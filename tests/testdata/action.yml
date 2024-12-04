@@ -1,0 +1,71 @@
+# action.yml
+name: 'Fabric Agent Action'
+description: 'A GitHub action that leverages fabric patterns through an agent-based approach'
+author: 'xvnpw'
+branding:
+  icon: 'book-open'
+  color: 'green'
+inputs:
+  input_file:
+    description: 'path to input file'
+    required: true
+  output_file:
+    description: 'path to output file'
+    required: true
+  agent_type:
+    description: 'type of agent, one of router, react'
+    required: false
+    default: 'router'
+  agent_provider:
+    description: 'agent provider name'
+    required: false
+    default: 'openai'
+  agent_model:
+    description: 'agent model' # e.g. gpt-3.5-turbo, anthropic/claude-2
+    required: false
+    default: 'gpt-4o'
+  agent_temperature:
+    description: 'agent sampling temperature for a model'
+    required: false
+    default: 0
+  agent_preamble_enabled:
+    description: 'Enable preamble in output'
+    required: false
+    default: false
+  agent_preamble:
+    description: 'Preamble added to the beginning of output'
+    required: false
+  fabric_provider:
+    description: 'fabric provider name'
+    required: false
+    default: 'openai'
+  fabric_model:
+    description: 'fabric model' # e.g. gpt-3.5-turbo, anthropic/claude-2
+    required: false
+    default: 'gpt-4o'
+  fabric_temperature:
+    description: 'fabric sampling temperature for a model'
+    required: false
+    default: 0
+  fabric_patterns_included:
+    description: 'Comma separated list of fabric tools to include in agent' # e.g. create_quiz,improve_writing
+    required: false
+  fabric_patterns_excluded:
+    description: 'Comma separated list of fabric tools to exclude in agent'
+    required: false
+  fabric_max_num_turns:
+    description: 'Maximum number of turns to LLM when running fabric patterns'
+    required: false
+    default: 10
+  verbose:
+    description: 'verbose messages'
+    required: false
+    default: false
+  debug:
+    description: 'debug messages'
+    required: false
+    default: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+# no args - use environment variables to pass arguments

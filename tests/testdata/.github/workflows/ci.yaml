@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Poetry
+        run: pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.create false
+          poetry install --no-root
+          poetry install
+
+      - name: Run Ruff
+        run: poetry run ruff check --output-format=github .
+
+      - name: Run MyPy
+        run: poetry run mypy fabric_agent_action
+
+      - name: Dockerfile linter
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+
+      - name: Test with pytest
+        run: poetry run pytest -m "not integration"
+
+      - name: Test docker
+        run: |
+          docker build . -t test-fabric-agent-action
+          docker run test-fabric-agent-action
+
+      - name: Setup Bats and bats libs
+        id: setup-bats
+        uses: bats-core/bats-action@3.0.0
+
+      - name: Bats tests
+        shell: bash
+        env:
+         BATS_LIB_PATH: ${{ steps.setup-bats.outputs.lib-path }}
+         TERM: xterm
+        run: bats bats/test-entrypoint.bats
+
+      - name: Security check with Bandit
+        run: poetry run bandit -r . --severity-level high

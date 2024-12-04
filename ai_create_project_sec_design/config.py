@@ -1,0 +1,73 @@
+import io
+from typing import List, Optional, Set, Union
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing_extensions import Literal
+
+from ai_create_project_sec_design.utils import find_node_binary
+
+
+class AppConfig(BaseModel):
+    """Configuration model with validation."""
+
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
+    target_dir: str
+    output_file: io.TextIOWrapper
+    project_type: Literal["python", "generic", "go"] = Field(default="python")
+    verbose: bool = Field(default=False)
+    debug: bool = Field(default=False)
+
+    agent_provider: Literal["openai", "openrouter", "anthropic"] = Field(default="openai")
+    agent_model: str = Field(default="gpt-4o")
+    agent_temperature: float = Field(default=0, ge=0, le=1)
+    agent_preamble_enabled: bool = Field(default=False)
+    agent_preamble: str = Field(default="##### (🤖 AI Generated)")
+
+    editor_provider: Literal["openai", "openrouter", "anthropic"] = Field(default="openai")
+    editor_model: str = Field(default="gpt-4o")
+    editor_temperature: float = Field(default=0, ge=0, le=1)
+    editor_max_turns_count: int = Field(default=3, ge=0)
+
+    exclude: Optional[List[str]]
+    exclude_mode: Literal["add", "override"] = Field(default="add")
+    include: Optional[List[str]]
+    include_mode: Literal["add", "override"] = Field(default="add")
+    filter_keywords: Optional[Set[str]]
+    files_context_window: Optional[int]
+    files_chunk_size: Optional[int]
+    dry_run: bool = Field(default=False)
+    node_path: str
+
+    @field_validator("exclude", mode="before")
+    def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:
+        if not value:
+            return []
+        if isinstance(value, list):
+            return value
+        return [s.strip() for s in value.split(",") if s.strip()]
+
+    @field_validator("include", mode="before")
+    def parse_include(cls, value: Union[str, List[str], None]) -> List[str]:
+        if not value:
+            return []
+        if isinstance(value, list):
+            return value
+        return [s.strip() for s in value.split(",") if s.strip()]
+
+    @field_validator("filter_keywords", mode="before")
+    def parse_filter_keywords(cls, value: Union[str, Set[str], None]) -> Set[str]:
+        if not value:
+            return set()
+        if isinstance(value, set):
+            return value
+        return {s.strip() for s in value.split(",") if s.strip()}
+
+    @field_validator("node_path", mode="before")
+    def parse_node_path(cls, value: Union[str, None]) -> str:
+        if not value:
+            node_binary = find_node_binary()
+            if not node_binary:
+                raise FileNotFoundError("Node.js binary not found. Please install Node.js.")
+            return node_binary
+        return value

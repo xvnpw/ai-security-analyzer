@@ -1,0 +1,37 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                "-d", "-i", "test4.txt", "-o", "test_output.txt", "--agent-type", "react_experimental_issue", "--fabric-patterns-included", "create_stride_threat_model,improve_writing,clean_text,create_quiz,create_summary",
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+        },
+        {
+            "name": "Python Debugger: Generate Fabric Tools",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "args": [
+                //"--process-all"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}",
+                "CHANGED_FILES" : "prompts/fabric_patterns/create_quiz/system.md",
+            },
+        }
+    ]
+}
+// "--fabric-provider", "openrouter", "--fabric-model", "openai/o1-preview",
+// # -i fabric_input.md -o fabric_output.md --fabric-provider openrouter --fabric-model openai/o1-preview --fabric-temperature 0.2 --fabric-tools-included clean_text,create_stride_threat_model,create_design_document,review_design,refine_design_document,create_threat_scenarios,improve_writing,create_quiz --debug

@@ -48,7 +48,7 @@ coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
-.pytest_cache/
+/.pytest_cache/
 cover/
 
 # Translations
@@ -123,7 +123,7 @@ celerybeat.pid
 
 # Environments
 .env
-.venv
+/.venv
 env/
 venv/
 ENV/
@@ -141,7 +141,7 @@ venv.bak/
 /site
 
 # mypy
-.mypy_cache/
+/.mypy_cache/
 .dmypy.json
 dmypy.json
 
@@ -160,3 +160,8 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+/test_repo*
+/.ruff_cache
+/.vscode
+node_modules

@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "ai-create-project-sec-design"
+version = "0.0.1"
+description = ""
+authors = ["xvnpw <17719543+xvnpw@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langgraph = "^0.2.53"
+langgraph-sdk = "^0.1.40"
+langsmith = "^0.1.147"
+langchain-community = "^0.3.8"
+langchain-core = "^0.3.21"
+langchain-openai = "^0.2.10"
+langchain-anthropic = "^0.3.0"
+langchain-text-splitters = "^0.3.2"
+six = "^1.16.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+mypy = "^1.13.0"
+ruff = "^0.8.1"
+bandit = "^1.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+show_error_codes = true
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 119
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: marks tests as integration tests",
+]
