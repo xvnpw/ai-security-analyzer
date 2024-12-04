@@ -18,6 +18,58 @@
 
 **AI Create Project Security Design** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
 
+## Features
+
+- 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
+- 📝 **Automated Documentation Generation**: Generates comprehensive security design documents.
+- 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
+- 🔄 **Multi-Project Support**: Supports Python, Go, and generic project types.
+- 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
+- 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
+- 🎯 **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
+- 🌐 **Cross-Platform Compatibility**: Runs on Windows, macOS, and Linux.
+
+## Prerequisites
+
+- **Python 3.11**
+- **Node.js**: Required for validating Mermaid diagrams in Markdown.
+- **Poetry**: For managing Python dependencies.
+
+## Installation
+
+### From Source
+
+Clone the repository and install dependencies using the provided script:
+
+```bash
+git clone git@github.com:xvnpw/ai-create-project-sec-design.git
+cd ai-create-project-sec-design
+./build.sh  # Installs Python and Node.js dependencies
+poetry run python ai_create_project_sec_design/app.py --help
+```
+
+### Using Docker
+
+You can run the application using Docker without installing Python or Node.js locally.
+
+#### In PowerShell (Windows):
+
+```powershell
+docker run -v C:\path\to\your\project:/target `
+           -e OPENAI_API_KEY=$Env:OPENAI_API_KEY `
+           ghcr.io/xvnpw/ai-create-project-sec-design:v1 `
+           -v -t /target -o /target/security_design.md
+```
+
+#### In Bash (Linux/macOS):
+
+```bash
+docker run -v ~/path/to/your/project:/target \
+           -e OPENAI_API_KEY=$OPENAI_API_KEY \
+           ghcr.io/xvnpw/ai-create-project-sec-design:v1 \
+           -v -t /target -o /target/security_design.md
+```
+
 ## Token Usage and Cost Management ⚠️
 
 ### Understanding Token Consumption
@@ -91,58 +143,6 @@ The application follows these high-level steps:
 7. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
 8. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
 9. **Completion**: Finalizes the security design document.
-
-## Features
-
-- 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
-- 📝 **Automated Documentation Generation**: Generates comprehensive security design documents.
-- 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
-- 🔄 **Multi-Project Support**: Supports Python, Go, and generic project types.
-- 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
-- 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
-- 🎯 **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
-- 🌐 **Cross-Platform Compatibility**: Runs on Windows, macOS, and Linux.
-
-## Prerequisites
-
-- **Python 3.11**
-- **Node.js**: Required for validating Mermaid diagrams in Markdown.
-- **Poetry**: For managing Python dependencies.
-
-## Installation
-
-### From Source
-
-Clone the repository and install dependencies using the provided script:
-
-```bash
-git clone git@github.com:xvnpw/ai-create-project-sec-design.git
-cd ai-create-project-sec-design
-./build.sh  # Installs Python and Node.js dependencies
-poetry run python ai_create_project_sec_design/app.py --help
-```
-
-### Using Docker
-
-You can run the application using Docker without installing Python or Node.js locally.
-
-#### In PowerShell (Windows):
-
-```powershell
-docker run -v C:\path\to\your\project:/target `
-           -e OPENAI_API_KEY=$Env:OPENAI_API_KEY `
-           ghcr.io/xvnpw/ai-create-project-sec-design:v1 `
-           -v -t /target -o /target/security_design.md
-```
-
-#### In Bash (Linux/macOS):
-
-```bash
-docker run -v ~/path/to/your/project:/target \
-           -e OPENAI_API_KEY=$OPENAI_API_KEY \
-           ghcr.io/xvnpw/ai-create-project-sec-design:v1 \
-           -v -t /target -o /target/security_design.md
-```
 
 ## Configuration
 
