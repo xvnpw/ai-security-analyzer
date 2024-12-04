@@ -57,7 +57,7 @@ You can run the application using Docker without installing Python or Node.js lo
 ```powershell
 docker run -v C:\path\to\your\project:/target `
            -e OPENAI_API_KEY=$Env:OPENAI_API_KEY `
-           ghcr.io/xvnpw/ai-create-project-sec-design:v1 `
+           ghcr.io/xvnpw/ai-create-project-sec-design:v0.0.1 `
            -v -t /target -o /target/security_design.md
 ```
 
@@ -66,7 +66,7 @@ docker run -v C:\path\to\your\project:/target `
 ```bash
 docker run -v ~/path/to/your/project:/target \
            -e OPENAI_API_KEY=$OPENAI_API_KEY \
-           ghcr.io/xvnpw/ai-create-project-sec-design:v1 \
+           ghcr.io/xvnpw/ai-create-project-sec-design:v0.0.1 \
            -v -t /target -o /target/security_design.md
 ```
 
