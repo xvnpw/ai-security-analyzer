@@ -124,9 +124,9 @@ stateDiagram-v2
     Load_Project_Files --> Apply_Filters
     Apply_Filters --> Split_into_Chunks
     Split_into_Chunks --> Initial_Draft
-    Initial_Draft -->  Process_More_Docs
-    Process_More_Docs --> Process_More_Docs
-    Process_More_Docs --> Validate_Markdown: All Docs Processed
+    Initial_Draft -->  Update_Draft
+    Update_Draft --> Update_Draft: Process More Docs
+    Update_Draft --> Validate_Markdown: All Docs Processed
     Validate_Markdown --> Editor: Invalid Markdown
     Editor --> Validate_Markdown: Fix Formatting
     Validate_Markdown --> [*]: Valid Markdown
