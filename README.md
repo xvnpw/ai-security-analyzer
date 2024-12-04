@@ -1,51 +1,96 @@
 <div align="center">
 
-# AI Create Project Security Design
+  # AI Create Project Security Design
 
-[![CI](https://github.com/xvnpw/ai-create-project-sec-design/actions/workflows/ci.yaml/badge.svg)](https://github.com/xvnpw/ai-create-project-sec-design/actions/workflows/ci.yaml)
-[![GitHub release](https://img.shields.io/github/release/xvnpw/ai-create-project-sec-design.svg)](https://github.com/xvnpw/ai-create-project-sec-design/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-<img src="./images/logo.webp" alt="logo" width="200" height="200"/>
+  <a href="https://github.com/xvnpw/ai-create-project-sec-design">
+    <img src="./images/logo.webp" alt="logo" width="200" height="200"/>
+  </a>
 
-🤖 **AI Create Project Security Design** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
+  [![CI](https://github.com/xvnpw/ai-create-project-sec-design/actions/workflows/ci.yaml/badge.svg)](https://github.com/xvnpw/ai-create-project-sec-design/actions/workflows/ci.yaml)
+  [![GitHub release](https://img.shields.io/github/release/xvnpw/ai-create-project-sec-design.svg)](https://github.com/xvnpw/ai-create-project-sec-design/releases)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+  **AI Create Project Security Design** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
 </div>
+
+---
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+  - [From Source](#from-source)
+  - [Using Docker](#using-docker)
+- [Configuration](#configuration)
+  - [General Options](#general-options)
+  - [Input/Output Options](#inputoutput-options)
+  - [Agent Configuration](#agent-configuration)
+  - [Editor Configuration](#editor-configuration)
+- [Environment Variables](#environment-variables)
+- [Usage Examples](#usage-examples)
+  - [Basic Usage](#basic-usage)
+  - [Excluding Specific Files or Directories](#excluding-specific-files-or-directories)
+  - [Using a Different LLM Provider and Model](#using-a-different-llm-provider-and-model)
+  - [Dry Run Mode](#dry-run-mode)
+- [Troubleshooting](#troubleshooting)
+  - [Common Issues](#common-issues)
+- [Supported LLM Providers](#supported-llm-providers)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
 
 ## Overview
 
-AI Create Project Security Design is a Python-based tool that analyzes your project's codebase and generates detailed security documentation. It supports multiple project types and uses advanced language models to create insightful security design documents.
+**AI Create Project Security Design** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
 
 ## Architecture
 
-To help you understand how the application works, we've included application flow diagram.
+To help you understand how the application works, we've included an application flow diagram.
 
 ### Application Flow
 
 ```mermaid
 stateDiagram-v2
     [*] --> ParseConfig: Start
-    ParseConfig --> LoadFiles: Configure App
+    ParseConfig --> LoadFiles: Configure Application
     LoadFiles --> SortFilter: Load Project Files
     SortFilter --> SplitDocs: Apply Filters
     SplitDocs --> CreateDraft: Split into Chunks
     CreateDraft --> UpdateDraft: Initial Draft
-    UpdateDraft --> UpdateDraft: More Docs
+    UpdateDraft --> UpdateDraft: Process More Docs
     UpdateDraft --> ValidateMarkdown: All Docs Processed
-    ValidateMarkdown --> Editor: Invalid
-    Editor --> ValidateMarkdown: Fix Format
-    ValidateMarkdown --> [*]: Valid
+    ValidateMarkdown --> Editor: Invalid Markdown
+    Editor --> ValidateMarkdown: Fix Formatting
+    ValidateMarkdown --> [*]: Valid Markdown
 ```
+
+The application follows these high-level steps:
+
+1. **Configure Application**: Parses command-line arguments and sets up the configuration.
+2. **Load Project Files**: Loads files from the specified target directory, applying include/exclude rules.
+3. **Apply Filters**: Sorts and filters documents based on specified keywords and patterns.
+4. **Split into Chunks**: Splits documents into smaller chunks that fit within the LLM's context window.
+5. **Create Initial Draft**: Uses the LLM to generate an initial security design document based on the first batch of documents.
+6. **Process More Docs**: Iteratively updates the draft by processing additional document batches.
+7. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
+8. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
+9. **Completion**: Finalizes the security design document.
 
 ## Features
 
-- 🔍 Intelligent code analysis
-- 📝 Automated documentation generation
-- 🔐 Security-focused design insights
-- 🔄 Support for multiple project types (Python, Go, Generic)
-- 🤖 Multiple LLM provider support
-- 📊 Mermaid diagram validation
-- 🎯 Customizable file filtering
+- 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
+- 📝 **Automated Documentation Generation**: Generates comprehensive security design documents.
+- 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
+- 🔄 **Multi-Project Support**: Supports Python, Go, and generic project types.
+- 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
+- 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
+- 🎯 **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
+- 🌐 **Cross-Platform Compatibility**: Runs on Windows, macOS, and Linux.
 
 ## Prerequisites
 
@@ -55,21 +100,25 @@ stateDiagram-v2
 
 ## Installation
 
-### From source
+### From Source
+
+Clone the repository and install dependencies using the provided script:
 
 ```bash
-$ git clone git@github.com:xvnpw/ai-create-project-sec-design.git
-$ cd ai-create-project-sec-design
-$ ./build.sh # will install python and node dependencies
-$ poetry run ai-create-project-sec-design/app.py
+git clone git@github.com:xvnpw/ai-create-project-sec-design.git
+cd ai-create-project-sec-design
+./build.sh  # Installs Python and Node.js dependencies
+poetry run python ai_create_project_sec_design/app.py --help
 ```
 
 ### Using Docker
 
+You can run the application using Docker without installing Python or Node.js locally.
+
 #### In PowerShell (Windows):
 
 ```powershell
-docker run -v c:\path\to\your\project:/target `
+docker run -v C:\path\to\your\project:/target `
            -e OPENAI_API_KEY=$Env:OPENAI_API_KEY `
            ghcr.io/xvnpw/ai-create-project-sec-design:v1 `
            -v -t /target -o /target/security_design.md
@@ -110,9 +159,11 @@ The application accepts various command-line arguments to tailor its behavior.
 
 - `--agent-provider`: LLM provider for the agent (`openai`, `openrouter`, `anthropic`). Default is `openai`.
 - `--agent-model`: Model name for the agent. Default is `gpt-4o`.
-- `--agent-temperature`: Sampling temperature for the agent model. Default is `0`.
+- `--agent-temperature`: Sampling temperature for the agent model (between `0` and `1`). Default is `0`.
 - `--agent-preamble-enabled`: Enable preamble in the output.
 - `--agent-preamble`: Preamble text added to the beginning of the output.
+- `--files-context-window`: Maximum token size for LLM context window. Automatically determined if not set.
+- `--files-chunk-size`: Chunk size in tokens for splitting files. Automatically determined if not set.
 
 ### Editor Configuration
 
@@ -142,7 +193,7 @@ poetry run python ai_create_project_sec_design/app.py \
     -o security_design.md
 ```
 
-### Exclude Specific Files or Directories
+### Excluding Specific Files or Directories
 
 Exclude the `tests` directory and `LICENSE` file:
 
@@ -153,7 +204,7 @@ poetry run python ai_create_project_sec_design/app.py \
     --exclude "LICENSE,**/tests/**"
 ```
 
-### Use a Different LLM Provider and Model
+### Using a Different LLM Provider and Model
 
 Use Anthropic's Claude model:
 
@@ -162,7 +213,9 @@ poetry run python ai_create_project_sec_design/app.py \
     -t /path/to/your/project \
     -o security_design.md \
     --agent-provider anthropic \
-    --agent-model claude-3-5-sonnet-20240620
+    --agent-model claude-3-5-sonnet-20240620 \
+    --editor-provider anthropic \
+    --editor-model claude-3-5-sonnet-20240620
 ```
 
 ### Dry Run Mode
@@ -175,25 +228,63 @@ poetry run python ai_create_project_sec_design/app.py \
     --dry-run
 ```
 
+**Sample Output:**
+
+```
+=========== dry-run ===========
+All documents token count: 123456
+List of chunked files to analyse:
+src/main.py
+src/utils.py
+README.md
+...
+```
+
 ## Troubleshooting
 
 ### Common Issues
 
 #### Chunk Size Longer Than Specified
 
+You may encounter a warning like:
+
 ```
 langchain_text_splitters.base - WARNING - Created a chunk of size 78862, which is longer than the specified 70000
 ```
 
-This warning indicates that some document chunks exceed the context window size of the LLM. To resolve this, make sure `--files-chunk-size` is lower than `--files-context-window`.
+This warning indicates that some document chunks exceed the LLM's context window size. To resolve this, ensure that `--files-chunk-size` is lower than `--files-context-window`.
 
-Example:
+**Example:**
 
 ```bash
 poetry run python ai_create_project_sec_design/app.py \
     -t /path/to/your/project \
     --files-chunk-size 50000 \
     --files-context-window 70000
+```
+
+#### Node.js Not Found
+
+If you receive an error indicating that Node.js is not found:
+
+```
+FileNotFoundError: Node.js binary not found. Please install Node.js.
+```
+
+Ensure that Node.js is installed and added to your system's PATH, or provide the path using the `--node-path` option.
+
+#### OpenAI API Key Not Set
+
+If you get an error about `OPENAI_API_KEY`:
+
+```
+Error: OPENAI_API_KEY not set in environment variables.
+```
+
+Make sure you've set the `OPENAI_API_KEY` environment variable:
+
+```bash
+export OPENAI_API_KEY=your_openai_api_key
 ```
 
 ## Supported LLM Providers
@@ -208,4 +299,4 @@ Contributions are welcome! Please open issues and pull requests. Ensure that you
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute this software as per the terms of the license.
