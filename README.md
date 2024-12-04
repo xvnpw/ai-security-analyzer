@@ -119,17 +119,17 @@ To help you understand how the application works, we've included an application 
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Configure Application: Start
-    ParseConfig --> LoadFiles: Configure Application
-    LoadFiles --> SortFilter: Load Project Files
-    SortFilter --> SplitDocs: Apply Filters
-    SplitDocs --> CreateDraft: Split into Chunks
-    CreateDraft --> UpdateDraft: Initial Draft
-    UpdateDraft --> UpdateDraft: Process More Docs
-    UpdateDraft --> ValidateMarkdown: All Docs Processed
-    ValidateMarkdown --> Editor: Invalid Markdown
-    Editor --> ValidateMarkdown: Fix Formatting
-    ValidateMarkdown --> [*]: Valid Markdown
+    [*] --> Configure_Application
+    Configure_Application --> Load_Project_Files
+    Load_Project_Files --> Apply_Filters
+    Apply_Filters --> Split_into_Chunks
+    Split_into_Chunks --> Initial_Draft
+    Initial_Draft -->  Process_More_Docs
+    Process_More_Docs --> Process_More_Docs
+    Process_More_Docs --> Validate_Markdown: All Docs Processed
+    Validate_Markdown --> Editor: Invalid Markdown
+    Editor --> Validate_Markdown: Fix Formatting
+    Validate_Markdown --> [*]: Valid Markdown
 ```
 
 The application follows these high-level steps:
