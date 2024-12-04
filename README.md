@@ -18,8 +18,6 @@
 
 **AI Create Project Security Design** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
 
-I'll create a dedicated section about managing token usage and costs. Here's the proposed addition to your README:
-
 ## Token Usage and Cost Management ⚠️
 
 ### Understanding Token Consumption
