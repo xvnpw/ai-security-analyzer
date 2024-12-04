@@ -119,7 +119,7 @@ To help you understand how the application works, we've included an application 
 
 ```mermaid
 stateDiagram-v2
-    [*] --> ParseConfig: Start
+    [*] --> Configure Application: Start
     ParseConfig --> LoadFiles: Configure Application
     LoadFiles --> SortFilter: Load Project Files
     SortFilter --> SplitDocs: Apply Filters
