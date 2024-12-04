@@ -14,39 +14,52 @@
   **AI Create Project Security Design** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
 </div>
 
----
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Architecture](#architecture)
-- [Features](#features)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-  - [From Source](#from-source)
-  - [Using Docker](#using-docker)
-- [Configuration](#configuration)
-  - [General Options](#general-options)
-  - [Input/Output Options](#inputoutput-options)
-  - [Agent Configuration](#agent-configuration)
-  - [Editor Configuration](#editor-configuration)
-- [Environment Variables](#environment-variables)
-- [Usage Examples](#usage-examples)
-  - [Basic Usage](#basic-usage)
-  - [Excluding Specific Files or Directories](#excluding-specific-files-or-directories)
-  - [Using a Different LLM Provider and Model](#using-a-different-llm-provider-and-model)
-  - [Dry Run Mode](#dry-run-mode)
-- [Troubleshooting](#troubleshooting)
-  - [Common Issues](#common-issues)
-- [Supported LLM Providers](#supported-llm-providers)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
 ## Overview
 
 **AI Create Project Security Design** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
+
+I'll create a dedicated section about managing token usage and costs. Here's the proposed addition to your README:
+
+## Token Usage and Cost Management ⚠️
+
+### Understanding Token Consumption
+
+This application may consume a significant number of tokens due to its workflow:
+- Each file is processed and sent to LLM
+- Multiple rounds of analysis for comprehensive documentation
+- Additional tokens for markdown validation and fixes
+- Large codebases can lead to substantial token usage
+
+### Cost Control Best Practices 💰
+
+1. **Always Start with Dry Run**
+```bash
+poetry run python ai_create_project_sec_design/app.py \
+    -t /path/to/your/project \
+    --dry-run
+```
+This will show you:
+- Total number of tokens to be processed
+- List of files that will be analyzed
+- No actual API calls will be made
+
+2. **Optimize File Selection**
+   - Use `--exclude` to skip non-essential files:
+     ```bash
+     --exclude "**/tests/**,**/docs/**,LICENSE,*.md"
+     ```
+   - Focus on security-relevant files with `--filter-keywords`:
+     ```bash
+     --filter-keywords "security,auth,crypto,password,secret,token"
+     ```
+
+### Recommendations
+
+1. Start with `--dry-run` to assess token usage
+2. Use file filtering options to reduce scope
+3. Consider running on smaller, security-critical portions first
+4. Test on smaller codebases before analyzing large projects
+5. Keep track of your API usage limits and costs
 
 ## Architecture
 
