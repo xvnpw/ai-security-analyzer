@@ -112,6 +112,8 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         logger.info("Creating initial draft")
         try:
             documents = state["splitted_docs"]
+            if len(documents) == 0:
+                raise ValueError("Empty documents list. Check you filtering configuration.")
             first_batch = self.doc_processor.get_docs_batch(documents, documents_context_window)
             logger.info(f"Processing first batch of documents: {len(first_batch)} of {len(documents)}")
 
