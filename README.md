@@ -11,7 +11,12 @@
   [![GitHub release](https://img.shields.io/github/release/xvnpw/ai-create-project-sec-design.svg)](https://github.com/xvnpw/ai-create-project-sec-design/releases)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-  **AI Create Project Security Design** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
+  🤖 **AI Create Project Security Design** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
+
+  **🎥 Demo:**
+
+  <img src="./images/demo.gif" alt="demo" />
+
 </div>
 
 ## Overview
