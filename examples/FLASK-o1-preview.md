@@ -167,19 +167,18 @@ Selected Deployment Architecture:
 
 ```mermaid
 C4Deployment
-title Flask Application Deployment Diagram
-
-Deployment_Node(host_server, "Host Server") {
-    Deployment_Node(nginx, "Nginx", "Reverse Proxy Server with SSL/TLS") {
-        Container(web_server, "Nginx", "Reverse Proxy", "Handles incoming HTTPS requests")
-    }
-    Deployment_Node(gunicorn, "Gunicorn", "WSGI Server") {
-        Container(flask_app, "Flask Application", "Python", "Runs the Flask application")
-    }
-}
-
-Rel(client_browser, web_server, "Sends requests to", "HTTPS")
-Rel(web_server, flask_app, "Proxies requests to", "WSGI")
+  title Flask Application Deployment Diagram
+  
+  Deployment_Node(host_server, "Host Server") {
+      Deployment_Node(nginx, "Nginx", "Reverse Proxy Server with SSL/TLS") {
+          Container(web_server, "Nginx", "Reverse Proxy", "Handles incoming HTTPS requests")
+      }
+      Deployment_Node(gunicorn, "Gunicorn", "WSGI Server") {
+          Container(flask_app, "Flask Application", "Python", "Runs the Flask application")
+      }
+  }
+  
+  Rel(web_server, flask_app, "Proxies requests to", "WSGI")
 ```
 
 ### Elements of Deployment Diagram
