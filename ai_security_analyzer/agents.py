@@ -331,9 +331,8 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         return (
             f"Based on the following PROJECT FILES, {message_type} the {draft_update_prompt}.\n"
             f"{'There will be more files to analyze after this batch.' if more_files else ''}\n\n"
-            + (  # noqa: W503
-                f"CURRENT {draft_update_prompt}:\n{current_description}\n\n" if current_description else ""
-            )
+            f"CURRENT {draft_update_prompt}:\n"
+            + (f"{current_description}\n\n" if current_description else "")  # noqa: W503
             + f"PROJECT FILES:\n{formatted_docs}"  # noqa: W503
         )
 
