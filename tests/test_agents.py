@@ -366,11 +366,11 @@ def test_create_human_prompt(
     assert ret_by_lines[1] == (
         "There will be more files to analyze after this batch." if len(documents) > len(batch) else ""
     )
+    assert ret_by_lines[3] == "CURRENT DESIGN DOCUMENT:"
 
     lines = 0
     if current_description:
-        assert ret_by_lines[3] == "CURRENT DESIGN DOCUMENT:"
         assert ret_by_lines[4] == current_description
-        lines = 3
+        lines = 2
 
-    assert ret_by_lines[3 + lines] == "PROJECT FILES:"
+    assert ret_by_lines[4 + lines] == "PROJECT FILES:"
