@@ -1,6 +1,6 @@
 from langchain_core.documents import Document
 
-from ai_create_project_sec_design.documents import DocumentProcessor, DocumentFilter
+from ai_security_analyzer.documents import DocumentProcessor, DocumentFilter
 
 
 # Mock Tokenizer for testing

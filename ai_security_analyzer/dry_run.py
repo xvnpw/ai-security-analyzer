@@ -5,13 +5,13 @@ from langgraph.graph import START, END, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from tiktoken import Encoding
 
-from ai_create_project_sec_design.agents import (
+from ai_security_analyzer.agents import (
     CreateProjectSecurityDesignAgent,
     AgentState,
 )
-from ai_create_project_sec_design.documents import DocumentFilter, DocumentProcessor
-from ai_create_project_sec_design.llms import LLMProvider
-from ai_create_project_sec_design.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
+from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 
 logger = logging.getLogger(__name__)
 

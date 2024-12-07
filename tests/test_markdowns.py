@@ -1,5 +1,5 @@
-from ai_create_project_sec_design.markdowns import MarkdownMermaidValidator
-from ai_create_project_sec_design.utils import find_node_binary
+from ai_security_analyzer.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.utils import find_node_binary
 
 NODE_PATH = find_node_binary()
 if not NODE_PATH:

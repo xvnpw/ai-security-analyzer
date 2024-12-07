@@ -5,8 +5,8 @@ from unittest.mock import patch
 import pytest
 from langchain_core.language_models.chat_models import BaseChatModel
 
-from ai_create_project_sec_design import constants
-from ai_create_project_sec_design.llms import LLMProvider
+from ai_security_analyzer import constants
+from ai_security_analyzer.llms import LLMProvider
 
 
 @dataclass

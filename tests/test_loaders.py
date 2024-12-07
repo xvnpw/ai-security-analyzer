@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from ai_create_project_sec_design.loaders import RepoDirectoryLoader
+from ai_security_analyzer.loaders import RepoDirectoryLoader
 
 
 def _in_path(substring, paths):

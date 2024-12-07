@@ -1,6 +1,6 @@
 from unittest.mock import Mock
-from ai_create_project_sec_design.graphs import RunGraphExecutor, DryRunGraphExecutor, GraphExecutorFactory
-from ai_create_project_sec_design.config import AppConfig
+from ai_security_analyzer.graphs import RunGraphExecutor, DryRunGraphExecutor, GraphExecutorFactory
+from ai_security_analyzer.config import AppConfig
 from langgraph.graph.state import CompiledStateGraph
 from langchain_core.documents import Document
 

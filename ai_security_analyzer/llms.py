@@ -8,8 +8,8 @@ from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 
-from ai_create_project_sec_design import constants
-from ai_create_project_sec_design.config import AppConfig
+from ai_security_analyzer import constants
+from ai_security_analyzer.config import AppConfig
 
 logger = logging.getLogger(__name__)
 

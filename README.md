@@ -1,17 +1,17 @@
 <div align="center">
 
-  # AI Create Project Security Design
+  # AI Security Analyzer
 
 
-  <a href="https://github.com/xvnpw/ai-create-project-sec-design">
+  <a href="https://github.com/xvnpw/ai-security-analyzer">
     <img src="./images/logo.webp" alt="logo" width="200" height="200"/>
   </a>
 
-  [![CI](https://github.com/xvnpw/ai-create-project-sec-design/actions/workflows/ci.yaml/badge.svg)](https://github.com/xvnpw/ai-create-project-sec-design/actions/workflows/ci.yaml)
-  [![GitHub release](https://img.shields.io/github/release/xvnpw/ai-create-project-sec-design.svg)](https://github.com/xvnpw/ai-create-project-sec-design/releases)
+  [![CI](https://github.com/xvnpw/ai-security-analyzer/actions/workflows/ci.yaml/badge.svg)](https://github.com/xvnpw/ai-security-analyzer/actions/workflows/ci.yaml)
+  [![GitHub release](https://img.shields.io/github/release/xvnpw/ai-security-analyzer.svg)](https://github.com/xvnpw/ai-security-analyzer/releases)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-  🤖 **AI Create Project Security Design** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
+  🤖 **AI Security Analyzer** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
 
   **🎥 Demo:**
 
@@ -21,7 +21,7 @@
 
 ## Overview
 
-**AI Create Project Security Design** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
+**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
 
 ## Features
 
@@ -47,10 +47,10 @@
 Clone the repository and install dependencies using the provided script:
 
 ```bash
-git clone git@github.com:xvnpw/ai-create-project-sec-design.git
-cd ai-create-project-sec-design
+git clone git@github.com:xvnpw/ai-security-analyzer.git
+cd ai-security-analyzer
 ./build.sh  # Installs Python and Node.js dependencies
-poetry run python ai_create_project_sec_design/app.py --help
+poetry run python ai_security_analyzer/app.py --help
 ```
 
 ### Using Docker
@@ -62,7 +62,7 @@ You can run the application using Docker without installing Python or Node.js lo
 ```powershell
 docker run -v C:\path\to\your\project:/target `
            -e OPENAI_API_KEY=$Env:OPENAI_API_KEY `
-           ghcr.io/xvnpw/ai-create-project-sec-design:v0.0.1 `
+           ghcr.io/xvnpw/ai-security-analyzer:v0.0.1 `
            -v -t /target -o /target/security_design.md
 ```
 
@@ -71,7 +71,7 @@ docker run -v C:\path\to\your\project:/target `
 ```bash
 docker run -v ~/path/to/your/project:/target \
            -e OPENAI_API_KEY=$OPENAI_API_KEY \
-           ghcr.io/xvnpw/ai-create-project-sec-design:v0.0.1 \
+           ghcr.io/xvnpw/ai-security-analyzer:v0.0.1 \
            -v -t /target -o /target/security_design.md
 ```
 
@@ -89,7 +89,7 @@ This application may consume a significant number of tokens due to its workflow:
 
 1. **Always Start with Dry Run**
 ```bash
-poetry run python ai_create_project_sec_design/app.py \
+poetry run python ai_security_analyzer/app.py \
     -t /path/to/your/project \
     --dry-run
 ```
@@ -204,7 +204,7 @@ Set one of the following environment variables based on your chosen LLM provider
 Generate a security design document for a Python project:
 
 ```bash
-poetry run python ai_create_project_sec_design/app.py \
+poetry run python ai_security_analyzer/app.py \
     -t /path/to/your/project \
     -o security_design.md
 ```
@@ -214,7 +214,7 @@ poetry run python ai_create_project_sec_design/app.py \
 Exclude the `tests` directory and `LICENSE` file:
 
 ```bash
-poetry run python ai_create_project_sec_design/app.py \
+poetry run python ai_security_analyzer/app.py \
     -t /path/to/your/project \
     -o security_design.md \
     --exclude "LICENSE,**/tests/**"
@@ -225,7 +225,7 @@ poetry run python ai_create_project_sec_design/app.py \
 Use Anthropic's Claude model:
 
 ```bash
-poetry run python ai_create_project_sec_design/app.py \
+poetry run python ai_security_analyzer/app.py \
     -t /path/to/your/project \
     -o security_design.md \
     --agent-provider anthropic \
@@ -239,7 +239,7 @@ poetry run python ai_create_project_sec_design/app.py \
 See which files would be analyzed without making API calls:
 
 ```bash
-poetry run python ai_create_project_sec_design/app.py \
+poetry run python ai_security_analyzer/app.py \
     -t /path/to/your/project \
     --dry-run
 ```
@@ -273,7 +273,7 @@ This warning indicates that some document chunks exceed the LLM's context window
 **Example:**
 
 ```bash
-poetry run python ai_create_project_sec_design/app.py \
+poetry run python ai_security_analyzer/app.py \
     -t /path/to/your/project \
     --files-chunk-size 50000 \
     --files-context-window 70000

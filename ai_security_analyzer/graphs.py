@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Any, Final, List
 
 from langgraph.graph.state import CompiledStateGraph
-from ai_create_project_sec_design.config import AppConfig
+from ai_security_analyzer.config import AppConfig
 from langchain_core.documents import Document
 
 logger = logging.getLogger(__name__)

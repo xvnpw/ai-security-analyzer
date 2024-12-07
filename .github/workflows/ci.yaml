@@ -32,7 +32,7 @@ jobs:
         run: poetry run ruff check --output-format=github .
 
       - name: Run MyPy
-        run: poetry run mypy ai_create_project_sec_design
+        run: poetry run mypy ai_security_analyzer
 
       - name: Test with pytest
         run: poetry run pytest -m "not integration"
@@ -47,5 +47,5 @@ jobs:
 
       - name: Test docker
         run: |
-          docker build . -t test-ai-create-project-sec-design
-          docker run test-ai-create-project-sec-design -h
+          docker build . -t test-ai-security-analyzer
+          docker run test-ai-security-analyzer -h

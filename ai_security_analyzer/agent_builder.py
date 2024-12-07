@@ -4,13 +4,13 @@ from typing import Type
 import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
 
-from ai_create_project_sec_design.agents import CreateProjectSecurityDesignAgent
-from ai_create_project_sec_design.base_agent import BaseAgent
-from ai_create_project_sec_design.config import AppConfig
-from ai_create_project_sec_design.documents import DocumentFilter, DocumentProcessor
-from ai_create_project_sec_design.dry_run import DryRunAgent
-from ai_create_project_sec_design.llms import LLMProvider
-from ai_create_project_sec_design.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.agents import CreateProjectSecurityDesignAgent
+from ai_security_analyzer.base_agent import BaseAgent
+from ai_security_analyzer.config import AppConfig
+from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
+from ai_security_analyzer.dry_run import DryRunAgent
+from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 
 logger = logging.getLogger(__name__)
 

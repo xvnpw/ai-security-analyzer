@@ -8,4 +8,4 @@ if [ -n "$GITHUB_WORKSPACE" ]; then
     echo "Detected GitHub runner"
 fi
 
-exec /usr/local/bin/python /app/ai_create_project_sec_design/app.py "$@"
+exec /usr/local/bin/python /app/ai_security_analyzer/app.py "$@"

@@ -4,7 +4,7 @@ from typing import List, Optional, Set, Union
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing_extensions import Literal
 
-from ai_create_project_sec_design.utils import find_node_binary
+from ai_security_analyzer.utils import find_node_binary
 
 
 class AppConfig(BaseModel):

@@ -5,9 +5,9 @@ import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
 from langgraph.graph.state import CompiledStateGraph
 
-from ai_create_project_sec_design.documents import DocumentFilter, DocumentProcessor
-from ai_create_project_sec_design.llms import LLMProvider
-from ai_create_project_sec_design.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
+from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 
 logger = logging.getLogger(__name__)
 

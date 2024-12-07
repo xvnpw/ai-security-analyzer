@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ai-create-project-sec-design"
+name = "ai-security-analyzer"
 version = "0.0.1"
 description = ""
 authors = ["xvnpw <17719543+xvnpw@users.noreply.github.com>"]

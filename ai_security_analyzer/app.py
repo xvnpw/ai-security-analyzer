@@ -2,10 +2,10 @@ import argparse
 import logging
 import sys
 
-from ai_create_project_sec_design.agent_builder import AgentBuilder
-from ai_create_project_sec_design.config import AppConfig
-from ai_create_project_sec_design.graphs import GraphExecutorFactory
-from ai_create_project_sec_design.llms import LLMProvider
+from ai_security_analyzer.agent_builder import AgentBuilder
+from ai_security_analyzer.config import AppConfig
+from ai_security_analyzer.graphs import GraphExecutorFactory
+from ai_security_analyzer.llms import LLMProvider
 
 logger = logging.getLogger(__name__)
 
@@ -195,11 +195,11 @@ def main() -> None:
         config = parse_arguments()
         setup_logging(config.verbose, config.debug)
 
-        logger.info("Starting AI Create Project Security Design")
+        logger.info("Starting AI Security Analyzer")
 
         app(config)
 
-        logger.info("AI Create Project Security Design completed successfully")
+        logger.info("AI Security Analyzer completed successfully")
 
     except Exception as e:
         logger.error(f"Application error: {e}")

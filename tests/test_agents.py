@@ -4,15 +4,15 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 
-from ai_create_project_sec_design.agent_builder import AgentBuilder
-from ai_create_project_sec_design.agents import (
+from ai_security_analyzer.agent_builder import AgentBuilder
+from ai_security_analyzer.agents import (
     CreateProjectSecurityDesignAgent,
     GraphNodeType,
 )
-from ai_create_project_sec_design.base_agent import BaseAgent
-from ai_create_project_sec_design.documents import DocumentFilter, DocumentProcessor
-from ai_create_project_sec_design.llms import LLM, LLMProvider, ModelConfig
-from ai_create_project_sec_design.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.base_agent import BaseAgent
+from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
+from ai_security_analyzer.llms import LLM, LLMProvider, ModelConfig
+from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from langchain_core.documents import Document
 
 
