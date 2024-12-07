@@ -157,7 +157,7 @@ def parse_arguments() -> AppConfig:
         "--agent-prompt-type",
         choices=["sec-design", "threat-modeling"],
         default="sec-design",
-        help="Prompt to use in agent (default: sec-design)",
+        help="Prompt to use in agent (default: sec-design): sec-design - Security Design for Project, threat-modeling - Threat Modeling for Project",
     )
 
     # Editor configuration

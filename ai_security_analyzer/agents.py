@@ -135,7 +135,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
                 batch=first_batch,
                 processed_count=0,
                 message_type="create",
-                current_description=None,
+                current_description="",
                 draft_update_prompt=self.draft_update_prompt,
             )
             messages = [agent_msg, HumanMessage(content=human_prompt)]

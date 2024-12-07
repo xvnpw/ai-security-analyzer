@@ -26,6 +26,8 @@ class DryRunAgent(CreateProjectSecurityDesignAgent):
         markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
+        agent_prompt: str,
+        draft_update_prompt: str,
     ):
         super().__init__(
             llm_provider,
@@ -35,6 +37,8 @@ class DryRunAgent(CreateProjectSecurityDesignAgent):
             markdown_validator,
             doc_processor,
             doc_filter,
+            agent_prompt,
+            draft_update_prompt,
         )
 
     def _count_token(self, state: AgentState):  # type: ignore[no-untyped-def]

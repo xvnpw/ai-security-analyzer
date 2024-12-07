@@ -1,4 +1,7 @@
-AGENT_PROMPTS = {
+from typing import Dict
+
+
+AGENT_PROMPTS: Dict[str, str] = {
     "sec-design": """# IDENTITY and PURPOSE
 
 You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components.
@@ -65,7 +68,7 @@ Given a PROJECT FILES and CURRENT DESIGN DOCUMENT, provide a well written, detai
     "threat-modeling": "",
 }
 
-UPDATE_PROMPTS = {
+UPDATE_PROMPTS: Dict[str, str] = {
     "sec-design": "DESIGN DOCUMENT",
     "threat-modeling": "",
 }
