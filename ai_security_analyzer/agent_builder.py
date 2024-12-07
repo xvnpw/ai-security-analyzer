@@ -11,6 +11,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.dry_run import DryRunAgent
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.prompts import AGENT_PROMPTS, UPDATE_PROMPTS
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +26,7 @@ class AgentBuilder:
             "dry-run": DryRunAgent,
         }
         self._agent_type = "dry-run" if config.dry_run else "run"
+        self.agent_prompt_type = config.agent_prompt_type
 
     def build(self) -> BaseAgent:
         agent_class = self._agents.get(self._agent_type)
@@ -49,6 +51,14 @@ class AgentBuilder:
         doc_processor = DocumentProcessor(tokenizer)
         doc_filter = DocumentFilter()
 
+        agent_prompt = AGENT_PROMPTS.get(self.agent_prompt_type)
+        if not agent_prompt:
+            raise ValueError(f"No agent prompt for type: {self.agent_prompt_type}")
+
+        draft_update_prompt = UPDATE_PROMPTS.get(self.agent_prompt_type)
+        if not draft_update_prompt:
+            raise ValueError(f"No update prompt for type: {self.agent_prompt_type}")
+
         return agent_class(
             self.llm_provider,
             text_splitter,
@@ -57,4 +67,6 @@ class AgentBuilder:
             markdown_validator,
             doc_processor,
             doc_filter,
+            agent_prompt,
+            draft_update_prompt,
         )

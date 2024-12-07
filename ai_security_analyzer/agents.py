@@ -27,6 +27,9 @@ class GraphNodeType(Enum):
     EDITOR = "editor"
 
 
+MESSAGE_TYPE = Literal["create", "update"]
+
+
 @dataclass
 class AgentState(TypedDict):
     target_dir: str
@@ -56,6 +59,8 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
+        agent_prompt: str,
+        draft_update_prompt: str,
     ):
         super().__init__(
             llm_provider,
@@ -65,6 +70,8 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
             markdown_validator,
             doc_processor,
             doc_filter,
+            agent_prompt,
+            draft_update_prompt,
         )
 
     def _load_files(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -118,12 +125,19 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
             logger.info(f"Processing first batch of documents: {len(first_batch)} of {len(documents)}")
 
             agent_msg = (
-                SystemMessage(content=self._get_agent_prompt())
+                SystemMessage(content=self.agent_prompt)
                 if use_system_message
-                else HumanMessage(content=self._get_agent_prompt())
+                else HumanMessage(content=self.agent_prompt)
             )
 
-            human_prompt = self._create_human_prompt(documents, first_batch)
+            human_prompt = self._create_human_prompt(
+                documents=documents,
+                batch=first_batch,
+                processed_count=0,
+                message_type="create",
+                current_description=None,
+                draft_update_prompt=self.draft_update_prompt,
+            )
             messages = [agent_msg, HumanMessage(content=human_prompt)]
 
             response = llm.invoke(messages)
@@ -290,38 +304,37 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
     ) -> List[Union[SystemMessage, HumanMessage]]:
         """Create messages for updating the draft"""
         agent_msg = (
-            SystemMessage(content=self._get_agent_prompt())
-            if use_system_message
-            else HumanMessage(content=self._get_agent_prompt())
+            SystemMessage(content=self.agent_prompt) if use_system_message else HumanMessage(content=self.agent_prompt)
         )
 
-        # Calculate remaining documents after this batch
+        human_prompt = self._create_human_prompt(
+            documents, batch, processed_count, "update", current_description, self.draft_update_prompt
+        )
+
+        return [agent_msg, HumanMessage(content=human_prompt)]
+
+    def _create_human_prompt(
+        self,
+        documents: List[Document],
+        batch: List[Document],
+        processed_count: int,
+        message_type: MESSAGE_TYPE,
+        current_description: str,
+        draft_update_prompt: str,
+    ) -> str:
+        """Create human prompt for document processing"""
         remaining_after_batch = len(documents) - (processed_count + len(batch))
         more_files = remaining_after_batch > 0
 
         formatted_docs = self.doc_processor.format_docs_for_prompt(batch)
 
-        human_prompt = (
-            f"Based on the following PROJECT FILES, update the DESIGN DOCUMENT.\n"
-            f"{'There will be more files to analyze after this batch.' if more_files else ''}\n\n"
-            f"CURRENT DESIGN DOCUMENT:\n{current_description}\n\n"
-            f"PROJECT FILES:\n{formatted_docs}"
-        )
-
-        return [agent_msg, HumanMessage(content=human_prompt)]
-
-    def _create_human_prompt(self, documents: List[Document], batch: List[Document]) -> str:
-        """Create human prompt for document processing"""
-        remaining_after_batch = len(documents) - len(batch)
-        more_files = remaining_after_batch > 0
-
-        formatted_docs = self.doc_processor.format_docs_for_prompt(batch)
-
         return (
-            f"Based on the following PROJECT FILES, create the DESIGN DOCUMENT.\n"
+            f"Based on the following PROJECT FILES, {message_type} the {draft_update_prompt}.\n"
             f"{'There will be more files to analyze after this batch.' if more_files else ''}\n\n"
-            f"CURRENT DESIGN DOCUMENT:\n\n"
-            f"PROJECT FILES:\n{formatted_docs}"
+            + (  # noqa: W503
+                f"CURRENT {draft_update_prompt}:\n{current_description}\n\n" if current_description else ""
+            )
+            + f"PROJECT FILES:\n{formatted_docs}"  # noqa: W503
         )
 
     def _get_editor_prompt(self) -> str:
@@ -352,68 +365,3 @@ You are an expert at cleaning up broken and, malformatted, markdown text, for ex
 INPUT:
 
     """
-
-    def _get_agent_prompt(self) -> str:
-        return """# IDENTITY and PURPOSE
-
-You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components.
-
-# GOAL
-
-Given a PROJECT FILES and CURRENT DESIGN DOCUMENT, provide a well written, detailed project design document that will be use later for threat modelling.
-
-# STEPS
-
-- Take a step back and think step-by-step about how to achieve the best possible results by following the steps below.
-
-- Think deeply about the nature and meaning of the input for 28 hours and 12 minutes.
-
-- Create a virtual whiteboard in you mind and map out all the important concepts, points, ideas, facts, and other information contained in the input.
-
-- Appreciate the fact that each company is different. Fresh startup can have bigger risk appetite then already established Fortune 500 company.
-
-- If CURRENT DESIGN DOCUMENT is not empty - it means that draft of this document was created in previous interactions with LLM using previous batch of PROJECT FILES. In such case update CURRENT DESIGN DESCRIPTION with new information that you get from current PROJECT FILES. In case CURRENT DESIGN DESCRIPTION is empty it means that you get first batch of PROJECT FILES
-
-- PROJECT FILES will contain typical files that can be found in github repository. Those will be configuration, scripts, README, production code and testing code, etc.
-
-- Take the input provided and create a section called BUSINESS POSTURE, determine what are business priorities and goals that idea or project is trying to solve. Give most important business risks that need to be addressed based on priorities and goals.
-
-- Under that, create a section called SECURITY POSTURE, identify and list all existing security controls, and accepted risks for project. Focus on secure software development lifecycle and deployment model. Prefix security controls with 'security control', accepted risk with 'accepted risk'. Withing this section provide list of recommended security controls, that you think are high priority to implement and wasn't mention in input. Under that but still in SECURITY POSTURE section provide list of security requirements that are important for idea or project in question. Include topics: authentication, authorization, input validation, cryptography. For each existing security control point out, where it's implemented or described.
-
-- Under that, create a section called DESIGN. Use that section to provide well written, detailed design document including diagram.
-
-- In DESIGN section, create subsection called C4 CONTEXT and provide mermaid diagram that will represent a project context diagram showing project as a box in the centre, surrounded by its users and the other systems/projects that it interacts with.
-
-- Under that, in C4 CONTEXT subsection, create table that will describe elements of context diagram. Include columns: 1. Name - name of element; 2. Type - type of element; 3. Description - description of element; 4. Responsibilities - responsibilities of element; 5. Security controls - security controls that will be implemented by element.
-
-- Under that, In DESIGN section, create subsection called C4 CONTAINER and provide mermaid diagram that will represent a container diagram. In case project is very simple - containers diagram might be only extension of C4 CONTEXT diagram. In case project is more complex it should show the high-level shape of the architecture and how responsibilities are distributed across it. It also shows the major technology choices and how the containers communicate with one another.
-
-- Under that, in C4 CONTAINER subsection, create table that will describe elements of container diagram. Include columns: 1. Name - name of element; 2. Type - type of element; 3. Description - description of element; 4. Responsibilities - responsibilities of element; 5. Security controls - security controls that will be implemented by element.
-
-- Under that, In DESIGN section, create subsection called DEPLOYMENT and provide information how project is deployed into target environment. Project might be deployed into multiply different deployment architectures. First list all possible solutions and pick one to descried in details. Include mermaid diagram to visualize deployment. A deployment diagram allows to illustrate how instances of software systems and/or containers in the static model are deployed on to the infrastructure within a given deployment environment.
-
-- Under that, in DEPLOYMENT subsection, create table that will describe elements of deployment diagram. Include columns: 1. Name - name of element; 2. Type - type of element; 3. Description - description of element; 4. Responsibilities - responsibilities of element; 5. Security controls - security controls that will be implemented by element.
-
-- Under that, In DESIGN section, create subsection called BUILD and provide information how project is build and publish. Focus on security controls of build process, e.g. supply chain security, build automation, security checks during build, e.g. SAST scanners, linters, etc. Project can be vary, some might not have any automated build system and some can use CI environments like GitHub Workflows, Jankins, and others. Include diagram that will illustrate build process, starting with developer and ending in build artifacts.
-
-- Under that, create a section called RISK ASSESSMENT, and answer following questions: What are critical business process we are trying to protect? What data we are trying to protect and what is their sensitivity?
-
-- Under that, create a section called QUESTIONS & ASSUMPTIONS, list questions that you have and the default assumptions regarding BUSINESS POSTURE, SECURITY POSTURE and DESIGN.
-
-# OUTPUT INSTRUCTIONS
-
-- Output in the format above only using valid Markdown.
-
-- Do not use bold or italic formatting in the Markdown (no asterisks).
-
-- Do not complain about anything, just do what you're told.
-
-# INPUT FORMATTING
-
-- You will get PROJECT FILES - batch of projects files that fits into context window
-
-- CURRENT DESIGN DOCUMENT - document that was created in previous interactions with LLM based on previous batches of project files
-
-# INPUT:
-
-        """

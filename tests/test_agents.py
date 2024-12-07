@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from pathlib import Path
+from typing import List
 from unittest.mock import MagicMock, Mock
 
 import pytest
@@ -29,6 +30,7 @@ class AppConfigTest:
     editor_max_turns_count: int = 3
     dry_run: bool = False
     node_path = "/usr/bin/node"
+    agent_prompt_type = "sec-design"
 
 
 @pytest.fixture
@@ -220,14 +222,14 @@ def test_update_draft_with_new_docs(llm_provider):
 
 
 def test_update_draft_condition_complete_docs():
-    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None)
+    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None, None, None)
     state = {"splitted_docs": [1, 2, 3], "processed_docs_count": 3}
     result = agent._update_draft_condition(state)
     assert result == GraphNodeType.MARKDOWN_VALIDATOR.value
 
 
 def test_update_draft_condition_more_docs():
-    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None)
+    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None, None, None)
     state = {"splitted_docs": [1, 2, 3], "processed_docs_count": 2}
     result = agent._update_draft_condition(state)
     assert result == GraphNodeType.UPDATE_DRAFT.value
@@ -244,6 +246,8 @@ def test_markdown_validator_with_valid_markdown(markdown_validator):
         markdown_validator=markdown_validator,
         doc_processor=None,
         doc_filter=None,
+        agent_prompt=None,
+        draft_update_prompt=None,
     )
 
     state = {"sec_repo_doc": "Valid Markdown Content"}
@@ -264,6 +268,8 @@ def test_markdown_validator_with_invalid_markdown(markdown_validator):
         markdown_validator=markdown_validator,
         doc_processor=None,
         doc_filter=None,
+        agent_prompt=None,
+        draft_update_prompt=None,
     )
 
     state = {"sec_repo_doc": "Invalid Markdown Content"}
@@ -275,14 +281,14 @@ def test_markdown_validator_with_invalid_markdown(markdown_validator):
 
 
 def test_markdown_error_condition_with_error_and_max_turns():
-    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None)
+    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None, None, None)
     state = {"sec_repo_doc_validation_error": "Error", "editor_turns_count": 3}
     result = agent._markdown_error_condition(state)
     assert result == "__end__"
 
 
 def test_markdown_error_condition_with_error_and_less_than_max_turns():
-    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None)
+    agent = CreateProjectSecurityDesignAgent(None, None, None, 3, None, None, None, None, None)
     state = {"sec_repo_doc_validation_error": "Error", "editor_turns_count": 2}
     result = agent._markdown_error_condition(state)
     assert result == GraphNodeType.EDITOR.value
@@ -315,3 +321,56 @@ def test_build_graph(llm_provider):
 
     graph = agent.build_graph()
     assert graph
+
+
+@pytest.mark.parametrize(
+    "message_type, documents, batch,current_description,processed_count,update_draft_prompt,",
+    [
+        ("create", [Document("test1"), Document("test2")], [Document("test1")], "current desc", 0, "DESIGN DOCUMENT"),
+        (
+            "update",
+            [Document("test1"), Document("test2"), Document("test3")],
+            [Document("test1")],
+            "current desc",
+            1,
+            "DESIGN DOCUMENT",
+        ),
+        (
+            "create",
+            [Document("test1"), Document("test2")],
+            [Document("test1"), Document("test2")],
+            None,
+            0,
+            "DESIGN DOCUMENT",
+        ),
+    ],
+)
+def test_create_human_prompt(
+    llm_provider,
+    message_type: str,
+    documents: List[Document],
+    batch: List[Document],
+    current_description: str,
+    processed_count: int,
+    update_draft_prompt: str,
+):
+    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+
+    ret = agent._create_human_prompt(
+        documents, batch, processed_count, message_type, current_description, update_draft_prompt
+    )
+
+    ret_by_lines = ret.splitlines()
+
+    assert ret_by_lines[0] == f"Based on the following PROJECT FILES, {message_type} the DESIGN DOCUMENT."
+    assert ret_by_lines[1] == (
+        "There will be more files to analyze after this batch." if len(documents) > len(batch) else ""
+    )
+
+    lines = 0
+    if current_description:
+        assert ret_by_lines[3] == "CURRENT DESIGN DOCUMENT:"
+        assert ret_by_lines[4] == current_description
+        lines = 3
+
+    assert ret_by_lines[3 + lines] == "PROJECT FILES:"

@@ -23,6 +23,8 @@ class BaseAgent(ABC):
         markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
+        agent_prompt: str,
+        draft_update_prompt: str,
     ):
         self.llm_provider = llm_provider
         self.text_splitter = text_splitter
@@ -31,6 +33,8 @@ class BaseAgent(ABC):
         self.max_editor_turns_count = max_editor_turns_count
         self.doc_processor = doc_processor
         self.doc_filter = doc_filter
+        self.agent_prompt = agent_prompt
+        self.draft_update_prompt = draft_update_prompt
 
     @abstractmethod
     def build_graph(self) -> CompiledStateGraph:

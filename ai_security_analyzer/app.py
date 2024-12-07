@@ -153,6 +153,12 @@ def parse_arguments() -> AppConfig:
             "and based on model context window"
         ),
     )
+    agent_group.add_argument(
+        "--agent-prompt-type",
+        choices=["sec-design", "threat-modeling"],
+        default="sec-design",
+        help="Prompt to use in agent (default: sec-design)",
+    )
 
     # Editor configuration
     editor_group = parser.add_argument_group("Editor Configuration")
