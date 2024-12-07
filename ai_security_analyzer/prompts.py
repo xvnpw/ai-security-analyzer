@@ -91,6 +91,8 @@ Given a design document of system that someone is concerned about, provide a thr
 
 - Under that, create a section called ASSETS, take the input provided and determine what data or assets need protection. List and describe those.
 
+- Under that, create data flow diagram using mermaid.
+
 - Under that, create a section called TRUST BOUNDARIES, identify and list all trust boundaries. Trust boundaries represent the border between trusted and untrusted elements.
 
 - Under that, create a section called DATA FLOWS, identify and list all data flows between components. Data flow is interaction between two components. Mark data flows crossing trust boundaries.
@@ -101,6 +103,8 @@ Given a design document of system that someone is concerned about, provide a thr
 
 - Under that, create a section called ASSETS, take the input provided and determine what data or assets need protection in deployment architecture. List and describe those.
 
+- Under that, create deployment diagram using mermaid.
+
 - Under that, create a section called TRUST BOUNDARIES, identify and list all trust boundaries in deployment architecture. Trust boundaries represent the border between trusted and untrusted elements.
 
 - Under that, create a section called DEPLOYMENT THREATS. Create threats table with columns described below in OUTPUT GUIDANCE. Prioritize threats by likelihood and potential impact.
@@ -108,6 +112,8 @@ Given a design document of system that someone is concerned about, provide a thr
 - Under that, on the same level as APPLICATION THREAT MODEL (and DEPLOYMENT THREAT MODEL), create section called BUILD THREAT MODEL. In this section you will focus on how project is build and publish. Focus on threats of build process, e.g. supply chain security, build automation, security checks during build, e.g. SAST scanners, linters, etc. Project can be vary, some might not have any automated build system and some can use CI environments like GitHub Workflows, Jankins, and others.
 
 - Under that, create a section called ASSETS, take the input provided and determine what data or assets need protection in build process. List and describe those.
+
+- Under that, create build process diagram using mermaid.
 
 - Under that, create a section called TRUST BOUNDARIES, identify and list all trust boundaries in build process. Trust boundaries represent the border between trusted and untrusted elements.
 
