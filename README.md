@@ -26,13 +26,13 @@
 ## Features
 
 - 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
-- 📝 **Automated Documentation Generation**: Generates comprehensive security design documents.
-- 📋 **Multiple Analysis Types**: Supports different types of security analysis including security design documentation and threat modeling
+- 📝 **Automated Documentation Generation**: Generates comprehensive security design and threat modeling documents.
 - 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
 - 🔄 **Multi-Project Support**: Supports Python, Go, and generic project types.
 - 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
+- 🎯 **Flexible Prompt Types**: Choose between different prompt types like security design and threat modeling for your documentation needs.
 - 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
-- 🎯 **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
+- 🎛️ **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
 - 🌐 **Cross-Platform Compatibility**: Runs on Windows, macOS, and Linux.
 
 ## Prerequisites
@@ -144,11 +144,11 @@ The application follows these high-level steps:
 2. **Load Project Files**: Loads files from the specified target directory, applying include/exclude rules.
 3. **Apply Filters**: Sorts and filters documents based on specified keywords and patterns.
 4. **Split into Chunks**: Splits documents into smaller chunks that fit within the LLM's context window.
-5. **Create Initial Draft**: Uses the LLM to generate an initial security design document based on the first batch of documents.
+5. **Create Initial Draft**: Uses the LLM to generate an initial security document based on the first batch of documents.
 6. **Process More Docs**: Iteratively updates the draft by processing additional document batches.
 7. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
 8. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
-9. **Completion**: Finalizes the security design document.
+9. **Completion**: Finalizes the security documentation.
 
 ## Configuration
 
@@ -164,7 +164,7 @@ The application accepts various command-line arguments to tailor its behavior.
 
 - `-t`, `--target-dir`: **Required**. Target directory containing the repository.
 - `-p`, `--project-type`: Type of project (`python`, `generic`, `go`). Default is `python`.
-- `-o`, `--output-file`: Output file for the security design document. Default is `stdout`.
+- `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
 - `--exclude`: Comma-separated list of patterns to exclude from analysis (e.g., `LICENSE,**/tests/**`).
 - `--exclude-mode`: How to handle the exclude patterns (`add` to add to default excludes, `override` to replace). Default is `add`.
 - `--include`: Comma-separated list of patterns to include in the analysis.
@@ -177,11 +177,11 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--agent-provider`: LLM provider for the agent (`openai`, `openrouter`, `anthropic`). Default is `openai`.
 - `--agent-model`: Model name for the agent. Default is `gpt-4o`.
 - `--agent-temperature`: Sampling temperature for the agent model (between `0` and `1`). Default is `0`.
+- `--agent-preamble-enabled`: Enable preamble in the output.
+- `--agent-preamble`: Preamble text added to the beginning of the output.
 - `--agent-prompt-type`: Prompt to use in agent (default: `sec-design`). Options are:
   - `sec-design`: Generate a security design document for the project.
   - `threat-modeling`: Perform threat modeling for the project.
-- `--agent-preamble-enabled`: Enable preamble in the output.
-- `--agent-preamble`: Preamble text added to the beginning of the output.
 - `--files-context-window`: Maximum token size for LLM context window. Automatically determined if not set.
 - `--files-chunk-size`: Chunk size in tokens for splitting files. Automatically determined if not set.
 
