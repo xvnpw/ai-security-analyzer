@@ -11,7 +11,7 @@
   [![GitHub release](https://img.shields.io/github/release/xvnpw/ai-security-analyzer.svg)](https://github.com/xvnpw/ai-security-analyzer/releases)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-  🤖 **AI Security Analyzer** is a powerful tool that leverages AI to automatically generate comprehensive security design documentation for your projects.
+   🤖 **AI Security Analyzer** is a powerful tool that leverages AI to automatically generate comprehensive security documentation for your projects, including security design and threat modeling.
 
   **🎥 Demo:**
 
@@ -21,12 +21,13 @@
 
 ## Overview
 
-**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security design documentation. It supports multiple project types and utilizes advanced language models (LLMs) to create insightful security design documents tailored to your project's specific needs.
+**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types including security design documentation and threat modeling. The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
 
 ## Features
 
 - 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
 - 📝 **Automated Documentation Generation**: Generates comprehensive security design documents.
+- 📋 **Multiple Analysis Types**: Supports different types of security analysis including security design documentation and threat modeling
 - 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
 - 🔄 **Multi-Project Support**: Supports Python, Go, and generic project types.
 - 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
@@ -176,6 +177,9 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--agent-provider`: LLM provider for the agent (`openai`, `openrouter`, `anthropic`). Default is `openai`.
 - `--agent-model`: Model name for the agent. Default is `gpt-4o`.
 - `--agent-temperature`: Sampling temperature for the agent model (between `0` and `1`). Default is `0`.
+- `--agent-prompt-type`: Prompt to use in agent (default: `sec-design`). Options are:
+  - `sec-design`: Generate a security design document for the project.
+  - `threat-modeling`: Perform threat modeling for the project.
 - `--agent-preamble-enabled`: Enable preamble in the output.
 - `--agent-preamble`: Preamble text added to the beginning of the output.
 - `--files-context-window`: Maximum token size for LLM context window. Automatically determined if not set.
@@ -232,6 +236,15 @@ poetry run python ai_security_analyzer/app.py \
     --agent-model claude-3-5-sonnet-20240620 \
     --editor-provider anthropic \
     --editor-model claude-3-5-sonnet-20240620
+```
+
+### Generate Threat Model
+
+```bash
+poetry run python ai_security_analyzer/app.py \
+    -t /path/to/your/project \
+    -o threat_model.md \
+    --agent-prompt-type threat-modeling
 ```
 
 ### Dry Run Mode
