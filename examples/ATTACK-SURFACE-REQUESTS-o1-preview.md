@@ -1,314 +1,536 @@
-# Threat Model
+# Attack Surface Analysis for `Requests` Library
 
 ## Attack Surface Identification
 
-1. **HTTP Requests Handling**
-   - **Description:** The library provides the capability to send HTTP requests to arbitrary URLs specified by the user.
-   - **Components:**
-     - Methods like `requests.get()`, `requests.post()`, etc., which accept URLs and parameters from the user.
-   - **Implementation:**
-     - Located in `src/requests/api.py`, `src/requests/adapters.py`, `src/requests/sessions.py`.
+### Components and Entry Points
 
-2. **HTTPS Certificate Verification**
-   - **Description:** Handling of SSL/TLS certificate verification.
-   - **Components:**
-     - Ability to disable verification using `verify=False`, which can lead to security issues.
-   - **Implementation:**
-     - SSL/TLS handling is primarily in `src/requests/certs.py`, `src/requests/sessions.py`, `src/requests/adapters.py`.
+1. **HTTP Request Handling API**
 
-3. **Authentication Mechanisms**
-   - **Description:** Support for Basic, Digest, and Proxy authentication methods.
-   - **Components:**
-     - Authentication classes and the `auth` parameter in request methods.
-   - **Implementation:**
-     - Located in `src/requests/auth.py`.
+   - **Description**: The `requests` library provides functions and classes for making HTTP requests.
+   - **Entry Points**:
+     - Functions like `requests.get`, `requests.post`, `requests.put`, etc.
+     - Classes such as `Session`, `Request`, `PreparedRequest`.
+   - **Implementation Details**:
+     - Implemented in `src/requests/api.py`, `src/requests/models.py`, `src/requests/sessions.py`.
 
-4. **Proxy Configuration and Handling**
-   - **Description:** Allows the use of HTTP and SOCKS proxies, including environment-based configurations.
-   - **Components:**
-     - Proxy settings via parameters or environment variables.
-   - **Implementation:**
-     - Found in `src/requests/utils.py`, `src/requests/sessions.py`.
+2. **URL Parsing and Handling**
 
-5. **Cookie Handling**
-   - **Description:** Management of cookies from server responses and user-specified cookies.
-   - **Components:**
-     - CookieJar handling, setting, and extraction of cookies.
-   - **Implementation:**
-     - Located in `src/requests/cookies.py`.
+   - **Description**: Processing and sanitizing user-provided URLs.
+   - **Potential Vulnerabilities**:
+     - Malformed or malicious URLs leading to SSRF, open redirects, or information disclosure.
+   - **Implementation Details**:
+     - URL parsing in `src/requests/utils.py`, `src/requests/models.py`.
 
-6. **HTTP Redirection Handling**
-   - **Description:** Automatic following of HTTP redirects.
-   - **Components:**
-     - Redirect logic that may inadvertently expose sensitive data.
-   - **Implementation:**
-     - Managed in `src/requests/sessions.py`.
+3. **SSL/TLS Connections and Certificate Verification**
 
-7. **Custom SSL Contexts and Default SSL Context**
-   - **Description:** Introduction of default SSL context and ability to use system default certificates.
-   - **Components:**
+   - **Description**: Handling secure HTTP connections, SSL context configuration, certificate verification.
+   - **Components**:
      - SSL context creation and configuration.
-   - **Implementation:**
-     - Found in `src/requests/adapters.py`.
+     - Certificate verification logic.
+     - Handling of the `verify` parameter.
+     - Custom certificate authorities via `certifi`.
+   - **Potential Vulnerabilities**:
+     - Insecure SSL defaults.
+     - Bypassing certificate verification.
+     - Vulnerable SSL/TLS protocols or ciphersuites.
+   - **Implementation Details**:
+     - `src/requests/certs.py`: provides default CA bundle.
+     - `src/requests/adapters.py`: `cert_verify` method.
+     - SSL context usage in `src/requests/adapters.py`.
 
-8. **Error and Exception Handling**
-   - **Description:** Handling of exceptions and errors, which might leak sensitive data.
-   - **Components:**
-     - Exception classes and error messages.
-   - **Implementation:**
-     - Located in `src/requests/exceptions.py`.
+4. **Authentication Mechanisms**
 
-9. **Security Policy and Disclosure Process**
-   - **Description:** Guidelines for vulnerability disclosure and handling.
-   - **Components:**
-     - Security reporting instructions.
-   - **Implementation:**
-     - Documented in `.github/SECURITY.md` and `docs/community/vulnerabilities.rst`.
+   - **Description**: Handling HTTP authentication methods like Basic, Digest, and Proxy authentication.
+   - **Components**:
+     - Basic Auth (`HTTPBasicAuth`)
+     - Digest Auth (`HTTPDigestAuth`)
+     - Proxy Authentication (`HTTPProxyAuth`)
+   - **Potential Vulnerabilities**:
+     - Credentials leakage in logs or error messages.
+     - Insecure storage or handling of credentials.
+     - Reuse of authentication headers in redirects.
+   - **Implementation Details**:
+     - Auth handlers in `src/requests/auth.py`.
+     - Authorization header management in `src/requests/adapters.py`, `src/requests/sessions.py`.
 
-10. **Session Objects and State Management**
-    - **Description:** Maintenance of state across requests, including cookies and authentication headers.
-    - **Components:**
-      - `Session` objects and their state management logic.
-    - **Implementation:**
-      - Located in `src/requests/sessions.py`.
+5. **Redirect Handling**
 
-11. **Third-Party Dependencies Handling**
-    - **Description:** Management of external dependencies which may introduce vulnerabilities.
-    - **Components:**
-      - Dependencies like `urllib3`, `idna`, `chardet`/`charset_normalizer`, `certifi`.
-    - **Implementation:**
-      - Specified in `setup.py` and `setup.cfg`.
+   - **Description**: Processing HTTP redirects and maintaining session state.
+   - **Potential Vulnerabilities**:
+     - Redirection loops.
+     - Leaking of sensitive headers (e.g., `Authorization`) during redirects.
+     - Open redirects leading to phishing attacks.
+   - **Implementation Details**:
+     - Redirection logic in `src/requests/sessions.py` (`SessionRedirectMixin` class).
+     - Max redirects controlled by `Session.max_redirects`.
+     - Authentication stripping in `src/requests/sessions.py`.
 
-12. **Handling of Encoding and Content Decoding**
-    - **Description:** Automatic content decoding and handling of different content encodings.
-    - **Components:**
-      - Decoding mechanisms that might be exploited.
-    - **Implementation:**
-      - Found in `src/requests/utils.py`, `src/requests/models.py`.
+6. **Cookie Management**
 
-13. **MITM and SSL/TLS Configuration Issues**
-    - **Description:** Risks associated with disabled SSL verification and misconfigured SSL contexts.
-    - **Components:**
-      - SSL verification settings.
-    - **Implementation:**
-      - Managed in `src/requests/sessions.py`, `src/requests/adapters.py`.
+   - **Description**: Handling cookies sent to and from servers.
+   - **Components**:
+     - CookieJar management.
+     - Domain and path scoping.
+     - Cookie setting and retrieval.
+   - **Potential Vulnerabilities**:
+     - Cookie injection attacks.
+     - Insecure persistence of cookies.
+   - **Implementation Details**:
+     - Cookie handling in `src/requests/cookies.py`.
+     - Cookie extraction and insertion in `src/requests/models.py`, `src/requests/sessions.py`.
 
-14. **User-Agent and Headers Manipulation**
-    - **Description:** Potential leakage of environment details through headers.
-    - **Components:**
-      - Default headers including the User-Agent string.
-    - **Implementation:**
-      - Located in `src/requests/utils.py`.
+7. **Proxy Configuration and Handling**
 
-15. **Multipart File Uploads**
-    - **Description:** Handling of file uploads which could lead to arbitrary file inclusion or data leaks.
-    - **Components:**
-      - `files` parameter in request methods.
-    - **Implementation:**
-      - Managed in `src/requests/models.py`.
+   - **Description**: Support for using HTTP proxies, including SOCKS proxies.
+   - **Potential Vulnerabilities**:
+     - Proxy credential leakage.
+     - Insecure default proxy settings.
+     - Transparent redirection of traffic to malicious proxies.
+   - **Implementation Details**:
+     - Proxy handling in `src/requests/sessions.py`, `src/requests/adapters.py`, `src/requests/utils.py`.
+     - Proxy URL parsing and usage in `src/requests/adapters.py`.
 
-16. **Handling of Unverified HTTP Responses**
-    - **Description:** Parsing and processing of HTTP responses without proper validation.
-    - **Components:**
-      - Response handling logic.
-    - **Implementation:**
-      - Located in `src/requests/models.py`.
+8. **Header Processing**
 
-17. **Vulnerabilities Mentioned in HISTORY.md**
-    - **Description:** Previous security vulnerabilities provide insights into potential issues.
-    - **Components:**
-      - Historical CVEs and security fixes, such as CVE-2024-35195, CVE-2023-32681.
-    - **Implementation:**
-      - Documented in `HISTORY.md`.
+   - **Description**: Managing HTTP headers in requests and responses.
+   - **Potential Vulnerabilities**:
+     - Injection attacks via headers.
+     - Header smuggling.
+     - Reuse or leakage of sensitive headers.
+   - **Implementation Details**:
+     - Header validation in `src/requests/utils.py` (`check_header_validity` function).
+     - Header manipulation in `src/requests/models.py`.
 
-18. **Test Servers and Testing Utilities**
-    - **Description:** Inclusion of test server implementations and testing utilities that may introduce vulnerabilities if misused.
-    - **Components:**
-      - Test servers like `Server` and `TLSServer` classes used for testing purposes.
-    - **Implementation:**
-      - Defined in `tests/testserver/server.py` and used in test files such as `tests/test_testserver.py`.
+9. **File Handling and Multipart Form Data**
 
-19. **Testing Code and Configuration**
-    - **Description:** Test scripts and configuration files that could expose sensitive information or be exploited if deployed in production.
-    - **Components:**
-      - Test files (`tests/test_*.py`), configuration files (`pyproject.toml`, `setup.cfg`), and documentation files.
-    - **Implementation:**
-      - Located in the `tests` directory and `docs` directory.
+   - **Description**: Supporting file uploads and encoding of multipart form data.
+   - **Potential Vulnerabilities**:
+     - Unsafe file handling leading to resource exhaustion.
+     - Injection of malicious content via uploaded files.
+   - **Implementation Details**:
+     - Multipart encoding in `src/requests/models.py` (`prepare_body` method).
+     - File name and content handling in `src/requests/models.py`.
+
+10. **Third-Party Dependencies**
+
+    - **Description**: Use of external libraries like `urllib3`, `chardet`, `charset_normalizer`, `idna`, and `certifi`.
+    - **Potential Vulnerabilities**:
+      - Outdated or vulnerable dependencies.
+      - Dependency confusion attacks.
+    - **Implementation Details**:
+      - Dependencies declared in `setup.cfg`.
+      - Imported in modules like `src/requests/compat.py`, `src/requests/packages.py`, `src/requests/__init__.py`.
+
+11. **Input Data Handling**
+
+    - **Description**: Handling of data provided by users for request bodies, parameters, headers.
+    - **Potential Vulnerabilities**:
+      - Injection attacks via untrusted data.
+      - Buffer overflows or memory exhaustion with large inputs.
+    - **Implementation Details**:
+      - Data encoding and parameter handling in `src/requests/models.py`, `src/requests/utils.py`.
+
+12. **CA Bundle Management**
+
+    - **Description**: Use of `certifi` package to manage CA certificates for SSL/TLS verification.
+    - **Potential Vulnerabilities**:
+      - Outdated or compromised CA certificates may not verify malicious certificates.
+    - **Implementation Details**:
+      - Certificate management relies on `certifi` dependency specified in `setup.cfg` and discussed in documentation `docs/user/advanced.rst`.
+
+13. **Test Utilities Exposure**
+
+    - **Description**: Inclusion of testing utilities and servers in the codebase.
+    - **Potential Vulnerabilities**:
+      - If test code is accidentally included in production distributions, it could expose internal functions or create security vulnerabilities.
+    - **Implementation Details**:
+      - Test server code in `tests/test_lowlevel.py`, `tests/testserver/server.py`.
+      - Test configurations in `pyproject.toml`, `setup.cfg`.
 
 ## Threat Enumeration
 
-1. **Spoofing**
-   - **Threat:** An attacker could perform a man-in-the-middle (MITM) attack by redirecting HTTP/HTTPS requests to malicious servers, especially if SSL verification is disabled.
-   - **Exploitation:** If SSL verification is disabled (`verify=False`), attackers can intercept and redirect traffic, presenting fraudulent certificates.
+### 1. HTTP Request Handling API
 
-2. **Tampering**
-   - **Threat:** Unauthorized modification of HTTP/HTTPS response data.
-   - **Exploitation:** Without proper SSL/TLS verification, attackers can alter data in transit, modifying request parameters or responses.
+- **Threat**: **Tampering with Request Parameters**
+  - **Description**: Attackers could manipulate request parameters to inject malicious inputs.
+  - **Attack Vectors**: If unvalidated or improperly handled, parameters could be exploited (e.g., command injection).
+  - **Components**: `src/requests/models.py`, `src/requests/sessions.py`, `src/requests/api.py`
 
-3. **Repudiation**
-   - **Threat:** Users or attackers denying actions or transactions performed due to lack of proper logging or tracking.
-   - **Exploitation:** Improper reuse or failure to clear authentication headers could allow malicious actions without accountability.
+- **Threat**: **Information Disclosure via Error Messages**
+  - **Description**: Detailed error messages could leak sensitive information.
+  - **Attack Vectors**: Exceptions or tracebacks containing sensitive data.
+  - **Components**: `src/requests/exceptions.py`, `src/requests/models.py`
 
-4. **Information Disclosure**
-   - **Threat:** Leakage of sensitive data such as authentication tokens, cookies, or headers to unintended destinations.
-   - **Exploitation:** Improper handling of redirects (e.g., from HTTPS to HTTP) might send sensitive headers over insecure channels (e.g., CVE-2018-18074).
+### 2. URL Parsing and Handling
 
-5. **Denial of Service**
-   - **Threat:** Consumption of excessive resources leading to service disruption.
-   - **Exploitation:** Attackers can send decompression bombs or large payloads, causing the client to exhaust memory during content decoding.
+- **Threat**: **Server-Side Request Forgery (SSRF)**
+  - **Description**: Crafting URLs that cause the application to make requests to internal resources.
+  - **Attack Vectors**: Supplying malicious URLs to access internal services.
+  - **Components**: `src/requests/models.py`, `src/requests/utils.py`
 
-6. **Elevation of Privilege**
-   - **Threat:** Gaining unauthorized access through flaws in authentication mechanisms.
-   - **Exploitation:** If authentication credentials are not properly isolated, attackers might hijack sessions or reuse credentials.
+- **Threat**: **Open Redirects**
+  - **Description**: Improper validation of redirect URLs leading to open redirects.
+  - **Attack Vectors**: Manipulated redirect location headers pointing to attacker-controlled URLs.
+  - **Components**: `src/requests/sessions.py` (`resolve_redirects` method)
 
-7. **Dependence on Vulnerable Dependencies**
-   - **Threat:** Introduction of security risks through outdated or vulnerable third-party libraries.
-   - **Exploitation:** Exploiting known vulnerabilities in dependencies like `urllib3`, `idna`, or `chardet` to compromise applications.
+### 3. SSL/TLS Connections and Certificate Verification
 
-8. **Insecure Proxy Configuration**
-   - **Threat:** Interception or redirection of traffic via malicious proxy settings.
-   - **Exploitation:** Attackers could manipulate proxy configurations, especially if environment variables are not properly sanitized.
+- **Threat**: **Man-in-the-Middle (MitM) Attacks via Insecure SSL Configuration**
+  - **Description**: Disabling SSL verification allows attackers to intercept and tamper with communications.
+  - **Attack Vectors**: Setting `verify=False`, accepting self-signed or invalid certificates.
+  - **Components**: `src/requests/adapters.py` (`cert_verify` method)
 
-9. **Cookie Leakage**
-   - **Threat:** Unauthorized access to cookies leading to session hijacking.
-   - **Exploitation:** Cookies sent to incorrect domains due to improper domain validation can expose session information.
+- **Threat**: **Man-in-the-Middle (MitM) Attacks via Outdated CA Certificates**
+  - **Description**: Attackers could exploit outdated or compromised CA certificates in the `certifi` package to intercept and decrypt communications.
+  - **Attack Vectors**: Applications using an outdated `certifi` package may trust malicious certificates.
+  - **Components**: `certifi` dependency, SSL verification processes.
 
-10. **Invalid SSL Contexts**
-    - **Threat:** Weakening of SSL/TLS security through misconfigured contexts.
-    - **Exploitation:** Use of weak cipher suites or improper SSL context setup can be exploited by attackers.
+### 4. Authentication Mechanisms
 
-11. **Header Injection**
-    - **Threat:** Injection of malicious headers into HTTP requests.
-    - **Exploitation:** User input used in headers without validation can lead to header injection attacks.
+- **Threat**: **Credential Leakage**
+  - **Description**: Credentials might be transmitted over insecure channels or logged.
+  - **Attack Vectors**: Sending credentials over HTTP instead of HTTPS, logging sensitive information.
+  - **Components**: `src/requests/auth.py`, `src/requests/adapters.py`
 
-12. **Insecure Test Server Configuration**
-    - **Threat:** Deployment of test server code in production environments leading to security vulnerabilities.
-    - **Exploitation:** Attackers could exploit test servers' simplified configurations, gaining unauthorized access or executing arbitrary code.
+- **Threat**: **Reusing Authentication Headers on Redirects**
+  - **Description**: Authentication headers might be sent to unintended hosts during redirects.
+  - **Attack Vectors**: Following redirects to different domains while maintaining `Authorization` headers.
+  - **Components**: `src/requests/sessions.py` (`should_strip_auth` method)
 
-13. **Sensitive Information Exposure in Test and Documentation Files**
-    - **Threat:** Leakage of sensitive data through test scripts, configuration, or documentation.
-    - **Exploitation:** Attackers may find hardcoded credentials, API keys, or internal endpoints in test codes and documentation files.
+### 5. Redirect Handling
+
+- **Threat**: **Authentication Header Leakage via Redirects**
+  - **Description**: Sensitive headers sent to untrusted domains.
+  - **Attack Vectors**: Not stripping `Authorization` headers on cross-domain redirects.
+  - **Components**: `src/requests/sessions.py`
+
+- **Threat**: **Redirection Loops Leading to Denial of Service**
+  - **Description**: Infinite redirect loops causing resource exhaustion.
+  - **Attack Vectors**: Handling of redirects without proper loop detection or limit.
+  - **Components**: `src/requests/sessions.py` (`max_redirects` parameter)
+
+### 6. Cookie Management
+
+- **Threat**: **Cookie Injection and Manipulation**
+  - **Description**: Attackers could inject or manipulate cookies to alter session state.
+  - **Attack Vectors**: Acceptance of cookies from untrusted sources, weak domain/path validation.
+  - **Components**: `src/requests/cookies.py`, `src/requests/sessions.py`
+
+### 7. Proxy Configuration and Handling
+
+- **Threat**: **Proxy Credential Exposure**
+  - **Description**: Proxy credentials could be exposed in logs or via insecure connections.
+  - **Attack Vectors**: Including credentials in proxy URLs, transmitting over insecure channels.
+  - **Components**: `src/requests/adapters.py`, `src/requests/sessions.py`
+
+- **Threat**: **Proxy Injection via Environment Variables**
+  - **Description**: Manipulating proxy settings via environment variables to redirect traffic.
+  - **Attack Vectors**: Untrusted environment variables leading to traffic redirection.
+  - **Components**: `src/requests/utils.py`
+
+### 8. Header Processing
+
+- **Threat**: **Header Injection**
+  - **Description**: Malicious data included in headers causing response splitting or smuggling.
+  - **Attack Vectors**: Not validating headers properly.
+  - **Components**: `src/requests/utils.py`, `src/requests/models.py`
+
+- **Threat**: **Sensitive Data in Headers**
+  - **Description**: Sensitive data included in headers sent over insecure channels.
+  - **Attack Vectors**: Headers containing tokens or credentials sent over HTTP.
+  - **Components**: `src/requests/models.py`, `src/requests/adapters.py`
+
+### 9. File Handling and Multipart Form Data
+
+- **Threat**: **Resource Exhaustion via Large File Uploads**
+  - **Description**: Sending extremely large files causing memory or disk exhaustion.
+  - **Attack Vectors**: Unbounded file size during multipart encoding.
+  - **Components**: `src/requests/models.py`, `src/requests/utils.py`
+
+### 10. Third-Party Dependencies
+
+- **Threat**: **Vulnerable Dependencies**
+  - **Description**: Using outdated or vulnerable libraries exposes the system to exploits.
+  - **Attack Vectors**: Vulnerabilities in `urllib3`, `chardet`, `idna`, `certifi`.
+  - **Components**: `src/requests/compat.py`, `src/requests/__init__.py`, `setup.cfg`
+
+- **Threat**: **Dependency Confusion**
+  - **Description**: Attackers supplying malicious packages with the same name as internal dependencies.
+  - **Attack Vectors**: Malicious packages uploaded to public repositories with higher version numbers.
+  - **Components**: Installation process via `setup.cfg`
+
+### 11. Input Data Handling
+
+- **Threat**: **Injection Attacks via Untrusted Input**
+  - **Description**: Unvalidated input leading to SQL injection, command injection.
+  - **Attack Vectors**: Malicious payloads in data, parameters.
+  - **Components**: `src/requests/models.py`, `src/requests/utils.py`
+
+### 12. CA Bundle Management
+
+- **Threat**: **Man-in-the-Middle (MitM) Attacks via Outdated CA Certificates**
+  - **Description**: Attackers could exploit outdated or compromised CA certificates in the `certifi` package to intercept and decrypt communications.
+  - **Attack Vectors**: Applications using an outdated `certifi` package may trust malicious certificates.
+  - **Components**: `certifi` dependency, SSL verification processes.
+
+### 13. Test Utilities Exposure
+
+- **Threat**: **Exposure of Test Server Utilities in Production Environment**
+  - **Description**: If test server code is included in the production package, attackers could exploit vulnerabilities in these test utilities.
+  - **Attack Vectors**: Inclusion of `tests/testserver/server.py` in production could expose unnecessary network interfaces.
+  - **Components**: `tests` directory, test server code.
 
 ## Impact Assessment
 
-1. **Spoofing**
-   - **Impact:** High - Compromises confidentiality and integrity.
-   - **Likelihood:** Medium-High, especially if users disable SSL verification.
+### Critical Severity
 
-2. **Tampering**
-   - **Impact:** High - Data integrity is compromised.
-   - **Likelihood:** Medium-High without enforced SSL verification.
+- **Man-in-the-Middle (MitM) Attacks via Insecure SSL Configuration**
+  - **Impact**: Compromise of confidentiality and integrity.
+  - **Likelihood**: High if SSL verification is disabled.
+  - **Existing Controls**: SSL verification enabled by default.
+  - **Severity**: **Critical**
 
-3. **Repudiation**
-   - **Impact:** Medium - Loss of accountability.
-   - **Likelihood:** Low-Medium.
+- **Dependency Confusion**
+  - **Impact**: Execution of malicious code during installation.
+  - **Likelihood**: Medium to High, depending on dependency management practices.
+  - **Existing Controls**: Use of standard package indices.
+  - **Severity**: **Critical**
 
-4. **Information Disclosure**
-   - **Impact:** High - Sensitive data may be exposed to unauthorized parties.
-   - **Likelihood:** Medium with improper redirect handling.
+### High Severity
 
-5. **Denial of Service**
-   - **Impact:** Medium-High - Affects availability.
-   - **Likelihood:** Low-Medium, depends on exposure.
+- **Man-in-the-Middle (MitM) Attacks via Outdated CA Certificates**
+  - **Impact**: Compromise of confidentiality and integrity through interception of encrypted communications.
+  - **Likelihood**: Medium to High if `certifi` is not regularly updated.
+  - **Existing Controls**: Users must update `certifi` to receive updated CA bundles.
+  - **Severity**: **High**
 
-6. **Elevation of Privilege**
-   - **Impact:** High - Unauthorized actions can be performed.
-   - **Likelihood:** Low-Medium.
+- **Credential Leakage**
+  - **Impact**: Disclosure of sensitive credentials.
+  - **Likelihood**: Medium, depends on usage patterns.
+  - **Existing Controls**: Secure handling recommended but depends on user implementation.
+  - **Severity**: **High**
 
-7. **Dependence on Vulnerable Dependencies**
-   - **Impact:** High - Could lead to critical vulnerabilities.
-   - **Likelihood:** Medium if dependencies are not kept up-to-date.
+- **Reusing Authentication Headers on Redirects**
+  - **Impact**: Credentials sent to unintended hosts.
+  - **Likelihood**: Medium
+  - **Existing Controls**: Stripping auth headers when redirecting to a different host.
+  - **Severity**: **High**
 
-8. **Insecure Proxy Configuration**
-   - **Impact:** High - Potential interception of all traffic.
-   - **Likelihood:** Medium.
+- **Vulnerable Dependencies**
+  - **Impact**: Introduction of known vulnerabilities.
+  - **Likelihood**: Medium to High
+  - **Existing Controls**: Specifying dependency versions in `setup.cfg`.
+  - **Severity**: **High**
 
-9. **Cookie Leakage**
-   - **Impact:** High - Enables session hijacking.
-   - **Likelihood:** Medium.
+- **Injection Attacks via Untrusted Input**
+  - **Impact**: Execution of arbitrary code or commands.
+  - **Likelihood**: Medium
+  - **Existing Controls**: User responsibility to sanitize inputs.
+  - **Severity**: **High**
 
-10. **Invalid SSL Contexts**
-    - **Impact:** High - Weakens SSL/TLS security.
-    - **Likelihood:** Medium.
+### Medium Severity
 
-11. **Header Injection**
-    - **Impact:** Medium-High - Can manipulate requests/responses.
-    - **Likelihood:** Low-Medium.
+- **Server-Side Request Forgery (SSRF)**
+  - **Impact**: Unauthorized access to internal resources.
+  - **Likelihood**: High if user input is not validated.
+  - **Severity**: **Medium**
 
-12. **Insecure Test Server Configuration**
-    - **Impact:** High - May lead to unauthorized access or code execution.
-    - **Likelihood:** Low - Test servers are typically not deployed to production, but misconfiguration can occur.
+- **Proxy Credential Exposure**
+  - **Impact**: Disclosure of proxy credentials.
+  - **Likelihood**: Medium
+  - **Severity**: **Medium**
 
-13. **Sensitive Information Exposure in Test and Documentation Files**
-    - **Impact:** High - Exposure of credentials or internal information.
-    - **Likelihood:** Low-Medium - Depends on code review and handling practices.
+- **Sensitive Data in Headers**
+  - **Impact**: Exposure of sensitive information over insecure channels.
+  - **Likelihood**: Medium
+  - **Severity**: **Medium**
+
+- **Cookie Injection and Manipulation**
+  - **Impact**: Session hijacking or manipulation.
+  - **Likelihood**: Medium
+  - **Severity**: **Medium**
+
+- **Resource Exhaustion via Large File Uploads**
+  - **Impact**: Denial of service.
+  - **Likelihood**: Medium
+  - **Severity**: **Medium**
+
+- **Exposure of Test Server Utilities in Production Environment**
+  - **Impact**: Potential unauthorized access or execution of code.
+  - **Likelihood**: Low; test code is typically not included in production packages.
+  - **Existing Controls**: Standard packaging excludes the `tests` directory.
+  - **Severity**: **Medium**
+
+### Low Severity
+
+- **Tampering with Request Parameters**
+  - **Impact**: Potential unauthorized actions.
+  - **Likelihood**: Medium
+  - **Severity**: **Low**
+
+- **Information Disclosure via Error Messages**
+  - **Impact**: Leakage of sensitive information.
+  - **Likelihood**: Low to Medium
+  - **Severity**: **Low**
+
+- **Redirection Loops Leading to Denial of Service**
+  - **Impact**: Resource exhaustion.
+  - **Likelihood**: Low to Medium
+  - **Severity**: **Low**
 
 ## Threat Ranking
 
-1. **Spoofing (MITM due to disabled SSL verification)**
-2. **Information Disclosure (Sensitive data leaked via redirects)**
-3. **Tampering (Modification of HTTPS responses)**
-4. **Dependence on Vulnerable Dependencies**
-5. **Insecure Test Server Configuration**
-6. **Sensitive Information Exposure in Test and Documentation Files**
-7. **Elevation of Privilege (Authentication mechanism flaws)**
-8. **Insecure Proxy Configuration**
-9. **Cookie Leakage**
-10. **Denial of Service (Resource exhaustion via decompression bombs)**
-11. **Invalid SSL Contexts**
-12. **Repudiation (Lack of logging or improper auth handling)**
-13. **Header Injection**
+1. **Critical**
+   - MitM via Insecure SSL Configuration
+   - Dependency Confusion
+
+2. **High**
+   - Man-in-the-Middle (MitM) Attacks via Outdated CA Certificates
+   - Credential Leakage
+   - Reusing Authentication Headers on Redirects
+   - Vulnerable Dependencies
+   - Injection Attacks via Untrusted Input
+
+3. **Medium**
+   - Server-Side Request Forgery (SSRF)
+   - Proxy Credential Exposure
+   - Sensitive Data in Headers
+   - Cookie Injection and Manipulation
+   - Resource Exhaustion via Large File Uploads
+   - Exposure of Test Server Utilities in Production Environment
+
+4. **Low**
+   - Tampering with Request Parameters
+   - Information Disclosure via Error Messages
+   - Redirection Loops Leading to Denial of Service
 
 ## Mitigation Recommendations
 
-1. **Spoofing**
-   - **Recommendation:** Enforce SSL certificate verification by default and discourage or deprecate the use of `verify=False`.
-   - **Implementation:** Update `src/requests/sessions.py` and `src/requests/adapters.py` to enforce SSL verification and add warnings when disabled.
+### Mitigation for **MitM via Insecure SSL Configuration**
 
-2. **Information Disclosure**
-   - **Recommendation:** Ensure sensitive headers like `Authorization` are not forwarded when redirecting from HTTPS to HTTP or to different domains.
-   - **Implementation:** Modify redirection logic in `src/requests/sessions.py` to strip sensitive headers appropriately.
+- **Recommendation**:
+  - Enforce SSL verification by default and discourage disabling it.
+  - Display prominent warnings when `verify=False` is used.
+  - Provide documentation on the risks of disabling SSL verification.
+- **Threats Addressed**: Man-in-the-Middle Attacks via Insecure SSL Configuration
+- **References**:
+  - [OWASP Transport Layer Protection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)
 
-3. **Tampering**
-   - **Recommendation:** Strengthen SSL/TLS verification and provide secure defaults.
-   - **Implementation:** Similar to recommendation 1; ensure SSL verification cannot be easily disabled.
+### Mitigation for **Dependency Confusion**
 
-4. **Dependence on Vulnerable Dependencies**
-   - **Recommendation:** Regularly update dependencies to secure versions and implement dependency checks.
-   - **Implementation:** Update `setup.py` and `setup.cfg` to require minimum secure versions and set up CI/CD checks for vulnerabilities.
+- **Recommendation**:
+  - Use explicit dependency version pinning and verify package authenticity.
+  - Regularly update dependencies to patched versions.
+  - Encourage the use of checksum verification for packages.
+- **Threats Addressed**: Dependency Confusion, Vulnerable Dependencies
+- **References**:
+  - [Best Practices for Dependency Management](https://owasp.org/www-project-top-ten/2017/A9_Using_Components_with_Known_Vulnerabilities)
 
-5. **Insecure Test Server Configuration**
-   - **Recommendation:** Ensure test server code is not included in production builds and is only used in testing environments.
-   - **Implementation:** Review build and deployment processes to exclude `tests` directory and validate deployment packages.
+### Mitigation for **Man-in-the-Middle (MitM) Attacks via Outdated CA Certificates**
 
-6. **Sensitive Information Exposure in Test and Documentation Files**
-   - **Recommendation:** Audit test scripts and documentation for hardcoded credentials or sensitive information before release.
-   - **Implementation:** Implement code review practices and use automated tools to scan for secrets in `tests/` and `docs/` directories.
+- **Recommendation**:
+  - Ensure the `certifi` package is regularly updated to include the latest trusted CA certificates.
+  - Provide guidance to users on the importance of keeping dependencies up to date.
+- **Threats Addressed**: Man-in-the-Middle (MitM) Attacks via Outdated CA Certificates
+- **References**:
+  - [OWASP Transport Layer Protection Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Protection_Cheat_Sheet.html)
+  - [Certifi Documentation](https://certifiio.readthedocs.io/)
 
-7. **Elevation of Privilege**
-   - **Recommendation:** Securely handle authentication credentials and isolate them between sessions.
-   - **Implementation:** Review `src/requests/auth.py` and `src/requests/sessions.py` to ensure proper credential management.
+### Mitigation for **Credential Leakage**
 
-8. **Insecure Proxy Configuration**
-   - **Recommendation:** Validate and sanitize proxy configurations, avoid insecure defaults.
-   - **Implementation:** Enhance proxy handling in `src/requests/utils.py` and `src/requests/sessions.py`.
+- **Recommendation**:
+  - Avoid logging sensitive data such as credentials.
+  - Ensure that credentials are only sent over secure channels (HTTPS).
+  - Implement checks to prevent sending credentials over HTTP.
+- **Threats Addressed**: Credential Leakage
+- **References**:
+  - [OWASP Authentication Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authentication_Cheat_Sheet.html)
 
-9. **Cookie Leakage**
-   - **Recommendation:** Properly scope cookies to their domains and paths, prevent them from being sent to unintended destinations.
-   - **Implementation:** Improve domain validation in `src/requests/cookies.py`.
+### Mitigation for **Reusing Authentication Headers on Redirects**
 
-10. **Denial of Service**
-    - **Recommendation:** Implement limits on content decoding sizes and detect potential decompression bombs.
-    - **Implementation:** Update `src/requests/models.py` to include size checks during decompression.
+- **Recommendation**:
+  - Ensure `Authorization` headers are stripped when redirecting to different hosts.
+  - Update `should_strip_auth` method to handle edge cases.
+- **Threats Addressed**: Reusing Authentication Headers on Redirects
+- **References**:
+  - [RFC 7235 Section 2.2](https://tools.ietf.org/html/rfc7235#section-2.2)
 
-11. **Invalid SSL Contexts**
-    - **Recommendation:** Validate SSL contexts and enforce strong cipher suites and protocols.
-    - **Implementation:** Adjust SSL context configuration in `src/requests/adapters.py`.
+### Mitigation for **Injection Attacks via Untrusted Input**
 
-12. **Repudiation**
-    - **Recommendation:** Promote proper logging and secure authentication handling.
-    - **Implementation:** Provide guidance in documentation and potentially add logging support.
+- **Recommendation**:
+  - Implement input validation and sanitization within the library where applicable.
+  - Encourage users to validate inputs before usage.
+- **Threats Addressed**: Injection Attacks via Untrusted Input
+- **References**:
+  - [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)
 
-13. **Header Injection**
-    - **Recommendation:** Sanitize all user-provided data used in headers.
-    - **Implementation:** Implement header validation in `src/requests/models.py` when setting headers.
+### Mitigation for **Server-Side Request Forgery (SSRF)**
+
+- **Recommendation**:
+  - Provide utilities or guidelines for validating and sanitizing URLs.
+  - Warn users about the risks of making requests to user-supplied URLs.
+- **Threats Addressed**: Server-Side Request Forgery (SSRF)
+- **References**:
+  - [OWASP SSRF Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html)
+
+### Mitigation for **Proxy Credential Exposure**
+
+- **Recommendation**:
+  - Avoid including credentials in proxy URLs.
+  - Support separate parameters or secure methods for proxy authentication.
+- **Threats Addressed**: Proxy Credential Exposure
+- **References**:
+  - [Secure Proxy Configuration Practices](https://www.owasp.org/index.php/Preventing_Proxy_Attacks)
+
+### Mitigation for **Sensitive Data in Headers**
+
+- **Recommendation**:
+  - Educate users on avoiding sending sensitive data in headers.
+  - Provide mechanisms to enforce secure transmission when sensitive headers are used.
+- **Threats Addressed**: Sensitive Data in Headers
+- **References**:
+  - [OWASP Secure Headers Project](https://owasp.org/www-project-secure-headers/)
+
+### Mitigation for **Cookie Injection and Manipulation**
+
+- **Recommendation**:
+  - Implement strict cookie handling policies.
+  - Sanitize cookie domains and paths.
+- **Threats Addressed**: Cookie Injection and Manipulation
+- **References**:
+  - [OWASP Cookie Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+
+### Mitigation for **Resource Exhaustion via Large File Uploads**
+
+- **Recommendation**:
+  - Implement configurable limits on file sizes.
+  - Stream file uploads to avoid memory exhaustion.
+- **Threats Addressed**: Resource Exhaustion via Large File Uploads
+- **References**:
+  - [OWASP Denial of Service Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Denial_of_Service_Cheat_Sheet.html)
+
+### Mitigation for **Exposure of Test Server Utilities in Production Environment**
+
+- **Recommendation**:
+  - Ensure that test code and utilities are excluded from production distributions.
+  - Review build and packaging processes to prevent accidental inclusion of test code.
+- **Threats Addressed**: Exposure of Test Server Utilities in Production Environment
+- **References**:
+  - [Secure Software Distribution](https://owasp.org/www-project-secure-software-distribution/)
+
+## QUESTIONS & ASSUMPTIONS
+
+- **Assumptions**:
+  - Users of the `requests` library are expected to handle input validation.
+  - SSL verification is enabled by default, but users can disable it.
+  - The library relies on third-party dependencies which are properly maintained.
+  - Logging practices are left to the discretion of library users.
+  - Test code and utilities are not included in production distributions.
+
+- **Questions**:
+  - Are there measures to prevent users from accidentally disabling SSL verification without understanding the risks?
+  - How does the library handle updates to third-party dependencies to address security vulnerabilities?
+  - Is there guidance provided to users on safe practices for handling authentication and sensitive data?
+  - What mechanisms are in place to sanitize or validate headers and cookies to prevent injection attacks?
+  - Are build and packaging processes reviewed to ensure test code is not included in production distributions?
+  - How are updates to the `certifi` package communicated to users to ensure CA certificates remain up to date?

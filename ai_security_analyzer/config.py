@@ -18,7 +18,7 @@ class AppConfig(BaseModel):
     verbose: bool = Field(default=False)
     debug: bool = Field(default=False)
 
-    agent_prompt_type: Literal["sec-design", "threat-modeling", "threat-modeling2", "attack-surface"] = Field(
+    agent_prompt_type: Literal["sec-design", "threat-modeling", "attack-surface", "threat-scenarios"] = Field(
         default="sec-design"
     )
     agent_provider: Literal["openai", "openrouter", "anthropic"] = Field(default="openai")
