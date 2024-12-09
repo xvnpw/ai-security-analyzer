@@ -28,9 +28,8 @@
 - 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
 - 📝 **Automated Documentation Generation**: Generates comprehensive security design and threat modeling documents.
 - 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
-- 🔄 **Multi-Project Support**: Supports Python, Go, and generic project types.
+- 🔄 **Multi-Project Support**: Supports Python, Go project types.
 - 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
-- 🎯 **Flexible Prompt Types**: Choose between different prompt types like security design and threat modeling for your documentation needs.
 - 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
 - 🎛️ **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
 - 🌐 **Cross-Platform Compatibility**: Runs on Windows, macOS, and Linux.

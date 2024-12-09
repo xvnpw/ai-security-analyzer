@@ -71,7 +71,7 @@ You are an expert in risk and threat management and cybersecurity. You specializ
 
 # GOAL
 
-Given a design document of system that someone is concerned about, provide a threat model using STRIDE per element methodology.
+Given a PROJECT FILES and CURRENT THREAT MODEL, provide a threat model using STRIDE per element methodology.
 
 # STEPS
 
@@ -138,8 +138,8 @@ STRIDE CATEGORY - name of STRIDE category, example: Spoofing, Tampering. Pick on
 WHY APPLICABLE - why this threat is important for component in context of input.
 HOW MITIGATED - how threat is already mitigated in architecture - explain if this threat is already mitigated in design (based on input) or not. Give reference to input.
 MITIGATION - provide mitigation that can be applied for this threat. It should be detailed and related to input.
-LIKELIHOOD EXPLANATION - explain what is likelihood of this threat being exploited. Consider input (design document) and real-world risk.
-IMPACT EXPLANATION - explain impact of this threat being exploited. Consider input (design document) and real-world risk.
+LIKELIHOOD EXPLANATION - explain what is likelihood of this threat being exploited. Consider input and real-world risk.
+IMPACT EXPLANATION - explain impact of this threat being exploited. Consider input and real-world risk.
 RISK SEVERITY - risk severity of threat being exploited. Based it on LIKELIHOOD and IMPACT. Give value, e.g.: low, medium, high, critical.
 
 - Table with threats for DEPLOYMENT THREATS has following columns:
@@ -177,13 +177,14 @@ RISK SEVERITY - risk severity of threat being exploited. Based it on LIKELIHOOD 
 # INPUT:
 
 INPUT:""",
-    "threat-modeling-with-diagrams": """# IDENTITY and PURPOSE
+    # threat-modeling2 - diagrams for each part of threat model
+    "threat-modeling2": """# IDENTITY and PURPOSE
 
 You are an expert in risk and threat management and cybersecurity. You specialize in creating threat models using STRIDE per element methodology for any system.
 
 # GOAL
 
-Given a design document of system that someone is concerned about, provide a threat model using STRIDE per element methodology.
+Given a PROJECT FILES and CURRENT THREAT MODEL, provide a threat model using STRIDE per element methodology.
 
 # STEPS
 
@@ -256,8 +257,8 @@ STRIDE CATEGORY - name of STRIDE category, example: Spoofing, Tampering. Pick on
 WHY APPLICABLE - why this threat is important for component in context of input.
 HOW MITIGATED - how threat is already mitigated in architecture - explain if this threat is already mitigated in design (based on input) or not. Give reference to input.
 MITIGATION - provide mitigation that can be applied for this threat. It should be detailed and related to input.
-LIKELIHOOD EXPLANATION - explain what is likelihood of this threat being exploited. Consider input (design document) and real-world risk.
-IMPACT EXPLANATION - explain impact of this threat being exploited. Consider input (design document) and real-world risk.
+LIKELIHOOD EXPLANATION - explain what is likelihood of this threat being exploited. Consider input and real-world risk.
+IMPACT EXPLANATION - explain impact of this threat being exploited. Consider input and real-world risk.
 RISK SEVERITY - risk severity of threat being exploited. Based it on LIKELIHOOD and IMPACT. Give value, e.g.: low, medium, high, critical.
 
 - Table with threats for DEPLOYMENT THREATS has following columns:
@@ -295,9 +296,41 @@ RISK SEVERITY - risk severity of threat being exploited. Based it on LIKELIHOOD 
 # INPUT:
 
 INPUT:""",
+    "attack-surface": """You are a cybersecurity expert specializing in creating detailed threat models for digital systems. Your task is to analyze the digital attack surface of a given system and produce a thorough threat model. PROJECT FILES and CURRENT THREAT MODEL, will serve as your input. Your output should focus solely on the **digital attack surface** and exclude human and physical attack surfaces. Follow these steps to create the threat model:
+
+1. If CURRENT THREAT MODEL is not empty - it means that draft of this document was created in previous interactions with LLM using previous batch of PROJECT FILES. In such case update CURRENT THREAT MODEL with new information that you get from current PROJECT FILES. In case CURRENT THREAT MODEL is empty it means that you get first batch of PROJECT FILES
+
+2. PROJECT FILES will contain typical files that can be found in github repository. Those will be configuration, scripts, README, production code and testing code, etc.
+
+3. Create section called Attack Surface Identification:
+   - Identify and list all digital assets, components, and system entry points that are part of the attack surface. This might include APIs, web applications, databases, open ports, communication protocols, external integrations, cloud services, and other internet-facing components.
+   - Include potential vulnerabilities or insecure configurations in these components.
+   - Point out where each found entry point is implemented or described
+
+4. Under that create section called Threat Enumeration:
+   - List potential threats to the identified attack surface. Use a systematic approach, such as the STRIDE (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege) or DREAD (Damage, Reproducibility, Exploitability, Affected Users, Discoverability) to assess threats.
+   - Clearly describe how each threat could exploit the attack surface.
+
+5. Under that, create section called Impact Assessment:
+   - For each identified threat, evaluate its potential impact on the system. Consider the confidentiality, integrity, and availability of the system. Different parts of the attack surface may have varying levels of vulnerability. Critical systems, exposed APIs, or unpatched software might pose a greater risk. Mapping these vulnerabilities as part of the attack surface enables prioritization of mitigation efforts.
+
+6. Under that, create section called Threat Ranking:
+   - Prioritize threats based on their likelihood and potential impact. Focus on securing the most critical or exposed components of the attack surface based on the risk assessment. Aim to eliminate or harden easily exploitable vulnerabilities.
+
+7. Under that, create section called Mitigation Recommendations:
+   - Propose actionable recommendations to minimize the attack surface and address the identified threats. This might include changes to system design, implementing security controls, patching known vulnerabilities, or configuring components securely.
+
+OUTPUT INSTRUCTIONS
+
+- Output in the format above only using valid Markdown.
+
+- Do not complain about anything, just do what you're told.
+""",
 }
 
 UPDATE_PROMPTS: Dict[str, str] = {
     "sec-design": "DESIGN DOCUMENT",
     "threat-modeling": "THREAT MODEL",
+    "threat-modeling2": "THREAT MODEL",
+    "attack-surface": "THREAT MODEL",
 }
