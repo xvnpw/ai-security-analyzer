@@ -463,7 +463,7 @@ INPUT:
     ###
     # attack-tree
     ###
-    "attack-tree": """As a cybersecurity expert with over 20 years of experience utilizing the STRIDE threat modeling methodology, your task is to produce a comprehensive attack tree in Mermaid syntax based on the provided project files. The attack tree should reflect all potential threats to the application as detailed in the description.
+    "attack-tree": """As a cybersecurity expert with over 20 years of experience utilizing the STRIDE threat modeling methodology, your task is to produce a comprehensive attack tree in Mermaid syntax based on the provided project files. The attack tree should reflect all potential threats to the project as detailed in the description.
 
 - Update the Current Attack Tree (if applicable):
 
