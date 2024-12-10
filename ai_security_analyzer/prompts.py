@@ -460,6 +460,69 @@ END THREAT MODEL ESSAY
 
 INPUT:
 """,
+    ###
+    # attack-tree
+    ###
+    "attack-tree": """As a cybersecurity expert with over 20 years of experience utilizing the STRIDE threat modeling methodology, your task is to produce a comprehensive attack tree in Mermaid syntax based on the provided project files. The attack tree should reflect all potential threats to the application as detailed in the description.
+
+- Update the Current Attack Tree (if applicable):
+
+   - When the `CURRENT ATTACK TREE` is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of `PROJECT FILES`. In this case, integrate new findings from the current `PROJECT FILES` into the existing `CURRENT ATTACK TREE`. Ensure consistency and avoid duplication.
+
+   - If the `CURRENT ATTACK TREE` is empty, proceed to create a new attack tree based on the current `PROJECT FILES`.
+
+- Analyze the Project Files:
+
+   - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
+
+   - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
+
+Requirements for the attack tree:
+1. Use Mermaid graph TD syntax
+2. Start with a root node representing the main attack goal
+3. Include multiple levels of attack vectors and methods
+4. Consider both technical and non-technical attack paths
+5. Include AND/OR relationships where appropriate
+6. Add probability or difficulty indicators if relevant
+7. Label nodes with clear, concise descriptions
+8. Consider common attack patterns and vulnerabilities
+9. Include potential mitigations where applicable
+
+Formatting rules:
+1. MUST wrap node labels containing parentheses in double quotes: ["Example (text)"]
+2. Use appropriate node shapes:
+   - [] for root nodes
+   - () for intermediate nodes
+   - {} for AND gates
+   - {{}} for OR gates
+   - [] for leaf nodes
+3. Use --> for connections
+4. Include comments to explain complex relationships
+
+Please respond ONLY with the Mermaid code block starting with ```mermaid and ending with ```.
+
+Example format:
+```mermaid
+graph TD
+    A[Root Attack Goal] --> B{"OR Gate"}
+    B --> C["Attack Vector 1"]
+    B --> D["Attack Vector 2"]
+    C --> E("AND Gate")
+    E --> F["Sub-attack 1"]
+    E --> G["Sub-attack 2"]
+```
+
+Remember to consider:
+- Attack surface
+- Entry points
+- Assets at risk
+- System components
+- Trust boundaries
+- Data flows
+- Authentication mechanisms
+- Authorization controls
+
+""",
 }
 
 UPDATE_PROMPTS: Dict[str, str] = {
@@ -467,4 +530,5 @@ UPDATE_PROMPTS: Dict[str, str] = {
     "threat-modeling": "THREAT MODEL",
     "attack-surface": "THREAT MODEL",
     "threat-scenarios": "THREAT MODEL",
+    "attack-tree": "ATTACK TREE",
 }
