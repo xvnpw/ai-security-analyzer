@@ -164,9 +164,9 @@ The application accepts various command-line arguments to tailor its behavior.
 - `-t`, `--target-dir`: **Required**. Target directory containing the repository.
 - `-p`, `--project-type`: Type of project (`python`, `generic`, `go`). Default is `python`.
 - `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
-- `--exclude`: Comma-separated list of patterns to exclude from analysis using python **glob** patterns (e.g., `LICENSE,**/tests/**`).
+- `--exclude`: Comma-separated list of patterns to exclude from analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `LICENSE,**/tests/**`).
 - `--exclude-mode`: How to handle the exclude patterns (`add` to add to default excludes, `override` to replace). Default is `add`.
-- `--include`: Comma-separated list of patterns to include in the analysis using python **glob** patterns (e.g., `**/*.java`).
+- `--include`: Comma-separated list of patterns to include in the analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `**/*.java`).
 - `--include-mode`: How to handle the include patterns (`add` to add to default includes, `override` to replace). Default is `add`.
 - `--filter-keywords`: Comma-separated list of keywords. Only files containing these keywords will be analyzed.
 - `--dry-run`: Perform a dry run. Prints configuration and list of files to analyze without making API calls.
