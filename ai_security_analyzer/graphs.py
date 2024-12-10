@@ -84,7 +84,7 @@ class DryRunGraphExecutor(BaseGraphExecutor):
 
         output = f"""=========== dry-run ===========
 All documents token count: {token_count}
-List of chunked files to analyse:
+List of chunked files to analyze:
 {splitted_docs_str}
 """
         print(output)

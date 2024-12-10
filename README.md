@@ -21,12 +21,12 @@
 
 ## Overview
 
-**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types including security design documentation and threat modeling. The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
+**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types including security design documentation, threat modeling, attack surface analysis, and threat scenarios. The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
 
 ## Features
 
 - 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
-- 📝 **Automated Documentation Generation**: Generates comprehensive security design and threat modeling documents.
+- 📝 **Automated Documentation Generation**: Generates comprehensive security design, threat modeling, attack surface analysis, and threat scenarios documents.
 - 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
 - 🔄 **Multi-Project Support**: Supports Python, Go project types.
 - 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
@@ -181,6 +181,8 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--agent-prompt-type`: Prompt to use in agent (default: `sec-design`). Options are:
   - `sec-design`: Generate a security design document for the project.
   - `threat-modeling`: Perform threat modeling for the project.
+  - `attack-surface`: Perform attack surface analysis for the project.
+  - `threat-scenarios`: Perform threat scenarios analysis for the project using Daniel Miessler's [prompt](https://github.com/danielmiessler/fabric/blob/f5f50cc4c94a539ee56bc533e9b1194eb9aa424d/patterns/create_threat_scenarios/system.md).
 - `--files-context-window`: Maximum token size for LLM context window. Automatically determined if not set.
 - `--files-chunk-size`: Chunk size in tokens for splitting files. Automatically determined if not set.
 
@@ -261,11 +263,33 @@ poetry run python ai_security_analyzer/app.py \
 ```
 =========== dry-run ===========
 All documents token count: 123456
-List of chunked files to analyse:
+List of chunked files to analyze:
 src/main.py
 src/utils.py
 README.md
 ...
+```
+
+## Real World Examples
+
+Check [examples](https://github.com/xvnpw/ai-security-analyzer/blob/main/examples/README.md) for real world examples, e.g. flask framework, requests library, etc.
+
+## Supported Project Types
+
+- Python
+- Go
+- More to come...
+
+In case you want to use a project type that is not supported, please use the `generic` project type with `--include`, `--include-mode`, `--exclude`, `--exclude-mode` options.
+
+**Example:**
+
+```bash
+poetry run python ai_security_analyzer/app.py \
+    -t /path/to/your/project \
+    -o security_design.md \
+    --project-type generic \
+    --include "**/*.java"
 ```
 
 ## Troubleshooting

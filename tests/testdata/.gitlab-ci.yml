@@ -1,0 +1,28 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - echo "Building project..."
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+test:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - npm test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying application..."
+    - npm run deploy
+  only:
+    - main

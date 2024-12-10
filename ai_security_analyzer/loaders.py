@@ -19,7 +19,7 @@ LOADERS: dict[str, Type[Any]] = {
 }
 
 GENERIC_FILES_GLOB = ["**/*.md", "**/Dockerfile", "**/*.yml", "**/*.sh", "**/*.bash", "**/*.yaml"]
-PYTHON_FILES_GLOB = ["**/*.py", "pyproject.toml"]
+PYTHON_FILES_GLOB = ["**/*.py", "pyproject.toml", "requirements.txt"]
 GO_FILES_GLOB = ["**/*.go", "**/go.mod", "Makefile"]
 
 FILES_GLOB: dict[str, List[str]] = {
@@ -35,8 +35,10 @@ def _is_visible(p: Path) -> bool:
     return not any(part.startswith(".") for part in p.parts)
 
 
-def _is_github(p: Path) -> bool:
-    return p.parts[0] == ".github"
+# function to check if the file is ci/cd related, e.g. github actions, gitlab ci, etc.
+def _is_ci_cd(p: Path) -> bool:
+    CICD = [".github", ".gitlab", ".circleci", ".jenkins", ".drone", ".gitlab-ci", ".drone.yml"]
+    return any(p.parts[0].startswith(cicd) for cicd in CICD)
 
 
 class RepoDirectoryLoader(DirectoryLoader):
@@ -138,7 +140,7 @@ class RepoDirectoryLoader(DirectoryLoader):
         """
         if item.is_file():
             relative_path = item.relative_to(path)
-            if _is_visible(relative_path) or self.load_hidden or _is_github(relative_path):
+            if _is_visible(relative_path) or self.load_hidden or _is_ci_cd(relative_path):
                 try:
                     logger.debug(f"Processing file: {str(item)}")
                     loader_cls = LOADERS.get(item.suffix, TextLoader)

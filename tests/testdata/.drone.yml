@@ -1,0 +1,22 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: install
+    image: node:16
+    commands:
+      - npm install
+
+  - name: test
+    image: node:16
+    commands:
+      - npm test
+
+  - name: deploy
+    image: node:16
+    when:
+      branch:
+        - main
+    commands:
+      - npm run deploy

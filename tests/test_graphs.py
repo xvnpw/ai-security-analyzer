@@ -70,7 +70,7 @@ def test_dry_run_graph_executor_success(capfd):
     # Build expected output
     expected_output = """=========== dry-run ===========
 All documents token count: 1234
-List of chunked files to analyse:
+List of chunked files to analyze:
 file1.py
 file2.py
 """
