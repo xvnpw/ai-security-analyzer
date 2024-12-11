@@ -26,6 +26,7 @@ class MarkdownMermaidValidator:
             for index, mermaid in enumerate(mermaids, start=1):
                 logger.debug(f"Validating Mermaid diagram {index}...")
                 valid, error = self.validate_mermaid_diagram(mermaid)
+                logger.debug(f"Validation result: {valid}, Error: {error}")
                 if DOMPURIFY_ERROR in (error or ""):
                     logger.warning(f"Skipping mermaid validation. Node libraries misconfigured: {error}")
                     return True, None

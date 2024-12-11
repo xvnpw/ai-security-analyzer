@@ -157,7 +157,12 @@ def parse_arguments() -> AppConfig:
         "--agent-prompt-type",
         choices=["sec-design", "threat-modeling", "attack-surface", "threat-scenarios", "attack-tree"],
         default="sec-design",
-        help="Prompt to use in agent (default: sec-design): sec-design - Security Design, threat-modeling - Threat Modeling, attack-surface - Attack Surface Analysis, threat-scenarios - Threat Scenarios",
+        help="""Prompt to use in agent (default: sec-design):
+ - sec-design - Security Design
+ - threat-modeling - Threat Modeling
+ - attack-surface - Attack Surface Analysis
+ - threat-scenarios - Threat Scenarios
+ - attack-tree - Attack Tree""",
     )
 
     # Editor configuration

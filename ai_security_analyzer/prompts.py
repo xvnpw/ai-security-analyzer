@@ -463,65 +463,247 @@ INPUT:
     ###
     # attack-tree
     ###
-    "attack-tree": """As a cybersecurity expert with over 20 years of experience utilizing the STRIDE threat modeling methodology, your task is to produce a comprehensive attack tree in Mermaid syntax based on the provided project files. The attack tree should reflect all potential threats to the project as detailed in the description.
+    "attack-tree": """You are a cybersecurity expert specializing in threat modeling using attack trees. Your task is to perform a detailed threat modeling analysis on a specific PROJECT FILES to identify how an attacker might compromise systems using this project by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
 
-- Update the Current Attack Tree (if applicable):
+### Objective:
+
+- Attacker's Goal: To compromise systems that use given project by exploiting weaknesses or vulnerabilities within the project itself.
+
+  *(Note: If you find a more precise or impactful goal during your analysis, feel free to refine it.)*
+
+### Instructions:
+
+1. Update the Current Attack Tree (if applicable):
 
    - When the `CURRENT ATTACK TREE` is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of `PROJECT FILES`. In this case, integrate new findings from the current `PROJECT FILES` into the existing `CURRENT ATTACK TREE`. Ensure consistency and avoid duplication.
 
    - If the `CURRENT ATTACK TREE` is empty, proceed to create a new attack tree based on the current `PROJECT FILES`.
 
-- Analyze the Project Files:
+2. Analyze the Project Files:
 
    - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
 
    - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
 
-Requirements for the attack tree:
-1. Use Mermaid graph TD syntax
-2. Start with a root node representing the main attack goal
-3. Include multiple levels of attack vectors and methods
-4. Consider both technical and non-technical attack paths
-5. Include AND/OR relationships where appropriate
-6. Add probability or difficulty indicators if relevant
-7. Label nodes with clear, concise descriptions
-8. Consider common attack patterns and vulnerabilities
-9. Include potential mitigations where applicable
+3. Understand the Project:
 
-Formatting rules:
-1. MUST wrap node labels containing parentheses in double quotes: ["Example (text)"]
-2. Use appropriate node shapes:
-   - [] for root nodes
-   - () for intermediate nodes
-   - {} for AND gates
-   - {{}} for OR gates
-   - [] for leaf nodes
-3. Use --> for connections
-4. Include comments to explain complex relationships
+   - Provide a brief overview of *project*, including its purpose, functionalities, typical use cases, and the technologies it interacts with.
+   - Identify key components, modules, or features that are critical to its operation.
+   - Note any dependencies on other libraries or frameworks.
 
-Please respond ONLY with the Mermaid code block starting with ```mermaid and ending with ```.
+4. Define the Root Goal of the Attack Tree:
 
-Example format:
-```mermaid
-graph TD
-    A[Root Attack Goal] --> B{"OR Gate"}
-    B --> C["Attack Vector 1"]
-    B --> D["Attack Vector 2"]
-    C --> E("AND Gate")
-    E --> F["Sub-attack 1"]
-    E --> G["Sub-attack 2"]
+   - Clearly state the attacker's ultimate objective concerning *project*.
+   - Ensure the goal focuses on compromising systems using the project by exploiting weaknesses in the project.
+   - Refine the goal if necessary to align with the project's specifics.
+
+5. Identify High-Level Attack Paths (Sub-Goals):
+
+   - Break down the root goal into major attack strategies an attacker might employ.
+   - Consider different avenues such as:
+     - Injecting malicious code into the project.
+     - Exploiting existing vulnerabilities in the project.
+     - Compromising distribution channels (e.g., package repositories).
+     - Leveraging common misconfigurations or insecure implementations by users of the project.
+
+6. Expand Each Attack Path with Detailed Steps:
+
+   - For each high-level attack path, outline specific methods or techniques an attacker could use.
+   - Include both technical exploits and non-technical tactics (e.g., social engineering).
+   - Consider the project's development practices, contribution processes, and distribution mechanisms.
+   - Expand each sub-goal and sub-path with detailed steps.
+
+7. Apply Logical Operators ("AND" / "OR"):
+
+   - Define the logical relationships between the nodes in the attack tree.
+     - "AND" Nodes: Require all child nodes to be achieved.
+     - "OR" Nodes: Achieving any one child node suffices.
+   - Use these operators to clarify the conditions necessary for each part of the attack.
+
+8. Visualize the Attack Tree:
+
+   - Represent the attack tree in a text-based visual format.
+   - Use indentation, lines, and symbols to show the hierarchy and logical relationships.
+     - For example:
+       - Use `+--` to indicate a child node.
+       - Use `[AND]` or `[OR]` to specify logical operators.
+   - Ensure the visualization clearly illustrates the attack paths from the root goal to the leaf nodes.
+
+9. Assign Attributes to Each Node:
+
+   - For each attack step, estimate:
+     - Likelihood: How probable is it that the attack could occur?
+     - Impact: What would be the potential damage if the attack is successful?
+     - Effort: What resources or time would the attacker need?
+     - Skill Level: What level of expertise is required?
+     - Detection Difficulty: How easy would it be to detect the attack?
+   - Use these attributes to prioritize risks.
+
+10. Analyze and Prioritize Attack Paths:
+
+   - Identify the most significant risks based on the likelihood and impact. Add a "Justification" that explains why you think the risk is significant.
+   - Highlight critical nodes that, if addressed, could mitigate multiple attack paths.
+   - Consider the feasibility from an attacker's perspective.
+
+11. Develop Mitigation Strategies:
+
+   - For each identified threat, recommend security controls or countermeasures.
+   - Consider both preventive measures (e.g., code signing, MFA for maintainers) and detective measures (e.g., monitoring, alerts).
+   - Address potential vulnerabilities in development, contribution, and distribution processes.
+
+12. Summarize Findings:
+
+    - Conclude with a summary of the key risks and recommended actions.
+    - Emphasize the most critical areas needing attention to improve security.
+
+13. Questions & Assumptions:
+
+    - List questions that you have and the default assumptions regarding this threat model document.
+
+### Formatting Guidelines:
+
+- Structure: Present the information in a clear, logical order following the steps above.
+- Clarity: Use clear and concise language suitable for both technical and non-technical stakeholders.
+- Headings and Subheadings: Use them to organize the content for easy navigation.
+- Bullet Points and Tables: Utilize them where appropriate to enhance readability.
+- Visual Aids: Include a text-based visualization of the attack tree using indentation and symbols to represent the hierarchy and logical relationships.
+
+---
+
+Example Usage of the Prompt:
+
+# Threat Modeling Analysis for the Project XYZ Using Attack Trees
+
+## 1. Understand the Project
+
+Project Name: XYZ
+
+### Overview
+
+Overview of the project.
+
+### Key Components and Features
+
+- Key components and features of the project.
+
+### Dependencies
+
+- Dependencies of the project.
+
+## 2. Define the Root Goal of the Attack Tree
+
+Attacker's Ultimate Objective:
+
+...
+
+## 3. Identify High-Level Attack Paths (Sub-Goals)
+
+Identify high-level attack paths (sub-goals) for the attacker to achieve the root goal.
+
+## 4. Expand Each Attack Path with Detailed Steps
+
+### 1. Sub-Goal 1
+
+- 1.1 Step 1
+  - 1.1.1 Step 1.1
+    - ...
+  - 1.1.2 Step 1.2
+    - ...
+
+- 1.2 Step 2
+  - ...
+
+- 1.3 Step 3
+  - ...
+
+### 2. Sub-Goal 2
+
+- 2.1 Step 1
+  - ...
+
+- 2.2 Step 2
+  - ...
+
+- 2.3 Step 3
+  - ...
+
+## 5. Visualize the Attack Tree
+
+```
+Root Goal: Compromise applications using Project XYZ by exploiting weaknesses in Project XYZ
+
+[OR]
++-- 1. Sub-Goal 1
+    [OR]
+    +-- 1.1 Step 1
+        [OR]
+        +-- 1.1.1 Step 1.1
+            [AND]
+            +-- ...
+            +-- ...
+        +-- 1.1.2 Step 1.2
+            [AND]
+            +-- ...
+            +-- ...
+    +-- 1.2 Step 2
+        [AND]
+        +-- ...
+        +-- ...
+        [OR]
+        +-- ...
+        +-- ...
+
++-- 2. Sub-Goal 2
+    [OR]
+    +-- 2.1 Step 1
+        [OR]
+        +-- ...
+    +-- 2.2 Step 2
+        [AND]
+        +-- ...
+...
 ```
 
-Remember to consider:
-- Attack surface
-- Entry points
-- Assets at risk
-- System components
-- Trust boundaries
-- Data flows
-- Authentication mechanisms
-- Authorization controls
+## 6. Assign Attributes to Each Node
 
+| Attack Step | Likelihood | Impact | Effort | Skill Level | Detection Difficulty |
+|---|---|---|---|---|---|
+| 1 Sub-Goal 1 | Medium | High | Medium | Medium | Medium |
+| - 1.1 Step 1 | Medium | High | Medium | Medium | Medium |
+| -- 1.1.1 Step 1.1 | High | High | Low | Low | Medium |
+| -- 1.1.2 Step 1.2 | Medium | High | Low | Low | Medium |
+...
+| 2 Sub-Goal 2 | Medium | High | Medium | Medium | Medium |
+| - 2.1 Step 1 | Medium | High | Medium | Medium | High |
+...
+
+## 7. Analyze and Prioritize Attack Paths
+
+### High-Risk Paths
+
+...
+
+### Critical Nodes
+
+...
+
+## 8. Develop Mitigation Strategies
+
+...
+
+## 9. Summarize Findings
+
+### Key Risks Identified
+
+- ...
+
+### Recommended Actions
+
+- ...
+
+## 10. Questions & Assumptions
+
+- ...
 """,
 }
 
