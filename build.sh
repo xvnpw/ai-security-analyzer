@@ -1,5 +1,6 @@
 #!/bin/sh
 
 npm install
-poetry install --no-interaction --no-ansi
+poetry config virtualenvs.create false
+poetry install --no-root --no-interaction --no-ansi
 scripts/fix_mermaid_dompurify.sh

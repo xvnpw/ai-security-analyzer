@@ -1,6 +1,6 @@
 #!/bin/sh -l
 
-# setting up correct python path to find fabric_agent_action module
+# setting up correct python path to find ai_security_analyzer module
 export PYTHONPATH="/app:$PYTHONPATH"
 
 # copying fabric configuration to temporary $HOME set by github workflow
