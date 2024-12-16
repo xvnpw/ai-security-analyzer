@@ -30,15 +30,18 @@ JAVA_FILES_GLOB = [
 
 ANDROID_FILES_GLOB = ["**/AndroidManifest.xml", "**/proguard-rules.pro", "**/*.kts", "**/*.kt"]
 
+JAVASCRIPT_FILES_GLOB = ["**/*.js", "**/*.js", "**/*.ts", "**/*.ts"]
+
 FILES_GLOB: dict[str, List[str]] = {
     "generic": GENERIC_FILES_GLOB,
     "python": GENERIC_FILES_GLOB + PYTHON_FILES_GLOB,
     "go": GENERIC_FILES_GLOB + GO_FILES_GLOB,
     "java": GENERIC_FILES_GLOB + JAVA_FILES_GLOB,
     "android": GENERIC_FILES_GLOB + JAVA_FILES_GLOB + ANDROID_FILES_GLOB,
+    "javascript": GENERIC_FILES_GLOB + JAVASCRIPT_FILES_GLOB,
 }
 
-DEFAULT_EXCLUDE = ["LICENSE"]
+DEFAULT_EXCLUDE = ["LICENSE", "**/dist/*", "**/bin/*"]
 
 
 def _is_visible(p: Path) -> bool:

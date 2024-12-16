@@ -28,7 +28,7 @@
 - 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
 - 📝 **Automated Documentation Generation**: Generates comprehensive security design, threat modeling, attack surface analysis, and threat scenarios documents.
 - 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
-- 🔄 **Multi-Project Support**: Supports Python, Go project types.
+- 🔄 **Multi-Project Support**: Supports Python, Go, Java, Android, and JavaScript project types.
 - 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
 - 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
 - 🎛️ **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
@@ -162,7 +162,7 @@ The application accepts various command-line arguments to tailor its behavior.
 ### Input/Output Options
 
 - `-t`, `--target-dir`: **Required**. Target directory containing the repository.
-- `-p`, `--project-type`: Type of project (`python`, `generic`, `go`). Default is `python`.
+- `-p`, `--project-type`: Type of project (`python`, `generic`, `go`, `java`, `android`, `javascript`). Default is `python`.
 - `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
 - `--exclude`: Comma-separated list of patterns to exclude from analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `LICENSE,**/tests/**`).
 - `--exclude-mode`: How to handle the exclude patterns (`add` to add to default excludes, `override` to replace). Default is `add`.
