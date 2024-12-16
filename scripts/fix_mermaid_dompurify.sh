@@ -9,4 +9,5 @@ if [ -f "$TARGET_FILE" ]; then
   echo "Override successful."
 else
   echo "File $TARGET_FILE not found in ./node_modules."
+  exit 1
 fi

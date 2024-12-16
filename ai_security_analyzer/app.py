@@ -35,7 +35,7 @@ def parse_arguments() -> AppConfig:
     io_group.add_argument(
         "-p",
         "--project-type",
-        choices=["python", "generic", "go"],
+        choices=["python", "generic", "go", "java", "android"],
         default="python",
         help="Type of project (default: python)",
     )

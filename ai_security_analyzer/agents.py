@@ -141,7 +141,14 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
             messages = [agent_msg, HumanMessage(content=human_prompt)]
 
             response = llm.invoke(messages)
-            return {"sec_repo_doc": response.content, "processed_docs_count": len(first_batch)}
+            usage_metadata = response.usage_metadata
+            if usage_metadata:
+                document_tokens = usage_metadata.get("total_tokens", 0)
+            return {
+                "sec_repo_doc": response.content,
+                "processed_docs_count": len(first_batch),
+                "document_tokens": document_tokens,
+            }
         except Exception as e:
             logger.error(f"Error creating initial draft: {e}")
             raise ValueError(str(e))
@@ -172,9 +179,13 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
             )
 
             response = llm.invoke(messages)
+            usage_metadata = response.usage_metadata
+            if usage_metadata:
+                document_tokens = state.get("document_tokens", 0) + usage_metadata.get("total_tokens", 0)
             return {
                 "sec_repo_doc": response.content,
                 "processed_docs_count": processed_count + len(next_batch),
+                "document_tokens": document_tokens,
             }
         except Exception as e:
             logger.error(f"Error updating draft: {e}")
@@ -229,10 +240,14 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         messages = [editor_msg, HumanMessage(content=human_prompt)]
 
         response = llm.invoke(messages)
+        usage_metadata = response.usage_metadata  # type: ignore[attr-defined]
+        if usage_metadata:
+            document_tokens = state.get("document_tokens", 0) + usage_metadata.get("total_tokens", 0)
         return {
             "sec_repo_doc": response.content,
             "sec_repo_doc_validation_error": "",
             "editor_turns_count": state.get("editor_turns_count", 0) + 1,
+            "document_tokens": document_tokens,
         }
 
     def build_graph(self) -> CompiledStateGraph:

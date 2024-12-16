@@ -36,7 +36,11 @@ jobs:
         run: pip install poetry
 
       - name: Install dependencies
-        run: ./build.sh
+        run: |
+          npm install
+          poetry config virtualenvs.create false
+          poetry install --no-root --no-interaction --no-ansi
+          scripts/fix_mermaid_dompurify.sh
 
       - name: Run Ruff
         run: poetry run ruff check --output-format=github .

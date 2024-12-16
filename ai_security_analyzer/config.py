@@ -14,7 +14,7 @@ class AppConfig(BaseModel):
 
     target_dir: str
     output_file: io.TextIOWrapper
-    project_type: Literal["python", "generic", "go"] = Field(default="python")
+    project_type: Literal["python", "generic", "go", "java", "android"] = Field(default="python")
     verbose: bool = Field(default=False)
     debug: bool = Field(default=False)
 

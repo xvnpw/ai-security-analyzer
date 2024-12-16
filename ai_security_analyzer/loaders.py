@@ -18,14 +18,24 @@ LOADERS: dict[str, Type[Any]] = {
     ".txt": TextLoader,
 }
 
-GENERIC_FILES_GLOB = ["**/*.md", "**/Dockerfile", "**/*.yml", "**/*.sh", "**/*.bash", "**/*.yaml"]
+GENERIC_FILES_GLOB = ["**/*.md", "**/Dockerfile", "**/*.yml", "**/*.sh", "**/*.bash", "**/*.yaml", "**/*.toml"]
 PYTHON_FILES_GLOB = ["**/*.py", "pyproject.toml", "requirements.txt"]
 GO_FILES_GLOB = ["**/*.go", "**/go.mod", "Makefile"]
+JAVA_FILES_GLOB = [
+    "**/*.java",
+    "**/pom.xml",
+    "**/build.gradle",
+    "**/*.properties",
+]
+
+ANDROID_FILES_GLOB = ["**/AndroidManifest.xml", "**/proguard-rules.pro", "**/*.kts", "**/*.kt"]
 
 FILES_GLOB: dict[str, List[str]] = {
     "generic": GENERIC_FILES_GLOB,
     "python": GENERIC_FILES_GLOB + PYTHON_FILES_GLOB,
     "go": GENERIC_FILES_GLOB + GO_FILES_GLOB,
+    "java": GENERIC_FILES_GLOB + JAVA_FILES_GLOB,
+    "android": GENERIC_FILES_GLOB + JAVA_FILES_GLOB + ANDROID_FILES_GLOB,
 }
 
 DEFAULT_EXCLUDE = ["LICENSE"]

@@ -12,7 +12,10 @@ COPY package.json package-lock.json ./
 
 COPY . .
 
-RUN ./build.sh
+RUN npm install && \
+    poetry config virtualenvs.create false && \
+    poetry install --no-root --no-interaction --no-ansi && \
+    scripts/fix_mermaid_dompurify.sh
 
 COPY entrypoint.sh /entrypoint.sh
 

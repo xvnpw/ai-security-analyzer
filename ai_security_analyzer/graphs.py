@@ -42,6 +42,8 @@ class RunGraphExecutor(BaseGraphExecutor):
             raise
 
     def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
         output_content = state.get("sec_repo_doc", "")
         if self.config.agent_preamble_enabled:
             output_content = f"{self.config.agent_preamble}\n\n{output_content}"
