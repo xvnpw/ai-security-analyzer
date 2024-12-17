@@ -12,7 +12,8 @@ class AppConfig(BaseModel):
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    target_dir: str
+    mode: Literal["dir", "github", "file"] = Field(default="dir")
+    target: str
     output_file: io.TextIOWrapper
     project_type: Literal["python", "generic", "go", "java", "android", "javascript"] = Field(default="python")
     verbose: bool = Field(default=False)

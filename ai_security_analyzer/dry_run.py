@@ -5,8 +5,8 @@ from langgraph.graph import START, END, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from tiktoken import Encoding
 
-from ai_security_analyzer.agents import (
-    CreateProjectSecurityDesignAgent,
+from ai_security_analyzer.full_dir_scan import (
+    FullDirScanAgent,
     AgentState,
 )
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
@@ -16,7 +16,7 @@ from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 logger = logging.getLogger(__name__)
 
 
-class DryRunAgent(CreateProjectSecurityDesignAgent):
+class DryRunFullDirScanAgent(FullDirScanAgent):
     def __init__(
         self,
         llm_provider: LLMProvider,
@@ -27,7 +27,7 @@ class DryRunAgent(CreateProjectSecurityDesignAgent):
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
         agent_prompt: str,
-        draft_update_prompt: str,
+        doc_type_prompt: str,
     ):
         super().__init__(
             llm_provider,
@@ -38,7 +38,7 @@ class DryRunAgent(CreateProjectSecurityDesignAgent):
             doc_processor,
             doc_filter,
             agent_prompt,
-            draft_update_prompt,
+            doc_type_prompt,
         )
 
     def _count_token(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -50,7 +50,7 @@ class DryRunAgent(CreateProjectSecurityDesignAgent):
         return {"document_tokens": tokens}
 
     def build_graph(self) -> CompiledStateGraph:
-        logger.debug(f"[{DryRunAgent.__name__}] building graph...")
+        logger.debug(f"[{DryRunFullDirScanAgent.__name__}] building graph...")
 
         def load_files(state: AgentState):  # type: ignore[no-untyped-def]
             return self._load_files(state)

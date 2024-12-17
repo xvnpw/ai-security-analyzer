@@ -1,6 +1,7 @@
 import argparse
 import logging
 import sys
+import os
 
 from ai_security_analyzer.agent_builder import AgentBuilder
 from ai_security_analyzer.config import AppConfig
@@ -24,13 +25,19 @@ def parse_arguments() -> AppConfig:
     """Parse command-line arguments and return an AppConfig instance."""
     parser = argparse.ArgumentParser(description="AI Create Security Repository Document")
 
+    parser.add_argument(
+        "mode",
+        choices=["dir", "github", "file"],
+        help="Operation mode: 'dir' for directory analysis, 'github' for GitHub repository analysis, 'file' for single file analysis",
+    )
+
     # Input/Output arguments
     io_group = parser.add_argument_group("Input/Output Options")
     io_group.add_argument(
         "-t",
-        "--target-dir",
+        "--target",
         required=True,
-        help="Target directory containing the repository",
+        help="Target: directory path for 'dir' mode, GitHub repository URL for 'github' mode, or file path for 'file' mode",
     )
     io_group.add_argument(
         "-p",
@@ -197,6 +204,16 @@ def parse_arguments() -> AppConfig:
 
     args = parser.parse_args()
 
+    # Validate target based on mode
+    if args.mode == "dir" and not os.path.isdir(args.target):
+        parser.error("In 'dir' mode, target must be a valid directory path")
+    elif args.mode == "file" and not os.path.isfile(args.target):
+        parser.error("In 'file' mode, target must be a valid file path")
+    elif args.mode == "github" and not args.target.startswith("https://github.com/"):
+        parser.error(
+            "In 'github' mode, target must be a valid GitHub repository URL starting with 'https://github.com/'"
+        )
+
     config = AppConfig(**vars(args))
     return config
 
@@ -229,7 +246,7 @@ def app(config: AppConfig) -> None:
     graph = agent.build_graph()
 
     executor = GraphExecutorFactory.create(config)
-    executor.execute(graph, config.target_dir)
+    executor.execute(graph, config.target)
 
 
 if __name__ == "__main__":

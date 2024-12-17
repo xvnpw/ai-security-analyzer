@@ -1,7 +1,75 @@
 from typing import Dict
 
 
-AGENT_PROMPTS: Dict[str, str] = {
+def get_agent_prompt(prompt_type: str, mode: str) -> str:
+    prompt_template = _TEMPLATE_PROMPTS.get(prompt_type)
+    if not prompt_template:
+        raise ValueError(f"No prompt template for prompt type: {prompt_type}")
+
+    doc_type = DOC_TYPE_PROMPTS.get(prompt_type)
+    if not doc_type:
+        raise ValueError(f"No doc type for prompt type: {prompt_type}")
+
+    if mode == "dir":
+        if prompt_type in ("sec-design", "threat-modeling"):
+            return prompt_template.format(DIR_1, DIR_2.format(doc_type, doc_type, doc_type), DIR_3.format(doc_type))
+        elif prompt_type in ("attack-surface", "attack-tree", "threat-scenarios"):
+            return prompt_template.format(DIR_1, DIR_STEPS_2.format(doc_type, doc_type, doc_type, doc_type))
+        else:
+            raise ValueError(f"Unknown prompt type: {prompt_type}")
+
+    elif mode == "github":
+        if prompt_type in ("sec-design", "threat-modeling"):
+            return prompt_template.format(
+                GITHUB_1, GITHUB_2.format(doc_type, doc_type, doc_type), GITHUB_3.format(doc_type)
+            )
+        elif prompt_type in ("attack-surface", "attack-tree", "threat-scenarios"):
+            return prompt_template.format(GITHUB_1, GITHUB_STEPS_2.format(doc_type, doc_type, doc_type, doc_type))
+        else:
+            raise ValueError(f"Unknown prompt type: {prompt_type}")
+    else:
+        raise ValueError(f"Unknown mode: {mode}")
+
+
+DIR_1 = "PROJECT FILES"
+DIR_2 = """- If CURRENT {} is not empty - it means that draft of this document was created in previous interactions with LLM using previous batch of PROJECT FILES. In such case update CURRENT {} with new information that you get from current PROJECT FILES. In case CURRENT {} is empty it means that you get first batch of PROJECT FILES
+
+- PROJECT FILES will contain typical files that can be found in github repository. Those will be configuration, scripts, README, production code and testing code, etc.
+"""
+DIR_3 = """- You will get PROJECT FILES - batch of projects files that fits into context window
+
+- CURRENT {} - document that was created in previous interactions with LLM based on previous batches of project files
+"""
+
+DIR_STEPS_2 = """1. Update the CURRENT {} (if applicable):
+
+   - When the `CURRENT {}` is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of `PROJECT FILES`. In this case, integrate new findings from the current `PROJECT FILES` into the existing `CURRENT {}`. Ensure consistency and avoid duplication.
+
+   - If the `CURRENT {}` is empty, proceed to create a new threat model based on the current `PROJECT FILES`.
+
+2. Analyze the Project Files:
+
+   - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
+
+   - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
+"""
+
+GITHUB_1 = "GITHUB REPOSITORY"
+GITHUB_2 = """- If CURRENT DESIGN DOCUMENT is not empty - it means that draft of this document was created in previous interactions with LLM. In such case update CURRENT DESIGN DESCRIPTION with new information that you get from your knowledge base. In case CURRENT DESIGN DESCRIPTION is empty it means that you get first iteration."""
+GITHUB_3 = """- CURRENT DESIGN DOCUMENT - document that was created in previous interactions with LLM based on knowledge base so far"""
+
+GITHUB_STEPS_2 = """1. Update the Current Threat Model (if applicable):
+
+   - When the `CURRENT THREAT MODEL` is not empty, it indicates that a draft of this document was created in previous interactions with LLM. In this case, integrate new findings from the latest knowledge base into the existing `CURRENT THREAT MODEL`. Ensure consistency and avoid duplication.
+
+   - If the `CURRENT THREAT MODEL` is empty, proceed to create a new threat model based on your knowledge base.
+
+2. Analyze the Project Files:
+
+   - Thoroughly review all project files you have in your knowledge base to identify components, configurations, and code relevant to the attack surface.
+"""
+
+_TEMPLATE_PROMPTS: Dict[str, str] = {
     ###
     # sec-design
     ###
@@ -11,7 +79,7 @@ You are an expert in software, cloud and cybersecurity architecture. You special
 
 # GOAL
 
-Given a PROJECT FILES and CURRENT DESIGN DOCUMENT, provide a well written, detailed project design document that will be use later for threat modelling.
+Given a {} and CURRENT DESIGN DOCUMENT, provide a well written, detailed project design document that will be use later for threat modelling.
 
 # STEPS
 
@@ -23,9 +91,7 @@ Given a PROJECT FILES and CURRENT DESIGN DOCUMENT, provide a well written, detai
 
 - Appreciate the fact that each company is different. Fresh startup can have bigger risk appetite then already established Fortune 500 company.
 
-- If CURRENT DESIGN DOCUMENT is not empty - it means that draft of this document was created in previous interactions with LLM using previous batch of PROJECT FILES. In such case update CURRENT DESIGN DESCRIPTION with new information that you get from current PROJECT FILES. In case CURRENT DESIGN DESCRIPTION is empty it means that you get first batch of PROJECT FILES
-
-- PROJECT FILES will contain typical files that can be found in github repository. Those will be configuration, scripts, README, production code and testing code, etc.
+{}
 
 - Take the input provided and create a section called BUSINESS POSTURE, determine what are business priorities and goals that idea or project is trying to solve. Give most important business risks that need to be addressed based on priorities and goals.
 
@@ -61,13 +127,10 @@ Given a PROJECT FILES and CURRENT DESIGN DOCUMENT, provide a well written, detai
 
 # INPUT FORMATTING
 
-- You will get PROJECT FILES - batch of projects files that fits into context window
-
-- CURRENT DESIGN DOCUMENT - document that was created in previous interactions with LLM based on previous batches of project files
+{}
 
 # INPUT:
-
-        """,
+""",
     ###
     # threat-modeling
     ###
@@ -77,7 +140,7 @@ You are an expert in risk and threat management and cybersecurity. You specializ
 
 # GOAL
 
-Given a PROJECT FILES and CURRENT THREAT MODEL, provide a threat model using STRIDE per element methodology.
+Given a {} and CURRENT THREAT MODEL, provide a threat model using STRIDE per element methodology.
 
 # STEPS
 
@@ -89,9 +152,7 @@ Given a PROJECT FILES and CURRENT THREAT MODEL, provide a threat model using STR
 
 - Fully understand the STRIDE per element threat modeling approach.
 
-- If CURRENT THREAT MODEL is not empty - it means that draft of this document was created in previous interactions with LLM using previous batch of PROJECT FILES. In such case update CURRENT THREAT MODEL with new information that you get from current PROJECT FILES. In case CURRENT THREAT MODEL is empty it means that you get first batch of PROJECT FILES
-
-- PROJECT FILES will contain typical files that can be found in github repository. Those will be configuration, scripts, README, production code and testing code, etc.
+{}
 
 - Take the input provided and create a section called APPLICATION THREAT MODEL.
 
@@ -180,25 +241,18 @@ RISK SEVERITY - risk severity of threat being exploited. Based it on LIKELIHOOD 
 
 - Do not complain about anything, just do what you're told.
 
-# INPUT:
+# INPUT FORMATTING
 
-INPUT:""",
+{}
+
+# INPUT:
+""",
     ####
     # attack-surface
     ####
-    "attack-surface": """You are a cybersecurity expert specializing in creating detailed threat models for digital systems. Your task is to analyze the digital attack surface of a given system and produce a thorough threat model. You will be provided with `PROJECT FILES` and a `CURRENT THREAT MODEL` as your input. Your output should focus solely on the digital attack surface, excluding human and physical attack surfaces. Follow these steps to create the threat model:
+    "attack-surface": """You are a cybersecurity expert specializing in creating detailed threat models for digital systems. Your task is to analyze the digital attack surface of a given system and produce a thorough threat model. You will be provided with `{}` and a `CURRENT THREAT MODEL` as your input. Your output should focus solely on the digital attack surface, excluding human and physical attack surfaces. Follow these steps to create the threat model:
 
-1. Update the Current Threat Model (if applicable):
-
-   - When the `CURRENT THREAT MODEL` is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of `PROJECT FILES`. In this case, integrate new findings from the current `PROJECT FILES` into the existing `CURRENT THREAT MODEL`. Ensure consistency and avoid duplication.
-
-   - If the `CURRENT THREAT MODEL` is empty, proceed to create a new threat model based on the current `PROJECT FILES`.
-
-2. Analyze the Project Files:
-
-   - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
-
-   - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
+{}
 
 3. Structure the Threat Model:
    - The output threat model must include the following sections in the specified Markdown format:
@@ -280,7 +334,7 @@ You are an expert in risk and threat management and cybersecurity. You specializ
 
 # GOAL
 
-Given a situation or system that someone is concerned about, or that's in need of security, provide a list of the most likely ways that system will be attacked.
+Given a situation or system that someone is concerned about, or that's in need of security, provide a list of the most likely ways that system will be attacked. You will be provided with `{}` and a `CURRENT THREAT MODEL` as your input.
 
 # THREAT MODEL ESSAY BY DANIEL MIESSLER
 
@@ -404,17 +458,7 @@ END THREAT MODEL ESSAY
 
 # STEPS
 
-- Update the Current Threat Model (if applicable):
-
-   - When the `CURRENT THREAT MODEL` is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of `PROJECT FILES`. In this case, integrate new findings from the current `PROJECT FILES` into the existing `CURRENT THREAT MODEL`. Ensure consistency and avoid duplication.
-
-   - If the `CURRENT THREAT MODEL` is empty, proceed to create a new threat model based on the current `PROJECT FILES`.
-
-- Analyze the Project Files:
-
-   - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
-
-   - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
+{}
 
 - Think deeply about the input and what they are concerned with.
 
@@ -463,7 +507,7 @@ INPUT:
     ###
     # attack-tree
     ###
-    "attack-tree": """You are a cybersecurity expert specializing in threat modeling using attack trees. Your task is to perform a detailed threat modeling analysis on a specific PROJECT FILES to identify how an attacker might compromise systems using this project by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
+    "attack-tree": """You are a cybersecurity expert specializing in threat modeling using attack trees. Your task is to perform a detailed threat modeling analysis on a specific {} to identify how an attacker might compromise systems using this project by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
 
 ### Objective:
 
@@ -473,17 +517,7 @@ INPUT:
 
 ### Instructions:
 
-1. Update the Current Attack Tree (if applicable):
-
-   - When the `CURRENT ATTACK TREE` is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of `PROJECT FILES`. In this case, integrate new findings from the current `PROJECT FILES` into the existing `CURRENT ATTACK TREE`. Ensure consistency and avoid duplication.
-
-   - If the `CURRENT ATTACK TREE` is empty, proceed to create a new attack tree based on the current `PROJECT FILES`.
-
-2. Analyze the Project Files:
-
-   - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
-
-   - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
+{}
 
 3. Understand the Project:
 
@@ -707,7 +741,7 @@ Root Goal: Compromise applications using Project XYZ by exploiting weaknesses in
 """,
 }
 
-UPDATE_PROMPTS: Dict[str, str] = {
+DOC_TYPE_PROMPTS: Dict[str, str] = {
     "sec-design": "DESIGN DOCUMENT",
     "threat-modeling": "THREAT MODEL",
     "attack-surface": "THREAT MODEL",

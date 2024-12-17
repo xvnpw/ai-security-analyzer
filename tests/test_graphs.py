@@ -1,5 +1,10 @@
-from unittest.mock import Mock
-from ai_security_analyzer.graphs import RunGraphExecutor, DryRunGraphExecutor, GraphExecutorFactory
+from unittest.mock import Mock, patch
+from ai_security_analyzer.graphs import (
+    FullDirScanGraphExecutor,
+    DryRunFullDirScanGraphExecutor,
+    GraphExecutorFactory,
+    GithubGraphExecutor,
+)
 from ai_security_analyzer.config import AppConfig
 from langgraph.graph.state import CompiledStateGraph
 from langchain_core.documents import Document
@@ -18,19 +23,47 @@ def test_run_graph_executor_success():
     config.agent_preamble = "Test Preamble"
     config.output_file = Mock()
 
-    executor = RunGraphExecutor(config)
+    executor = FullDirScanGraphExecutor(config)
 
     graph = Mock(spec=CompiledStateGraph)
-    # Mocking graph.invoke to return a state dict
-    state = {"sec_repo_doc": "Test Content"}
+    # Mocking graph.invoke to return a state dict with token count
+    state = {"sec_repo_doc": "Test Content", "document_tokens": 1000}
     graph.invoke.return_value = state
 
-    target_dir = "/path/to/target_dir"
+    target = "/path/to/target_dir"
 
     # Act
-    executor.execute(graph, target_dir)
+    with patch("ai_security_analyzer.graphs.logger") as mock_logger:
+        executor.execute(graph, target)
+
+        # Assert logger was called with token count
+        mock_logger.info.assert_called_with("Actual token usage: 1000")
 
     # Check that output_file.write was called with the correct content
+    expected_output = f"{config.agent_preamble}\n\n{state['sec_repo_doc']}"
+    config.output_file.write.assert_called_once_with(expected_output)
+
+
+def test_github_graph_executor_success():
+    # Arrange
+    config = Mock(spec=AppConfig)
+    config.agent_preamble_enabled = True
+    config.agent_preamble = "Test Preamble"
+    config.output_file = Mock()
+
+    executor = GithubGraphExecutor(config)
+    graph = Mock(spec=CompiledStateGraph)
+    state = {"sec_repo_doc": "Test Content", "document_tokens": 1000}
+    graph.invoke.return_value = state
+
+    # Act
+    with patch("ai_security_analyzer.graphs.logger") as mock_logger:
+        executor.execute(graph, "owner/repo")
+
+        # Assert logger was called with token count
+        mock_logger.info.assert_called_with("Actual token usage: 1000")
+
+    # Check output
     expected_output = f"{config.agent_preamble}\n\n{state['sec_repo_doc']}"
     config.output_file.write.assert_called_once_with(expected_output)
 
@@ -44,7 +77,7 @@ def test_dry_run_graph_executor_success(capfd):
     config.include = []
     config.include_mode = "include_mode_test"
     config.filter_keywords = []
-    executor = DryRunGraphExecutor(config)
+    executor = DryRunFullDirScanGraphExecutor(config)
 
     graph = Mock(spec=CompiledStateGraph)
     # Mocking state returned by graph.invoke
@@ -59,10 +92,10 @@ def test_dry_run_graph_executor_success(capfd):
     }
     graph.invoke.return_value = state
 
-    target_dir = "/path/to/target_dir"
+    target = "/path/to/target_dir"
 
     # Act
-    executor.execute(graph, target_dir)
+    executor.execute(graph, target)
 
     # Capture the printed output
     out, err = capfd.readouterr()
@@ -78,21 +111,47 @@ file2.py
     assert out.strip() == expected_output.strip()
 
 
-def test_graph_executor_factory_run_executor():
+def test_graph_executor_factory_dir_executor():
     # Arrange
     config = Mock(spec=AppConfig)
     config.dry_run = False
+    config.mode = "dir"
     # Act
     executor = GraphExecutorFactory.create(config)
     # Assert
-    assert isinstance(executor, RunGraphExecutor)
+    assert isinstance(executor, FullDirScanGraphExecutor)
+
+
+def test_graph_executor_factory_github_executor():
+    # Arrange
+    config = Mock(spec=AppConfig)
+    config.dry_run = False
+    config.mode = "github"
+    # Act
+    executor = GraphExecutorFactory.create(config)
+    # Assert
+    assert isinstance(executor, GithubGraphExecutor)
 
 
 def test_graph_executor_factory_dry_run_executor():
     # Arrange
     config = Mock(spec=AppConfig)
     config.dry_run = True
+    config.mode = "dir"
     # Act
     executor = GraphExecutorFactory.create(config)
     # Assert
-    assert isinstance(executor, DryRunGraphExecutor)
+    assert isinstance(executor, DryRunFullDirScanGraphExecutor)
+
+
+def test_graph_executor_factory_invalid_type():
+    # Arrange
+    config = Mock(spec=AppConfig)
+    config.dry_run = False
+    config.mode = "invalid"
+    # Act & Assert
+    try:
+        GraphExecutorFactory.create(config)
+        assert False, "Should have raised ValueError"
+    except ValueError as e:
+        assert "invalid" in str(e)

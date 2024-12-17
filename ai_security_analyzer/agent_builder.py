@@ -1,17 +1,20 @@
 import logging
 from typing import Type
 
+
 import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
 
-from ai_security_analyzer.agents import CreateProjectSecurityDesignAgent
+from ai_security_analyzer.full_dir_scan import FullDirScanAgent
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.dry_run import DryRunAgent
+from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
-from ai_security_analyzer.prompts import AGENT_PROMPTS, UPDATE_PROMPTS
+from ai_security_analyzer.prompts import DOC_TYPE_PROMPTS, get_agent_prompt
+from ai_security_analyzer.github_agents import GithubAgent
+from ai_security_analyzer.base_agent import AgentType
 
 logger = logging.getLogger(__name__)
 
@@ -21,17 +24,19 @@ class AgentBuilder:
         self.llm_provider = llm_provider
         self.config = config
 
-        self._agents: dict[str, Type[BaseAgent]] = {
-            "run": CreateProjectSecurityDesignAgent,
-            "dry-run": DryRunAgent,
+        self._agents: dict[AgentType, Type[BaseAgent]] = {
+            AgentType.DIR: FullDirScanAgent,
+            AgentType.DRY_RUN_DIR: DryRunFullDirScanAgent,
+            AgentType.GITHUB: GithubAgent,
         }
-        self._agent_type = "dry-run" if config.dry_run else "run"
+        agent_type = AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
+        self._agent_type = agent_type
         self.agent_prompt_type = config.agent_prompt_type
 
     def build(self) -> BaseAgent:
         agent_class = self._agents.get(self._agent_type)
         if not agent_class:
-            raise ValueError(f"Unknown agent type: {self._agent_type}")
+            raise ValueError(f"Unknown agent type: {self._agent_type.value}")
 
         agent_model = self.llm_provider.create_agent_llm()
         agent_model_config = agent_model.model_config
@@ -51,12 +56,12 @@ class AgentBuilder:
         doc_processor = DocumentProcessor(tokenizer)
         doc_filter = DocumentFilter()
 
-        agent_prompt = AGENT_PROMPTS.get(self.agent_prompt_type)
+        agent_prompt = get_agent_prompt(self.agent_prompt_type, self.config.mode)
         if not agent_prompt:
             raise ValueError(f"No agent prompt for type: {self.agent_prompt_type}")
 
-        draft_update_prompt = UPDATE_PROMPTS.get(self.agent_prompt_type)
-        if not draft_update_prompt:
+        doc_type_prompt = DOC_TYPE_PROMPTS.get(self.agent_prompt_type)
+        if not doc_type_prompt:
             raise ValueError(f"No update prompt for type: {self.agent_prompt_type}")
 
         return agent_class(
@@ -68,5 +73,5 @@ class AgentBuilder:
             doc_processor,
             doc_filter,
             agent_prompt,
-            draft_update_prompt,
+            doc_type_prompt,
         )

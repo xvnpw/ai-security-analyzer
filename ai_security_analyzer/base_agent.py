@@ -1,5 +1,6 @@
 import logging
 from abc import ABC, abstractmethod
+from enum import Enum
 
 import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
@@ -10,6 +11,12 @@ from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 
 logger = logging.getLogger(__name__)
+
+
+class AgentType(Enum):
+    DIR = "dir"
+    DRY_RUN_DIR = "dry-run-dir"
+    GITHUB = "github"
 
 
 class BaseAgent(ABC):
@@ -24,7 +31,7 @@ class BaseAgent(ABC):
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
         agent_prompt: str,
-        draft_update_prompt: str,
+        doc_type_prompt: str,
     ):
         self.llm_provider = llm_provider
         self.text_splitter = text_splitter
@@ -34,7 +41,7 @@ class BaseAgent(ABC):
         self.doc_processor = doc_processor
         self.doc_filter = doc_filter
         self.agent_prompt = agent_prompt
-        self.draft_update_prompt = draft_update_prompt
+        self.doc_type_prompt = doc_type_prompt
 
     @abstractmethod
     def build_graph(self) -> CompiledStateGraph:

@@ -49,7 +49,7 @@ class AgentState(TypedDict):
     document_tokens: int
 
 
-class CreateProjectSecurityDesignAgent(BaseAgent):
+class FullDirScanAgent(BaseAgent):
     def __init__(
         self,
         llm_provider: LLMProvider,
@@ -60,7 +60,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
         agent_prompt: str,
-        draft_update_prompt: str,
+        doc_type_prompt: str,
     ):
         super().__init__(
             llm_provider,
@@ -71,7 +71,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
             doc_processor,
             doc_filter,
             agent_prompt,
-            draft_update_prompt,
+            doc_type_prompt,
         )
 
     def _load_files(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -136,7 +136,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
                 processed_count=0,
                 message_type="create",
                 current_description="",
-                draft_update_prompt=self.draft_update_prompt,
+                doc_type_prompt=self.doc_type_prompt,
             )
             messages = [agent_msg, HumanMessage(content=human_prompt)]
 
@@ -251,7 +251,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         }
 
     def build_graph(self) -> CompiledStateGraph:
-        logger.debug(f"[{CreateProjectSecurityDesignAgent.__name__}] building graph...")
+        logger.debug(f"[{FullDirScanAgent.__name__}] building graph...")
 
         llm = self.llm_provider.create_agent_llm()
         editor_llm = self.llm_provider.create_editor_llm()
@@ -323,7 +323,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         )
 
         human_prompt = self._create_human_prompt(
-            documents, batch, processed_count, "update", current_description, self.draft_update_prompt
+            documents, batch, processed_count, "update", current_description, self.doc_type_prompt
         )
 
         return [agent_msg, HumanMessage(content=human_prompt)]
@@ -335,7 +335,7 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         processed_count: int,
         message_type: MESSAGE_TYPE,
         current_description: str,
-        draft_update_prompt: str,
+        doc_type_prompt: str,
     ) -> str:
         """Create human prompt for document processing"""
         remaining_after_batch = len(documents) - (processed_count + len(batch))
@@ -344,9 +344,9 @@ class CreateProjectSecurityDesignAgent(BaseAgent):
         formatted_docs = self.doc_processor.format_docs_for_prompt(batch)
 
         return (
-            f"Based on the following PROJECT FILES, {message_type} the {draft_update_prompt}.\n"
+            f"Based on the following PROJECT FILES, {message_type} the {doc_type_prompt}.\n"
             f"{'There will be more files to analyze after this batch.' if more_files else ''}\n\n"
-            f"CURRENT {draft_update_prompt}:\n"
+            f"CURRENT {doc_type_prompt}:\n"
             + (f"{current_description}\n\n" if current_description else "")  # noqa: W503
             + f"PROJECT FILES:\n{formatted_docs}"  # noqa: W503
         )
