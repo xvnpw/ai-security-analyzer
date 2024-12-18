@@ -155,13 +155,20 @@ The application accepts various command-line arguments to tailor its behavior.
 
 ### General Options
 
+- `mode`: **Required**. Operation mode (`dir`, `github`, `file`):
+  - `dir`: Analyze a local directory
+  - `github`: Analyze a GitHub repository
+  - `file`: Analyze a single file
 - `-h`, `--help`: Show help message and exit.
 - `-v`, `--verbose`: Enable verbose logging.
 - `-d`, `--debug`: Enable debug logging.
 
 ### Input/Output Options
 
-- `-t`, `--target-dir`: **Required**. Target directory containing the repository.
+- `-t`, `--target`: **Required**. Target based on mode:
+  - For `dir` mode: Directory path to analyze
+  - For `github` mode: GitHub repository URL (must start with 'https://github.com/')
+  - For `file` mode: File path to analyze
 - `-p`, `--project-type`: Type of project (`python`, `generic`, `go`, `java`, `android`, `javascript`). Default is `python`.
 - `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
 - `--exclude`: Comma-separated list of patterns to exclude from analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `LICENSE,**/tests/**`).
