@@ -150,6 +150,29 @@ The application follows these high-level steps:
 8. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
 9. **Completion**: Finalizes the security documentation.
 
+### Application Flow for `github` mode
+
+```mermaid
+stateDiagram-v2
+    [*] --> Configure_Application
+    Configure_Application --> Create_Initial_Draft
+    Create_Initial_Draft --> Refine_Draft
+    Refine_Draft --> Refine_Draft: More Refinements Needed
+    Refine_Draft --> Validate_Markdown: All Refinements Done
+    Validate_Markdown --> Editor: Invalid Markdown
+    Editor --> Validate_Markdown: Fix Formatting
+    Validate_Markdown --> [*]: Valid Markdown
+```
+
+The application follows these high-level steps:
+
+1. **Configure Application**: Parses command-line arguments and sets up the configuration.
+2. **Create Initial Draft**: Uses the LLM to generate an initial security document based on the GitHub repository URL.
+3. **Refine Draft**: Iteratively refines the draft to improve its quality (number of iterations configurable via `--refinement-count`).
+4. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
+5. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
+6. **Completion**: Finalizes the security documentation.
+
 ## Configuration
 
 The application accepts various command-line arguments to tailor its behavior.
