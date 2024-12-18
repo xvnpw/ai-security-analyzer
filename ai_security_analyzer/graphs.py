@@ -21,31 +21,6 @@ class BaseGraphExecutor(ABC):
         pass
 
 
-class GithubGraphExecutor(BaseGraphExecutor):
-
-    def execute(self, graph: CompiledStateGraph, target: str) -> None:
-        try:
-            state = graph.invoke(
-                {
-                    "target_repo": target,
-                    "refinement_count": self.config.refinement_count,
-                }
-            )
-            self._write_output(state)
-        except Exception as e:
-            logger.error(f"Graph execution failed: {e}")
-            raise
-
-    def _write_output(self, state: dict[str, Any] | Any) -> None:
-        actual_token_count = state.get("document_tokens", 0)
-        logger.info(f"Actual token usage: {actual_token_count}")
-        output_content = state.get("sec_repo_doc", "")
-        if self.config.agent_preamble_enabled:
-            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
-
-        self.config.output_file.write(output_content)
-
-
 class FullDirScanGraphExecutor(BaseGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
@@ -98,6 +73,38 @@ List of chunked files to analyze:
         print(output)
 
 
+class GithubGraphExecutor(FullDirScanGraphExecutor):
+
+    def execute(self, graph: CompiledStateGraph, target: str) -> None:
+        try:
+            state = graph.invoke(
+                {
+                    "target_repo": target,
+                    "refinement_count": self.config.refinement_count,
+                }
+            )
+            self._write_output(state)
+        except Exception as e:
+            logger.error(f"Graph execution failed: {e}")
+            raise
+
+
+class FileGraphExecutor(FullDirScanGraphExecutor):
+
+    def execute(self, graph: CompiledStateGraph, target: str) -> None:
+        try:
+            state = graph.invoke(
+                {
+                    "target_file": target,
+                    "refinement_count": self.config.refinement_count,
+                }
+            )
+            self._write_output(state)
+        except Exception as e:
+            logger.error(f"Graph execution failed: {e}")
+            raise
+
+
 class GraphExecutorFactory:
     """Factory for creating graph executors."""
 
@@ -107,6 +114,7 @@ class GraphExecutorFactory:
             AgentType.DIR: FullDirScanGraphExecutor,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanGraphExecutor,
             AgentType.GITHUB: GithubGraphExecutor,
+            AgentType.FILE: FileGraphExecutor,
         }
         agent_type = AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
         executor_class = executors.get(agent_type)

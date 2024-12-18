@@ -17,6 +17,7 @@ class AgentType(Enum):
     DIR = "dir"
     DRY_RUN_DIR = "dry-run-dir"
     GITHUB = "github"
+    FILE = "file"
 
 
 class BaseAgent(ABC):

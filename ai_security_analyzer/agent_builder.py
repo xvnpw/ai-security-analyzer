@@ -14,6 +14,7 @@ from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.prompts import DOC_TYPE_PROMPTS, get_agent_prompt
 from ai_security_analyzer.github_agents import GithubAgent
+from ai_security_analyzer.file_agents import FileAgent
 from ai_security_analyzer.base_agent import AgentType
 
 logger = logging.getLogger(__name__)
@@ -28,6 +29,7 @@ class AgentBuilder:
             AgentType.DIR: FullDirScanAgent,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanAgent,
             AgentType.GITHUB: GithubAgent,
+            AgentType.FILE: FileAgent,
         }
         agent_type = AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
         self._agent_type = agent_type

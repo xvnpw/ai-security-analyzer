@@ -2,33 +2,35 @@ from typing import Dict
 
 
 def get_agent_prompt(prompt_type: str, mode: str) -> str:
+    # Validate prompt type and get templates
     prompt_template = _TEMPLATE_PROMPTS.get(prompt_type)
+    doc_type = DOC_TYPE_PROMPTS.get(prompt_type)
     if not prompt_template:
         raise ValueError(f"No prompt template for prompt type: {prompt_type}")
-
-    doc_type = DOC_TYPE_PROMPTS.get(prompt_type)
     if not doc_type:
         raise ValueError(f"No doc type for prompt type: {prompt_type}")
 
-    if mode == "dir":
-        if prompt_type in ("sec-design", "threat-modeling"):
-            return prompt_template.format(DIR_1, DIR_2.format(doc_type, doc_type, doc_type), DIR_3.format(doc_type))
-        elif prompt_type in ("attack-surface", "attack-tree", "threat-scenarios"):
-            return prompt_template.format(DIR_1, DIR_STEPS_2.format(doc_type, doc_type, doc_type, doc_type))
-        else:
-            raise ValueError(f"Unknown prompt type: {prompt_type}")
+    # Map modes to their base templates
+    mode_templates = {
+        "dir": (DIR_1, DIR_2, DIR_3, DIR_STEPS_2),
+        "github": (GITHUB_1, GITHUB_2, GITHUB_3, GITHUB_STEPS_2),
+        "file": (FILE_1, FILE_2, FILE_3, FILE_STEPS_2),
+    }
 
-    elif mode == "github":
-        if prompt_type in ("sec-design", "threat-modeling"):
-            return prompt_template.format(
-                GITHUB_1, GITHUB_2.format(doc_type, doc_type, doc_type), GITHUB_3.format(doc_type)
-            )
-        elif prompt_type in ("attack-surface", "attack-tree", "threat-scenarios"):
-            return prompt_template.format(GITHUB_1, GITHUB_STEPS_2.format(doc_type, doc_type, doc_type, doc_type))
-        else:
-            raise ValueError(f"Unknown prompt type: {prompt_type}")
-    else:
+    # Get mode-specific templates
+    templates = mode_templates.get(mode)
+    if not templates:
         raise ValueError(f"Unknown mode: {mode}")
+
+    base_1, base_2, base_3, steps_2 = templates
+
+    # Format prompt based on type
+    if prompt_type in ("sec-design", "threat-modeling"):
+        return prompt_template.format(base_1, base_2.format(doc_type, doc_type, doc_type), base_3.format(doc_type))
+    elif prompt_type in ("attack-surface", "attack-tree", "threat-scenarios"):
+        return prompt_template.format(base_1, steps_2.format(doc_type, doc_type, doc_type, doc_type))
+    else:
+        raise ValueError(f"Unknown prompt type: {prompt_type}")
 
 
 DIR_1 = "PROJECT FILES"
@@ -67,6 +69,24 @@ GITHUB_STEPS_2 = """1. Update the CURRENT {} (if applicable):
 2. Analyze the Project Files:
 
    - Thoroughly review all project files you have in your knowledge base to identify components, configurations, and code relevant to the attack surface.
+"""
+
+FILE_1 = "FILE"
+FILE_2 = "- If CURRENT {} is not empty - it means that draft of this document was created in previous interactions with LLM using FILE content. In such case update CURRENT {} with new information that you get from FILE. In case CURRENT {} is empty it means that you first time get FILE content"
+FILE_3 = """- You will get FILE content
+
+- CURRENT {} - document that was created in previous interactions with LLM based on FILE content
+"""
+
+FILE_STEPS_2 = """1. Update the CURRENT {} (if applicable):
+
+   - When the `CURRENT {}` is not empty, it indicates that a draft of this document was created in previous interactions using `FILE` content. In this case, integrate new findings from the current `FILE` into the existing `CURRENT {}`. Ensure consistency and avoid duplication.
+
+   - If the `CURRENT {}` is empty, proceed to create a new threat model based on the `FILE` content.
+
+2. Analyze the provided input:
+
+   - Thoroughly review all provided information from `FILE`.
 """
 
 _TEMPLATE_PROMPTS: Dict[str, str] = {

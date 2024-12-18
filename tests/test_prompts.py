@@ -7,6 +7,7 @@ VALID_PROMPT_TYPES = ["sec-design", "threat-modeling", "attack-surface", "attack
 MODE_SPECIFIC_CONTENT = [
     ("dir", "PROJECT FILES", "GITHUB REPOSITORY"),
     ("github", "GITHUB REPOSITORY", "PROJECT FILES"),
+    ("file", "FILE", "PROJECT FILES"),
 ]
 
 DOC_TYPE_MAPPING = [
@@ -19,7 +20,7 @@ DOC_TYPE_MAPPING = [
 
 
 @pytest.mark.parametrize("prompt_type", VALID_PROMPT_TYPES)
-@pytest.mark.parametrize("mode", ["dir", "github"])
+@pytest.mark.parametrize("mode", ["dir", "github", "file"])
 def test_get_agent_prompt_valid_inputs(prompt_type: str, mode: str):
     """Test valid combinations of prompt types and modes"""
     result = get_agent_prompt(prompt_type, mode)
