@@ -55,14 +55,14 @@ DIR_STEPS_2 = """1. Update the CURRENT {} (if applicable):
 """
 
 GITHUB_1 = "GITHUB REPOSITORY"
-GITHUB_2 = """- If CURRENT DESIGN DOCUMENT is not empty - it means that draft of this document was created in previous interactions with LLM. In such case update CURRENT DESIGN DESCRIPTION with new information that you get from your knowledge base. In case CURRENT DESIGN DESCRIPTION is empty it means that you get first iteration."""
-GITHUB_3 = """- CURRENT DESIGN DOCUMENT - document that was created in previous interactions with LLM based on knowledge base so far"""
+GITHUB_2 = "- If CURRENT {} is not empty - it means that draft of this document was created in previous interactions with LLM. In such case update CURRENT {} with new information that you get from your knowledge base. In case CURRENT {} is empty it means that you get first iteration."
+GITHUB_3 = "- CURRENT {} - document that was created in previous interactions with LLM based on knowledge base so far"
 
-GITHUB_STEPS_2 = """1. Update the Current Threat Model (if applicable):
+GITHUB_STEPS_2 = """1. Update the CURRENT {} (if applicable):
 
-   - When the `CURRENT THREAT MODEL` is not empty, it indicates that a draft of this document was created in previous interactions with LLM. In this case, integrate new findings from the latest knowledge base into the existing `CURRENT THREAT MODEL`. Ensure consistency and avoid duplication.
+   - When the `CURRENT {}` is not empty, it indicates that a draft of this document was created in previous interactions with LLM. In this case, integrate new findings from the latest knowledge base into the existing `CURRENT {}`. Ensure consistency and avoid duplication.
 
-   - If the `CURRENT THREAT MODEL` is empty, proceed to create a new threat model based on your knowledge base.
+   - If the `CURRENT {}` is empty, proceed to create a new threat model based on your knowledge base.
 
 2. Analyze the Project Files:
 
