@@ -62,8 +62,8 @@ You can run the application using Docker without installing Python or Node.js lo
 ```powershell
 docker run -v C:\path\to\your\project:/target `
            -e OPENAI_API_KEY=$Env:OPENAI_API_KEY `
-           ghcr.io/xvnpw/ai-security-analyzer:v0.0.3 `
-           -v -t /target -o /target/security_design.md
+           ghcr.io/xvnpw/ai-security-analyzer:latest `
+           dir -v -t /target -o /target/security_design.md
 ```
 
 #### In Bash (Linux/macOS):
@@ -71,8 +71,8 @@ docker run -v C:\path\to\your\project:/target `
 ```bash
 docker run -v ~/path/to/your/project:/target \
            -e OPENAI_API_KEY=$OPENAI_API_KEY \
-           ghcr.io/xvnpw/ai-security-analyzer:v0.0.3 \
-           -v -t /target -o /target/security_design.md
+           ghcr.io/xvnpw/ai-security-analyzer:latest \
+           dir -v -t /target -o /target/security_design.md
 ```
 
 ## Token Usage and Cost Management ⚠️
@@ -90,6 +90,7 @@ In `dir` mode this application may consume a significant number of tokens due to
 1. **Always Start with Dry Run**
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     --dry-run
 ```
