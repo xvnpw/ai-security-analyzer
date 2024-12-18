@@ -2,6 +2,11 @@ import os
 import platform
 from shutil import which
 from typing import Union
+from langchain_core.messages import BaseMessage
+
+
+def get_total_tokens(message: BaseMessage) -> int:
+    return message.usage_metadata.get("total_tokens", 0)  # type: ignore
 
 
 def find_node_binary() -> Union[str | None]:

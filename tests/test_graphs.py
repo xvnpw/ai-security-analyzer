@@ -49,6 +49,7 @@ def test_github_graph_executor_success():
     config = Mock(spec=AppConfig)
     config.agent_preamble_enabled = True
     config.agent_preamble = "Test Preamble"
+    config.refinement_count = 1
     config.output_file = Mock()
 
     executor = GithubGraphExecutor(config)

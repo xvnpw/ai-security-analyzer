@@ -15,12 +15,13 @@ from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.utils import get_total_tokens
 
 logger = logging.getLogger(__name__)
 
 
 class GraphNodeType(Enum):
-    UPDATE_DRAFT = "update_draft_with_new_docs"
+    REFINE_DRAFT = "refine_draft"
     MARKDOWN_VALIDATOR = "markdown_validator"
     EDITOR = "editor"
 
@@ -35,7 +36,8 @@ class AgentState(TypedDict):
     sec_repo_doc_validation_error: Optional[str]
     editor_turns_count: int
     document_tokens: int
-    update_draft: bool
+    refinement_count: int
+    current_refinement_count: int
 
 
 class GithubAgent(BaseAgent):
@@ -81,9 +83,7 @@ class GithubAgent(BaseAgent):
             messages = [agent_msg, HumanMessage(content=human_prompt)]
 
             response = llm.invoke(messages)
-            usage_metadata = response.usage_metadata
-            if usage_metadata:
-                document_tokens = usage_metadata.get("total_tokens", 0)
+            document_tokens = get_total_tokens(response)
             return {
                 "sec_repo_doc": response.content,
                 "document_tokens": document_tokens,
@@ -92,8 +92,8 @@ class GithubAgent(BaseAgent):
             logger.error(f"Error creating initial draft: {e}")
             raise ValueError(str(e))
 
-    def _update_draft_with_new_docs(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info("Updating draft with new documents")
+    def _refine_draft(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
+        logger.info("Refining draft")
         try:
             current_description = state.get("sec_repo_doc", "")
             target_repo = state["target_repo"]
@@ -101,22 +101,23 @@ class GithubAgent(BaseAgent):
             messages = self._create_update_messages(current_description, use_system_message, target_repo)
 
             response = llm.invoke(messages)
-            usage_metadata = response.usage_metadata
-            if usage_metadata:
-                document_tokens = state.get("document_tokens", 0) + usage_metadata.get("total_tokens", 0)
+            document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
             return {
                 "sec_repo_doc": response.content,
                 "document_tokens": document_tokens,
+                "current_refinement_count": state.get("current_refinement_count", 0) + 1,
             }
         except Exception as e:
             logger.error(f"Error updating draft: {e}")
             raise ValueError(str(e))
 
-    def _update_draft_condition(self, state: AgentState) -> Literal["update_draft_with_new_docs", "markdown_validator"]:
-        update_draft = state["update_draft"]
+    def _refine_draft_condition(self, state: AgentState) -> Literal["refine_draft", "markdown_validator"]:
+        current_refinement_count = state.get("current_refinement_count", 0)
+        refinement_count = state["refinement_count"]
 
-        if update_draft:
-            return GraphNodeType.UPDATE_DRAFT.value
+        if current_refinement_count < refinement_count:
+            logger.info(f"Refining draft. Iteration {current_refinement_count+1} of {refinement_count}")
+            return GraphNodeType.REFINE_DRAFT.value
         else:
             return GraphNodeType.MARKDOWN_VALIDATOR.value
 
@@ -160,9 +161,7 @@ class GithubAgent(BaseAgent):
         messages = [editor_msg, HumanMessage(content=human_prompt)]
 
         response = llm.invoke(messages)
-        usage_metadata = response.usage_metadata  # type: ignore[attr-defined]
-        if usage_metadata:
-            document_tokens = state.get("document_tokens", 0) + usage_metadata.get("total_tokens", 0)
+        document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
         return {
             "sec_repo_doc": response.content,
             "sec_repo_doc_validation_error": "",
@@ -179,13 +178,13 @@ class GithubAgent(BaseAgent):
         def create_initial_draft(state: AgentState):  # type: ignore[no-untyped-def]
             return self._create_initial_draft(state, llm.llm, llm.model_config.use_system_message)
 
-        def update_draft_with_new_docs(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._update_draft_with_new_docs(state, llm.llm, llm.model_config.use_system_message)
+        def refine_draft(state: AgentState):  # type: ignore[no-untyped-def]
+            return self._refine_draft(state, llm.llm, llm.model_config.use_system_message)
 
-        def update_draft_condition(
+        def refine_draft_condition(
             state: AgentState,
-        ) -> Literal["update_draft_with_new_docs", "markdown_validator"]:
-            return self._update_draft_condition(state)
+        ) -> Literal["refine_draft", "markdown_validator"]:
+            return self._refine_draft_condition(state)
 
         def markdown_validator(state: AgentState):  # type: ignore[no-untyped-def]
             return self._markdown_validator(state)
@@ -198,12 +197,12 @@ class GithubAgent(BaseAgent):
 
         builder = StateGraph(AgentState)
         builder.add_node("create_initial_draft", create_initial_draft)
-        builder.add_node(GraphNodeType.UPDATE_DRAFT.value, update_draft_with_new_docs)
+        builder.add_node(GraphNodeType.REFINE_DRAFT.value, refine_draft)
         builder.add_node(GraphNodeType.MARKDOWN_VALIDATOR.value, markdown_validator)
         builder.add_node(GraphNodeType.EDITOR.value, editor)
         builder.add_edge(START, "create_initial_draft")
-        builder.add_conditional_edges("create_initial_draft", update_draft_condition)
-        builder.add_edge(GraphNodeType.UPDATE_DRAFT.value, GraphNodeType.MARKDOWN_VALIDATOR.value)
+        builder.add_conditional_edges("create_initial_draft", refine_draft_condition)
+        builder.add_conditional_edges(GraphNodeType.REFINE_DRAFT.value, refine_draft_condition)
         builder.add_conditional_edges(GraphNodeType.MARKDOWN_VALIDATOR.value, markdown_error_condition)
         builder.add_edge(GraphNodeType.EDITOR.value, GraphNodeType.MARKDOWN_VALIDATOR.value)
         graph = builder.compile()

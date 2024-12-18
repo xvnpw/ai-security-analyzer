@@ -42,6 +42,7 @@ class AppConfig(BaseModel):
     files_chunk_size: Optional[int]
     dry_run: bool = Field(default=False)
     node_path: str
+    refinement_count: int = Field(default=1)
 
     @field_validator("exclude", mode="before")
     def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:

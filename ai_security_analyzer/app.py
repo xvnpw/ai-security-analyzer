@@ -171,6 +171,12 @@ def parse_arguments() -> AppConfig:
  - threat-scenarios - Threat Scenarios
  - attack-tree - Attack Tree""",
     )
+    agent_group.add_argument(
+        "--refinement-count",
+        type=int,
+        default=1,
+        help="Number of refinements to perform. For mods: github and file (default: 1)",
+    )
 
     # Editor configuration
     editor_group = parser.add_argument_group("Editor Configuration")

@@ -28,7 +28,7 @@ class GithubGraphExecutor(BaseGraphExecutor):
             state = graph.invoke(
                 {
                     "target_repo": target,
-                    "update_draft": True,  # TODO
+                    "refinement_count": self.config.refinement_count,
                 }
             )
             self._write_output(state)

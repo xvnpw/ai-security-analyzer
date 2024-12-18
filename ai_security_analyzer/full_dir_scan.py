@@ -17,6 +17,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.loaders import RepoDirectoryLoader
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.utils import get_total_tokens
 
 logger = logging.getLogger(__name__)
 
@@ -141,9 +142,7 @@ class FullDirScanAgent(BaseAgent):
             messages = [agent_msg, HumanMessage(content=human_prompt)]
 
             response = llm.invoke(messages)
-            usage_metadata = response.usage_metadata
-            if usage_metadata:
-                document_tokens = usage_metadata.get("total_tokens", 0)
+            document_tokens = get_total_tokens(response)
             return {
                 "sec_repo_doc": response.content,
                 "processed_docs_count": len(first_batch),
@@ -179,9 +178,7 @@ class FullDirScanAgent(BaseAgent):
             )
 
             response = llm.invoke(messages)
-            usage_metadata = response.usage_metadata
-            if usage_metadata:
-                document_tokens = state.get("document_tokens", 0) + usage_metadata.get("total_tokens", 0)
+            document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
             return {
                 "sec_repo_doc": response.content,
                 "processed_docs_count": processed_count + len(next_batch),
@@ -240,9 +237,7 @@ class FullDirScanAgent(BaseAgent):
         messages = [editor_msg, HumanMessage(content=human_prompt)]
 
         response = llm.invoke(messages)
-        usage_metadata = response.usage_metadata  # type: ignore[attr-defined]
-        if usage_metadata:
-            document_tokens = state.get("document_tokens", 0) + usage_metadata.get("total_tokens", 0)
+        document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
         return {
             "sec_repo_doc": response.content,
             "sec_repo_doc_validation_error": "",
