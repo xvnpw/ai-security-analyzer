@@ -28,7 +28,7 @@ class GithubGraphExecutor(BaseGraphExecutor):
             state = graph.invoke(
                 {
                     "target_repo": target,
-                    "update_draft": False,  # TODO
+                    "update_draft": True,  # TODO
                 }
             )
             self._write_output(state)
