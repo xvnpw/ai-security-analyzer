@@ -243,10 +243,9 @@ Set one of the following environment variables based on your chosen LLM provider
 
 ## Usage Examples
 
-### Basic Usage
+### Basic Usage Examples
 
-Generate a security design document for a Python project:
-
+1. Generate a security design document (default):
 ```bash
 poetry run python ai_security_analyzer/app.py \
     dir \
@@ -254,35 +253,7 @@ poetry run python ai_security_analyzer/app.py \
     -o security_design.md
 ```
 
-### Excluding Specific Files or Directories
-
-Exclude the `tests` directory and `LICENSE` file:
-
-```bash
-poetry run python ai_security_analyzer/app.py \
-    dir \
-    -t /path/to/your/project \
-    -o security_design.md \
-    --exclude "LICENSE,**/tests/**"
-```
-
-### Using a Different LLM Provider and Model
-
-Use Anthropic's Claude model:
-
-```bash
-poetry run python ai_security_analyzer/app.py \
-    dir \
-    -t /path/to/your/project \
-    -o security_design.md \
-    --agent-provider anthropic \
-    --agent-model claude-3-5-sonnet-20240620 \
-    --editor-provider anthropic \
-    --editor-model claude-3-5-sonnet-20240620
-```
-
-### Generate Threat Model
-
+2. Generate a threat model:
 ```bash
 poetry run python ai_security_analyzer/app.py \
     dir \
@@ -291,27 +262,130 @@ poetry run python ai_security_analyzer/app.py \
     --agent-prompt-type threat-modeling
 ```
 
-### Dry Run Mode
+3. Analyze a GitHub repository:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    github \
+    -t https://github.com/user/repo \
+    -o security_analysis.md
+```
 
-See which files would be analyzed without making API calls:
+### Advanced Configuration Examples
 
+1. Custom file filtering with specific focus:
 ```bash
 poetry run python ai_security_analyzer/app.py \
     dir \
     -t /path/to/your/project \
-    --dry-run
+    -o security_design.md \
+    --exclude "**/tests/**,**/docs/**" \
+    --include "**/*.py,**/*.java" \
+    --filter-keywords "security,auth,crypto,password"
+```
+This example:
+- Excludes test files, documentation, and LICENSE
+- Only includes Python and Java files
+- Focuses on files containing security-related keywords
+
+2. Using Anthropic's Claude model with custom temperature:
+```bash
+export ANTHROPIC_API_KEY=your_key_here
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    -o security_design.md \
+    --agent-provider anthropic \
+    --agent-model claude-3-5-sonnet-20240620 \
+    --agent-temperature 0.7 \
+    --editor-provider anthropic \
+    --editor-model claude-3-5-sonnet-20240620
 ```
 
-**Sample Output:**
-
+3. Attack surface analysis with custom refinement count:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    github \
+    -t https://github.com/user/repo \
+    -o attack_surface.md \
+    --agent-prompt-type attack-surface \
+    --refinement-count 3
 ```
-=========== dry-run ===========
-All documents token count: 123456
-List of chunked files to analyze:
-src/main.py
-src/utils.py
-README.md
-...
+
+### Project-Specific Examples
+
+1. Java/Android project analysis:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/android/project \
+    -o security_design.md \
+    --project-type android \
+    --exclude "**/build/**,**/.gradle/**" \
+    --include "**/*.xml"
+```
+
+2. JavaScript/Node.js project:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/node/project \
+    -o security_design.md \
+    --project-type javascript \
+    --exclude "**/node_modules/**" \
+    --include "**/*.json" \
+    --filter-keywords "auth,jwt,cookie,session"
+```
+
+### Performance Optimization Examples
+
+1. Dry run with token estimation:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    --dry-run \
+    --exclude "**/tests/**,**/docs/**" \
+    --filter-keywords "security,auth"
+```
+
+2. Custom context window and chunk size:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    -o security_design.md \
+    --files-context-window 70000 \
+    --files-chunk-size 50000
+```
+
+3. Verbose logging for debugging:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    -o security_design.md \
+    -v \
+    --debug
+```
+
+### Output Customization Examples
+
+1. Custom preamble for generated content:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    -o security_design.md \
+    --agent-preamble-enabled \
+    --agent-preamble "# Security Analysis (AI Generated on $(date))"
+```
+
+2. Attack tree analysis with stdout output:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    --agent-prompt-type attack-tree
 ```
 
 ## Real World Examples
