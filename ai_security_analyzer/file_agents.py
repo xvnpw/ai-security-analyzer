@@ -73,7 +73,7 @@ class FileAgent(BaseAgent):
         try:
             loader = TextLoader(state["target_file"], encoding="utf-8")
             docs = loader.load()
-            logger.info(f"Loaded {len(docs)} documents")
+            logger.info(f"Loaded {len(docs)} document")
             return {"repo_doc": docs[0]}
         except Exception as e:
             logger.error(f"Error loading file: {e}")

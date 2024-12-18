@@ -180,6 +180,31 @@ The application follows these high-level steps:
 5. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
 6. **Completion**: Finalizes the security documentation.
 
+### Application Flow for `file` mode
+
+```mermaid
+stateDiagram-v2
+    [*] --> Configure_Application
+    Configure_Application --> Load_File
+    Load_File --> Create_Initial_Draft
+    Create_Initial_Draft --> Refine_Draft
+    Refine_Draft --> Refine_Draft: More Refinements Needed
+    Refine_Draft --> Validate_Markdown: All Refinements Done
+    Validate_Markdown --> Editor: Invalid Markdown
+    Editor --> Validate_Markdown: Fix Formatting
+    Validate_Markdown --> [*]: Valid Markdown
+```
+
+The application follows these high-level steps:
+
+1. **Configure Application**: Parses command-line arguments and sets up the configuration.
+2. **Load File**: Loads the specified file for analysis.
+3. **Create Initial Draft**: Uses the LLM to generate an initial security document based on the file content.
+4. **Refine Draft**: Iteratively refines the draft to improve its quality (number of iterations configurable via `--refinement-count`).
+5. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
+6. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
+7. **Completion**: Finalizes the security documentation.
+
 ## Configuration
 
 The application accepts various command-line arguments to tailor its behavior.
@@ -269,6 +294,15 @@ poetry run python ai_security_analyzer/app.py \
     github \
     -t https://github.com/user/repo \
     -o security_analysis.md
+```
+
+4. Analyze a single file:
+```bash
+poetry run python ai_security_analyzer/app.py \
+    file \
+    -t examples/FLASK-o1-preview.md \
+    -o attack_tree.md \
+    --agent-prompt-type attack-tree
 ```
 
 ### Advanced Configuration Examples
