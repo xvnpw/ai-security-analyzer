@@ -119,7 +119,7 @@ This will show you:
 
 ## Architecture
 
-To help you understand how the application works, we've included an application flow diagram.
+To help you understand how the application works, we've included an application flow diagrams.
 
 ### Application Flow for `dir` mode
 
@@ -315,6 +315,9 @@ Check [examples](https://github.com/xvnpw/ai-security-analyzer/blob/main/example
 
 - Python
 - Go
+- Java
+- Android
+- JavaScript
 - More to come...
 
 In case you want to use a project type that is not supported, please use the `generic` project type with `--include`, `--include-mode`, `--exclude`, `--exclude-mode` options.
