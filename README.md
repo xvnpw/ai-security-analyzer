@@ -11,7 +11,7 @@
   [![GitHub release](https://img.shields.io/github/release/xvnpw/ai-security-analyzer.svg)](https://github.com/xvnpw/ai-security-analyzer/releases)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-   🤖 **AI Security Analyzer** is a powerful tool that leverages AI to automatically generate comprehensive security documentation for your projects, including security design and threat modeling.
+   🤖 **AI Security Analyzer** is a powerful tool that leverages AI to automatically generate comprehensive security documentation for your projects, including security design, threat modeling, attack surface analysis, and more.
 
   **🎥 Demo:**
 
@@ -21,18 +21,25 @@
 
 ## Overview
 
-**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types including security design documentation, threat modeling, attack surface analysis, threat scenarios, and attack tree. The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
+**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types:
 
-## Features
+- 🔒 Security Design Documentation
+- 🎯 Threat Modeling
+- 🔍 Attack Surface Analysis
+- ⚠️ Threat Scenarios
+- 🌳 Attack Tree Analysis
 
-- 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
-- 📝 **Automated Documentation Generation**: Generates comprehensive security design, threat modeling, attack surface analysis, threat scenarios, and attack tree documents.
-- 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
-- 🔄 **Multi-Project Support**: Supports Python, Go, Java, Android, and JavaScript project types.
-- 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
-- 📊 **Mermaid Diagram Validation**: Validates Mermaid diagrams in Markdown files.
-- 🎛️ **Customizable File Filtering**: Allows inclusion/exclusion of files and directories based on patterns.
-- 🌐 **Cross-Platform Compatibility**: Runs on Windows, macOS, and Linux.
+The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
+
+## Key Features
+
+- 🔍 **Intelligent Analysis**: Automatically analyzes codebases for security considerations
+- 📝 **Multiple Document Types**: Generates various security documentation types
+- 🤖 **Multi-LLM Support**: Works with OpenAI, OpenRouter, and Anthropic models
+- 🔄 **Project Type Support**: Python, Go, Java, Android, JavaScript, and generic projects
+- 📊 **Mermaid Diagram Validation**: Built-in validation for Mermaid diagrams
+- 🎛️ **Flexible Configuration**: Extensive file filtering and customization options
+- 🌐 **Cross-Platform**: Runs on Windows, macOS, and Linux
 
 ## Prerequisites
 
