@@ -21,12 +21,12 @@
 
 ## Overview
 
-**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types including security design documentation, threat modeling, attack surface analysis, and threat scenarios. The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
+**AI Security Analyzer** is a Python-based tool that analyzes your project's codebase and automatically generates detailed security documentation. It supports multiple analysis types including security design documentation, threat modeling, attack surface analysis, threat scenarios, and attack tree. The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
 
 ## Features
 
 - 🔍 **Intelligent Code Analysis**: Automatically analyzes your project's codebase for security considerations.
-- 📝 **Automated Documentation Generation**: Generates comprehensive security design, threat modeling, attack surface analysis, and threat scenarios documents.
+- 📝 **Automated Documentation Generation**: Generates comprehensive security design, threat modeling, attack surface analysis, threat scenarios, and attack tree documents.
 - 🔐 **Security-Focused Insights**: Provides detailed insights into potential security risks and design patterns.
 - 🔄 **Multi-Project Support**: Supports Python, Go, Java, Android, and JavaScript project types.
 - 🤖 **Multiple LLM Provider Support**: Compatible with OpenAI, OpenRouter, and Anthropic models.
@@ -79,7 +79,7 @@ docker run -v ~/path/to/your/project:/target \
 
 ### Understanding Token Consumption
 
-This application may consume a significant number of tokens due to its workflow:
+In `dir` mode this application may consume a significant number of tokens due to its workflow:
 - Each file is processed and sent to LLM
 - Multiple rounds of analysis for comprehensive documentation
 - Additional tokens for markdown validation and fixes
@@ -110,7 +110,7 @@ This will show you:
 
 ### Recommendations
 
-1. Start with `--dry-run` to assess token usage
+1. For `dir` mode start with `--dry-run` to assess token usage
 2. Use file filtering options to reduce scope
 3. Consider running on smaller, security-critical portions first
 4. Test on smaller codebases before analyzing large projects
@@ -120,7 +120,7 @@ This will show you:
 
 To help you understand how the application works, we've included an application flow diagram.
 
-### Application Flow
+### Application Flow for `dir` mode
 
 ```mermaid
 stateDiagram-v2
@@ -218,6 +218,7 @@ Generate a security design document for a Python project:
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     -o security_design.md
 ```
@@ -228,6 +229,7 @@ Exclude the `tests` directory and `LICENSE` file:
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     -o security_design.md \
     --exclude "LICENSE,**/tests/**"
@@ -239,6 +241,7 @@ Use Anthropic's Claude model:
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     -o security_design.md \
     --agent-provider anthropic \
@@ -251,6 +254,7 @@ poetry run python ai_security_analyzer/app.py \
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     -o threat_model.md \
     --agent-prompt-type threat-modeling
@@ -262,6 +266,7 @@ See which files would be analyzed without making API calls:
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     --dry-run
 ```
@@ -294,6 +299,7 @@ In case you want to use a project type that is not supported, please use the `ge
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     -o security_design.md \
     --project-type generic \
@@ -318,6 +324,7 @@ This warning indicates that some document chunks exceed the LLM's context window
 
 ```bash
 poetry run python ai_security_analyzer/app.py \
+    dir \
     -t /path/to/your/project \
     --files-chunk-size 50000 \
     --files-context-window 70000
