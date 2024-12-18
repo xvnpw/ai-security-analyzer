@@ -278,6 +278,7 @@ poetry run python ai_security_analyzer/app.py \
     dir \
     -t /path/to/your/project \
     -o security_design.md \
+    -p generic \
     --exclude "**/tests/**,**/docs/**" \
     --include "**/*.py,**/*.java" \
     --filter-keywords "security,auth,crypto,password"
@@ -358,14 +359,14 @@ poetry run python ai_security_analyzer/app.py \
     --files-chunk-size 50000
 ```
 
-3. Verbose logging for debugging:
+3. Verbose logging and debugging:
 ```bash
 poetry run python ai_security_analyzer/app.py \
     dir \
     -t /path/to/your/project \
     -o security_design.md \
     -v \
-    --debug
+    -d
 ```
 
 ### Output Customization Examples
