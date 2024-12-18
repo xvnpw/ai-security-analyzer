@@ -156,8 +156,8 @@ The application accepts various command-line arguments to tailor its behavior.
 ### General Options
 
 - `mode`: **Required**. Operation mode (`dir`, `github`, `file`):
-  - `dir`: Analyze a local directory
-  - `github`: Analyze a GitHub repository
+  - `dir`: Analyze a local directory (will send all files from directory to LLM)
+  - `github`: Analyze a GitHub repository (will use model knowledge base to generate documentation)
   - `file`: Analyze a single file
 - `-h`, `--help`: Show help message and exit.
 - `-v`, `--verbose`: Enable verbose logging.
