@@ -225,14 +225,14 @@ The application accepts various command-line arguments to tailor its behavior.
   - For `dir` mode: Directory path to analyze
   - For `github` mode: GitHub repository URL (must start with 'https://github.com/')
   - For `file` mode: File path to analyze
-- `-p`, `--project-type`: Type of project (`python`, `generic`, `go`, `java`, `android`, `javascript`). Default is `python`.
 - `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
-- `--exclude`: Comma-separated list of patterns to exclude from analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `LICENSE,**/tests/**`).
-- `--exclude-mode`: How to handle the exclude patterns (`add` to add to default excludes, `override` to replace). Default is `add`.
-- `--include`: Comma-separated list of patterns to include in the analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `**/*.java`).
-- `--include-mode`: How to handle the include patterns (`add` to add to default includes, `override` to replace). Default is `add`.
-- `--filter-keywords`: Comma-separated list of keywords. Only files containing these keywords will be analyzed.
-- `--dry-run`: Perform a dry run. Prints configuration and list of files to analyze without making API calls.
+- `-p`, `--project-type`: **For `dir` mode only**. Type of project (`python`, `generic`, `go`, `java`, `android`, `javascript`). Default is `python`.
+- `--exclude`: **For `dir` mode only**. Comma-separated list of patterns to exclude from analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `LICENSE,**/tests/**`).
+- `--exclude-mode`: **For `dir` mode only**. How to handle the exclude patterns (`add` to add to default excludes, `override` to replace). Default is `add`.
+- `--include`: **For `dir` mode only**. Comma-separated list of patterns to include in the analysis using python [glob patterns](https://docs.python.org/3/library/glob.html) (e.g., `**/*.java`).
+- `--include-mode`: **For `dir` mode only**. How to handle the include patterns (`add` to add to default includes, `override` to replace). Default is `add`.
+- `--filter-keywords`: **For `dir` mode only**. Comma-separated list of keywords. Only files containing these keywords will be analyzed.
+- `--dry-run`: **For `dir` mode only**. Perform a dry run. Prints configuration and list of files to analyze without making API calls.
 
 ### Agent Configuration
 
@@ -247,9 +247,9 @@ The application accepts various command-line arguments to tailor its behavior.
   - `attack-surface`: Perform attack surface analysis for the project.
   - `threat-scenarios`: Perform threat scenarios analysis for the project using [Daniel Miessler's](https://danielmiessler.com/) [prompt](https://github.com/danielmiessler/fabric/blob/f5f50cc4c94a539ee56bc533e9b1194eb9aa424d/patterns/create_threat_scenarios/system.md).
   - `attack-tree`: Perform attack tree analysis for the project.
-- `--refinement-count`: Number of iterations to refine the generated documentation (default: `1`). Higher values may produce more detailed and polished output but will increase token usage.
-- `--files-context-window`: Maximum token size for LLM context window. Automatically determined if not set.
-- `--files-chunk-size`: Chunk size in tokens for splitting files. Automatically determined if not set.
+- `--refinement-count`: **For `github` and `file` modes only**. Number of iterations to refine the generated documentation (default: `1`). Higher values may produce more detailed and polished output but will increase token usage.
+- `--files-context-window`: **For `dir` mode only**. Maximum token size for LLM context window. Automatically determined if not set.
+- `--files-chunk-size`: **For `dir` mode only**. Chunk size in tokens for splitting files. Automatically determined if not set.
 
 ### Editor Configuration
 
