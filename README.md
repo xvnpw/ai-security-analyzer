@@ -271,7 +271,7 @@ Set one of the following environment variables based on your chosen LLM provider
 
 ### Basic Usage Examples
 
-1. Generate a security design document (default):
+1. Generate a security design document for python project (default):
 ```bash
 poetry run python ai_security_analyzer/app.py \
     dir \
@@ -279,7 +279,7 @@ poetry run python ai_security_analyzer/app.py \
     -o security_design.md
 ```
 
-2. Generate a threat model:
+2. Generate a threat model for python project:
 ```bash
 poetry run python ai_security_analyzer/app.py \
     dir \
@@ -320,7 +320,7 @@ poetry run python ai_security_analyzer/app.py \
 ```
 This example:
 - Excludes test files, documentation, and LICENSE
-- Only includes Python and Java files
+- Only includes Python and Java source files
 - Focuses on files containing security-related keywords
 
 2. Using Anthropic's Claude model with custom temperature:
@@ -428,7 +428,7 @@ poetry run python ai_security_analyzer/app.py \
 
 Check [examples](https://github.com/xvnpw/ai-security-analyzer/blob/main/examples/README.md) for real world examples, e.g. flask framework, requests library, etc.
 
-## Supported Project Types
+## Supported Project Types - for `dir` mode only
 
 - Python
 - Go

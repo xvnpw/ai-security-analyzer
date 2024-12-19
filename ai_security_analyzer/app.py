@@ -23,12 +23,19 @@ def setup_logging(verbose: bool, debug: bool) -> None:
 
 def parse_arguments() -> AppConfig:
     """Parse command-line arguments and return an AppConfig instance."""
-    parser = argparse.ArgumentParser(description="AI Create Security Repository Document")
+    parser = argparse.ArgumentParser(
+        description="AI Security Analyzer - A tool that leverages AI to automatically generate comprehensive security documentation for your projects"
+    )
 
     parser.add_argument(
         "mode",
         choices=["dir", "github", "file"],
-        help="Operation mode: 'dir' for directory analysis, 'github' for GitHub repository analysis, 'file' for single file analysis",
+        help=(
+            "Operation mode: "
+            "'dir' to analyze a local directory (will send all files from directory to LLM), "
+            "'github' to analyze a GitHub repository (will use model knowledge base to generate documentation), "
+            "'file' to analyze a single file"
+        ),
     )
 
     # Input/Output arguments
@@ -37,27 +44,32 @@ def parse_arguments() -> AppConfig:
         "-t",
         "--target",
         required=True,
-        help="Target: directory path for 'dir' mode, GitHub repository URL for 'github' mode, or file path for 'file' mode",
+        help=(
+            "Target based on mode: "
+            "Directory path for 'dir' mode, "
+            "GitHub repository URL (must start with 'https://github.com/') for 'github' mode, "
+            "or file path for 'file' mode"
+        ),
     )
     io_group.add_argument(
         "-p",
         "--project-type",
         choices=["python", "generic", "go", "java", "android", "javascript"],
         default="python",
-        help="Type of project (default: python)",
+        help="Type of project (python, generic, go, java, android, javascript). Default is python",
     )
     io_group.add_argument(
         "-o",
         "--output-file",
         type=argparse.FileType("w", encoding="utf-8"),
         default=sys.stdout,
-        help="Output file for the security repository document (default: stdout)",
+        help="Output file for the security documentation. Default is stdout",
     )
     io_group.add_argument(
         "--exclude",
         help=(
-            "Comma separated list of patterns that will be excluded from analysis. "
-            "Pattern needs to be compatible with `fnmatch` (e.g. '**/prompts/**,LICENSE,*.png')"
+            "Comma-separated list of patterns to exclude from analysis using python glob patterns "
+            "(e.g., 'LICENSE,**/tests/**')"
         ),
     )
     io_group.add_argument(
@@ -65,16 +77,15 @@ def parse_arguments() -> AppConfig:
         choices=["add", "override"],
         default="add",
         help=(
-            "Mode in which exclude argument will work. 'add' - provided exclude will be added to built-in list "
-            "of excluded patterns. 'override' - provided exclude will override existing list of excluded patterns. "
-            "(default: add)"
+            "How to handle the exclude patterns ('add' to add to default excludes, "
+            "'override' to replace). Default is add"
         ),
     )
     io_group.add_argument(
         "--include",
         help=(
-            "Comma separated list of patterns that will be included from analysis. "
-            "Pattern needs to be compatible with `glob` (e.g. '**/prompts/**,LICENSE,*.png')"
+            "Comma-separated list of patterns to include in the analysis using python glob patterns "
+            "(e.g., '**/*.java')"
         ),
     )
     io_group.add_argument(
@@ -82,22 +93,18 @@ def parse_arguments() -> AppConfig:
         choices=["add", "override"],
         default="add",
         help=(
-            "Mode in which include argument will work. 'add' - provided include will be added to built-in list "
-            "of included patterns. 'override' - provided include will override existing list of included patterns. "
-            "(default: add)"
+            "How to handle the include patterns ('add' to add to default includes, "
+            "'override' to replace). Default is add"
         ),
     )
     io_group.add_argument(
         "--filter-keywords",
-        help=(
-            "Comma separated list of keywords. If used, only files that contain one of the keywords will be "
-            "analyzed (default: not set)"
-        ),
+        help="Comma-separated list of keywords. Only files containing these keywords will be analyzed",
     )
     io_group.add_argument(
         "--dry-run",
         action="store_true",
-        help="Dry run/ Will print configuration and list of files to analyze. No calls to LLMs",
+        help="Perform a dry run. Prints configuration and list of files to analyze without making API calls",
     )
 
     # Logging arguments
@@ -121,18 +128,18 @@ def parse_arguments() -> AppConfig:
         "--agent-provider",
         choices=["openai", "openrouter", "anthropic"],
         default="openai",
-        help="LLM provider for the agent (default: openai)",
+        help="LLM provider for the agent (openai, openrouter, anthropic). Default is openai",
     )
     agent_group.add_argument(
         "--agent-model",
         default="gpt-4o",
-        help="Model name for the agent (default: gpt-4o)",
+        help="Model name for the agent. Default is gpt-4o",
     )
     agent_group.add_argument(
         "--agent-temperature",
         type=float,
         default=0,
-        help="Sampling temperature for the agent model (default: 0)",
+        help="Sampling temperature for the agent model (between 0 and 1). Default is 0",
     )
     agent_group.add_argument(
         "--agent-preamble-enabled",
@@ -145,37 +152,37 @@ def parse_arguments() -> AppConfig:
         help="Preamble added to the beginning of the output (default: '##### (🤖 AI Generated)')",
     )
     agent_group.add_argument(
-        "--files-context-window",
-        type=int,
-        help=(
-            "Size of window in tokens that can be used by files. By default, it's automatic and based on "
-            "model context window"
-        ),
-    )
-    agent_group.add_argument(
-        "--files-chunk-size",
-        type=int,
-        help=(
-            "Size of chunk in tokens that will be used to split files into chunks. By default, it's automatic "
-            "and based on model context window"
-        ),
-    )
-    agent_group.add_argument(
         "--agent-prompt-type",
         choices=["sec-design", "threat-modeling", "attack-surface", "threat-scenarios", "attack-tree"],
         default="sec-design",
-        help="""Prompt to use in agent (default: sec-design):
- - sec-design - Security Design
- - threat-modeling - Threat Modeling
- - attack-surface - Attack Surface Analysis
- - threat-scenarios - Threat Scenarios
- - attack-tree - Attack Tree""",
+        help=(
+            "Prompt to use in agent (default: sec-design):\n"
+            " - sec-design: Generate a security design document for the project\n"
+            " - threat-modeling: Perform threat modeling for the project\n"
+            " - attack-surface: Perform attack surface analysis for the project\n"
+            " - threat-scenarios: Perform threat scenarios analysis for the project\n"
+            " - attack-tree: Perform attack tree analysis for the project"
+        ),
     )
     agent_group.add_argument(
         "--refinement-count",
         type=int,
         default=1,
-        help="Number of refinements to perform. For mods: github and file (default: 1)",
+        help=(
+            "Number of iterations to refine the generated documentation (default: 1). "
+            "Higher values may produce more detailed and polished output but will increase token usage. "
+            "For 'github' and 'file' modes only"
+        ),
+    )
+    agent_group.add_argument(
+        "--files-context-window",
+        type=int,
+        help="Maximum token size for LLM context window. Automatically determined if not set",
+    )
+    agent_group.add_argument(
+        "--files-chunk-size",
+        type=int,
+        help="Chunk size in tokens for splitting files. Automatically determined if not set",
     )
 
     # Editor configuration
@@ -184,28 +191,28 @@ def parse_arguments() -> AppConfig:
         "--editor-provider",
         choices=["openai", "openrouter", "anthropic"],
         default="openai",
-        help="LLM provider for the editor (default: openai)",
+        help="LLM provider for the editor (openai, openrouter, anthropic). Default is openai",
     )
     editor_group.add_argument(
         "--editor-model",
         default="gpt-4o",
-        help="Model name for the editor (default: gpt-4o)",
+        help="Model name for the editor. Default is gpt-4o",
     )
     editor_group.add_argument(
         "--editor-temperature",
         type=float,
         default=0,
-        help="Sampling temperature for the editor model (default: 0)",
+        help="Sampling temperature for the editor model. Default is 0",
     )
     editor_group.add_argument(
         "--editor-max-turns-count",
         type=int,
         default=3,
-        help="Maximum number of turns in which the editor will try to fix broken markdown formatting (default: 3)",
+        help="Maximum number of attempts the editor will try to fix markdown issues. Default is 3",
     )
     editor_group.add_argument(
         "--node-path",
-        help="Path to node binary (default: based on os)",
+        help="Path to the Node.js binary. Attempts to auto-detect if not provided",
     )
 
     args = parser.parse_args()
