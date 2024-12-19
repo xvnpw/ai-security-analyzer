@@ -93,7 +93,7 @@ flowchart LR
     A[GitHub Actions Workflow Runner] --> B[Fabric Agent Action Container]
     subgraph B[Fabric Agent Action Container]
       C[app.py CLI + EntryPoint] --> D[Agents Module & Graph Executor]
-      D --> E[Fabric Tools (Patterns)]
+      D --> E["Fabric Tools (Patterns)"]
       D --> F[LLM Provider]
     end
     F --> G[External LLM API Endpoints]
