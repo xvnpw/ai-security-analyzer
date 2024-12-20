@@ -22,13 +22,13 @@ class AppConfig(BaseModel):
     agent_prompt_type: Literal["sec-design", "threat-modeling", "attack-surface", "threat-scenarios", "attack-tree"] = (
         Field(default="sec-design")
     )
-    agent_provider: Literal["openai", "openrouter", "anthropic"] = Field(default="openai")
+    agent_provider: Literal["openai", "openrouter", "anthropic", "google"] = Field(default="openai")
     agent_model: str = Field(default="gpt-4o")
     agent_temperature: float = Field(default=0, ge=0, le=1)
     agent_preamble_enabled: bool = Field(default=False)
     agent_preamble: str = Field(default="##### (🤖 AI Generated)")
 
-    editor_provider: Literal["openai", "openrouter", "anthropic"] = Field(default="openai")
+    editor_provider: Literal["openai", "openrouter", "anthropic", "google"] = Field(default="openai")
     editor_model: str = Field(default="gpt-4o")
     editor_temperature: float = Field(default=0, ge=0, le=1)
     editor_max_turns_count: int = Field(default=3, ge=0)

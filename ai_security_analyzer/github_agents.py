@@ -15,7 +15,7 @@ from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
-from ai_security_analyzer.utils import get_total_tokens
+from ai_security_analyzer.utils import get_response_content, get_total_tokens
 
 logger = logging.getLogger(__name__)
 
@@ -85,7 +85,7 @@ class GithubAgent(BaseAgent):
             response = llm.invoke(messages)
             document_tokens = get_total_tokens(response)
             return {
-                "sec_repo_doc": response.content,
+                "sec_repo_doc": get_response_content(response),
                 "document_tokens": document_tokens,
             }
         except Exception as e:
@@ -103,7 +103,7 @@ class GithubAgent(BaseAgent):
             response = llm.invoke(messages)
             document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
             return {
-                "sec_repo_doc": response.content,
+                "sec_repo_doc": get_response_content(response),
                 "document_tokens": document_tokens,
                 "current_refinement_count": state.get("current_refinement_count", 0) + 1,
             }
@@ -163,7 +163,7 @@ class GithubAgent(BaseAgent):
         response = llm.invoke(messages)
         document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
         return {
-            "sec_repo_doc": response.content,
+            "sec_repo_doc": get_response_content(response),
             "sec_repo_doc_validation_error": "",
             "editor_turns_count": state.get("editor_turns_count", 0) + 1,
             "document_tokens": document_tokens,

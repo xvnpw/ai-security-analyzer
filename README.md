@@ -35,7 +35,7 @@ The tool supports multiple project types and utilizes advanced language models (
 
 - 🔍 **Intelligent Analysis**: Automatically analyzes codebases for security considerations
 - 📝 **Multiple Document Types**: Generates various security documentation types
-- 🤖 **Multi-LLM Support**: Works with OpenAI, OpenRouter, and Anthropic models
+- 🤖 **Multi-LLM Support**: Works with OpenAI, OpenRouter, Anthropic, and Google models
 - 🔄 **Project Type Support**: Python, Go, Java, Android, JavaScript, and generic projects
 - 📊 **Mermaid Diagram Validation**: Built-in validation for Mermaid diagrams
 - 🎛️ **Flexible Configuration**: Extensive file filtering and customization options
@@ -236,7 +236,7 @@ The application accepts various command-line arguments to tailor its behavior.
 
 ### Agent Configuration
 
-- `--agent-provider`: LLM provider for the agent (`openai`, `openrouter`, `anthropic`). Default is `openai`.
+- `--agent-provider`: LLM provider for the agent (`openai`, `openrouter`, `anthropic`, `google`). Default is `openai`.
 - `--agent-model`: Model name for the agent. Default is `gpt-4o`.
 - `--agent-temperature`: Sampling temperature for the agent model (between `0` and `1`). Default is `0`.
 - `--agent-preamble-enabled`: Enable preamble in the output.
@@ -253,7 +253,7 @@ The application accepts various command-line arguments to tailor its behavior.
 
 ### Editor Configuration
 
-- `--editor-provider`: LLM provider for the editor (`openai`, `openrouter`, `anthropic`). Default is `openai`.
+- `--editor-provider`: LLM provider for the editor (`openai`, `openrouter`, `anthropic`, `google`). Default is `openai`.
 - `--editor-model`: Model name for the editor. Default is `gpt-4o`.
 - `--editor-temperature`: Sampling temperature for the editor model. Default is `0`.
 - `--editor-max-turns-count`: Maximum number of attempts the editor will try to fix markdown issues. Default is `3`.
@@ -266,6 +266,7 @@ Set one of the following environment variables based on your chosen LLM provider
 - `OPENAI_API_KEY`
 - `OPENROUTER_API_KEY`
 - `ANTHROPIC_API_KEY`
+- `GOOGLE_API_KEY`
 
 ## Usage Examples
 
@@ -345,6 +346,20 @@ poetry run python ai_security_analyzer/app.py \
     -o attack_surface.md \
     --agent-prompt-type attack-surface \
     --refinement-count 3
+```
+
+3. Using Google's Gemini model:
+```bash
+export GOOGLE_API_KEY=your_key_here
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    -o security_design.md \
+    --agent-provider google \
+    --agent-model gemini-2.0-flash-thinking-exp \
+    --agent-temperature 0 \
+    --editor-provider google \
+    --editor-model gemini-2.0-flash-thinking-exp
 ```
 
 ### Project-Specific Examples
@@ -503,6 +518,7 @@ export OPENAI_API_KEY=your_openai_api_key
 - [OpenAI](https://platform.openai.com/) - Industry standard.
 - [OpenRouter](https://openrouter.ai/) - Multi-model gateway.
 - [Anthropic](https://www.anthropic.com/) - Claude models.
+- [Google](https://ai.google.dev/) - Gemini models.
 
 ## Contributing
 

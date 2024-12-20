@@ -126,9 +126,9 @@ def parse_arguments() -> AppConfig:
     agent_group = parser.add_argument_group("Agent Configuration")
     agent_group.add_argument(
         "--agent-provider",
-        choices=["openai", "openrouter", "anthropic"],
+        choices=["openai", "openrouter", "anthropic", "google"],
         default="openai",
-        help="LLM provider for the agent (openai, openrouter, anthropic). Default is openai",
+        help="LLM provider for the agent (openai, openrouter, anthropic, google). Default is openai",
     )
     agent_group.add_argument(
         "--agent-model",
@@ -189,9 +189,9 @@ def parse_arguments() -> AppConfig:
     editor_group = parser.add_argument_group("Editor Configuration")
     editor_group.add_argument(
         "--editor-provider",
-        choices=["openai", "openrouter", "anthropic"],
+        choices=["openai", "openrouter", "anthropic", "google"],
         default="openai",
-        help="LLM provider for the editor (openai, openrouter, anthropic). Default is openai",
+        help="LLM provider for the editor (openai, openrouter, anthropic, google). Default is openai",
     )
     editor_group.add_argument(
         "--editor-model",

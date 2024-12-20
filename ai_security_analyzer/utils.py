@@ -9,6 +9,25 @@ def get_total_tokens(message: BaseMessage) -> int:
     return message.usage_metadata.get("total_tokens", 0)  # type: ignore
 
 
+def get_response_content(message: BaseMessage) -> str:
+    """
+    Extract content from a BaseMessage, handling both string and list content types.
+    Returns the content if it's a string, or the last element if it's a list.
+
+    Args:
+        message: BaseMessage object containing the response content
+
+    Returns:
+        str: The message content or the last element if content is a list
+    """
+    content = message.content
+    if isinstance(content, str):
+        return content
+    elif isinstance(content, list):
+        return str(content[-1])
+    return str(content)  # Fallback case for other types
+
+
 def find_node_binary() -> Union[str | None]:
     """
     Locate the Node.js binary in a cross-platform manner.

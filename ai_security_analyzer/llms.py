@@ -7,13 +7,14 @@ from typing import Any, Literal, Type, Optional
 from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 from ai_security_analyzer import constants
 from ai_security_analyzer.config import AppConfig
 
 logger = logging.getLogger(__name__)
 
-ProviderType = Literal["openai", "openrouter", "anthropic"]
+ProviderType = Literal["openai", "openrouter", "anthropic", "google"]
 
 DEFAULT_CONTEXT_WINDOW = 70000
 DEFAULT_CHUNK_SIZE = 60000
@@ -69,6 +70,11 @@ class LLMProvider:
                 env_key=constants.ANTHROPIC_API_KEY,
                 api_base=None,
                 model_class=ChatAnthropic,
+            ),
+            "google": ProviderConfig(
+                env_key=constants.GOOGLE_API_KEY,
+                api_base=None,
+                model_class=ChatGoogleGenerativeAI,
             ),
         }
 
@@ -129,6 +135,12 @@ class LLMProvider:
                 "temperature": llm_config.temperature,
                 "model": llm_config.model,
                 "anthropic_api_key": api_key,
+            }
+        elif provider_config.model_class == ChatGoogleGenerativeAI:
+            kwargs = {
+                "temperature": llm_config.temperature,
+                "model": llm_config.model,
+                "google_api_key": api_key,
             }
         else:
             raise ValueError(f"Unsupported model class: {provider_config.model_class}")

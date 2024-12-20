@@ -17,6 +17,7 @@ langchain-openai = "^0.2.10"
 langchain-anthropic = "^0.3.0"
 langchain-text-splitters = "^0.3.2"
 six = "^1.16.0"
+langchain-google-genai = "^2.0.7"
 
 
 [tool.poetry.group.dev.dependencies]
