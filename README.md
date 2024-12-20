@@ -348,7 +348,7 @@ poetry run python ai_security_analyzer/app.py \
     --refinement-count 3
 ```
 
-3. Using Google's Gemini model:
+4. Using Google's Gemini model:
 ```bash
 export GOOGLE_API_KEY=your_key_here
 poetry run python ai_security_analyzer/app.py \
