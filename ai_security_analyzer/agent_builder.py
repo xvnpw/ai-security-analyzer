@@ -13,7 +13,7 @@ from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.prompts import DOC_TYPE_PROMPTS, get_agent_prompt
-from ai_security_analyzer.github_agents import GithubAgent
+from ai_security_analyzer.github2_agents import GithubAgent2
 from ai_security_analyzer.file_agents import FileAgent
 from ai_security_analyzer.base_agent import AgentType
 
@@ -28,7 +28,7 @@ class AgentBuilder:
         self._agents: dict[AgentType, Type[BaseAgent]] = {
             AgentType.DIR: FullDirScanAgent,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanAgent,
-            AgentType.GITHUB: GithubAgent,
+            AgentType.GITHUB: GithubAgent2,
             AgentType.FILE: FileAgent,
         }
         agent_type = AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)

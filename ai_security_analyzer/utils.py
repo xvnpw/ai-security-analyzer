@@ -2,7 +2,16 @@ import os
 import platform
 from shutil import which
 from typing import Union
-from langchain_core.messages import BaseMessage
+from langchain_core.messages import BaseMessage, AIMessage
+
+
+def convert_to_ai_message(message: BaseMessage) -> AIMessage:
+    content = message.content
+
+    if isinstance(content, list):
+        content = str(content[-1])
+
+    return AIMessage(content=content)
 
 
 def get_total_tokens(message: BaseMessage) -> int:

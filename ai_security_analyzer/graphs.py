@@ -6,6 +6,7 @@ from langgraph.graph.state import CompiledStateGraph
 from ai_security_analyzer.config import AppConfig
 from langchain_core.documents import Document
 from ai_security_analyzer.base_agent import AgentType
+from ai_security_analyzer.prompts import GITHUB2_CONFIGS
 
 logger = logging.getLogger(__name__)
 
@@ -77,16 +78,30 @@ class GithubGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
+            config = GITHUB2_CONFIGS[self.config.agent_prompt_type]
+
             state = graph.invoke(
                 {
                     "target_repo": target,
-                    "refinement_count": self.config.refinement_count,
+                    "step_count": config["steps"],
+                    "step_index": 0,
+                    "step_prompts": config["step_prompts"],
                 }
             )
             self._write_output(state)
         except Exception as e:
             logger.error(f"Graph execution failed: {e}")
             raise
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc", "")
+
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
 
 
 class FileGraphExecutor(FullDirScanGraphExecutor):

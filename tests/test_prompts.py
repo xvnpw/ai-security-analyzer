@@ -6,7 +6,6 @@ VALID_PROMPT_TYPES = ["sec-design", "threat-modeling", "attack-surface", "attack
 
 MODE_SPECIFIC_CONTENT = [
     ("dir", "PROJECT FILES", "GITHUB REPOSITORY"),
-    ("github", "GITHUB REPOSITORY", "PROJECT FILES"),
     ("file", "FILE", "PROJECT FILES"),
 ]
 
@@ -68,11 +67,10 @@ def test_prompt_templates_and_doc_types_match():
 def test_get_agent_prompt_different_modes(prompt_type: str):
     """Test prompts are different for different modes but contain expected content"""
     dir_result = get_agent_prompt(prompt_type, "dir")
-    github_result = get_agent_prompt(prompt_type, "github")
+    file_result = get_agent_prompt(prompt_type, "file")
 
     # Results should be different for dir vs github
-    assert dir_result != github_result
+    assert dir_result != file_result
 
     # Each should contain mode-specific content
     assert "PROJECT FILES" in dir_result
-    assert "GITHUB REPOSITORY" in github_result

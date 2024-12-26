@@ -44,31 +44,6 @@ def test_run_graph_executor_success():
     config.output_file.write.assert_called_once_with(expected_output)
 
 
-def test_github_graph_executor_success():
-    # Arrange
-    config = Mock(spec=AppConfig)
-    config.agent_preamble_enabled = True
-    config.agent_preamble = "Test Preamble"
-    config.refinement_count = 1
-    config.output_file = Mock()
-
-    executor = GithubGraphExecutor(config)
-    graph = Mock(spec=CompiledStateGraph)
-    state = {"sec_repo_doc": "Test Content", "document_tokens": 1000}
-    graph.invoke.return_value = state
-
-    # Act
-    with patch("ai_security_analyzer.graphs.logger") as mock_logger:
-        executor.execute(graph, "owner/repo")
-
-        # Assert logger was called with token count
-        mock_logger.info.assert_called_with("Actual token usage: 1000")
-
-    # Check output
-    expected_output = f"{config.agent_preamble}\n\n{state['sec_repo_doc']}"
-    config.output_file.write.assert_called_once_with(expected_output)
-
-
 def test_dry_run_graph_executor_success(capfd):
     # Arrange
     config = Mock(spec=AppConfig)

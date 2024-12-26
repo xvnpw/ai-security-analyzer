@@ -13,7 +13,7 @@ def get_agent_prompt(prompt_type: str, mode: str) -> str:
     # Map modes to their base templates
     mode_templates = {
         "dir": (DIR_1, DIR_2, DIR_3, DIR_STEPS_2),
-        "github": (GITHUB_1, GITHUB_2, GITHUB_3, GITHUB_STEPS_2),
+        "github": ("GITHUB_1", "GITHUB_2", "GITHUB_3", "GITHUB_STEPS_2"),
         "file": (FILE_1, FILE_2, FILE_3, FILE_STEPS_2),
     }
 
@@ -54,21 +54,6 @@ DIR_STEPS_2 = """1. Update the CURRENT {} (if applicable):
    - The `PROJECT FILES` will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
 
    - Thoroughly review all provided files to identify components, configurations, and code relevant to the attack surface.
-"""
-
-GITHUB_1 = "GITHUB REPOSITORY"
-GITHUB_2 = "- If CURRENT {} is not empty - it means that draft of this document was created in previous interactions with LLM. In such case update CURRENT {} with new information that you get from your knowledge base. In case CURRENT {} is empty it means that you get first iteration."
-GITHUB_3 = "- CURRENT {} - document that was created in previous interactions with LLM based on knowledge base so far"
-
-GITHUB_STEPS_2 = """1. Update the CURRENT {} (if applicable):
-
-   - When the `CURRENT {}` is not empty, it indicates that a draft of this document was created in previous interactions with LLM. In this case, integrate new findings from the latest knowledge base into the existing `CURRENT {}`. Ensure consistency and avoid duplication.
-
-   - If the `CURRENT {}` is empty, proceed to create a new threat model based on your knowledge base.
-
-2. Analyze the Project Files:
-
-   - Thoroughly review all project files you have in your knowledge base to identify components, configurations, and code relevant to the attack surface.
 """
 
 FILE_1 = "FILE"
@@ -767,4 +752,91 @@ DOC_TYPE_PROMPTS: Dict[str, str] = {
     "attack-surface": "THREAT MODEL",
     "threat-scenarios": "THREAT MODEL",
     "attack-tree": "ATTACK TREE",
+}
+
+GITHUB2_THREAT_MODELING_PROMPTS = [
+    "You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {}. Focus on threats introduced by {} and omit general, common web application threats.",
+    "Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {} component is affected (describe what component is affected, e.g. module, function, etc.), risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting, especially for tables.",
+    "Update threat list and return only threats that directly involve {}. Return high and critical threats only. Use valid markdown formatting, especially for tables.",
+]
+
+GITHUB2_ATTACK_TREE_PROMPTS = [
+    """You are cybersecurity expert, working with development team. Your task is to create detail threat model using attack tree analysis for application that is using {}. Focus on threats introduced by {} and omit general, common web application threats. Identify how an attacker might compromise application using {} by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
+
+Objective:
+Attacker's Goal: To compromise application that use given project by exploiting weaknesses or vulnerabilities within the project itself.
+
+(Note: If you find a more precise or impactful goal during your analysis, feel free to refine it.)""",
+    """For each attack step, estimate:
+- Likelihood: How probable is it that the attack could occur?
+- Impact: What would be the potential damage if the attack is successful?
+- Effort: What resources or time would the attacker need?
+- Skill Level: What level of expertise is required?
+- Detection Difficulty: How easy would it be to detect the attack?""",
+    "Update attack tree and mark High-Risk Paths and Critical Nodes",
+    "Update attack tree and return sub-tree with only High-Risk Paths and Critical Nodes. Return title, goal,sub-tree and detailed breakdown of attack vectors for High-Risk Paths and Critical Nodes.",
+]
+
+GITHUB2_SEC_DESIGN_PROMPTS = [
+    "You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components. Provide a well written, detailed project design document that will be use later for threat modelling for project: {}",
+    "Improve it. Return improved version.",
+]
+
+GITHUB2_ATTACK_SURFACE_PROMPTS = [
+    "You are cybersecurity expert, working with development team. Your task is to create attack surface analysis for application that is using {}. Focus on attack surface introduced by {} and omit general, common attack surface.",
+    "Create key attack surface list with: description, how {} contributes to the attack surface, example, impact, risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting, especially for tables.",
+    "Update key attack surface list and return only elements that directly involve {}. Return high and critical elements only. Use valid markdown formatting, especially for tables.",
+]
+
+GITHUB2_PROMPTS: Dict[str, str] = {
+    "sec-design": "DESIGN DOCUMENT",
+    "threat-modeling": "THREAT MODEL",
+    "attack-surface": "THREAT MODEL",
+    "threat-scenarios": "THREAT MODEL",
+    "attack-tree": "ATTACK TREE",
+}
+
+GITHUB2_THREAT_MODELING_CONFIG = {
+    "steps": 3,
+    "step_prompts": [
+        lambda target_repo: GITHUB2_THREAT_MODELING_PROMPTS[0].format(target_repo, target_repo.split("/")[-1]),
+        lambda target_repo: GITHUB2_THREAT_MODELING_PROMPTS[1].format(target_repo, target_repo.split("/")[-1]),
+        lambda target_repo: GITHUB2_THREAT_MODELING_PROMPTS[2].format(target_repo, target_repo.split("/")[-1]),
+    ],
+}
+
+GITHUB2_ATTACK_TREE_CONFIG = {
+    "steps": 4,
+    "step_prompts": [
+        lambda target_repo: GITHUB2_ATTACK_TREE_PROMPTS[0].format(
+            target_repo, target_repo.split("/")[-1], target_repo.split("/")[-1]
+        ),
+        lambda target_repo: GITHUB2_ATTACK_TREE_PROMPTS[1].format(target_repo),
+        lambda target_repo: GITHUB2_ATTACK_TREE_PROMPTS[2].format(target_repo),
+        lambda target_repo: GITHUB2_ATTACK_TREE_PROMPTS[3].format(target_repo),
+    ],
+}
+
+GITHUB2_SEC_DESIGN_CONFIG = {
+    "steps": 2,
+    "step_prompts": [
+        lambda target_repo: GITHUB2_SEC_DESIGN_PROMPTS[0].format(target_repo),
+        lambda target_repo: GITHUB2_SEC_DESIGN_PROMPTS[1].format(target_repo),
+    ],
+}
+
+GITHUB2_ATTACK_SURFACE_CONFIG = {
+    "steps": 3,
+    "step_prompts": [
+        lambda target_repo: GITHUB2_ATTACK_SURFACE_PROMPTS[0].format(target_repo, target_repo.split("/")[-1]),
+        lambda target_repo: GITHUB2_ATTACK_SURFACE_PROMPTS[1].format(target_repo.split("/")[-1]),
+        lambda target_repo: GITHUB2_ATTACK_SURFACE_PROMPTS[2].format(target_repo.split("/")[-1]),
+    ],
+}
+
+GITHUB2_CONFIGS = {
+    "threat-modeling": GITHUB2_THREAT_MODELING_CONFIG,
+    "attack-tree": GITHUB2_ATTACK_TREE_CONFIG,
+    "sec-design": GITHUB2_SEC_DESIGN_CONFIG,
+    "attack-surface": GITHUB2_ATTACK_SURFACE_CONFIG,
 }
