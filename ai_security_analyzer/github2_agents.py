@@ -96,6 +96,7 @@ class GithubAgent2(BaseAgent):
             messages = state["messages"]
             last_message = messages[-1]
             final_response = get_response_content(last_message)
+            final_response = final_response.strip()
 
             if final_response.startswith("```markdown"):
                 final_response = final_response.replace("```markdown", "")

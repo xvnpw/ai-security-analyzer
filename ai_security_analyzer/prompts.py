@@ -778,8 +778,8 @@ Attacker's Goal: To compromise application that use given project by exploiting 
 ]
 
 GITHUB2_SEC_DESIGN_PROMPTS = [
-    "You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components. Provide a well written, detailed project design document that will be use later for threat modelling for project: {}. Use valid markdown formatting, especially for tables and mermaid diagrams.",
-    "Improve it. Return improved version. Use valid markdown formatting, especially for tables and mermaid diagrams.",
+    "You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components. Provide a well written, detailed project design document that will be use later for threat modelling for project: {}. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.",
+    "Improve it. Return improved version. Use valid markdown formatting, especially for tables and mermaid diagrams (especially add quotes around nodes names in flowcharts).",
 ]
 
 GITHUB2_ATTACK_SURFACE_PROMPTS = [
