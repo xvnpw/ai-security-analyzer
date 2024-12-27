@@ -783,7 +783,7 @@ GITHUB2_SEC_DESIGN_PROMPTS = [
 ]
 
 GITHUB2_ATTACK_SURFACE_PROMPTS = [
-    "You are cybersecurity expert, working with development team. Your task is to create attack surface analysis for application that is using {}. Focus on attack surface introduced by {} and omit general, common attack surface.",
+    "You are cybersecurity expert, working with development team. Your task is to create attack surface analysis for application that is using {}. Focus on attack surface introduced by {} and omit general, common attack surface. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.",
     "Create key attack surface list with: description, how {} contributes to the attack surface, example, impact, risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting, especially for tables.",
     "Update key attack surface list and return only elements that directly involve {}. Return high and critical elements only. Use valid markdown formatting, especially for tables.",
 ]
