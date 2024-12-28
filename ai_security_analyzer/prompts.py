@@ -774,7 +774,7 @@ Attacker's Goal: To compromise application that use given project by exploiting 
 - Skill Level: What level of expertise is required?
 - Detection Difficulty: How easy would it be to detect the attack?""",
     "Update attack tree and mark High-Risk Paths and Critical Nodes",
-    "Update attack tree and return sub-tree with only High-Risk Paths and Critical Nodes. Return title, goal,sub-tree and detailed breakdown of attack vectors for High-Risk Paths and Critical Nodes.",
+    "Update attack tree and return sub-tree with only High-Risk Paths and Critical Nodes. Return title, goal,sub-tree and detailed breakdown of attack vectors for High-Risk Paths and Critical Nodes. Don't use markdown tables at all, use markdown lists instead.",
 ]
 
 GITHUB2_SEC_DESIGN_PROMPTS = [
