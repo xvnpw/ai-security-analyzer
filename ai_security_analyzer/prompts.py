@@ -755,9 +755,9 @@ DOC_TYPE_PROMPTS: Dict[str, str] = {
 }
 
 GITHUB2_THREAT_MODELING_PROMPTS = [
-    "You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {}. Focus on threats introduced by {} and omit general, common web application threats. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
-    "Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {} component is affected (describe what component is affected, e.g. module, function, etc.), risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
-    "Update threat list and return only threats that directly involve {}. Return high and critical threats only. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
+    "You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {}. Focus on threats introduced by {} and omit general, common web application threats. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.",
+    "Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {} component is affected (describe what component is affected, e.g. module, function, etc.), risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.",
+    "Update threat list and return only threats that directly involve {}. Return high and critical threats only. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.",
 ]
 
 GITHUB2_ATTACK_TREE_PROMPTS = [
