@@ -755,9 +755,9 @@ DOC_TYPE_PROMPTS: Dict[str, str] = {
 }
 
 GITHUB2_THREAT_MODELING_PROMPTS = [
-    "You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {}. Focus on threats introduced by {} and omit general, common web application threats.",
-    "Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {} component is affected (describe what component is affected, e.g. module, function, etc.), risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting, especially for tables.",
-    "Update threat list and return only threats that directly involve {}. Return high and critical threats only. Use valid markdown formatting, especially for tables.",
+    "You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {}. Focus on threats introduced by {} and omit general, common web application threats. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
+    "Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {} component is affected (describe what component is affected, e.g. module, function, etc.), risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
+    "Update threat list and return only threats that directly involve {}. Return high and critical threats only. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
 ]
 
 GITHUB2_ATTACK_TREE_PROMPTS = [
@@ -779,7 +779,7 @@ Attacker's Goal: To compromise application that use given project by exploiting 
 
 GITHUB2_SEC_DESIGN_PROMPTS = [
     "You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components. Provide a well written, detailed project design document that will be use later for threat modelling for project: {}. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
-    "Improve it. Return improved version. Use valid markdown formatting, especially for tables and mermaid diagrams (especially add quotes around nodes names in flowcharts).",
+    "Improve it. Return improved version. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead.",
 ]
 
 GITHUB2_ATTACK_SURFACE_PROMPTS = [
