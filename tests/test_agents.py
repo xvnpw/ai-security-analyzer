@@ -32,6 +32,7 @@ class AppConfigTest:
     dry_run: bool = False
     node_path = "/usr/bin/node"
     agent_prompt_type = "sec-design"
+    deep_analysis: bool = False
 
 
 @pytest.fixture

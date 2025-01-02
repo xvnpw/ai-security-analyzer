@@ -53,6 +53,7 @@ def test_dry_run_graph_executor_success(capfd):
     config.include = []
     config.include_mode = "include_mode_test"
     config.filter_keywords = []
+    config.deep_analysis = False
     executor = DryRunFullDirScanGraphExecutor(config)
 
     graph = Mock(spec=CompiledStateGraph)
@@ -92,6 +93,7 @@ def test_graph_executor_factory_dir_executor():
     config = Mock(spec=AppConfig)
     config.dry_run = False
     config.mode = "dir"
+    config.deep_analysis = False
     # Act
     executor = GraphExecutorFactory.create(config)
     # Assert
@@ -103,6 +105,7 @@ def test_graph_executor_factory_github_executor():
     config = Mock(spec=AppConfig)
     config.dry_run = False
     config.mode = "github"
+    config.deep_analysis = False
     # Act
     executor = GraphExecutorFactory.create(config)
     # Assert
@@ -114,6 +117,7 @@ def test_graph_executor_factory_dry_run_executor():
     config = Mock(spec=AppConfig)
     config.dry_run = True
     config.mode = "dir"
+    config.deep_analysis = False
     # Act
     executor = GraphExecutorFactory.create(config)
     # Assert
@@ -125,6 +129,7 @@ def test_graph_executor_factory_invalid_type():
     config = Mock(spec=AppConfig)
     config.dry_run = False
     config.mode = "invalid"
+    config.deep_analysis = False
     # Act & Assert
     try:
         GraphExecutorFactory.create(config)
