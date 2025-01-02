@@ -20,11 +20,14 @@ class AgentType(Enum):
     GITHUB = "github"
     GITHUB_DEEP_TM = "github-deep-tm"
     FILE = "file"
+    GITHUB_DEEP_AS = "github-deep-as"
 
     @staticmethod
     def create(config: AppConfig) -> "AgentType":
         if config.deep_analysis and config.agent_prompt_type == "threat-modeling":
             return AgentType.GITHUB_DEEP_TM
+        elif config.deep_analysis and config.agent_prompt_type == "attack-surface":
+            return AgentType.GITHUB_DEEP_AS
         else:
             return AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
 

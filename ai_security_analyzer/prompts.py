@@ -848,3 +848,11 @@ THREAT:
 
 {}
 """
+
+GITHUB2_GET_ATTACK_SURFACE_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack surface from attack surface analysis for application that is using {}.
+
+ATTACK SURFACE:
+{}
+
+{}
+"""

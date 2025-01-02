@@ -129,6 +129,30 @@ class GithubDeepTmGraphExecutor(GithubGraphExecutor):
                 f.write(threat.detail_analysis)
 
 
+class GithubDeepAsGraphExecutor(GithubGraphExecutor):
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc", "")
+
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
+
+        output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
+        attack_surfaces_dir = os.path.join(output_dir, "attack_surfaces")
+
+        os.makedirs(attack_surfaces_dir, exist_ok=True)
+
+        attack_surfaces = state.get("output_attack_surfaces", [])
+        for attack_surface in attack_surfaces:
+            attack_surface_path = os.path.join(attack_surfaces_dir, f"{attack_surface.filename}.md")
+            with open(attack_surface_path, "w") as f:
+                f.write(attack_surface.detail_analysis)
+
+
 class FileGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
@@ -156,6 +180,7 @@ class GraphExecutorFactory:
             AgentType.GITHUB: GithubGraphExecutor,
             AgentType.FILE: FileGraphExecutor,
             AgentType.GITHUB_DEEP_TM: GithubDeepTmGraphExecutor,
+            AgentType.GITHUB_DEEP_AS: GithubDeepAsGraphExecutor,
         }
         agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)
