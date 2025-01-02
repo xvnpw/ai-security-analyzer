@@ -1,6 +1,7 @@
 import logging
 from abc import ABC, abstractmethod
 from typing import Any, Final, List, Type
+import os
 
 from langgraph.graph.state import CompiledStateGraph
 from ai_security_analyzer.config import AppConfig
@@ -104,6 +105,30 @@ class GithubGraphExecutor(FullDirScanGraphExecutor):
         self.config.output_file.write(output_content)
 
 
+class GithubDeepTmGraphExecutor(GithubGraphExecutor):
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc", "")
+
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
+
+        output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
+        threats_dir = os.path.join(output_dir, "threats")
+
+        os.makedirs(threats_dir, exist_ok=True)
+
+        threats = state.get("output_threats", [])
+        for threat in threats:
+            threat_path = os.path.join(threats_dir, f"{threat.filename}.md")
+            with open(threat_path, "w") as f:
+                f.write(threat.detail_analysis)
+
+
 class FileGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
@@ -130,8 +155,9 @@ class GraphExecutorFactory:
             AgentType.DRY_RUN_DIR: DryRunFullDirScanGraphExecutor,
             AgentType.GITHUB: GithubGraphExecutor,
             AgentType.FILE: FileGraphExecutor,
+            AgentType.GITHUB_DEEP_TM: GithubDeepTmGraphExecutor,
         }
-        agent_type = AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
+        agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)
         if not executor_class:
             raise ValueError(f"Unknown agent type: {agent_type.value}")

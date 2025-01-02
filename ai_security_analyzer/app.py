@@ -184,6 +184,11 @@ def parse_arguments() -> AppConfig:
         type=int,
         help="Chunk size in tokens for splitting files. Automatically determined if not set",
     )
+    agent_group.add_argument(
+        "--deep-analysis",
+        action="store_true",
+        help="Enable deep analysis for GitHub mode - only for threat modeling",
+    )
 
     # Editor configuration
     editor_group = parser.add_argument_group("Editor Configuration")
@@ -207,8 +212,8 @@ def parse_arguments() -> AppConfig:
     editor_group.add_argument(
         "--editor-max-turns-count",
         type=int,
-        default=3,
-        help="Maximum number of attempts the editor will try to fix markdown issues. Default is 3",
+        default=0,
+        help="Maximum number of attempts the editor will try to fix markdown issues. Default is 0 (editor disabled)",
     )
     editor_group.add_argument(
         "--node-path",

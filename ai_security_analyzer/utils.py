@@ -3,6 +3,7 @@ import platform
 from shutil import which
 from typing import Union
 from langchain_core.messages import BaseMessage, AIMessage
+from pathvalidate import sanitize_filename
 
 
 def convert_to_ai_message(message: BaseMessage) -> AIMessage:
@@ -35,6 +36,10 @@ def get_response_content(message: BaseMessage) -> str:
     elif isinstance(content, list):
         return str(content[-1])
     return str(content)  # Fallback case for other types
+
+
+def format_filename(filename: str) -> str:
+    return sanitize_filename(filename).lower().replace(" ", "_")
 
 
 def find_node_binary() -> Union[str | None]:

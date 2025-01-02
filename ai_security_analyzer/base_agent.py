@@ -9,6 +9,7 @@ from langgraph.graph.state import CompiledStateGraph
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.config import AppConfig
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +18,15 @@ class AgentType(Enum):
     DIR = "dir"
     DRY_RUN_DIR = "dry-run-dir"
     GITHUB = "github"
+    GITHUB_DEEP_TM = "github-deep-tm"
     FILE = "file"
+
+    @staticmethod
+    def create(config: AppConfig) -> "AgentType":
+        if config.deep_analysis and config.agent_prompt_type == "threat-modeling":
+            return AgentType.GITHUB_DEEP_TM
+        else:
+            return AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
 
 
 class BaseAgent(ABC):

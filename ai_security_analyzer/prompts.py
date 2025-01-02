@@ -840,3 +840,11 @@ GITHUB2_CONFIGS = {
     "sec-design": GITHUB2_SEC_DESIGN_CONFIG,
     "attack-surface": GITHUB2_ATTACK_SURFACE_CONFIG,
 }
+
+GITHUB2_GET_THREAT_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular threat from threat model for application that is using {}.
+
+THREAT:
+{}
+
+{}
+"""

@@ -1838,6 +1838,22 @@ files = [
 ]
 
 [[package]]
+name = "pathvalidate"
+version = "3.2.2"
+description = "pathvalidate is a Python library to sanitize/validate a string such as filenames/file-paths/etc."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pathvalidate-3.2.2-py3-none-any.whl", hash = "sha256:088dd9cae734389b5949c6f42a159dcd8a2d66a2358dfce8e1252712ada66191"},
+    {file = "pathvalidate-3.2.2.tar.gz", hash = "sha256:ff7383cafc499fa574b46c1c00cf2965a53aedc92dd2d62729993cdba308319b"},
+]
+
+[package.extras]
+docs = ["Sphinx (>=2.4)", "sphinx_rtd_theme (>=1.2.2)", "urllib3 (<2)"]
+readme = ["path (>=13,<18)", "readmemaker (>=1.2.0)"]
+test = ["Faker (>=1.0.8)", "allpairspy (>=2)", "click (>=6.2)", "pytest (>=6.0.1)", "pytest-md-report (>=0.6.2)"]
+
+[[package]]
 name = "pbr"
 version = "6.1.0"
 description = "Python Build Reasonableness"
@@ -2874,4 +2890,4 @@ propcache = ">=0.2.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "b8b2a8e60cd2c2d10e4190def08e6224bc48799a3f9812d0e2e76636f8c02d9c"
+content-hash = "d6c65a4708587da87f508882b9e79aee281d1d876ff73d2ecf467b39ea2966c5"

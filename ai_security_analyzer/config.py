@@ -27,6 +27,7 @@ class AppConfig(BaseModel):
     agent_temperature: float = Field(default=0, ge=0, le=1)
     agent_preamble_enabled: bool = Field(default=False)
     agent_preamble: str = Field(default="##### (🤖 AI Generated)")
+    deep_analysis: bool = Field(default=False)
 
     editor_provider: Literal["openai", "openrouter", "anthropic", "google"] = Field(default="openai")
     editor_model: str = Field(default="gpt-4o")
