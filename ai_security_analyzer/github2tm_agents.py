@@ -116,7 +116,7 @@ class GithubAgent2Tm(BaseAgent):
             return "final_response"
 
     def _final_response(self, state: AgentState):  # type: ignore[no-untyped-def]
-        logger.info("Getting final response")
+        logger.info("Getting intermediate response")
         try:
             messages = state["messages"]
             last_message = messages[-1]
@@ -137,7 +137,7 @@ class GithubAgent2Tm(BaseAgent):
             raise ValueError(str(e))
 
     def _structured_threat_model(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info("Get structured threat model")
+        logger.info("Getting structured threat model")
         try:
             sec_repo_doc = state["sec_repo_doc"]
 
@@ -175,7 +175,7 @@ class GithubAgent2Tm(BaseAgent):
             return "threats_final_response"
 
     def _get_threat_details(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info(f"Get threat details {state.get('threats_index', 0)+1} of {state['threats_count']}")
+        logger.info(f"Getting threat details {state.get('threats_index', 0)+1} of {state['threats_count']}")
         try:
             target_repo = state["target_repo"]
             threats = state["threats"]

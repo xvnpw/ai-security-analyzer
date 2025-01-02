@@ -116,7 +116,7 @@ class GithubAgent2As(BaseAgent):
             return "final_response"
 
     def _final_response(self, state: AgentState):  # type: ignore[no-untyped-def]
-        logger.info("Getting final response")
+        logger.info("Getting intermediate response")
         try:
             messages = state["messages"]
             last_message = messages[-1]
@@ -137,7 +137,7 @@ class GithubAgent2As(BaseAgent):
             raise ValueError(str(e))
 
     def _structured_attack_surface(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info("Get structured attack surface analysis")
+        logger.info("Getting structured attack surface analysis")
         try:
             sec_repo_doc = state["sec_repo_doc"]
 
@@ -176,7 +176,7 @@ class GithubAgent2As(BaseAgent):
 
     def _get_attack_surface_details(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
         logger.info(
-            f"Get attack surface details {state.get('attack_surfaces_index', 0)+1} of {state['attack_surfaces_count']}"
+            f"Getting attack surface details {state.get('attack_surfaces_index', 0)+1} of {state['attack_surfaces_count']}"
         )
         try:
             target_repo = state["target_repo"]

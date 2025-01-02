@@ -21,6 +21,8 @@ class AgentType(Enum):
     GITHUB_DEEP_TM = "github-deep-tm"
     FILE = "file"
     GITHUB_DEEP_AS = "github-deep-as"
+    GITHUB_DEEP_AT = "github-deep-at"
+    GITHUB_DEEP_SD = "github-deep-sd"
 
     @staticmethod
     def create(config: AppConfig) -> "AgentType":
@@ -28,6 +30,10 @@ class AgentType(Enum):
             return AgentType.GITHUB_DEEP_TM
         elif config.deep_analysis and config.agent_prompt_type == "attack-surface":
             return AgentType.GITHUB_DEEP_AS
+        elif config.deep_analysis and config.agent_prompt_type == "attack-tree":
+            return AgentType.GITHUB_DEEP_AT
+        elif config.deep_analysis and config.agent_prompt_type == "sec-design":
+            return AgentType.GITHUB_DEEP_SD
         else:
             return AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
 

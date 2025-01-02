@@ -856,3 +856,17 @@ ATTACK SURFACE:
 
 {}
 """
+
+GITHUB2_GET_ATTACK_TREE_PATH_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack tree path from attack tree analysis for application that is using {}.
+
+ATTACK TREE PATH:
+{}
+
+{}
+"""
+
+GITHUB2_SEC_DESIGN_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of security considerations from security design review for application that is using {}.
+
+SECURITY DESIGN REVIEW:
+{}
+"""

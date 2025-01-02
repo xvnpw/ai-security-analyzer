@@ -16,6 +16,8 @@ from ai_security_analyzer.prompts import DOC_TYPE_PROMPTS, get_agent_prompt
 from ai_security_analyzer.github2_agents import GithubAgent2
 from ai_security_analyzer.github2tm_agents import GithubAgent2Tm
 from ai_security_analyzer.github2as_agents import GithubAgent2As
+from ai_security_analyzer.github2at_agents import GithubAgent2At
+from ai_security_analyzer.github2sd_agents import GithubAgent2Sd
 from ai_security_analyzer.file_agents import FileAgent
 from ai_security_analyzer.base_agent import AgentType
 
@@ -33,6 +35,8 @@ class AgentBuilder:
             AgentType.GITHUB: GithubAgent2,
             AgentType.GITHUB_DEEP_TM: GithubAgent2Tm,
             AgentType.GITHUB_DEEP_AS: GithubAgent2As,
+            AgentType.GITHUB_DEEP_AT: GithubAgent2At,
+            AgentType.GITHUB_DEEP_SD: GithubAgent2Sd,
             AgentType.FILE: FileAgent,
         }
         agent_type = AgentType.create(config)

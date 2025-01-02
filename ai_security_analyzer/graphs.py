@@ -153,6 +153,51 @@ class GithubDeepAsGraphExecutor(GithubGraphExecutor):
                 f.write(attack_surface.detail_analysis)
 
 
+class GithubDeepAtGraphExecutor(GithubGraphExecutor):
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc", "")
+
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
+
+        output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
+        attack_tree_paths_dir = os.path.join(output_dir, "attack_tree_paths")
+
+        os.makedirs(attack_tree_paths_dir, exist_ok=True)
+
+        attack_tree_paths = state.get("output_attack_tree_paths", [])
+        for attack_tree_path in attack_tree_paths:
+            attack_tree_path_path = os.path.join(attack_tree_paths_dir, f"{attack_tree_path.filename}.md")
+            with open(attack_tree_path_path, "w") as f:
+                f.write(attack_tree_path.detail_analysis)
+
+
+class GithubDeepSdGraphExecutor(GithubGraphExecutor):
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc", "")
+
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
+
+        # Get the base output path without extension
+        output_base = os.path.splitext(self.config.output_file.name)[0]
+        sec_design_details_path = f"{output_base}-deep-analysis.md"
+
+        sec_design_details = state.get("sec_design_details", "")
+        with open(sec_design_details_path, "w") as f:
+            f.write(sec_design_details)
+
+
 class FileGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
@@ -181,6 +226,8 @@ class GraphExecutorFactory:
             AgentType.FILE: FileGraphExecutor,
             AgentType.GITHUB_DEEP_TM: GithubDeepTmGraphExecutor,
             AgentType.GITHUB_DEEP_AS: GithubDeepAsGraphExecutor,
+            AgentType.GITHUB_DEEP_AT: GithubDeepAtGraphExecutor,
+            AgentType.GITHUB_DEEP_SD: GithubDeepSdGraphExecutor,
         }
         agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)
