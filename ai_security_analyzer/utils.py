@@ -4,6 +4,7 @@ from shutil import which
 from typing import Union
 from langchain_core.messages import BaseMessage, AIMessage
 from pathvalidate import sanitize_filename
+import hashlib
 
 
 def convert_to_ai_message(message: BaseMessage) -> AIMessage:
@@ -39,7 +40,35 @@ def get_response_content(message: BaseMessage) -> str:
 
 
 def format_filename(filename: str) -> str:
-    return sanitize_filename(filename).lower().replace(" ", "_")
+    """
+    Format a filename to be safe for markdown links and filesystem usage.
+    Converts to lowercase, replaces spaces with underscores, and handles special characters.
+    For long filenames, truncates and adds an MD5 hash.
+    """
+    # First sanitize using pathvalidate
+    sanitized = sanitize_filename(filename)
+
+    # Replace problematic characters for markdown links
+    replacements = {
+        " ": "_",
+        "[": "_",
+        "]": "_",
+        "(": "_",
+        ")": "_",
+        ".": "_",
+    }
+
+    # Apply all replacements and convert to lowercase
+    for char, replacement in replacements.items():
+        sanitized = sanitized.replace(char, replacement)
+    sanitized = sanitized.lower()
+
+    # Handle long filenames
+    if len(sanitized) > 100:
+        md5_hash = hashlib.md5(filename.encode(), usedforsecurity=False).hexdigest()[:8]
+        sanitized = f"{sanitized[:100]}_{md5_hash}"
+
+    return sanitized
 
 
 def find_node_binary() -> Union[str | None]:
