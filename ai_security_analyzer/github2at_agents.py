@@ -30,7 +30,9 @@ class AttackTreePath(BaseModel):
 
 class AttackTreeAnalysis(BaseModel):
     attack_tree_objective: str = Field(description="Objective of the attack tree analysis.")
-    attack_sub_tree_visualization: str = Field(description="Visualization of the attack sub-tree.")
+    attack_sub_tree_visualization: str = Field(
+        description="Correctly formatted markdown visualization of the attack sub-tree."
+    )
     attack_sub_tree_paths: List[AttackTreePath] = Field(
         description="List of attack sub-tree paths.",
     )
@@ -225,9 +227,12 @@ class GithubAgent2At(BaseAgent):
             repo_name = state["target_repo"].split("/")[-1]
             owner_name = state["target_repo"].split("/")[-2]
 
+            attack_tree_visualization = state["attack_tree_visualization"]
+            attack_tree_visualization = self._format_attack_tree_visualization(attack_tree_visualization)
+
             final_response = f"# Attack Tree Analysis for {owner_name}/{repo_name}\n\n"
             final_response += f"Objective: {state['attack_tree_objective']}\n\n"
-            final_response += f"## Attack Tree Visualization\n\n{state['attack_tree_visualization']}\n\n"
+            final_response += f"## Attack Tree Visualization\n\n{attack_tree_visualization}\n\n"
             for attack_tree_path in attack_tree_paths:
                 attack_tree_path_filename = format_filename(attack_tree_path.title)
                 attack_tree_path_path = f"./attack_tree_paths/{attack_tree_path_filename}.md"
@@ -239,6 +244,16 @@ class GithubAgent2At(BaseAgent):
         except Exception as e:
             logger.error(f"Error on getting attack tree paths final response: {e}")
             raise ValueError(str(e))
+
+    def _format_attack_tree_visualization(self, visualization: str) -> str:
+        visualization = visualization.strip()
+        if not visualization.startswith("```"):
+            visualization = f"```\n{visualization}"
+
+        if not visualization.endswith("```"):
+            visualization = f"{visualization}\n```\n"
+
+        return visualization
 
     def build_graph(self) -> CompiledStateGraph:
         logger.debug(f"[{GithubAgent2At.__name__}] building graph...")
