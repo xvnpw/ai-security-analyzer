@@ -225,7 +225,7 @@ class GithubAgent2At(BaseAgent):
             repo_name = state["target_repo"].split("/")[-1]
             owner_name = state["target_repo"].split("/")[-2]
 
-            final_response = f"# Attack Tree Path Analysis for {owner_name}/{repo_name}\n\n"
+            final_response = f"# Attack Tree Analysis for {owner_name}/{repo_name}\n\n"
             final_response += f"Objective: {state['attack_tree_objective']}\n\n"
             final_response += f"## Attack Tree Visualization\n\n{state['attack_tree_visualization']}\n\n"
             for attack_tree_path in attack_tree_paths:
