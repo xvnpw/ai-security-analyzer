@@ -867,6 +867,14 @@ ATTACK TREE PATH:
 
 GITHUB2_SEC_DESIGN_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of security considerations from security design review for application that is using {}.
 
+Instructions for generating the deep analysis:
+1. Define Objective of deep analysis, Scope and Methodology. Objective should include thorough security analysis of key components of the {}.
+2. Break down the security implications of each key component outlined in the security design review.
+3. Focus on inferring the architecture, components, and data flow based on the codebase and available documentation.
+4. Given security considerations should be tailored to the type of project being analyzed. Do not give general security recommendations, give specific recommendations for the project.
+5. Provide actionable and tailored to {} mitigation strategies applicable to the identified threats.
+6. Do not use markdown tables at all, use markdown lists instead.
+
 SECURITY DESIGN REVIEW:
 {}
 """

@@ -117,9 +117,12 @@ class GithubAgent2Sd(BaseAgent):
         logger.info("Getting deep analysis of security design review")
         try:
             target_repo = state["target_repo"]
+            repo_name = target_repo.split("/")[-1]
             sec_repo_doc = state["sec_repo_doc"]
 
-            get_details_prompt = GITHUB2_SEC_DESIGN_DETAILS_PROMPT.format(target_repo, sec_repo_doc)
+            get_details_prompt = GITHUB2_SEC_DESIGN_DETAILS_PROMPT.format(
+                target_repo, sec_repo_doc, repo_name, repo_name
+            )
 
             get_details_msg = HumanMessage(content=get_details_prompt)
 
