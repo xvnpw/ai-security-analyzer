@@ -189,6 +189,12 @@ def parse_arguments() -> AppConfig:
         action="store_true",
         help="Enable deep analysis for GitHub mode - only for threat modeling",
     )
+    agent_group.add_argument(
+        "--recursion-limit",
+        type=int,
+        default=30,
+        help="Graph recursion limit. Default is 30",
+    )
 
     # Editor configuration
     editor_group = parser.add_argument_group("Editor Configuration")

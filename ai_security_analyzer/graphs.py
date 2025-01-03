@@ -36,7 +36,8 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
                     "include": self.config.include,
                     "include_mode": self.config.include_mode,
                     "filter_keywords": self.config.filter_keywords,
-                }
+                },
+                {"recursion_limit": self.config.recursion_limit},
             )
             self._write_output(state)
         except Exception as e:
@@ -87,7 +88,8 @@ class GithubGraphExecutor(FullDirScanGraphExecutor):
                     "step_count": config["steps"],
                     "step_index": 0,
                     "step_prompts": config["step_prompts"],
-                }
+                },
+                {"recursion_limit": self.config.recursion_limit},
             )
             self._write_output(state)
         except Exception as e:
@@ -206,7 +208,8 @@ class FileGraphExecutor(FullDirScanGraphExecutor):
                 {
                     "target_file": target,
                     "refinement_count": self.config.refinement_count,
-                }
+                },
+                {"recursion_limit": self.config.recursion_limit},
             )
             self._write_output(state)
         except Exception as e:

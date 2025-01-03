@@ -28,6 +28,7 @@ class AppConfig(BaseModel):
     agent_preamble_enabled: bool = Field(default=False)
     agent_preamble: str = Field(default="##### (🤖 AI Generated)")
     deep_analysis: bool = Field(default=False)
+    recursion_limit: int = Field(default=30)
 
     editor_provider: Literal["openai", "openrouter", "anthropic", "google"] = Field(default="openai")
     editor_model: str = Field(default="gpt-4o")
