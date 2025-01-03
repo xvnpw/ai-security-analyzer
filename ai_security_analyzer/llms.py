@@ -162,6 +162,15 @@ class LLMProvider:
             )
         )
 
+    def create_agent_llm_for_structured_queries(self) -> LLM:
+        return self._get_llm_instance(
+            LLMConfig(
+                provider=self.config.agent_provider,
+                model=self.config.agent_model,
+                temperature=0.0,
+            )
+        )
+
     def create_editor_llm(self) -> LLM:
         return self._get_llm_instance(
             LLMConfig(

@@ -236,6 +236,7 @@ class GithubAgent2As(BaseAgent):
         logger.debug(f"[{GithubAgent2As.__name__}] building graph...")
 
         llm = self.llm_provider.create_agent_llm()
+        structured_llm = self.llm_provider.create_agent_llm_for_structured_queries()
 
         def internal_step(state: AgentState):  # type: ignore[no-untyped-def]
             return self._internal_step(state, llm.llm, llm.model_config.use_system_message)
@@ -247,7 +248,9 @@ class GithubAgent2As(BaseAgent):
             return self._final_response(state)
 
         def structured_attack_surface(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._structured_attack_surface(state, llm.llm, llm.model_config.use_system_message)
+            return self._structured_attack_surface(
+                state, structured_llm.llm, structured_llm.model_config.use_system_message
+            )
 
         def get_attack_surface_details(state: AgentState):  # type: ignore[no-untyped-def]
             return self._get_attack_surface_details(state, llm.llm, llm.model_config.use_system_message)
