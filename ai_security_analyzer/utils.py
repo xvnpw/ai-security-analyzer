@@ -56,6 +56,8 @@ def format_filename(filename: str) -> str:
         "(": "_",
         ")": "_",
         ".": "_",
+        "`": "_",
+        ",": "_",
     }
 
     # Apply all replacements and convert to lowercase
