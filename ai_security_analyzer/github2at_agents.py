@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 class AttackTreePath(BaseModel):
     title: str = Field(description="Title of the attack tree path.")
-    text: str = Field(description="Markdown formatted text content of the attack tree path.")
+    text: str = Field(description="Correctly formatted markdown text content of the attack tree path.")
 
 
 class AttackTreeAnalysis(BaseModel):

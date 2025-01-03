@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 class Threat(BaseModel):
     title: str = Field(description="Title of the threat.")
-    text: str = Field(description="Markdown formatted text content of the threat.")
+    text: str = Field(description="Correctly formatted markdown text content of the threat.")
 
 
 class ThreatModel(BaseModel):

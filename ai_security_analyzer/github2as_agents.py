@@ -25,7 +25,7 @@ logger = logging.getLogger(__name__)
 
 class AttackSurface(BaseModel):
     title: str = Field(description="Title of the attack surface.")
-    text: str = Field(description="Markdown formatted text content of the attack surface.")
+    text: str = Field(description="Correctly formatted markdown text content of the attack surface.")
 
 
 class AttackSurfaceAnalysis(BaseModel):
