@@ -240,14 +240,16 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--agent-model`: Model name for the agent. Default is `gpt-4o`.
 - `--agent-temperature`: Sampling temperature for the agent model (between `0` and `1`). Default is `0`.
 - `--agent-preamble-enabled`: Enable preamble in the output.
-- `--agent-preamble`: Preamble text added to the beginning of the output.
+- `--agent-preamble`: Preamble text added to the beginning of the output. Default is `##### (🤖 AI Generated)`.
 - `--agent-prompt-type`: Prompt to use in agent (default: `sec-design`). Options are:
   - `sec-design`: Generate a security design document for the project.
   - `threat-modeling`: Perform threat modeling for the project.
   - `attack-surface`: Perform attack surface analysis for the project.
   - `threat-scenarios`: Perform threat scenarios analysis for the project using [Daniel Miessler's](https://danielmiessler.com/) [prompt](https://github.com/danielmiessler/fabric/blob/f5f50cc4c94a539ee56bc533e9b1194eb9aa424d/patterns/create_threat_scenarios/system.md).
   - `attack-tree`: Perform attack tree analysis for the project.
-- `--refinement-count`: **For `github` and `file` modes only**. Number of iterations to refine the generated documentation (default: `1`). Higher values may produce more detailed and polished output but will increase token usage.
+- `--deep-analysis`: **For `github` mode only**. Enable deep analysis.
+- `--recursion-limit`: Graph recursion limit. Default is `35`.
+- `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `1`).
 - `--files-context-window`: **For `dir` mode only**. Maximum token size for LLM context window. Automatically determined if not set.
 - `--files-chunk-size`: **For `dir` mode only**. Chunk size in tokens for splitting files. Automatically determined if not set.
 
@@ -256,7 +258,7 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--editor-provider`: LLM provider for the editor (`openai`, `openrouter`, `anthropic`, `google`). Default is `openai`.
 - `--editor-model`: Model name for the editor. Default is `gpt-4o`.
 - `--editor-temperature`: Sampling temperature for the editor model. Default is `0`.
-- `--editor-max-turns-count`: Maximum number of attempts the editor will try to fix markdown issues. Default is `3`.
+- `--editor-max-turns-count`: Maximum number of attempts the editor will try to fix markdown issues. Default is `0` (editor disabled).
 - `--node-path`: Path to the Node.js binary. Attempts to auto-detect if not provided.
 
 ## Environment Variables

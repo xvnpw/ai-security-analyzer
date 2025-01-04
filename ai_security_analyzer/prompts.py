@@ -124,7 +124,7 @@ Given a {} and CURRENT DESIGN DOCUMENT, provide a well written, detailed project
 
 # OUTPUT INSTRUCTIONS
 
-- Output in the format above only using valid Markdown.
+- Output in the format above only using valid Markdown. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts)
 
 - Do not use bold or italic formatting in the Markdown (no asterisks).
 

@@ -171,7 +171,7 @@ def parse_arguments() -> AppConfig:
         help=(
             "Number of iterations to refine the generated documentation (default: 1). "
             "Higher values may produce more detailed and polished output but will increase token usage. "
-            "For 'github' and 'file' modes only"
+            "For 'file' mode only"
         ),
     )
     agent_group.add_argument(
@@ -187,7 +187,7 @@ def parse_arguments() -> AppConfig:
     agent_group.add_argument(
         "--deep-analysis",
         action="store_true",
-        help="Enable deep analysis for GitHub mode - only for threat modeling",
+        help="Enable deep analysis for 'github' mode",
     )
     agent_group.add_argument(
         "--recursion-limit",

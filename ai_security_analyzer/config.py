@@ -1,10 +1,13 @@
 import io
+import logging
 from typing import List, Optional, Set, Union
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing_extensions import Literal
 
 from ai_security_analyzer.utils import find_node_binary
+
+logger = logging.getLogger(__name__)
 
 
 class AppConfig(BaseModel):
@@ -75,6 +78,6 @@ class AppConfig(BaseModel):
         if not value:
             node_binary = find_node_binary()
             if not node_binary:
-                raise FileNotFoundError("Node.js binary not found. Please install Node.js.")
+                logger.warning("Node.js binary not found. Editor will be disabled.")
             return node_binary
         return value

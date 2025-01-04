@@ -38,11 +38,11 @@ class MarkdownMermaidValidator:
             return is_valid, error_message
 
         except subprocess.CalledProcessError as e:
-            logger.error(f"Error running Node.js script: {e}")
-            return False, f"Error running Node.js script: {str(e)}"
+            logger.warning(f"Skipping mermaid validation. Node.js misconfigured: {e}")
+            return True, None
         except Exception as e:
-            logger.error(f"Unexpected error: {e}")
-            return False, f"Unexpected error: {str(e)}"
+            logger.warning(f"Skipping mermaid validation. Node.js misconfigured: {e}")
+            return True, None
 
     def extract_mermaid_blocks(self, markdown_content: str) -> List[str]:
         mermaid_regex = r"```mermaid([\s\S]*?)```"

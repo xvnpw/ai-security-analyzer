@@ -139,6 +139,10 @@ class FileAgent(BaseAgent):
         logger.info("Validating markdown")
         sec_repo_doc = state["sec_repo_doc"]
 
+        if self.max_editor_turns_count == 0:
+            logger.info("Editor is disabled. Skipping markdown validation")
+            return {"sec_repo_doc_validation_error": ""}
+
         is_valid, error = self.markdown_validator.validate_content(sec_repo_doc)
 
         if not is_valid:
