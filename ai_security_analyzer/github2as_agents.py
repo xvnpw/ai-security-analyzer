@@ -59,6 +59,12 @@ class AgentState(MessagesState):
 
 
 class GithubAgent2As(BaseAgent):
+    """GithubAgent2As is a class that is used to generate deep analysis of attack surface based on model knowledge about specific GitHub repository.
+
+    It was built to be used with Google's Gemini 2.0 Flask Thinking Experimental Mode.
+    Experimental model is working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
+    """
+
     def __init__(
         self,
         llm_provider: LLMProvider,
