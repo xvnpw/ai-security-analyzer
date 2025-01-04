@@ -10,7 +10,7 @@ from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.file_agents import FileAgent
-from ai_security_analyzer.full_dir_scan import FullDirScanAgent
+from ai_security_analyzer.full_dir_scan_agents import FullDirScanAgent
 from ai_security_analyzer.github2_agents import GithubAgent2
 from ai_security_analyzer.github2as_agents import GithubAgent2As
 from ai_security_analyzer.github2at_agents import GithubAgent2At

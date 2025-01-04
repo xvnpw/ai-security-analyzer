@@ -5,7 +5,7 @@ from langgraph.graph import START, END, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 from tiktoken import Encoding
 
-from ai_security_analyzer.full_dir_scan import (
+from ai_security_analyzer.full_dir_scan_agents import (
     FullDirScanAgent,
     AgentState,
 )

@@ -185,12 +185,15 @@ class GithubDeepSdGraphExecutor(GithubGraphExecutor):
 
         self.config.output_file.write(output_content)
 
-        output_base = os.path.splitext(self.config.output_file.name)[0]
-        sec_design_details_path = f"{output_base}-deep-analysis.md"
+        sec_design_details_path = self._create_sec_design_details_path()
 
         sec_design_details = state.get("sec_design_details", "")
         with open(sec_design_details_path, "w") as f:
             f.write(sec_design_details)
+
+    def _create_sec_design_details_path(self) -> str:
+        output_base = os.path.splitext(self.config.output_file.name)[0]
+        return f"{output_base}-deep-analysis.md"
 
 
 class FileGraphExecutor(FullDirScanGraphExecutor):

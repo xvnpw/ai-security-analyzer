@@ -7,7 +7,7 @@ from ai_security_analyzer.agent_builder import AgentBuilder
 from ai_security_analyzer.base_agent import AgentType
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.full_dir_scan import FullDirScanAgent
+from ai_security_analyzer.full_dir_scan_agents import FullDirScanAgent
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.github2_agents import GithubAgent2
 

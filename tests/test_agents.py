@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, Mock
 import pytest
 
 from ai_security_analyzer.agent_builder import AgentBuilder
-from ai_security_analyzer.full_dir_scan import (
+from ai_security_analyzer.full_dir_scan_agents import (
     FullDirScanAgent,
     GraphNodeType,
 )
