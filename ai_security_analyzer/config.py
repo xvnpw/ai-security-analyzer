@@ -74,7 +74,7 @@ class AppConfig(BaseModel):
         return {s.strip() for s in value.split(",") if s.strip()}
 
     @field_validator("node_path", mode="before")
-    def parse_node_path(cls, value: Union[str, None]) -> str:
+    def parse_node_path(cls, value: Union[str, None]) -> Union[str, None]:
         if not value:
             node_binary = find_node_binary()
             if not node_binary:
