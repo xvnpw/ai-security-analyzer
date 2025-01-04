@@ -160,7 +160,7 @@ def parse_arguments() -> AppConfig:
             " - sec-design: Generate a security design document for the project\n"
             " - threat-modeling: Perform threat modeling for the project\n"
             " - attack-surface: Perform attack surface analysis for the project\n"
-            " - threat-scenarios: Perform threat scenarios analysis for the project\n"
+            " - threat-scenarios: Perform threat scenarios analysis for the project (not supported in 'github' mode)\n"
             " - attack-tree: Perform attack tree analysis for the project"
         ),
     )
@@ -237,6 +237,10 @@ def parse_arguments() -> AppConfig:
         parser.error(
             "In 'github' mode, target must be a valid GitHub repository URL starting with 'https://github.com/'"
         )
+
+    # Validate prompt type for github mode
+    if args.mode == "github" and args.agent_prompt_type == "threat-scenarios":
+        parser.error("'threat-scenarios' prompt type is not supported in 'github' mode")
 
     config = AppConfig(**vars(args))
     return config

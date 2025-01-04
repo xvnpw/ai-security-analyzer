@@ -245,7 +245,7 @@ The application accepts various command-line arguments to tailor its behavior.
   - `sec-design`: Generate a security design document for the project.
   - `threat-modeling`: Perform threat modeling for the project.
   - `attack-surface`: Perform attack surface analysis for the project.
-  - `threat-scenarios`: Perform threat scenarios analysis for the project using [Daniel Miessler's](https://danielmiessler.com/) [prompt](https://github.com/danielmiessler/fabric/blob/f5f50cc4c94a539ee56bc533e9b1194eb9aa424d/patterns/create_threat_scenarios/system.md).
+  - `threat-scenarios`: Perform threat scenarios analysis for the project using [Daniel Miessler's](https://danielmiessler.com/) [prompt](https://github.com/danielmiessler/fabric/blob/f5f50cc4c94a539ee56bc533e9b1194eb9aa424d/patterns/create_threat_scenarios/system.md). **Not supported in `github` mode.**
   - `attack-tree`: Perform attack tree analysis for the project.
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis.
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
