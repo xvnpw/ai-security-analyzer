@@ -30,15 +30,15 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
         doc_type_prompt: str,
     ):
         super().__init__(
-            llm_provider,
-            text_splitter,
-            tokenizer,
-            max_editor_turns_count,
-            markdown_validator,
-            doc_processor,
-            doc_filter,
-            agent_prompt,
-            doc_type_prompt,
+            llm_provider=llm_provider,
+            text_splitter=text_splitter,
+            tokenizer=tokenizer,
+            markdown_validator=markdown_validator,
+            doc_processor=doc_processor,
+            doc_filter=doc_filter,
+            max_editor_turns_count=max_editor_turns_count,
+            agent_prompt=agent_prompt,
+            doc_type_prompt=doc_type_prompt,
         )
 
     def _count_token(self, state: AgentState):  # type: ignore[no-untyped-def]

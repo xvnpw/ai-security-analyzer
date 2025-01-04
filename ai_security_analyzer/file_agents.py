@@ -14,6 +14,7 @@ from tiktoken import Encoding
 from typing_extensions import TypedDict
 
 from ai_security_analyzer.base_agent import BaseAgent
+from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
@@ -43,30 +44,24 @@ class AgentState(TypedDict):
     repo_doc: Document
 
 
-class FileAgent(BaseAgent):
+class FileAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMixin):
     def __init__(
         self,
         llm_provider: LLMProvider,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
-        max_editor_turns_count: int,
         markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
+        max_editor_turns_count: int,
         agent_prompt: str,
         doc_type_prompt: str,
     ):
-        super().__init__(
-            llm_provider,
-            text_splitter,
-            tokenizer,
-            max_editor_turns_count,
-            markdown_validator,
-            doc_processor,
-            doc_filter,
-            agent_prompt,
-            doc_type_prompt,
-        )
+        BaseAgent.__init__(self, llm_provider)
+        DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
+        MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
+        self.agent_prompt = agent_prompt
+        self.doc_type_prompt = doc_type_prompt
 
     def _load_file(self, state: AgentState):  # type: ignore[no-untyped-def]
         logger.info("Loading file")

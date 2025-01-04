@@ -7,7 +7,6 @@ from langgraph.graph.state import CompiledStateGraph
 from ai_security_analyzer.config import AppConfig
 from langchain_core.documents import Document
 from ai_security_analyzer.base_agent import AgentType
-from ai_security_analyzer.prompts import GITHUB2_CONFIGS
 
 logger = logging.getLogger(__name__)
 
@@ -80,14 +79,9 @@ class GithubGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
-            config = GITHUB2_CONFIGS[self.config.agent_prompt_type]
-
             state = graph.invoke(
                 {
                     "target_repo": target,
-                    "step_count": config["steps"],
-                    "step_index": 0,
-                    "step_prompts": config["step_prompts"],
                 },
                 {"recursion_limit": self.config.recursion_limit},
             )

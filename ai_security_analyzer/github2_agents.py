@@ -3,15 +3,11 @@ from dataclasses import dataclass
 from typing import Any, List, Literal, Callable
 
 from langchain_core.messages import HumanMessage
-from langchain_text_splitters import CharacterTextSplitter
 from langgraph.graph import START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
-from tiktoken import Encoding
 
 from ai_security_analyzer.base_agent import BaseAgent
-from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
 from langgraph.graph import MessagesState
 
@@ -29,8 +25,6 @@ class AgentState(MessagesState):
     step2: str
     step3: str
     step_index: int
-    step_count: int
-    step_prompts: List[Callable[[str], str]]
 
 
 class GithubAgent2(BaseAgent):
@@ -40,36 +34,17 @@ class GithubAgent2(BaseAgent):
     Experimental model is working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
     """
 
-    def __init__(
-        self,
-        llm_provider: LLMProvider,
-        text_splitter: CharacterTextSplitter,
-        tokenizer: Encoding,
-        max_editor_turns_count: int,
-        markdown_validator: MarkdownMermaidValidator,
-        doc_processor: DocumentProcessor,
-        doc_filter: DocumentFilter,
-        agent_prompt: str,
-        doc_type_prompt: str,
-    ):
-        super().__init__(
-            llm_provider,
-            text_splitter,
-            tokenizer,
-            max_editor_turns_count,
-            markdown_validator,
-            doc_processor,
-            doc_filter,
-            agent_prompt,
-            doc_type_prompt,
-        )
+    def __init__(self, llm_provider: LLMProvider, step_prompts: List[Callable[[str], str]]):
+        super().__init__(llm_provider)
+        self.step_prompts = step_prompts
+        self.step_count = len(step_prompts)
 
     def _internal_step(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info(f"Internal step {state.get('step_index', 0)+1} of {state['step_count']}")
+        logger.info(f"Internal step {state.get('step_index', 0)+1} of {self.step_count}")
         try:
             target_repo = state["target_repo"]
             step_index = state.get("step_index", 0)
-            step_prompts = state["step_prompts"]
+            step_prompts = self.step_prompts
 
             step_prompt = step_prompts[step_index](target_repo)
 
@@ -84,12 +59,12 @@ class GithubAgent2(BaseAgent):
                 f"step{step_index}": get_response_content(response),
             }
         except Exception as e:
-            logger.error(f"Error on internal step {state['step_index']} of {state['step_count']}: {e}")
+            logger.error(f"Error on internal step {state['step_index']} of {self.step_count}: {e}")
             raise ValueError(str(e))
 
     def _internal_step_condition(self, state: AgentState) -> Literal["internal_step", "final_response"]:
         current_step_index = state["step_index"]
-        step_count = state["step_count"]
+        step_count = self.step_count
 
         if current_step_index < step_count:
             return "internal_step"

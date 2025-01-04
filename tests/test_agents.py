@@ -283,14 +283,34 @@ def test_markdown_validator_with_invalid_markdown(markdown_validator):
 
 
 def test_markdown_error_condition_with_error_and_max_turns():
-    agent = FullDirScanAgent(None, None, None, 3, None, None, None, None, None)
+    agent = FullDirScanAgent(
+        llm_provider=None,
+        text_splitter=None,
+        tokenizer=None,
+        markdown_validator=None,
+        doc_processor=None,
+        doc_filter=None,
+        max_editor_turns_count=3,
+        agent_prompt=None,
+        doc_type_prompt=None,
+    )
     state = {"sec_repo_doc_validation_error": "Error", "editor_turns_count": 3}
     result = agent._markdown_error_condition(state)
     assert result == "__end__"
 
 
 def test_markdown_error_condition_with_error_and_less_than_max_turns():
-    agent = FullDirScanAgent(None, None, None, 3, None, None, None, None, None)
+    agent = FullDirScanAgent(
+        llm_provider=None,
+        text_splitter=None,
+        tokenizer=None,
+        markdown_validator=None,
+        doc_processor=None,
+        doc_filter=None,
+        max_editor_turns_count=3,
+        agent_prompt=None,
+        doc_type_prompt=None,
+    )
     state = {"sec_repo_doc_validation_error": "Error", "editor_turns_count": 2}
     result = agent._markdown_error_condition(state)
     assert result == GraphNodeType.EDITOR.value

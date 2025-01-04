@@ -19,6 +19,8 @@ from ai_security_analyzer.loaders import RepoDirectoryLoader
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
 
+from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin
+
 logger = logging.getLogger(__name__)
 
 
@@ -50,30 +52,24 @@ class AgentState(TypedDict):
     document_tokens: int
 
 
-class FullDirScanAgent(BaseAgent):
+class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMixin):
     def __init__(
         self,
         llm_provider: LLMProvider,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
-        max_editor_turns_count: int,
         markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
+        max_editor_turns_count: int,
         agent_prompt: str,
         doc_type_prompt: str,
     ):
-        super().__init__(
-            llm_provider,
-            text_splitter,
-            tokenizer,
-            max_editor_turns_count,
-            markdown_validator,
-            doc_processor,
-            doc_filter,
-            agent_prompt,
-            doc_type_prompt,
-        )
+        BaseAgent.__init__(self, llm_provider)
+        DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
+        MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
+        self.agent_prompt = agent_prompt
+        self.doc_type_prompt = doc_type_prompt
 
     def _load_files(self, state: AgentState):  # type: ignore[no-untyped-def]
         logger.info("Loading files")

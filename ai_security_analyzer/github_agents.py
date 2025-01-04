@@ -5,17 +5,16 @@ from typing import Any, List, Literal, Optional, Union
 
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_text_splitters import CharacterTextSplitter
 from langgraph.graph import START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
-from tiktoken import Encoding
 from typing_extensions import TypedDict
 
 from ai_security_analyzer.base_agent import BaseAgent
-from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
+
+from ai_security_analyzer.components import MarkdownValidationMixin
 
 logger = logging.getLogger(__name__)
 
@@ -40,30 +39,19 @@ class AgentState(TypedDict):
     current_refinement_count: int
 
 
-class GithubAgent(BaseAgent):
+class GithubAgent(BaseAgent, MarkdownValidationMixin):
     def __init__(
         self,
         llm_provider: LLMProvider,
-        text_splitter: CharacterTextSplitter,
-        tokenizer: Encoding,
         max_editor_turns_count: int,
         markdown_validator: MarkdownMermaidValidator,
-        doc_processor: DocumentProcessor,
-        doc_filter: DocumentFilter,
         agent_prompt: str,
         doc_type_prompt: str,
     ):
-        super().__init__(
-            llm_provider,
-            text_splitter,
-            tokenizer,
-            max_editor_turns_count,
-            markdown_validator,
-            doc_processor,
-            doc_filter,
-            agent_prompt,
-            doc_type_prompt,
-        )
+        BaseAgent.__init__(self, llm_provider)
+        MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
+        self.agent_prompt = agent_prompt
+        self.doc_type_prompt = doc_type_prompt
 
     def _create_initial_draft(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
         logger.info("Creating initial draft")
