@@ -192,8 +192,8 @@ def parse_arguments() -> AppConfig:
     agent_group.add_argument(
         "--recursion-limit",
         type=int,
-        default=30,
-        help="Graph recursion limit. Default is 30",
+        default=35,
+        help="Graph recursion limit. Default is 35",
     )
 
     # Editor configuration
