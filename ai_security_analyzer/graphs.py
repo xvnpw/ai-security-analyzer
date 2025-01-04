@@ -185,7 +185,6 @@ class GithubDeepSdGraphExecutor(GithubGraphExecutor):
 
         self.config.output_file.write(output_content)
 
-        # Get the base output path without extension
         output_base = os.path.splitext(self.config.output_file.name)[0]
         sec_design_details_path = f"{output_base}-deep-analysis.md"
 

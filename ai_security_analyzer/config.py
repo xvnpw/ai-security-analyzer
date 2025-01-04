@@ -38,13 +38,13 @@ class AppConfig(BaseModel):
     editor_temperature: float = Field(default=0, ge=0, le=1)
     editor_max_turns_count: int = Field(default=3, ge=0)
 
-    exclude: Optional[List[str]]
+    exclude: Optional[List[str]] = Field(default=None)
     exclude_mode: Literal["add", "override"] = Field(default="add")
-    include: Optional[List[str]]
+    include: Optional[List[str]] = Field(default=None)
     include_mode: Literal["add", "override"] = Field(default="add")
-    filter_keywords: Optional[Set[str]]
-    files_context_window: Optional[int]
-    files_chunk_size: Optional[int]
+    filter_keywords: Optional[Set[str]] = Field(default=None)
+    files_context_window: Optional[int] = Field(default=None)
+    files_chunk_size: Optional[int] = Field(default=None)
     dry_run: bool = Field(default=False)
     node_path: str
     refinement_count: int = Field(default=1)
