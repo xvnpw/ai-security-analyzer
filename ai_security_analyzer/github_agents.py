@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, List, Literal, Optional, Union
+from typing import Any, List, Literal, Optional, Union, deprecated
 
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -10,11 +10,10 @@ from langgraph.graph.state import CompiledStateGraph
 from typing_extensions import TypedDict
 
 from ai_security_analyzer.base_agent import BaseAgent
+from ai_security_analyzer.components import MarkdownValidationMixin
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
-
-from ai_security_analyzer.components import MarkdownValidationMixin
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +38,7 @@ class AgentState(TypedDict):
     current_refinement_count: int
 
 
+@deprecated("This class is deprecated. Use Github2Agent instead.")
 class GithubAgent(BaseAgent, MarkdownValidationMixin):
     def __init__(
         self,

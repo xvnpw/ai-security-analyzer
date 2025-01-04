@@ -162,23 +162,24 @@ The application follows these high-level steps:
 ```mermaid
 stateDiagram-v2
     [*] --> Configure_Application
-    Configure_Application --> Create_Initial_Draft
-    Create_Initial_Draft --> Refine_Draft
-    Refine_Draft --> Refine_Draft: More Refinements Needed
-    Refine_Draft --> Validate_Markdown: All Refinements Done
-    Validate_Markdown --> Editor: Invalid Markdown
-    Editor --> Validate_Markdown: Fix Formatting
-    Validate_Markdown --> [*]: Valid Markdown
+    Configure_Application --> Internal_Step
+    Internal_Step --> Internal_Step: More Steps Needed
+    Internal_Step --> Final_Response: All Steps Complete
+    Final_Response --> [*]
 ```
 
 The application follows these high-level steps:
 
 1. **Configure Application**: Parses command-line arguments and sets up the configuration.
-2. **Create Initial Draft**: Uses the LLM to generate an initial security document based on the GitHub repository URL.
-3. **Refine Draft**: Iteratively refines the draft to improve its quality (number of iterations configurable via `--refinement-count`).
-4. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
-5. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
-6. **Completion**: Finalizes the security documentation.
+2. **Internal Steps**: Iteratively processes the repository through defined steps where each step:
+   - Uses a specific prompt from the step_prompts list
+   - Accumulates responses in the state
+   - Tracks progress through step_index
+3. **Final Response**: Once all steps are complete:
+   - Processes the final accumulated response
+   - Formats the markdown output
+   - Removes markdown code block markers if present
+4. **Completion**: Returns the final security documentation
 
 ### Application Flow for `file` mode
 
