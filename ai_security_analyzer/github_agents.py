@@ -1,13 +1,13 @@
 import logging
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, List, Literal, Optional, Union, deprecated
+from typing import Any, List, Literal, Optional, Union
 
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
-from typing_extensions import TypedDict
+from typing_extensions import TypedDict, deprecated
 
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.components import MarkdownValidationMixin
