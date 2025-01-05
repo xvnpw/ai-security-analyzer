@@ -238,6 +238,13 @@ def parse_arguments() -> AppConfig:
             "In 'github' mode, target must be a valid GitHub repository URL starting with 'https://github.com/'"
         )
 
+    # Mode-specific argument validations
+    if args.deep_analysis and args.mode != "github":
+        parser.error("--deep-analysis is only available in 'github' mode")
+
+    if args.dry_run and args.mode != "dir":
+        parser.error("--dry-run is only available in 'dir' mode")
+
     # Validate prompt type for github mode
     if args.mode == "github" and args.agent_prompt_type == "threat-scenarios":
         parser.error("'threat-scenarios' prompt type is not supported in 'github' mode")
