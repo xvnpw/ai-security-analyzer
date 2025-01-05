@@ -14,7 +14,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from operator import add
 
 
-from ai_security_analyzer.prompts import GITHUB2_GET_ATTACK_TREE_PATH_DETAILS_PROMPT
+from ai_security_analyzer.prompts import GITHUB2_FORMAT_ATTACK_TREE_PROMPT, GITHUB2_GET_ATTACK_TREE_PATH_DETAILS_PROMPT
 
 logger = logging.getLogger(__name__)
 
@@ -130,7 +130,7 @@ class GithubAgent2At(BaseAgent):
 
             parser = PydanticOutputParser(pydantic_object=AttackTreeAnalysis)
 
-            format_prompt = f"You are task with formatting attack tree path analysis. Don't change any text content of attack tree paths only format it to json. Follow instructions carefully:\nATTACK TREE PATH ANALYSIS:\n{sec_repo_doc}\n{parser.get_format_instructions()}"
+            format_prompt = GITHUB2_FORMAT_ATTACK_TREE_PROMPT.format(sec_repo_doc, parser.get_format_instructions())
 
             format_msg = HumanMessage(content=format_prompt)
 

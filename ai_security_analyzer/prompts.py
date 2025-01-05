@@ -878,3 +878,9 @@ Instructions for generating the deep analysis:
 SECURITY DESIGN REVIEW:
 {}
 """
+
+GITHUB2_FORMAT_ATTACK_SURFACE_PROMPT = "You are task with formatting attack surface analysis. Don't change any text content of attack surfaces only format it to json. Follow instructions carefully:\nATTACK SURFACE ANALYSIS:\n{}\n{}"
+
+GITHUB2_FORMAT_ATTACK_TREE_PROMPT = "You are task with formatting attack tree path analysis. Don't change any text content of attack tree paths only format it to json. Follow instructions carefully:\nATTACK TREE PATH ANALYSIS:\n{}\n{}"
+
+GITHUB2_FORMAT_THREAT_MODEL_PROMPT = "You are task with formatting threat model. Don't change any text content of threats only format it to json. Follow instructions carefully:\nTHREAT MODEL:\n{}\n{}"

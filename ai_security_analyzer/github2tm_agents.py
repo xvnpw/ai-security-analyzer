@@ -14,7 +14,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from operator import add
 
 
-from ai_security_analyzer.prompts import GITHUB2_GET_THREAT_DETAILS_PROMPT
+from ai_security_analyzer.prompts import GITHUB2_FORMAT_THREAT_MODEL_PROMPT, GITHUB2_GET_THREAT_DETAILS_PROMPT
 
 logger = logging.getLogger(__name__)
 
@@ -124,7 +124,7 @@ class GithubAgent2Tm(BaseAgent):
 
             parser = PydanticOutputParser(pydantic_object=ThreatModel)
 
-            format_prompt = f"You are task with formatting threat model. Don't change any text content of threats only format it to json. Follow instructions carefully:\nTHREAT MODEL:\n{sec_repo_doc}\n{parser.get_format_instructions()}"
+            format_prompt = GITHUB2_FORMAT_THREAT_MODEL_PROMPT.format(sec_repo_doc, parser.get_format_instructions())
 
             format_msg = HumanMessage(content=format_prompt)
 
