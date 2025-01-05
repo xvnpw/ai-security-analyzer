@@ -344,8 +344,8 @@ poetry run python ai_security_analyzer/app.py \
 3. Attack surface analysis with custom refinement count:
 ```bash
 poetry run python ai_security_analyzer/app.py \
-    github \
-    -t https://github.com/user/repo \
+    file \
+    -t examples/FLASK-o1-preview.md \
     -o attack_surface.md \
     --agent-prompt-type attack-surface \
     --refinement-count 3
@@ -467,6 +467,45 @@ poetry run python ai_security_analyzer/app.py \
     --project-type generic \
     --include "**/*.java"
 ```
+
+## Deep Analysis in GitHub Mode
+
+Enable **Deep Analysis** in **GitHub Mode** to perform an in-depth examination of specific attack surfaces, threats, or attack trees within a GitHub repository.
+
+### Enabling Deep Analysis
+
+Use the `--deep-analysis` flag when running the tool in `github` mode:
+
+```bash
+poetry run python ai_security_analyzer/app.py \
+    github \
+    -t https://github.com/user/repo \
+    -o output.md \
+    --agent-prompt-type <prompt-type> \
+    --deep-analysis
+```
+
+### Deep Analysis Output
+
+Depending on the selected `--agent-prompt-type`, the deep analysis will generate:
+
+- **attack-surface**:
+  - Main analysis in `output.md`
+  - Detailed analysis of each attack surface in `./attack_surfaces/*.md`
+
+- **threat-modeling**:
+  - Main analysis in `output.md`
+  - Detailed analysis of each threat in `./threats/*.md`
+
+- **attack-tree**:
+  - Main analysis in `output.md`
+  - Detailed analysis of each attack path in `./attack_tree_paths/*.md`
+
+- **sec-design**:
+  - Main analysis in `output.md`
+  - Detailed security design analysis in `output-deep-analysis.md`
+
+Each detailed analysis file provides comprehensive information about specific security aspects, including detailed descriptions, impact analysis, mitigation strategies, and implementation recommendations.
 
 ## Troubleshooting
 
