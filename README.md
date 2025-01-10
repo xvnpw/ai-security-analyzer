@@ -172,13 +172,9 @@ The application follows these high-level steps:
 
 1. **Configure Application**: Parses command-line arguments and sets up the configuration.
 2. **Internal Steps**: Iteratively processes the repository through defined steps where each step:
-   - Uses a specific prompt from the step_prompts list
-   - Accumulates responses in the state
-   - Tracks progress through step_index
 3. **Final Response**: Once all steps are complete:
    - Processes the final accumulated response
    - Formats the markdown output
-   - Removes markdown code block markers if present
 4. **Completion**: Returns the final security documentation
 
 ### Application Flow for `file` mode
