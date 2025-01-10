@@ -171,7 +171,7 @@ stateDiagram-v2
 The application follows these high-level steps:
 
 1. **Configure Application**: Parses command-line arguments and sets up the configuration.
-2. **Internal Steps**: Iteratively processes the repository through defined steps where each step:
+2. **Internal Steps**: Iteratively processes the repository through defined steps.
 3. **Final Response**: Once all steps are complete:
    - Processes the final accumulated response
    - Formats the markdown output
