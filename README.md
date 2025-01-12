@@ -565,6 +565,7 @@ export OPENAI_API_KEY=your_openai_api_key
 - [ ] Add support for `--continue` that will continue in case of error - currently intermediate data is lost when error occurs
 - [ ] Think about how to handle images in markdown - currently they are not supported (maybe https://github.com/microsoft/markitdown 🤔)
 - [ ] Add support for structured output when it will be available in reasoning models
+- [ ] Probably drop markdown validation - it's not working as expected - models still cannot fix problems with markdown 😡
 
 ## Contributing
 
