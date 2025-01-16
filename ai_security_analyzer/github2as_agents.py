@@ -90,7 +90,7 @@ class GithubAgent2As(BaseAgent):
                 f"step{step_index}": get_response_content(response),
             }
         except Exception as e:
-            logger.error(f"Error on internal step {state['step_index']} of {self.step_count}: {e}")
+            logger.error(f"Error on internal step {state['step_index']+1} of {self.step_count}: {e}")
             raise ValueError(str(e))
 
     def _internal_step_condition(self, state: AgentState) -> Literal["internal_step", "final_response"]:
@@ -193,7 +193,7 @@ class GithubAgent2As(BaseAgent):
             }
         except Exception as e:
             logger.error(
-                f"Error on get attack surface details {state['attack_surfaces_index']} of {state['attack_surfaces_count']}: {e}"
+                f"Error on get attack surface details {state['attack_surfaces_index']+1} of {state['attack_surfaces_count']}: {e}"
             )
             raise ValueError(str(e))
 

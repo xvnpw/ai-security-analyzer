@@ -89,7 +89,7 @@ class GithubAgent2Tm(BaseAgent):
                 f"step{step_index}": get_response_content(response),
             }
         except Exception as e:
-            logger.error(f"Error on internal step {state['step_index']} of {self.step_count}: {e}")
+            logger.error(f"Error on internal step {state['step_index']+1} of {self.step_count}: {e}")
             raise ValueError(str(e))
 
     def _internal_step_condition(self, state: AgentState) -> Literal["internal_step", "final_response"]:
@@ -189,7 +189,7 @@ class GithubAgent2Tm(BaseAgent):
                 "output_threats": [output_threat],
             }
         except Exception as e:
-            logger.error(f"Error on get threat details {state['threats_index']} of {state['threats_count']}: {e}")
+            logger.error(f"Error on get threat details {state['threats_index']+1} of {state['threats_count']}: {e}")
             raise ValueError(str(e))
 
     def _threats_final_response(self, state: AgentState):  # type: ignore[no-untyped-def]

@@ -258,6 +258,12 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--editor-max-turns-count`: Maximum number of attempts the editor will try to fix markdown issues. Default is `0` (editor disabled).
 - `--node-path`: Path to the Node.js binary. Attempts to auto-detect if not provided.
 
+### Checkpointing Options
+
+- `--resume`: Resume from last checkpoint if available.
+- `--clear-checkpoints`: Clear existing checkpoints before starting.
+- `--checkpoint-dir`: Directory to store checkpoints. Default is `.checkpoints`.
+
 ## Environment Variables
 
 Set one of the following environment variables based on your chosen LLM provider:
@@ -502,6 +508,30 @@ Depending on the selected `--agent-prompt-type`, the deep analysis will generate
   - Detailed security design analysis in `output-deep-analysis.md`
 
 Each detailed analysis file provides comprehensive information about specific security aspects, including detailed descriptions, impact analysis, mitigation strategies, and implementation recommendations.
+
+## Checkpointing
+
+The application supports checkpointing to help recover from failures during long-running analyses.
+
+### How Checkpointing Works
+
+1. **Automatic Checkpoint Creation**
+   - Checkpoints are automatically created during execution
+   - Stored in SQLite database in the checkpoint directory (default: `.checkpoints`)
+   - Each execution has a unique thread ID based on mode, target, and prompt type
+
+2. **Recovery Process**
+   - Use `--resume` to attempt recovery from last checkpoint
+   - If checkpoint exists, execution continues from last successful state
+   - If no checkpoint exists, starts from beginning
+
+3. **Checkpoint Management**
+   - Checkpoints are automatically cleared upon successful completion
+   - Use `--clear-checkpoints` to manually clear existing checkpoints
+   - Change checkpoint location with `--checkpoint-dir`
+
+4. **Limitations**
+   - Checkpoints are implemented using Langchain's checkpoint saver, which is not fully implemented yet. It might work incorrectly. Hope it will be fixed in future.
 
 ## Troubleshooting
 

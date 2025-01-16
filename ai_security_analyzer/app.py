@@ -284,7 +284,7 @@ def main() -> None:
         logger.info("AI Security Analyzer completed successfully")
 
     except Exception as e:
-        logger.error(f"Application error: {e}")
+        logger.error(f"Application error: {e}. You can try to run with --resume to resume from last checkpoint.")
         sys.exit(1)
     finally:
         # Ensure files are properly closed
@@ -295,16 +295,17 @@ def main() -> None:
 
 def app(config: AppConfig) -> None:
     llm_provider = LLMProvider(config)
-    checkpoint_manager = CheckpointManager(config)
-    checkpoint_manager.check_resume()
 
-    agent_builder = AgentBuilder(llm_provider, checkpoint_manager, config)
-    agent = agent_builder.build()
-    graph = agent.build_graph()
+    with CheckpointManager(config) as checkpoint_manager:
+        checkpoint_manager.check_resume()
 
-    executor = GraphExecutorFactory.create(config)
-    executor.execute(graph, config.target)
-    checkpoint_manager.clear_current_checkpoint()
+        agent_builder = AgentBuilder(llm_provider, checkpoint_manager, config)
+        agent = agent_builder.build()
+        graph = agent.build_graph()
+
+        executor = GraphExecutorFactory.create(config)
+        executor.execute(graph, config.target)
+        checkpoint_manager.clear_current_checkpoint()
 
 
 if __name__ == "__main__":

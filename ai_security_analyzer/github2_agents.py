@@ -48,9 +48,6 @@ class GithubAgent2(BaseAgent):
             step_index = state.get("step_index", 0)
             step_prompts = self.step_prompts
 
-            # if step_index == 1:
-            #     raise ValueError("Step 1 is not implemented")
-
             step_prompt = step_prompts[step_index](target_repo)
 
             step_msg = HumanMessage(content=step_prompt)

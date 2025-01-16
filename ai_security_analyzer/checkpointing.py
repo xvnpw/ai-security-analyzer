@@ -62,6 +62,16 @@ class CheckpointManager:
             self.conn.rollback()  # Rollback in case of error
             raise RuntimeError(f"Failed to clear checkpoint: {str(e)}")
 
-    def __del__(self) -> None:
+    def close(self) -> None:
+        """Explicitly close the database connection."""
         if hasattr(self, "conn"):
             self.conn.close()
+
+    def __enter__(self) -> "CheckpointManager":
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:  # type: ignore[no-untyped-def]
+        self.close()
+
+    def __del__(self) -> None:
+        self.close()
