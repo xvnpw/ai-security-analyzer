@@ -590,9 +590,9 @@ export OPENAI_API_KEY=your_openai_api_key
 
 ## Roadmap
 
-- [ ] Check results from sec-docs and update prompts to get predictable results - especially for `--deep-analysis`
+- [x] ~~Check results from sec-docs and update prompts to get predictable results - especially for `--deep-analysis`~~
 - [ ] Verify prompts with OpenAI o1, o1-pro, etc. models via API - need to get access to them first ☹️
-- [ ] Add support for `--continue` that will continue in case of error - currently intermediate data is lost when error occurs
+- [x] ~~Add support for `--continue` that will continue in case of error - currently intermediate data is lost when error occurs~~
 - [ ] Think about how to handle images in markdown - currently they are not supported (maybe https://github.com/microsoft/markitdown 🤔)
 - [ ] Add support for structured output when it will be available in reasoning models
 - [ ] Probably drop markdown validation - it's not working as expected - models still cannot fix problems with markdown 😡
