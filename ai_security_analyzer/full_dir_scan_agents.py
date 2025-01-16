@@ -18,7 +18,7 @@ from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.loaders import RepoDirectoryLoader
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
-
+from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin
 
 logger = logging.getLogger(__name__)
@@ -64,8 +64,9 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
         max_editor_turns_count: int,
         agent_prompt: str,
         doc_type_prompt: str,
+        checkpoint_manager: CheckpointManager,
     ):
-        BaseAgent.__init__(self, llm_provider)
+        BaseAgent.__init__(self, llm_provider, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
         MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
         self.agent_prompt = agent_prompt
@@ -300,7 +301,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
         builder.add_conditional_edges(GraphNodeType.UPDATE_DRAFT.value, update_draft_condition)
         builder.add_conditional_edges(GraphNodeType.MARKDOWN_VALIDATOR.value, markdown_error_condition)
         builder.add_edge(GraphNodeType.EDITOR.value, GraphNodeType.MARKDOWN_VALIDATOR.value)
-        graph = builder.compile()
+        graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
         return graph
 

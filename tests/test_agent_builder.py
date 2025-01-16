@@ -10,6 +10,7 @@ from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.full_dir_scan_agents import FullDirScanAgent
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.github2_agents import GithubAgent2
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 
 @pytest.fixture
@@ -38,35 +39,40 @@ def base_config():
     )
 
 
-def test_agent_builder_initialization(mock_llm_provider, base_config):
-    builder = AgentBuilder(mock_llm_provider, base_config)
+@pytest.fixture
+def mock_checkpoint_manager():
+    return Mock(spec=CheckpointManager)
+
+
+def test_agent_builder_initialization(mock_llm_provider, mock_checkpoint_manager, base_config):
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     assert builder.llm_provider == mock_llm_provider
     assert builder.config == base_config
     assert builder._agent_type == AgentType.DIR
 
 
-def test_build_dir_agent(mock_llm_provider, base_config):
-    builder = AgentBuilder(mock_llm_provider, base_config)
+def test_build_dir_agent(mock_llm_provider, mock_checkpoint_manager, base_config):
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     agent = builder.build()
     assert isinstance(agent, FullDirScanAgent)
 
 
-def test_build_dry_run_dir_agent(mock_llm_provider, base_config):
+def test_build_dry_run_dir_agent(mock_llm_provider, mock_checkpoint_manager, base_config):
     base_config.dry_run = True
-    builder = AgentBuilder(mock_llm_provider, base_config)
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     agent = builder.build()
     assert isinstance(agent, DryRunFullDirScanAgent)
 
 
-def test_build_github_agent(mock_llm_provider, base_config):
+def test_build_github_agent(mock_llm_provider, mock_checkpoint_manager, base_config):
     base_config.mode = "github"
-    builder = AgentBuilder(mock_llm_provider, base_config)
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     agent = builder.build()
     assert isinstance(agent, GithubAgent2)
 
 
-def test_invalid_agent_type(mock_llm_provider, base_config):
-    builder = AgentBuilder(mock_llm_provider, base_config)
+def test_invalid_agent_type(mock_llm_provider, mock_checkpoint_manager, base_config):
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     # Manually set an invalid agent type
     builder._agent_type = Mock(spec=AgentType)
     builder._agent_type.value = "invalid-agent-type"
@@ -75,11 +81,11 @@ def test_invalid_agent_type(mock_llm_provider, base_config):
         builder.build()
 
 
-def test_missing_agent_prompt(mock_llm_provider, base_config):
+def test_missing_agent_prompt(mock_llm_provider, mock_checkpoint_manager, base_config):
     base_config.agent_prompt_type = "invalid-prompt-type"  # type: ignore
 
     with pytest.raises(ValueError, match="No prompt template for prompt type: invalid-prompt-type"):
-        builder = AgentBuilder(mock_llm_provider, base_config)
+        builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
         builder.build()
 
 
@@ -91,16 +97,16 @@ def test_missing_agent_prompt(mock_llm_provider, base_config):
         ("file", AgentType.FILE),
     ],
 )
-def test_different_agent_modes(mock_llm_provider, base_config, mode, expected_type):
+def test_different_agent_modes(mock_llm_provider, mock_checkpoint_manager, base_config, mode, expected_type):
     base_config.mode = mode
-    builder = AgentBuilder(mock_llm_provider, base_config)
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     assert builder._agent_type == expected_type
 
 
-def test_deep_analysis_config(mock_llm_provider, base_config):
+def test_deep_analysis_config(mock_llm_provider, mock_checkpoint_manager, base_config):
     base_config.mode = "github"
     base_config.deep_analysis = True
     base_config.agent_prompt_type = "threat-modeling"
 
-    builder = AgentBuilder(mock_llm_provider, base_config)
+    builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, base_config)
     assert builder._agent_type == AgentType.GITHUB_DEEP_TM

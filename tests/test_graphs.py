@@ -23,6 +23,8 @@ def test_run_graph_executor_success():
     config.agent_preamble = "Test Preamble"
     config.output_file = Mock()
     config.recursion_limit = 10
+    config.mode = "dir"
+    config.agent_prompt_type = "sec-design"
 
     executor = FullDirScanGraphExecutor(config)
 
@@ -56,6 +58,8 @@ def test_dry_run_graph_executor_success(capfd):
     config.filter_keywords = []
     config.deep_analysis = False
     config.recursion_limit = 10
+    config.mode = "dir"
+    config.agent_prompt_type = "sec-design"
     executor = DryRunFullDirScanGraphExecutor(config)
 
     graph = Mock(spec=CompiledStateGraph)

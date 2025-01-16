@@ -48,6 +48,9 @@ class AppConfig(BaseModel):
     dry_run: bool = Field(default=False)
     node_path: str
     refinement_count: int = Field(default=1)
+    resume: bool = Field(default=False)
+    clear_checkpoints: bool = Field(default=False)
+    checkpoint_dir: str = Field(default=".checkpoints")
 
     @field_validator("exclude", mode="before")
     def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:

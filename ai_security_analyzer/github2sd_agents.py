@@ -9,7 +9,7 @@ from langgraph.graph.state import CompiledStateGraph
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
-
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 from ai_security_analyzer.prompts import GITHUB2_SEC_DESIGN_DETAILS_PROMPT
 
@@ -36,8 +36,13 @@ class GithubAgent2Sd(BaseAgent):
     Experimental model is working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
     """
 
-    def __init__(self, llm_provider: LLMProvider, step_prompts: List[Callable[[str], str]]):
-        super().__init__(llm_provider)
+    def __init__(
+        self,
+        llm_provider: LLMProvider,
+        step_prompts: List[Callable[[str], str]],
+        checkpoint_manager: CheckpointManager,
+    ):
+        super().__init__(llm_provider, checkpoint_manager)
         self.step_prompts = step_prompts
         self.step_count = len(step_prompts)
 
@@ -46,6 +51,7 @@ class GithubAgent2Sd(BaseAgent):
         try:
             target_repo = state["target_repo"]
             step_index = state.get("step_index", 0)
+
             step_prompts = self.step_prompts
 
             step_prompt = step_prompts[step_index](target_repo)
@@ -144,6 +150,6 @@ class GithubAgent2Sd(BaseAgent):
         builder.add_conditional_edges("internal_step", internal_step_condition)
         builder.add_edge("final_response", "get_sec_design_details")
         builder.add_edge("get_sec_design_details", "__end__")
-        graph = builder.compile()
+        graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
         return graph

@@ -7,6 +7,7 @@ from langgraph.graph.state import CompiledStateGraph
 from ai_security_analyzer.config import AppConfig
 from langchain_core.documents import Document
 from ai_security_analyzer.base_agent import AgentType
+from langchain_core.runnables.config import RunnableConfig
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +18,16 @@ class BaseGraphExecutor(ABC):
     def __init__(self, config: AppConfig) -> None:
         self.config: Final[AppConfig] = config
 
+    def get_execution_id(self, target: str) -> str:
+        """Generate a unique execution ID based on input parameters"""
+        return f"{self.config.mode}_{target}_{self.config.agent_prompt_type}"
+
+    def get_runnable_config(self, target: str) -> RunnableConfig:
+        return RunnableConfig(
+            configurable={"thread_id": self.get_execution_id(target)},
+            recursion_limit=self.config.recursion_limit,
+        )
+
     @abstractmethod
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         pass
@@ -26,6 +37,8 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
+            runnable_config = self.get_runnable_config(target)
+
             state = graph.invoke(
                 {
                     "target_dir": target,
@@ -36,7 +49,7 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
                     "include_mode": self.config.include_mode,
                     "filter_keywords": self.config.filter_keywords,
                 },
-                {"recursion_limit": self.config.recursion_limit},
+                runnable_config,
             )
             self._write_output(state)
         except Exception as e:
@@ -79,11 +92,13 @@ class GithubGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
+            runnable_config = self.get_runnable_config(target)
+
             state = graph.invoke(
                 {
                     "target_repo": target,
                 },
-                {"recursion_limit": self.config.recursion_limit},
+                runnable_config,
             )
             self._write_output(state)
         except Exception as e:
@@ -200,12 +215,14 @@ class FileGraphExecutor(FullDirScanGraphExecutor):
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
+            runnable_config = self.get_runnable_config(target)
+
             state = graph.invoke(
                 {
                     "target_file": target,
                     "refinement_count": self.config.refinement_count,
                 },
-                {"recursion_limit": self.config.recursion_limit},
+                runnable_config,
             )
             self._write_output(state)
         except Exception as e:

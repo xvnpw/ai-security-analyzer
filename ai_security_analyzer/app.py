@@ -7,6 +7,7 @@ from ai_security_analyzer.agent_builder import AgentBuilder
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.graphs import GraphExecutorFactory
 from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 logger = logging.getLogger(__name__)
 
@@ -226,6 +227,24 @@ def parse_arguments() -> AppConfig:
         help="Path to the Node.js binary. Attempts to auto-detect if not provided",
     )
 
+    # Checkpointing arguments
+    checkpoint_group = parser.add_argument_group("Checkpointing Options")
+    checkpoint_group.add_argument(
+        "--resume",
+        action="store_true",
+        help="Resume from last checkpoint if available",
+    )
+    checkpoint_group.add_argument(
+        "--clear-checkpoints",
+        action="store_true",
+        help="Clear existing checkpoints before starting",
+    )
+    checkpoint_group.add_argument(
+        "--checkpoint-dir",
+        default=".checkpoints",
+        help="Directory to store checkpoints. Default is .checkpoints",
+    )
+
     args = parser.parse_args()
 
     # Validate target based on mode
@@ -276,12 +295,16 @@ def main() -> None:
 
 def app(config: AppConfig) -> None:
     llm_provider = LLMProvider(config)
-    agent_builder = AgentBuilder(llm_provider, config)
+    checkpoint_manager = CheckpointManager(config)
+    checkpoint_manager.check_resume()
+
+    agent_builder = AgentBuilder(llm_provider, checkpoint_manager, config)
     agent = agent_builder.build()
     graph = agent.build_graph()
 
     executor = GraphExecutorFactory.create(config)
     executor.execute(graph, config.target)
+    checkpoint_manager.clear_current_checkpoint()
 
 
 if __name__ == "__main__":

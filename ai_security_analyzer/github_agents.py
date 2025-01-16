@@ -14,6 +14,7 @@ from ai_security_analyzer.components import MarkdownValidationMixin
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 logger = logging.getLogger(__name__)
 
@@ -47,8 +48,9 @@ class GithubAgent(BaseAgent, MarkdownValidationMixin):
         markdown_validator: MarkdownMermaidValidator,
         agent_prompt: str,
         doc_type_prompt: str,
+        checkpoint_manager: CheckpointManager,
     ):
-        BaseAgent.__init__(self, llm_provider)
+        BaseAgent.__init__(self, llm_provider, checkpoint_manager)
         MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
         self.agent_prompt = agent_prompt
         self.doc_type_prompt = doc_type_prompt
@@ -197,7 +199,7 @@ class GithubAgent(BaseAgent, MarkdownValidationMixin):
         builder.add_conditional_edges(GraphNodeType.REFINE_DRAFT.value, refine_draft_condition)
         builder.add_conditional_edges(GraphNodeType.MARKDOWN_VALIDATOR.value, markdown_error_condition)
         builder.add_edge(GraphNodeType.EDITOR.value, GraphNodeType.MARKDOWN_VALIDATOR.value)
-        graph = builder.compile()
+        graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
         return graph
 

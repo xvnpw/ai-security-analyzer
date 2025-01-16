@@ -19,13 +19,15 @@ from ai_security_analyzer.github2tm_agents import GithubAgent2Tm
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.prompts import DOC_TYPE_PROMPTS, GITHUB2_CONFIGS, get_agent_prompt
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 logger = logging.getLogger(__name__)
 
 
 class AgentBuilder:
-    def __init__(self, llm_provider: LLMProvider, config: AppConfig) -> None:
+    def __init__(self, llm_provider: LLMProvider, checkpoint_manager: CheckpointManager, config: AppConfig) -> None:
         self.llm_provider = llm_provider
+        self.checkpoint_manager = checkpoint_manager
         self.config = config
 
         self._agents: dict[AgentType, Type[BaseAgent]] = {
@@ -83,6 +85,7 @@ class AgentBuilder:
                 max_editor_turns_count=self.config.editor_max_turns_count,
                 agent_prompt=agent_prompt,
                 doc_type_prompt=doc_type_prompt,
+                checkpoint_manager=self.checkpoint_manager,
             )
         elif issubclass(agent_class, MarkdownValidationMixin):
             # Agents that need markdown validation
@@ -100,8 +103,9 @@ class AgentBuilder:
                 max_editor_turns_count=self.config.editor_max_turns_count,
                 agent_prompt=agent_prompt,
                 doc_type_prompt=doc_type_prompt,
+                checkpoint_manager=self.checkpoint_manager,
             )
         else:
             # Agents that only need llm_provider
             config = GITHUB2_CONFIGS[self.config.agent_prompt_type]
-            return agent_class(llm_provider=self.llm_provider, step_prompts=config["step_prompts"])  # type: ignore[call-arg]
+            return agent_class(llm_provider=self.llm_provider, step_prompts=config["step_prompts"], checkpoint_manager=self.checkpoint_manager)  # type: ignore[call-arg]

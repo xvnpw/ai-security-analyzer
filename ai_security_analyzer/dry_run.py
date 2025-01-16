@@ -12,6 +12,7 @@ from ai_security_analyzer.full_dir_scan_agents import (
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 logger = logging.getLogger(__name__)
 
@@ -28,6 +29,7 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
         doc_filter: DocumentFilter,
         agent_prompt: str,
         doc_type_prompt: str,
+        checkpoint_manager: CheckpointManager,
     ):
         super().__init__(
             llm_provider=llm_provider,
@@ -39,6 +41,7 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
             max_editor_turns_count=max_editor_turns_count,
             agent_prompt=agent_prompt,
             doc_type_prompt=doc_type_prompt,
+            checkpoint_manager=checkpoint_manager,
         )
 
     def _count_token(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -74,6 +77,6 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
         builder.add_edge("sort_filter_docs", "split_docs_to_window")
         builder.add_edge("split_docs_to_window", "count_tokens")
         builder.add_edge("count_tokens", END)
-        graph = builder.compile()
+        graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
         return graph

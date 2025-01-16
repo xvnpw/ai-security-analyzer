@@ -8,6 +8,7 @@ from langgraph.graph.state import CompiledStateGraph
 from pydantic import BaseModel, Field
 
 from ai_security_analyzer.base_agent import BaseAgent
+from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename
 from langchain_core.output_parsers import PydanticOutputParser
@@ -65,8 +66,13 @@ class GithubAgent2At(BaseAgent):
     Experimental model is working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
     """
 
-    def __init__(self, llm_provider: LLMProvider, step_prompts: List[Callable[[str], str]]):
-        super().__init__(llm_provider)
+    def __init__(
+        self,
+        llm_provider: LLMProvider,
+        step_prompts: List[Callable[[str], str]],
+        checkpoint_manager: CheckpointManager,
+    ):
+        super().__init__(llm_provider, checkpoint_manager)
         self.step_prompts = step_prompts
         self.step_count = len(step_prompts)
 
@@ -279,6 +285,6 @@ class GithubAgent2At(BaseAgent):
         builder.add_conditional_edges("structured_attack_tree_path", get_attack_tree_path_details_condition)
         builder.add_conditional_edges("get_attack_tree_path_details", get_attack_tree_path_details_condition)
         builder.add_edge("attack_tree_paths_final_response", "__end__")
-        graph = builder.compile()
+        graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
         return graph

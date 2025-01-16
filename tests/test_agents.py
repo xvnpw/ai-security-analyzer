@@ -15,6 +15,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLM, LLMProvider, ModelConfig
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from langchain_core.documents import Document
+from ai_security_analyzer.checkpointing import CheckpointManager
 
 
 @dataclass
@@ -68,16 +69,21 @@ def markdown_validator():
     return validator
 
 
-def test_agent_builder_with_valid_agent_type(llm_provider):
-    builder = AgentBuilder(llm_provider, AppConfigTest())
+@pytest.fixture
+def checkpoint_manager():
+    return Mock(spec=CheckpointManager)
+
+
+def test_agent_builder_with_valid_agent_type(llm_provider, checkpoint_manager):
+    builder = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest())
     agent = builder.build()
     assert agent is not None
     assert isinstance(agent, BaseAgent)
     assert isinstance(agent, FullDirScanAgent)
 
 
-def test_load_files_with_invalid_directory(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_load_files_with_invalid_directory(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     state = {
         "target_dir": "/non/existent/directory",
         "project_type": "python",
@@ -93,8 +99,8 @@ def test_load_files_with_invalid_directory(llm_provider):
     assert "Failed to load files" in str(exc_info.value)
 
 
-def test_simple_agent_sort_filter_docs(llm_provider, doc_filter):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_simple_agent_sort_filter_docs(llm_provider, doc_filter, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     agent.doc_filter = doc_filter
     assert isinstance(agent, FullDirScanAgent)
 
@@ -117,8 +123,8 @@ def test_simple_agent_sort_filter_docs(llm_provider, doc_filter):
     assert len(new_state2["sorted_filtered_docs"]) > 0
 
 
-def test_sort_filter_docs_with_no_docs(llm_provider, doc_filter):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_sort_filter_docs_with_no_docs(llm_provider, doc_filter, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     agent.doc_filter = doc_filter
     state = {"repo_docs": [], "filter_keywords": None}
 
@@ -128,8 +134,8 @@ def test_sort_filter_docs_with_no_docs(llm_provider, doc_filter):
     assert len(new_state["sorted_filtered_docs"]) == 0
 
 
-def test_simple_agent_split_docs_to_window(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_simple_agent_split_docs_to_window(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     assert isinstance(agent, FullDirScanAgent)
 
     target_dir = Path(__file__).resolve().parent / "testdata"
@@ -152,8 +158,8 @@ def test_simple_agent_split_docs_to_window(llm_provider):
     assert len(new_state3["splitted_docs"]) >= len(new_state2["sorted_filtered_docs"])
 
 
-def test_split_docs_with_empty_docs(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_split_docs_with_empty_docs(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     state = {"sorted_filtered_docs": []}
 
     new_state = agent._split_docs_to_window(state)
@@ -162,8 +168,8 @@ def test_split_docs_with_empty_docs(llm_provider):
     assert len(new_state["splitted_docs"]) == 0
 
 
-def test_simple_agent_create_initial_draft(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_simple_agent_create_initial_draft(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     llm = llm_provider.create_agent_llm().llm
 
     target_dir = Path(__file__).resolve().parent / "testdata"
@@ -193,8 +199,8 @@ def test_simple_agent_create_initial_draft(llm_provider):
     llm.invoke.assert_called_once()
 
 
-def test_create_initial_draft_with_empty_documents(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_create_initial_draft_with_empty_documents(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     llm = llm_provider.create_agent_llm().llm
     state = {"splitted_docs": []}
 
@@ -202,8 +208,8 @@ def test_create_initial_draft_with_empty_documents(llm_provider):
         agent._create_initial_draft(state, llm, 1000, True)
 
 
-def test_update_draft_with_new_docs(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_update_draft_with_new_docs(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     llm = llm_provider.create_agent_llm().llm
 
     mock_response = MagicMock()
@@ -224,14 +230,14 @@ def test_update_draft_with_new_docs(llm_provider):
 
 
 def test_update_draft_condition_complete_docs():
-    agent = FullDirScanAgent(None, None, None, 3, None, None, None, None, None)
+    agent = FullDirScanAgent(None, None, None, 3, None, None, None, None, None, None)
     state = {"splitted_docs": [1, 2, 3], "processed_docs_count": 3}
     result = agent._update_draft_condition(state)
     assert result == GraphNodeType.MARKDOWN_VALIDATOR.value
 
 
 def test_update_draft_condition_more_docs():
-    agent = FullDirScanAgent(None, None, None, 3, None, None, None, None, None)
+    agent = FullDirScanAgent(None, None, None, 3, None, None, None, None, None, None)
     state = {"splitted_docs": [1, 2, 3], "processed_docs_count": 2}
     result = agent._update_draft_condition(state)
     assert result == GraphNodeType.UPDATE_DRAFT.value
@@ -250,6 +256,7 @@ def test_markdown_validator_with_valid_markdown(markdown_validator):
         doc_filter=None,
         agent_prompt=None,
         doc_type_prompt=None,
+        checkpoint_manager=None,
     )
 
     state = {"sec_repo_doc": "Valid Markdown Content"}
@@ -272,6 +279,7 @@ def test_markdown_validator_with_invalid_markdown(markdown_validator):
         doc_filter=None,
         agent_prompt=None,
         doc_type_prompt=None,
+        checkpoint_manager=None,
     )
 
     state = {"sec_repo_doc": "Invalid Markdown Content"}
@@ -293,6 +301,7 @@ def test_markdown_error_condition_with_error_and_max_turns():
         max_editor_turns_count=3,
         agent_prompt=None,
         doc_type_prompt=None,
+        checkpoint_manager=None,
     )
     state = {"sec_repo_doc_validation_error": "Error", "editor_turns_count": 3}
     result = agent._markdown_error_condition(state)
@@ -310,14 +319,15 @@ def test_markdown_error_condition_with_error_and_less_than_max_turns():
         max_editor_turns_count=3,
         agent_prompt=None,
         doc_type_prompt=None,
+        checkpoint_manager=None,
     )
     state = {"sec_repo_doc_validation_error": "Error", "editor_turns_count": 2}
     result = agent._markdown_error_condition(state)
     assert result == GraphNodeType.EDITOR.value
 
 
-def test_editor_fixing_markdown(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_editor_fixing_markdown(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
     llm = llm_provider.create_editor_llm().llm
 
     mock_response = MagicMock()
@@ -338,8 +348,8 @@ def test_editor_fixing_markdown(llm_provider):
     llm.invoke.assert_called_once()
 
 
-def test_build_graph(llm_provider):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+def test_build_graph(llm_provider, checkpoint_manager):
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
 
     graph = agent.build_graph()
     assert graph
@@ -369,6 +379,7 @@ def test_build_graph(llm_provider):
 )
 def test_create_human_prompt(
     llm_provider,
+    checkpoint_manager,
     message_type: str,
     documents: List[Document],
     batch: List[Document],
@@ -376,7 +387,7 @@ def test_create_human_prompt(
     processed_count: int,
     update_draft_prompt: str,
 ):
-    agent = AgentBuilder(llm_provider, AppConfigTest()).build()
+    agent = AgentBuilder(llm_provider, checkpoint_manager, AppConfigTest()).build()
 
     ret = agent._create_human_prompt(
         documents, batch, processed_count, message_type, current_description, update_draft_prompt
