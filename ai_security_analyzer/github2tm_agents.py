@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename
+from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename, clean_markdown
 from langchain_core.output_parsers import PydanticOutputParser
 from operator import add
 from ai_security_analyzer.checkpointing import CheckpointManager
@@ -107,13 +107,7 @@ class GithubAgent2Tm(BaseAgent):
             messages = state["messages"]
             last_message = messages[-1]
             final_response = get_response_content(last_message)
-            final_response = final_response.strip()
-
-            if final_response.startswith("```markdown"):
-                final_response = final_response.replace("```markdown", "")
-
-            if final_response.endswith("```"):
-                final_response = final_response[:-3]
+            final_response = clean_markdown(final_response)
 
             return {
                 "sec_repo_doc": final_response,
@@ -176,6 +170,7 @@ class GithubAgent2Tm(BaseAgent):
             response = llm.invoke([get_threat_details_msg])
             document_tokens = get_total_tokens(response)
             threat_details = get_response_content(response)
+            threat_details = clean_markdown(threat_details)
 
             output_threat = OutputThreat(
                 title=threats[threats_index].title,

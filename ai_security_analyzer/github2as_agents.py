@@ -10,7 +10,7 @@ from pydantic import BaseModel, Field
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename
+from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename, clean_markdown
 from langchain_core.output_parsers import PydanticOutputParser
 from operator import add
 
@@ -108,13 +108,7 @@ class GithubAgent2As(BaseAgent):
             messages = state["messages"]
             last_message = messages[-1]
             final_response = get_response_content(last_message)
-            final_response = final_response.strip()
-
-            if final_response.startswith("```markdown"):
-                final_response = final_response.replace("```markdown", "")
-
-            if final_response.endswith("```"):
-                final_response = final_response[:-3]
+            final_response = clean_markdown(final_response)
 
             return {
                 "sec_repo_doc": final_response,
@@ -179,6 +173,7 @@ class GithubAgent2As(BaseAgent):
             response = llm.invoke([get_attack_surface_details_msg])
             document_tokens = get_total_tokens(response)
             attack_surface_details = get_response_content(response)
+            attack_surface_details = clean_markdown(attack_surface_details)
 
             output_attack_surface = OutputAttackSurface(
                 title=attack_surfaces[attack_surfaces_index].title,

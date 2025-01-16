@@ -8,7 +8,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.utils import get_response_content, get_total_tokens
+from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
 
 from ai_security_analyzer.prompts import GITHUB2_SEC_DESIGN_DETAILS_PROMPT
@@ -85,13 +85,7 @@ class GithubAgent2Sd(BaseAgent):
             messages = state["messages"]
             last_message = messages[-1]
             final_response = get_response_content(last_message)
-            final_response = final_response.strip()
-
-            if final_response.startswith("```markdown"):
-                final_response = final_response.replace("```markdown", "")
-
-            if final_response.endswith("```"):
-                final_response = final_response[:-3]
+            final_response = clean_markdown(final_response)
 
             return {
                 "sec_repo_doc": final_response,

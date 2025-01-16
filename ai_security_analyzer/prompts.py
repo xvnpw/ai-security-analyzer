@@ -841,7 +841,7 @@ GITHUB2_CONFIGS = {
     "attack-surface": GITHUB2_ATTACK_SURFACE_CONFIG,
 }
 
-GITHUB2_GET_THREAT_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular threat from threat model for application that is using {}.
+GITHUB2_GET_THREAT_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular threat from threat model for application that is using {}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of threat. Output valid markdown.
 
 THREAT:
 {}
@@ -849,7 +849,7 @@ THREAT:
 {}
 """
 
-GITHUB2_GET_ATTACK_SURFACE_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack surface from attack surface analysis for application that is using {}.
+GITHUB2_GET_ATTACK_SURFACE_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack surface from attack surface analysis for application that is using {}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of attack surface. Output valid markdown.
 
 ATTACK SURFACE:
 {}
@@ -857,7 +857,7 @@ ATTACK SURFACE:
 {}
 """
 
-GITHUB2_GET_ATTACK_TREE_PATH_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack tree path from attack tree analysis for application that is using {}.
+GITHUB2_GET_ATTACK_TREE_PATH_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack tree path from attack tree analysis for application that is using {}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of attack tree path. Output valid markdown.
 
 ATTACK TREE PATH:
 {}

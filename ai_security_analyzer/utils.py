@@ -7,6 +7,22 @@ from pathvalidate import sanitize_filename
 import hashlib
 
 
+def clean_markdown(markdown: str) -> str:
+    markdown = markdown.strip()
+
+    if markdown.startswith("```markdown"):
+        markdown = markdown[11:]
+    elif markdown.startswith("```"):
+        markdown = markdown[3:]
+
+    if markdown.endswith("```"):
+        markdown = markdown[:-3]
+
+    markdown = markdown.strip()
+
+    return markdown
+
+
 def convert_to_ai_message(message: BaseMessage) -> AIMessage:
     content = message.content
 
