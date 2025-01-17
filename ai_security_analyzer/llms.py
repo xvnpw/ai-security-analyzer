@@ -96,6 +96,14 @@ class LLMProvider:
                 documents_context_window=config.files_context_window or DEFAULT_CONTEXT_WINDOW,
                 tokenizer_model_name="gpt-4",
             ),
+            "o1-mini": ModelConfig(
+                max_number_of_tools=0,
+                use_system_message=False,
+                documents_chunk_size=config.files_chunk_size or DEFAULT_CHUNK_SIZE,
+                documents_chunk_overlap=0,
+                documents_context_window=config.files_context_window or DEFAULT_CONTEXT_WINDOW,
+                tokenizer_model_name="gpt-4",
+            ),
             "gemini-2.0-flash-thinking-exp": ModelConfig(
                 max_number_of_tools=0,
                 use_system_message=True,
