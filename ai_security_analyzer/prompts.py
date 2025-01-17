@@ -1,7 +1,17 @@
 from typing import Dict
 
 
+def get_doc_type_prompt(prompt_type: str, mode: str) -> str:
+    if mode == "dir2":
+        return DIR2_DOC_TYPE_PROMPTS[prompt_type]
+
+    return DOC_TYPE_PROMPTS[prompt_type]
+
+
 def get_agent_prompt(prompt_type: str, mode: str) -> str:
+    if mode == "dir2":
+        return _DIR2_PROMPTS[prompt_type]
+
     # Validate prompt type and get templates
     prompt_template = _TEMPLATE_PROMPTS.get(prompt_type)
     doc_type = DOC_TYPE_PROMPTS.get(prompt_type)
@@ -884,3 +894,43 @@ GITHUB2_FORMAT_ATTACK_SURFACE_PROMPT = "You are task with formatting attack surf
 GITHUB2_FORMAT_ATTACK_TREE_PROMPT = "You are task with formatting attack tree path analysis. Don't change any text content of attack tree paths only format it to json. Follow instructions carefully:\nATTACK TREE PATH ANALYSIS:\n{}\n{}"
 
 GITHUB2_FORMAT_THREAT_MODEL_PROMPT = "You are task with formatting threat model. Don't change any text content of threats only format it to json. Follow instructions carefully:\nTHREAT MODEL:\n{}\n{}"
+
+DIR2_THREAT_MODELING_PROMPTS = """You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {project_name}. Focus on threats introduced by {project_name} and omit general, common web application threats. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead. Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {project_name} component is affected (describe what component is affected, e.g. module, function, etc.), risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Exclude low severity threats and keep only medium, high and critical threats. I will give you PROJECT FILES and CURRENT THREAT MODEL. When the CURRENT THREAT MODEL is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of PROJECT FILES. In this case, integrate new findings from current PROJECT FILES into the existing CURRENT THREAT MODEL. Ensure consistency and avoid duplication. If the CURRENT THREAT MODEL is empty, proceed to create a new threat model based on the current PROJECT FILES. The PROJECT FILES will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more."""
+
+DIR2_ATTACK_SURFACE_PROMPTS = """You are cybersecurity expert, working with development team. Your task is to create attack surface analysis for application that is using {project_name}. Focus on attack surface introduced by {project_name} and omit general, common attack surface. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead. Create key attack surface list with: description, how {project_name} contributes to the attack surface, example, impact, risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Exclude low severity attack surfaces and keep only medium, high and critical attack surfaces. I will give you PROJECT FILES and CURRENT ATTACK SURFACE ANALYSIS. When the CURRENT ATTACK SURFACE ANALYSIS is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of PROJECT FILES. In this case, integrate new findings from current PROJECT FILES into the existing CURRENT ATTACK SURFACE ANALYSIS. Ensure consistency and avoid duplication. If the CURRENT ATTACK SURFACE ANALYSIS is empty, proceed to create a new attack surface analysis based on the current PROJECT FILES. The PROJECT FILES will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more."""
+
+DIR2_ATTACK_TREE_PROMPTS = """You are cybersecurity expert, working with development team. Your task is to create detail threat model using attack tree analysis for application that is using {project_name}. Focus on threats introduced by {project_name} and omit general, common web application threats. Identify how an attacker might compromise application using {project_name} by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format. Put visualization into ``` code block. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.
+
+Objective:
+Attacker's Goal: To compromise application that use given project by exploiting weaknesses or vulnerabilities within the project itself.
+
+(Note: If you find a more precise or impactful goal during your analysis, feel free to refine it.)
+
+For each attack step, write:
+- Description of the attack vector
+- Actionable insights
+- Likelihood: How probable is it that the attack could occur?
+- Impact: What would be the potential damage if the attack is successful?
+- Effort: What resources or time would the attacker need?
+- Skill Level: What level of expertise is required?
+- Detection Difficulty: How easy would it be to detect the attack?
+
+Exclude low severity attack steps and keep only medium, high and critical attack steps.
+
+I will give you PROJECT FILES and CURRENT ATTACK TREE. When the CURRENT ATTACK TREE is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of PROJECT FILES. In this case, integrate new findings from current PROJECT FILES into the existing CURRENT ATTACK TREE. Ensure consistency and avoid duplication. If the CURRENT ATTACK TREE is empty, proceed to create a new attack tree based on the current PROJECT FILES. The PROJECT FILES will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more."""
+
+DIR2_SEC_DESIGN_PROMPTS = """You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components. Provide a well written, detailed project design document that will be use later for threat modelling for project: {project_name}. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts). Don't use markdown tables at all, use markdown lists instead. I will give you PROJECT FILES and CURRENT DESIGN DOCUMENT. When the CURRENT DESIGN DOCUMENT is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of PROJECT FILES. In this case, integrate new findings from current PROJECT FILES into the existing CURRENT DESIGN DOCUMENT. Ensure consistency and avoid duplication. If the CURRENT DESIGN DOCUMENT is empty, proceed to create a new design document based on the current PROJECT FILES. The PROJECT FILES will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more."""
+
+_DIR2_PROMPTS = {
+    "threat-modeling": DIR2_THREAT_MODELING_PROMPTS,
+    "attack-surface": DIR2_ATTACK_SURFACE_PROMPTS,
+    "attack-tree": DIR2_ATTACK_TREE_PROMPTS,
+    "sec-design": DIR2_SEC_DESIGN_PROMPTS,
+}
+
+DIR2_DOC_TYPE_PROMPTS: Dict[str, str] = {
+    "sec-design": "DESIGN DOCUMENT",
+    "threat-modeling": "THREAT MODEL",
+    "attack-surface": "ATTACK SURFACE ANALYSIS",
+    "attack-tree": "ATTACK TREE",
+}

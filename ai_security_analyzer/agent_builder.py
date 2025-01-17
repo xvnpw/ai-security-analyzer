@@ -11,6 +11,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.file_agents import FileAgent
 from ai_security_analyzer.full_dir_scan_agents import FullDirScanAgent
+from ai_security_analyzer.full_dir_scan2_agents import FullDirScanAgent2
 from ai_security_analyzer.github2_agents import GithubAgent2
 from ai_security_analyzer.github2as_agents import GithubAgent2As
 from ai_security_analyzer.github2at_agents import GithubAgent2At
@@ -18,7 +19,7 @@ from ai_security_analyzer.github2sd_agents import GithubAgent2Sd
 from ai_security_analyzer.github2tm_agents import GithubAgent2Tm
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
-from ai_security_analyzer.prompts import DOC_TYPE_PROMPTS, GITHUB2_CONFIGS, get_agent_prompt
+from ai_security_analyzer.prompts import GITHUB2_CONFIGS, get_agent_prompt, get_doc_type_prompt
 from ai_security_analyzer.checkpointing import CheckpointManager
 
 logger = logging.getLogger(__name__)
@@ -33,6 +34,8 @@ class AgentBuilder:
         self._agents: dict[AgentType, Type[BaseAgent]] = {
             AgentType.DIR: FullDirScanAgent,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanAgent,
+            AgentType.DIR2: FullDirScanAgent2,
+            AgentType.DRY_RUN_DIR2: DryRunFullDirScanAgent,
             AgentType.GITHUB: GithubAgent2,
             AgentType.GITHUB_DEEP_TM: GithubAgent2Tm,
             AgentType.GITHUB_DEEP_AS: GithubAgent2As,
@@ -72,7 +75,7 @@ class AgentBuilder:
             if not agent_prompt:
                 raise ValueError(f"No agent prompt for type: {self.agent_prompt_type}")
 
-            doc_type_prompt = DOC_TYPE_PROMPTS.get(self.agent_prompt_type)
+            doc_type_prompt = get_doc_type_prompt(self.agent_prompt_type, self.config.mode)
             if not doc_type_prompt:
                 raise ValueError(f"No update prompt for type: {self.agent_prompt_type}")
             return agent_class(  # type: ignore[call-arg]
@@ -94,7 +97,7 @@ class AgentBuilder:
             if not agent_prompt:
                 raise ValueError(f"No agent prompt for type: {self.agent_prompt_type}")
 
-            doc_type_prompt = DOC_TYPE_PROMPTS.get(self.agent_prompt_type)
+            doc_type_prompt = get_doc_type_prompt(self.agent_prompt_type, self.config.mode)
             if not doc_type_prompt:
                 raise ValueError(f"No update prompt for type: {self.agent_prompt_type}")
             return agent_class(  # type: ignore[call-arg]

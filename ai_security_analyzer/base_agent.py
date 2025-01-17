@@ -14,6 +14,8 @@ logger = logging.getLogger(__name__)
 class AgentType(Enum):
     DIR = "dir"
     DRY_RUN_DIR = "dry-run-dir"
+    DIR2 = "dir2"
+    DRY_RUN_DIR2 = "dry-run-dir2"
     GITHUB = "github"
     GITHUB_DEEP_TM = "github-deep-tm"
     FILE = "file"

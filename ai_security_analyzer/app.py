@@ -30,12 +30,13 @@ def parse_arguments() -> AppConfig:
 
     parser.add_argument(
         "mode",
-        choices=["dir", "github", "file"],
+        choices=["dir", "github", "file", "dir2"],
         help=(
             "Operation mode: "
             "'dir' to analyze a local directory (will send all files from directory to LLM), "
             "'github' to analyze a GitHub repository (will use model knowledge base to generate documentation), "
-            "'file' to analyze a single file"
+            "'file' to analyze a single file, "
+            "'dir2' version 2 of dir mode"
         ),
     )
 
@@ -250,6 +251,8 @@ def parse_arguments() -> AppConfig:
     # Validate target based on mode
     if args.mode == "dir" and not os.path.isdir(args.target):
         parser.error("In 'dir' mode, target must be a valid directory path")
+    elif args.mode == "dir2" and not os.path.isdir(args.target):
+        parser.error("In 'dir2' mode, target must be a valid directory path")
     elif args.mode == "file" and not os.path.isfile(args.target):
         parser.error("In 'file' mode, target must be a valid file path")
     elif args.mode == "github" and not args.target.startswith("https://github.com/"):
@@ -261,8 +264,8 @@ def parse_arguments() -> AppConfig:
     if args.deep_analysis and args.mode != "github":
         parser.error("--deep-analysis is only available in 'github' mode")
 
-    if args.dry_run and args.mode != "dir":
-        parser.error("--dry-run is only available in 'dir' mode")
+    if args.dry_run and args.mode not in ("dir", "dir2"):
+        parser.error("--dry-run is only available in 'dir/dir2' mode")
 
     # Validate prompt type for github mode
     if args.mode == "github" and args.agent_prompt_type == "threat-scenarios":

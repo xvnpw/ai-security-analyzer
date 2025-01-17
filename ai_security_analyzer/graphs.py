@@ -238,6 +238,8 @@ class GraphExecutorFactory:
         executors: dict[AgentType, Type[BaseGraphExecutor]] = {
             AgentType.DIR: FullDirScanGraphExecutor,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanGraphExecutor,
+            AgentType.DIR2: FullDirScanGraphExecutor,
+            AgentType.DRY_RUN_DIR2: DryRunFullDirScanGraphExecutor,
             AgentType.GITHUB: GithubGraphExecutor,
             AgentType.FILE: FileGraphExecutor,
             AgentType.GITHUB_DEEP_TM: GithubDeepTmGraphExecutor,
