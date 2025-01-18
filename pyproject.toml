@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ai-security-analyzer"
-version = "0.0.30"
+version = "0.0.31"
 description = ""
 authors = ["xvnpw <17719543+xvnpw@users.noreply.github.com>"]
 license = "MIT"
