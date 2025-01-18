@@ -210,6 +210,7 @@ The application accepts various command-line arguments to tailor its behavior.
 
 - `mode`: **Required**. Operation mode (`dir`, `github`, `file`):
   - `dir`: Analyze a local directory (will send all files from directory to LLM)
+  - `dir2`: Version 2 of dir mode optimized for Gemini 2.0 Flash Thinking Exp model
   - `github`: Analyze a GitHub repository (will use model knowledge base to generate documentation)
   - `file`: Analyze a single file
 - `-h`, `--help`: Show help message and exit.
@@ -219,7 +220,7 @@ The application accepts various command-line arguments to tailor its behavior.
 ### Input/Output Options
 
 - `-t`, `--target`: **Required**. Target based on mode:
-  - For `dir` mode: Directory path to analyze
+  - For `dir`/`dir2` mode: Directory path to analyze
   - For `github` mode: GitHub repository URL (must start with 'https://github.com/')
   - For `file` mode: File path to analyze
 - `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
