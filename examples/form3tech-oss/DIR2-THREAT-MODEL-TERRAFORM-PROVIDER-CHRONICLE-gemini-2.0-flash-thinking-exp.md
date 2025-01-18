@@ -1,152 +1,210 @@
 ## Threat Model for Applications Using Terraform Chronicle
 
-This document outlines potential security threats introduced by using the `terraform-provider-chronicle`. It focuses on vulnerabilities specific to the provider and excludes general web application security concerns.
+This document outlines the potential security threats introduced by using the `terraform-provider-chronicle`. It focuses specifically on risks associated with the provider itself and its interaction with Chronicle, excluding general web application security concerns.
 
 ### Threat List
 
-- **Threat:** Exposure of Chronicle API Credentials through Terraform State
-  - **Description:**  Chronicle provider configuration allows specifying API credentials (e.g., `backstoryapi_credentials`, `ingestionapi_credentials`, `bigqueryapi_credentials`, `forwarderapi_credentials`) directly in the Terraform configuration files, through environment variables, or via file paths as seen in `client\util.go`. If the Terraform state file is not properly secured (e.g., stored in an unencrypted location, accessible to unauthorized users), these credentials could be exposed. An attacker gaining access to the state file could extract these credentials and use them to directly access and manipulate Chronicle APIs, potentially reading sensitive data, modifying configurations, or ingesting malicious data.
-  - **Impact:** Critical
-  - **Affected Component:** Provider Configuration, Terraform State Management, `client\util.go`
-  - **Risk Severity:** Critical
-  - **Mitigation Strategies:**
-    - Store Terraform state files in secure, encrypted backends with access controls.
-    - Avoid storing credentials directly in Terraform configuration files.
-    - Utilize secret management tools (e.g., HashiCorp Vault, AWS Secrets Manager) to manage and inject credentials at runtime.
-    - Implement proper access control and auditing for the Terraform state backend.
-    - Regularly rotate API keys and credentials.
-    - If using file paths for credentials, ensure the files are stored securely with appropriate permissions.
+*   **Threat:** Exposure of Chronicle API Credentials in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve sensitive credentials used to authenticate with the Chronicle API. This could happen if the state file is stored insecurely (e.g., unencrypted storage, publicly accessible buckets). With these credentials, an attacker could perform any action allowed by the associated Chronicle account, such as reading ingested data, modifying rules, or deleting resources.
+    *   **Impact:** Critical. Full compromise of the Chronicle environment, leading to data breaches, unauthorized modifications, and denial of service.
+    *   **Affected Component:** Terraform Provider Configuration (specifically the `backstoryapi_credentials`, `bigqueryapi_credentials`, `ingestionapi_credentials`, `forwarderapi_credentials` attributes in the provider configuration and the `authentication` blocks within feed resources). The `client.GetCredentials` function in `client/client.go` handles loading these credentials. The `multiEnvSearch` and `envSearch` functions in `chronicle/util.go` facilitate retrieving credentials from environment variables.
+    *   **Current Mitigations:** The provider allows specifying credentials via environment variables (e.g., `CHRONICLE_BIGQUERY_CREDENTIALS`), which can reduce the risk of them being directly embedded in the Terraform configuration. The documentation also mentions that sensitive attributes like `secret_access_key`, `sas_token`, `shared_key`, `client_secret`, and API tokens are marked as sensitive in the schema, which should prevent them from being displayed in plain text in `terraform plan` output. However, they are still stored in the state file. The provider also supports separate `*_access_token` attributes, potentially allowing for more granular control if access tokens with limited scopes are used.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption (e.g., AWS S3 with encryption, Azure Storage with encryption, HashiCorp Consul).
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing credentials directly in the Terraform configuration or state.
+        *   Implement regular rotation of API keys and credentials.
+    *   **Risk Severity:** Critical
 
-- **Threat:** Exposure of AWS/Azure/Okta/Proofpoint/Qualys/Thinkst Canary/Microsoft Office 365 Credentials in Feed Configurations
-  - **Description:** Several feed resources (e.g., `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, `chronicle_feed_azure_blobstore`, `chronicle_feed_okta_system_log`, `chronicle_feed_proofpoint_siem`, `chronicle_feed_qualys_vm`, `chronicle_feed_thinkst_canary`, `chronicle_feed_microsoft_office_365_management_activity`, `chronicle_google_cloud_storage_bucket`) require credentials for external services to pull logs. These credentials (e.g., `access_key_id`, `secret_access_key` for AWS, `shared_key`, `sas_token` for Azure, API tokens (`value`) for Okta, `user`, `secret` for Proofpoint and Qualys, API tokens for Thinkst Canary, `client_id`, `client_secret` for Microsoft Office 365) are often specified directly in the Terraform configuration. If the Terraform state is compromised, these credentials could be exposed, allowing an attacker to access the external services. The `chronicle_feed_amazon_sqs` resource allows for separate SQS and S3 credentials, increasing the number of secrets that need to be managed. The `chronicle_feed_azure_blobstore` resource uses `shared_key` or `sas_token` for authentication. The `chronicle_feed_microsoft_office_365_management_activity` resource uses `client_id` and `client_secret`. The `chronicle_feed_okta_system_log` and `chronicle_feed_okta_users` resources use `key` and `value` for authentication. The `chronicle_feed_proofpoint_siem` and `chronicle_feed_qualys_vm` resources use `user` and `secret` for authentication. The `chronicle_feed_thinkst_canary` resource uses an API token (`value`) for authentication. The `chronicle_google_cloud_storage_bucket` resource does not require explicit credentials in the Terraform configuration, relying on the underlying infrastructure's authentication mechanisms, but misconfigurations could still lead to exposure.
-  - **Impact:** High
-  - **Affected Component:** Feed Resources (Amazon S3, Amazon SQS, Azure Blobstore, Okta System Log, Okta Users, Proofpoint SIEM, Qualys VM, Thinkst Canary, Google Cloud Storage Bucket, Microsoft Office 365 Management Activity)
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Avoid storing credentials directly in Terraform configuration for feed resources.
-    - Utilize secret management tools to manage and inject credentials for external services.
-    - Implement the principle of least privilege when granting permissions to the credentials used by the feeds.
-    - Regularly rotate API keys and credentials for external services.
-    - Consider using instance profiles or managed identities where applicable to avoid storing credentials.
+*   **Threat:** Exposure of Azure Blob Storage Credentials in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve sensitive credentials (shared key or SAS token) used to authenticate with Azure Blob Storage for `chronicle_azure_blobstore` resources. This could happen if the state file is stored insecurely. With these credentials, an attacker could potentially access the configured Azure Blob Storage container, potentially reading, modifying, or deleting logs before they are ingested by Chronicle, or even injecting malicious data.
+    *   **Impact:** High. Potential for data loss, data manipulation, or injection of malicious data in the Azure Blob Storage, impacting the integrity of ingested logs.
+    *   **Affected Component:** `chronicle_azure_blobstore` resource (specifically the `details.authentication.shared_key` attributes) as defined in `examples\resources\feed\azure_blobstore\main.tf`.
+    *   **Current Mitigations:** The `shared_key` attribute is marked as sensitive in the schema, which should prevent it from being displayed in plain text in `terraform plan` output. However, it is still stored in the state file.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption.
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing credentials directly in the Terraform configuration or state.
+        *   Implement regular rotation of Azure Blob Storage keys or SAS tokens.
+        *   Explore using managed identities for authentication where applicable.
+    *   **Risk Severity:** High
 
-- **Threat:** Insecure Handling of Sensitive Data in Transit
-  - **Description:** The provider interacts with various APIs (Chronicle, AWS, Azure, Okta, etc.) to manage resources and ingest data. If these connections are not properly secured using HTTPS/TLS, sensitive data like credentials and log data could be intercepted in transit by a man-in-the-middle attacker.
-  - **Impact:** High
-  - **Affected Component:** All API interactions
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Ensure the provider and the underlying libraries enforce HTTPS/TLS for all API communication.
-    - Verify the TLS certificates of the API endpoints to prevent impersonation.
-    - Avoid using custom or insecure API endpoints (`*_custom_endpoint` options) unless absolutely necessary and with thorough security vetting.
+*   **Threat:** Exposure of Microsoft Office 365 Credentials in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve sensitive credentials (OAuth client ID and client secret) used to authenticate with the Microsoft Office 365 Management Activity API for `chronicle_feed_microsoft_office_365_management_activity` resources. This could happen if the state file is stored insecurely. With these credentials, an attacker could potentially access the Office 365 Management Activity API and retrieve audit logs, potentially gaining access to sensitive organizational information.
+    *   **Impact:** High. Potential for unauthorized access to sensitive audit logs from Microsoft Office 365.
+    *   **Affected Component:** `chronicle_feed_microsoft_office_365_management_activity` resource (specifically the `details.authentication.client_id` and `details.authentication.client_secret` attributes) as defined in `examples\resources\feed\api\microsoft_office_365_management_activity\main.tf`.
+    *   **Current Mitigations:** The `client_secret` attribute is marked as sensitive in the schema, which should prevent it from being displayed in plain text in `terraform plan` output. However, the `client_id` is not marked as sensitive, and both are stored in the state file.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption.
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing credentials directly in the Terraform configuration or state.
+        *   Implement regular rotation of Office 365 application secrets.
+        *   Mark the `client_id` attribute as sensitive in the schema.
+    *   **Risk Severity:** High
 
-- **Threat:**  Accidental Deletion or Modification of Chronicle Resources
-  - **Description:**  Terraform's declarative nature means that changes to the configuration will be applied to the infrastructure. If a user with sufficient permissions makes unintended changes to the Terraform configuration (e.g., modifies a feed configuration, deletes a rule, or revokes RBAC roles), it can lead to accidental deletion or modification of critical Chronicle resources, potentially disrupting security monitoring and incident response capabilities.
-  - **Impact:** High
-  - **Affected Component:** All Resource Types (Feeds, Rules, RBAC Subjects, Reference Lists)
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Implement code review processes for Terraform configurations.
-    - Utilize version control for Terraform configurations to track changes and enable rollback.
-    - Apply the principle of least privilege when granting Terraform state access and provider configuration permissions.
-    - Use Terraform Cloud or similar tools for remote state management, collaboration, and policy enforcement.
-    - Implement destroy protection on critical resources where supported.
+*   **Threat:** Exposure of Okta API Token in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve the sensitive Okta API token used for authentication in `chronicle_feed_okta_system_log` and `chronicle_feed_okta_users` resources. This could happen if the state file is stored insecurely. With this token, an attacker could potentially access the Okta API, retrieve system logs or user information, and potentially perform other actions depending on the token's permissions.
+    *   **Impact:** High. Potential for unauthorized access to sensitive Okta system logs and user data.
+    *   **Affected Component:**
+        *   `chronicle_feed_okta_system_log` resource (specifically the `details.authentication.value` attribute) as defined in `examples\resources\feed\api\okta_system_log\main.tf`.
+        *   `chronicle_feed_okta_users` resource (specifically the `details.authentication.value` attribute) as defined in `examples\resources\feed\api\okta_users\main.tf`.
+    *   **Current Mitigations:** The `value` attribute within the `authentication` block is marked as sensitive in the schema for both resources, which should prevent it from being displayed in plain text in `terraform plan` output. However, it is still stored in the state file.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption.
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing the API token directly in the Terraform configuration or state.
+        *   Implement regular rotation of Okta API tokens.
+    *   **Risk Severity:** High
 
-- **Threat:**  Injection Vulnerabilities in Rule Text
-  - **Description:** The `chronicle_rule` resource allows defining YARA-L rules through the `rule_text` attribute. If the input for `rule_text` is not properly sanitized or validated, an attacker could potentially inject malicious YARA-L code. While the direct impact is within the Chronicle environment, this could lead to unexpected rule behavior, potentially bypassing detection mechanisms or causing performance issues within Chronicle. The `examples\resources\detection\rule\main.tf` shows an example of loading the rule text from a file, which could introduce vulnerabilities if the file's content is not trusted.
-  - **Impact:** Medium
-  - **Affected Component:** `chronicle_rule` resource
-  - **Risk Severity:** Medium
-  - **Mitigation Strategies:**
-    - Implement robust input validation and sanitization for the `rule_text` attribute.
-    - Provide clear guidelines and training to users on secure YARA-L rule development practices.
-    - Regularly review and audit existing rules for potential malicious content.
-    - When loading rule text from a file, ensure the file's integrity and source are trustworthy.
+*   **Threat:** Exposure of Proofpoint SIEM Credentials in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve the sensitive Proofpoint SIEM credentials (username and secret) used for authentication in the `chronicle_feed_proofpoint_siem` resource. This could happen if the state file is stored insecurely. With these credentials, an attacker could potentially access the Proofpoint SIEM API and retrieve logs.
+    *   **Impact:** High. Potential for unauthorized access to Proofpoint SIEM logs.
+    *   **Affected Component:** `chronicle_feed_proofpoint_siem` resource (specifically the `details.authentication.user` and `details.authentication.secret` attributes) as defined in `examples\resources\feed\api\proofpoint_siem\main.tf`.
+    *   **Current Mitigations:** The `secret` attribute within the `authentication` block is marked as sensitive in the schema, which should prevent it from being displayed in plain text in `terraform plan` output. However, it is still stored in the state file.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption.
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing the credentials directly in the Terraform configuration or state.
+        *   Implement regular rotation of Proofpoint SIEM secrets.
+    *   **Risk Severity:** High
 
-- **Threat:**  Manipulation of Ingestion Feeds Leading to Data Poisoning
-  - **Description:** Attackers who gain unauthorized access to the Terraform state or provider configurations could modify feed configurations (e.g., change the source of logs, alter parsing rules if configurable in the future). This could lead to the ingestion of malicious or incorrect data into Chronicle, potentially misleading security analysis and hindering accurate threat detection. The ability to configure separate S3 credentials for `chronicle_feed_amazon_sqs` and separate authentication methods (`shared_key`, `sas_token`) for `chronicle_feed_azure_blobstore` adds more potential points of manipulation.
-  - **Impact:** High
-  - **Affected Component:** Feed Resources (Amazon S3, Amazon SQS, Azure Blobstore, Microsoft Office 365 Management Activity, Okta System Log, Okta Users, Proofpoint SIEM, Qualys VM, Thinkst Canary, Google Cloud Storage Bucket)
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Secure Terraform state and provider configurations as described in previous threats.
-    - Implement monitoring and alerting for changes to feed configurations.
-    - Regularly audit feed configurations to ensure they are pointing to legitimate and trusted sources.
-    - Implement data validation and anomaly detection within Chronicle to identify potentially poisoned data.
+*   **Threat:** Exposure of Qualys VM Credentials in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve the sensitive Qualys VM credentials (username and password) used for authentication in the `chronicle_feed_qualys_vm` resource. This could happen if the state file is stored insecurely. With these credentials, an attacker could potentially access the Qualys VM API and retrieve vulnerability data.
+    *   **Impact:** High. Potential for unauthorized access to Qualys VM vulnerability data.
+    *   **Affected Component:** `chronicle_feed_qualys_vm` resource (specifically the `details.authentication.user` and `details.authentication.secret` attributes) as defined in `examples\resources\feed\api\qualys_vm\main.tf`.
+    *   **Current Mitigations:** The `secret` attribute within the `authentication` block is marked as sensitive in the schema, which should prevent it from being displayed in plain text in `terraform plan` output. However, it is still stored in the state file.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption.
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing the credentials directly in the Terraform configuration or state.
+        *   Implement regular rotation of Qualys VM passwords.
+    *   **Risk Severity:** High
 
-- **Threat:**  Abuse of Custom Endpoints
-  - **Description:** The provider allows specifying custom endpoints for various Chronicle APIs (e.g., `alert_custom_endpoint`, `feed_custom_endpoint`, `events_custom_endpoint`, `artifact_custom_endpoint`, `alias_custom_endpoint`, `asset_custom_endpoint`, `ioc_custom_endpoint`, `rule_custom_endpoint`, `subjects_custom_endpoint`). If these custom endpoints are not properly validated or point to malicious servers, attackers could potentially intercept API requests, steal credentials, or manipulate API responses.
-  - **Impact:** High
-  - **Affected Component:** Provider Configuration
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Avoid using custom endpoints unless absolutely necessary.
-    - Thoroughly vet the security of any custom endpoint before using it.
-    - Ensure that custom endpoints use HTTPS and have valid TLS certificates.
-    - Implement strict input validation for custom endpoint URLs.
+*   **Threat:** Exposure of Thinkst Canary API Key in Terraform State
+    *   **Description:** Attackers gaining access to the Terraform state file could retrieve the sensitive API key used to authenticate with Thinkst Canary for `chronicle_feed_thinkst_canary` resources. This could happen if the state file is stored insecurely. With this key, an attacker could potentially access the Thinkst Canary API and retrieve alerts or other information, depending on the permissions associated with the key.
+    *   **Impact:** High. Potential for unauthorized access to sensitive data from Thinkst Canary.
+    *   **Affected Component:** `chronicle_feed_thinkst_canary` resource (specifically the `details.authentication.value` attribute) as defined in `examples\resources\feed\api\thinkst_canary\main.tf`.
+    *   **Current Mitigations:** The `value` attribute within the `authentication` block is marked as sensitive in the schema, which should prevent it from being displayed in plain text in `terraform plan` output. However, it is still stored in the state file.
+    *   **Missing Mitigations:**
+        *   Enforce or recommend the use of secure state backends with encryption.
+        *   Consider integrating with HashiCorp Vault or other secrets management solutions to avoid storing the API key directly in the Terraform configuration or state.
+        *   Implement regular rotation of Thinkst Canary API keys.
+    *   **Risk Severity:** High
 
-- **Threat:**  Exposure of Secrets in Debug Logs
-  - **Description:** The `debug.sh` script enables debugging for the provider. Depending on the debugging level and the provider's logging implementation, sensitive information like API keys or access tokens might be logged, potentially exposing them to anyone with access to the debug logs.
-  - **Impact:** Medium
-  - **Affected Component:** Debugging Tools and Logging
-  - **Risk Severity:** Medium
-  - **Mitigation Strategies:**
-    - Avoid using debug mode in production environments.
-    - If debugging is necessary, ensure that debug logs are stored securely and access is restricted.
-    - Review the provider's logging configuration to avoid logging sensitive information.
-    - Sanitize or redact sensitive information from debug logs before sharing them.
+*   **Threat:** Unauthorized Modification of Chronicle Rules
+    *   **Description:** An attacker with write access to the Terraform configuration could modify or delete existing Chronicle rules by altering the `chronicle_rule` resource definitions. This could disable critical detection logic, allowing malicious activity to go unnoticed. They could also introduce new, less strict rules or rules that exfiltrate data. The `client.CreateRule`, `client.CreateRuleVersion`, `client.ChangeAlertingRule`, `client.ChangeLiveRule`, and `client.DeleteRule` functions in `client/rule.go` are used to manage rules.
+    *   **Impact:** High. Significant impact on security monitoring capabilities, potentially leading to delayed incident detection and response.
+    *   **Affected Component:** `chronicle_rule` resource as defined in `examples\resources\detection\rule\main.tf`.
+    *   **Current Mitigations:**  None specific to the provider. Standard Terraform practices for managing access to the configuration files apply.
+    *   **Missing Mitigations:**
+        *   Implement strict access control policies for the Terraform repository and state backend.
+        *   Utilize code review processes for all Terraform changes.
+        *   Consider using Terraform Cloud or Enterprise for enhanced collaboration and access control features.
+        *   Implement monitoring and alerting on changes to Chronicle rules.
+    *   **Risk Severity:** High
 
-- **Threat:** Inconsistent Credential Handling
-  - **Description:** The provider allows specifying API credentials through various methods: direct input in Terraform configuration, local file paths (as seen in `client\util.go` and examples), or environment variables (sometimes base64 encoded). This inconsistency can lead to confusion and increase the risk of accidental exposure. For example, developers might mistakenly commit a file containing credentials or fail to properly secure environment variables. The `client.go` file shows that credentials can be provided as a file path, a direct JSON string, or through environment variables. The `GetCredentials` function in `client.go` attempts to decode base64 encoded credentials from environment variables. The `pathOrContents` function in `client\util.go` handles reading credentials from a specified file path.
-  - **Impact:** High
-  - **Affected Component:** Provider Configuration (authentication parameters), `client.go`, `client\util.go`
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Standardize credential management practices across the organization.
-    - Strongly recommend and document the use of secret management tools over direct configuration, environment variables, or local files.
-    - Implement checks (e.g., linters, static analysis) to detect hardcoded credentials in configuration files.
-    - Clearly document the expected format and security implications of each credential input method.
-    - If using file paths for credentials, enforce secure storage and access controls for those files.
+*   **Threat:** Unauthorized Modification of Chronicle Feed Configurations
+    *   **Description:** An attacker with write access to the Terraform configuration could modify Chronicle feed configurations (e.g., `chronicle_feed_amazon_s3`, `chronicle_feed_okta_system_log`, `chronicle_azure_blobstore`, `chronicle_google_cloud_storage_bucket`, `chronicle_feed_microsoft_office_365_management_activity`, `chronicle_feed_okta_users`, `chronicle_feed_proofpoint_siem`, `chronicle_feed_qualys_vm`, `chronicle_feed_thinkst_canary`). This could involve changing the data sources, altering authentication details, or disabling feeds entirely, leading to gaps in data ingestion and security monitoring. For example, an attacker could change the S3 URI in an Amazon S3 feed to point to a malicious bucket, disable a critical log source, or modify authentication details for an Okta or Thinkst Canary feed. The `client.CreateFeed` and `client.UpdateFeed` functions in `client/feed.go` are used to manage feeds.
+    *   **Impact:** High. Disruption of security data ingestion, leading to blind spots in security monitoring and potential data loss.
+    *   **Affected Component:** All `chronicle_feed_*` resources, such as those defined in `examples\resources\feed\*`. The specific configuration details are defined in the respective resource files.
+    *   **Current Mitigations:** None specific to the provider. Standard Terraform practices for managing access to the configuration files apply.
+    *   **Missing Mitigations:**
+        *   Implement strict access control policies for the Terraform repository and state backend.
+        *   Utilize code review processes for all Terraform changes.
+        *   Consider using Terraform Cloud or Enterprise for enhanced collaboration and access control features.
+        *   Implement monitoring and alerting on changes to Chronicle feed configurations.
+    *   **Risk Severity:** High
 
-- **Threat:**  Incorrect Configuration of Source Deletion Options Leading to Data Loss or Unintended Retention
-  - **Description:** The `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, and `chronicle_feed_google_cloud_storage_bucket` resources offer options for deleting source files after ingestion (`source_delete_options`). Incorrect configuration of these options could lead to unintended data loss if files are deleted prematurely or, conversely, to increased storage costs and potential security risks if data is retained unnecessarily. The `chronicle_feed_google_cloud_storage_bucket` offers more granular options for deletion. The `validation.go` file contains validation functions (`validateFeedS3SourceDeleteOption`, `validateFeedGCSSourceDeleteOption`, `validateFeedAzureBlobStoreSourceDeleteOption`) for these options, highlighting the importance of correct configuration.
-  - **Impact:** Medium
-  - **Affected Component:** `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, `chronicle_feed_google_cloud_storage_bucket` resources, `validation.go`
-  - **Risk Severity:** Medium
-  - **Mitigation Strategies:**
-    - Clearly document the implications of each `source_delete_options` value.
-    - Implement code reviews to ensure the chosen option aligns with data retention policies.
-    - Consider implementing safeguards or backups before enabling source deletion.
-    - Regularly review and audit feed configurations to verify the `source_delete_options` are correctly set.
+*   **Threat:** Privilege Escalation through RBAC Subject Manipulation
+    *   **Description:** An attacker with write access to the Terraform configuration could modify the roles assigned to subjects using the `chronicle_rbac_subject` resource. This could allow them to grant themselves or other unauthorized users elevated privileges within the Chronicle environment, enabling them to perform actions beyond their intended scope. The `client.CreateSubject` and `client.UpdateSubject` functions in `client/subject.go` are used to manage subjects.
+    *   **Impact:** High. Unauthorized access to sensitive Chronicle functionalities and data, potentially leading to data breaches or service disruption.
+    *   **Affected Component:** `chronicle_rbac_subject` resource as defined in `examples\resources\rbac\subject\main.tf`.
+    *   **Current Mitigations:** None specific to the provider. Standard Terraform practices for managing access to the configuration files apply.
+    *   **Missing Mitigations:**
+        *   Implement strict access control policies for the Terraform repository and state backend.
+        *   Utilize code review processes for all Terraform changes, especially those involving RBAC configurations.
+        *   Implement monitoring and alerting on changes to Chronicle RBAC subject configurations.
+    *   **Risk Severity:** High
 
-- **Threat:** Potential for Malicious Content Injection via Reference Lists
-  - **Description:** The `chronicle_reference_list` resource allows users to define lists of strings, which can be used in Chronicle rules. If an attacker gains the ability to modify these reference lists (through compromised Terraform state or provider configuration), they could inject malicious content. This is especially concerning when the `content_type` is set to `REGEX`, as it allows for the introduction of potentially harmful regular expressions that could cause performance issues or unexpected behavior within Chronicle's rule processing engine. Even with `CONTENT_TYPE_DEFAULT_STRING` or `CIDR`, adding misleading or malicious entries could negatively impact security analysis. The `validation.go` file includes `validateReferenceListContentType` which validates the allowed content types.
-  - **Impact:** Medium
-  - **Affected Component:** `chronicle_reference_list` resource, `validation.go`
-  - **Risk Severity:** Medium
-  - **Mitigation Strategies:**
-    - Secure Terraform state and provider configurations as described in previous threats.
-    - Implement change control and auditing for modifications to reference lists.
-    - Regularly review the content of reference lists for unexpected or malicious entries.
-    - If using `REGEX` content type, ensure that the regular expressions are carefully vetted and do not introduce security vulnerabilities (e.g., ReDoS).
+*   **Threat:** Sensitive Information Disclosure through Verbose Debug Logging
+    *   **Description:** If the Terraform provider is run in debug mode (using the `-debug` flag or the `debug.sh` script), sensitive information, including API requests and responses, which might contain credentials or other confidential data, could be logged to the console or debug logs. An attacker gaining access to these logs could potentially extract sensitive information. The logging is handled within the `client/transport.go` file.
+    *   **Impact:** Medium. Potential exposure of sensitive credentials or configuration details.
+    *   **Affected Component:** Provider's debugging functionality (controlled by the `-debug` flag in `main.go` and the `debug.sh` script). The `loggingTransport` in `client/client.go` is responsible for this logging.
+    *   **Current Mitigations:** The documentation doesn't explicitly warn against using debug mode in production.
+    *   **Missing Mitigations:**
+        *   Clearly document the risks associated with running the provider in debug mode and advise against its use in production environments.
+        *   Ensure that debug logs, if enabled for troubleshooting, are stored securely and access is restricted.
+        *   Consider implementing more granular control over debug logging to avoid logging sensitive information.
+    *   **Risk Severity:** Medium
 
-- **Threat:** Potential Regular Expression Denial of Service (ReDoS) in Reference Lists
-  - **Description:** When the `chronicle_reference_list` resource's `content_type` is set to `REGEX`, users can define regular expressions. If an attacker gains control over the content of a reference list, they could inject complex, inefficient regular expressions. When these reference lists are used in Chronicle rules, the processing of these malicious regular expressions could lead to excessive CPU consumption and a denial of service within the Chronicle environment. The `validation.go` file includes `validateRegexp` which is used for validating various string formats, but might not prevent all ReDoS scenarios.
-  - **Impact:** High
-  - **Affected Component:** `chronicle_reference_list` resource, Chronicle Rule Processing Engine
-  - **Risk Severity:** High
-  - **Mitigation Strategies:**
-    - Implement safeguards to prevent the injection of overly complex regular expressions in reference lists.
-    - Consider using static analysis tools to evaluate the complexity and potential performance impact of regular expressions before they are applied.
-    - Implement resource limits or timeouts for regular expression processing within Chronicle.
-    - Educate users on the risks of ReDoS and best practices for writing efficient regular expressions.
+*   **Threat:** Manipulation of Reference Lists for Malicious Purposes
+    *   **Description:** An attacker with write access to the Terraform configuration could modify the contents of Chronicle reference lists using the `chronicle_reference_list` resource. This could be used to inject malicious IPs, domains, or other indicators into lists used for detection or blocking, potentially leading to false positives or false negatives in security alerts and responses. The `client.CreateReferenceList` and `client.UpdateReferenceList` functions in `client/reference_list.go` are used to manage reference lists.
+    *   **Impact:** Medium. Degradation of the effectiveness of security rules and alerts, potentially leading to missed threats or unnecessary alerts.
+    *   **Affected Component:** `chronicle_reference_list` resource as defined in `examples\resources\reference_lists\main.tf`.
+    *   **Current Mitigations:** None specific to the provider. Standard Terraform practices for managing access to the configuration files apply.
+    *   **Missing Mitigations:**
+        *   Implement strict access control policies for the Terraform repository and state backend.
+        *   Utilize code review processes for all Terraform changes, especially those involving reference list modifications.
+        *   Implement monitoring and alerting on changes to Chronicle reference lists.
+    *   **Risk Severity:** Medium
 
-- **Threat:** Credential Exposure through Verbose Logging
-  - **Description:** While the `debug.sh` script was previously identified as a potential source of secret exposure, the underlying logging mechanism used by the provider could also inadvertently log sensitive information. The `client\transport.go` file shows the use of `log.Printf` for debugging retry attempts. Depending on the verbosity of the logging configuration and the content of the messages, API keys or other secrets could be logged, potentially exposing them if these logs are not properly secured.
-  - **Impact:** Medium
-  - **Affected Component:** Logging mechanism, `client\transport.go`
-  - **Risk Severity:** Medium
-  - **Mitigation Strategies:**
-    - Carefully review the provider's logging implementation and configuration to identify and prevent the logging of sensitive information.
-    - Ensure that logging levels are appropriately configured, especially in production environments, to minimize the risk of exposing secrets.
-    - Secure access to log files and implement mechanisms for log rotation and secure storage.
-    - Sanitize or redact sensitive information from logs before storing or sharing them.
+*   **Threat:** Redirection of API Traffic via Custom Endpoints
+    *   **Description:** An attacker with write access to the Terraform configuration could modify the `*_custom_endpoint` attributes in the provider configuration (e.g., `events_custom_endpoint`, `rule_custom_endpoint`). This could redirect API calls intended for Chronicle to an attacker-controlled server. This allows the attacker to intercept API requests and potentially steal credentials or manipulate responses, leading to unexpected behavior or data breaches. The base paths are configured in `client/client.go` and the validation is done by `validateCustomEndpoint` in `chronicle/validation.go`.
+    *   **Impact:** High. Potential for credential theft, manipulation of Chronicle data, and disruption of service.
+    *   **Affected Component:** Terraform Provider Configuration (specifically the `*_custom_endpoint` attributes in `provider.go`). The base paths are generated in `client/endpoints.go`.
+    *   **Current Mitigations:** The provider includes validation functions (`validateCustomEndpoint`) for these custom endpoint URLs, which might prevent obviously invalid URLs. However, it doesn't prevent the use of malicious but syntactically valid URLs.
+    *   **Missing Mitigations:**
+        *   Document the risks associated with using custom endpoints and advise caution.
+        *   Consider implementing a mechanism to verify the authenticity or trustworthiness of custom endpoints, although this might be complex.
+        *   Implement monitoring and alerting for changes to the provider configuration, especially the custom endpoint settings.
+    *   **Risk Severity:** High
+
+*   **Threat:** Abuse of Source Deletion Options in Feed Configurations
+    *   **Description:** An attacker with write access to the Terraform configuration could modify the `source_delete_options` attribute in feed resources (e.g., `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, `chronicle_google_cloud_storage_bucket`). By setting this to `SOURCE_DELETION_ON_SUCCESS` or `SOURCE_DELETION_ON_SUCCESS_FILES_ONLY`, the attacker could cause the deletion of source logs even if ingestion was not successful from the perspective of the security team, leading to data loss and hindering investigations. Conversely, setting it to `SOURCE_DELETION_NEVER` for feeds with high data volume could lead to increased storage costs for the victim. The validation for these options is in `chronicle/validation.go`.
+    *   **Impact:** Medium. Potential for data loss or increased storage costs.
+    *   **Affected Component:** `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, and `chronicle_google_cloud_storage_bucket` resources (specifically the `source_delete_options` attribute) as defined in `examples\resources\feed\amazon_s3\main.tf`, `examples\resources\feed\amazon_sqs\main.tf`, and `examples\resources\feed\google_cloud_storage_bucket\main.tf`.
+    *   **Current Mitigations:** None specific to the provider. Standard Terraform practices for managing access to the configuration files apply.
+    *   **Missing Mitigations:**
+        *   Implement strict access control policies for the Terraform repository and state backend.
+        *   Utilize code review processes for all Terraform changes, especially those involving feed configurations.
+        *   Implement monitoring and alerting on changes to the `source_delete_options` attribute in feed configurations.
+    *   **Risk Severity:** Medium
+
+*   **Threat:** Insufficient Input Validation
+    *   **Description:** The provider relies on validation functions (present in `chronicle/validation.go`) for various inputs, such as credentials, regions, and source types. If these validations are incomplete, incorrect, or missing for certain fields, it could lead to unexpected behavior, API errors, or potentially exploitable vulnerabilities. For example, a missing validation for a specific field in a feed configuration could allow an attacker to inject malicious data.
+    *   **Impact:** Medium. Could lead to service disruption, unexpected errors, or in some cases, the ability to inject malicious data or bypass security controls.
+    *   **Affected Component:**  Various resource configurations and provider inputs. The validation functions are located in `chronicle/validation.go`.
+    *   **Current Mitigations:** The provider implements several validation functions for different input types. For example, `validateCredentials`, `validateRegion`, `validateFeedS3SourceType`, etc.
+    *   **Missing Mitigations:**
+        *   Conduct a thorough review of all resource attributes and provider inputs to ensure comprehensive validation is in place.
+        *   Implement unit tests specifically for validation functions to ensure they behave as expected and cover edge cases.
+        *   Consider using schema validation provided by the Terraform Plugin Framework more extensively.
+    *   **Risk Severity:** Medium
+
+*   **Threat:** Misconfiguration through Environment Variables
+    *   **Description:** The provider supports configuring API credentials and other settings via environment variables (e.g., `CHRONICLE_BIGQUERY_CREDENTIALS`). If these environment variables are not handled securely or if there are inconsistencies in how they are processed (e.g., different precedence rules), it could lead to misconfigurations. An attacker who can control the environment where Terraform is executed might be able to inject malicious credentials or alter settings. The `multiEnvSearch` and `envSearch` functions in `chronicle/util.go`, and the `GetCredentials` function in `client/client.go` handle environment variables.
+    *   **Impact:** High. Potential for unauthorized access to Chronicle APIs, leading to data breaches or service disruption.
+    *   **Affected Component:** Provider configuration, specifically the logic for retrieving credentials from environment variables in `client/client.go`.
+    *   **Current Mitigations:** The provider uses specific environment variable names for credentials.
+    *   **Missing Mitigations:**
+        *   Clearly document the supported environment variables and their precedence.
+        *   Advise users on securely managing environment variables, especially in CI/CD pipelines.
+        *   Consider providing options to restrict the use of environment variables for sensitive settings in favor of more secure methods like secrets management.
+    *   **Risk Severity:** High
+
+*   **Threat:** Potential DoS through lack of rate limiting on client-side
+    *   **Description:** While the Chronicle API itself likely has rate limiting, the Terraform provider might not have sufficient client-side rate limiting for all API calls. An attacker with control over the Terraform configuration or execution environment could potentially trigger a large number of API requests in a short period, potentially leading to denial of service on the Chronicle API or impacting the performance of the Chronicle environment. The rate limiters are defined in `client/endpoints.go`.
+    *   **Impact:** Medium. Could lead to temporary disruption of Chronicle services or impact performance.
+    *   **Affected Component:** The API client implementation in `client/*.go`, specifically the functions that make API calls.
+    *   **Current Mitigations:** The provider implements rate limiters for some API calls as defined in `client/endpoints.go`.
+    *   **Missing Mitigations:**
+        *   Review all API interactions and ensure appropriate client-side rate limiting is implemented for all critical operations, especially those that could be easily abused.
+        *   Make the rate limits configurable or provide guidance on appropriate settings.
+        *   Implement circuit breaker patterns to prevent cascading failures in case of API overload.
+    *   **Risk Severity:** Medium
+
+*   **Threat:** Local File Inclusion via `file()` function in `chronicle_rule`
+    *   **Description:** The `chronicle_rule` resource allows specifying the `rule_text` using the `file()` function. If an attacker gains write access to the Terraform configuration, they could potentially provide a path to a sensitive local file on the machine where Terraform is being executed. The content of this file would then be included in the rule text sent to the Chronicle API. This could lead to the disclosure of sensitive information contained within that file. The `file()` function usage is demonstrated in `examples\resources\detection\rule\main.tf` and the file reading logic is in `client\util.go` within the `pathOrContents` function.
+    *   **Impact:** High. Potential disclosure of sensitive information from the local filesystem where Terraform is executed.
+    *   **Affected Component:** `chronicle_rule` resource, specifically the `rule_text` attribute when using the `file()` function. The `pathOrContents` function in `client\util.go` is responsible for reading the file.
+    *   **Current Mitigations:** None specific to the provider. Standard Terraform practices for managing access to the configuration files apply.
+    *   **Missing Mitigations:**
+        *   Clearly document the security implications of using the `file()` function and advise caution.
+        *   Recommend or enforce the use of remote storage for rule files instead of local paths.
+        *   Implement checks or warnings if the `file()` function is used with paths outside of a designated safe directory.
+        *   Consider if the `file()` function is strictly necessary or if there are alternative ways to provide rule content.
+    *   **Risk Severity:** High

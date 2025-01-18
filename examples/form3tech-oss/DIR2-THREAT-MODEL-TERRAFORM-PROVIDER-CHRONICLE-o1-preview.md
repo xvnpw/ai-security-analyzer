@@ -1,98 +1,80 @@
 # Threat Model for Terraform Provider Chronicle
 
-## Threat: Exposure of Sensitive Credentials in Error Messages
+## Threats
 
-### Description
+### 1. Exposure of Sensitive Data in State Files, Logs, and Error Messages
 
-When invalid credentials are supplied to the `terraform-provider-chronicle` application, the error handling mechanisms may include the raw contents of these credentials in the error messages. Specifically, the functions `GetCredentials` in `client/client.go` and `validateCredentials` in `chronicle/validation.go` incorporate variables containing sensitive data directly into the error outputs. An attacker with access to logs or error outputs could exploit this vulnerability to retrieve sensitive credentials.
+- **Description**: The provider may store or log sensitive data such as authentication tokens, secret keys, and client secrets in the Terraform state file, output logs, or error messages. Attackers gaining access to these files or logs could obtain these sensitive credentials. For example, in `client/transport.go`, the `sendRequest` function logs errors, which may include sensitive data.
 
-### Impact
+- **Impact**: Unauthorized access to cloud resources or third-party services using compromised credentials, leading to data breaches, unauthorized actions, and potential escalation of privileges.
 
-Exposure of sensitive credentials can lead to unauthorized access to the Chronicle API. An attacker could use these credentials to access, modify, or delete resources within the Chronicle environment, leading to potential data breaches and loss of integrity and confidentiality.
+- **Affected Component**:
+  - Resource implementations, particularly functions like `flattenDetailsFromReadOperation` in various resource files (e.g., `resource_feed_thinkst_canary.go`, `resource_feed_microsoft_office_365_management_activity.go`), which handle sensitive data.
+  - Logging statements in `client/transport.go`, especially in the `sendRequest` function where errors are logged without sanitization.
 
-### Affected Component
+- **Current Mitigations**:
+  - Some sensitive fields are marked as `Sensitive` in the schema, which instructs Terraform to handle them appropriately.
 
-- `GetCredentials` function in `client/client.go`
-- `validateCredentials` function in `chronicle/validation.go`
+- **Missing Mitigations**:
+  - Ensure all sensitive data is appropriately marked as `Sensitive` in the schema.
+  - Review all resource implementations to verify that sensitive data is not inadvertently stored in the state file, output logs, or error messages.
+  - Avoid setting sensitive data from API responses into the resource data unless necessary.
+  - Implement error handling that sanitizes or redacts sensitive data from error messages before logging.
+  - Use appropriate logging levels and avoid logging sensitive information in debug logs.
 
-### Risk Severity
+- **Risk Severity**: **High**
 
-**High**
+### 2. Improper Handling of Credentials in Configuration Files
 
-### Mitigation Strategies
+- **Description**: The provider allows specifying credentials via configuration files or environment variables. Users may inadvertently expose sensitive credentials if they check in configuration files containing the credentials to version control systems.
 
-- **Sanitize Error Messages**: Modify the error handling code to ensure that sensitive data is not included in error messages. Avoid incorporating raw credential contents into errors.
-- **Avoid Logging Sensitive Data**: Ensure that logs do not contain any sensitive information such as credentials or access tokens.
-- **Input Validation**: Implement strict input validation and sanitization to prevent sensitive data from being inadvertently exposed.
-- **Code Audit**: Perform regular code reviews and security audits to identify and remediate instances where sensitive data may be exposed.
-- **Use Secure Libraries**: Utilize secure libraries and frameworks that handle credential management and error reporting securely.
+- **Impact**: Exposure of credentials leading to unauthorized access to services and data breaches.
 
----
+- **Affected Component**: Provider configuration schema (e.g., `bigqueryapi_credentials`, `backstoryapi_credentials` in `provider.go`).
 
-## Threat: Exposure of Sensitive Credentials in Terraform State Files
+- **Current Mitigations**:
+  - The provider allows specifying credentials via environment variables, which can help keep credentials out of configuration files.
 
-### Description
+- **Missing Mitigations**:
+  - Update documentation to emphasize best practices for managing credentials securely.
+  - Encourage using environment variables or secret management tools instead of hardcoding credentials in configuration files.
+  - Provide examples and guidelines on using secure methods for credential management.
 
-The `terraform-provider-chronicle` may store sensitive credentials, such as access keys and secrets, in plaintext within the Terraform state files. Since Terraform state files by default store all resource attributes, including any sensitive data provided, an attacker with access to these state files could retrieve sensitive credentials and gain unauthorized access to the Chronicle API or other integrated services.
+- **Risk Severity**: **Medium**
 
-### Impact
+### 3. Potential for Insecure Defaults
 
-Exposure of sensitive credentials through state files can lead to unauthorized access to critical systems, data breaches, and compromise of the Chronicle environment. Attackers could exploit these credentials to perform malicious operations, leading to loss of data confidentiality, integrity, and availability.
+- **Description**: The provider may have default configurations or settings that are not secure, potentially leading to unintended exposure of data or services.
 
-### Affected Component
+- **Impact**: Security vulnerabilities due to misconfigurations, leading to data breaches or unauthorized access.
 
-- **Resource Definitions**: Handling sensitive credentials in authentication configurations across various feed resources:
-  - `feed_amazon_s3` (`feed_amazon_s3.go`)
-  - `feed_amazon_sqs` (`feed_amazon_sqs.go`)
-  - `feed_azure_blobstore` (`feed_azure_blobstore.go`)
-  - `feed_google_cloud_storage_bucket` (`feed_google_cloud_storage_bucket.go`)
-  - `feed_microsoft_office_365_management_activity` (`feed_microsoft_office_365_management_activity.go`)
-  - `feed_okta_system_log` (`feed_okta_system_log.go`)
-  - `feed_okta_users` (`feed_okta_users.go`)
-  - `feed_proofpoint_siem` (`feed_proofpoint_siem.go`)
-  - `feed_qualys_vm` (`feed_qualys_vm.go`)
-  - `feed_thinkst_canary` (`feed_thinkst_canary.go`)
+- **Affected Component**: Provider's default configurations and resource definitions.
 
-### Risk Severity
+- **Current Mitigations**:
+  - Not specified in the project files.
 
-**Critical**
+- **Missing Mitigations**:
+  - Review default configurations to ensure they are secure.
+  - Set secure defaults for all configurations and document the implications of changing them.
+  - Provide guidance on secure configuration practices in the documentation.
 
-### Mitigation Strategies
+- **Risk Severity**: **Medium**
 
-- **Mark Sensitive Attributes**: Update the Terraform provider code to mark all sensitive attributes (e.g., `access_key_id`, `secret_access_key`, `shared_key`, `client_secret`, `user`, `secret`, etc.) with `Sensitive: true` in the schema definitions. This prevents Terraform from storing these values in plaintext within state files.
-- **Utilize `ConfigSchema`**: Implement the `ConfigSchema` in the provider to accept sensitive data during provider configuration without storing it in the state.
-- **Use Environment Variables or Secret Management**: Encourage the use of environment variables or secret management solutions (e.g., HashiCorp Vault) to supply sensitive information at runtime rather than hardcoding them in configuration files.
-- **Secure State Storage**: Advise users to store state files securely by using remote backends with encryption at rest and proper access controls (e.g., Terraform Cloud, AWS S3 with encryption and tight IAM policies).
-- **Documentation and Alerts**: Update the documentation to include warnings about the risks of storing sensitive data and provide best practices. Implement alerts or warnings in the provider when users attempt to include sensitive data in ways that could compromise security.
-- **Code Reviews and Testing**: Conduct thorough code reviews and implement automated tests to ensure that sensitive attributes are correctly marked and handled throughout the provider codebase.
+### 4. Dependency on Third-Party Libraries with Potential Vulnerabilities
 
----
+- **Description**: The provider depends on third-party libraries or tools that may contain vulnerabilities, which can be exploited by attackers.
 
-## Threat: Logging of Sensitive Data During Request Retries
+- **Impact**: Exploitation of known vulnerabilities in dependencies can lead to compromise of the provider or the infrastructure it manages.
 
-### Description
+- **Affected Component**: External dependencies specified in `go.mod` and used in the codebase.
 
-The `sendRequest` function in `client/transport.go` includes a retry mechanism that logs errors when retries occur. The error messages logged (`log.Printf("[DEBUG] Retrying request after error: %v", err)`) may contain sensitive information if the error includes sensitive data returned from the server or included in request parameters. An attacker with access to application logs could exploit this vulnerability to obtain sensitive information.
+- **Current Mitigations**:
+  - Not specified in the project files.
 
-### Impact
+- **Missing Mitigations**:
+  - Regularly update dependencies to the latest secure versions.
+  - Use tools to monitor dependencies for known vulnerabilities (e.g., Dependabot, Snyk).
+  - Implement a process for vulnerability management in dependencies.
+  - Perform periodic security assessments of third-party libraries.
 
-Logging sensitive data can lead to unauthorized disclosure of credentials or other sensitive information, potentially allowing attackers to compromise accounts or services. This can result in data breaches, unauthorized actions within the Chronicle environment, and a loss of trust and compliance violations.
-
-### Affected Component
-
-- `sendRequest` function in `client/transport.go`
-
-### Risk Severity
-
-**Medium**
-
-### Mitigation Strategies
-
-- **Avoid Logging Sensitive Errors**: Modify the logging mechanism to ensure that error messages do not include sensitive information. Use error wrapping and custom error types to control the level of detail in logs.
-- **Use Log Levels Appropriately**: Adjust log levels to prevent sensitive information from being logged in debug or error logs. Sensitive data should never be logged, even in debug mode.
-- **Implement Error Scrubbing**: Create utility functions to sanitize errors before logging, removing or masking any sensitive content.
-- **Secure Log Storage**: Ensure that log files are stored securely with proper access controls and encryption to prevent unauthorized access.
-- **Regular Auditing**: Perform regular audits of log files and logging configurations to ensure compliance with security policies and standards.
-- **Developer Training**: Educate developers about the risks of logging sensitive data and enforce coding standards that prevent such practices.
-
----
+- **Risk Severity**: **Medium**

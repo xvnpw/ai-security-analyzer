@@ -597,6 +597,7 @@ export OPENAI_API_KEY=your_openai_api_key
 - [ ] Think about how to handle images in markdown - currently they are not supported (maybe https://github.com/microsoft/markitdown 🤔)
 - [ ] Add support for structured output when it will be available in reasoning models
 - [ ] Probably drop markdown validation - it's not working as expected - models still cannot fix problems with markdown 😡
+- [ ] Add `--input-context` option to add additional context to the analysis, e.g. existing mitigations, accepted risks, etc.
 
 ## Contributing
 
