@@ -1,0 +1,469 @@
+## Threat Model for Flask Applications
+
+This threat model focuses on threats specifically related to the Flask framework. General web application security threats are not covered here.
+
+- Threat: Dependency Vulnerabilities
+  - Description: Flask relies on various dependencies like Werkzeug, Jinja2, itsdangerous, click, and blinker, as well as potentially plugin commands. Vulnerabilities in these dependencies can be exploited by attackers. An attacker could leverage known vulnerabilities in these packages or Flask plugins to compromise the Flask application. This could range from denial of service to remote code execution, depending on the specific vulnerability. The `pyproject.toml` file in `install.rst` lists "flask" as a dependency, highlighting the reliance on external packages.
+  - Impact: Critical. Remote Code Execution, Data Breach, Denial of Service.
+  - Affected Component: Flask Core, Dependencies (Werkzeug, Jinja2, itsdangerous, click, blinker, importlib-metadata), Flask Plugins.
+  - Current Mitigations: Not explicitly mitigated by Flask itself. Relying on developers to keep dependencies updated. Risk severity is high due to potential for RCE. Flask 3.1.0 and later versions update minimum dependency versions to latest feature releases, which encourages using more secure versions.
+  - Missing Mitigations:
+    - Dependency scanning tools in CI/CD pipelines to detect vulnerable dependencies, including plugin dependencies.
+    - Regular dependency updates and security patching.
+    - Consider using a Software Bill of Materials (SBOM) to track dependencies and plugins.
+    - Regularly audit dependencies, especially when using less common Flask extensions, as mentioned in `extensions.rst` and `extensiondev.rst`.
+  - Risk Severity: Critical
+
+- Threat: Insecure `SECRET_KEY` Configuration
+  - Description: Flask uses the `SECRET_KEY` for securely signing session cookies and other security-related features. If the `SECRET_KEY` is weak, easily guessable, or exposed, attackers can forge session cookies, leading to session hijacking or manipulation. They could impersonate users, bypass authentication, and gain unauthorized access. The `factory.rst` and `deploy.rst` documentation emphasize the importance of a strong, random `SECRET_KEY`. `factory.rst` sets a default insecure `'dev'` key for development and warns about overriding it in production. `deploy.rst` instructs generating a random key and storing it in `instance/config.py`.
+  - Impact: High. Session Hijacking, Authentication Bypass, Unauthorized Access.
+  - Affected Component: Flask Core, Session Management (using `itsdangerous` internally), Configuration (`Config`, `ConfigAttribute` in `flask/sansio/app.py`).
+  - Current Mitigations: Flask documentation recommends using a strong, randomly generated `SECRET_KEY` and storing it securely, but it's up to the developer to implement this. Risk severity is high if developers fail to follow best practices. Better error reporting on missing secret keys was added in Flask 0.2, improving developer guidance.
+  - Missing Mitigations:
+    - Enforce strong `SECRET_KEY` generation and management guidance in documentation and tutorials.
+    - Provide tooling or recommendations for secure `SECRET_KEY` storage (e.g., environment variables, secrets management systems).
+    - Security linters or static analysis tools could warn about weak or default `SECRET_KEY` values.
+  - Risk Severity: High
+
+- Threat: Insecure `SECRET_KEY_FALLBACKS` Configuration
+  - Description: Flask allows configuring `SECRET_KEY_FALLBACKS` for session key rotation, as introduced in Flask 3.1.0. If `SECRET_KEY_FALLBACKS` is mismanaged, for example, if old, compromised keys are not removed or if the fallback mechanism is not properly understood, it can lead to security vulnerabilities. An attacker might exploit old, potentially weaker or compromised keys present in `SECRET_KEY_FALLBACKS` to forge session cookies if they manage to obtain one of these fallback keys. The `config.rst` documentation describes `SECRET_KEY_FALLBACKS` and highlights the need for proper key rotation.
+  - Impact: High. Session Hijacking, Authentication Bypass, Unauthorized Access.
+  - Affected Component: Flask Core, Session Management, `SECRET_KEY_FALLBACKS` configuration.
+  - Current Mitigations: Flask provides the `SECRET_KEY_FALLBACKS` option since version 3.1.0, but relies on developers to manage key rotation and fallback keys securely. Risk severity is high if `SECRET_KEY_FALLBACKS` is misconfigured or keys are not rotated and managed properly.
+  - Missing Mitigations:
+    - Provide clear guidelines and best practices for secure `SECRET_KEY_FALLBACKS` management, including key rotation procedures and secure storage of fallback keys.
+    - Warn against keeping old or potentially compromised keys in `SECRET_KEY_FALLBACKS` indefinitely.
+    - Recommend automated key rotation mechanisms and secure key management practices.
+  - Risk Severity: High
+
+- Threat: Server-Side Template Injection (SSTI) in Jinja2 Templates
+  - Description: Flask uses Jinja2 as its default templating engine. If user-provided data is directly embedded into Jinja2 templates without proper sanitization or escaping, it can lead to Server-Side Template Injection (SSTI). Attackers can inject malicious Jinja2 code into input fields, URLs, or other user-controlled data points. When the template is rendered, this injected code is executed on the server, potentially leading to Remote Code Execution (RCE). The `templates.rst` documentation introduces Jinja2 templates and mentions autoescaping for HTML templates, but doesn't explicitly warn against SSTI.
+  - Impact: Critical. Remote Code Execution, Data Breach, Server Compromise.
+  - Affected Component: Jinja2 Templating Engine, Flask Rendering Functions (`render_template`), `create_jinja_environment` and `jinja_environment` in `flask/sansio/app.py`, `Environment`.
+  - Current Mitigations: Flask and Jinja2 provide autoescaping by default for common HTML template extensions, which mitigates many XSS vulnerabilities. However, autoescaping might not be sufficient to prevent SSTI if developers are not careful when rendering templates, especially when using filters or custom template logic, or when using template extensions where autoescaping is not enabled by default (as changed in Flask 0.5). Risk severity is critical if developers bypass autoescaping or use unsafe practices. The `javascript.rst` documentation shows how to safely pass data to JavaScript using the `tojson` filter, which is a mitigation against XSS when embedding data in `<script>` blocks or `data-` attributes.
+  - Missing Mitigations:
+    - Emphasize SSTI risks in Flask documentation and security guidelines, especially considering the autoescaping changes in Flask 0.5, and the risks of attribute injection and `javascript:` URIs as mentioned in `web-security.rst`.
+    - Recommend using template linters or static analysis tools to detect potential SSTI vulnerabilities.
+    - Educate developers on secure template rendering practices, especially when dealing with user-provided data and different template file extensions, and the importance of always quoting HTML attributes and using Content Security Policy (CSP) to mitigate `javascript:` URI risks.
+  - Risk Severity: Critical
+
+- Threat: Session Cookie Manipulation due to Vulnerabilities in `itsdangerous` and `TaggedJSONSerializer`
+  - Description: Flask's session management relies on the `itsdangerous` library to sign session cookies. Session data serialization is handled by `TaggedJSONSerializer`. While `itsdangerous` is designed to prevent tampering, vulnerabilities in `itsdangerous` itself, incorrect usage in Flask, or vulnerabilities in `TaggedJSONSerializer` could lead to session cookie manipulation. If an attacker can bypass the signature verification, exploit weaknesses in `itsdangerous`, or exploit deserialization flaws in `TaggedJSONSerializer`, they could forge session cookies, leading to session hijacking and unauthorized access. The `installation.rst` documentation lists `itsdangerous` as a dependency.
+  - Impact: High. Session Hijacking, Authentication Bypass, Unauthorized Access.
+  - Affected Component: `itsdangerous` library, `TaggedJSONSerializer`, Flask Session Management.
+  - Current Mitigations: Flask relies on the security of `itsdangerous` and `TaggedJSONSerializer`. Regular updates of these libraries are crucial. Risk severity is high if vulnerabilities are found in `itsdangerous` or `TaggedJSONSerializer` or if Flask's usage of them is flawed. Flask 3.1.0 and later versions update minimum dependency versions, which encourages using more secure versions of `itsdangerous`.
+  - Missing Mitigations:
+    - Continuous monitoring for security vulnerabilities in `itsdangerous` and `TaggedJSONSerializer`.
+    - Thorough security audits of Flask's session management implementation and its interaction with `itsdangerous` and `TaggedJSONSerializer`, focusing on deserialization logic within `TaggedJSONSerializer`.
+    - Consider exploring alternative session management libraries or methods for enhanced security.
+    - Implement unit tests specifically for deserialization of various tagged types by `TaggedJSONSerializer`, including potentially malicious payloads.
+  - Risk Severity: High
+
+- Threat: Session Cookie Configuration Mismanagement
+  - Description: Flask provides various configuration options for session cookies. Misconfiguring these options can weaken session security. For example, setting `SESSION_COOKIE_HTTPONLY` to `False` makes cookies accessible to JavaScript, increasing the risk of XSS-based session hijacking. Not setting `SESSION_COOKIE_SECURE` in production over HTTPS exposes session cookies to interception. Incorrect `SESSION_COOKIE_DOMAIN` or `SESSION_COOKIE_PATH` can lead to cookies being sent to unintended domains or paths, potentially leaking session information or causing session fixation vulnerabilities. Flask 2.3.2 and 2.2.5 and later versions set `Vary: Cookie` header when the session is accessed, modified, or refreshed, which is a mitigation against caching session cookies incorrectly. Flask 2.3.0 and later versions changed the default for `SESSION_COOKIE_DOMAIN` to not fallback to `SERVER_NAME`, improving default security. Flask 2.0.0 and later versions include `samesite` and `secure` options when removing the session cookie. Flask 1.0.0 and later versions added `SESSION_COOKIE_SAMESITE` to control the `SameSite` attribute. Flask 3.1.0 and later versions added `SESSION_COOKIE_PARTITIONED` config for CHIPS attribute. Flask 0.5 introduced `SERVER_NAME` config key which is now also used to set the session cookie cross-subdomain wide, highlighting the importance of correct `SERVER_NAME` configuration for session security. The `config.rst` documentation details all these session cookie configurations and their security implications. The `quickstart.rst` documentation introduces sessions and their cookie-based implementation. The `web-security.rst` file also emphasizes the importance of `Secure`, `HttpOnly`, and `SameSite` cookie options.
+  - Impact: High. Session Hijacking, Session Fixation, Information Disclosure.
+  - Affected Component: Flask Session Management, Session Cookie Configuration.
+  - Current Mitigations: Flask provides configuration options, but relies on developers to configure them securely. Default values for some options like `SESSION_COOKIE_HTTPONLY=True` and `SESSION_COOKIE_SECURE=False` (by default, should be True in production) offer some baseline security, but proper configuration is crucial. Risk severity is high if session cookie configurations are not reviewed and hardened for production environments. Flask versions 2.2.5, 2.3.0, 2.3.2, 2.0.0, 1.0.0, 3.1.0 and later include some improvements in default settings and features related to session cookie security.
+  - Missing Mitigations:
+    - Emphasize secure session cookie configuration in documentation and security guidelines, especially considering the importance of `SERVER_NAME` as introduced in Flask 0.5, and the `Secure`, `HttpOnly`, and `SameSite` options as highlighted in `web-security.rst`.
+    - Provide clear recommendations for each session cookie configuration option and their security implications.
+    - Recommend security headers (e.g., `Strict-Transport-Security`) to enforce HTTPS and enhance cookie security.
+    - Security linters or static analysis tools could check for insecure session cookie configurations.
+  - Risk Severity: High
+
+- Threat: Deserialization Vulnerabilities in `TaggedJSONSerializer`
+  - Description: Vulnerabilities in `TaggedJSONSerializer` could lead to deserialization issues when session cookies or other data serialized with `TaggedJSONSerializer` are processed. Attackers might craft malicious payloads in session cookies or other serialized data with specially crafted tagged JSON. When Flask deserializes these payloads using `TaggedJSONSerializer`, it could lead to unexpected behavior, potentially including code execution if vulnerabilities exist in the deserialization logic within the `to_python` methods of the tag classes. Flask 0.2 introduced JSON support, making deserialization vulnerabilities relevant since then.
+  - Impact: High. Session Hijacking, Authentication Bypass, potentially Remote Code Execution (depending on the nature of the deserialization vulnerability).
+  - Affected Component: `TaggedJSONSerializer`, specifically `to_python` methods in tag classes.
+  - Current Mitigations: Flask relies on the security of `TaggedJSONSerializer` and its tag implementations. Regular security audits of `TaggedJSONSerializer` are crucial. Risk severity is high if vulnerabilities are found in `TaggedJSONSerializer` deserialization logic.
+  - Missing Mitigations:
+    - Thorough security audits of `TaggedJSONSerializer` and its tag implementations, focusing on deserialization logic in `to_python` methods.
+    - Consider adding unit tests specifically for deserialization of various tagged types, including potentially malicious payloads, to ensure robustness and prevent deserialization vulnerabilities. The `test_json_tag.py` file shows tests for `TaggedJSONSerializer`, but more security-focused tests are needed.
+    - Explore alternative serialization methods if `TaggedJSONSerializer` is deemed too complex or risky.
+    - Implement fuzzing and property-based testing for `TaggedJSONSerializer` deserialization to automatically detect potential vulnerabilities.
+  - Risk Severity: High
+
+- Threat: Celery Task Deserialization Vulnerabilities (in Celery Example)
+  - Description: If Celery is used to process tasks, especially those involving deserializing data from untrusted sources (e.g., task arguments), it can introduce deserialization vulnerabilities. Attackers could craft malicious payloads that, when deserialized by Celery workers, lead to Remote Code Execution (RCE) on the worker machines. This is a general Celery threat, but relevant in the context of Flask applications using Celery, as demonstrated in `celery.rst` documentation and `examples/celery` example.
+  - Impact: Critical. Remote Code Execution on Celery workers, potential lateral movement to Flask application server if workers and web app share infrastructure.
+  - Affected Component: Celery integration, Celery worker processes, Task serialization/deserialization.
+  - Current Mitigations: Not directly mitigated by Flask. Mitigation depends on secure Celery configuration and task design. Risk severity is critical if Celery is used without proper security considerations.
+  - Missing Mitigations:
+    - Follow Celery security best practices, including input validation and secure serialization/deserialization methods.
+    - Isolate Celery workers from the main Flask application server in terms of network access and permissions.
+    - Regularly audit Celery configurations and task implementations for potential deserialization vulnerabilities.
+  - Risk Severity: Critical
+
+- Threat: SQL Injection Vulnerabilities (in Tutorial Example)
+  - Description: If developers construct SQL queries by directly embedding user inputs without proper parameterization or using an ORM, it can lead to SQL Injection vulnerabilities. Attackers can inject malicious SQL code into input fields, potentially gaining unauthorized access to the database, modifying data, or even executing arbitrary commands on the database server. The `sqlite3.rst` and `sqlalchemy.rst` documentation highlight the use of databases with Flask, making SQL injection a relevant threat if raw SQL is used insecurely. The `sqlite3.rst` documentation explicitly warns against SQL injection and recommends using parameterization. The `blog.rst` and `database.rst` tutorial files demonstrate database interaction using raw SQL queries in the Flaskr blog application. While the tutorial uses parameterized queries in `blog.py`, the general examples might still lead developers to use insecure practices if not careful. The `views.rst` file also mentions using parameterized queries to prevent SQL injection.
+  - Impact: High. Data Breach, Data Manipulation, Potential Database Server Compromise.
+  - Affected Component: Database interaction logic, raw SQL queries.
+  - Current Mitigations: Flask itself does not enforce or provide built-in SQL injection prevention. It relies on developers to use secure database interaction practices. Risk severity is high if developers use raw SQL queries insecurely. The `sqlite3.rst` documentation provides guidance on using parameterized queries to mitigate SQL injection. The `blog.py` code in `blog.rst` tutorial uses parameterized queries in examples.
+  - Missing Mitigations:
+    - Strongly recommend using an ORM (like SQLAlchemy, although not part of Flask core) to abstract database interactions and automatically handle parameterization.
+    - Emphasize SQL injection risks in Flask documentation and security guidelines, especially when demonstrating database access.
+    - Provide examples of secure database interaction using parameterization or ORMs.
+    - Static analysis tools can detect potential SQL injection vulnerabilities in raw SQL queries.
+  - Risk Severity: High
+
+- Threat: Host Header Injection and Routing Misconfiguration due to `TRUSTED_HOSTS`, `SERVER_NAME`, `subdomain_matching`, and `host_matching`
+  - Description: Flask's URL routing and host matching logic, configured via `TRUSTED_HOSTS`, `SERVER_NAME`, `subdomain_matching`, and `host_matching`. If `TRUSTED_HOSTS` is not correctly configured, or if `host_matching=False` and application logic relies on the Host header without validation, attackers can manipulate the Host header. Furthermore, misconfigurations in `SERVER_NAME`, `subdomain_matching`, and `host_matching` can lead to unexpected routing behavior, potentially allowing attackers to bypass intended access controls or reach unintended application parts. This can lead to open redirect, password reset poisoning, cache poisoning, or other application-specific vulnerabilities. Flask 3.1.0 and later versions introduced `TRUSTED_HOSTS` config and `Request.trusted_hosts` check during routing to mitigate host header injection. Flask 3.1.0 also fixed how `host_matching=True` or `subdomain_matching=False` interacts with `SERVER_NAME`. Flask 0.5 introduced `SERVER_NAME` config key which is crucial for subdomain handling and should be configured correctly to prevent host header injection related issues. Flask 0.6 added subdomain support for modules, which also relies on correct `SERVER_NAME` configuration. The `config.rst` documentation details `TRUSTED_HOSTS` and `SERVER_NAME` and their importance for security. The `deploying/nginx.rst` documentation indirectly highlights the importance of correct host configuration when setting up reverse proxies.
+  - Impact: Medium to High. Potential for authentication bypass, password reset poisoning, cache poisoning, open redirect, and other application-specific vulnerabilities.
+  - Affected Component: Flask Core, URL handling (`url_map_class` in `flask/sansio/app.py`), Werkzeug integration, Host/Subdomain matching logic, Configuration (`TRUSTED_HOSTS`, `SERVER_NAME`, `subdomain_matching`, `host_matching`).
+  - Current Mitigations: Flask provides `TRUSTED_HOSTS`, `SERVER_NAME`, `subdomain_matching`, and `host_matching` configurations, and since version 3.1.0 includes `TRUSTED_HOSTS` check. However, it's still up to the developer to configure them correctly. Risk severity is medium to high if developers fail to configure these options properly or don't validate Host header when `host_matching=False`. Flask 3.1.0 and later versions provide improved mitigations with `TRUSTED_HOSTS` and fixes in host/subdomain matching logic.
+  - Missing Mitigations:
+    - Emphasize the importance of correct configuration of `TRUSTED_HOSTS`, `SERVER_NAME`, `subdomain_matching`, and `host_matching` in documentation and security guidelines, especially considering subdomain support added in Flask 0.6 and the importance of `SERVER_NAME` since Flask 0.5.
+    - Provide detailed guidance on how to properly configure these options for different deployment scenarios, including examples for subdomain and host matching.
+    - Static analysis tools could potentially detect missing or insecure configurations related to host and subdomain matching.
+    - Encourage thorough testing of routing configurations, especially when using subdomain or host matching.
+  - Risk Severity: Medium/High
+
+- Threat: Insecure Configuration Loading from Python Files/Objects
+  - Description: Flask's configuration system allows loading configurations from Python files and objects. If the files or objects loaded are from untrusted sources, they could contain malicious code. An attacker could craft a malicious Python file or object that, when loaded by the Flask application, executes arbitrary code on the server. This is especially critical if configuration loading is performed dynamically based on user input or external data. Flask 2.0.0 and later versions introduced `Config.from_file` to load config using arbitrary file loaders and Flask 2.1.0 and later versions added `Config.from_prefixed_env()` to load config from environment variables. These new methods, while useful, can also be misused if loading from untrusted sources. Flask 0.3 added support for configurations in general, making configuration loading a potential attack vector since then. The `config.rst` documentation details various methods for loading configurations, including from Python files, data files, and environment variables, highlighting the flexibility but also potential risks if not handled carefully. The `appfactories.rst` documentation shows examples of loading configurations from files in application factories. The `factory.rst` tutorial file demonstrates loading configuration from `config.py` in the instance folder, which is a recommended practice, but the general capability of loading from Python files still poses a risk if misused.
+  - Impact: Critical. Remote Code Execution, Server Compromise, Data Breach.
+  - Affected Component: Flask Configuration (`Config` class in `flask/sansio/app.py`, `make_config`, `from_file`, `from_prefixed_env`).
+  - Current Mitigations: Flask itself does not provide explicit mitigations. It relies on developers to load configuration files and objects from trusted sources. Risk severity is critical if developers load configurations from untrusted sources.
+  - Missing Mitigations:
+    - Strongly advise against loading configuration from untrusted sources in documentation and security guidelines, especially considering configuration support was added in Flask 0.3.
+    - Implement input validation and sanitization if configuration file paths or object names are derived from user input or external data.
+    - Consider using more secure configuration formats (e.g., JSON, TOML) and loaders when dealing with potentially untrusted configuration sources.
+    - Static analysis tools could potentially detect insecure configuration loading patterns.
+  - Risk Severity: Critical
+
+- Threat: Exposure of Debugger and Reloader in Production (via CLI)
+  - Description: Flask's debug mode, if enabled in production, exposes the Werkzeug debugger and reloader. The debugger can reveal sensitive source code and allow execution of arbitrary Python code. The reloader can cause unexpected application restarts and potential denial of service. The `config.rst` and `debugging.rst` documentation strongly warn against enabling debug mode in production due to the severe security risks. The `quickstart.rst` documentation also warns against using debug mode in production. The `server.rst` documentation also warns against using development server in production. Deployment documentation like `index.rst` and server-specific docs (e.g., `gevent.rst`, `gunicorn.rst`, `uwsgi.rst`, `waitress.rst`) emphasize using production WSGI servers instead of the development server. The `factory.rst` tutorial file mentions debug mode and running the application in debug mode during development, implicitly highlighting the risk if debug mode is left enabled in production. The `deploy.rst` tutorial file explicitly warns against using the development server (`flask run`) in production and recommends production WSGI servers. The `tutorial/README.rst` and `examples/tutorial/README.rst` also mention running Flask in debug mode during development.
+  - Impact: Critical. Information Disclosure (via Debugger), Remote Code Execution (via Debugger console), Denial of Service (via Reloader).
+  - Affected Component: Flask Core (`debug` property in `flask/sansio/app.py`), Werkzeug Debugger, Werkzeug Reloader, `get_debug_flag` in `flask/helpers`, CLI (`flask run --debug`).
+  - Current Mitigations: Flask documentation warns against using debug mode in production. However, the application itself doesn't prevent running in debug mode in production. Risk severity is critical due to the potential for RCE if debug mode is enabled in production. Flask 2.2.0 and later versions encourage direct control over debug mode, making it more explicit.
+  - Missing Mitigations:
+    - Enhance Flask to display a very strong warning message and potentially refuse to start if debug mode is enabled in production-like environments (e.g., when `FLASK_ENV=production` or similar environment variable is set, although `FLASK_ENV` is deprecated).
+    - Consider adding a configuration option or environment variable to globally disable debug features in production deployments.
+    - Improve documentation to clearly and repeatedly emphasize the severe security risks of running the development server and debugger/reloader in production, especially when using `flask run` CLI command.
+  - Risk Severity: Critical
+
+- Threat: File Serving Vulnerabilities via `send_file` and `send_from_directory`
+  - Description: Flask provides helper functions `send_file` and `send_from_directory` to serve files. If `send_file` is used with user-controlled paths without proper validation, or if `send_from_directory` is misconfigured, attackers could potentially access files outside of the intended directories or download sensitive application files, leading to directory traversal or file disclosure. Flask 2.0.0 and later versions made `send_file` and `send_from_directory` wrappers around Werkzeug implementations and renamed some parameters, but the core security considerations remain the same. Flask 0.2 added `send_file` helper, introducing file serving vulnerabilities since then. Flask 0.5 added a helper function to expose files from any directory, potentially increasing the risk if misused. Flask 0.6.1 fixed a security problem in `send_from_directory` that allowed arbitrary file download on Windows with backslashes, highlighting the directory traversal risk. Flask 1.0 added `safe_join` which is used in `send_from_directory` to mitigate directory traversal. The `favicon.rst` and `fileuploads.rst` documentation use `send_from_directory`, highlighting its usage and potential misuses. The `static.rst` tutorial file describes serving static files, which implicitly involves file serving and potential vulnerabilities if misconfigured.
+  - Impact: High. File Disclosure, Directory Traversal, Access to sensitive application files.
+  - Affected Component: `send_file`, `send_from_directory` (in `flask.helpers`, not in provided file, but part of Flask), `test_helpers.py`.
+  - Current Mitigations: `send_from_directory` uses `safe_join` (added in Flask 1.0) to prevent directory traversal, but relies on developers to use it correctly and restrict the `directory` parameter. `send_file` documentation warns against using user-provided paths. Risk severity is high if these functions are misused. Flask 0.6.1 fixed a specific directory traversal issue.
+  - Missing Mitigations:
+    - Emphasize secure file serving practices in documentation and security guidelines, especially when using `send_file` with user input, and considering the history of directory traversal vulnerabilities and fixes (Flask 0.6.1 fix).
+    - Provide clearer examples of secure usage of `send_file` and `send_from_directory`, highlighting path validation and sanitization.
+    - Static analysis tools could potentially detect insecure patterns in `send_file` and `send_from_directory` usage.
+  - Risk Severity: High
+
+- Threat: Open Redirect and SSRF via URL Generation and Redirection
+  - Description: Flask's `url_for` function generates URLs, and `redirect` function handles redirects. If application logic uses user-controlled input to construct URLs with `url_for` or in `redirect` destinations without proper validation, attackers could craft malicious URLs. This can lead to open redirect vulnerabilities, where users are redirected to attacker-controlled sites, or Server-Side Request Forgery (SSRF) if the application makes requests based on these generated URLs. Flask 2.2.0 and later versions made `flask.url_for` call `app.url_for` which is a customization point, but doesn't directly change the threat. Flask 0.2 added external URL support, making open redirect and SSRF more relevant if external URLs are not handled carefully. The `quickstart.rst` documentation introduces `url_for` for URL building. The `javascript.rst` documentation shows how to generate URLs for JavaScript using `url_for` and `request.script_root`, highlighting the usage of URL generation in different contexts. The `blog.rst`, `templates.rst`, and `static.rst` tutorial files extensively use `url_for` in templates and Python code for URL generation, highlighting its central role and potential risks if misused with user input. The `views.rst` file also mentions `url_for` and its usage in redirects and templates.
+  - Impact: Medium. Open Redirect, Server-Side Request Forgery (SSRF).
+  - Affected Component: `url_for`, `redirect` (in `flask.helpers`, not in provided file, but part of Flask), URL handling logic in application code, `handle_url_build_error` and `inject_url_defaults` in `flask/sansio/app.py`, `test_helpers.py`.
+  - Current Mitigations: Flask's `url_for` and `redirect` functions themselves are not vulnerable, but the security depends on how developers use them in their application logic. Risk severity is medium as it requires insecure application code.
+  - Missing Mitigations:
+    - Emphasize the risks of open redirects and SSRF in documentation and security guidelines, especially when using `url_for` and `redirect` with user input, and considering external URL support added in Flask 0.2.
+    - Recommend URL validation and sanitization best practices when using `url_for` and `redirect` with external or user-provided data.
+    - Security linters or static analysis tools could potentially detect insecure URL construction patterns.
+  - Risk Severity: Medium
+
+- Threat: Request Size Limit Bypass/DoS
+  - Description: Flask's `Request` class (in Werkzeug, underlying Flask) introduces configuration options (`MAX_CONTENT_LENGTH`, `MAX_FORM_MEMORY_SIZE`, `MAX_FORM_PARTS`) to limit request body size and form data size. If these limits are not configured or are set too high, or if there are vulnerabilities allowing bypass of these limits, attackers could send excessively large requests. This could lead to denial of service by consuming excessive server resources or by exploiting vulnerabilities in request parsing logic when handling very large requests. Flask 3.1.0 and later versions added `MAX_FORM_MEMORY_SIZE` and `MAX_FORM_PARTS` config options and improved documentation about resource limits. Flask 0.6 added `MAX_CONTENT_LENGTH` configuration value, mitigating DoS by limiting request data size since then. The `config.rst` documentation details `MAX_CONTENT_LENGTH`, `MAX_FORM_MEMORY_SIZE`, and `MAX_FORM_PARTS` and recommends setting them appropriately. The `web-security.rst` file also mentions these resource use limits. The `fileuploads.rst` documentation mentions `MAX_CONTENT_LENGTH` in the context of file upload size limits.
+  - Impact: Medium to High. Denial of Service, Resource Exhaustion, Potential for exploitation of parsing vulnerabilities.
+  - Affected Component: `Request` class (in Werkzeug), request handling, configuration (`MAX_CONTENT_LENGTH`, `MAX_FORM_MEMORY_SIZE`, `MAX_FORM_PARTS`).
+  - Current Mitigations: Flask provides configuration options for request size limits. Default values are set for `MAX_FORM_MEMORY_SIZE` and `MAX_FORM_PARTS`, but `MAX_CONTENT_LENGTH` is `None` by default. Mitigation relies on developers configuring these limits appropriately. Risk severity is medium to high if limits are not configured or bypassed. Flask 3.1.0 and later versions provide more configuration options and better documentation. Flask 0.6 introduced `MAX_CONTENT_LENGTH` mitigation.
+  - Missing Mitigations:
+    - Strongly recommend setting `MAX_CONTENT_LENGTH` in documentation and security guidelines, even though it was introduced in Flask 0.6, as it's still not set by default.
+    - Provide guidance on choosing appropriate values for these limits based on application needs and infrastructure capacity.
+    - Consider adding default `MAX_CONTENT_LENGTH` in Flask or Werkzeug to prevent unbounded request bodies by default.
+    - Regularly review and adjust request size limits as application requirements change.
+    - Implement monitoring and alerting for unusually large requests to detect potential DoS attacks.
+  - Risk Severity: Medium/High
+
+- Threat: Insecure Custom JSON Provider
+  - Description: Flask allows using custom JSON providers by subclassing `JSONProvider` and setting `json_provider_class`. If a custom JSON provider is implemented insecurely, particularly in its serialization or deserialization logic, it could introduce vulnerabilities. For example, a custom provider might be vulnerable to deserialization attacks if it uses unsafe deserialization methods or mishandles data types. An attacker could exploit these vulnerabilities by sending crafted JSON payloads, potentially leading to Remote Code Execution or other security breaches. Flask 2.2.0 and later versions introduced `JSONProvider` and customization points for JSON handling, making custom providers more relevant. Flask 0.2 integrated JSON support, and custom JSON providers can potentially introduce vulnerabilities in JSON handling since then.
+  - Impact: High to Critical. Remote Code Execution, Data Breach, Denial of Service, depending on the vulnerability in the custom provider.
+  - Affected Component: `JSONProvider` and `DefaultJSONProvider` classes in `flask/sansio/app.py`, custom JSON provider implementations, JSON serialization/deserialization logic.
+  - Current Mitigations: Flask's default `DefaultJSONProvider` is based on Python's standard `json` library, which is generally considered secure. However, Flask does not provide specific mitigations for custom JSON providers. The security relies entirely on the implementation of the custom provider. Risk severity is high to critical if a vulnerable custom provider is used.
+  - Missing Mitigations:
+    - Provide security guidelines for developing custom JSON providers, emphasizing secure serialization and deserialization practices, especially considering JSON support was added in Flask 0.2 and custom providers are now more relevant since Flask 2.2.0.
+    - Recommend thorough security audits and testing of custom JSON providers before deployment.
+    - Consider providing a secure base class or helper functions for custom JSON providers to reduce the risk of common vulnerabilities.
+    - Static analysis tools could potentially be developed to analyze custom JSON provider code for common security flaws.
+  - Risk Severity: High/Critical
+
+- Threat: JSON Deserialization Vulnerabilities in Custom JSON Providers
+  - Description: When using custom JSON providers, particularly with custom `object_hook` implementations, vulnerabilities can arise during deserialization. If the `object_hook` in a custom JSON provider is not carefully implemented, it might be susceptible to deserialization attacks. An attacker could craft malicious JSON payloads that, when processed by a vulnerable `object_hook`, lead to unexpected behavior, potentially including code execution. Flask 0.2 introduced JSON support, and custom `object_hook` can be a source of deserialization vulnerabilities since then. The `javascript.rst` documentation describes receiving JSON in views using `request.json`, which internally uses the JSON provider and its deserialization logic, making deserialization vulnerabilities in custom providers directly exploitable via API endpoints that consume JSON.
+  - Impact: High to Critical. Remote Code Execution, Data Breach, Denial of Service, depending on the vulnerability in the custom provider's `object_hook`.
+  - Affected Component: Custom JSON provider implementations, specifically the `object_hook` method, JSON deserialization logic.
+  - Current Mitigations: Flask's default JSON provider is secure, but custom providers are developer's responsibility. No built-in mitigations for custom `object_hook` implementations. Risk severity is high to critical if a vulnerable custom provider with insecure `object_hook` is used.
+  - Missing Mitigations:
+    - Provide specific security guidelines for implementing `object_hook` in custom JSON providers, emphasizing secure deserialization practices and input validation, especially considering JSON support was added in Flask 0.2.
+    - Recommend thorough security audits and testing of custom JSON providers, especially the `object_hook` method, before deployment.
+    - Provide secure coding examples and best practices for `object_hook` implementations to prevent common deserialization vulnerabilities.
+    - Static analysis tools could potentially be developed to analyze custom JSON provider code, including `object_hook`, for common security flaws.
+  - Risk Severity: High/Critical
+
+- Threat: Blueprint Security Mismanagement
+  - Description: Flask Blueprints allow modularizing applications. However, if blueprints are not managed securely, it can lead to vulnerabilities. This includes inconsistent security policies across blueprints, overlapping routes with different access controls, improper handling of blueprint-specific configurations, and blueprint naming collisions. Attackers might exploit these inconsistencies or naming issues to bypass authentication, access unauthorized resources, or cause unexpected application behavior. Registering blueprints with the same name, as checked in `Blueprint.register` in `flask/sansio/blueprints.py`, can lead to configuration conflicts and unexpected behavior if not handled carefully by developers. The `Scaffold` class in `flask/sansio/scaffold.py` manages blueprint registration and related functionalities, highlighting the complexity of managing blueprints securely. Flask 2.0.1 and later versions improved blueprint name handling and nested blueprint registration. Flask 2.0.0 and later versions restructured Blueprint implementation using `Scaffold` class and added support for nested blueprints. Flask 0.7 introduced Blueprints, making blueprint security management a relevant concern since then. The `errorhandling.rst` documentation highlights that blueprint error handlers for 404 and 405 are only invoked within the blueprint's view functions, not for invalid URL access, which can lead to inconsistent error handling if not properly understood. The `index.rst` documentation lists blueprints as a feature. The `packages.rst` and `urlprocessors.rst` documentation highlight the usage of blueprints for structuring large applications and managing URL processors, further emphasizing the importance of secure blueprint management. The `blog.rst` tutorial file introduces and uses blueprints to structure the blog application, demonstrating blueprint usage and implicitly highlighting potential mismanagement risks. The `views.rst` file describes blueprints and their usage in organizing views.
+  - Impact: Medium to High. Authentication Bypass, Authorization Issues, Information Disclosure, Application Logic Errors, Configuration Conflicts.
+  - Affected Component: Flask Blueprints (`Blueprint`, `register_blueprint`, `iter_blueprints` in `flask/sansio/blueprints.py`, `Scaffold` in `flask/sansio/scaffold.py`), application routing, blueprint-specific configurations, blueprint naming.
+  - Current Mitigations: Flask provides blueprint functionality, but security management across blueprints is primarily the developer's responsibility. Flask prevents registering blueprints with the same name to the same application instance, reducing the risk of direct naming collisions during registration, as seen in `Blueprint.register`. Risk severity is medium to high depending on the complexity of blueprint usage and potential for misconfiguration. Flask 2.0.0 and 2.0.1 and later versions include improvements in blueprint handling.
+  - Missing Mitigations:
+    - Provide best practices and guidelines for secure blueprint management, including consistent security policy enforcement across blueprints and clear naming conventions, especially considering blueprints were introduced in Flask 0.7.
+    - Recommend using clear naming conventions and organizational structures for blueprints to improve security visibility and maintainability.
+    - Consider developing tooling or extensions to help manage and audit security configurations across multiple blueprints.
+    - Emphasize the importance of testing and security reviews when using blueprints to ensure consistent and secure application behavior.
+    - Static analysis tools could detect potential blueprint naming conflicts or inconsistent configurations.
+  - Risk Severity: Medium/High
+
+- Threat: Blueprint URL Prefix and Subdomain Misconfiguration
+  - Description: Flask Blueprints allow defining URL prefixes and subdomains. Misconfiguration of these prefixes or subdomains, especially in nested blueprints, can lead to routing errors, unintended exposure of blueprint routes, or access control bypasses if different blueprints are intended for different user roles or network segments. Attackers might exploit these misconfigurations to access unintended functionalities or bypass intended access restrictions. The `Scaffold` class manages routing and URL handling, making it a central component for this threat. Flask 2.3.0 and later versions ensured subdomains are applied with nested blueprints. Flask 2.0.1 and later versions combined URL prefixes when nesting blueprints and fixed blueprint prefix/route slash merging issues. Flask 2.0.0 and later versions added support for nested blueprints. Flask 0.6 introduced subdomain support for modules, and blueprints (Flask 0.7) inherited this feature, making subdomain and prefix misconfiguration a relevant threat since then. The `index.rst` documentation lists blueprints as a feature. The `urlprocessors.rst` documentation shows how blueprints can be used to manage internationalized URLs with prefixes, highlighting the importance of correct prefix configuration. The `blog.rst` tutorial file uses blueprints without URL prefixes, but the feature is available and misconfiguration is possible in more complex applications. The `views.rst` file describes blueprint URL prefixes and their configuration.
+  - Impact: Medium to High. Routing Errors, Unauthorized Access, Access Control Bypass.
+  - Affected Component: Flask Blueprints (`Blueprint`, `BlueprintSetupState`, `register_blueprint` in `flask/sansio/blueprints.py`, `Scaffold` in `flask/sansio/scaffold.py`), URL routing, subdomain handling.
+  - Current Mitigations: Flask provides the functionality to configure URL prefixes and subdomains for blueprints. However, it relies on developers to configure them correctly and consistently. Risk severity is medium to high depending on the complexity of blueprint URL configurations and potential for misconfiguration. Flask versions 2.0.0, 2.0.1, 2.3.0 and later include improvements in blueprint URL handling.
+  - Missing Mitigations:
+    - Emphasize the importance of correct URL prefix and subdomain configuration in blueprint documentation and security guidelines, especially considering subdomain support since Flask 0.6 and blueprints since Flask 0.7.
+    - Provide clear examples and best practices for configuring URL prefixes and subdomains, especially in nested blueprint scenarios.
+    - Recommend thorough testing of routing configurations when using blueprints with URL prefixes and subdomains to ensure intended access paths are correctly configured and unintended paths are blocked.
+    - Static analysis tools could potentially detect inconsistent or overlapping URL prefix/subdomain configurations across blueprints.
+  - Risk Severity: Medium/High
+
+- Threat: Blueprint Static File and Template Serving Misconfiguration
+  - Description: Flask Blueprints can serve static files and templates. Misconfiguration of static folders, static URL paths, or template folders within blueprints can lead to file disclosure vulnerabilities if static files are placed in publicly accessible locations unintentionally, or directory traversal if `send_static_file` is not properly secured within the blueprint context. Similarly, template misconfigurations could lead to information disclosure or SSTI if templates are not properly managed within blueprints. The `Scaffold` class manages static and template folder configurations. Flask 0.5 added support for per-package template and static-file directories, and blueprints (Flask 0.7) extended this, making static and template serving misconfiguration a relevant threat since then. The `index.rst` documentation lists blueprints as a feature. The `templates.rst` and `static.rst` tutorial files demonstrate template and static file usage within blueprints, implicitly highlighting potential misconfiguration risks.
+  - Impact: Medium to High. File Disclosure, Directory Traversal, Server-Side Template Injection (if templates are misconfigured within blueprints).
+  - Affected Component: Flask Blueprints (`Blueprint`, `BlueprintSetupState` in `flask/sansio/blueprints.py`, `Scaffold` in `flask/sansio/scaffold.py`), static file serving (`send_static_file`), template rendering, blueprint configuration for static and template folders.
+  - Current Mitigations: Flask's `send_from_directory` (used internally by `send_static_file`) provides `safe_join` for directory traversal prevention. However, misconfiguration at the blueprint level, such as incorrect `static_folder` or `static_url_path` settings, can still lead to vulnerabilities. Risk severity is medium to high depending on the blueprint static/template configurations and potential for misconfiguration.
+  - Missing Mitigations:
+    - Emphasize secure configuration of static and template folders within blueprints in documentation and security guidelines, especially considering blueprint resource serving since Flask 0.7 and per-package resources since Flask 0.5.
+    - Provide clear examples of secure static file and template serving within blueprints, highlighting path configurations and access control considerations.
+    - Recommend careful review of blueprint static and template folder configurations to prevent unintended file exposure or directory traversal.
+    - Static analysis tools could potentially detect insecure configurations of static and template folders in blueprints.
+  - Risk Severity: Medium/High
+
+- Threat: Unbounded Cookie Size or Cookie Size Limit Bypass
+  - Description: Flask allows configuring `MAX_COOKIE_SIZE` to limit the size of cookies. If `MAX_COOKIE_SIZE` is not configured, set to 0 (disabling the limit), or if there's a bypass, an attacker could send very large cookies. This could lead to denial of service by exhausting server resources (memory, bandwidth) or by exploiting potential vulnerabilities in cookie parsing logic when handling excessively large cookies. Flask 1.0.0 and later versions added `MAX_COOKIE_SIZE` and `Response.max_cookie_size` to control cookie size limits. The `config.rst` documentation describes `MAX_COOKIE_SIZE` and its default value.
+  - Impact: Medium to High. Denial of Service, Resource Exhaustion, Potential for exploitation of parsing vulnerabilities.
+  - Affected Component: Flask Core, Cookie handling, Configuration (`MAX_COOKIE_SIZE`).
+  - Current Mitigations: Flask provides `MAX_COOKIE_SIZE` configuration since version 1.0.0. Default value is Werkzeug's default, which is also Flask's default config. Mitigation relies on developers configuring this limit appropriately. Risk severity is medium to high if limits are not configured or bypassed.
+  - Missing Mitigations:
+    - Strongly recommend setting `MAX_COOKIE_SIZE` in documentation and security guidelines, as it was introduced in Flask 1.0.0.
+    - Provide guidance on choosing appropriate values for `MAX_COOKIE_SIZE` based on application needs and infrastructure capacity.
+    - Consider setting a reasonable default `MAX_COOKIE_SIZE` in Flask to prevent unbounded cookie sizes by default.
+    - Regularly review and adjust cookie size limits as application requirements change.
+    - Implement monitoring and alerting for unusually large cookies to detect potential DoS attacks.
+  - Risk Severity: Medium/High
+
+- Threat: CLI Command Injection/Abuse
+  - Description: Attackers might try to inject malicious commands or arguments into Flask CLI tools if they can control the execution environment (e.g., compromised CI/CD pipelines, developer workstations, or exposed management interfaces). This could lead to arbitrary code execution on the server or denial of service. Flask 2.2.0 and later versions added `--app` and `--debug` options to the `flask` CLI, and `--env-file` option, providing more control over CLI execution but not directly changing the command injection risk. Flask 2.0.0 and later versions improved CLI error messages and made CLI more robust. Flask 1.1.0 and later versions simplified CLI entry point and added `--extra-files` option. Flask 0.11.0 and later versions introduced the `flask` CLI based on Click, making CLI command injection/abuse a relevant threat since then. The `index.rst` documentation lists CLI as a feature. The `factory.rst`, `database.rst`, and `deploy.rst` tutorial files demonstrate using Flask CLI commands like `flask run` and `flask init-db`, highlighting CLI usage and implicitly the potential for abuse if the environment is compromised. The `tutorial/README.rst` and `examples/tutorial/README.rst` also show examples of using Flask CLI commands.
+  - Impact: High to Critical. Remote Code Execution, Denial of Service, Server Compromise.
+  - Affected Component: Flask CLI (`FlaskGroup`, `AppGroup`, `run_command` in `flask/cli.py` - not provided, but part of Flask), command parsing logic, execution environment.
+  - Current Mitigations: Flask CLI itself does not have built-in mitigations against command injection. Security relies on securing the execution environment and access to CLI tools. Risk severity is high to critical if the CLI execution environment is not properly secured.
+  - Missing Mitigations:
+    - Implement strict access control and auditing for Flask CLI tool execution, especially considering CLI was introduced in Flask 0.11.0.
+    - Sanitize or validate any input that influences CLI command construction or arguments, especially if derived from external or untrusted sources.
+    - Avoid running Flask CLI tools in untrusted or exposed environments.
+    - Security awareness training for developers regarding CLI security best practices.
+  - Risk Severity: High/Critical
+
+- Threat: Configuration Injection via Environment Variables
+  - Description: Flask's configuration loading mechanism, particularly `from_prefixed_env`, reads configuration from environment variables. If environment variables are not properly sanitized or if an attacker can control environment variables (e.g., in containerized environments, shared hosting, or via compromised system configurations), they could inject malicious configurations. This could lead to various vulnerabilities depending on the injected configuration, including overriding security settings, changing application behavior, or in some cases, potentially leading to code execution if configuration values are processed unsafely. Flask 2.1.0 and later versions added `Config.from_prefixed_env()` to load config from environment variables, making this threat more relevant. Flask 0.3 added support for configurations in general, and environment variables can be a source of configuration injection since then. The `config.rst` documentation details how to load configurations from environment variables using `from_prefixed_env`. The `celery.rst` and `appfactories.rst` documentation show examples of using environment variables for configuration.
+  - Impact: Medium to Critical. Configuration Tampering, Authentication Bypass, potentially Remote Code Execution (depending on how injected configuration is used).
+  - Affected Component: Flask Configuration (`Config`, `from_prefixed_env` in `flask/config.py` - not provided, but part of Flask), environment variable handling.
+  - Current Mitigations: Flask's `from_prefixed_env` reads environment variables but does not inherently sanitize them. Mitigation relies on secure environment management and preventing unauthorized modification of environment variables. Risk severity is medium to critical depending on the application's configuration and sensitivity to environment variables.
+  - Missing Mitigations:
+    - Implement strict control over environment variable settings in deployment environments, especially considering environment variable configuration loading since Flask 2.1.0 and general configuration support since Flask 0.3.
+    - Avoid relying on environment variables for highly sensitive configuration settings if possible. Use dedicated secrets management solutions instead.
+    - Sanitize or validate environment variables used for configuration, especially if they influence critical application behavior or security settings.
+    - Document and enforce secure environment variable management practices for development and deployment.
+  - Risk Severity: Medium/Critical
+
+- Threat: Resource Exhaustion via Streaming Responses
+  - Description: Flask's `stream_with_context` allows creating streaming responses. If not handled properly, streaming responses could be abused to cause resource exhaustion or denial of service. An attacker could initiate many long-lived streaming connections, consuming server resources (CPU, memory, network bandwidth) and potentially making the application unresponsive to legitimate users. This is especially relevant if streaming endpoints are publicly accessible or if request rates are not limited. Flask 2.2.0 and later versions improved context preservation for streaming responses. Flask 0.9 and later versions added `flask.stream_with_context`, introducing resource exhaustion risk via streaming responses since then. The `templating.rst` documentation also mentions streaming templates. The `streaming.rst` documentation itself describes streaming content and highlights the usage of `stream_with_context`, emphasizing the feature and potential misuse.
+  - Impact: Medium to High. Denial of Service, Resource Exhaustion.
+  - Affected Component: Flask Core, Streaming Responses (`stream_with_context` in `flask/helpers`), response handling.
+  - Current Mitigations: Flask provides `stream_with_context` but does not inherently limit the number or duration of streaming connections. Mitigation relies on application-level rate limiting, resource management, and proper handling of streaming responses. Risk severity is medium to high if streaming endpoints are not properly secured and resource-limited.
+  - Missing Mitigations:
+    - Implement rate limiting and connection limits for streaming endpoints to prevent abuse, especially considering streaming responses were introduced in Flask 0.9.
+    - Monitor resource usage for streaming endpoints and set up alerts for unusual activity.
+    - Design streaming responses to be efficient and minimize resource consumption.
+    - Consider using techniques like backpressure or flow control to manage streaming data and prevent server overload.
+  - Risk Severity: Medium/High
+
+- Threat: HTTP Host Header DoS via Invalid Characters
+  - Description: Providing a non-printable character in the `HTTP_HOST` header can lead to a 400 Bad Request error. While this is intended behavior to reject invalid Host headers, an attacker could intentionally send a large number of requests with invalid `HTTP_HOST` headers to cause denial of service. This could exhaust server resources by forcing the application to process and reject each invalid request. Flask 1.1.0 and later versions improved handling of unprintable Unicode characters in Host header, resulting in 400 error instead of 500, but the DoS potential remains.
+  - Impact: Medium. Denial of Service, Resource Exhaustion.
+  - Affected Component: Werkzeug Request handling (underlying Flask), HTTP Host header parsing.
+  - Current Mitigations: Werkzeug and Flask reject requests with invalid `HTTP_HOST` headers, preventing potential routing or security issues. However, this rejection itself can be exploited for DoS. Risk severity is medium as it's a DoS vulnerability, but not critical data breach or RCE. Flask 1.1.0 and later versions improved error handling for invalid Host headers.
+  - Missing Mitigations:
+    - Implement rate limiting at the reverse proxy or firewall level to restrict the number of requests from a single IP address, regardless of the validity of the Host header.
+    - Optimize request handling to quickly reject invalid Host headers with minimal resource consumption.
+    - Monitor for unusual patterns of 400 Bad Request errors, which might indicate a DoS attempt.
+  - Risk Severity: Medium
+
+- Threat: Request Context Leaking in Asynchronous/Greenlet Environments
+  - Description: When using asynchronous frameworks or greenlets, improper management of the Flask request context can lead to context leaking or confusion. If contexts are not correctly copied or isolated in concurrent execution environments, data from one request (e.g., session, request-local data) might bleed into another request processed in a different greenlet or asynchronous task. This could lead to information disclosure, session hijacking, or other unexpected security issues. Flask 2.1.0 and later versions allowed `copy_current_request_context` to decorate async functions. Flask 0.10 and later versions added support for copying request contexts for better working with greenlets. Flask 2.0 added async/await support, making context leaking in async environments a relevant threat since then. Flask 0.10 added greenlet context copying support, addressing context management in greenlet environments. The `lifecycle.rst` and `reqcontext.rst` documentation describe request context. The `deploying/asgi.rst` and `deploying/eventlet.rst` files highlight ASGI and eventlet deployments, where context management is crucial. The `deploying/gevent.rst`, `deploying/gunicorn.rst`, and `deploying/uwsgi.rst` documentation mention gevent and eventlet workers, further emphasizing the relevance of context management in asynchronous deployments. The `streaming.rst` documentation mentions `stream_with_context`, which is a tool to manage context in streaming scenarios, highlighting the importance of context management.
+  - Impact: High. Information Disclosure, Session Hijacking, Data Corruption, Unexpected Application Behavior.
+  - Affected Component: Flask Request Context (`RequestContext`), `greenlet` integration (if used), asynchronous task execution (if used), `copy_current_request_context`.
+  - Current Mitigations: Flask provides `copy_current_request_context` decorator to help manage context in greenlet/async environments. However, developers must use it correctly. Risk severity is high if context management is flawed in asynchronous applications. Flask versions 0.10, 2.1.0 and later include features to improve context management in async/greenlet environments.
+  - Missing Mitigations:
+    - Emphasize the importance of proper request context management in asynchronous and greenlet-based Flask applications in documentation and security guidelines, especially considering async/await support since Flask 2.0 and greenlet support since Flask 0.10, and ASGI/eventlet deployments.
+    - Provide clear examples and best practices for using `copy_current_request_context` and other context management techniques in concurrent environments.
+    - Recommend thorough testing of context isolation in asynchronous applications to prevent context leaking.
+    - Consider providing more robust built-in context management mechanisms for asynchronous scenarios in Flask itself.
+  - Risk Severity: High
+
+- Threat: Overriding Security-Relevant Methods in Flask Subclasses
+  - Description: Flask allows subclassing the `Flask` class and overriding methods. If developers override security-relevant methods like `log_exception` or other core functionalities without fully understanding the security implications, they could inadvertently weaken the application's security posture. For example, disabling exception logging might hinder security monitoring and incident response. The `subclassing.rst` documentation itself describes subclassing Flask, highlighting this feature and implicitly the potential risks if misused.
+  - Impact: Medium to High. Weakened Security Monitoring, Potential for Undetected Security Breaches, Application Instability.
+  - Affected Component: Flask Core (`Flask` class), subclassing mechanism, overridable methods (e.g., `log_exception`).
+  - Current Mitigations: Flask allows subclassing, but relies on developers to understand the implications of overriding methods. Risk severity is medium to high depending on which methods are overridden and how.
+  - Missing Mitigations:
+    - Warn against overriding security-relevant methods in Flask subclasses without careful consideration and security review in documentation and security guidelines.
+    - Provide clear documentation on the security implications of overridable methods in the `Flask` class.
+    - Consider making certain security-critical methods less easily overridable or provide clearer guidance on how to override them safely.
+    - Static analysis tools could potentially detect overrides of security-sensitive methods in Flask subclasses and flag them for review.
+  - Risk Severity: Medium/High
+
+- Threat: Information Disclosure via Verbose Error Handlers and Debugging Aids
+  - Description: Flask's error handlers and debugging features like `EXPLAIN_TEMPLATE_LOADING` can expose sensitive information in error messages, especially when debug mode is enabled or custom error handlers are overly verbose. This can reveal internal application paths, configurations, or even source code snippets to attackers. While helpful for development, these verbose error messages should not be exposed in production. Flask 0.8 and later versions added the ability to trap HTTP exceptions and Bad Request errors in debug mode, and Flask 0.11.0 and later versions added `EXPLAIN_TEMPLATE_LOADING` config flag, both potentially increasing verbosity in debug mode. Flask 1.1.0 and later versions made original exception available in 500 error handlers as `e.original_exception`, which could also lead to more verbose error messages if not handled carefully. Flask 1.0.0 and later versions enabled `TRAP_BAD_REQUEST_ERRORS` by default in debug mode, and made `BadRequestKeyError` messages more informative in debug mode. Flask 0.4 added application-wide error handlers from modules, which can also contribute to information disclosure if error handlers are not carefully designed. Flask 0.3 added logging request handling exceptions, which is a mitigation for security monitoring, but verbose error handlers can still disclose information to users. The `debugging.rst` and `errorhandling.rst` documentation discuss error handling and debugging, emphasizing the need to avoid verbose error messages in production. The `quickstart.rst` documentation mentions debug mode and its debugger. The `tutorial/README.rst` and `examples/tutorial/README.rst` also mention debug mode in development.
+  - Impact: Medium. Information Disclosure, Exposure of internal application structure and potential sensitive data.
+  - Affected Component: Flask Error Handling (`errorhandler` decorator, `Flask.error_handler_spec`), Debugging features (`EXPLAIN_TEMPLATE_LOADING`), Werkzeug exception handling.
+  - Current Mitigations: Flask's default error handler in production environments is less verbose than in debug mode. Flask documentation warns against enabling debug mode in production. Risk severity is medium as it often requires misconfiguration (enabling debug mode or creating overly verbose custom error handlers in production). Flask versions 0.8, 0.11.0, 1.0.0, 1.1.0 and later versions introduced features that can increase error verbosity in debug mode. Flask 0.3 added logging for exception which is a monitoring mitigation.
+  - Missing Mitigations:
+    - Strongly warn against enabling debug mode and `EXPLAIN_TEMPLATE_LOADING` in production environments in documentation and security guidelines, especially considering features added in Flask 0.8, 0.11.0, 1.0.0, 1.1.0 that can increase error verbosity.
+    - Ensure that debug mode and related debugging features are disabled by default in production deployments.
+    - Provide guidance on creating secure error handlers that log necessary information securely without exposing sensitive details to end-users.
+    - Sanitize or reduce the verbosity of error messages in production to avoid unnecessary information disclosure, even if debug features are accidentally enabled.
+    - Static analysis tools could potentially detect overly verbose error handlers that might disclose sensitive information.
+  - Risk Severity: Medium
+
+- Threat: Insecure Flask Extension Usage
+  - Description: Flask extensions are third-party packages that add functionality to Flask applications. If these extensions are not developed or used securely, they can introduce vulnerabilities into the Flask application. This could include vulnerabilities in the extension code itself, insecure configuration options provided by the extension, or misuse of the extension by the application developer. An attacker could exploit vulnerabilities in extensions to compromise the Flask application. The `extensions.rst` and `extensiondev.rst` documents describe Flask extensions and their development.
+  - Impact: High to Critical. Remote Code Execution, Data Breach, Denial of Service, depending on the vulnerability in the extension.
+  - Affected Component: Flask Extensions, Third-party extension code, Extension configuration, Application code using extensions.
+  - Current Mitigations: Flask itself does not provide direct mitigations for insecure extensions. The security of extensions relies on the extension developers and users. Risk severity is high to critical if vulnerable extensions are used. The `extensiondev.rst` provides guidelines for extension developers to improve security.
+  - Missing Mitigations:
+    - Encourage developers to use only reputable and well-maintained Flask extensions.
+    - Promote security audits and vulnerability scanning of Flask extensions.
+    - Provide guidelines for developers on how to securely integrate and configure Flask extensions.
+    - Consider developing a community-driven security review process for popular Flask extensions.
+    - Static analysis tools could potentially be extended to analyze Flask extension code for common security flaws.
+  - Risk Severity: High/Critical
+
+- Threat: Logging Misconfiguration and Information Leakage
+  - Description: Flask uses Python's standard logging. Misconfiguration of logging, such as setting overly permissive log levels or including sensitive data in log messages, can lead to information leakage. Attackers could potentially gain access to sensitive information from log files, such as API keys, passwords, or user data, if logging is not configured securely. Conversely, insufficient logging can hinder security monitoring and incident response. The `logging.rst` documentation details Flask's logging capabilities and configuration.
+  - Impact: Medium to High. Information Disclosure, Weakened Security Monitoring.
+  - Affected Component: Flask Logging, Python `logging` module, Log files, Logging configuration.
+  - Current Mitigations: Flask uses standard Python logging, which provides flexibility in configuration. However, secure logging configuration is the developer's responsibility. Risk severity is medium to high depending on the logging configuration and the sensitivity of data logged.
+  - Missing Mitigations:
+    - Emphasize secure logging practices in documentation and security guidelines, especially regarding sensitive data and appropriate log levels.
+    - Provide examples of secure logging configurations and best practices for avoiding information leakage in logs.
+    - Recommend regular review of logging configurations to ensure they are still appropriate and secure.
+    - Security linters or static analysis tools could potentially detect insecure logging configurations or patterns that might lead to information leakage.
+  - Risk Severity: Medium/High
+
+- Threat: Insecure WSGI Middleware
+  - Description: Flask applications are WSGI applications and can be wrapped by WSGI middleware. If insecure or vulnerable WSGI middleware is used, it can introduce vulnerabilities into the Flask application. This could include vulnerabilities in the middleware code itself, misconfiguration of middleware, or middleware that weakens the security of the underlying Flask application. An attacker could exploit vulnerabilities in middleware to compromise the Flask application. The `proxy_fix.rst` documentation describes `ProxyFix` middleware, highlighting the importance of correct middleware configuration for security. The `methodoverrides.rst` documentation shows an example of custom middleware, further illustrating the use of middleware and potential risks if custom middleware is not secure. The `deploy.rst` tutorial file recommends using WSGI servers like Waitress, implicitly highlighting the role of WSGI servers and middleware in deployment and potential security implications.
+  - Impact: High to Critical. Remote Code Execution, Data Breach, Denial of Service, depending on the vulnerability in the middleware.
+  - Affected Component: WSGI Middleware, Werkzeug, Application deployment environment.
+  - Current Mitigations: Flask itself does not provide direct mitigations for insecure middleware. The security of middleware relies on the middleware developers and users. Risk severity is high to critical if vulnerable middleware is used.
+  - Missing Mitigations:
+    - Encourage developers to use only reputable and well-maintained WSGI middleware.
+    - Promote security audits and vulnerability scanning of WSGI middleware used with Flask applications.
+    - Provide guidelines for developers on how to securely integrate and configure WSGI middleware with Flask.
+    - Recommend careful review and testing of WSGI middleware before deployment.
+    - Dependency scanning tools should also check for vulnerabilities in WSGI middleware.
+  - Risk Severity: High/Critical
+
+- Threat: Cross-Site Request Forgery (CSRF)
+  - Description: Flask applications using cookie-based authentication are susceptible to CSRF attacks. If CSRF protection is not implemented, an attacker can trick a user's browser into making unauthorized requests to the Flask application while the user is authenticated. This can lead to actions being performed on behalf of the user without their consent, such as data modification or unauthorized transactions. The `web-security.rst` file explicitly mentions CSRF as a security concern and notes that Flask does not provide built-in CSRF protection. The Flask tutorial application in `blog.rst`, `auth.rst`, and `templates.rst` uses forms and session-based authentication, making it vulnerable to CSRF if not explicitly protected. The `javascript/README.rst` example highlights JavaScript and AJAX interactions, which are common contexts for CSRF attacks.
+  - Impact: High. Unauthorized Actions, Data Manipulation, Potential Account Takeover.
+  - Affected Component: Application logic handling state-changing requests, Session management (cookie-based authentication).
+  - Current Mitigations: Not mitigated by Flask core. Developers are responsible for implementing CSRF protection. Risk severity is high if CSRF protection is not implemented.
+  - Missing Mitigations:
+    - Strongly recommend and document CSRF protection implementation in Flask applications, as highlighted in `web-security.rst`.
+    - Provide guidance and examples on how to implement CSRF protection, potentially using extensions or middleware.
+    - Consider adding built-in CSRF protection to Flask core in future versions.
+    - Security linters or static analysis tools could detect missing CSRF protection in Flask applications.
+  - Risk Severity: High
+
+- Threat: Missing or Misconfigured Security Headers
+  - Description: Flask applications might be missing important security headers or have them misconfigured. Missing security headers like HSTS, CSP, X-Content-Type-Options, and X-Frame-Options, as described in `web-security.rst`, can leave the application vulnerable to various attacks, including MITM attacks, XSS, clickjacking, and content sniffing attacks. Misconfiguring these headers can also weaken security. The `nginx.rst` and `apache-httpd.rst` documentation indirectly relate to this by describing reverse proxy setups where security headers are often configured.
+  - Impact: Medium to High. Increased vulnerability to MITM, XSS, clickjacking, and content sniffing attacks.
+  - Affected Component: Response headers, Web server configuration, Application configuration.
+  - Current Mitigations: Not mitigated by Flask core. Developers are responsible for setting security headers. Risk severity is medium to high if security headers are missing or misconfigured.
+  - Missing Mitigations:
+    - Emphasize the importance of security headers in documentation and security guidelines, as detailed in `web-security.rst`.
+    - Provide clear recommendations and examples for setting secure headers like HSTS, CSP, X-Content-Type-Options, and X-Frame-Options.
+    - Recommend using extensions like `Flask-Talisman` to manage security headers.
+    - Security linters or static analysis tools could detect missing or insecure security header configurations.
+  - Risk Severity: Medium/High
+
+- Threat: Copy/Paste to Terminal Command Injection
+  - Description: If Flask applications display code snippets intended for users to copy and paste into a terminal, and these snippets contain hidden characters like backspace (``\b``), it can lead to command injection vulnerabilities. As described in `web-security.rst`, these hidden characters can be rendered differently in HTML than how they are interpreted by terminals. An attacker could craft malicious code snippets that appear safe in HTML but execute dangerous commands when pasted into a terminal.
+  - Impact: High. Remote Code Execution on user's machine, Potential system compromise.
+  - Affected Component: Code examples displayed in the application, User interface, HTML rendering.
+  - Current Mitigations: Not mitigated by Flask core. Mitigation relies on developers sanitizing code snippets or warning users about copy/pasting untrusted code. Risk severity is high if the application displays code snippets without proper sanitization or warnings.
+  - Missing Mitigations:
+    - Warn developers about the risks of copy/paste to terminal command injection in documentation and security guidelines, as highlighted in `web-security.rst`.
+    - Recommend sanitizing code snippets to remove hidden characters like backspace before displaying them.
+    - Consider displaying warnings to users about the risks of copying and pasting code from untrusted sources.
+    - Implement server-side or client-side sanitization to automatically remove hidden characters from code snippets before display.
+  - Risk Severity: High
+
+- Threat: Insecure File Upload Handling
+  - Description: If file uploads are not handled securely, attackers can exploit vulnerabilities. This includes directory traversal by manipulating filenames (mitigated by `secure_filename` but developers might misuse it), Cross-Site Scripting (XSS) by uploading malicious files (e.g., HTML, SVG, JavaScript) that are then served with incorrect content types, and Denial of Service (DoS) by uploading excessively large files if `MAX_CONTENT_LENGTH` is not set or is too high. The `fileuploads.rst` documentation describes file upload handling and mentions `secure_filename` and `MAX_CONTENT_LENGTH`, highlighting these risks.
+  - Impact: High. File Disclosure (Directory Traversal), Cross-Site Scripting (XSS), Denial of Service (DoS).
+  - Affected Component: File upload handling logic, `secure_filename` function, `send_from_directory`, static file serving, `MAX_CONTENT_LENGTH` configuration.
+  - Current Mitigations: Flask provides `secure_filename` to mitigate directory traversal and `MAX_CONTENT_LENGTH` to limit upload size. However, secure usage depends on developers. Risk severity is high if file uploads are not handled carefully.
+  - Missing Mitigations:
+    - Emphasize secure file upload practices in documentation and security guidelines, especially regarding directory traversal, XSS, and DoS risks, as highlighted in `fileuploads.rst`.
+    - Provide clear examples of secure file upload handling, including input validation, sanitization, content type handling, and setting appropriate size limits.
+    - Recommend using file scanning and antivirus tools for uploaded files.
+    - Security linters or static analysis tools could potentially detect insecure file upload handling patterns.
+  - Risk Severity: High
+
+- Threat: WSGI Server and Reverse Proxy Misconfiguration
+  - Description: Misconfiguring WSGI servers (like Gunicorn, uWSGI, Waitress, Gevent, mod_wsgi) and reverse proxies (like Nginx, Apache httpd) can introduce security vulnerabilities. This includes running WSGI servers as root, exposing WSGI servers directly to the internet without a reverse proxy, bypassing reverse proxy security features by incorrect binding, and misconfiguring reverse proxy headers. Attackers could exploit these misconfigurations to gain unauthorized access, bypass security controls, or cause denial of service. The `deploying/index.rst` and all deployment-related documentation files emphasize the importance of using production-ready WSGI servers and reverse proxies and highlight potential misconfiguration risks. The `deploy.rst` tutorial file recommends using Waitress as a production WSGI server and implicitly highlights the importance of correct WSGI server configuration for security in production. The `tutorial/README.rst` and `examples/tutorial/README.rst` also implicitly highlight the deployment context.
+  - Impact: High to Critical. Server Compromise, Unauthorized Access, Denial of Service, Bypassing Security Controls.
+  - Affected Component: WSGI Server configuration (Gunicorn, uWSGI, Waitress, Gevent, mod_wsgi), Reverse Proxy configuration (Nginx, Apache httpd), Deployment environment.
+  - Current Mitigations: Flask documentation recommends using production-ready WSGI servers and reverse proxies and warns against common misconfigurations. However, secure configuration is the developer's responsibility. Risk severity is high to critical if deployment infrastructure is misconfigured.
+  - Missing Mitigations:
+    - Provide detailed security guidelines for configuring various WSGI servers and reverse proxies with Flask applications, emphasizing secure binding, user permissions, and header configurations.
+    - Recommend using configuration management tools and infrastructure-as-code to ensure consistent and secure deployment configurations.
+    - Security checklists and automated security audits for deployment configurations.
+    - Emphasize the principle of least privilege and secure default configurations for WSGI servers and reverse proxies in documentation.
+  - Risk Severity: High/Critical
+
+- Threat: Insecure Caching Mechanisms
+  - Description: If caching mechanisms (like Flask-Caching) are not implemented and configured securely, they can introduce vulnerabilities. This includes information disclosure by caching sensitive data in shared caches without proper access control, cache poisoning by allowing attackers to inject malicious data into the cache, and denial of service by cache exhaustion or cache stampede. While `caching.rst` mentions Flask-Caching, it doesn't explicitly discuss security implications of caching. The `viewdecorators.rst` documentation shows an example of a caching decorator, highlighting the use of caching and implicitly the need for secure caching implementation.
+  - Impact: Medium to High. Information Disclosure, Cache Poisoning, Denial of Service.
+  - Affected Component: Caching implementation (Flask-Caching or custom), Cache storage, Cache configuration.
+  - Current Mitigations: Flask itself does not provide built-in caching, and mitigations depend on the chosen caching library and developer implementation. Risk severity is medium to high depending on the sensitivity of cached data and the security of the caching mechanism.
+  - Missing Mitigations:
+    - Provide security guidelines for implementing caching in Flask applications, emphasizing secure storage of cached data, cache invalidation strategies, and protection against cache poisoning and DoS attacks.
+    - Recommend using secure caching backends and configuring appropriate access controls for caches.
+    - Security audits of caching implementations and configurations.
+    - Consider providing secure caching utilities or recommendations within Flask or its official extensions.
+  - Risk Severity: Medium/High
+
+- Threat: HTTP Method Override Misuse
+  - Description: Using HTTP method overrides via `X-HTTP-Method-Override` header can introduce security risks if not handled carefully. While intended for compatibility with proxies that don't support all HTTP methods, it can be misused by attackers to bypass security controls or cause unexpected application behavior if the application logic relies on the original HTTP method and doesn't properly account for overrides. For example, an attacker might use POST with `X-HTTP-Method-Override: DELETE` to bypass access controls that only check for DELETE requests but not POST requests with method overrides.
+  - Impact: Medium to High. Authorization Bypass, Unexpected Application Behavior.
+  - Affected Component: WSGI Middleware implementing method override, Application routing and authorization logic.
+  - Current Mitigations: Flask itself doesn't provide built-in method override functionality, it requires custom middleware as shown in `methodoverrides.rst`. Mitigation relies on developers implementing and using method overrides securely and understanding the security implications. Risk severity is medium to high if method overrides are misused or not properly secured.
+  - Missing Mitigations:
+    - Warn developers about the security risks of HTTP method overrides in documentation and security guidelines, especially regarding potential authorization bypasses.
+    - Recommend carefully reviewing and testing application logic that relies on HTTP methods when method overrides are enabled.
+    - Suggest implementing robust authorization checks that consider both the original and overridden HTTP methods.
+    - Consider alternative solutions to HTTP method limitations in proxies if possible, instead of relying on overrides.
+  - Risk Severity: Medium/High
+
+- Threat: Lazy Loading Routing Complexity
+  - Description: Implementing lazy loading of views using `add_url_rule` and custom classes like `LazyView` can increase the complexity of application routing. This complexity can lead to misconfigurations, routing errors, and potential security vulnerabilities if not managed carefully. For example, incorrect import paths in `LazyView` or misconfigured URL rules can lead to unexpected routing behavior or denial of service if routes are not properly loaded.
+  - Impact: Medium. Routing Errors, Denial of Service (if routes fail to load), Potential for misconfiguration leading to unintended access.
+  - Affected Component: Flask routing system, `add_url_rule`, custom `LazyView` implementation, application structure.
+  - Current Mitigations: Flask provides `add_url_rule` for flexible routing, but lazy loading requires custom implementation and careful configuration by developers. Risk severity is medium due to potential for misconfiguration and routing errors.
+  - Missing Mitigations:
+    - Provide clear guidelines and best practices for implementing lazy loading of views securely and correctly in documentation.
+    - Recommend thorough testing of routing configurations when using lazy loading to ensure all routes are loaded and function as expected.
+    - Static analysis tools could potentially detect misconfigurations in lazy loading implementations, such as incorrect import paths or URL rule definitions.
+    - Consider providing built-in support for lazy loading in Flask core to simplify implementation and reduce potential for errors.
+  - Risk Severity: Medium
