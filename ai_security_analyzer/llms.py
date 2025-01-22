@@ -112,6 +112,14 @@ class LLMProvider:
                 documents_context_window=21000,
                 tokenizer_model_name="gpt2",
             ),
+            "deepseek/deepseek-r1": ModelConfig(
+                max_number_of_tools=0,
+                use_system_message=True,
+                documents_chunk_size=55000,
+                documents_chunk_overlap=0,
+                documents_context_window=60000,
+                tokenizer_model_name="gpt2",
+            ),
         }
 
         self._default_model_config = ModelConfig(

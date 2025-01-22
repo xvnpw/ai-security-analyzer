@@ -155,7 +155,7 @@ def parse_arguments() -> AppConfig:
     )
     agent_group.add_argument(
         "--agent-prompt-type",
-        choices=["sec-design", "threat-modeling", "attack-surface", "threat-scenarios", "attack-tree"],
+        choices=["sec-design", "threat-modeling", "attack-surface", "threat-scenarios", "attack-tree", "mitigations"],
         default="sec-design",
         help=(
             "Prompt to use in agent (default: sec-design):\n"
