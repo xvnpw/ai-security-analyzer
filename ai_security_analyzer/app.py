@@ -164,6 +164,7 @@ def parse_arguments() -> AppConfig:
             " - attack-surface: Perform attack surface analysis for the project\n"
             " - threat-scenarios: Perform threat scenarios analysis for the project (not supported in 'github' mode)\n"
             " - attack-tree: Perform attack tree analysis for the project"
+            " - mitigations: Perform mitigation strategies analysis for the project"
         ),
     )
     agent_group.add_argument(

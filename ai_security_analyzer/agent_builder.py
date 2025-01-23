@@ -17,6 +17,7 @@ from ai_security_analyzer.github2as_agents import GithubAgent2As
 from ai_security_analyzer.github2at_agents import GithubAgent2At
 from ai_security_analyzer.github2sd_agents import GithubAgent2Sd
 from ai_security_analyzer.github2tm_agents import GithubAgent2Tm
+from ai_security_analyzer.github2ms_agents import GithubAgent2Ms
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.prompts import GITHUB2_CONFIGS, get_agent_prompt, get_doc_type_prompt
@@ -41,6 +42,7 @@ class AgentBuilder:
             AgentType.GITHUB_DEEP_AS: GithubAgent2As,
             AgentType.GITHUB_DEEP_AT: GithubAgent2At,
             AgentType.GITHUB_DEEP_SD: GithubAgent2Sd,
+            AgentType.GITHUB_DEEP_MS: GithubAgent2Ms,
             AgentType.FILE: FileAgent,
         }
         agent_type = AgentType.create(config)

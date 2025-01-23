@@ -798,12 +798,19 @@ GITHUB2_ATTACK_SURFACE_PROMPTS = [
     "Update key attack surface list and return only elements that directly involve {}. Return high and critical elements only. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.",
 ]
 
+GITHUB2_MITIGATION_STRATEGIES_PROMPTS = [
+    "You are cybersecurity expert, working with development team. Your task is to create mitigation strategies for application that is using {}. Focus on mitigation strategies for threats introduced by {} and omit general, common mitigation strategies. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.",
+    "Create mitigation strategies list with: mitigation strategy, description (describe in details step by step how can developers or users reduce the risk), list of threats mitigated (describe what threats are mitigated and what is their severity), impact (describe the impact of the mitigation strategy - how much risk is reduced for each threat), currently implemented (describe if this mitigation strategy is currently implemented in the project and where), missing implementation (describe where this mitigation strategy is missing in the project). Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.",
+    "Update mitigation strategies list and return only mitigation strategies that directly involve {}. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.",
+]
+
 GITHUB2_PROMPTS: Dict[str, str] = {
     "sec-design": "DESIGN DOCUMENT",
     "threat-modeling": "THREAT MODEL",
     "attack-surface": "THREAT MODEL",
     "threat-scenarios": "THREAT MODEL",
     "attack-tree": "ATTACK TREE",
+    "mitigations": "MITIGATION STRATEGIES",
 }
 
 GITHUB2_THREAT_MODELING_CONFIG = {
@@ -844,11 +851,21 @@ GITHUB2_ATTACK_SURFACE_CONFIG = {
     ],
 }
 
+GITHUB2_MITIGATION_STRATEGIES_CONFIG = {
+    "steps": 3,
+    "step_prompts": [
+        lambda target_repo: GITHUB2_MITIGATION_STRATEGIES_PROMPTS[0].format(target_repo, target_repo.split("/")[-1]),
+        lambda target_repo: GITHUB2_MITIGATION_STRATEGIES_PROMPTS[1].format(target_repo, target_repo.split("/")[-1]),
+        lambda target_repo: GITHUB2_MITIGATION_STRATEGIES_PROMPTS[2].format(target_repo, target_repo.split("/")[-1]),
+    ],
+}
+
 GITHUB2_CONFIGS = {
     "threat-modeling": GITHUB2_THREAT_MODELING_CONFIG,
     "attack-tree": GITHUB2_ATTACK_TREE_CONFIG,
     "sec-design": GITHUB2_SEC_DESIGN_CONFIG,
     "attack-surface": GITHUB2_ATTACK_SURFACE_CONFIG,
+    "mitigations": GITHUB2_MITIGATION_STRATEGIES_CONFIG,
 }
 
 GITHUB2_GET_THREAT_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular threat from threat model for application that is using {}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of threat. Output valid markdown.
@@ -875,6 +892,14 @@ ATTACK TREE PATH:
 {}
 """
 
+GITHUB2_GET_MITIGATION_STRATEGY_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular mitigation strategy from mitigation strategies for application that is using {}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of mitigation strategy. Output valid markdown.
+
+MITIGATION STRATEGY:
+{}
+
+{}
+"""
+
 GITHUB2_SEC_DESIGN_DETAILS_PROMPT = """You are cybersecurity expert, working with development team. Your task is to create deep analysis of security considerations from security design review for application that is using {}.
 
 Instructions for generating the deep analysis:
@@ -894,6 +919,8 @@ GITHUB2_FORMAT_ATTACK_SURFACE_PROMPT = "You are task with formatting attack surf
 GITHUB2_FORMAT_ATTACK_TREE_PROMPT = "You are task with formatting attack tree path analysis. Don't change any text content of attack tree paths only format it to json. Follow instructions carefully:\nATTACK TREE PATH ANALYSIS:\n{}\n{}"
 
 GITHUB2_FORMAT_THREAT_MODEL_PROMPT = "You are task with formatting threat model. Don't change any text content of threats only format it to json. Follow instructions carefully:\nTHREAT MODEL:\n{}\n{}"
+
+GITHUB2_FORMAT_MITIGATION_STRATEGIES_PROMPT = "You are task with formatting mitigation strategies. Don't change any text content of mitigation strategies only format it to json. Follow instructions carefully:\nMITIGATION STRATEGIES:\n{}\n{}"
 
 DIR2_THREAT_MODELING_PROMPTS = """You are cybersecurity expert, working with development team. Your task is to create threat model for application that is using {project_name}. Focus on threats introduced by {project_name} and omit general, common web application threats. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead. Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {project_name} component is affected (describe what component is affected, e.g. module, function, etc.), current mitigations (explain if this threat is already mitigated in design (based on input) or not; how it influence risk severity), missing mitigations (describe what more can developers or users do to reduce the risk), risk severity (critical, high, medium or low). Exclude low severity threats and keep only medium, high and critical threats. I will give you PROJECT FILES and CURRENT THREAT MODEL. When the CURRENT THREAT MODEL is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of PROJECT FILES. In this case, integrate new findings from current PROJECT FILES into the existing CURRENT THREAT MODEL. Ensure consistency and avoid duplication. If the CURRENT THREAT MODEL is empty, proceed to create a new threat model based on the current PROJECT FILES. The PROJECT FILES will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more."""
 
