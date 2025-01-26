@@ -18,6 +18,7 @@ ProviderType = Literal["openai", "openrouter", "anthropic", "google"]
 
 DEFAULT_CONTEXT_WINDOW = 70000
 DEFAULT_CHUNK_SIZE = 60000
+DEFAULT_OPENAI_REASONING_EFFORT = "high"
 
 
 @dataclass(frozen=True)
@@ -28,6 +29,8 @@ class ModelConfig:
     documents_chunk_overlap: int
     documents_context_window: int
     tokenizer_model_name: str
+    supports_structured_output: bool
+    reasoning_effort: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -48,6 +51,9 @@ class ProviderConfig:
     env_key: str
     api_base: Optional[str]
     model_class: Type[BaseChatModel]
+
+
+FIX_TEMPERATURE_MODELS = ["o1", "o1-preview"]
 
 
 class LLMProvider:
@@ -87,6 +93,7 @@ class LLMProvider:
                 documents_chunk_overlap=0,
                 documents_context_window=config.files_context_window or DEFAULT_CONTEXT_WINDOW,
                 tokenizer_model_name="gpt-4o",
+                supports_structured_output=True,
             ),
             "o1-preview": ModelConfig(
                 max_number_of_tools=0,
@@ -95,6 +102,7 @@ class LLMProvider:
                 documents_chunk_overlap=0,
                 documents_context_window=config.files_context_window or DEFAULT_CONTEXT_WINDOW,
                 tokenizer_model_name="gpt-4",
+                supports_structured_output=False,
             ),
             "o1-mini": ModelConfig(
                 max_number_of_tools=0,
@@ -103,22 +111,35 @@ class LLMProvider:
                 documents_chunk_overlap=0,
                 documents_context_window=config.files_context_window or DEFAULT_CONTEXT_WINDOW,
                 tokenizer_model_name="gpt-4",
+                supports_structured_output=False,
             ),
             "gemini-2.0-flash-thinking-exp": ModelConfig(
                 max_number_of_tools=0,
                 use_system_message=True,
-                documents_chunk_size=20000,
+                documents_chunk_size=config.files_chunk_size or 20000,
                 documents_chunk_overlap=0,
-                documents_context_window=21000,
+                documents_context_window=config.files_context_window or 21000,
                 tokenizer_model_name="gpt2",
+                supports_structured_output=False,
             ),
             "deepseek/deepseek-r1": ModelConfig(
                 max_number_of_tools=0,
                 use_system_message=True,
-                documents_chunk_size=55000,
+                documents_chunk_size=config.files_chunk_size or 55000,
                 documents_chunk_overlap=0,
-                documents_context_window=60000,
+                documents_context_window=config.files_context_window or 60000,
                 tokenizer_model_name="gpt2",
+                supports_structured_output=False,
+            ),
+            "o1": ModelConfig(
+                max_number_of_tools=0,
+                use_system_message=False,
+                documents_chunk_size=config.files_chunk_size or 90000,
+                documents_chunk_overlap=0,
+                documents_context_window=config.files_context_window or 100000,
+                tokenizer_model_name="gpt-4",
+                supports_structured_output=False,
+                reasoning_effort=config.reasoning_effort or DEFAULT_OPENAI_REASONING_EFFORT,
             ),
         }
 
@@ -129,6 +150,7 @@ class LLMProvider:
             documents_chunk_overlap=0,
             documents_context_window=config.files_context_window or DEFAULT_CONTEXT_WINDOW,
             tokenizer_model_name="gpt2",
+            supports_structured_output=False,
         )
 
     def _get_llm_instance(self, llm_config: LLMConfig) -> LLM:
@@ -151,6 +173,7 @@ class LLMProvider:
                 "temperature": llm_config.temperature,
                 "model_name": llm_config.model,
                 "openai_api_key": api_key,
+                "reasoning_effort": model_config.reasoning_effort,
             }
             if provider_config.api_base:
                 kwargs["openai_api_base"] = provider_config.api_base
@@ -187,11 +210,16 @@ class LLMProvider:
         )
 
     def create_agent_llm_for_structured_queries(self) -> LLM:
+        if self.config.agent_model in FIX_TEMPERATURE_MODELS:
+            temperature = 1
+        else:
+            temperature = 0
+
         return self._get_llm_instance(
             LLMConfig(
                 provider=self.config.agent_provider,
                 model=self.config.agent_model,
-                temperature=0.0,
+                temperature=temperature,
             )
         )
 

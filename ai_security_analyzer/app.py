@@ -8,6 +8,7 @@ from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.graphs import GraphExecutorFactory
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.checkpointing import CheckpointManager
+from ai_security_analyzer.prompts.prompt_manager import PromptManager
 
 logger = logging.getLogger(__name__)
 
@@ -30,13 +31,12 @@ def parse_arguments() -> AppConfig:
 
     parser.add_argument(
         "mode",
-        choices=["dir", "github", "file", "dir2"],
+        choices=["dir", "github", "file"],
         help=(
             "Operation mode: "
             "'dir' to analyze a local directory (will send all files from directory to LLM), "
             "'github' to analyze a GitHub repository (will use model knowledge base to generate documentation), "
-            "'file' to analyze a single file, "
-            "'dir2' version 2 of dir mode"
+            "'file' to analyze a single file"
         ),
     )
 
@@ -155,14 +155,13 @@ def parse_arguments() -> AppConfig:
     )
     agent_group.add_argument(
         "--agent-prompt-type",
-        choices=["sec-design", "threat-modeling", "attack-surface", "threat-scenarios", "attack-tree", "mitigations"],
+        choices=["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations"],
         default="sec-design",
         help=(
             "Prompt to use in agent (default: sec-design):\n"
             " - sec-design: Generate a security design document for the project\n"
             " - threat-modeling: Perform threat modeling for the project\n"
             " - attack-surface: Perform attack surface analysis for the project\n"
-            " - threat-scenarios: Perform threat scenarios analysis for the project (not supported in 'github' mode)\n"
             " - attack-tree: Perform attack tree analysis for the project"
             " - mitigations: Perform mitigation strategies analysis for the project"
         ),
@@ -170,9 +169,9 @@ def parse_arguments() -> AppConfig:
     agent_group.add_argument(
         "--refinement-count",
         type=int,
-        default=1,
+        default=0,
         help=(
-            "Number of iterations to refine the generated documentation (default: 1). "
+            "Number of iterations to refine the generated documentation (default: 0). "
             "Higher values may produce more detailed and polished output but will increase token usage. "
             "For 'file' mode only"
         ),
@@ -198,7 +197,11 @@ def parse_arguments() -> AppConfig:
         default=35,
         help="Graph recursion limit. Default is 35",
     )
-
+    agent_group.add_argument(
+        "--reasoning-effort",
+        choices=["low", "medium", "high"],
+        help="Reasoning effort for the agent (only for reasoning models, e.g. o1). Default is None",
+    )
     # Editor configuration
     editor_group = parser.add_argument_group("Editor Configuration")
     editor_group.add_argument(
@@ -252,8 +255,6 @@ def parse_arguments() -> AppConfig:
     # Validate target based on mode
     if args.mode == "dir" and not os.path.isdir(args.target):
         parser.error("In 'dir' mode, target must be a valid directory path")
-    elif args.mode == "dir2" and not os.path.isdir(args.target):
-        parser.error("In 'dir2' mode, target must be a valid directory path")
     elif args.mode == "file" and not os.path.isfile(args.target):
         parser.error("In 'file' mode, target must be a valid file path")
     elif args.mode == "github" and not args.target.startswith("https://github.com/"):
@@ -265,12 +266,8 @@ def parse_arguments() -> AppConfig:
     if args.deep_analysis and args.mode != "github":
         parser.error("--deep-analysis is only available in 'github' mode")
 
-    if args.dry_run and args.mode not in ("dir", "dir2"):
-        parser.error("--dry-run is only available in 'dir/dir2' mode")
-
-    # Validate prompt type for github mode
-    if args.mode == "github" and args.agent_prompt_type == "threat-scenarios":
-        parser.error("'threat-scenarios' prompt type is not supported in 'github' mode")
+    if args.dry_run and args.mode not in ("dir"):
+        parser.error("--dry-run is only available in 'dir' mode")
 
     config = AppConfig(**vars(args))
     return config
@@ -303,7 +300,8 @@ def app(config: AppConfig) -> None:
     with CheckpointManager(config) as checkpoint_manager:
         checkpoint_manager.check_resume()
 
-        agent_builder = AgentBuilder(llm_provider, checkpoint_manager, config)
+        prompt_manager = PromptManager()
+        agent_builder = AgentBuilder(llm_provider, checkpoint_manager, config, prompt_manager)
         agent = agent_builder.build()
         graph = agent.build_graph()
 

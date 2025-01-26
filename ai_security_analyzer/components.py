@@ -27,3 +27,9 @@ class MarkdownValidationMixin:
     def __init__(self, markdown_validator: MarkdownMermaidValidator, max_editor_turns_count: int):
         self.markdown_validator = markdown_validator
         self.max_editor_turns_count = max_editor_turns_count
+
+
+class DeepAnalysisMixin:
+    def __init__(self, deep_analysis_prompt_template: str, format_prompt_template: str):
+        self.deep_analysis_prompt_template = deep_analysis_prompt_template
+        self.format_prompt_template = format_prompt_template

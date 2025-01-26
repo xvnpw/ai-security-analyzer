@@ -1,0 +1,7 @@
+templates:
+  - text: |
+      You are cybersecurity expert, working with development team. Your task is to create mitigation strategies for application that is using {target_repo}. Focus on mitigation strategies for threats introduced by {repo_name} and omit general, common mitigation strategies. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.
+  - text: |
+      Create mitigation strategies list with: mitigation strategy, description (describe in details step by step how can developers or users reduce the risk), list of threats mitigated (describe what threats are mitigated and what is their severity), impact (describe the impact of the mitigation strategy - how much risk is reduced for each threat), currently implemented (describe if this mitigation strategy is currently implemented in the project and where), missing implementation (describe where this mitigation strategy is missing in the project). Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.
+  - text: |
+      Update mitigation strategies list and return only mitigation strategies that directly involve {repo_name}. Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.

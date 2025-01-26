@@ -9,11 +9,15 @@ DOMPURIFY_ERROR = "DOMPurify.sanitize is not a function"
 
 
 class MarkdownMermaidValidator:
-    def __init__(self, node_path: str, validate_script_path: str = "validateMermaid.js"):
+    def __init__(self, node_path: Optional[str], validate_script_path: str = "validateMermaid.js"):
         self.node_path = node_path
         self.validate_script_path = validate_script_path
 
     def validate_content(self, doc_content: str) -> Tuple[bool, Optional[str]]:
+        if not self.node_path:
+            logger.warning("Node.js binary not found. Skipping Mermaid validation.")
+            return True, None
+
         try:
             mermaids = self.extract_mermaid_blocks(doc_content)
             if not mermaids:
@@ -52,6 +56,9 @@ class MarkdownMermaidValidator:
 
     def validate_mermaid_diagram(self, mermaid_code: str) -> Tuple[bool, Optional[str]]:
         try:
+            if not self.node_path:
+                raise ValueError("Node path is not set")
+
             result = subprocess.run(
                 [self.node_path, self.validate_script_path, mermaid_code],
                 capture_output=True,

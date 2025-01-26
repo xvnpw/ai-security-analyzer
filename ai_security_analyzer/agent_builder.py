@@ -5,13 +5,12 @@ import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
 
 from ai_security_analyzer.base_agent import AgentType, BaseAgent
-from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin
+from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin, DeepAnalysisMixin
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
 from ai_security_analyzer.file_agents import FileAgent
 from ai_security_analyzer.full_dir_scan_agents import FullDirScanAgent
-from ai_security_analyzer.full_dir_scan2_agents import FullDirScanAgent2
 from ai_security_analyzer.github2_agents import GithubAgent2
 from ai_security_analyzer.github2as_agents import GithubAgent2As
 from ai_security_analyzer.github2at_agents import GithubAgent2At
@@ -20,23 +19,28 @@ from ai_security_analyzer.github2tm_agents import GithubAgent2Tm
 from ai_security_analyzer.github2ms_agents import GithubAgent2Ms
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
-from ai_security_analyzer.prompts import GITHUB2_CONFIGS, get_agent_prompt, get_doc_type_prompt
 from ai_security_analyzer.checkpointing import CheckpointManager
+from ai_security_analyzer.prompts.prompt_manager import PromptManager
 
 logger = logging.getLogger(__name__)
 
 
 class AgentBuilder:
-    def __init__(self, llm_provider: LLMProvider, checkpoint_manager: CheckpointManager, config: AppConfig) -> None:
+    def __init__(
+        self,
+        llm_provider: LLMProvider,
+        checkpoint_manager: CheckpointManager,
+        config: AppConfig,
+        prompt_manager: PromptManager,
+    ) -> None:
         self.llm_provider = llm_provider
         self.checkpoint_manager = checkpoint_manager
         self.config = config
+        self.prompt_manager = prompt_manager
 
         self._agents: dict[AgentType, Type[BaseAgent]] = {
             AgentType.DIR: FullDirScanAgent,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanAgent,
-            AgentType.DIR2: FullDirScanAgent2,
-            AgentType.DRY_RUN_DIR2: DryRunFullDirScanAgent,
             AgentType.GITHUB: GithubAgent2,
             AgentType.GITHUB_DEEP_TM: GithubAgent2Tm,
             AgentType.GITHUB_DEEP_AS: GithubAgent2As,
@@ -48,7 +52,6 @@ class AgentBuilder:
         agent_type = AgentType.create(config)
 
         self._agent_type = agent_type
-        self.agent_prompt_type = config.agent_prompt_type
 
     def build(self) -> BaseAgent:
         agent_class = self._agents.get(self._agent_type)
@@ -73,13 +76,17 @@ class AgentBuilder:
             doc_processor = DocumentProcessor(tokenizer)
             doc_filter = DocumentFilter()
 
-            agent_prompt = get_agent_prompt(self.agent_prompt_type, self.config.mode)
+            agent_prompt = self.prompt_manager.get_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
             if not agent_prompt:
-                raise ValueError(f"No agent prompt for type: {self.agent_prompt_type}")
+                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
 
-            doc_type_prompt = get_doc_type_prompt(self.agent_prompt_type, self.config.mode)
+            doc_type_prompt = self.prompt_manager.get_doc_type_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
             if not doc_type_prompt:
-                raise ValueError(f"No update prompt for type: {self.agent_prompt_type}")
+                raise ValueError(f"No update prompt for type: {self.config.agent_prompt_type}")
             return agent_class(  # type: ignore[call-arg]
                 llm_provider=self.llm_provider,
                 text_splitter=text_splitter,
@@ -95,13 +102,17 @@ class AgentBuilder:
         elif issubclass(agent_class, MarkdownValidationMixin):
             # Agents that need markdown validation
             markdown_validator = MarkdownMermaidValidator(self.config.node_path)
-            agent_prompt = get_agent_prompt(self.agent_prompt_type, self.config.mode)
+            agent_prompt = self.prompt_manager.get_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
             if not agent_prompt:
-                raise ValueError(f"No agent prompt for type: {self.agent_prompt_type}")
+                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
 
-            doc_type_prompt = get_doc_type_prompt(self.agent_prompt_type, self.config.mode)
+            doc_type_prompt = self.prompt_manager.get_doc_type_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
             if not doc_type_prompt:
-                raise ValueError(f"No update prompt for type: {self.agent_prompt_type}")
+                raise ValueError(f"No update prompt for type: {self.config.agent_prompt_type}")
             return agent_class(  # type: ignore[call-arg]
                 llm_provider=self.llm_provider,
                 markdown_validator=markdown_validator,
@@ -110,7 +121,38 @@ class AgentBuilder:
                 doc_type_prompt=doc_type_prompt,
                 checkpoint_manager=self.checkpoint_manager,
             )
+        elif issubclass(agent_class, DeepAnalysisMixin):
+            agent_prompt = self.prompt_manager.get_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
+            if not agent_prompt:
+                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
+
+            deep_analysis_prompt = self.prompt_manager.get_deep_analysis_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
+            if not deep_analysis_prompt:
+                raise ValueError(f"No deep analysis prompt for type: {self.config.agent_prompt_type}")
+
+            format_prompt = self.prompt_manager.get_format_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
+            if not format_prompt:
+                raise ValueError(f"No format prompt for type: {self.config.agent_prompt_type}")
+
+            return agent_class(  # type: ignore[call-arg]
+                llm_provider=self.llm_provider,
+                step_prompts=agent_prompt,
+                deep_analysis_prompt_template=deep_analysis_prompt,
+                format_prompt_template=format_prompt,
+                checkpoint_manager=self.checkpoint_manager,
+            )
         else:
             # Agents that only need llm_provider
-            config = GITHUB2_CONFIGS[self.config.agent_prompt_type]
-            return agent_class(llm_provider=self.llm_provider, step_prompts=config["step_prompts"], checkpoint_manager=self.checkpoint_manager)  # type: ignore[call-arg]
+            agent_prompt = self.prompt_manager.get_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
+            if not agent_prompt:
+                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
+
+            return agent_class(llm_provider=self.llm_provider, step_prompts=agent_prompt, checkpoint_manager=self.checkpoint_manager)  # type: ignore[call-arg]

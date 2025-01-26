@@ -19,6 +19,7 @@ class AppConfigTest:
     editor_provider: str = "anthropic"
     editor_model: str = "claude-v1"
     editor_temperature: float = 0.4
+    reasoning_effort: str = "low"
 
 
 def test_create_agent_llm_success():

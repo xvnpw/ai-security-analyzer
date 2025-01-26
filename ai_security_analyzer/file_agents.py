@@ -55,14 +55,14 @@ class FileAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMixin):
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
         max_editor_turns_count: int,
-        agent_prompt: str,
+        agent_prompt: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
     ):
         BaseAgent.__init__(self, llm_provider, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
         MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
-        self.agent_prompt = agent_prompt
+        self.agent_prompt = agent_prompt[0]
         self.doc_type_prompt = doc_type_prompt
 
     def _load_file(self, state: AgentState):  # type: ignore[no-untyped-def]

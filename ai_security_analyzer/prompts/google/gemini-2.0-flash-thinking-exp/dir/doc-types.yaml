@@ -1,0 +1,6 @@
+doc-types:
+  sec-design: "DESIGN DOCUMENT"
+  threat-modeling: "THREAT MODEL"
+  attack-surface: "ATTACK SURFACE ANALYSIS"
+  attack-tree: "ATTACK TREE"
+  mitigations: "MITIGATION STRATEGIES"

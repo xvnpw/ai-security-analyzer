@@ -1,0 +1,7 @@
+templates:
+  - text: |
+      You are cybersecurity expert, working with development team. Your task is to create attack surface analysis for application that is using {target_repo}. Focus on attack surface introduced by {repo_name} and omit general, common attack surface. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.
+  - text: |
+      Create key attack surface list with: description, how {repo_name} contributes to the attack surface, example, impact, risk severity (critical, high, medium or low), and mitigation strategies (describe how can developers or users reduce the risk). Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.
+  - text: |
+      Update key attack surface list and return only elements that directly involve {repo_name}. Return high and critical elements only. Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.

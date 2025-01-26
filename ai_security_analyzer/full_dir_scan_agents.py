@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_text_splitters import CharacterTextSplitter
-from langgraph.graph import START, StateGraph
+from langgraph.graph import START, StateGraph, END
 from langgraph.graph.state import CompiledStateGraph
 from tiktoken import Encoding
 
@@ -17,7 +17,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.loaders import RepoDirectoryLoader
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
-from ai_security_analyzer.utils import get_response_content, get_total_tokens
+from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin
 
@@ -28,6 +28,7 @@ class GraphNodeType(Enum):
     UPDATE_DRAFT = "update_draft_with_new_docs"
     MARKDOWN_VALIDATOR = "markdown_validator"
     EDITOR = "editor"
+    FINAL_RESPONSE = "final_response"
 
 
 MESSAGE_TYPE = Literal["create", "update"]
@@ -62,14 +63,14 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
         max_editor_turns_count: int,
-        agent_prompt: str,
+        agent_prompt: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
     ):
         BaseAgent.__init__(self, llm_provider, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
         MarkdownValidationMixin.__init__(self, markdown_validator, max_editor_turns_count)
-        self.agent_prompt = agent_prompt
+        self.agent_prompt = agent_prompt[0]
         self.doc_type_prompt = doc_type_prompt
 
     def _load_files(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -208,7 +209,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
             logger.debug(f"Markdown validation error: {error}")
             return {"sec_repo_doc_validation_error": error}
 
-    def _markdown_error_condition(self, state: AgentState) -> Literal["editor", "__end__"]:
+    def _markdown_error_condition(self, state: AgentState) -> Literal["editor", "final_response"]:
         sec_repo_doc_validation_error = state.get("sec_repo_doc_validation_error", "")
         editor_turns_count = state.get("editor_turns_count", 0)
         if sec_repo_doc_validation_error and editor_turns_count < self.max_editor_turns_count:
@@ -217,7 +218,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
             )
             return GraphNodeType.EDITOR.value
         else:
-            return "__end__"
+            return GraphNodeType.FINAL_RESPONSE.value
 
     def _editor(self, state: AgentState, llm: BaseChatModel, use_system_message: bool):  # type: ignore[no-untyped-def]
         logger.info("Fixing markdown broken formatting")
@@ -245,6 +246,14 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
             "editor_turns_count": state.get("editor_turns_count", 0) + 1,
             "document_tokens": document_tokens,
         }
+
+    def _final_response(self, state: AgentState):  # type: ignore[no-untyped-def]
+        logger.info("Generating final response")
+        sec_repo_doc = state["sec_repo_doc"]
+
+        sec_repo_doc = clean_markdown(sec_repo_doc)
+
+        return {"sec_repo_doc": sec_repo_doc}
 
     def build_graph(self) -> CompiledStateGraph:
         logger.debug(f"[{FullDirScanAgent.__name__}] building graph...")
@@ -279,11 +288,14 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
         def markdown_validator(state: AgentState):  # type: ignore[no-untyped-def]
             return self._markdown_validator(state)
 
-        def markdown_error_condition(state: AgentState) -> Literal["editor", "__end__"]:
+        def markdown_error_condition(state: AgentState) -> Literal["editor", "final_response"]:
             return self._markdown_error_condition(state)
 
         def editor(state: AgentState):  # type: ignore[no-untyped-def]
             return self._editor(state, editor_llm.llm, editor_llm.model_config.use_system_message)
+
+        def final_response(state: AgentState):  # type: ignore[no-untyped-def]
+            return self._final_response(state)
 
         builder = StateGraph(AgentState)
         builder.add_node("load_files", load_files)
@@ -293,6 +305,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
         builder.add_node(GraphNodeType.UPDATE_DRAFT.value, update_draft_with_new_docs)
         builder.add_node(GraphNodeType.MARKDOWN_VALIDATOR.value, markdown_validator)
         builder.add_node(GraphNodeType.EDITOR.value, editor)
+        builder.add_node(GraphNodeType.FINAL_RESPONSE.value, final_response)
         builder.add_edge(START, "load_files")
         builder.add_edge("load_files", "sort_filter_docs")
         builder.add_edge("sort_filter_docs", "split_docs_to_window")
@@ -301,6 +314,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin, MarkdownValidationMix
         builder.add_conditional_edges(GraphNodeType.UPDATE_DRAFT.value, update_draft_condition)
         builder.add_conditional_edges(GraphNodeType.MARKDOWN_VALIDATOR.value, markdown_error_condition)
         builder.add_edge(GraphNodeType.EDITOR.value, GraphNodeType.MARKDOWN_VALIDATOR.value)
+        builder.add_edge(GraphNodeType.FINAL_RESPONSE.value, END)
         graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
         return graph
