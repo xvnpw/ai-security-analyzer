@@ -243,6 +243,7 @@ The application accepts various command-line arguments to tailor its behavior.
   - `threat-modeling`: Perform threat modeling for the project.
   - `attack-surface`: Perform attack surface analysis for the project.
   - `attack-tree`: Perform attack tree analysis for the project.
+  - `mitigations`: Perform mitigation strategies analysis for the project.
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis.
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
 - `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `1`).
