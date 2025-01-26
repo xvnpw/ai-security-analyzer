@@ -13,6 +13,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.checkpointing import CheckpointManager
+from typing import List
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +28,7 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
         markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
-        agent_prompt: str,
+        agent_prompt: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
     ):

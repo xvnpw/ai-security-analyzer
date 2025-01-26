@@ -1,0 +1,41 @@
+templates:
+  threat-modeling: |-
+    You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular threat from threat model for application that is using {target_repo}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of threat. Output valid markdown.
+
+    THREAT:
+    {title}
+
+    {text}
+  attack-surface: |-
+    You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack surface from attack surface analysis for application that is using {target_repo}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of attack surface. Output valid markdown.
+
+    ATTACK SURFACE:
+    {title}
+
+    {text}
+  attack-tree: |-
+    You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular attack tree path from attack tree analysis for application that is using {target_repo}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of attack tree path. Output valid markdown.
+
+    ATTACK TREE PATH:
+    {title}
+
+    {text}
+  mitigations: |-
+    You are cybersecurity expert, working with development team. Your task is to create deep analysis of particular mitigation strategy from mitigation strategies for application that is using {target_repo}. Start with Define Objective of deep analysis, Scope and Methodology. Then continue with deep analysis of mitigation strategy. Output valid markdown.
+
+    MITIGATION STRATEGY:
+    {title}
+
+    {text}
+  sec-design: |-
+    You are cybersecurity expert, working with development team. Your task is to create deep analysis of security considerations from security design review for application that is using {target_repo}.
+
+    Instructions for generating the deep analysis:
+    1. Define Objective of deep analysis, Scope and Methodology. Objective should include thorough security analysis of key components of the {repo_name}.
+    2. Break down the security implications of each key component outlined in the security design review.
+    3. Focus on inferring the architecture, components, and data flow based on the codebase and available documentation.
+    4. Given security considerations should be tailored to the type of project being analyzed. Do not give general security recommendations, give specific recommendations for the project.
+    5. Provide actionable and tailored to {repo_name} mitigation strategies applicable to the identified threats.
+
+    SECURITY DESIGN REVIEW:
+    {text}

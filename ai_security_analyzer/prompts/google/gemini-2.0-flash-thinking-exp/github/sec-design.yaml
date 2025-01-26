@@ -1,0 +1,5 @@
+templates:
+  - text: |
+      You are an expert in software, cloud and cybersecurity architecture. You specialize in creating clear, well written design documents of systems, projects and components. Provide a well written, detailed project design document that will be use later for threat modelling for project: {target_repo}. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts; don't use style, linkStyle, etc.).
+  - text: |
+      Improve it. Return improved version. Use valid markdown formatting. Use valid mermaid syntax (especially add quotes around nodes names in flowcharts; don't use style, linkStyle, etc.).

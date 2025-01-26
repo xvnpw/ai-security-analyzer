@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from typing import Any, List, Literal, Callable
+from typing import Any, List, Literal
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import START, StateGraph
@@ -31,12 +31,10 @@ class GithubAgent2(BaseAgent):
     """GithubAgent2 is a class that is used to generate security documentation based on model knowledge about specific GitHub repository.
 
     It was built to be used with Google's Gemini 2.0 Flask Thinking Experimental Mode.
-    Experimental model is working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
+    Experimental model is not working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
     """
 
-    def __init__(
-        self, llm_provider: LLMProvider, step_prompts: List[Callable[[str], str]], checkpoint_manager: CheckpointManager
-    ):
+    def __init__(self, llm_provider: LLMProvider, step_prompts: List[str], checkpoint_manager: CheckpointManager):
         super().__init__(llm_provider, checkpoint_manager)
         self.step_prompts = step_prompts
         self.step_count = len(step_prompts)
@@ -45,10 +43,11 @@ class GithubAgent2(BaseAgent):
         logger.info(f"Internal step {state.get('step_index', 0)+1} of {self.step_count}")
         try:
             target_repo = state["target_repo"]
+            repo_name = target_repo.split("/")[-1]
             step_index = state.get("step_index", 0)
             step_prompts = self.step_prompts
 
-            step_prompt = step_prompts[step_index](target_repo)
+            step_prompt = step_prompts[step_index].format(target_repo=target_repo, repo_name=repo_name)
 
             step_msg = HumanMessage(content=step_prompt)
 

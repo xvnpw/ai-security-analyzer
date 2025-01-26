@@ -1,13 +1,13 @@
 import logging
+import os
 from abc import ABC, abstractmethod
 from typing import Any, Final, List, Type
-import os
 
-from langgraph.graph.state import CompiledStateGraph
+from ai_security_analyzer.base_agent import AgentType
 from ai_security_analyzer.config import AppConfig
 from langchain_core.documents import Document
-from ai_security_analyzer.base_agent import AgentType
 from langchain_core.runnables.config import RunnableConfig
+from langgraph.graph.state import CompiledStateGraph
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,6 @@ class BaseGraphExecutor(ABC):
 
 
 class FullDirScanGraphExecutor(BaseGraphExecutor):
-
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
             runnable_config = self.get_runnable_config(target)
@@ -67,7 +66,6 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
 
 
 class DryRunFullDirScanGraphExecutor(FullDirScanGraphExecutor):
-
     def _format_docs(self, documents: List[Document]) -> str:
         formatted_docs = []
         for doc in documents:
@@ -89,7 +87,6 @@ List of chunked files to analyze:
 
 
 class GithubGraphExecutor(FullDirScanGraphExecutor):
-
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
             runnable_config = self.get_runnable_config(target)
@@ -116,7 +113,11 @@ class GithubGraphExecutor(FullDirScanGraphExecutor):
         self.config.output_file.write(output_content)
 
 
-class GithubDeepTmGraphExecutor(GithubGraphExecutor):
+class GithubDeepGraphExecutor(GithubGraphExecutor):
+    output_subdir_name: str = ""
+    output_state_key: str = ""
+    output_filename_attr: str = "filename"
+    output_content_attr: str = "detail_analysis"
 
     def _write_output(self, state: dict[str, Any] | Any) -> None:
         actual_token_count = state.get("document_tokens", 0)
@@ -127,116 +128,63 @@ class GithubDeepTmGraphExecutor(GithubGraphExecutor):
             output_content = f"{self.config.agent_preamble}\n\n{output_content}"
 
         self.config.output_file.write(output_content)
+
+        self._write_additional_output(state)
+
+    def _write_additional_output(self, state: dict[str, Any] | Any) -> None:
+        if not self.output_subdir_name or not self.output_state_key:
+            return
 
         output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
-        threats_dir = os.path.join(output_dir, "threats")
+        subdir_path = os.path.join(output_dir, self.output_subdir_name)
 
-        os.makedirs(threats_dir, exist_ok=True)
+        os.makedirs(subdir_path, exist_ok=True)
 
-        threats = state.get("output_threats", [])
-        for threat in threats:
-            threat_path = os.path.join(threats_dir, f"{threat.filename}.md")
-            with open(threat_path, "w") as f:
-                f.write(threat.detail_analysis)
+        items = state.get(self.output_state_key, [])
+        for item in items:
+            filename = getattr(item, self.output_filename_attr, "output")
+            content = getattr(item, self.output_content_attr, "")
 
-
-class GithubDeepAsGraphExecutor(GithubGraphExecutor):
-
-    def _write_output(self, state: dict[str, Any] | Any) -> None:
-        actual_token_count = state.get("document_tokens", 0)
-        logger.info(f"Actual token usage: {actual_token_count}")
-        output_content = state.get("sec_repo_doc", "")
-
-        if self.config.agent_preamble_enabled:
-            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
-
-        self.config.output_file.write(output_content)
-
-        output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
-        attack_surfaces_dir = os.path.join(output_dir, "attack_surfaces")
-
-        os.makedirs(attack_surfaces_dir, exist_ok=True)
-
-        attack_surfaces = state.get("output_attack_surfaces", [])
-        for attack_surface in attack_surfaces:
-            attack_surface_path = os.path.join(attack_surfaces_dir, f"{attack_surface.filename}.md")
-            with open(attack_surface_path, "w") as f:
-                f.write(attack_surface.detail_analysis)
+            item_path = os.path.join(subdir_path, f"{filename}.md")
+            with open(item_path, "w") as f:
+                f.write(content)
 
 
-class GithubDeepAtGraphExecutor(GithubGraphExecutor):
-
-    def _write_output(self, state: dict[str, Any] | Any) -> None:
-        actual_token_count = state.get("document_tokens", 0)
-        logger.info(f"Actual token usage: {actual_token_count}")
-        output_content = state.get("sec_repo_doc", "")
-
-        if self.config.agent_preamble_enabled:
-            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
-
-        self.config.output_file.write(output_content)
-
-        output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
-        attack_tree_paths_dir = os.path.join(output_dir, "attack_tree_paths")
-
-        os.makedirs(attack_tree_paths_dir, exist_ok=True)
-
-        attack_tree_paths = state.get("output_attack_tree_paths", [])
-        for attack_tree_path in attack_tree_paths:
-            attack_tree_path_path = os.path.join(attack_tree_paths_dir, f"{attack_tree_path.filename}.md")
-            with open(attack_tree_path_path, "w") as f:
-                f.write(attack_tree_path.detail_analysis)
+class GithubDeepTmGraphExecutor(GithubDeepGraphExecutor):
+    output_subdir_name = "threats"
+    output_state_key = "output_threats"
 
 
-class GithubDeepSdGraphExecutor(GithubGraphExecutor):
+class GithubDeepAsGraphExecutor(GithubDeepGraphExecutor):
+    output_subdir_name = "attack_surfaces"
+    output_state_key = "output_attack_surfaces"
 
-    def _write_output(self, state: dict[str, Any] | Any) -> None:
-        actual_token_count = state.get("document_tokens", 0)
-        logger.info(f"Actual token usage: {actual_token_count}")
-        output_content = state.get("sec_repo_doc", "")
 
-        if self.config.agent_preamble_enabled:
-            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+class GithubDeepAtGraphExecutor(GithubDeepGraphExecutor):
+    output_subdir_name = "attack_tree_paths"
+    output_state_key = "output_attack_tree_paths"
 
-        self.config.output_file.write(output_content)
 
-        sec_design_details_path = self._create_sec_design_details_path()
+class GithubDeepMsGraphExecutor(GithubDeepGraphExecutor):
+    output_subdir_name = "mitigation_strategies"
+    output_state_key = "output_mitigation_strategies"
 
+
+class GithubDeepSdGraphExecutor(GithubDeepGraphExecutor):
+    def _write_additional_output(self, state: dict[str, Any] | Any) -> None:
         sec_design_details = state.get("sec_design_details", "")
+
+        if not sec_design_details:
+            return
+
+        output_base = os.path.splitext(self.config.output_file.name)[0]
+        sec_design_details_path = f"{output_base}-deep-analysis.md"
+
         with open(sec_design_details_path, "w") as f:
             f.write(sec_design_details)
 
-    def _create_sec_design_details_path(self) -> str:
-        output_base = os.path.splitext(self.config.output_file.name)[0]
-        return f"{output_base}-deep-analysis.md"
-
-
-class GithubDeepMsGraphExecutor(GithubGraphExecutor):
-
-    def _write_output(self, state: dict[str, Any] | Any) -> None:
-        actual_token_count = state.get("document_tokens", 0)
-        logger.info(f"Actual token usage: {actual_token_count}")
-        output_content = state.get("sec_repo_doc", "")
-
-        if self.config.agent_preamble_enabled:
-            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
-
-        self.config.output_file.write(output_content)
-
-        output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
-        mitigation_strategies_dir = os.path.join(output_dir, "mitigation_strategies")
-
-        os.makedirs(mitigation_strategies_dir, exist_ok=True)
-
-        mitigation_strategies = state.get("output_mitigation_strategies", [])
-        for mitigation_strategy in mitigation_strategies:
-            mitigation_strategy_path = os.path.join(mitigation_strategies_dir, f"{mitigation_strategy.filename}.md")
-            with open(mitigation_strategy_path, "w") as f:
-                f.write(mitigation_strategy.detail_analysis)
-
 
 class FileGraphExecutor(FullDirScanGraphExecutor):
-
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
             runnable_config = self.get_runnable_config(target)
@@ -262,8 +210,6 @@ class GraphExecutorFactory:
         executors: dict[AgentType, Type[BaseGraphExecutor]] = {
             AgentType.DIR: FullDirScanGraphExecutor,
             AgentType.DRY_RUN_DIR: DryRunFullDirScanGraphExecutor,
-            AgentType.DIR2: FullDirScanGraphExecutor,
-            AgentType.DRY_RUN_DIR2: DryRunFullDirScanGraphExecutor,
             AgentType.GITHUB: GithubGraphExecutor,
             AgentType.FILE: FileGraphExecutor,
             AgentType.GITHUB_DEEP_TM: GithubDeepTmGraphExecutor,

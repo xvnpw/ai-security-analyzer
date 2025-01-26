@@ -1,34 +1,35 @@
 import logging
-from dataclasses import dataclass
-from typing import Any, Callable, List, Literal, Annotated
+from typing import List, Literal, Annotated, Any
 
-from langchain_core.messages import HumanMessage
-from langgraph.graph import START, MessagesState, StateGraph
-from langgraph.graph.state import CompiledStateGraph
 from pydantic import BaseModel, Field
+from langchain_core.messages import HumanMessage
 
-from ai_security_analyzer.base_agent import BaseAgent
-from ai_security_analyzer.checkpointing import CheckpointManager
+from ai_security_analyzer.github2_deep_base_agents import (
+    BaseGithubDeepAnalysisAgent,
+    BaseDeepAnalysisState,
+)
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename, clean_markdown
-from langchain_core.output_parsers import PydanticOutputParser
+from ai_security_analyzer.checkpointing import CheckpointManager
+from ai_security_analyzer.utils import (
+    clean_markdown,
+    get_response_content,
+    get_total_tokens,
+    format_filename,
+)
+from langgraph.graph import StateGraph
 from operator import add
-
-
-from ai_security_analyzer.prompts import GITHUB2_FORMAT_ATTACK_SURFACE_PROMPT, GITHUB2_GET_ATTACK_SURFACE_DETAILS_PROMPT
+from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
 
 class AttackSurface(BaseModel):
     title: str = Field(description="Title of the attack surface.")
-    text: str = Field(description="Correctly formatted markdown text content of the attack surface.")
+    text: str = Field(description="Markdown text content of the attack surface.")
 
 
 class AttackSurfaceAnalysis(BaseModel):
-    attack_surfaces: List[AttackSurface] = Field(
-        description="List of attack surfaces.",
-    )
+    attack_surfaces: List[AttackSurface] = Field(description="List of attack surfaces.")
 
 
 class OutputAttackSurface(BaseModel):
@@ -38,225 +39,94 @@ class OutputAttackSurface(BaseModel):
 
 
 @dataclass
-class AgentState(MessagesState):
-    target_repo: str
-    sec_repo_doc: str
-    document_tokens: int
-    step0: str
-    step1: str
-    step2: str
-    step3: str
-    step_index: int
-    output_attack_surfaces: Annotated[list[OutputAttackSurface], add]
+class AgentState(BaseDeepAnalysisState):
+    attack_surfaces: List[AttackSurface]
     attack_surfaces_index: int
     attack_surfaces_count: int
-    attack_surfaces: List[AttackSurface]
+    output_attack_surfaces: Annotated[List[OutputAttackSurface], add]
 
 
-class GithubAgent2As(BaseAgent):
-    """GithubAgent2As is a class that is used to generate deep analysis of attack surface based on model knowledge about specific GitHub repository.
-
-    It was built to be used with Google's Gemini 2.0 Flask Thinking Experimental Mode.
-    Experimental model is working well with markdown and mermaid syntax, that's why cannot use GithubAgent class.
+class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalysis]):
+    """
+    Performs deep analysis of "attack surfaces" for a GitHub repo.
+    Inherits the repeated logic from BaseGithubDeepAnalysisAgent.
     """
 
     def __init__(
         self,
         llm_provider: LLMProvider,
-        step_prompts: List[Callable[[str], str]],
+        step_prompts: List[str],
+        deep_analysis_prompt_template: str,
+        format_prompt_template: str,
         checkpoint_manager: CheckpointManager,
     ):
-        super().__init__(llm_provider, checkpoint_manager)
-        self.step_prompts = step_prompts
-        self.step_count = len(step_prompts)
-
-    def _internal_step(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info(f"Internal step {state.get('step_index', 0)+1} of {self.step_count}")
-        try:
-            target_repo = state["target_repo"]
-            step_index = state.get("step_index", 0)
-            step_prompts = self.step_prompts
-
-            step_prompt = step_prompts[step_index](target_repo)
-
-            step_msg = HumanMessage(content=step_prompt)
-
-            response = llm.invoke(state["messages"] + [step_msg])
-            document_tokens = get_total_tokens(response)
-            return {
-                "messages": state["messages"] + [step_msg, response],
-                "document_tokens": state.get("document_tokens", 0) + document_tokens,
-                "step_index": step_index + 1,
-                f"step{step_index}": get_response_content(response),
-            }
-        except Exception as e:
-            logger.error(f"Error on internal step {state['step_index']+1} of {self.step_count}: {e}")
-            raise ValueError(str(e))
-
-    def _internal_step_condition(self, state: AgentState) -> Literal["internal_step", "final_response"]:
-        current_step_index = state["step_index"]
-        step_count = self.step_count
-
-        if current_step_index < step_count:
-            return "internal_step"
-        else:
-            return "final_response"
-
-    def _final_response(self, state: AgentState):  # type: ignore[no-untyped-def]
-        logger.info("Getting intermediate response")
-        try:
-            messages = state["messages"]
-            last_message = messages[-1]
-            final_response = get_response_content(last_message)
-            final_response = clean_markdown(final_response)
-
-            return {
-                "sec_repo_doc": final_response,
-            }
-        except Exception as e:
-            logger.error(f"Error on getting final response: {e}")
-            raise ValueError(str(e))
-
-    def _structured_attack_surface(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info("Getting structured attack surface analysis")
-        try:
-            sec_repo_doc = state["sec_repo_doc"]
-
-            parser = PydanticOutputParser(pydantic_object=AttackSurfaceAnalysis)
-
-            format_prompt = GITHUB2_FORMAT_ATTACK_SURFACE_PROMPT.format(sec_repo_doc, parser.get_format_instructions())
-
-            format_msg = HumanMessage(content=format_prompt)
-
-            response = llm.invoke([format_msg])
-            document_tokens = get_total_tokens(response)
-            content = get_response_content(response)
-
-            parsed_attack_surface_analysis = parser.parse(content)
-            attack_surfaces = parsed_attack_surface_analysis.attack_surfaces
-            return {
-                "document_tokens": state.get("document_tokens", 0) + document_tokens,
-                "attack_surfaces": attack_surfaces,
-                "attack_surfaces_index": 0,
-                "attack_surfaces_count": len(attack_surfaces),
-            }
-        except Exception as e:
-            logger.error(f"Error on structured attack surface analysis: {e}")
-            raise ValueError(str(e))
-
-    def _get_attack_surface_details_condition(
-        self, state: AgentState
-    ) -> Literal["get_attack_surface_details", "attack_surfaces_final_response"]:
-        attack_surfaces_index = state["attack_surfaces_index"]
-        attack_surfaces_count = state["attack_surfaces_count"]
-
-        if attack_surfaces_index < attack_surfaces_count:
-            return "get_attack_surface_details"
-        else:
-            return "attack_surfaces_final_response"
-
-    def _get_attack_surface_details(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
-        logger.info(
-            f"Getting attack surface details {state.get('attack_surfaces_index', 0)+1} of {state['attack_surfaces_count']}"
+        super().__init__(
+            llm_provider=llm_provider,
+            step_prompts=step_prompts,
+            deep_analysis_prompt_template=deep_analysis_prompt_template,
+            format_prompt_template=format_prompt_template,
+            checkpoint_manager=checkpoint_manager,
+            structured_parser_model=AttackSurfaceAnalysis,
+            do_iteration=True,
+            builder=StateGraph(AgentState),
         )
-        try:
-            target_repo = state["target_repo"]
-            attack_surfaces = state["attack_surfaces"]
-            attack_surfaces_index = state.get("attack_surfaces_index", 0)
 
-            get_attack_surface_details_prompt = GITHUB2_GET_ATTACK_SURFACE_DETAILS_PROMPT.format(
-                target_repo, attack_surfaces[attack_surfaces_index].title, attack_surfaces[attack_surfaces_index].text
-            )
+    def _has_more_items_condition(self, state: AgentState) -> Literal["get_item_details", "items_final_response"]:
+        if state["attack_surfaces_index"] < state["attack_surfaces_count"]:
+            return "get_item_details"
+        else:
+            return "items_final_response"
 
-            get_attack_surface_details_msg = HumanMessage(content=get_attack_surface_details_prompt)
+    def _structured_parse_step(self, state: AgentState, llm_structured: Any) -> dict[str, Any]:
+        # Call the base method to parse
+        result = super()._structured_parse_step(state, llm_structured)
 
-            response = llm.invoke([get_attack_surface_details_msg])
-            document_tokens = get_total_tokens(response)
-            attack_surface_details = get_response_content(response)
-            attack_surface_details = clean_markdown(attack_surface_details)
+        surfaces = result["structured_data"].attack_surfaces
+        result["attack_surfaces"] = surfaces
+        result["attack_surfaces_index"] = 0
+        result["attack_surfaces_count"] = len(surfaces)
+        return result
 
-            output_attack_surface = OutputAttackSurface(
-                title=attack_surfaces[attack_surfaces_index].title,
-                filename=format_filename(attack_surfaces[attack_surfaces_index].title),
-                detail_analysis=attack_surface_details,
-            )
+    def _get_item_details(self, state: AgentState, llm: Any) -> dict[str, Any]:
+        idx = state["attack_surfaces_index"]
+        surfaces = state["attack_surfaces"]
+        target_repo = state["target_repo"]
+        title = surfaces[idx].title
+        text = surfaces[idx].text
 
-            return {
-                "document_tokens": state.get("document_tokens", 0) + document_tokens,
-                "attack_surfaces_index": attack_surfaces_index + 1,
-                "output_attack_surfaces": [output_attack_surface],
-            }
-        except Exception as e:
-            logger.error(
-                f"Error on get attack surface details {state['attack_surfaces_index']+1} of {state['attack_surfaces_count']}: {e}"
-            )
-            raise ValueError(str(e))
+        prompt = self.deep_analysis_prompt_template.format(
+            target_repo=target_repo,
+            title=title,
+            text=text,
+        )
+        msg = HumanMessage(content=prompt)
+        response = llm.invoke([msg])
+        tokens = get_total_tokens(response)
+        detail = clean_markdown(get_response_content(response))
 
-    def _attack_surfaces_final_response(self, state: AgentState):  # type: ignore[no-untyped-def]
-        logger.info("Getting attack surfaces final response")
-        try:
-            attack_surfaces = state["attack_surfaces"]
-            repo_name = state["target_repo"].split("/")[-1]
-            owner_name = state["target_repo"].split("/")[-2]
+        output_attack_surface = OutputAttackSurface(
+            title=title,
+            filename=format_filename(title),
+            detail_analysis=detail,
+        )
 
-            final_response = f"# Attack Surface Analysis for {owner_name}/{repo_name}\n\n"
-            for attack_surface in attack_surfaces:
-                attack_surface_filename = format_filename(attack_surface.title)
-                attack_surface_path = f"./attack_surfaces/{attack_surface_filename}.md"
-                final_response += (
-                    f"## Attack Surface: [{attack_surface.title}]({attack_surface_path})\n\n{attack_surface.text}\n\n"
-                )
+        return {
+            "attack_surfaces_index": idx + 1,
+            "output_attack_surfaces": [output_attack_surface],
+            "document_tokens": state["document_tokens"] + tokens,
+        }
 
-            return {
-                "sec_repo_doc": final_response,
-            }
-        except Exception as e:
-            logger.error(f"Error on getting attack surfaces final response: {e}")
-            raise ValueError(str(e))
+    def _items_final_response(self, state: AgentState) -> dict[str, Any]:
+        surfaces = state["attack_surfaces"]
+        repo_name = state["target_repo"].split("/")[-1]
+        owner_name = state["target_repo"].split("/")[-2]
 
-    def build_graph(self) -> CompiledStateGraph:
-        logger.debug(f"[{GithubAgent2As.__name__}] building graph...")
+        final_response = f"# Attack Surface Analysis for {owner_name}/{repo_name}\n\n"
+        for surface in surfaces:
+            surface_filename = format_filename(surface.title)
+            surface_path = f"./attack_surfaces/{surface_filename}.md"
+            final_response += f"## Attack Surface: [{surface.title}]({surface_path})\n\n" f"{surface.text}\n\n"
 
-        llm = self.llm_provider.create_agent_llm()
-        structured_llm = self.llm_provider.create_agent_llm_for_structured_queries()
-
-        def internal_step(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._internal_step(state, llm.llm, llm.model_config.use_system_message)
-
-        def internal_step_condition(state: AgentState) -> Literal["internal_step", "final_response"]:
-            return self._internal_step_condition(state)
-
-        def final_response(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._final_response(state)
-
-        def structured_attack_surface(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._structured_attack_surface(
-                state, structured_llm.llm, structured_llm.model_config.use_system_message
-            )
-
-        def get_attack_surface_details(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._get_attack_surface_details(state, llm.llm, llm.model_config.use_system_message)
-
-        def attack_surfaces_final_response(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._attack_surfaces_final_response(state)
-
-        def get_attack_surface_details_condition(
-            state: AgentState,
-        ) -> Literal["get_attack_surface_details", "attack_surfaces_final_response"]:
-            return self._get_attack_surface_details_condition(state)
-
-        builder = StateGraph(AgentState)
-        builder.add_node("internal_step", internal_step)
-        builder.add_node("final_response", final_response)
-        builder.add_node("structured_attack_surface", structured_attack_surface)
-        builder.add_node("get_attack_surface_details", get_attack_surface_details)
-        builder.add_node("attack_surfaces_final_response", attack_surfaces_final_response)
-        builder.add_edge(START, "internal_step")
-        builder.add_conditional_edges("internal_step", internal_step_condition)
-        builder.add_edge("final_response", "structured_attack_surface")
-        builder.add_conditional_edges("structured_attack_surface", get_attack_surface_details_condition)
-        builder.add_conditional_edges("get_attack_surface_details", get_attack_surface_details_condition)
-        builder.add_edge("attack_surfaces_final_response", "__end__")
-        graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
-
-        return graph
+        return {
+            "sec_repo_doc": final_response,
+        }

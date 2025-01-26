@@ -1,0 +1,19 @@
+templates:
+  - text: |-
+      You are cybersecurity expert, working with development team. Your task is to create detail threat model using attack tree analysis for application that is using {target_repo}. Focus on threats introduced by {repo_name} and omit general, common web application threats. Identify how an attacker might compromise application using {repo_name} by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
+
+      Objective:
+      Attacker's Goal: To compromise application that use given project by exploiting weaknesses or vulnerabilities within the project itself.
+
+      (Note: If you find a more precise or impactful goal during your analysis, feel free to refine it.)
+  - text: |-
+      For each attack step, estimate:
+      - Likelihood: How probable is it that the attack could occur?
+      - Impact: What would be the potential damage if the attack is successful?
+      - Effort: What resources or time would the attacker need?
+      - Skill Level: What level of expertise is required?
+      - Detection Difficulty: How easy would it be to detect the attack?
+  - text: |-
+      Update attack tree and mark High-Risk Paths and Critical Nodes
+  - text: |-
+      Update attack tree and return sub-tree with only High-Risk Paths and Critical Nodes. Return title, goal, sub-tree and detailed breakdown of attack vectors for High-Risk Paths and Critical Nodes. Don't use markdown tables at all, use markdown lists instead.

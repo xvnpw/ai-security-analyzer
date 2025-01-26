@@ -26,8 +26,8 @@
 - 🔒 Security Design Documentation
 - 🎯 Threat Modeling
 - 🔍 Attack Surface Analysis
-- ⚠️ Threat Scenarios
 - 🌳 Attack Tree Analysis
+- 🛡️ Mitigation Strategies
 
 The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
 
@@ -210,7 +210,6 @@ The application accepts various command-line arguments to tailor its behavior.
 
 - `mode`: **Required**. Operation mode (`dir`, `github`, `file`):
   - `dir`: Analyze a local directory (will send all files from directory to LLM)
-  - `dir2`: Version 2 of dir mode optimized for Gemini 2.0 Flash Thinking Exp model
   - `github`: Analyze a GitHub repository (will use model knowledge base to generate documentation)
   - `file`: Analyze a single file
 - `-h`, `--help`: Show help message and exit.
@@ -220,7 +219,7 @@ The application accepts various command-line arguments to tailor its behavior.
 ### Input/Output Options
 
 - `-t`, `--target`: **Required**. Target based on mode:
-  - For `dir`/`dir2` mode: Directory path to analyze
+  - For `dir` mode: Directory path to analyze
   - For `github` mode: GitHub repository URL (must start with 'https://github.com/')
   - For `file` mode: File path to analyze
 - `-o`, `--output-file`: Output file for the security documentation. Default is `stdout`.
@@ -243,7 +242,6 @@ The application accepts various command-line arguments to tailor its behavior.
   - `sec-design`: Generate a security design document for the project.
   - `threat-modeling`: Perform threat modeling for the project.
   - `attack-surface`: Perform attack surface analysis for the project.
-  - `threat-scenarios`: Perform threat scenarios analysis for the project using [Daniel Miessler's](https://danielmiessler.com/) [prompt](https://github.com/danielmiessler/fabric/blob/f5f50cc4c94a539ee56bc533e9b1194eb9aa424d/patterns/create_threat_scenarios/system.md). **Not supported in `github` mode.**
   - `attack-tree`: Perform attack tree analysis for the project.
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis.
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
