@@ -2,16 +2,17 @@ from ai_security_analyzer.app import app
 from ai_security_analyzer.config import AppConfig
 import pytest
 import os
+from ai_security_analyzer.utils import format_filename
 
 
 @pytest.mark.parametrize(
     "agent_prompt_type,agent_provider,agent_model,agent_temperature",
     [
-        ("sec-design", "openai", "o1", 1),
-        ("threat-modeling", "openai", "o1", 1),
-        ("attack-surface", "openai", "o1", 1),
-        ("attack-tree", "openai", "o1", 1),
-        ("mitigations", "openai", "o1", 1),
+        ("sec-design", "openrouter", "openai/o1", 1),
+        ("threat-modeling", "openrouter", "openai/o1", 1),
+        ("attack-surface", "openrouter", "openai/o1", 1),
+        ("attack-tree", "openrouter", "openai/o1", 1),
+        ("mitigations", "openrouter", "openai/o1", 1),
         ("sec-design", "google", "gemini-2.0-flash-thinking-exp", 0),
         ("threat-modeling", "google", "gemini-2.0-flash-thinking-exp", 0),
         ("attack-surface", "google", "gemini-2.0-flash-thinking-exp", 0),
@@ -21,7 +22,7 @@ import os
 )
 @pytest.mark.integration
 def test_app_github_mode(agent_prompt_type, agent_provider, agent_model, agent_temperature):
-    output_path = f"tests-output/github-{agent_prompt_type}-flask-{agent_model}.md"
+    output_path = f"tests-output/github-{agent_prompt_type}-flask-{format_filename(agent_model)}.md"
 
     # Create output directory if it doesn't exist
     os.makedirs("tests-output", exist_ok=True)
@@ -48,16 +49,21 @@ def test_app_github_mode(agent_prompt_type, agent_provider, agent_model, agent_t
 @pytest.mark.parametrize(
     "agent_prompt_type,agent_provider,agent_model,agent_temperature",
     [
-        ("sec-design", "openai", "o1", 1),
-        ("threat-modeling", "openai", "o1", 1),
-        ("attack-surface", "openai", "o1", 1),
-        ("attack-tree", "openai", "o1", 1),
-        ("mitigations", "openai", "o1", 1),
+        ("sec-design", "openrouter", "openai/o1", 1),
+        ("threat-modeling", "openrouter", "openai/o1", 1),
+        ("attack-surface", "openrouter", "openai/o1", 1),
+        ("attack-tree", "openrouter", "openai/o1", 1),
+        ("mitigations", "openrouter", "openai/o1", 1),
+        ("sec-design", "google", "gemini-2.0-flash-thinking-exp", 0),
+        ("threat-modeling", "google", "gemini-2.0-flash-thinking-exp", 0),
+        ("attack-surface", "google", "gemini-2.0-flash-thinking-exp", 0),
+        ("attack-tree", "google", "gemini-2.0-flash-thinking-exp", 0),
+        ("mitigations", "google", "gemini-2.0-flash-thinking-exp", 0),
     ],
 )
 @pytest.mark.integration
 def test_app_file_mode(agent_prompt_type, agent_provider, agent_model, agent_temperature):
-    output_path = f"tests-output/file-{agent_prompt_type}-flask-{agent_model}.md"
+    output_path = f"tests-output/file-{agent_prompt_type}-flask-{format_filename(agent_model)}.md"
 
     # Create output directory if it doesn't exist
     os.makedirs("tests-output", exist_ok=True)
@@ -84,11 +90,11 @@ def test_app_file_mode(agent_prompt_type, agent_provider, agent_model, agent_tem
 @pytest.mark.parametrize(
     "agent_prompt_type,agent_provider,agent_model,agent_temperature",
     [
-        ("sec-design", "openai", "o1", 1),
-        ("threat-modeling", "openai", "o1", 1),
-        ("attack-surface", "openai", "o1", 1),
-        ("attack-tree", "openai", "o1", 1),
-        ("mitigations", "openai", "o1", 1),
+        ("sec-design", "openrouter", "openai/o1", 1),
+        ("threat-modeling", "openrouter", "openai/o1", 1),
+        ("attack-surface", "openrouter", "openai/o1", 1),
+        ("attack-tree", "openrouter", "openai/o1", 1),
+        ("mitigations", "openrouter", "openai/o1", 1),
         ("sec-design", "google", "gemini-2.0-flash-thinking-exp", 0),
         ("threat-modeling", "google", "gemini-2.0-flash-thinking-exp", 0),
         ("attack-surface", "google", "gemini-2.0-flash-thinking-exp", 0),
@@ -98,7 +104,7 @@ def test_app_file_mode(agent_prompt_type, agent_provider, agent_model, agent_tem
 )
 @pytest.mark.integration
 def test_app_dir_mode(agent_prompt_type, agent_provider, agent_model, agent_temperature):
-    output_path = f"tests-output/dir-{agent_prompt_type}-flask-{agent_model}.md"
+    output_path = f"tests-output/dir-{agent_prompt_type}-flask-{format_filename(agent_model)}.md"
 
     # Create output directory if it doesn't exist
     os.makedirs("tests-output", exist_ok=True)
@@ -134,7 +140,7 @@ def test_app_dir_mode(agent_prompt_type, agent_provider, agent_model, agent_temp
 )
 @pytest.mark.integration
 def test_app_github_deep_analysis_mode(agent_prompt_type, agent_provider, agent_model, agent_temperature):
-    output_path = f"tests-output/github-deep-analysis-{agent_prompt_type}-flask-{agent_model}.md"
+    output_path = f"tests-output/github-deep-analysis-{agent_prompt_type}-flask-{format_filename(agent_model)}.md"
 
     # Create output directory if it doesn't exist
     os.makedirs("tests-output", exist_ok=True)

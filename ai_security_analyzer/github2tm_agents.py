@@ -22,12 +22,14 @@ logger = logging.getLogger(__name__)
 
 
 class Threat(BaseModel):
-    title: str
-    text: str
+    title: str = Field(description="Title of the threat.")
+    text: str = Field(description="Correctly formatted markdown text content of the threat.")
 
 
 class ThreatModel(BaseModel):
-    threats: List[Threat]
+    threats: List[Threat] = Field(
+        description="List of threats.",
+    )
 
 
 class OutputThreat(BaseModel):
