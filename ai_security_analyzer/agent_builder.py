@@ -5,7 +5,7 @@ import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
 
 from ai_security_analyzer.base_agent import AgentType, BaseAgent
-from ai_security_analyzer.components import DocumentProcessingMixin, MarkdownValidationMixin, DeepAnalysisMixin
+from ai_security_analyzer.components import DocumentProcessingMixin, DeepAnalysisMixin
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
@@ -18,7 +18,6 @@ from ai_security_analyzer.github2sd_agents import GithubAgent2Sd
 from ai_security_analyzer.github2tm_agents import GithubAgent2Tm
 from ai_security_analyzer.github2ms_agents import GithubAgent2Ms
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.prompts.prompt_manager import PromptManager
 
@@ -72,7 +71,6 @@ class AgentBuilder:
                 chunk_overlap=agent_model_config.documents_chunk_overlap,
             )
             tokenizer = tiktoken.encoding_for_model(agent_model_config.tokenizer_model_name)
-            markdown_validator = MarkdownMermaidValidator(self.config.node_path)
             doc_processor = DocumentProcessor(tokenizer)
             doc_filter = DocumentFilter()
 
@@ -91,32 +89,8 @@ class AgentBuilder:
                 llm_provider=self.llm_provider,
                 text_splitter=text_splitter,
                 tokenizer=tokenizer,
-                markdown_validator=markdown_validator,
                 doc_processor=doc_processor,
                 doc_filter=doc_filter,
-                max_editor_turns_count=self.config.editor_max_turns_count,
-                agent_prompt=agent_prompt,
-                doc_type_prompt=doc_type_prompt,
-                checkpoint_manager=self.checkpoint_manager,
-            )
-        elif issubclass(agent_class, MarkdownValidationMixin):
-            # Agents that need markdown validation
-            markdown_validator = MarkdownMermaidValidator(self.config.node_path)
-            agent_prompt = self.prompt_manager.get_prompt(
-                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
-            )
-            if not agent_prompt:
-                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
-
-            doc_type_prompt = self.prompt_manager.get_doc_type_prompt(
-                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
-            )
-            if not doc_type_prompt:
-                raise ValueError(f"No update prompt for type: {self.config.agent_prompt_type}")
-            return agent_class(  # type: ignore[call-arg]
-                llm_provider=self.llm_provider,
-                markdown_validator=markdown_validator,
-                max_editor_turns_count=self.config.editor_max_turns_count,
                 agent_prompt=agent_prompt,
                 doc_type_prompt=doc_type_prompt,
                 checkpoint_manager=self.checkpoint_manager,

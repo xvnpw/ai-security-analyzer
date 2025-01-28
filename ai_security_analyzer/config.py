@@ -5,7 +5,6 @@ from typing import List, Optional, Set, Union
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing_extensions import Literal
 
-from ai_security_analyzer.utils import find_node_binary
 
 logger = logging.getLogger(__name__)
 
@@ -33,11 +32,6 @@ class AppConfig(BaseModel):
     deep_analysis: bool = Field(default=False)
     recursion_limit: int = Field(default=30)
 
-    editor_provider: Literal["openai", "openrouter", "anthropic", "google"] = Field(default="openai")
-    editor_model: str = Field(default="gpt-4o")
-    editor_temperature: float = Field(default=0, ge=0, le=1)
-    editor_max_turns_count: int = Field(default=0, ge=0)
-
     exclude: Optional[List[str]] = Field(default=None)
     exclude_mode: Literal["add", "override"] = Field(default="add")
     include: Optional[List[str]] = Field(default=None)
@@ -46,7 +40,6 @@ class AppConfig(BaseModel):
     files_context_window: Optional[int] = Field(default=None)
     files_chunk_size: Optional[int] = Field(default=None)
     dry_run: bool = Field(default=False)
-    node_path: Optional[str] = Field(default=None)
     refinement_count: int = Field(default=0)
     resume: bool = Field(default=False)
     clear_checkpoints: bool = Field(default=False)
@@ -76,12 +69,3 @@ class AppConfig(BaseModel):
         if isinstance(value, set):
             return value
         return {s.strip() for s in value.split(",") if s.strip()}
-
-    @field_validator("node_path", mode="before")
-    def parse_node_path(cls, value: Optional[str]) -> Optional[str]:
-        if not value:
-            node_binary = find_node_binary()
-            if not node_binary:
-                logger.warning("Node.js binary not found. Editor will be disabled.")
-            return node_binary
-        return value
