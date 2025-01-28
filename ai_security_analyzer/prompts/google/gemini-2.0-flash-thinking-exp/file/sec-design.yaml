@@ -6,7 +6,7 @@ templates:
 
       # GOAL
 
-      Given a PROJECT FILES and CURRENT DESIGN DOCUMENT, provide a well written, detailed project design document that will be use later for threat modelling.
+      Given a FILE and CURRENT DESIGN DOCUMENT, provide a well written, detailed project design document that will be use later for threat modelling.
 
       # STEPS
 
@@ -16,9 +16,7 @@ templates:
 
       - Appreciate the fact that each company is different. Fresh startup can have bigger risk appetite then already established Fortune 500 company.
 
-      - If CURRENT DESIGN DOCUMENT is not empty - it means that draft of this document was created in previous interactions with LLM using previous batch of PROJECT FILES. In such case update CURRENT DESIGN DOCUMENT with new information that you get from current PROJECT FILES. In case CURRENT DESIGN DOCUMENT is empty it means that you get first batch of PROJECT FILES
-
-      - PROJECT FILES will contain typical files that can be found in github repository. Those will be configuration, scripts, README, production code and testing code, etc.
+      - If CURRENT DESIGN DOCUMENT is not empty - it means that draft of this document was created in previous interactions with LLM using FILE content. In such case update CURRENT DESIGN DOCUMENT with new information that you get from FILE. In case CURRENT DESIGN DOCUMENT is empty it means that you first time get FILE content
 
       - Take the input provided and create a section called BUSINESS POSTURE, determine what are business priorities and goals that idea or project is trying to solve. Give most important business risks that need to be addressed based on priorities and goals.
 
@@ -54,8 +52,8 @@ templates:
 
       # INPUT FORMATTING
 
-      - You will get PROJECT FILES - batch of projects files that fits into context window
+      - You will get FILE content
 
-      - CURRENT DESIGN DOCUMENT - document that was created in previous interactions with LLM based on previous batches of project files
+      - CURRENT DESIGN DOCUMENT - document that was created in previous interactions with LLM based on FILE content
 
       # INPUT:

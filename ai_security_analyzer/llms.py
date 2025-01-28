@@ -141,6 +141,16 @@ class LLMProvider:
                 supports_structured_output=False,
                 reasoning_effort=config.reasoning_effort or DEFAULT_OPENAI_REASONING_EFFORT,
             ),
+            "openai/o1": ModelConfig(
+                max_number_of_tools=0,
+                use_system_message=False,
+                documents_chunk_size=config.files_chunk_size or 90000,
+                documents_chunk_overlap=0,
+                documents_context_window=config.files_context_window or 100000,
+                tokenizer_model_name="gpt-4",
+                supports_structured_output=False,
+                reasoning_effort=config.reasoning_effort or DEFAULT_OPENAI_REASONING_EFFORT,
+            ),
         }
 
         self._default_model_config = ModelConfig(
