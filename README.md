@@ -84,7 +84,7 @@ docker run -v ~/path/to/your/project:/target \
 
 ### Understanding Token Consumption
 
-In `dir` mode this application may consume a significant number of tokens due to its workflow:
+In `dir` mode, this application may consume a significant number of tokens due to its workflow:
 - Each file is processed and sent to LLM
 - Multiple rounds of analysis for comprehensive documentation
 - Large codebases can lead to substantial token usage
@@ -115,7 +115,7 @@ This will show you:
 
 ### Recommendations
 
-1. For `dir` mode start with `--dry-run` to assess token usage
+1. For `dir` mode, start with `--dry-run` to assess token usage
 2. Use file filtering options to reduce scope
 3. Consider running on smaller, security-critical portions first
 4. Test on smaller codebases before analyzing large projects
@@ -123,7 +123,7 @@ This will show you:
 
 ## Architecture
 
-To help you understand how the application works, we've included an application flow diagrams.
+To help you understand how the application works, we've included application flow diagrams.
 
 ### Application Flow for `dir` mode
 
@@ -131,28 +131,24 @@ To help you understand how the application works, we've included an application 
 stateDiagram-v2
     [*] --> Configure_Application
     Configure_Application --> Load_Project_Files
-    Load_Project_Files --> Apply_Filters
-    Apply_Filters --> Split_into_Chunks
-    Split_into_Chunks --> Initial_Draft
-    Initial_Draft -->  Update_Draft
+    Load_Project_Files --> Sort_Filter_Docs
+    Sort_Filter_Docs --> Split_Docs_To_Window
+    Split_Docs_To_Window --> Create_Initial_Draft
+    Create_Initial_Draft --> Update_Draft
     Update_Draft --> Update_Draft: Process More Docs
-    Update_Draft --> Validate_Markdown: All Docs Processed
-    Validate_Markdown --> Editor: Invalid Markdown
-    Editor --> Validate_Markdown: Fix Formatting
-    Validate_Markdown --> [*]: Valid Markdown
+    Update_Draft --> Final_Response: All Docs Processed
+    Final_Response --> [*]
 ```
 
-The application follows these high-level steps:
+The application follows these steps:
 
 1. **Configure Application**: Parses command-line arguments and sets up the configuration.
 2. **Load Project Files**: Loads files from the specified target directory, applying include/exclude rules.
-3. **Apply Filters**: Sorts and filters documents based on specified keywords and patterns.
-4. **Split into Chunks**: Splits documents into smaller chunks that fit within the LLM's context window.
+3. **Sort Filter Docs**: Sorts and filters documents based on specified keywords and patterns.
+4. **Split Docs To Window**: Splits documents into smaller chunks that fit within the LLM's context window.
 5. **Create Initial Draft**: Uses the LLM to generate an initial security document based on the first batch of documents.
-6. **Process More Docs**: Iteratively updates the draft by processing additional document batches.
-7. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
-8. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
-9. **Completion**: Finalizes the security documentation.
+6. **Update Draft**: Iteratively updates the draft by processing additional document batches.
+7. **Final Response**: Formats and returns the final security documentation.
 
 ### Application Flow for `github` mode
 
@@ -165,14 +161,11 @@ stateDiagram-v2
     Final_Response --> [*]
 ```
 
-The application follows these high-level steps:
+The application follows these steps:
 
 1. **Configure Application**: Parses command-line arguments and sets up the configuration.
-2. **Internal Steps**: Iteratively processes the repository through defined steps.
-3. **Final Response**: Once all steps are complete:
-   - Processes the final accumulated response
-   - Formats the markdown output
-4. **Completion**: Returns the final security documentation
+2. **Internal Steps**: Iteratively processes the repository through predefined steps.
+3. **Final Response**: Formats and returns the final security documentation.
 
 ### Application Flow for `file` mode
 
@@ -183,21 +176,17 @@ stateDiagram-v2
     Load_File --> Create_Initial_Draft
     Create_Initial_Draft --> Refine_Draft
     Refine_Draft --> Refine_Draft: More Refinements Needed
-    Refine_Draft --> Validate_Markdown: All Refinements Done
-    Validate_Markdown --> Editor: Invalid Markdown
-    Editor --> Validate_Markdown: Fix Formatting
-    Validate_Markdown --> [*]: Valid Markdown
+    Refine_Draft --> Final_Response: All Refinements Done
+    Final_Response --> [*]
 ```
 
-The application follows these high-level steps:
+The application follows these steps:
 
 1. **Configure Application**: Parses command-line arguments and sets up the configuration.
 2. **Load File**: Loads the specified file for analysis.
 3. **Create Initial Draft**: Uses the LLM to generate an initial security document based on the file content.
 4. **Refine Draft**: Iteratively refines the draft to improve its quality (number of iterations configurable via `--refinement-count`).
-5. **Validate Markdown**: Checks the generated markdown for syntax and Mermaid diagram correctness.
-6. **Fix Formatting**: If validation fails, uses the editor LLM to fix markdown formatting issues.
-7. **Completion**: Finalizes the security documentation.
+5. **Final Response**: Formats and returns the final security documentation.
 
 ## Configuration
 
@@ -243,9 +232,10 @@ The application accepts various command-line arguments to tailor its behavior.
   - `mitigations`: Perform mitigation strategies analysis for the project.
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis.
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
-- `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `1`).
+- `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `0`).
 - `--files-context-window`: **For `dir` mode only**. Maximum token size for LLM context window. Automatically determined if not set.
 - `--files-chunk-size`: **For `dir` mode only**. Chunk size in tokens for splitting files. Automatically determined if not set.
+- `--reasoning-effort`: Reasoning effort for the agent (only for reasoning models, e.g., `o1`). Choices are `low`, `medium`, `high`. Default is `None`.
 
 ### Checkpointing Options
 
@@ -495,6 +485,10 @@ Depending on the selected `--agent-prompt-type`, the deep analysis will generate
 - **sec-design**:
   - Main analysis in `output.md`
   - Detailed security design analysis in `output-deep-analysis.md`
+
+- **mitigations**:
+  - Main analysis in `output.md`
+  - Detailed analysis of each mitigation strategy in `./mitigation_strategies/*.md`
 
 Each detailed analysis file provides comprehensive information about specific security aspects, including detailed descriptions, impact analysis, mitigation strategies, and implementation recommendations.
 
