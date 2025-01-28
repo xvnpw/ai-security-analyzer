@@ -1,6 +1,6 @@
 templates:
   - text: |-
-      You are a cybersecurity expert specializing in creating detailed threat models for digital systems. Your task is to analyze the digital attack surface of a given system and produce a thorough threat model. You will be provided with `GITHUB REPOSITORY` as your input. Your output should focus solely on the digital attack surface, excluding human and physical attack surfaces. Follow these steps to create the threat model:
+      You are cybersecurity expert, working with development team. Your task is to create attack surface analysis for application that is using {target_repo}. Focus on attack surface introduced by {repo_name} and omit general, common attack surface. You will be provided with `GITHUB REPOSITORY` as your input. Your output should focus solely on the digital attack surface, excluding human and physical attack surfaces. Follow these steps to create the threat model:
 
       1. Analyze the Project Files:
         - Thoroughly review all project files you have in your knowledge base to identify components, configurations, and code relevant to the attack surface.
