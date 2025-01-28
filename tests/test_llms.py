@@ -37,20 +37,6 @@ def test_create_agent_llm_success():
         assert agent_llm.model_config.documents_context_window == 1000
 
 
-def test_create_editor_llm_success():
-    # Set up the environment variables for API keys
-    with patch.dict(os.environ, {constants.ANTHROPIC_API_KEY: "fake-anthropic-api-key"}):
-        config = AppConfigTest()
-        provider = LLMProvider(config)
-        editor_llm = provider.create_editor_llm()
-
-        assert editor_llm is not None
-        assert isinstance(editor_llm.llm, BaseChatModel)
-        # Since 'claude-v1' is not defined in _model_configs, default model config is used
-        assert editor_llm.model_config.tokenizer_model_name == "gpt2"  # Default tokenizer model name
-        assert editor_llm.model_config.max_number_of_tools == 1000  # Default max_number_of_tools
-
-
 def test_create_llm_with_invalid_provider():
     # Set up the environment variables for API keys
     with patch.dict(os.environ, {}):

@@ -11,7 +11,6 @@ from ai_security_analyzer.full_dir_scan_agents import (
 )
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider
-from ai_security_analyzer.markdowns import MarkdownMermaidValidator
 from ai_security_analyzer.checkpointing import CheckpointManager
 from typing import List
 
@@ -24,8 +23,6 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
         llm_provider: LLMProvider,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
-        max_editor_turns_count: int,
-        markdown_validator: MarkdownMermaidValidator,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
         agent_prompt: List[str],
@@ -36,10 +33,8 @@ class DryRunFullDirScanAgent(FullDirScanAgent):
             llm_provider=llm_provider,
             text_splitter=text_splitter,
             tokenizer=tokenizer,
-            markdown_validator=markdown_validator,
             doc_processor=doc_processor,
             doc_filter=doc_filter,
-            max_editor_turns_count=max_editor_turns_count,
             agent_prompt=agent_prompt,
             doc_type_prompt=doc_type_prompt,
             checkpoint_manager=checkpoint_manager,

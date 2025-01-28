@@ -202,35 +202,6 @@ def parse_arguments() -> AppConfig:
         choices=["low", "medium", "high"],
         help="Reasoning effort for the agent (only for reasoning models, e.g. o1). Default is None",
     )
-    # Editor configuration
-    editor_group = parser.add_argument_group("Editor Configuration")
-    editor_group.add_argument(
-        "--editor-provider",
-        choices=["openai", "openrouter", "anthropic", "google"],
-        default="openai",
-        help="LLM provider for the editor (openai, openrouter, anthropic, google). Default is openai",
-    )
-    editor_group.add_argument(
-        "--editor-model",
-        default="gpt-4o",
-        help="Model name for the editor. Default is gpt-4o",
-    )
-    editor_group.add_argument(
-        "--editor-temperature",
-        type=float,
-        default=0,
-        help="Sampling temperature for the editor model. Default is 0",
-    )
-    editor_group.add_argument(
-        "--editor-max-turns-count",
-        type=int,
-        default=0,
-        help="Maximum number of attempts the editor will try to fix markdown issues. Default is 0 (editor disabled)",
-    )
-    editor_group.add_argument(
-        "--node-path",
-        help="Path to the Node.js binary. Attempts to auto-detect if not provided",
-    )
 
     # Checkpointing arguments
     checkpoint_group = parser.add_argument_group("Checkpointing Options")

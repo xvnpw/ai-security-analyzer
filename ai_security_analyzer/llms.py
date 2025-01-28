@@ -202,12 +202,3 @@ class LLMProvider:
                 temperature=temperature,
             )
         )
-
-    def create_editor_llm(self) -> LLM:
-        return self._get_llm_instance(
-            LLMConfig(
-                provider=self.config.editor_provider,
-                model=self.config.editor_model,
-                temperature=self.config.editor_temperature,
-            )
-        )

@@ -37,14 +37,12 @@ The tool supports multiple project types and utilizes advanced language models (
 - 📝 **Multiple Document Types**: Generates various security documentation types
 - 🤖 **Multi-LLM Support**: Works with OpenAI, OpenRouter, Anthropic, and Google models
 - 🔄 **Project Type Support**: Python, Go, Java, Android, JavaScript, and generic projects
-- 📊 **Mermaid Diagram Validation**: Built-in validation for Mermaid diagrams
 - 🎛️ **Flexible Configuration**: Extensive file filtering and customization options
 - 🌐 **Cross-Platform**: Runs on Windows, macOS, and Linux
 
 ## Prerequisites
 
 - **Python 3.11**
-- **Node.js**: Required for validating Mermaid diagrams in Markdown.
 - **Poetry**: For managing Python dependencies.
 
 ## Installation
@@ -56,13 +54,13 @@ Clone the repository and install dependencies using the provided script:
 ```bash
 git clone git@github.com:xvnpw/ai-security-analyzer.git
 cd ai-security-analyzer
-./build.sh  # Installs Python and Node.js dependencies
+./build.sh  # Installs Python dependencies
 poetry run python ai_security_analyzer/app.py --help
 ```
 
 ### Using Docker
 
-You can run the application using Docker without installing Python or Node.js locally.
+You can run the application using Docker without installing Python locally.
 
 #### In PowerShell (Windows):
 
@@ -89,7 +87,6 @@ docker run -v ~/path/to/your/project:/target \
 In `dir` mode this application may consume a significant number of tokens due to its workflow:
 - Each file is processed and sent to LLM
 - Multiple rounds of analysis for comprehensive documentation
-- Additional tokens for markdown validation and fixes
 - Large codebases can lead to substantial token usage
 
 ### Cost Control Best Practices 💰
@@ -249,14 +246,6 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `1`).
 - `--files-context-window`: **For `dir` mode only**. Maximum token size for LLM context window. Automatically determined if not set.
 - `--files-chunk-size`: **For `dir` mode only**. Chunk size in tokens for splitting files. Automatically determined if not set.
-
-### Editor Configuration
-
-- `--editor-provider`: LLM provider for the editor (`openai`, `openrouter`, `anthropic`, `google`). Default is `openai`.
-- `--editor-model`: Model name for the editor. Default is `gpt-4o`.
-- `--editor-temperature`: Sampling temperature for the editor model. Default is `0`.
-- `--editor-max-turns-count`: Maximum number of attempts the editor will try to fix markdown issues. Default is `0` (editor disabled).
-- `--node-path`: Path to the Node.js binary. Attempts to auto-detect if not provided.
 
 ### Checkpointing Options
 
@@ -557,16 +546,6 @@ poetry run python ai_security_analyzer/app.py \
     --files-context-window 70000
 ```
 
-#### Node.js Not Found
-
-If you receive an error indicating that Node.js is not found:
-
-```
-FileNotFoundError: Node.js binary not found. Please install Node.js.
-```
-
-Ensure that Node.js is installed and added to your system's PATH, or provide the path using the `--node-path` option.
-
 #### OpenAI API Key Not Set
 
 If you get an error about `OPENAI_API_KEY`:
@@ -595,7 +574,7 @@ export OPENAI_API_KEY=your_openai_api_key
 - [x] ~~Add support for `--continue` that will continue in case of error - currently intermediate data is lost when error occurs~~
 - [ ] Think about how to handle images in markdown - currently they are not supported (maybe https://github.com/microsoft/markitdown 🤔)
 - [ ] Add support for structured output when it will be available in reasoning models
-- [ ] Probably drop markdown validation - it's not working as expected - models still cannot fix problems with markdown 😡
+- [x] ~~Probably drop markdown validation - it's not working as expected - models still cannot fix problems with markdown 😡~~
 - [ ] Add `--input-context` option to add additional context to the analysis, e.g. existing mitigations, accepted risks, etc.
 
 ## Contributing
