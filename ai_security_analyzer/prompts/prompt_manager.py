@@ -7,6 +7,24 @@ class PromptManager:
     def __init__(self) -> None:
         self.base_path = Path(__file__).parent
 
+    def _sanitize_model_name(self, model: str) -> str:
+        """
+        Sanitize model name to create a safe directory name.
+        Replaces path-unsafe characters with underscores.
+
+        Args:
+            model: Model name that might contain unsafe characters
+
+        Returns:
+            Sanitized model name safe for directory usage
+        """
+        # Characters that are unsafe for directory names
+        unsafe_chars = ["/", "\\", ":", "*", "?", '"', "<", ">", "|"]
+        sanitized = model
+        for char in unsafe_chars:
+            sanitized = sanitized.replace(char, "_")
+        return sanitized
+
     def get_prompt(self, provider: str, model: str, mode: str, prompt_type: str) -> List[str]:
         """
         Get prompts from YAML file based on provider, model, mode and prompt type.
@@ -24,15 +42,18 @@ class PromptManager:
             FileNotFoundError: If the YAML file doesn't exist
             KeyError: If the YAML file doesn't contain required structure
         """
+        # Sanitize model name for safe directory usage
+        safe_model = self._sanitize_model_name(model)
+
         # Try provider-specific prompt first
-        yaml_path = self.base_path / provider / model / mode / f"{prompt_type}.yaml"
+        yaml_path = self.base_path / provider / safe_model / mode / f"{prompt_type}.yaml"
 
         # If provider-specific doesn't exist, try default
         if not yaml_path.exists():
             yaml_path = self.base_path / "default" / mode / f"{prompt_type}-default.yaml"
 
         if not yaml_path.exists():
-            raise FileNotFoundError(f"No prompt file found for {provider}/{model}/{mode}/{prompt_type}")
+            raise FileNotFoundError(f"No prompt file found for {provider}/{safe_model}/{mode}/{prompt_type}")
 
         with open(yaml_path, "r", encoding="utf-8") as file:
             try:
@@ -58,15 +79,18 @@ class PromptManager:
             FileNotFoundError: If no YAML file is found
             KeyError: If the YAML structure is invalid or prompt_type not found
         """
+        # Sanitize model name for safe directory usage
+        safe_model = self._sanitize_model_name(model)
+
         # Try provider-specific doc types first
-        yaml_path = self.base_path / provider / model / mode / "doc-types.yaml"
+        yaml_path = self.base_path / provider / safe_model / mode / "doc-types.yaml"
 
         # If provider-specific doesn't exist, try default
         if not yaml_path.exists():
             yaml_path = self.base_path / "default" / mode / "doc-types-default.yaml"
 
         if not yaml_path.exists():
-            raise FileNotFoundError(f"No doc-types file found for {provider}/{model}/{mode}")
+            raise FileNotFoundError(f"No doc-types file found for {provider}/{safe_model}/{mode}")
 
         with open(yaml_path, "r", encoding="utf-8") as file:
             try:
@@ -100,14 +124,17 @@ class PromptManager:
         if mode != "github":
             return ""
 
-        yaml_path = self.base_path / provider / model / mode / "deep-analysis.yaml"
+        # Sanitize model name for safe directory usage
+        safe_model = self._sanitize_model_name(model)
+
+        yaml_path = self.base_path / provider / safe_model / mode / "deep-analysis.yaml"
 
         # If provider-specific doesn't exist, try default
         if not yaml_path.exists():
             yaml_path = self.base_path / "default" / mode / "deep-analysis-default.yaml"
 
         if not yaml_path.exists():
-            raise FileNotFoundError(f"No deep analysis prompt file found for {provider}/{model}")
+            raise FileNotFoundError(f"No deep analysis prompt file found for {provider}/{safe_model}")
 
         with open(yaml_path, "r", encoding="utf-8") as file:
             try:
@@ -142,14 +169,17 @@ class PromptManager:
         if mode != "github":
             return ""
 
-        yaml_path = self.base_path / provider / model / mode / "deep-analysis-format.yaml"
+        # Sanitize model name for safe directory usage
+        safe_model = self._sanitize_model_name(model)
+
+        yaml_path = self.base_path / provider / safe_model / mode / "deep-analysis-format.yaml"
 
         # If provider-specific doesn't exist, try default
         if not yaml_path.exists():
             yaml_path = self.base_path / "default" / mode / "deep-analysis-format-default.yaml"
 
         if not yaml_path.exists():
-            raise FileNotFoundError(f"No format prompt file found for {provider}/{model}")
+            raise FileNotFoundError(f"No format prompt file found for {provider}/{safe_model}")
 
         with open(yaml_path, "r", encoding="utf-8") as file:
             try:
