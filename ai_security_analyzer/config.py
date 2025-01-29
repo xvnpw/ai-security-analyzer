@@ -24,7 +24,10 @@ class AppConfig(BaseModel):
     agent_prompt_type: Literal["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations"] = Field(
         default="sec-design"
     )
-    agent_provider: Literal["openai", "openrouter", "anthropic", "google"] = Field(default="openai")
+
+    # fake: only for testing
+    agent_provider: Literal["openai", "openrouter", "anthropic", "google", "fake"] = Field(default="openai")
+
     agent_model: str = Field(default="gpt-4o")
     agent_temperature: float = Field(default=0, ge=0, le=1)
     agent_preamble_enabled: bool = Field(default=False)

@@ -29,7 +29,9 @@ def convert_to_ai_message(message: BaseMessage) -> AIMessage:
 
 
 def get_total_tokens(message: BaseMessage) -> int:
-    return message.usage_metadata.get("total_tokens", 0)  # type: ignore
+    if message and hasattr(message, "usage_metadata"):
+        return message.usage_metadata.get("total_tokens", 0)  # type: ignore
+    return 0
 
 
 def get_response_content(message: BaseMessage) -> str:

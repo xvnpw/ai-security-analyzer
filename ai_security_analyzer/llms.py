@@ -10,6 +10,7 @@ from langchain_anthropic import ChatAnthropic
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_core.language_models.fake_chat_models import ParrotFakeChatModel
 
 from ai_security_analyzer.constants import (
     OPENAI_API_KEY,
@@ -24,7 +25,7 @@ from ai_security_analyzer.config import AppConfig
 
 logger = logging.getLogger(__name__)
 
-ProviderType = Literal["openai", "openrouter", "anthropic", "google"]
+ProviderType = Literal["openai", "openrouter", "anthropic", "google", "fake"]  # fake: only for testing
 
 
 @dataclass(frozen=True)
@@ -75,6 +76,11 @@ class LLMProvider:
 
         # Map provider to environment variables and model classes
         self._provider_configs: Dict[str, ProviderConfig] = {
+            "fake": ProviderConfig(
+                env_key="FAKE_API_KEY",
+                api_base=None,
+                model_class=ParrotFakeChatModel,
+            ),
             "openai": ProviderConfig(
                 env_key=OPENAI_API_KEY,
                 api_base=None,
@@ -168,6 +174,11 @@ class LLMProvider:
                 "temperature": llm_config.temperature,
                 "model": llm_config.model,
                 "google_api_key": api_key,
+            }
+        elif provider_config.model_class == ParrotFakeChatModel:
+            kwargs = {
+                "temperature": llm_config.temperature,
+                "model": llm_config.model,
             }
         else:
             raise ValueError(f"Unsupported model class: {provider_config.model_class}")
