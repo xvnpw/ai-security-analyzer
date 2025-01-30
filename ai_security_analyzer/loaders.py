@@ -73,12 +73,16 @@ class RepoDirectoryLoader(DirectoryLoader):
         else:
             raise ValueError(f"Invalid exclude_mode: {exclude_mode}")
 
+        logger.info(f"exclude config: mode={exclude_mode}, patterns={exclude}")
+
         if include_mode == "add":
             include = FILES_GLOB[project_type] + (include_patterns or [])
         elif include_mode == "override":
             include = include_patterns or []
         else:
             raise ValueError(f"Invalid include_mode: {include_mode}")
+
+        logger.info(f"include config: mode={include_mode}, patterns={include}")
 
         super().__init__(path, glob=include, exclude=exclude)
 

@@ -80,6 +80,12 @@ docker run -v ~/path/to/your/project:/target \
            dir -v -t /target -o /target/security_design.md
 ```
 
+## Recommended Models (as of January 2025)
+
+🥇 Google - Gemini 2.0 Flash Thinking Experimental<br/>
+🥈 OpenAI - o1 family models (at least o1-preview)<br/>
+🥉 DeepSeek - DeepSeek R1
+
 ## Token Usage and Cost Management ⚠️
 
 ### Understanding Token Consumption
@@ -230,7 +236,7 @@ The application accepts various command-line arguments to tailor its behavior.
   - `attack-surface`: Perform attack surface analysis for the project.
   - `attack-tree`: Perform attack tree analysis for the project.
   - `mitigations`: Perform mitigation strategies analysis for the project.
-- `--deep-analysis`: **For `github` mode only**. Enable deep analysis.
+- `--deep-analysis`: **For `github` mode only**. Enable deep analysis. (for now only supported by gemini-2.0-flash-thinking-exp model)
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
 - `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `0`).
 - `--files-context-window`: **For `dir` mode only**. Maximum token size for LLM context window. Automatically determined if not set.
@@ -449,9 +455,9 @@ poetry run python ai_security_analyzer/app.py \
     --include "**/*.java"
 ```
 
-## Deep Analysis in GitHub Mode
+## Deep Analysis in GitHub Mode (Experimental)
 
-Enable **Deep Analysis** in **GitHub Mode** to perform an in-depth examination of specific attack surfaces, threats, or attack trees within a GitHub repository.
+Enable **Deep Analysis** in **GitHub Mode** to perform an in-depth examination of specific attack surfaces, threats, or attack trees within a GitHub repository. Deep analysis is currently supported only by Gemini 2.0 Flash Thinking Experimental model.
 
 ### Enabling Deep Analysis
 
@@ -464,6 +470,9 @@ poetry run python ai_security_analyzer/app.py \
     -o output.md \
     --agent-prompt-type <prompt-type> \
     --deep-analysis
+    --agent-provider google \
+    --agent-model gemini-2.0-flash-thinking-exp \
+    --agent-temperature 0
 ```
 
 ### Deep Analysis Output
@@ -564,10 +573,10 @@ export OPENAI_API_KEY=your_openai_api_key
 ## Roadmap
 
 - [x] ~~Check results from sec-docs and update prompts to get predictable results - especially for `--deep-analysis`~~
-- [ ] Verify prompts with OpenAI o1, o1-pro, etc. models via API - need to get access to them first ☹️
+- [x] ~~Verify prompts with OpenAI o1, o1-pro, etc. models via API - need to get access to them first ☹️~~
 - [x] ~~Add support for `--continue` that will continue in case of error - currently intermediate data is lost when error occurs~~
 - [ ] Think about how to handle images in markdown - currently they are not supported (maybe https://github.com/microsoft/markitdown 🤔)
-- [ ] Add support for structured output when it will be available in reasoning models
+- [ ] Add support for structured output when it will be available in reasoning models - this way deep analysis will be supported by more models
 - [x] ~~Probably drop markdown validation - it's not working as expected - models still cannot fix problems with markdown 😡~~
 - [ ] Add `--input-context` option to add additional context to the analysis, e.g. existing mitigations, accepted risks, etc.
 

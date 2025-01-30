@@ -189,7 +189,7 @@ def parse_arguments() -> AppConfig:
     agent_group.add_argument(
         "--deep-analysis",
         action="store_true",
-        help="Enable deep analysis for 'github' mode",
+        help="Enable experimental deep analysis for 'github' mode (only supported by Gemini 2.0 Flash Thinking Experimental model)",
     )
     agent_group.add_argument(
         "--recursion-limit",
