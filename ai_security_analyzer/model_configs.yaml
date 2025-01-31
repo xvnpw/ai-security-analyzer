@@ -29,9 +29,9 @@ models:
   gemini-2.0-flash-thinking-exp:
     max_number_of_tools: 0
     use_system_message: true
-    documents_chunk_size: 20000
+    documents_chunk_size: 60000
     documents_chunk_overlap: 0
-    documents_context_window: 21000
+    documents_context_window: 71000
     tokenizer_model_name: 'gpt2'
     supports_structured_output: false
 
