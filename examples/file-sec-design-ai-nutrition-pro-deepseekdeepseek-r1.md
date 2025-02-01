@@ -1,15 +1,3 @@
-mermaid
-C4Context
-    title System Context diagram for AI Nutrition-Pro
-    System(AI_Nutrition_Pro, "AI Nutrition-Pro", "AI-powered content generation system for dietitians")
-    Person(Admin, "Administrator", "Manages system configuration and operations")
-    System(Meal_Planner, "Meal Planner Application", "External diet planning system")
-    System(ChatGPT, "ChatGPT-3.5", "OpenAI LLM service")
-    Rel(Meal_Planner, AI_Nutrition_Pro, "Submits content samples\nRetrieves AI-generated content", "HTTPS/REST")
-    Rel(Admin, AI_Nutrition_Pro, "Manages configurations\nMonitors operations", "HTTPS")
-    Rel(AI_Nutrition_Pro, ChatGPT, "Sends generation requests\nReceives LLM responses", "HTTPS/REST")
-```
-
 ## BUSINESS POSTURE
 **Primary Business Goals:**
 1. Provide AI-driven content generation for dietitians

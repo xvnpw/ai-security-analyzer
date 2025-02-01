@@ -69,3 +69,46 @@
 | [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-da-attack-surface-flask-gemini-2.0-flash-thinking-exp.md --agent-model gemini-2.0-flash-thinking-exp --agent-temperature 0 --agent-prompt-type attack-surface --agent-provider google --deep-analysis```</details> | python | gemini-2.0-flash-thinking-exp | [attack-surface](github-da-attack-surface-flask-gemini-2.0-flash-thinking-exp.md) |
 | [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-da-attack-tree-flask-gemini-2.0-flash-thinking-exp.md --agent-model gemini-2.0-flash-thinking-exp --agent-temperature 0 --agent-prompt-type attack-tree --agent-provider google --deep-analysis```</details> | python | gemini-2.0-flash-thinking-exp | [attack-tree](github-da-attack-tree-flask-gemini-2.0-flash-thinking-exp.md) |
 | [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-da-mitigations-flask-gemini-2.0-flash-thinking-exp.md --agent-model gemini-2.0-flash-thinking-exp --agent-temperature 0 --agent-prompt-type mitigations --agent-provider google --deep-analysis```</details> | python | gemini-2.0-flash-thinking-exp | [mitigations](github-da-mitigations-flask-gemini-2.0-flash-thinking-exp.md) |
+## dir mode
+
+| Project Name | Project Type | Model | Documentation |
+| --- | --- | --- | --- |
+| [screenshot-to-code](https://github.com/abi/screenshot-to-code)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py dir -t ../screenshot-to-code/ -v -o examples/dir-mitigations-screenshot-to-code-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type mitigations --agent-provider openai```</details> | python | o3-mini | [mitigations](dir-mitigations-screenshot-to-code-o3-mini.md) |
+
+## file mode
+
+| Project Name | Project Type | Model | Documentation |
+| --- | --- | --- | --- |
+| [AI Nutrition-Pro](../tests/EXAMPLE_ARCHITECTURE.md)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-mitigations-ai-nutrition-pro-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type mitigations --agent-provider openai```</details> | python | o3-mini | [mitigations](file-mitigations-ai-nutrition-pro-o3-mini.md) |
+
+## github mode
+
+| Project Name | Project Type | Model | Documentation |
+| --- | --- | --- | --- |
+| [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-mitigations-flask-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type mitigations --agent-provider openai```</details> | python | o3-mini | [mitigations](github-mitigations-flask-o3-mini.md) |
+## dir mode
+
+| Project Name | Project Type | Model | Documentation |
+| --- | --- | --- | --- |
+| [screenshot-to-code](https://github.com/abi/screenshot-to-code)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py dir -t ../screenshot-to-code/ -v -o examples/dir-sec-design-screenshot-to-code-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type sec-design --agent-provider openai```</details> | python | o3-mini | [sec-design](dir-sec-design-screenshot-to-code-o3-mini.md) |
+| [screenshot-to-code](https://github.com/abi/screenshot-to-code)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py dir -t ../screenshot-to-code/ -v -o examples/dir-threat-modeling-screenshot-to-code-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type threat-modeling --agent-provider openai```</details> | python | o3-mini | [threat-modeling](dir-threat-modeling-screenshot-to-code-o3-mini.md) |
+| [screenshot-to-code](https://github.com/abi/screenshot-to-code)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py dir -t ../screenshot-to-code/ -v -o examples/dir-attack-surface-screenshot-to-code-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type attack-surface --agent-provider openai```</details> | python | o3-mini | [attack-surface](dir-attack-surface-screenshot-to-code-o3-mini.md) |
+| [screenshot-to-code](https://github.com/abi/screenshot-to-code)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py dir -t ../screenshot-to-code/ -v -o examples/dir-attack-tree-screenshot-to-code-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type attack-tree --agent-provider openai```</details> | python | o3-mini | [attack-tree](dir-attack-tree-screenshot-to-code-o3-mini.md) |
+
+## file mode
+
+| Project Name | Project Type | Model | Documentation |
+| --- | --- | --- | --- |
+| [AI Nutrition-Pro](../tests/EXAMPLE_ARCHITECTURE.md)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-sec-design-ai-nutrition-pro-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type sec-design --agent-provider openai```</details> | python | o3-mini | [sec-design](file-sec-design-ai-nutrition-pro-o3-mini.md) |
+| [AI Nutrition-Pro](../tests/EXAMPLE_ARCHITECTURE.md)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-threat-modeling-ai-nutrition-pro-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type threat-modeling --agent-provider openai```</details> | python | o3-mini | [threat-modeling](file-threat-modeling-ai-nutrition-pro-o3-mini.md) |
+| [AI Nutrition-Pro](../tests/EXAMPLE_ARCHITECTURE.md)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-attack-surface-ai-nutrition-pro-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type attack-surface --agent-provider openai```</details> | python | o3-mini | [attack-surface](file-attack-surface-ai-nutrition-pro-o3-mini.md) |
+| [AI Nutrition-Pro](../tests/EXAMPLE_ARCHITECTURE.md)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-attack-tree-ai-nutrition-pro-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type attack-tree --agent-provider openai```</details> | python | o3-mini | [attack-tree](file-attack-tree-ai-nutrition-pro-o3-mini.md) |
+
+## github mode
+
+| Project Name | Project Type | Model | Documentation |
+| --- | --- | --- | --- |
+| [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-sec-design-flask-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type sec-design --agent-provider openai```</details> | python | o3-mini | [sec-design](github-sec-design-flask-o3-mini.md) |
+| [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-threat-modeling-flask-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type threat-modeling --agent-provider openai```</details> | python | o3-mini | [threat-modeling](github-threat-modeling-flask-o3-mini.md) |
+| [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-attack-surface-flask-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type attack-surface --agent-provider openai```</details> | python | o3-mini | [attack-surface](github-attack-surface-flask-o3-mini.md) |
+| [flask](https://github.com/pallets/flask)<br/><details><summary>commands...</summary>```bash python ai_security_analyzer/app.py github -t https://github.com/pallets/flask -v -o examples/github-attack-tree-flask-o3-mini.md --agent-model o3-mini --agent-temperature 1 --agent-prompt-type attack-tree --agent-provider openai```</details> | python | o3-mini | [attack-tree](github-attack-tree-flask-o3-mini.md) |
