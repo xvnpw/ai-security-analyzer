@@ -84,7 +84,7 @@ docker run -v ~/path/to/your/project:/target \
 
 🥇 Google - Gemini 2.0 Flash Thinking Experimental<br/>
 🥈 OpenAI - o1 family models (at least o1-preview)<br/>
-🥉 DeepSeek - DeepSeek R1
+🥉 DeepSeek - DeepSeek R1 and other models (GPT-4o, Claude 3.5 Sonnet, etc.)
 
 ## Token Usage and Cost Management ⚠️
 
