@@ -1,12 +1,12 @@
 #!/bin/bash
 
-AGENT_PROMPT_TYPES="sec-design threat-modeling attack-surface attack-tree" # mitigations"
+AGENT_PROMPT_TYPES="sec-design threat-modeling attack-surface attack-tree mitigations"
 
 declare -A models
 # models["o1"]="openai"
-models["o3-mini"]="openai"
+# models["o3-mini"]="openai"
 # models["gemini-2.0-flash-thinking-exp"]="google"
-# models["deepseek/deepseek-r1"]="openrouter"
+models["deepseek/deepseek-r1"]="openrouter"
 
 declare -A temperatures
 temperatures["o1"]="1"

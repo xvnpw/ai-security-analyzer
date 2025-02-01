@@ -1,39 +1,42 @@
-# Project Design Document: Flask (pallets/flask)
+# Project Design Document: Flask Web Framework
 
 ## BUSINESS POSTURE
 
 **Business Priorities and Goals:**
-1. Provide a lightweight, modular web framework for Python developers.
-2. Enable rapid development of web applications with minimal boilerplate.
-3. Maintain backward compatibility while allowing extensibility through extensions.
-4. Foster an open-source ecosystem around microservices and small-to-medium web apps.
+- Provide a lightweight, modular, and extensible web framework for Python developers.
+- Maintain simplicity while enabling rapid development of web applications.
+- Foster a large open-source community for contributions and support.
 
 **Key Business Risks:**
-1. Framework vulnerabilities impacting downstream applications (reputational risk)
-2. Over-reliance on community-maintained extensions (supply chain risk)
-3. Competition with full-stack frameworks offering built-in security features
-4. Maintaining security in minimalist design philosophy vs. enterprise feature expectations
+1. **Framework Vulnerabilities:** Security flaws in Flask could propagate to downstream applications.
+2. **Project Sustainability:** Reliance on volunteer maintainers risks delayed updates or abandonment.
+3. **Third-Party Dependency Risks:** Vulnerabilities in dependencies (e.g., Werkzeug, Jinja) may compromise Flask's security.
+
+---
 
 ## SECURITY POSTURE
 
 **Existing Security Controls:**
-1. Security Control: Secure session management (implemented in `flask.sessions`)
-2. Security Control: CSRF protection via Flask-WTF extension (documented in Flask docs)
-3. Security Control: Input sanitization through Werkzeug (base dependency)
-4. Accepted Risk: No built-in authentication system (delegated to extensions)
-5. Accepted Risk: Default development server not production-hardened
+- **Security Control:** Automated testing via GitHub Actions (implemented in `.github/workflows`).
+- **Security Control:** Dependency scanning via Dependabot (configured in `dependabot.yml`).
+- **Security Control:** Code review process for pull requests (enforced via GitHub branch protections).
 
-**Recommended Security Controls:**
-1. Formal security audit program for core framework
-2. Vulnerability disclosure program with CVE tracking
-3. SBOM generation for release artifacts
-4. Integration with OWASP Python Security Project
+**Accepted Risks:**
+- No formal SAST (Static Application Security Testing) integration in CI/CD.
+- Limited documentation on secure coding practices for Flask extension developers.
+
+**Recommended Security Controls (High Priority):**
+1. Integrate SAST tools (e.g., Bandit, Semgrep) into GitHub Actions.
+2. Implement signed releases for PyPI packages.
+3. Add threat modeling for new feature proposals.
 
 **Security Requirements:**
-- Authentication: Must support integration with standard auth mechanisms (OAuth2, OpenID Connect)
-- Authorization: Role-based access control through extensions
-- Input Validation: Built-in request parsing with Werkzeug
-- Cryptography: TLS 1.2+ support through WSGI server implementation
+- **Authentication:** Not natively provided; developers must implement via extensions (e.g., Flask-Login).
+- **Authorization:** Delegated to application-layer logic or third-party libraries.
+- **Input Validation:** Relies on Werkzeug's form/data parsing with basic sanitization.
+- **Cryptography:** Uses Python's `secrets` module for session cookie signing (default).
+
+---
 
 ## DESIGN
 
@@ -41,107 +44,114 @@
 
 ```mermaid
 graph TD
-    A[Web Browser] -->|HTTP Requests| B[Flask Application]
-    B -->|Database Queries| C[(SQL Database)]
-    B -->|API Calls| D[External Services]
-    E[Developer] -->|Writes Code| B
-    F[CI/CD System] -->|Deploys| B
+  A[Developer] -->|Contributes Code| B[Flask Repository]
+  B -->|Depends On| C[Werkzeug]
+  B -->|Depends On| D[Jinja2]
+  E[Web Application] -->|Uses| B
+  F[End User] -->|Interacts With| E
 ```
+
+**Context Diagram Elements Table:**
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|------------------|-------------------|
-| Web Browser | User Interface | End-user access point | Render UI, handle user input | HTTPS enforcement |
-| Flask Application | Software System | Core web application | Process requests, business logic | CSRF protection |
-| SQL Database | Data Store | Persistent data storage | Data persistence | Access controls |
-| External Services | External System | Third-party APIs | Specialized services | API key management |
-| Developer | Human | Application maintainer | Code development | Code signing |
-| CI/CD System | Automation | Deployment pipeline | Build/test/deploy | Pipeline security |
+| Flask Repository | Software System | Core Flask framework codebase | Provide HTTP request handling, routing, templating | Code reviews, automated tests |
+| Werkzeug | External System | WSGI utility library | HTTP protocol parsing, request/response objects | Dependency updates |
+| Jinja2 | External System | Templating engine | Render HTML templates | Input sanitization |
+| Developer | Human | Contributor/maintainer | Code development, issue triaging | 2FA enforcement |
+| Web Application | Software System | Flask-based application | Serve user-facing features | N/A (application-specific) |
 
 ### C4 CONTAINER
 
 ```mermaid
 graph TD
-    A[Web Browser] --> B[Flask App Container]
-    B --> C[WSGI Server]
-    C --> D[Application Code]
-    D --> E[Flask Core]
-    E --> F[Werkzeug]
-    E --> G[Jinja2]
-    B --> H[Extensions]
+  A[Web Browser] -->|HTTP Requests| B[Flask Application]
+  B -->|Uses| C[Flask Framework]
+  C -->|Renders| D[Jinja2 Templates]
+  C -->|Handles WSGI| E[Werkzeug]
 ```
+
+**Container Diagram Elements Table:**
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|------------------|-------------------|
-| WSGI Server | Container | HTTP request handler | Request routing | Request validation |
-| Application Code | Container | Business logic | Implement features | Input validation |
-| Flask Core | Component | Framework core | Provide base features | Session security |
-| Werkzeug | Component | Utility library | HTTP handling | Secure headers |
-| Jinja2 | Component | Templating engine | Template rendering | Autoescaping |
+| Flask Application | Container | Custom application logic | Implement business rules | Session management |
+| Flask Framework | Container | Core library | Route requests, process middleware | Secure defaults |
+| Jinja2 Templates | Container | Template files | Generate dynamic HTML | Auto-escaping enabled |
+| Werkzeug | Container | WSGI server | Parse HTTP headers | Request size limits |
 
 ### DEPLOYMENT
 
-**Typical Production Deployment:**
+**Common Deployment Architectures:**
+1. Traditional WSGI Server (Gunicorn/uWSGI + Nginx)
+2. Serverless (AWS Lambda + API Gateway)
+3. Containerized (Docker + Kubernetes)
+
+**Selected Deployment (Traditional WSGI):**
 ```mermaid
 graph TD
-    A[CDN] --> B[Load Balancer]
-    B --> C[App Server 1]
-    B --> D[App Server 2]
-    C --> E[Redis Cache]
-    D --> E
-    C --> F[Database Cluster]
-    D --> F
+  A[User] -->|HTTPS| B[Nginx]
+  B -->|Proxy| C[Gunicorn]
+  C -->|WSGI| D[Flask App]
+  D -->|Database| E[PostgreSQL]
 ```
+
+**Deployment Elements Table:**
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|------------------|-------------------|
-| CDN | Infrastructure | Content delivery | Static asset caching | DDoS protection |
-| Load Balancer | Infrastructure | Traffic distribution | SSL termination | WAF integration |
-| App Server | Container | Flask application | Request processing | Runtime security |
-| Redis Cache | Data Store | Session storage | Temporary data | Encryption at rest |
-| Database Cluster | Data Store | Primary data storage | Data persistence | TDE implementation |
+| Nginx | Infrastructure | Web server | TLS termination, rate limiting | TLS 1.3 enforcement |
+| Gunicorn | Infrastructure | WSGI server | Process management | Worker isolation |
+| Flask App | Container | Application runtime | Execute business logic | Secure session cookies |
+| PostgreSQL | Infrastructure | Database | Store persistent data | Encryption at rest |
 
 ### BUILD
 
-**CI/CD Pipeline:**
+**Build Process:**
+1. Developer commits to `main` branch (protected)
+2. GitHub Actions runs:
+   - Unit tests with pytest
+   - Linting via flake8
+   - Documentation build
+3. Successful builds trigger PyPI release via Twine
+
+**Security Controls:**
+- Branch protection requiring 2 maintainer approvals
+- Cryptographic signing of PyPI packages
+- Dependency version pinning in `requirements.txt`
+
 ```mermaid
 graph LR
-    A[Developer] -->|Commits| B[GitHub]
-    B -->|Triggers| C[GitHub Actions]
-    C --> D[Unit Tests]
-    C --> E[Linting]
-    C --> F[Dependency Scanning]
-    C --> G[Build Package]
-    G --> H[PyPI Registry]
+  A[Developer] -->|PR| B[GitHub]
+  B -->|Triggers| C[GitHub Actions]
+  C -->|Runs| D[Tests & Lint]
+  C -->|Publishes| E[PyPI]
 ```
 
-Security Controls:
-1. Signed git commits enforcement
-2. Automated security scanning (Bandit, Safety)
-3. Twine package signing
-4. Peer review requirements
+---
 
 ## RISK ASSESSMENT
 
 **Critical Business Processes:**
-1. Web application request handling integrity
-2. Session management reliability
-3. Extension ecosystem trust chain
+- HTTP request handling pipeline
+- Template rendering system
+- Extension ecosystem management
 
-**Data Protection Requirements:**
-- Sensitivity Levels:
-  1. High: User authentication credentials
-  2. Medium: Application configuration
-  3. Low: Static assets
+**Data to Protect:**
+- Session cookies (signed but not encrypted by default)
+- Application secrets (SECRET_KEY configuration)
+- User-supplied input (forms, URL parameters)
+
+---
 
 ## QUESTIONS & ASSUMPTIONS
 
 **Questions:**
-1. Is there a formal security review process for community extensions?
-2. What is the incident response process for framework vulnerabilities?
-3. Are there SLAs for security patch releases?
+1. Is there a formal process for security audits of third-party dependencies?
+2. How are secrets managed in the CI/CD pipeline for PyPI deployments?
+3. What is the SLA for addressing critical CVEs in released versions?
 
 **Assumptions:**
-1. Deployment uses WSGI server with security hardening
-2. Developers follow Flask security guidelines
-3. Extensions are vetted before production use
-4. Monitoring covers application-layer attacks
+- Flask is primarily deployed in production environments with reverse proxies
+- Developers follow WSGI server hardening guidelines
+- Applications implement additional security layers (e.g., WAF) externally
