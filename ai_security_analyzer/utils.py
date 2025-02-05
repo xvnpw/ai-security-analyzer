@@ -1,6 +1,8 @@
-from langchain_core.messages import BaseMessage, AIMessage
+from langchain_core.messages import BaseMessage, AIMessage, SystemMessage, HumanMessage
 from pathvalidate import sanitize_filename
 import hashlib
+from ai_security_analyzer.llms import ModelConfig
+from typing import Union
 
 
 def clean_markdown(markdown: str) -> str:
@@ -85,3 +87,17 @@ def format_filename(filename: str) -> str:
         sanitized = f"{sanitized[:100]}_{md5_hash}"
 
     return sanitized
+
+
+def create_system_message(prompt: str, model_config: ModelConfig) -> Union[SystemMessage, HumanMessage]:
+    if not model_config.use_system_message:
+        return HumanMessage(content=prompt)
+
+    if model_config.system_message_type == "system":
+        return SystemMessage(content=prompt)
+    elif model_config.system_message_type == "developer":
+        system_message = SystemMessage(content=prompt)
+        system_message.additional_kwargs = {"__openai_role__": "developer"}
+        return system_message
+    else:
+        raise ValueError(f"Cannot create system message: {model_config}")

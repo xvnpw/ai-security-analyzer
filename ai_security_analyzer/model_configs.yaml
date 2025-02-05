@@ -2,6 +2,7 @@ models:
   gpt-4o:
     max_number_of_tools: 128
     use_system_message: true
+    system_message_type: 'system'
     documents_chunk_size: 60000
     documents_chunk_overlap: 0
     documents_context_window: 70000
@@ -29,6 +30,7 @@ models:
   gemini-2.0-flash-thinking-exp:
     max_number_of_tools: 0
     use_system_message: true
+    system_message_type: 'system'
     documents_chunk_size: 60000
     documents_chunk_overlap: 0
     documents_context_window: 71000
@@ -38,25 +40,30 @@ models:
   deepseek/deepseek-r1:
     max_number_of_tools: 0
     use_system_message: true
+    system_message_type: 'system'
     documents_chunk_size: 55000
     documents_chunk_overlap: 0
     documents_context_window: 60000
     tokenizer_model_name: 'gpt2'
     supports_structured_output: false
 
+
   o1:
     max_number_of_tools: 0
-    use_system_message: false
+    use_system_message: true
+    system_message_type: 'developer'
     documents_chunk_size: 90000
     documents_chunk_overlap: 0
     documents_context_window: 100000
     tokenizer_model_name: 'gpt-4'
     supports_structured_output: false
     reasoning_effort: 'high'
+
 
   openai/o1:
     max_number_of_tools: 0
-    use_system_message: false
+    use_system_message: true
+    system_message_type: 'developer'
     documents_chunk_size: 90000
     documents_chunk_overlap: 0
     documents_context_window: 100000
@@ -64,19 +71,23 @@ models:
     supports_structured_output: false
     reasoning_effort: 'high'
 
+
   o3-mini:
     max_number_of_tools: 0
-    use_system_message: false
+    use_system_message: true
+    system_message_type: 'developer'
     documents_chunk_size: 90000
     documents_chunk_overlap: 0
     documents_context_window: 100000
     tokenizer_model_name: 'gpt-4'
     supports_structured_output: false
     reasoning_effort: 'high'
+
 
 default:
   max_number_of_tools: 1000
   use_system_message: true
+  system_message_type: 'system'
   documents_chunk_size: 60000
   documents_chunk_overlap: 0
   documents_context_window: 70000

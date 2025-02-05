@@ -8,15 +8,15 @@ from ai_security_analyzer.utils import format_filename
 @pytest.mark.parametrize(
     "agent_prompt_type,agent_provider,agent_model,agent_temperature",
     [
-        ("sec-design", "openai", "o1", 1),
+        ("sec-design", "openai", "o3-mini", 1),
         ("sec-design", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("threat-modeling", "openai", "o1", 1),
+        ("threat-modeling", "openai", "o3-mini", 1),
         ("threat-modeling", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("attack-surface", "openai", "o1", 1),
+        ("attack-surface", "openai", "o3-mini", 1),
         ("attack-surface", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("attack-tree", "openai", "o1", 1),
+        ("attack-tree", "openai", "o3-mini", 1),
         ("attack-tree", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("mitigations", "openai", "o1", 1),
+        ("mitigations", "openai", "o3-mini", 1),
         ("mitigations", "google", "gemini-2.0-flash-thinking-exp", 0),
     ],
 )
@@ -49,15 +49,15 @@ def test_app_github_mode(agent_prompt_type, agent_provider, agent_model, agent_t
 @pytest.mark.parametrize(
     "agent_prompt_type,agent_provider,agent_model,agent_temperature",
     [
-        ("sec-design", "openai", "o1", 1),
+        ("sec-design", "openai", "o3-mini", 1),
         ("sec-design", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("threat-modeling", "openai", "o1", 1),
+        ("threat-modeling", "openai", "o3-mini", 1),
         ("threat-modeling", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("attack-surface", "openai", "o1", 1),
+        ("attack-surface", "openai", "o3-mini", 1),
         ("attack-surface", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("attack-tree", "openai", "o1", 1),
+        ("attack-tree", "openai", "o3-mini", 1),
         ("attack-tree", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("mitigations", "openai", "o1", 1),
+        ("mitigations", "openai", "o3-mini", 1),
         ("mitigations", "google", "gemini-2.0-flash-thinking-exp", 0),
     ],
 )
@@ -78,6 +78,7 @@ def test_app_file_mode(agent_prompt_type, agent_provider, agent_model, agent_tem
             agent_temperature=agent_temperature,
             agent_prompt_type=agent_prompt_type,
             verbose=True,
+            refinement_count=1,
         )
 
         app(config)
@@ -90,15 +91,15 @@ def test_app_file_mode(agent_prompt_type, agent_provider, agent_model, agent_tem
 @pytest.mark.parametrize(
     "agent_prompt_type,agent_provider,agent_model,agent_temperature",
     [
-        ("sec-design", "openai", "o1", 1),
+        ("sec-design", "openai", "o3-mini", 1),
         ("sec-design", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("threat-modeling", "openai", "o1", 1),
+        ("threat-modeling", "openai", "o3-mini", 1),
         ("threat-modeling", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("attack-surface", "openai", "o1", 1),
+        ("attack-surface", "openai", "o3-mini", 1),
         ("attack-surface", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("attack-tree", "openai", "o1", 1),
+        ("attack-tree", "openai", "o3-mini", 1),
         ("attack-tree", "google", "gemini-2.0-flash-thinking-exp", 0),
-        ("mitigations", "openai", "o1", 1),
+        ("mitigations", "openai", "o3-mini", 1),
         ("mitigations", "google", "gemini-2.0-flash-thinking-exp", 0),
     ],
 )

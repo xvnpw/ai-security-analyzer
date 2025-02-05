@@ -38,12 +38,18 @@ class ModelConfig:
     tokenizer_model_name: str
     supports_structured_output: bool
     reasoning_effort: Optional[str] = None
+    system_message_type: Optional[Literal["system", "developer"]] = None
+
+    def __post_init__(self) -> None:
+        if self.use_system_message and self.system_message_type is None:
+            raise ValueError("system_message_type must be set when use_system_message is True")
 
 
 @dataclass(frozen=True)
 class LLM:
     llm: BaseChatModel
     model_config: ModelConfig
+    provider: ProviderType
 
 
 @dataclass(frozen=True)
@@ -115,6 +121,7 @@ class LLMProvider:
                 self._model_configs[model_name] = ModelConfig(
                     max_number_of_tools=mc.get("max_number_of_tools", 0),
                     use_system_message=mc.get("use_system_message", False),
+                    system_message_type=mc.get("system_message_type", None),
                     documents_chunk_size=self._get_chunk_size(mc, config),
                     documents_chunk_overlap=mc.get("documents_chunk_overlap", 0),
                     documents_context_window=self._get_context_window(mc, config),
@@ -128,6 +135,7 @@ class LLMProvider:
             self._default_model_config = ModelConfig(
                 max_number_of_tools=default_mc.get("max_number_of_tools", 1000),
                 use_system_message=default_mc.get("use_system_message", True),
+                system_message_type=default_mc.get("system_message_type", None),
                 documents_chunk_size=self._get_chunk_size(default_mc, config),
                 documents_chunk_overlap=default_mc.get("documents_chunk_overlap", 0),
                 documents_context_window=self._get_context_window(default_mc, config),
@@ -189,6 +197,7 @@ class LLMProvider:
         return LLM(
             llm=llm_instance,
             model_config=model_config,
+            provider=llm_config.provider,
         )
 
     def create_agent_llm(self) -> LLM:

@@ -32,6 +32,7 @@ models:
     tokenizer_model_name: 'test-tokenizer'
     supports_structured_output: true
     reasoning_effort: 'low'
+    system_message_type: 'developer'
   test-model-no-reasoning:
     max_number_of_tools: 5
     use_system_message: true
@@ -40,6 +41,7 @@ models:
     documents_context_window: 2000
     tokenizer_model_name: 'test-tokenizer'
     supports_structured_output: true
+    system_message_type: 'system'
 default:
   max_number_of_tools: 10
   use_system_message: false
@@ -129,8 +131,9 @@ def test_llm_dataclass():
         documents_context_window=200,
         tokenizer_model_name="test_tokenizer",
         supports_structured_output=False,
+        system_message_type="system",
     )
-    llm_obj = LLM(llm=mock_llm_instance, model_config=mock_model_config)
+    llm_obj = LLM(llm=mock_llm_instance, model_config=mock_model_config, provider="fake")
     assert isinstance(llm_obj.llm, ParrotFakeChatModel)
     assert isinstance(llm_obj.model_config, ModelConfig)
     assert llm_obj.model_config.max_number_of_tools == 1

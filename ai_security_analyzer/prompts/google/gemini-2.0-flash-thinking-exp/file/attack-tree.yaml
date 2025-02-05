@@ -17,3 +17,7 @@ templates:
       - Detection Difficulty: How easy would it be to detect the attack?
 
       Exclude low severity attack steps and keep only medium, high and critical attack steps.
+
+      - When the `CURRENT ATTACK TREE` is not empty, it indicates that a draft of this document was created in previous interactions using `FILE` content. In this case, integrate new findings from the current `FILE` into the existing `CURRENT ATTACK TREE`. Ensure consistency and avoid duplication.
+
+      - If the `CURRENT ATTACK TREE` is empty, proceed to create a new attack tree based on the `FILE` content.
