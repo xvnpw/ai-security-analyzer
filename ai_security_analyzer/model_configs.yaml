@@ -8,6 +8,7 @@ models:
     documents_context_window: 70000
     tokenizer_model_name: 'gpt-4o'
     supports_structured_output: true
+    structured_output_supports_temperature: true
 
   o1-preview:
     max_number_of_tools: 0

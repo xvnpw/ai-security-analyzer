@@ -2,7 +2,7 @@ import logging
 import os
 import sys
 from dataclasses import dataclass
-from typing import Any, Literal, Type, Optional, Dict
+from typing import Any, Literal, Type, Optional, Dict, List, Union
 from pathlib import Path
 
 import yaml
@@ -11,6 +11,7 @@ from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_openai import ChatOpenAI
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.language_models.fake_chat_models import ParrotFakeChatModel
+from langchain_core.messages import BaseMessage, SystemMessage, HumanMessage
 
 from ai_security_analyzer.constants import (
     OPENAI_API_KEY,
@@ -37,6 +38,7 @@ class ModelConfig:
     documents_context_window: int
     tokenizer_model_name: str
     supports_structured_output: bool
+    structured_output_supports_temperature: bool
     reasoning_effort: Optional[str] = None
     system_message_type: Optional[Literal["system", "developer"]] = None
 
@@ -45,11 +47,44 @@ class ModelConfig:
             raise ValueError("system_message_type must be set when use_system_message is True")
 
 
-@dataclass(frozen=True)
 class LLM:
-    llm: BaseChatModel
-    model_config: ModelConfig
-    provider: ProviderType
+    def __init__(self, llm: BaseChatModel, model_config: ModelConfig, provider: ProviderType):
+        self.llm = llm
+        self.model_config = model_config
+        self.provider = provider
+
+    def invoke(self, messages: list[Any]) -> BaseMessage:
+        """
+        Invokes the LLM with the given messages, applying message updates based on model config.
+        """
+        updated_messages: List[BaseMessage] = []
+        for message in messages:
+            if isinstance(message, SystemMessage):
+                updated_message = self._update_system_message(message)
+                updated_messages.append(updated_message)
+            else:
+                updated_messages.append(message)
+
+        return self.llm.invoke(updated_messages)
+
+    def _update_system_message(self, system_message: SystemMessage) -> Union[SystemMessage, HumanMessage]:
+        """
+        Updates a SystemMessage based on the model configuration.
+        If use_system_message is False, it converts SystemMessage to HumanMessage.
+        If system_message_type is 'developer', it adds additional kwargs.
+        """
+        prompt = system_message.content
+        if not self.model_config.use_system_message:
+            return HumanMessage(content=prompt)
+
+        if self.model_config.system_message_type == "system":
+            return SystemMessage(content=prompt)
+        elif self.model_config.system_message_type == "developer" and self.provider in ["openai", "fake"]:
+            updated_system_message = SystemMessage(content=prompt)
+            updated_system_message.additional_kwargs = {"__openai_role__": "developer"}
+            return updated_system_message
+        else:
+            raise ValueError(f"Cannot create system message: {self.model_config}")
 
 
 @dataclass(frozen=True)
@@ -57,6 +92,7 @@ class LLMConfig:
     provider: ProviderType
     model: str
     temperature: float
+    for_structured_output: bool
 
 
 @dataclass(frozen=True)
@@ -128,6 +164,7 @@ class LLMProvider:
                     tokenizer_model_name=mc.get("tokenizer_model_name", "gpt2"),
                     supports_structured_output=mc.get("supports_structured_output", False),
                     reasoning_effort=mc.get("reasoning_effort", None),
+                    structured_output_supports_temperature=mc.get("structured_output_supports_temperature", False),
                 )
 
             # Define default model configuration
@@ -142,9 +179,11 @@ class LLMProvider:
                 tokenizer_model_name=default_mc.get("tokenizer_model_name", "gpt2"),
                 supports_structured_output=default_mc.get("supports_structured_output", False),
                 reasoning_effort=default_mc.get("reasoning_effort", None),
+                structured_output_supports_temperature=default_mc.get("structured_output_supports_temperature", False),
             )
         except Exception as e:
             logger.error(f"Failed to load model configurations: {e}")
+
             sys.exit(1)
 
     def _get_llm_instance(self, llm_config: LLMConfig) -> LLM:
@@ -171,6 +210,12 @@ class LLMProvider:
             }
             if provider_config.api_base:
                 kwargs["openai_api_base"] = provider_config.api_base
+
+            if model_config.supports_structured_output and llm_config.for_structured_output:
+                if not model_config.structured_output_supports_temperature:
+                    kwargs["temperature"] = None
+                kwargs["disabled_params"] = {"parallel_tool_calls": None}
+
         elif provider_config.model_class == ChatAnthropic:
             kwargs = {
                 "temperature": llm_config.temperature,
@@ -206,6 +251,7 @@ class LLMProvider:
                 provider=self.config.agent_provider,
                 model=self.config.agent_model,
                 temperature=self.config.agent_temperature,
+                for_structured_output=False,
             )
         )
 
@@ -220,5 +266,6 @@ class LLMProvider:
                 provider=self.config.agent_provider,
                 model=self.config.agent_model,
                 temperature=temperature,
+                for_structured_output=True,
             )
         )

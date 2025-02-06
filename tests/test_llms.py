@@ -18,6 +18,7 @@ from ai_security_analyzer.constants import (
     DEFAULT_CONTEXT_WINDOW,
     DEFAULT_CHUNK_SIZE,
 )
+from langchain_core.messages import SystemMessage, HumanMessage
 
 
 # --- Mock model_configs.yaml content for testing ---
@@ -30,7 +31,7 @@ models:
     documents_chunk_overlap: 50
     documents_context_window: 2000
     tokenizer_model_name: 'test-tokenizer'
-    supports_structured_output: true
+    supports_structured_output: false
     reasoning_effort: 'low'
     system_message_type: 'developer'
   test-model-no-reasoning:
@@ -40,7 +41,7 @@ models:
     documents_chunk_overlap: 50
     documents_context_window: 2000
     tokenizer_model_name: 'test-tokenizer'
-    supports_structured_output: true
+    supports_structured_output: false
     system_message_type: 'system'
 default:
   max_number_of_tools: 10
@@ -109,6 +110,7 @@ def test_model_config_dataclass():
         "tokenizer_model_name": "test_tokenizer",
         "supports_structured_output": False,
         "reasoning_effort": "medium",
+        "structured_output_supports_temperature": False,
     }
     model_config = ModelConfig(**config_data)
     assert model_config.max_number_of_tools == 3
@@ -132,15 +134,17 @@ def test_llm_dataclass():
         tokenizer_model_name="test_tokenizer",
         supports_structured_output=False,
         system_message_type="system",
+        structured_output_supports_temperature=False,
     )
     llm_obj = LLM(llm=mock_llm_instance, model_config=mock_model_config, provider="fake")
     assert isinstance(llm_obj.llm, ParrotFakeChatModel)
     assert isinstance(llm_obj.model_config, ModelConfig)
+
     assert llm_obj.model_config.max_number_of_tools == 1
 
 
 def test_llm_config_dataclass():
-    llm_config = LLMConfig(provider="openai", model="gpt-4o", temperature=0.5)
+    llm_config = LLMConfig(provider="openai", model="gpt-4o", temperature=0.5, for_structured_output=False)
     assert llm_config.provider == "openai"
     assert llm_config.model == "gpt-4o"
     assert llm_config.temperature == 0.5
@@ -218,7 +222,7 @@ def test_get_context_window_default(app_config, llm_provider):
 
 @patch.dict(os.environ, {OPENAI_API_KEY: "test_openai_key"})
 def test_get_llm_instance_openai(llm_provider, app_config):
-    llm_config = LLMConfig(provider="openai", model="gpt-4o", temperature=0.1)
+    llm_config = LLMConfig(provider="openai", model="gpt-4o", temperature=0.1, for_structured_output=False)
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ChatOpenAI)
     assert llm_instance.llm.temperature == 0.1
@@ -228,7 +232,7 @@ def test_get_llm_instance_openai(llm_provider, app_config):
 
 @patch.dict(os.environ, {OPENROUTER_API_KEY: "test_openrouter_key"})
 def test_get_llm_instance_openrouter(llm_provider, app_config):
-    llm_config = LLMConfig(provider="openrouter", model="test-model", temperature=0.2)
+    llm_config = LLMConfig(provider="openrouter", model="test-model", temperature=0.2, for_structured_output=False)
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ChatOpenAI)  # OpenRouter uses ChatOpenAI class
     assert llm_instance.llm.temperature == 0.2
@@ -239,7 +243,7 @@ def test_get_llm_instance_openrouter(llm_provider, app_config):
 
 @patch.dict(os.environ, {ANTHROPIC_API_KEY: "test_anthropic_key"})
 def test_get_llm_instance_anthropic(llm_provider, app_config):
-    llm_config = LLMConfig(provider="anthropic", model="claude-v1.3", temperature=0.3)
+    llm_config = LLMConfig(provider="anthropic", model="claude-v1.3", temperature=0.3, for_structured_output=False)
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ChatAnthropic)
     assert llm_instance.llm.temperature == 0.3
@@ -249,7 +253,7 @@ def test_get_llm_instance_anthropic(llm_provider, app_config):
 
 @patch.dict(os.environ, {GOOGLE_API_KEY: "test_google_key"})
 def test_get_llm_instance_google(llm_provider, app_config):
-    llm_config = LLMConfig(provider="google", model="gemini-pro", temperature=0.4)
+    llm_config = LLMConfig(provider="google", model="gemini-pro", temperature=0.4, for_structured_output=False)
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ChatGoogleGenerativeAI)
     assert llm_instance.llm.temperature == 0.4
@@ -259,41 +263,41 @@ def test_get_llm_instance_google(llm_provider, app_config):
 
 @patch.dict(os.environ, {"FAKE_API_KEY": "test_fake_key"})
 def test_get_llm_instance_fake(llm_provider, app_config):
-    llm_config = LLMConfig(provider="fake", model="fake-model", temperature=0.5)
+    llm_config = LLMConfig(provider="fake", model="fake-model", temperature=0.5, for_structured_output=False)
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ParrotFakeChatModel)
 
 
 def test_get_llm_instance_unsupported_provider(llm_provider, app_config):
-    llm_config = LLMConfig(provider="unsupported", model="some-model", temperature=0.1)
+    llm_config = LLMConfig(provider="unsupported", model="some-model", temperature=0.1, for_structured_output=False)
     with pytest.raises(ValueError, match="Unsupported provider: unsupported"):
         llm_provider._get_llm_instance(llm_config)
 
 
 @patch.dict(os.environ, {}, clear=True)  # Ensure no API keys are set
 def test_get_llm_instance_missing_api_key_openai(llm_provider, app_config):
-    llm_config = LLMConfig(provider="openai", model="gpt-4o", temperature=0.1)
+    llm_config = LLMConfig(provider="openai", model="gpt-4o", temperature=0.1, for_structured_output=False)
     with pytest.raises(SystemExit):  # Expecting SystemExit because API key is missing
         llm_provider._get_llm_instance(llm_config)
 
 
 @patch.dict(os.environ, {}, clear=True)  # Ensure no API keys are set
 def test_get_llm_instance_missing_api_key_openrouter(llm_provider, app_config):
-    llm_config = LLMConfig(provider="openrouter", model="test-model", temperature=0.1)
+    llm_config = LLMConfig(provider="openrouter", model="test-model", temperature=0.1, for_structured_output=False)
     with pytest.raises(SystemExit):  # Expecting SystemExit because API key is missing
         llm_provider._get_llm_instance(llm_config)
 
 
 @patch.dict(os.environ, {}, clear=True)  # Ensure no API keys are set
 def test_get_llm_instance_missing_api_key_anthropic(llm_provider, app_config):
-    llm_config = LLMConfig(provider="anthropic", model="claude-v1.3", temperature=0.1)
+    llm_config = LLMConfig(provider="anthropic", model="claude-v1.3", temperature=0.1, for_structured_output=False)
     with pytest.raises(SystemExit):  # Expecting SystemExit because API key is missing
         llm_provider._get_llm_instance(llm_config)
 
 
 @patch.dict(os.environ, {}, clear=True)  # Ensure no API keys are set
 def test_get_llm_instance_missing_api_key_google(llm_provider, app_config):
-    llm_config = LLMConfig(provider="google", model="gemini-pro", temperature=0.1)
+    llm_config = LLMConfig(provider="google", model="gemini-pro", temperature=0.1, for_structured_output=False)
     with pytest.raises(SystemExit):  # Expecting SystemExit because API key is missing
         llm_provider._get_llm_instance(llm_config)
 
@@ -336,7 +340,7 @@ def test_create_agent_llm_for_structured_queries_fix_temp_model(llm_provider, ap
 
 @patch.dict(os.environ, {OPENAI_API_KEY: "test_openai_key"})
 def test_get_llm_instance_with_reasoning_effort(llm_provider, app_config):
-    llm_config = LLMConfig(provider="openai", model="test-model", temperature=0.1)
+    llm_config = LLMConfig(provider="openai", model="test-model", temperature=0.1, for_structured_output=False)
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ChatOpenAI)
     assert llm_instance.llm.reasoning_effort == "low"
@@ -345,8 +349,49 @@ def test_get_llm_instance_with_reasoning_effort(llm_provider, app_config):
 
 @patch.dict(os.environ, {OPENAI_API_KEY: "test_openai_key"})
 def test_get_llm_instance_no_reasoning_effort_in_config(llm_provider, app_config):
-    llm_config = LLMConfig(provider="openai", model="test-model-no-reasoning", temperature=0.1)
+    llm_config = LLMConfig(
+        provider="openai", model="test-model-no-reasoning", temperature=0.1, for_structured_output=False
+    )
     llm_instance = llm_provider._get_llm_instance(llm_config)
     assert isinstance(llm_instance.llm, ChatOpenAI)
     assert llm_instance.llm.reasoning_effort is None
     assert llm_instance.model_config.reasoning_effort is None
+
+
+@patch.dict(os.environ, {OPENAI_API_KEY: "test_openai_key"})
+def test_update_system_message_use_system_message_false(llm_provider, app_config):
+    llm_config = LLMConfig(
+        provider="openai", model="test-model-no-system", temperature=0.1, for_structured_output=False
+    )
+    llm_instance = llm_provider._get_llm_instance(llm_config)
+
+    system_message = SystemMessage(content="Test system message")
+    updated_message = llm_instance._update_system_message(system_message)
+    assert isinstance(updated_message, HumanMessage)
+    assert updated_message.content == "Test system message"
+
+
+@patch.dict(os.environ, {OPENAI_API_KEY: "test_openai_key"})
+def test_update_system_message_system_type(llm_provider, app_config):
+    llm_config = LLMConfig(
+        provider="openai", model="test-model-no-reasoning", temperature=0.1, for_structured_output=False
+    )
+    llm_instance = llm_provider._get_llm_instance(llm_config)
+
+    system_message = SystemMessage(content="Test system message")
+    updated_message = llm_instance._update_system_message(system_message)
+    assert isinstance(updated_message, SystemMessage)
+    assert updated_message.content == "Test system message"
+    assert updated_message.additional_kwargs == {}
+
+
+@patch.dict(os.environ, {OPENAI_API_KEY: "test_openai_key"})
+def test_update_system_message_developer_type_openai_provider(llm_provider, app_config):
+    llm_config = LLMConfig(provider="openai", model="test-model", temperature=0.1, for_structured_output=False)
+    llm_instance = llm_provider._get_llm_instance(llm_config)
+
+    system_message = SystemMessage(content="Test system message")
+    updated_message = llm_instance._update_system_message(system_message)
+    assert isinstance(updated_message, SystemMessage)
+    assert updated_message.content == "Test system message"
+    assert updated_message.additional_kwargs == {"__openai_role__": "developer"}

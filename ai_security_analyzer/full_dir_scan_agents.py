@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 import logging
-from typing import Any, List, Literal, Optional, Set, Union
+from typing import List, Literal, Optional, Set, Union
 from typing_extensions import TypedDict
 
 from langchain_core.documents import Document
@@ -13,12 +13,12 @@ from tiktoken import Encoding
 
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.loaders import RepoDirectoryLoader
-from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown, create_system_message
+from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.components import DocumentProcessingMixin
-from ai_security_analyzer.llms import ModelConfig
+
 
 logger = logging.getLogger(__name__)
 
@@ -105,12 +105,11 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
             logger.error(f"Error splitting documents: {e}")
             raise ValueError(f"Failed to split documents: {str(e)}")
 
-    def _create_initial_draft(  # type: ignore[no-untyped-def]
-        self, state: AgentState, llm: Any, model_config: ModelConfig
-    ):
+    def _create_initial_draft(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
         logger.info("Creating initial draft")
+
         try:
-            documents_context_window = model_config.documents_context_window
+            documents_context_window = llm.model_config.documents_context_window
 
             documents = state["splitted_docs"]
             if len(documents) == 0:
@@ -119,7 +118,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
             first_batch = self.doc_processor.get_docs_batch(documents, documents_context_window)
             logger.info(f"Processing first batch of documents: {len(first_batch)} of {len(documents)}")
 
-            agent_msg = create_system_message(self.agent_prompt, model_config)
+            agent_msg = SystemMessage(content=self.agent_prompt)
 
             human_prompt = self._create_human_prompt(
                 documents=documents,
@@ -142,12 +141,11 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
             logger.error(f"Error creating initial draft: {e}")
             raise ValueError(str(e))
 
-    def _update_draft_with_new_docs(  # type: ignore[no-untyped-def]
-        self, state: AgentState, llm: Any, model_config: ModelConfig
-    ):
+    def _update_draft_with_new_docs(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
         logger.info("Updating draft with new documents")
         try:
-            documents_context_window = model_config.documents_context_window
+            documents_context_window = llm.model_config.documents_context_window
+
             documents = state["splitted_docs"]
             current_description = state.get("sec_repo_doc", "")
             processed_count = state.get("processed_docs_count", 0)
@@ -164,9 +162,7 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
                 f"Processing next batch of documents: {len(next_batch)} [{processed_count+len(next_batch)} of {len(documents)}]"
             )
 
-            messages = self._create_update_messages(
-                processed_count, current_description, documents, next_batch, model_config
-            )
+            messages = self._create_update_messages(processed_count, current_description, documents, next_batch)
 
             response = llm.invoke(messages)
             document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
@@ -211,10 +207,10 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
             return self._split_docs_to_window(state)
 
         def create_initial_draft(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._create_initial_draft(state, llm.llm, llm.model_config)
+            return self._create_initial_draft(state, llm)
 
         def update_draft_with_new_docs(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._update_draft_with_new_docs(state, llm.llm, llm.model_config)
+            return self._update_draft_with_new_docs(state, llm)
 
         def update_draft_condition(state: AgentState) -> Literal["update_draft_with_new_docs", "final_response"]:
             return self._update_draft_condition(state)
@@ -246,10 +242,9 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
         current_description: str,
         documents: List[Document],
         batch: List[Document],
-        model_config: ModelConfig,
     ) -> List[Union[SystemMessage, HumanMessage]]:
         """Create messages for updating the draft"""
-        agent_msg = create_system_message(self.agent_prompt, model_config)
+        agent_msg = SystemMessage(content=self.agent_prompt)
 
         human_prompt = self._create_human_prompt(
             documents, batch, processed_count, "update", current_description, self.doc_type_prompt

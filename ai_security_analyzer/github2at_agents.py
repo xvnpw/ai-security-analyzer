@@ -7,7 +7,7 @@ from langgraph.graph import StateGraph
 from pydantic import BaseModel, Field
 
 from ai_security_analyzer.checkpointing import CheckpointManager
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename, clean_markdown
 from operator import add
 
@@ -72,7 +72,7 @@ class GithubAgent2At(BaseGithubDeepAnalysisAgent[AgentState, AttackTreeAnalysis]
             builder=StateGraph(AgentState),
         )
 
-    def _structured_parse_step(self, state: AgentState, llm_structured: Any) -> dict[str, Any]:
+    def _structured_parse_step(self, state: AgentState, llm_structured: LLM) -> dict[str, Any]:
         result = super()._structured_parse_step(state, llm_structured)
 
         tree_data = result["structured_data"]
@@ -89,7 +89,7 @@ class GithubAgent2At(BaseGithubDeepAnalysisAgent[AgentState, AttackTreeAnalysis]
             return "get_item_details"
         return "items_final_response"
 
-    def _get_item_details(self, state: AgentState, llm: Any) -> dict[str, Any]:
+    def _get_item_details(self, state: AgentState, llm: LLM) -> dict[str, Any]:
         idx = state["attack_tree_paths_index"]
         paths = state["attack_tree_paths"]
         target_repo = state["target_repo"]

@@ -8,7 +8,7 @@ from ai_security_analyzer.github2_deep_base_agents import (
     BaseGithubDeepAnalysisAgent,
     BaseDeepAnalysisState,
 )
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.utils import (
     clean_markdown,
@@ -77,7 +77,7 @@ class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalys
         else:
             return "items_final_response"
 
-    def _structured_parse_step(self, state: AgentState, llm_structured: Any) -> dict[str, Any]:
+    def _structured_parse_step(self, state: AgentState, llm_structured: LLM) -> dict[str, Any]:
         # Call the base method to parse
         result = super()._structured_parse_step(state, llm_structured)
 
@@ -87,7 +87,7 @@ class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalys
         result["attack_surfaces_count"] = len(surfaces)
         return result
 
-    def _get_item_details(self, state: AgentState, llm: Any) -> dict[str, Any]:
+    def _get_item_details(self, state: AgentState, llm: LLM) -> dict[str, Any]:
         idx = state["attack_surfaces_index"]
         surfaces = state["attack_surfaces"]
         target_repo = state["target_repo"]

@@ -26,12 +26,13 @@ from pydantic import BaseModel
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.components import DeepAnalysisMixin
 from ai_security_analyzer.checkpointing import CheckpointManager
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.utils import (
     get_response_content,
     get_total_tokens,
     clean_markdown,
 )
+
 from langchain_core.output_parsers import PydanticOutputParser
 from langgraph.graph import START, StateGraph
 
@@ -79,7 +80,7 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
         self.do_iteration = do_iteration
         self.builder = builder
 
-    def _internal_step(self, state: StateType, llm: Any) -> dict[str, Any]:
+    def _internal_step(self, state: StateType, llm: LLM) -> dict[str, Any]:
         step_index = int(state.get("step_index", 0))  # type: ignore
         if step_index >= len(self.step_prompts):
             logger.warning("Internal step called after all step_prompts are exhausted.")
@@ -153,7 +154,7 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
         structured_llm = self.llm_provider.create_agent_llm_for_structured_queries()
 
         def internal_step(state: StateType) -> dict[str, Any]:
-            return self._internal_step(state, llm.llm)
+            return self._internal_step(state, llm)
 
         def internal_step_condition(
             state: StateType,
@@ -164,10 +165,10 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
             return self._final_response(state)
 
         def structured_parse_step(state: StateType) -> dict[str, Any]:
-            return self._structured_parse_step(state, structured_llm.llm)
+            return self._structured_parse_step(state, structured_llm)
 
         def get_item_details(state: StateType) -> dict[str, Any]:
-            return self._get_item_details(state, llm.llm)
+            return self._get_item_details(state, llm)
 
         def items_final_response(state: StateType) -> dict[str, Any]:
             return self._items_final_response(state)

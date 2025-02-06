@@ -1,7 +1,7 @@
 import logging
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, List, Literal, Union
+from typing import List, Literal, Union
 
 from langchain_community.document_loaders.text import TextLoader
 from langchain_core.documents import Document
@@ -15,8 +15,8 @@ from typing_extensions import TypedDict
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.components import DocumentProcessingMixin
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.llms import LLMProvider, ModelConfig
-from ai_security_analyzer.utils import clean_markdown, get_response_content, get_total_tokens, create_system_message
+from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.utils import clean_markdown, get_response_content, get_total_tokens
 from ai_security_analyzer.checkpointing import CheckpointManager
 
 
@@ -69,10 +69,10 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
             logger.error(f"Error loading file: {e}")
             raise ValueError(f"Failed to load file: {str(e)}")
 
-    def _create_initial_draft(self, state: AgentState, llm: Any, model_config: ModelConfig):  # type: ignore[no-untyped-def]
+    def _create_initial_draft(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
         logger.info("Creating initial draft")
         try:
-            agent_msg = create_system_message(self.agent_prompt, model_config)
+            agent_msg = SystemMessage(content=self.agent_prompt)
 
             human_prompt = self._create_human_prompt(
                 document=state["repo_doc"],
@@ -92,14 +92,14 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
             logger.error(f"Error creating initial draft: {e}")
             raise ValueError(str(e))
 
-    def _refine_draft(self, state: AgentState, llm: Any, model_config: ModelConfig):  # type: ignore[no-untyped-def]
+    def _refine_draft(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
         logger.info("Refining draft")
         try:
             current_description = state.get("sec_repo_doc", "")
 
             repo_doc = state["repo_doc"]
 
-            messages = self._create_update_messages(current_description, repo_doc, model_config)
+            messages = self._create_update_messages(current_description, repo_doc)
 
             response = llm.invoke(messages)
             document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
@@ -139,10 +139,10 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
             return self._load_file(state)
 
         def create_initial_draft(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._create_initial_draft(state, llm.llm, llm.model_config)
+            return self._create_initial_draft(state, llm)
 
         def refine_draft(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._refine_draft(state, llm.llm, llm.model_config)
+            return self._refine_draft(state, llm)
 
         def refine_draft_condition(state: AgentState) -> Literal["refine_draft", "final_response"]:
             return self._refine_draft_condition(state)
@@ -168,10 +168,9 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
         self,
         current_description: str,
         document: Document,
-        model_config: ModelConfig,
     ) -> List[Union[SystemMessage, HumanMessage]]:
         """Create messages for updating the draft"""
-        agent_msg = create_system_message(self.agent_prompt, model_config)
+        agent_msg = SystemMessage(content=self.agent_prompt)
 
         human_prompt = self._create_human_prompt(document, "update", current_description, self.doc_type_prompt)
 

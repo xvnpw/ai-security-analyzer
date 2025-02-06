@@ -5,7 +5,7 @@ from typing import Any, List
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph
 
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
 from ai_security_analyzer.checkpointing import CheckpointManager
 from pydantic import BaseModel
@@ -56,12 +56,13 @@ class GithubAgent2Sd(BaseGithubDeepAnalysisAgent[AgentState, NoneBaseModel]):
             builder=StateGraph(AgentState),
         )
 
-    def _get_sec_design_details(self, state: AgentState, llm: Any) -> dict[str, Any]:
+    def _get_sec_design_details(self, state: AgentState, llm: LLM) -> dict[str, Any]:
         """
         Child-specific method. Called once after final_response,
         but we skip iteration. We'll do  "extra deep detail" step below if needed.
         """
         repo = state["target_repo"]
+
         doc = state["sec_repo_doc"]
         prompt = self.deep_analysis_prompt_template.format(
             target_repo=repo,
@@ -81,7 +82,7 @@ class GithubAgent2Sd(BaseGithubDeepAnalysisAgent[AgentState, NoneBaseModel]):
         super()._build()
 
         def get_sec_design_wrap(state: AgentState) -> dict[str, Any]:
-            return self._get_sec_design_details(state, self.llm_provider.create_agent_llm().llm)
+            return self._get_sec_design_details(state, self.llm_provider.create_agent_llm())
 
         self.builder.add_node("get_sec_design_details", get_sec_design_wrap)
         self.builder.add_edge("final_response", "get_sec_design_details")

@@ -1,16 +1,17 @@
 import logging
 from dataclasses import dataclass
-from typing import Any, List, Literal
+from typing import List, Literal
 
 from langchain_core.messages import HumanMessage
 from langgraph.graph import START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 
 from ai_security_analyzer.base_agent import BaseAgent
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from langgraph.graph import MessagesState
 from ai_security_analyzer.checkpointing import CheckpointManager
+
 
 logger = logging.getLogger(__name__)
 
@@ -39,10 +40,11 @@ class GithubAgent2(BaseAgent):
         self.step_prompts = step_prompts
         self.step_count = len(step_prompts)
 
-    def _internal_step(self, state: AgentState, llm: Any, use_system_message: bool):  # type: ignore[no-untyped-def]
+    def _internal_step(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
         logger.info(f"Internal step {state.get('step_index', 0)+1} of {self.step_count}")
         try:
             target_repo = state["target_repo"]
+
             repo_name = target_repo.split("/")[-1]
             step_index = state.get("step_index", 0)
             step_prompts = self.step_prompts
@@ -93,7 +95,7 @@ class GithubAgent2(BaseAgent):
         llm = self.llm_provider.create_agent_llm()
 
         def internal_step(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._internal_step(state, llm.llm, llm.model_config.use_system_message)
+            return self._internal_step(state, llm)
 
         def internal_step_condition(state: AgentState) -> Literal["internal_step", "final_response"]:
             return self._internal_step_condition(state)
