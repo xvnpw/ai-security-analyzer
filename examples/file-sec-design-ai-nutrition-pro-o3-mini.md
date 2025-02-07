@@ -1,196 +1,178 @@
 # BUSINESS POSTURE
 
-The AI Nutrition-Pro project is intended to provide an AI-driven nutrition content service for partner Meal Planner applications. The project supports client onboarding, configuration management, billing, and content generation via an API backed by a scalable containerized architecture. The solution enables rapid client integration, operational agility, and market expansion by leveraging cutting-edge AI services while ensuring reliability and high performance.
+The AI Nutrition-Pro application is designed to empower dietitians and meal planning services by providing robust, AI-powered nutrition content generation. It enables external applications—such as Meal Planner solutions—to integrate and leverage its capabilities for creating personalized diet recommendations and content. Business priorities include:
 
-Business priorities and goals:
-- Deliver timely and accurate AI-generated nutrition content to Meal Planner applications.
-- Ensure smooth client onboarding, configuration management, and billing tracking via an intuitive Web Control Plane.
-- Scale the solution securely using containerized infrastructure on AWS.
-- Leverage external AI technology (ChatGPT-3.5) to enhance content generation capabilities.
-- Maintain high availability, performance, and operational resilience to support market competitiveness.
+• Delivering reliable, scalable, and secure API services that integrate seamlessly with external systems.
+• Empowering administrators with a control plane to manage client configurations, tenant onboarding, and billing data.
+• Enabling AI-assisted content generation that leverages external LLM services (ChatGPT-3.5) with high availability.
 
-Most important business risks:
-- Service downtime or degraded performance affecting client satisfaction and revenue.
-- Unauthorized access or compromise of client configuration, billing data, or sensitive nutrition content.
-- Potential misuse or compromise of API keys by external Meal Planner applications.
-- Dependency on external LLM (ChatGPT-3.5) creating third‐party risk for content generation.
+The most important business risks to address are:
+
+• Unauthorized access or misuse of sensitive tenant and billing data.
+• Disruption of the AI content generation process due to integration or service outages (e.g., failure of ChatGPT-3.5 connectivity).
+• Data integrity issues arising from unvalidated input or API misuse.
+• Potential breaches through vulnerabilities in any of the containerized services or their build/deployment pipelines.
 
 # SECURITY POSTURE
 
-Existing security controls and accepted risks:
-- security control: API Gateway handles client authentication; described in the API Gateway (Kong) container.
-- security control: API Gateway enforces authorization with ACL rules; implemented as part of API Gateway configuration.
-- security control: Encrypted network traffic using TLS between Meal Planner applications and API Gateway as well as between containers and databases.
-- accepted risk: The risk of API key compromise is acknowledged and mitigated via rate limiting, but remains an inherent threat.
+**Existing security controls (inherited from the FILE):**
+• security control: Authentication is implemented through API keys at the API Gateway.
+• security control: Authorization is enforced via ACL rules in the API Gateway.
+• security control: Encrypted network traffic using TLS is required between Meal Planner applications and the API Gateway.
 
-Recommended security controls to implement:
-- security control: Strict input validation on all endpoints; to be implemented in the API Gateway and within the application code.
-- security control: Implementation of logging, monitoring, and intrusion detection for all critical components; to be integrated with AWS CloudWatch and SIEM tools.
-- security control: Multi-factor authentication for administrative access in the Web Control Plane.
-- security control: Regular vulnerability scanning (SAST, DAST) and container image scanning in the CI/CD pipeline.
-- security control: Automated certificate management and key rotation; to be enforced at both application and database levels.
+**Accepted risks:**
+• accepted risk: Relying solely on API key authentication for external systems which might be susceptible to key compromise if not rotated or managed properly.
 
-Security requirements:
-- Authentication: All components must enforce token-based or API key-based authentication. The API Gateway is responsible for enforcing authentication for external requests.
-- Authorization: Implement granular access control lists and role-based access for internal administrative users and external Meal Planner applications.
-- Input Validation: Validate and sanitize all incoming data at the API Gateway and within the application layers to thwart injection and other input-based attacks.
-- Cryptography: Enforce data encryption both at rest (for RDS databases) and in transit (using TLS). Ensure proper certificate management and key rotation procedures.
+**Recommended security controls:**
+• security control: Implement input validation at both the API Gateway and within the API Application to mitigate injection and malformed data risks.
+• security control: Enhance monitoring and logging across all components for detection and analysis of suspicious activities.
+• security control: Introduce periodic vulnerability scanning and automated SAST scans integrated into the CI/CD pipeline.
+• security control: Consider multi-factor authentication (MFA) for administrative access on the Web Control Plane.
+• security control: Enforce code signing and dependency integrity checks to secure the software supply chain.
+
+**Security requirements:**
+• Authentication: Enforce robust API key validation and consider integrating additional identity providers for administrative portals.
+• Authorization: Use role-based access control (RBAC) mechanisms within both the API and control plane systems.
+• Input validation: Apply stringent input sanitization and validation at all API endpoints and gateways.
+• Cryptography: Use state-of-the-art TLS for data in transit, and ensure all databases use encryption at rest with proper key management.
+
+For each control, note that:
+– The API Gateway (Kong) handles authentication, rate limiting, and ACL-based authorization.
+– The Web Control Plane implements administrative access controls and configuration management.
+– Database communications (Amazon RDS instances) enforce TLS and data encryption.
 
 # DESIGN
 
 ## C4 CONTEXT
 
-Below is the project context diagram showing AI Nutrition-Pro as the central system interacting with external systems and actors.
-
 ```mermaid
-flowchart LR
-    admin[Administrator]
-    meal[Meal Planner Application]
-    project[AI Nutrition-Pro]
-    chatgpt[ChatGPT-3.5]
-
-    admin -->|Configures system| project
-    meal -->|Sends API requests| project
-    project -->|Requests AI content| chatgpt
+graph LR
+    A[Meal Planner Application] -->|HTTPS/REST| B[API Gateway]
+    B -->|HTTPS/REST| C[API Application]
+    C -->|HTTPS/REST| D[ChatGPT-3.5]
+    E[Administrator] -->|Configure| F[Web Control Plane]
+    F -->|TLS| G[Control Plane Database]
+    C -->|TLS| H[API Database]
 ```
 
-Table: C4 CONTEXT Elements
-
-| Name                     | Type              | Description                                                         | Responsibilities                                                                | Security Controls                                                        |
-|--------------------------|-------------------|---------------------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| AI Nutrition-Pro         | Project/System    | Central system providing AI-generated nutrition content             | Process API requests, manage control plane operations, integrate with ChatGPT-3.5 | Enforces API security via API Gateway; internal encryption on data flows |
-| Administrator            | Person            | Internal user managing configuration and operational aspects         | Configure system properties and manage onboarding and billing data              | Access controlled via MFA and RBAC                                      |
-| Meal Planner Application | External System   | Partner application connecting via HTTPS/REST                       | Upload dietitian content samples; retrieve AI-generated nutrition content      | Authenticated via API keys; communication secured with TLS              |
-| ChatGPT-3.5              | External System   | External LLM service for generating AI content                        | Generate content based on provided data                                         | Communication secured via HTTPS/REST protocols                          |
+| Name                      | Type             | Description                                               | Responsibilities                                                                               | Security Controls                                            |
+|---------------------------|------------------|-----------------------------------------------------------|-----------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| Meal Planner Application  | External system  | Application for creating diets by dietitians              | Upload dietitian content samples and fetch AI-generated nutrition/diet results                | API key authentication; encrypted HTTPS communication       |
+| API Gateway               | Internal system  | Kong API Gateway                                          | Authenticate clients, apply rate limiting, and filter inputs                                  | API key authentication; ACL rules; TLS encryption             |
+| API Application           | Internal system  | Backend service offering AI Nutrition-Pro functionality   | Process AI content generation requests and interact with external LLM (ChatGPT-3.5) and databases | Secure API endpoints; input validation; TLS encryption        |
+| Web Control Plane         | Internal system  | Administrative interface for managing clients and billing | Handle client onboarding, configuration management, and billing data retrieval                | Role-based access control; secure session management; logging   |
+| Control Plane Database    | Internal database| Amazon RDS storing control plane data                     | Persist tenant configurations, billing information, and administrative data                   | TLS in transit; encryption at rest                            |
+| API Database              | Internal database| Amazon RDS storing API application data                   | Persist dietitian content samples, and log LLM requests and responses                          | TLS in transit; encryption at rest                            |
+| ChatGPT-3.5               | External system  | External LLM service for content generation               | Generate AI-driven content based on provided dietitian samples                                | Secure HTTPS communication                                  |
 
 ## C4 CONTAINER
 
-The container diagram below provides a high-level view of the internal architecture and shows how responsibilities are distributed.
-
 ```mermaid
-flowchart TD
-    subgraph AI_Nutrition_Pro
-        api_gateway[API Gateway (Kong)]
-        control_plane[Web Control Plane (Golang on AWS ECS)]
-        control_db[Control Plane Database (Amazon RDS)]
-        backend_api[API Application (Golang on AWS ECS)]
-        api_db[API Database (Amazon RDS)]
-    end
-
-    admin[Administrator] --> control_plane
-    meal[Meal Planner Application] --> api_gateway
-    api_gateway --> backend_api
-    control_plane --> control_db
-    backend_api --> api_db
-    backend_api -->|Calls AI service| chatgpt[ChatGPT-3.5]
+C4Container
+    title Container Diagram for AI Nutrition-Pro
+    Container_Boundary(c0, "AI Nutrition-Pro") {
+        Container(api_gateway, "API Gateway", "Kong", "Handles authentication, rate limiting, filtering input")
+        Container(app_control_plane, "Web Control Plane", "Golang on AWS ECS", "Manages client onboarding, configuration, and billing oversight")
+        ContainerDb(control_plan_db, "Control Plane Database", "Amazon RDS", "Stores control plane, tenant, and billing data")
+        Container(backend_api, "API Application", "Golang on AWS ECS", "Delivers core AI Nutrition-Pro functionalities and processes requests to AI")
+        ContainerDb(api_db, "API Database", "Amazon RDS", "Stores dietitian content, and LLM request/response logs")
+        Person(admin, "Administrator", "Manages configurations and resolves system issues")
+    }
 ```
 
-Table: C4 CONTAINER Elements
-
-| Name                     | Type                | Description                                                                      | Responsibilities                                                                                      | Security Controls                                                                                          |
-|--------------------------|---------------------|----------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|
-| API Gateway              | Container/System    | Kong-based API Gateway acting as entry point for external requests               | Authentication, rate limiting, and input filtering for incoming requests                              | Enforces TLS encryption; implements API key authentication and ACL rules                                  |
-| Web Control Plane        | Container/System    | Golang-based web application deployed on AWS ECS for client management           | Onboard clients, manage configuration, monitor billing data                                           | Secured with MFA for administrative access; communicates with Control Plane Database via TLS                |
-| Control Plane Database   | Container/Database  | Amazon RDS instance storing client, tenant, and billing data                     | Persist control and configuration data                                                                | Data encryption at rest and in transit; access controlled via network security groups                     |
-| API Application          | Container/System    | Golang-based API application deployed on AWS ECS providing nutrition APIs        | Process AI nutrition requests and interact with ChatGPT-3.5                                            | Secured communication with API Gateway; enforces input validation and carries out internal authorization    |
-| API Database             | Container/Database  | Amazon RDS instance storing dietitian content samples, LLM requests and responses  | Persist API-related data including dietitian samples and generated nutrition content                  | Data encrypted at rest and in transit; access restricted through secure network channels                   |
-| ChatGPT-3.5              | External System     | External LLM service used for AI content generation                              | Generate AI nutrition content based on input from the API Application                                  | Communication occurs over secure HTTPS/REST connections                                                   |
+| Name                   | Type               | Description                                                       | Responsibilities                                                                               | Security Controls                                              |
+|------------------------|--------------------|-------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| API Gateway            | Container          | Kong deployment acting as the API gateway                         | Authenticate requests; enforce rate limits; filter inputs                                      | API key validation; ACL enforcement; TLS encryption             |
+| Web Control Plane      | Container          | Golang-based control panel running on AWS ECS                       | Manage client onboarding, configuration, and billing                                          | Role-based access control; secure session management; logging     |
+| Control Plane Database | Container/Database | Amazon RDS instance holding control plane data                      | Persist tenant configurations and billing information                                          | TLS for data in transit; encryption at rest                      |
+| API Application        | Container          | Golang-based backend API deployed on AWS ECS                        | Provide core AI functionalities; process requests and interact with external LLM services        | Secure API development; input validation; TLS; logging            |
+| API Database           | Container/Database | Amazon RDS instance for storing API application data                | Persist dietitian content and LLM interaction logs                                             | TLS for data in transit; encryption at rest                      |
+| Administrator          | Person             | Administrative user for the system                                  | Configure system properties; resolve technical issues                                           | Secure admin access controls; MFA                               |
 
 ## DEPLOYMENT
 
-The project is deployed in a multi-tier AWS environment. Containers are orchestrated via AWS Elastic Container Service (ECS) while data is stored in Amazon RDS. The API Gateway is exposed over the internet, with all external communication secured via TLS. The deployment is designed for high availability and scalability.
-
-Below is a deployment diagram that illustrates the AWS deployment architecture.
+The deployment strategy leverages a cloud-native architecture using AWS. Core components are containerized and orchestrated via AWS Elastic Container Service (ECS), while data persistence is managed by Amazon RDS instances. Kong is deployed as the API gateway, ensuring secure, managed access to the services with TLS encryption. External integrations (Meal Planner Application and ChatGPT-3.5) are accessed over secured HTTPS connections.
 
 ```mermaid
-flowchart TB
-    subgraph AWS_Cloud
-        ecs[Amazon ECS Cluster]
-        rds_cp[Control Plane RDS]
-        rds_api[API Database RDS]
+graph TD
+    subgraph AWS Cloud
+        ECS[Container Host (AWS ECS)]
+        Kong[API Gateway (Kong)]
+        ControlPlane[Web Control Plane Container]
+        APIApp[API Application Container]
+        RDS1[Control Plane Database (Amazon RDS)]
+        RDS2[API Database (Amazon RDS)]
     end
-
-    admin[Administrator] -->|HTTPS| control_plane[Web Control Plane Container]
-    meal[Meal Planner Application] -->|HTTPS/REST| gateway[API Gateway Container]
-
-    ecs --> gateway
-    ecs --> control_plane
-    ecs --> api_app[API Application Container]
-
-    control_plane --TLS--> rds_cp
-    api_app --TLS--> rds_api
-
-    api_app -->|HTTPS/REST| chatgpt[ChatGPT-3.5]
+    MealApp[Meal Planner Application]
+    ChatGPT[ChatGPT-3.5]
+    MealApp -->|HTTPS| Kong
+    Kong -->|HTTPS| APIApp
+    ChatGPT -->|HTTPS| APIApp
+    ControlPlane -->|TLS| RDS1
+    APIApp -->|TLS| RDS2
 ```
 
-Table: DEPLOYMENT Elements
-
-| Name                          | Type                | Description                                                                      | Responsibilities                                                                         | Security Controls                                                    |
-|-------------------------------|---------------------|----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
-| Amazon ECS Cluster            | Infrastructure      | AWS-managed container orchestration service                                      | Hosts all containerized components (API Gateway, Web Control Plane, API Application)      | Managed with AWS security best practices; integrated with VPC controls|
-| API Gateway Container         | Container/System    | Kong-based container exposing API endpoints for external access                  | Authenticate and filter external API requests                                             | Enforces TLS; implements API key authentication and ACL rules       |
-| Web Control Plane Container   | Container/System    | Web application container enabling client onboarding, configuration, billing     | Manage system configuration and client management                                          | Secured via HTTPS and MFA; communicates over TLS with backend databases|
-| API Application Container     | Container/System    | Backend container that processes AI nutrition requests and integrates with LLM     | Provide AI-based content generation and data processing                                    | Secure communication with API Gateway and databases; input validation |
-| Control Plane Database (Amazon RDS) | Database      | Managed relational database storing configuration and billing data               | Persist control plane data                                                                 | Data encrypted at rest; access controlled by VPC and TLS encryption     |
-| API Database (Amazon RDS)     | Database            | Managed relational database storing dietitian samples and AI request/response logs | Persist API-related data                                                                   | Data encryption at rest; secured communication with API Application   |
-| Administrator                 | External Actor      | Internal user managing deployments and configurations                            | Configure and maintain system operations                                                   | Access managed via secure authentication methods                     |
-| Meal Planner Application      | External System     | Partner application integrating with AI Nutrition-Pro via REST APIs              | Upload content samples; retrieve AI-generated nutrition information                        | Uses API keys; communication secured via TLS                         |
-| ChatGPT-3.5                   | External System     | External LLM service used for generating AI nutrition content                    | Generate AI content based on requests from the API Application                              | Communication secured via HTTPS/REST                                  |
+| Name                      | Type            | Description                                                        | Responsibilities                                                                                 | Security Controls                                           |
+|---------------------------|-----------------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| Container Host (AWS ECS)  | Infrastructure  | AWS ECS cluster hosting containerized applications                 | Orchestrate container deployment and scaling; enforce network and isolation policies             | AWS security groups; VPC isolation; TLS enforcement          |
+| API Gateway (Kong)        | Container/Service| Kong API Gateway for managing and securing API traffic              | Authenticate and filter external requests; apply rate limiting                                 | API key validation; ACL rules; TLS encryption                |
+| Web Control Plane         | Container       | Golang based control panel deployed on AWS ECS                        | Manage client onboarding, configuration, and billing oversight                                  | Role-based access control; secure communication; logging       |
+| API Application         | Container       | Core API service implementing AI-powered nutrition functionalities     | Process AI requests; interact with ChatGPT-3.5 and databases                                      | Input validation; TLS encrypted communication; audit logging   |
+| Control Plane Database    | Database        | Amazon RDS instance for control plane data                           | Store tenant configurations, billing, and administrative data                                   | TLS in transit; encryption at rest                           |
+| API Database              | Database        | Amazon RDS instance for API data                                      | Store dietitian content and LLM communication logs                                               | TLS in transit; encryption at rest                           |
 
 ## BUILD
 
-The build process for AI Nutrition-Pro is automated using a CI/CD pipeline running in a secure environment (e.g. GitHub Workflows or Jenkins). Developers commit code changes to a centrally managed Git repository. On commit, automated triggers initiate a series of security checks such as static code analysis (SAST), dependency scanning, and container image vulnerability assessments. Once the code passes security and quality gates, Docker images are built and signed, then pushed to a secure container registry.
-
-Below is the build process flow diagram:
+The AI Nutrition-Pro build process integrates a CI/CD pipeline focused on security and quality assurance. Developers push code changes to the version control system (e.g., GitHub), which triggers automated builds. The CI/CD pipeline performs static analysis (SAST) and linter checks, runs dependency vulnerability scans, and executes unit and integration tests. Build artifacts are then packaged as container images, signed, and stored in a secure artifact repository before automated deployment to AWS ECS.
 
 ```mermaid
-flowchart TD
+graph TD
     Developer[Developer]
-    Repo[Git Repository]
+    VCS[Version Control System]
     CI[CI/CD Pipeline]
-    SAST[SAST and Security Scanning]
-    Build[Docker Build Process]
-    Registry[Secure Container Registry]
-    Artifact[Build Artifacts]
+    SAST[SAST & Linting]
+    Build[Container Build]
+    Artifact[Artifact Repository]
+    Deployment[Deployment to AWS ECS]
 
-    Developer --> Repo
-    Repo --> CI
+    Developer --> VCS
+    VCS --> CI
     CI --> SAST
     SAST --> Build
-    Build --> Registry
-    Registry --> Artifact
+    Build --> Artifact
+    Artifact --> Deployment
 ```
 
-Security controls for the build process:
-- Code repositories use branch protection and require peer reviews.
-- The CI/CD pipeline enforces security scans (SAST, dependency analysis, container image scanning).
-- Build artifacts are digitally signed and stored in a secured registry.
-- Supply chain integrity is maintained through automated and reproducible build processes.
+Security controls in the build process include:
+• security control: Automated SAST and linter tools for code quality and security vulnerabilities.
+• security control: Dependency scanning to detect and remediate vulnerable libraries.
+• security control: Code signing of build artifacts to ensure integrity.
+• security control: Access control on the CI/CD pipeline to prevent unauthorized changes.
 
 # RISK ASSESSMENT
 
-Critical business processes to protect:
-- Client onboarding, system configuration, and billing managed via the Web Control Plane.
-- The API Application process that handles incoming requests and integrates with the AI content generation service.
-- End-to-end processing of AI nutrition content from receiving requests to delivering outputs.
+Critical business processes being protected include:
+• Client onboarding and configuration management via the Web Control Plane.
+• AI-driven content processing and generation through the API Application.
+• Billing and tenant data management stored in the Control Plane Database.
 
-Data to protect and sensitivity:
-- Client and tenant configuration data including billing information (high sensitivity).
-- Dietitian content samples and AI-generated nutrition responses stored in the API Database (moderate sensitivity; proprietary and business-critical).
-- Administrative access credentials and API keys that grant access to the system (high sensitivity).
+Data and their sensitivities:
+• Tenant, billing, and administrative configuration data – highly sensitive; require strong access controls and encryption (both in transit and at rest).
+• Dietitian content and LLM request/response logs – sensitive intellectual property that must be protected against unauthorized access.
+• API keys and authentication credentials – sensitive data that need secure storage and management.
 
 # QUESTIONS & ASSUMPTIONS
 
 Questions:
-- How are API keys issued, managed, and revoked for Meal Planner applications?
-- What is the strategy for managing TLS certificates and ensuring up-to-date encryption standards?
-- Are there any plans to incorporate additional external services or LLMs beyond ChatGPT-3.5?
-- How is logging and monitoring implemented across all containers and components?
-- What is the incident response plan in case of a security breach or system failure?
+1. What is the expected load on each component (API Gateway, Web Control Plane, API Application) and are current scaling strategies sufficient?
+2. Will there be additional user roles or identity integrations needed for administrative access beyond API keys and basic authentication?
+3. How frequently should vulnerability assessments and penetration tests be conducted on both internal and external components?
+4. What is the disaster recovery strategy, particularly for the RDS instances storing critical business data?
+5. Are there plans to extend the integration with other external systems or LLM providers in the future?
 
 Assumptions:
-- The system is deployed on AWS using ECS for container orchestration and Amazon RDS for data storage.
-- API communication is secured using TLS and external requests are authenticated via API keys managed by the API Gateway.
-- The build process incorporates automated security checks and artifact signing to mitigate supply chain risks.
-- Administrative access is limited and secured via multi-factor authentication and role-based access control.
-- The design assumes that external systems (Meal Planner applications and ChatGPT-3.5) adhere to secure communication practices via HTTPS and REST APIs.
+1. AWS ECS, RDS, and Kong are configured following current best practices for security and availability.
+2. All communications between internal and external components are enforced with TLS.
+3. The API key-based authentication model is adequate for current external integrations but may evolve to include additional mechanisms such as OAuth or MFA.
+4. The CI/CD pipeline is already equipped with industry-standard security scanning and build automation tools.
+5. The organization maintains a robust incident response and vulnerability management process to handle security issues as they arise.

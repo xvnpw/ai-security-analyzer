@@ -1,161 +1,55 @@
-### Threat Model for screenshot-to-code Application
+- Threat: API Key Exposure
+  - Description: An attacker gains unauthorized access to API keys for services like OpenAI, Anthropic, Gemini, Replicate, or ScreenshotOne. This could happen through exposed configuration files, insecure storage, or compromised developer environments. With these keys, the attacker can make unauthorized requests to the AI services or screenshot services, potentially incurring financial costs for the application owner, exhausting API quotas, or abusing the services for malicious purposes.
+  - Impact: Financial loss due to unauthorized API usage, disruption of service due to quota exhaustion, potential abuse of AI or screenshot services leading to reputational damage or service suspension.
+  - Affected component: Backend configuration (config.py, .env files), Frontend settings storage (browser local storage), Screenshot functionality (screenshot.py).
+  - Current mitigations: API keys are intended to be stored in environment variables (`.env` files), which are not committed to the repository. Frontend settings, including API keys entered by users, are stored in the browser's local storage, which is client-side only.
+  - Missing mitigations: Implement more robust secret management practices, especially for production environments. Consider using a dedicated secret management vault, environment variables in containerized deployments, or backend-for-frontend key proxying to avoid direct exposure of API keys to the frontend. For hosted versions, server-side key management is crucial.
+  - Risk severity: High
 
-This threat model outlines potential security threats specific to the `screenshot-to-code` application, based on the provided project files. General web application threats are omitted to focus on application-specific risks.
+- Threat: Prompt Injection Attacks
+  - Description: An attacker crafts malicious screenshots or video inputs designed to manipulate the AI model's output. By injecting specific commands or instructions within the visual input, the attacker could cause the AI to generate unintended code, bypass intended functionalities, leak sensitive information, or even introduce vulnerabilities into the generated code.
+  - Impact: Generation of vulnerable or malicious code, exposure of sensitive information through AI responses, application malfunction or unpredictable behavior, potential for Cross-Site Scripting (XSS) vulnerabilities in the generated code if user-provided content is not properly handled.
+  - Affected component: Backend (LLM interaction in llm.py, prompts in prompts directory), Frontend (input handling), Video processing (video/utils.py).
+  - Current mitigations: The application relies on the inherent safety measures of the chosen AI models (Claude, GPT, Gemini). There is no explicit input sanitization or output validation implemented in the provided code to prevent prompt injection.
+  - Missing mitigations: Implement robust input validation and sanitization techniques to filter potentially malicious visual inputs. Employ prompt hardening strategies to make prompts less susceptible to injection. Validate and sanitize the AI-generated code output before presenting it to the user or using it in further processes to prevent execution of unintended or harmful code. Consider implementing Content Security Policy (CSP) to mitigate potential XSS risks from generated code.
+  - Risk severity: Medium
 
-- **Threat:** API Key Exposure
-  - **Description:** An attacker could gain unauthorized access to API keys for OpenAI, Anthropic, Gemini, Replicate, or ScreenshotOne. This could occur through various means, such as:
-    - Accidental commit of `.env` files containing API keys to version control.
-    - Leakage of API keys through application logs or debug outputs.
-    - Unauthorized access to the server or developer machines where API keys are stored.
-    - Client-side vulnerabilities (e.g., XSS) leading to extraction of API keys if stored insecurely in the browser.
-    If successful, the attacker could impersonate the application and make unauthorized requests to the AI models or screenshot service, leading to financial costs for the application owner and potential misuse of the AI services or screenshot functionality.
-  - **Impact:** Financial loss due to unauthorized API usage, potential service disruption, misuse of AI models or screenshot service, and potential exposure of website content via unauthorized screenshots. Depending on the scope of the compromised API keys, attackers might gain access to other services or data associated with the API accounts.
-  - **Which screenshot-to-code component is affected:** Backend configuration (`config.py`), environment variable handling, frontend settings storage (if API keys are stored client-side), screenshot functionality (`screenshot.py`).
-  - **Current Mitigations:**
-    - The application uses `.env` files for storing API keys, which is a standard practice to avoid hardcoding secrets in the codebase.
-    - Instructions in `Troubleshooting.md` mention storing the OpenAI key in the browser's settings dialog, stating it's "only stored in your browser. Never stored on our servers." This implies client-side storage is intended, although the security of this approach is questionable.
-  - **Missing Mitigations:**
-    - **Stronger warnings and best practices documentation:**  Clearly document the risks of API key exposure and provide comprehensive guidelines on secure API key management. Emphasize not committing `.env` files to version control and using secure methods for managing environment variables in different deployment environments. Extend this documentation to include ScreenshotOne API key management.
-    - **Server-side API key management for hosted version:** For the hosted version, transition to a server-side API key management system to avoid client-side storage risks altogether.
-    - **Regularly rotate API keys:** Implement a process for regularly rotating API keys to limit the window of opportunity if a key is compromised.
-    - **API key usage monitoring and alerts:** Monitor API key usage for unusual activity that might indicate a compromise.
-  - **Risk Severity:** High
+- Threat: Exposure of Debugging Artifacts
+  - Description: If debugging is enabled (e.g., `IS_DEBUG_ENABLED` flag or debug mode in `video/utils.py`), the application writes debug logs and potentially saves screenshots to temporary directories (`DEBUG_DIR`, `tmp_screenshots_dir`). If these directories are inadvertently exposed (e.g., through misconfigured server settings, exposed Docker volumes, or accidental deployment with debug mode enabled), an attacker could gain access to these files. This could lead to information disclosure, including insights into application logic, configurations, user data, API interactions, and potentially visual input data.
+  - Impact: Information disclosure of application internals and potentially sensitive data, reverse engineering of application logic, identification of vulnerabilities through debug logs and debugging artifacts, exposure of user screenshots or video frames.
+  - Affected component: Backend (DebugFileWriter.py, config.py, video/utils.py).
+  - Current mitigations: Debugging features are intended for development and local testing. Debug directories are likely intended to be within the local filesystem and not directly accessible in a production deployment.
+  - Missing mitigations: Ensure that debug mode and debugging features are strictly disabled in production deployments. Implement proper access controls and restrict access to debug directories in non-local environments if debugging is necessary. Regularly review and sanitize debug logs to avoid accidental exposure of sensitive information. Implement secure temporary file handling and cleanup to prevent persistent storage of debugging artifacts in production.
+  - Risk severity: Medium
 
-- **Threat:** Server-Side Request Forgery (SSRF) via Image URLs
-  - **Description:** The backend application processes images provided by users, potentially including images fetched from URLs (although primarily data URLs are mentioned in code). An attacker could exploit this by providing a malicious image URL that, when processed by the backend, triggers a request to an internal service or resource. This could allow the attacker to:
-    - Scan internal networks and identify open ports or services.
-    - Access internal APIs or services that are not intended to be publicly accessible.
-    - Potentially read sensitive data from internal resources.
-    - Launch denial-of-service attacks against internal services.
-  - **Impact:** Exposure of internal infrastructure, potential data leakage from internal services, and disruption of internal operations.
-  - **Which screenshot-to-code component is affected:** Backend image processing (`image_processing/utils.py`), LLM interaction (`llm.py`), evaluation scripts (`evals/\*`), image generation features (`image_generation/\*`).
-  - **Current Mitigations:**
-    - The code primarily uses data URLs for image processing, which reduces the immediate risk of SSRF from external URLs. However, the evaluation scripts and potential future features might involve processing images from URLs.
-    - It's unclear if there is any input validation or sanitization of image URLs to prevent SSRF.
-  - **Missing Mitigations:**
-    - **Strict URL validation and sanitization:** Implement robust validation of any URLs processed by the backend. This should include:
-      - Whitelisting allowed protocols (ideally, only `data:` if external URLs are not intended, or strictly `https:` for external resources).
-      - Blacklisting or sanitizing potentially harmful URL components.
-      - Preventing redirects to internal networks or restricted IP ranges.
-    - **Network segmentation:** Ensure that the backend processing images is isolated from sensitive internal networks to limit the impact of a successful SSRF attack.
-  - **Risk Severity:** Medium
+- Threat: Vulnerabilities in Third-Party Dependencies
+  - Description: The application relies on numerous third-party libraries and packages in both the frontend (`package.json`, `yarn.lock`) and backend (`pyproject.toml`, `poetry.lock`). These dependencies may contain known security vulnerabilities. If these vulnerabilities are not addressed, attackers could exploit them to compromise the application, potentially leading to code execution, denial of service, or data breaches.
+  - Impact: Application compromise, denial of service, data breaches, unauthorized access to system resources.
+  - Affected component: Backend dependencies (pyproject.toml), Frontend dependencies (package.json).
+  - Current mitigations: Dependency management is handled using Poetry for the backend and Yarn for the frontend, which helps in managing and installing dependencies.
+  - Missing mitigations: Implement a process for regular dependency vulnerability scanning and updates. Utilize tools like `poetry audit` and `yarn audit` to identify known vulnerabilities. Establish a policy for promptly updating vulnerable dependencies to their patched versions. Consider using a Software Composition Analysis (SCA) tool for continuous monitoring of dependency vulnerabilities.
+  - Risk severity: Medium
 
-- **Threat:** Insecure Debug Mode Enabled in Production
-  - **Description:** The application has debug flags (`IS_DEBUG_ENABLED`, `SHOULD_MOCK_AI_RESPONSE`) controlled by environment variables, as seen in `backend/config.py`. If debug mode is inadvertently or maliciously enabled in a production environment, it could lead to:
-    - **Information Disclosure:** Debug logs might contain sensitive information, error details, or internal application paths, which could be valuable to an attacker.
-    - **Unexpected Application Behavior:** Mock AI responses (`SHOULD_MOCK_AI_RESPONSE=True`) in production would bypass the intended AI processing, leading to incorrect or non-functional code generation.
-    - **Performance Degradation:** Debugging features can sometimes introduce performance overhead, impacting the application's responsiveness and availability.
-  - **Impact:** Information leakage, application malfunction, potential performance issues, and increased attack surface.
-  - **Which screenshot-to-code component is affected:** Backend configuration (`config.py`), mock LLM responses (`mock_llm.py`), debug logging (`debug/DebugFileWriter.py`).
-  - **Current Mitigations:**
-    - The use of environment variables to control debug flags is a standard practice for configuration management.
-    - The `IS_PROD` environment variable suggests an awareness of production vs. development environments.
-  - **Missing Mitigations:**
-    - **Enforce debug mode disabling in production:** Implement explicit checks in the application startup or configuration loading to ensure that debug flags are forcefully disabled in production environments, regardless of environment variable settings.
-    - **Automated configuration checks:** Include automated checks in deployment pipelines to verify that debug flags are disabled in production configurations.
-    - **Security review of debug logs:** Review debug logs to ensure they do not inadvertently expose sensitive information, even when debug mode is enabled in development.
-  - **Risk Severity:** Medium
+- Threat: Insecure Operation in Mock Mode
+  - Description: The application has a mock mode (`MOCK=true` environment variable) that simulates AI responses using predefined, static outputs from `mock_llm.py`. If mock mode is unintentionally enabled in a production environment, or if these mock responses are not carefully designed, it could lead to several security issues. The application might exhibit unexpected behavior, bypass intended security checks that rely on real AI processing, or expose hardcoded data that could be sensitive or misleading if served in a live setting.
+  - Impact: Application malfunction, bypass of intended security logic, serving of incorrect or misleading data to users, potential for denial of service if mock responses are resource-intensive or lead to errors.
+  - Affected component: Backend (mock_llm.py, config.py, main.py).
+  - Current mitigations: Mock mode is intended for development and debugging purposes, as indicated in `config.py`.
+  - Missing mitigations: Enforce strict controls to ensure mock mode is never enabled in production deployments. Implement environment-specific configurations to prevent accidental activation of mock mode in live environments. Clearly document the security implications and intended use case of mock mode to prevent misuse.
+  - Risk severity: Medium
 
-- **Threat:** Client-Side Manipulation of Version History
-  - **Description:** As documented in `design-docs.md`, the version history is stored client-side. This means an attacker with control over the client-side environment (e.g., the user's browser or local storage) could potentially manipulate or tamper with the version history data. While the exact impact depends on how version history is used, potential consequences include:
-    - **Data Integrity Issues:** If the application relies on version history for critical functions (e.g., code updates, rollbacks), manipulation could lead to inconsistencies or application errors.
-    - **Denial of Service:** Maliciously crafted version history data could potentially cause the frontend application to crash or malfunction.
-    - **Circumvention of Auditing or Tracking:** If version history is used for auditing or tracking changes, manipulation could allow an attacker to hide their actions.
-  - **Impact:** Data integrity compromise, potential application instability, and circumvention of audit trails.
-  - **Which screenshot-to-code component is affected:** Frontend application, client-side data storage, version history feature.
-  - **Current Mitigations:**
-    - The project files do not provide details on how version history is used or secured.
-  - **Missing Mitigations:**
-    - **Evaluate the criticality of version history:** Determine if client-side version history is essential and what security implications manipulation would have.
-    - **Consider server-side storage for critical version history:** If version history is critical for application functionality or security, consider moving storage to the server-side to ensure integrity and control.
-    - **Implement client-side integrity checks:** If client-side storage is necessary, explore techniques to enhance integrity, such as:
-      - Cryptographic signing of version history data to detect tampering.
-      - Using more secure client-side storage mechanisms than plain local storage if available and appropriate.
-    - **Clearly document client-side storage risks:** If client-side storage is retained, clearly document the security limitations and potential risks associated with client-side version history manipulation.
-  - **Risk Severity:** Medium
+- Threat: Unauthorized Access to Evaluation Interface
+  - Description: The application includes an evaluation interface accessible via the `/evals` route in the frontend. This interface allows for rating and reviewing the outputs of different AI models and prompts, as described in `Evaluation.md`. If this evaluation interface is not properly secured with authentication and authorization, unauthorized users could access it. This could lead to exposure of evaluation datasets (input screenshots, prompts, model outputs), rating data, and potentially insights into model performance and prompt engineering strategies, which might be considered sensitive or proprietary.
+  - Impact: Information disclosure of evaluation data, potential competitive disadvantage if evaluation data is sensitive, unauthorized manipulation of evaluation ratings.
+  - Affected component: Frontend (evals route in frontend application), Backend (evals router in routes/evals.py).
+  - Current mitigations: There is no explicit mention of access control or authentication for the `/evals` route in the provided files.
+  - Missing mitigations: Implement authentication and authorization mechanisms to restrict access to the `/evals` interface to authorized personnel only. This is especially critical for hosted versions or any deployment where unauthorized access is a concern. Consider using role-based access control (RBAC) to manage permissions for accessing and modifying evaluation data.
+  - Risk severity: Medium
 
-- **Threat:** Vulnerable Dependencies in Backend
-  - **Description:** The backend application relies on numerous third-party Python packages, as listed in `backend/pyproject.toml`. These dependencies could contain known security vulnerabilities. If not properly managed and updated, these vulnerabilities could be exploited by attackers to compromise the backend server.
-  - **Impact:** Backend server compromise, potential data breach, denial of service, and unauthorized access to application resources.
-  - **Which screenshot-to-code component is affected:** Backend dependencies, dependency management (`poetry`), backend server infrastructure.
-  - **Current Mitigations:**
-    - The project uses `poetry` for dependency management, which helps in managing and versioning dependencies.
-  - **Missing Mitigations:**
-    - **Dependency vulnerability scanning:** Implement automated dependency vulnerability scanning as part of the development and deployment process. Tools can identify known vulnerabilities in project dependencies.
-    - **Regular dependency updates:** Establish a process for regularly updating dependencies to the latest secure versions, addressing identified vulnerabilities promptly.
-    - **Dependency pinning and lock files:** Utilize `poetry.lock` to ensure consistent dependency versions across environments and to facilitate vulnerability tracking.
-  - **Risk Severity:** Medium
-
-- **Threat:** Insecure Client-Side Storage of OpenAI API Key
-  - **Description:** As mentioned in `Troubleshooting.md`, the application suggests storing the OpenAI API key in the browser's local storage. Local storage is vulnerable to client-side attacks, particularly Cross-Site Scripting (XSS). If an attacker can inject malicious JavaScript into the application (e.g., through an XSS vulnerability), they could access and steal the API key stored in local storage.
-  - **Impact:** Theft of OpenAI API key, leading to unauthorized usage of the OpenAI API, financial costs, and potential misuse of AI services.
-  - **Which screenshot-to-code component is affected:** Frontend settings dialog, browser local storage, user instructions (`Troubleshooting.md`).
-  - **Current Mitigations:**
-    - The documentation states that the key is "only stored in your browser," which is intended as a privacy measure but does not address client-side security risks.
-  - **Missing Mitigations:**
-    - **Eliminate client-side API key storage for hosted version:** For the hosted version of the application, completely remove the practice of storing API keys in the browser. Implement a secure backend service to manage and proxy API requests, eliminating the need for client-side API keys.
-    - **Strong warnings against client-side storage for open-source version:** For the open-source version, if client-side API key input is retained, provide very strong warnings to users about the security risks of storing API keys in browser local storage. Recommend alternative, more secure methods if feasible, or advise users to use API keys with very limited scope and billing controls.
-    - **XSS prevention:** Implement robust XSS prevention measures in the frontend application to minimize the risk of attackers injecting malicious JavaScript that could steal API keys or other sensitive data.
-  - **Risk Severity:** High
-
-- **Threat:** LLM Prompt Injection leading to Malicious Code Generation
-  - **Description:** The application relies on Large Language Models (LLMs) to generate code based on user-provided screenshots or videos. LLMs are susceptible to prompt injection attacks. An attacker could craft a malicious screenshot or video designed to manipulate the LLM's output, causing it to generate:
-    - **Vulnerable Code:** Code containing security flaws (e.g., XSS vulnerabilities in generated HTML, insecure API calls) that could be exploited by subsequent attackers.
-    - **Malicious Code:** Code that directly performs harmful actions, such as redirecting users to phishing sites, stealing user data, or performing other malicious operations within the generated web application.
-    - **Non-Functional or Incorrect Code:** Code that does not accurately represent the intended design or functionality, leading to application errors or unexpected behavior.
-  - **Impact:** Generation of insecure or malicious web applications, potential compromise of users of generated code, application malfunction, and reputational damage.
-  - **Which screenshot-to-code component is affected:** Backend LLM integration (`llm.py`), prompt construction (`prompts/\*`), code generation pipeline.
-  - **Current Mitigations:**
-    - The system prompts in `prompts/\*` are designed to guide the LLM to generate functional and accurate code. However, these prompts are unlikely to fully prevent sophisticated prompt injection attacks.
-  - **Missing Mitigations:**
-    - **Input sanitization and validation:** Implement input sanitization and validation on user-provided screenshots and videos to remove or neutralize potentially malicious content that could be used for prompt injection. This is challenging for image and video inputs but consider basic checks.
-    - **Output filtering and validation:** Implement post-generation filtering and validation of the code generated by the LLM. This could involve:
-      - Static code analysis to detect potential vulnerabilities in the generated code.
-      - Content filtering to identify and remove potentially malicious code patterns or outputs.
-      - Sandboxing or safe execution environments to test generated code before deployment.
-    - **Prompt hardening:** Continuously refine and harden the system prompts to make them more resistant to prompt injection attacks. Explore techniques like adversarial prompting to test and improve prompt robustness.
-    - **User awareness and warnings:** Clearly communicate to users the inherent risks of using AI-generated code, including the potential for vulnerabilities or unexpected behavior due to prompt injection or other LLM limitations. Advise users to carefully review and test generated code before deployment.
-  - **Risk Severity:** Medium
-
-- **Threat:** Path Traversal/Local File Inclusion in Evaluation Routes
-  - **Description:** The `get_evals`, `get_pairwise_evals`, and `get_best_of_n_evals` routes in `backend/routes/evals.py` accept folder paths as input parameters. If these folder paths are not properly validated and sanitized, an attacker could potentially use path traversal techniques (e.g., `../`, `..\\`) to access files and directories outside the intended evaluation directories. This could allow an attacker to read sensitive files on the server, list directory contents, or potentially even execute code if combined with other vulnerabilities.
-  - **Impact:** Unauthorized access to sensitive files, potential information disclosure, and potential for further exploitation if arbitrary file read is achieved.
-  - **Which screenshot-to-code component is affected:** Backend evaluation routes (`backend/routes/evals.py`), specifically the `get_evals`, `get_pairwise_evals`, and `get_best_of_n_evals` functions.
-  - **Current Mitigations:**
-    - The code checks if the provided folder exists using `os.path.exists()`. However, this does not prevent path traversal within the file system.
-  - **Missing Mitigations:**
-    - **Input validation and sanitization:** Implement strict validation and sanitization of the folder paths received as input. This should include:
-      - **Absolute path enforcement:** Ensure that the provided paths are resolved to absolute paths and are within the intended base directory for evaluations (e.g., `EVALS_DIR`).
-      - **Path traversal prevention:**  Sanitize input paths to remove or neutralize path traversal sequences like `../` and `..\\`. Use functions like `os.path.abspath()` and `os.path.normpath()` to canonicalize paths and prevent traversal.
-      - **Directory whitelisting:** If possible, whitelist allowed directories for evaluation and ensure the input path falls within these whitelisted directories.
-    - **Principle of least privilege:** Ensure that the backend process running the evaluation routes has the minimum necessary permissions to access only the required evaluation files and directories, limiting the impact of potential path traversal vulnerabilities.
-  - **Risk Severity:** Medium
-
-- **Threat:** ScreenshotOne API Key Exposure
-  - **Description:** The `screenshot.py` route utilizes an API key (`apiKey` parameter in `ScreenshotRequest`) to authenticate with the ScreenshotOne service. If this API key is exposed, attackers could make unauthorized requests to the ScreenshotOne API, potentially incurring costs, capturing screenshots of arbitrary URLs, or abusing the service in other ways. The exposure could happen through similar means as general API key exposure (e.g., insecure storage, leakage).
-  - **Impact:** Financial loss due to unauthorized ScreenshotOne API usage, potential abuse of screenshot service for malicious purposes (e.g., phishing, reconnaissance), and potential reputational damage.
-  - **Which screenshot-to-code component is affected:** Screenshot functionality (`backend/routes/screenshot.py`), specifically the `capture_screenshot` function and `ScreenshotRequest` model.
-  - **Current Mitigations:**
-    - The code uses an API key to access the ScreenshotOne service. The security of this key depends on how it is managed and transmitted. It's likely passed from the frontend, which introduces client-side exposure risks.
-  - **Missing Mitigations:**
-    - **Server-side ScreenshotOne API key management:**  Ideally, the ScreenshotOne API key should be managed server-side and not exposed to the client. The backend should act as a proxy for screenshot requests, authenticating with ScreenshotOne using a server-side API key.
-    - **Secure transmission of API key (if client-side is unavoidable):** If client-side API key usage is unavoidable, ensure secure transmission (HTTPS) and consider encrypting the key in transit and at rest if stored client-side temporarily. However, server-side management is strongly recommended.
-    - **API key usage monitoring and alerts:** Monitor ScreenshotOne API usage for unusual activity that might indicate a compromise.
-    - **Regularly rotate ScreenshotOne API key:** Implement a process for regularly rotating the ScreenshotOne API key.
-  - **Risk Severity:** High
-
-- **Threat:** Unvalidated URL in Screenshot Service leading to SSRF or Abusive Screenshot Capture
-  - **Description:** The `capture_screenshot` function in `screenshot.py` takes a `target_url` from the `ScreenshotRequest` and passes it directly to the ScreenshotOne API. If this `target_url` is not validated, an attacker could provide a malicious URL, potentially leading to:
-    - **SSRF on ScreenshotOne's infrastructure:** The ScreenshotOne service might be vulnerable to SSRF. An attacker could provide a URL pointing to internal resources within ScreenshotOne's network, potentially gaining access to sensitive information or internal services of ScreenshotOne.
-    - **Abusive screenshot capture:** An attacker could use the service to capture screenshots of websites for malicious purposes, such as taking screenshots of internal websites of organizations without authorization, or generating screenshots for phishing campaigns.
-  - **Impact:** Potential SSRF on ScreenshotOne infrastructure, unauthorized access to information within ScreenshotOne's network (if SSRF is successful), abuse of screenshot service for malicious purposes, and potential reputational damage.
-  - **Which screenshot-to-code component is affected:** Screenshot functionality (`backend/routes/screenshot.py`), specifically the `capture_screenshot` function and `ScreenshotRequest` model.
-  - **Current Mitigations:**
-    - There is no visible URL validation in the provided code for the `target_url` passed to `capture_screenshot`.
-  - **Missing Mitigations:**
-    - **URL validation and sanitization:** Implement robust validation and sanitization of the `target_url` before passing it to the ScreenshotOne API. This should include:
-      - **URL format validation:** Ensure the URL is in a valid format and uses allowed protocols (e.g., `http://`, `https://`).
-      - **Blacklisting of internal or malicious URLs:** Maintain a blacklist of URLs or URL patterns that should be blocked (e.g., private IP ranges, known malicious domains).
-      - **Content-Security-Policy (CSP) for generated code:** While not directly mitigating this threat, implementing a strong CSP in the generated code can help mitigate potential risks if malicious screenshots lead to the generation of code that tries to interact with unintended resources.
-    - **Rate limiting:** Implement rate limiting on the screenshot API endpoint to prevent abuse and large-scale malicious screenshot capturing.
-  - **Risk Severity:** Medium
+- Threat: Path Traversal in Evaluation Routes
+  - Description: The evaluation routes in `evals.py` (`/evals`, `/pairwise-evals`, `/best-of-n-evals`) accept folder paths as query parameters. If these paths are not properly validated and sanitized, an attacker could potentially manipulate these parameters to access files and directories outside the intended evaluation data directories. This could lead to unauthorized access to sensitive files on the server.
+  - Impact: Information disclosure, unauthorized access to server files, potential for further exploitation depending on the files accessed.
+  - Affected component: Backend (evals router in routes/evals.py).
+  - Current mitigations: The code checks if the provided folder exists using `os.path.exists()`. However, this does not prevent path traversal if the folder path itself is maliciously crafted (e.g., using "../" sequences).
+  - Missing mitigations: Implement robust input validation and sanitization for folder paths in the evaluation routes. Use secure path handling techniques to prevent path traversal vulnerabilities, such as using absolute paths, canonicalization, or restricting allowed paths to a whitelist. Avoid directly using user-provided paths in file system operations without proper validation.
+  - Risk severity: High

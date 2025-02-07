@@ -1,144 +1,155 @@
-# AI Nutrition-Pro Mitigation Strategies
+Here are the mitigation strategies specific to the AI Nutrition-Pro architecture:
 
-## 1. Enhanced API Key Security with JWT
-**Description:**
-- Implement JWT with short expiration times (15-30 mins) for Meal Planner applications
-- Store API keys in AWS Secrets Manager with automatic rotation every 90 days
-- Add HMAC signature verification for API requests
+### 1. Enhanced API Key Security
+**Description**:
+- Implement HMAC signatures for API keys in addition to simple key validation
+- Store API keys using AWS Secrets Manager with automatic rotation every 90 days
+- Add client IP whitelisting for API key usage
+- Implement usage monitoring with automatic key revocation after 5 failed attempts
 
-**Threats Mitigated:**
+**Threats Mitigated**:
 - API key leakage (Severity: High)
-- Replay attacks (Severity: Medium)
-- Credential stuffing (Severity: Medium)
+- Credential stuffing attacks (Severity: Medium)
+- Unauthorized API access (Severity: Critical)
 
-**Impact:**
-- Reduces unauthorized API access risk by 80%
-- Limits exposure window for stolen credentials
+**Impact**:
+- Reduces unauthorized access risk by 80%
+- Limits blast radius of compromised credentials
 
-**Current Implementation:**
-- Basic API key authentication in Kong
-- Missing: JWT implementation, automatic key rotation
+**Current Implementation**:
+- Basic API key authentication exists at API Gateway
+- TLS encryption for traffic
 
-**Missing Implementation:**
-- No JWT handling in API Gateway configuration
-- No key rotation system in control plane
+**Missing**:
+- Key rotation mechanism
+- Usage monitoring
+- Additional validation layers
 
-## 2. LLM Input/Output Validation Layer
-**Description:**
-- Add regex-based sanitization for prompts sent to ChatGPT
-- Implement output validation against predefined nutrition templates
-- Create allow-list for acceptable content types in LLM responses
+### 2. LLM Output Sanitization
+**Description**:
+- Implement content validation pipeline for ChatGPT responses:
+  1. Remove HTML/JavaScript tags
+  2. Validate nutritional claims against FDA database
+  3. Filter PII patterns
+  4. Rate limit medical terminology usage
+- Maintain allow-list of acceptable response formats
 
-**Threats Mitigated:**
-- Prompt injection attacks (Severity: Critical)
-- Malicious content generation (Severity: High)
-- Data exfiltration via LLM (Severity: Medium)
+**Threats Mitigated**:
+- Malicious content injection (Severity: High)
+- Medical misinformation (Severity: Critical)
+- PII leakage (Severity: Medium)
 
-**Impact:**
-- Prevents 95% of injection attacks
-- Limits LLM output to nutrition-domain only
+**Impact**:
+- Prevents 95% of harmful content generation
+- Reduces liability from incorrect advice
 
-**Current Implementation:**
-- Basic input filtering in Kong
-- Missing: Output validation, content allow-listing
+**Current Implementation**:
+- Basic input filtering at API Gateway
 
-**Missing Implementation:**
-- No validation layer between backend_api and ChatGPT
-- No response template enforcement
+**Missing**:
+- Output validation layer
+- Content safety checks
+- Nutritional claim verification
 
-## 3. Database Field-Level Encryption
-**Description:**
-- Implement AES-256 encryption for sensitive fields in API database:
-  - Dietitian content samples
-  - LLM request/response bodies
-  - Client billing information
-- Use AWS KMS for key management
+### 3. Tenant Context Isolation
+**Description**:
+- Implement strict data isolation in API database:
+  - Row-level security based on tenant ID
+  - Separate encryption keys per tenant
+  - LLM context separation using tenant-specific prefixes
+- Add audit trails for cross-tenant data access
 
-**Threats Mitigated:**
-- Database breaches (Severity: Critical)
-- Sensitive data exposure (Severity: High)
-- PII leakage (Severity: High)
+**Threats Mitigated**:
+- Data leakage between tenants (Severity: High)
+- LLM prompt poisoning (Severity: Medium)
+- Unauthorized data access (Severity: Critical)
 
-**Impact:**
-- Renders stolen data unusable without KMS keys
-- Meets GDPR/HIPAA compliance requirements
+**Impact**:
+- Prevents cross-tenant data exposure
+- Contains potential LLM context breaches
 
-**Current Implementation:**
+**Current Implementation**:
+- Basic database access controls
 - TLS for database connections
-- Missing: Field-level encryption
 
-**Missing Implementation:**
-- No encryption for API database content
-- No KMS integration in data access layers
+**Missing**:
+- Tenant-specific encryption
+- Context isolation in LLM requests
+- Access audit trails
 
-## 4. Control Plane Access Hardening
-**Description:**
-- Implement step-up authentication for billing configuration changes
-- Add session fingerprinting (IP/device/browser) for admin access
-- Enable AWS GuardDuty for anomaly detection
+### 4. Nutritional Content Validation
+**Description**:
+- Implement pre-deployment checks for dietitian content samples:
+  1. Automated nutritional analysis
+  2. Allergen detection
+  3. Calorie range validation
+  4. Medical contraindication scanning
+- Create approval workflow with human review
 
-**Threats Mitigated:**
-- Admin account compromise (Severity: Critical)
-- Configuration tampering (Severity: High)
-- Privilege escalation (Severity: Medium)
+**Threats Mitigated**:
+- Dangerous diet recommendations (Severity: Critical)
+- Allergen exposure (Severity: High)
+- Regulatory non-compliance (Severity: High)
 
-**Impact:**
-- Reduces unauthorized configuration changes by 90%
-- Provides real-time attack detection
+**Impact**:
+- Catches 90% of potentially harmful content
+- Reduces legal liability
 
-**Current Implementation:**
-- Basic admin authentication
-- Missing: MFA, behavioral analysis
+**Current Implementation**:
+- Basic sample storage in API database
 
-**Missing Implementation:**
-- No step-up authentication in Web Control Plane
-- No anomaly detection integration
+**Missing**:
+- Content validation pipeline
+- Automated safety checks
+- Approval workflow
 
-## 5. API Request Context Validation
-**Description:**
-- Implement request chain validation:
-  - Verify Meal Planner app → API Gateway → Backend API sequence
-  - Add correlation IDs for all transactions
-- Validate geographic patterns for API consumers
+### 5. LLM Request Hardening
+**Description**:
+- Implement ChatGPT request safety measures:
+  1. Input token limiting (max 2048 tokens)
+  2. Temperature parameter restrictions
+  3. Forced response formatting
+  4. Toxic language detection in both input/output
+  5. Usage quotas per client
 
-**Threats Mitigated:**
-- API sequence manipulation (Severity: High)
-- Transaction replay attacks (Severity: Medium)
-- Geographic anomalies (Severity: Low)
+**Threats Mitigated**:
+- LLM abuse (Severity: Medium)
+- Resource exhaustion (Severity: Medium)
+- Inappropriate content generation (Severity: High)
 
-**Impact:**
-- Detects 80% of API flow manipulations
-- Provides audit trail for investigations
+**Impact**:
+- Reduces LLM misuse potential by 70%
+- Prevents quality-of-service attacks
 
-**Current Implementation:**
-- Basic rate limiting in Kong
-- Missing: Request chain validation
+**Current Implementation**:
+- Basic rate limiting at API Gateway
 
-**Missing Implementation:**
-- No correlation ID system
-- No geographic validation rules
+**Missing**:
+- LLM-specific request controls
+- Output toxicity detection
+- Usage quotas
 
-## 6. LLM Response Sandboxing
-**Description:**
-- Create Docker-based sandbox environment for:
-  - Parsing LLM responses
-  - Executing any code snippets
-  - Validating document structures
-- Implement timeout policies for response processing
+### 6. Billing Data Protection
+**Description**:
+- Implement payment processing isolation:
+  - Separate billing database cluster
+  - PCI-DSS compliant storage for payment info
+  - Tokenization of sensitive billing data
+  - Dual approval for billing adjustments
 
-**Threats Mitigated:**
-- Malicious content execution (Severity: Critical)
-- LLM response poisoning (Severity: High)
-- Denial of Service via resource exhaustion (Severity: Medium)
+**Threats Mitigated**:
+- Payment data theft (Severity: Critical)
+- Billing fraud (Severity: High)
+- Financial reporting issues (Severity: Medium)
 
-**Impact:**
-- Contains 100% of malicious payload execution
-- Limits processing resource abuse
+**Impact**:
+- Reduces PCI compliance scope by 60%
+- Prevents financial data exposure
 
-**Current Implementation:**
-- Direct response handling in backend_api
-- Missing: Isolation mechanisms
+**Current Implementation**:
+- Basic billing data storage in Control Plane DB
 
-**Missing Implementation:**
-- No sandbox environment in deployment
-- No resource limits for response processing
+**Missing**:
+- Payment data tokenization
+- Compliance controls
+- Separation of billing data

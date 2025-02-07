@@ -393,5 +393,5 @@ def test_update_system_message_developer_type_openai_provider(llm_provider, app_
     system_message = SystemMessage(content="Test system message")
     updated_message = llm_instance._update_system_message(system_message)
     assert isinstance(updated_message, SystemMessage)
-    assert updated_message.content == "Test system message"
+    assert updated_message.content == "Formatting re-enabled\nTest system message"
     assert updated_message.additional_kwargs == {"__openai_role__": "developer"}

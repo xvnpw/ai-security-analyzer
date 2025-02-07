@@ -1,73 +1,81 @@
-## Attack Surface Analysis for chronicle Terraform Provider
+# Attack Surface Analysis for Terraform Chronicle Provider
 
-Below is the attack surface analysis for the `chronicle` Terraform provider, focusing on vulnerabilities introduced by the provider itself.
+- Attack Surface: **Credential Exposure in Terraform Configuration Files**
+  - Description: Terraform configuration files, which are often stored in version control systems, can contain sensitive credentials in plaintext if users directly embed secrets within the configuration.
+  - How `terraform-provider-chronicle` contributes to the attack surface: The provider's documentation examples continue to show credentials being directly embedded in the Terraform configuration for simplicity, as seen in the updated resource documentation and examples for `chronicle_feed_qualys_vm` and `chronicle_feed_thinkst_canary`.  The resource definition and test files (`resource_feed_qualys_vm.go`, `resource_feed_thinkst_canary.go`, `*_test.go`) confirm the use of `user`, `secret`, `value`, `key` attributes for authentication, which are potential candidates for hardcoding in configurations.
+  - Example:
+    ```terraform
+    provider "chronicle" {
+      backstoryapi_credentials = "YOUR_BACKSTORY_CREDENTIALS_JSON_STRING"
+      region                   = "europe"
+    }
 
-### Key Attack Surface List:
+    resource "chronicle_feed_qualys_vm" "qualys_vm" {
+      details {
+        authentication {
+          user   = "YOUR_QUALYS_USER"
+          secret = "YOUR_QUALYS_SECRET"
+        }
+      }
+    }
 
-*   **Attack Surface:** Insecure Storage of Credentials in Terraform State
-    *   **Description:** Terraform state files, by default, store resource configurations in plaintext. This includes sensitive attributes like API keys, secrets, and credentials required to authenticate with Chronicle and third-party services (AWS, Azure, Okta, Proofpoint, Qualys, Thinkst Canary, Microsoft Office 365). If the state file is compromised, these credentials can be exposed.
-    *   **How chronicle contributes to the attack surface:** The `chronicle` provider requires users to configure credentials for various APIs (Chronicle, and external services for log feeds) as part of its configuration. These credentials, when used in Terraform configurations, are stored in the state file. Resources like `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, `chronicle_feed_azure_blobstore`, `chronicle_feed_microsoft_office_365_management_activity`, `chronicle_feed_okta_system_log`, `chronicle_feed_okta_users`, `chronicle_feed_proofpoint_siem`, `chronicle_feed_qualys_vm`, `chronicle_feed_thinkst_canary`, and provider configuration options like `backstoryapi_credentials`, `bigqueryapi_credentials`, `ingestionapi_credentials`, `forwarderapi_credentials` directly handle and can store these sensitive credentials in the state. The resource definitions in `resource_feed_qualys_vm.go` and `resource_feed_thinkst_canary.go` and their corresponding tests in `resource_feed_qualys_vm_test.go` and `resource_feed_thinkst_canary_test.go` further demonstrate the handling of credentials for Qualys VM and Thinkst Canary feeds.
-    *   **Example:** A user configures a Thinkst Canary feed using `chronicle_feed_thinkst_canary` resource, providing `value` for authentication. After `terraform apply`, this secret value, in plaintext, is stored in the `terraform.tfstate` file. An attacker gaining access to this state file can extract these Thinkst Canary credentials. Similarly, configuring a Qualys VM feed using `chronicle_feed_qualys_vm` with `user` and `secret` will store these credentials in plaintext in the state file. Example configurations in `examples/resources/feed/api/qualys_vm/main.tf` and `examples/resources/feed/api/thinkst_canary/main.tf` illustrate this.
-    *   **Impact:** Critical. Exposure of credentials can lead to unauthorized access to Chronicle APIs and third-party services. For Chronicle, this could mean unauthorized data access, modification, or deletion. For third-party services, it could lead to data breaches, service disruption, or resource hijacking within those platforms (AWS S3, Azure Blob Storage, Okta, etc.).
-    *   **Risk Severity:** Critical
-    *   **Current Mitigations:**
-        *   Sensitive attributes like `secret_access_key`, `client_secret`, `shared_key`, `sas_token`, `value`, and credentials file content are marked as `Sensitive` in the schema definitions (e.g., in `resource_feed_amazon_s3.go`, `resource_feed_azure_blobstore.go`, `resource_feed_okta_system_log.go`, `provider.go`, `resource_feed_qualys_vm.go`, `resource_feed_thinkst_canary.go`). This instructs Terraform to redact these values in CLI output, but they are still stored in plaintext in the state file. This mitigation is insufficient to reduce risk severity.
-    *   **Missing Mitigations:**
-        *   **State File Encryption:** Encourage users to enable state file encryption at rest using backend-specific features (e.g., `terraform_remote_state` with encryption enabled in cloud storage like AWS S3, Google Cloud Storage, or Azure Storage Account).
-        *   **Credential Rotation:** Implement and document best practices for regular credential rotation for all configured services.
-        *   **External Secret Management:** Strongly recommend and document the use of external secret management tools (like HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, Google Secret Manager) to store and retrieve credentials instead of directly embedding them in Terraform configurations or relying on environment variables. The provider could be enhanced to directly integrate with such secret management solutions.
-        *   **Principle of Least Privilege:** Advise users to grant only the necessary permissions to the credentials used by the Terraform provider, limiting the potential impact of credential compromise.
+    resource "chronicle_feed_thinkst_canary" "thinkst_canary" {
+      details {
+        authentication {
+          value = "YOUR_THINKST_CANARY_TOKEN"
+        }
+      }
+    }
+    ```
+  - Impact: High. If configuration files are compromised, attackers can gain access to Chronicle APIs and potentially connected systems (Qualys, Thinkst Canary, etc.). This could lead to data breaches, unauthorized data ingestion, or disruption of security monitoring, and now extends to potentially compromising Qualys VM and Thinkst Canary assets if their respective credentials are exposed.
+  - Risk Severity: High
+  - Current Mitigations: Partially mitigated. Documentation still mentions environment variables and credential files as alternatives. However, direct embedding examples persist, and the provider doesn't enforce secure credential management. The newly added resources for Qualys VM and Thinkst Canary feeds also rely on similar authentication patterns, inheriting the same risks.
+  - Missing Mitigations:
+    - **Stronger emphasis in documentation on secure credential management practices**:  Documentation for new resources like `chronicle_feed_qualys_vm` and `chronicle_feed_thinkst_canary` must also prominently warn against direct credential embedding and reinforce secure alternatives.
+    - **Consider adding input validation or warnings within the provider**:  Extend potential warnings to resource attributes like `details.authentication.user`, `details.authentication.secret`, and `details.authentication.value` in resources like `chronicle_feed_qualys_vm` and `chronicle_feed_thinkst_canary`.
 
-*   **Attack Surface:** Exposure of Sensitive Credentials via Environment Variables
-    *   **Description:** The provider allows configuration of API credentials through environment variables (e.g., `CHRONICLE_BACKSTORY_CREDENTIALS`, `CHRONICLE_BIGQUERY_CREDENTIALS`, `CHRONICLE_INGESTION_CREDENTIALS`, `CHRONICLE_FORWARDER_CREDENTIALS`, `CHRONICLE_REGION`). While this can be convenient, environment variables can be unintentionally logged, exposed in process listings, or accessed by other applications running on the same system if not properly managed. The client initialization logic in `client/client.go` uses environment variables as a fallback mechanism for authentication.
-    *   **How chronicle contributes to the attack surface:** The provider code in `provider.go` explicitly checks for and utilizes these environment variables as fallback mechanisms for API authentication if credentials are not provided directly in the Terraform configuration. This design choice introduces environment variables as a potential attack vector for credential exposure. The `client/client.go` file details the logic for retrieving credentials from environment variables using functions like `WithBackstoryAPIEnvVar`, `WithBigQueryAPIEnvVar`, `WithIngestionAPIEnvVar`, and `WithForwarderAPIEnvVar`.
-    *   **Example:** A user sets `CHRONICLE_BACKSTORY_CREDENTIALS` environment variable with base64 encoded credentials for acceptance tests or quick local setup, as suggested in `README.md`. If this environment is not properly secured, or if the environment variables are logged or leaked, the Chronicle API credentials could be compromised.
-    *   **Impact:** High. Compromised Chronicle API credentials can lead to unauthorized access to Chronicle data and functionalities.
-    *   **Risk Severity:** High
-    *   **Current Mitigations:**
-        *   The documentation in `docs/index.md` mentions that environment variables have the lowest precedence, suggesting they are intended as a fallback or less preferred method.
-        *   The `README.md` mentions environment variables primarily in the context of acceptance tests and local development, implicitly suggesting they are not intended for production use.
-    *   **Missing Mitigations:**
-        *   **Discourage Environment Variable Usage:**  Strongly discourage the use of environment variables for storing sensitive credentials, especially in production environments. Emphasize the security risks in documentation and best practices guides.
-        *   **Secure Environment Variable Handling Guidance:** If environment variables are used (e.g., for local development), provide clear guidelines on securely managing them, such as avoiding logging them, restricting access to the environment where they are set, and using more secure methods for production.
-        *   **Removal of Env Var Fallback (Consideration):**  Evaluate if the fallback to environment variables is necessary for production scenarios. Removing this fallback would reduce the attack surface, forcing users to adopt more secure credential management practices.
+- Attack Surface: **Credential Exposure through Environment Variables**
+  - Description: Using environment variables for credentials, while better than direct embedding, remains a risk if not managed securely. Environment variables can be logged, exposed in process listings, or accessed by unauthorized entities.
+  - How `terraform-provider-chronicle` contributes to the attack surface: The provider continues to support environment variables for API credentials. The new resources don't change this aspect, and environment variables remain a documented configuration method.
+  - Example: Setting `CHRONICLE_BACKSTORY_CREDENTIALS`, `CHRONICLE_QUALYSVM_USER`, `CHRONICLE_THINKSTCANARY_TOKEN` environment variables.
+  - Impact: Medium. Compromised Terraform execution environments or exposed environment variables can lead to unauthorized Chronicle API access. The impact now includes potential access to Qualys VM and Thinkst Canary data and systems.
+  - Risk Severity: Medium
+  - Current Mitigations: Partially mitigated. Documentation mentions environment variables. Base64 encoding is mentioned but is weak obfuscation. No provider enforcement of secure environment variable management. This applies equally to credentials for new resources.
+  - Missing Mitigations:
+    - **Documentation should include best practices for environment variable security**:  Specifically mention securing environment variables when used for Qualys VM and Thinkst Canary credentials.
+    - **Consider recommending credential files or external secret stores over environment variables in many scenarios**:  This recommendation is still valid and should be reinforced for all resource types, including the newly added ones.
 
-*   **Attack Surface:** Misuse of Custom Endpoints
-    *   **Description:** The provider allows users to configure custom endpoints for various Chronicle APIs (`events_custom_endpoint`, `alert_custom_endpoint`, etc.). If a user is tricked or intentionally configures a custom endpoint pointing to a malicious server, sensitive data intended for Chronicle APIs could be intercepted by the attacker's server.
-    *   **How chronicle contributes to the attack surface:** The provider code in `provider.go` includes logic to read and apply these custom endpoint configurations using `customEndpoint` function and `With*BasePath` client options. This functionality, while potentially useful for specific advanced configurations, introduces the risk of endpoint hijacking or man-in-the-middle attacks if custom endpoints are not carefully managed. The `client/client.go` file shows the usage of `WithEventsBasePath`, `WithAlertBasePath`, etc., functions to set custom base paths. Validation for custom endpoints is implemented in `validation.go` using `validateCustomEndpoint`.
-    *   **Example:** An attacker could social engineer a user into using a malicious custom endpoint for the Events API. If the user configures `events_custom_endpoint` to point to the attacker's server, all event data sent by the provider will be directed to the attacker instead of Chronicle.
-    *   **Impact:** Medium to High. Depending on the API endpoint redirected, the impact could range from data exfiltration (events, alerts, assets, etc.) to potential manipulation of Chronicle resources if control plane APIs are targeted.
-    *   **Risk Severity:** High
-    *   **Current Mitigations:**
-        *   The provider code includes `validateCustomEndpoint` function in `provider.go` and implemented in `validation.go` which performs basic URL validation. However, this validation might not be sufficient to prevent all forms of malicious endpoint configurations (e.g., pointing to a legitimate-looking but attacker-controlled domain).
-    *   **Missing Mitigations:**
-        *   **Stronger Endpoint Validation:** Implement more robust validation for custom endpoints, potentially including checks against known malicious domains or requiring HTTPS.
-        *   **Warning and Documentation:**  Clearly document the security risks associated with using custom endpoints. Add warnings in the documentation and potentially in the provider's CLI output when custom endpoints are configured, emphasizing the need for extreme caution and verifying the endpoint's legitimacy.
-        *   **Principle of Least Privilege for Custom Endpoints (Consideration):**  Consider if custom endpoints should be restricted to specific user roles or require explicit administrative privileges to configure, reducing the likelihood of accidental or unauthorized misuse.
+- Attack Surface: **Insecure Storage of Sensitive Data in Terraform State Files**
+  - Description: Terraform state files store resource configurations in plaintext, potentially including sensitive data like API credentials.
+  - How `terraform-provider-chronicle` contributes to the attack surface: The provider manages resources that require credentials, and these credentials, even if passed via variables or environment variables, might be stored in the state file. The new resources for Qualys VM and Thinkst Canary also handle credentials that could end up in state. Test files (`*_test.go`) show examples of ignoring `details.0.authentication.0.user`, `details.0.authentication.0.secret`, `details.0.authentication.0.value`, `details.0.authentication.0.key` during state import verification, suggesting these are treated as sensitive, but the underlying risk of state file exposure remains.
+  - Example: Terraform state file might contain attributes related to `chronicle_feed_qualys_vm` or `chronicle_feed_thinkst_canary` resources, potentially including authentication details if not properly marked as sensitive.
+  - Impact: Medium. Compromised state files can expose sensitive information, including credentials for Chronicle, Qualys VM, and Thinkst Canary, even if not directly in configuration.
+  - Risk Severity: Medium
+  - Current Mitigations: Partially mitigated. Terraform SDK's `Sensitive: true` attribute marking is used. Test files indicate sensitivity of authentication attributes. However, state file encryption depends on the backend and is not guaranteed secrecy.
+  - Missing Mitigations:
+    - **Documentation should warn about state file security**:  Emphasize state file security for all resources, including new feed types and RBAC subject and reference list resources, as state files can store configurations related to these.
+    - **Review provider code to ensure sensitive attributes are correctly marked**:  Verify that `Sensitive: true` is correctly applied to all credential-related attributes in `chronicle_feed_qualys_vm`, `chronicle_feed_thinkst_canary`, and potentially other resources if they handle sensitive data.
 
-*   **Attack Surface:** Debug Port Exposure
-    *   **Description:** The `debug.sh` script exposes a debug port (`2345`) for debugging the provider using Delve. If this script is mistakenly used in a production environment or if the debug port is left open and accessible, it could allow attackers to connect to the debugging session and potentially gain control over the provider process, inspect memory, or execute arbitrary code.
-    *   **How chronicle contributes to the attack surface:** The `debug.sh` script, while intended for development, is included in the project repository. Its presence and the simplicity of running it might lead to accidental use in non-development environments, especially if users are not fully aware of the security implications.
-    *   **Example:** A developer, troubleshooting an issue in a staging or even production environment, might inadvertently use `debug.sh` to debug the provider. If the debug port `2345` is exposed to the network (e.g., due to misconfigured firewall rules or running in a container environment without proper network isolation), an attacker could connect to this port and exploit the debugging capabilities.
-    *   **Impact:** Medium. Successful exploitation could lead to information disclosure (memory inspection), denial of service (crashing the provider), or in worst-case scenarios, remote code execution on the system running the provider.
-    *   **Risk Severity:** Medium
-    *   **Current Mitigations:**
-        *   The `debug.sh` script is located in the root directory, implying it's primarily intended for development purposes.
-    *   **Missing Mitigations:**
-        *   **Documentation and Warnings:** Clearly document that `debug.sh` is strictly for development and debugging purposes and should never be used in production environments. Add prominent warnings in the script itself and in the README or development documentation.
-        *   **Remove `debug.sh` from Release Builds (Consideration):** Consider excluding `debug.sh` from release builds to further reduce the risk of accidental deployment in production.
-        *   **Authentication/Authorization for Debug Port (Consideration):** If debug functionality is needed in more controlled environments, explore options to add authentication or authorization mechanisms to the debug port to restrict access.
+- Attack Surface: **Man-in-the-Middle Attacks via Custom Endpoints**
+  - Description: The provider allows custom endpoints for Chronicle APIs, risking MITM attacks if HTTP is used or endpoints are compromised.
+  - How `terraform-provider-chronicle` contributes to the attack surface: Custom endpoint configuration options persist. No changes in new files to mitigate this.
+  - Example: Configuring `events_custom_endpoint` to `http://example.com/events`.
+  - Impact: Medium. Insecure custom endpoints can lead to intercepted communications and compromised API interactions. Impact remains limited to the specific API with a custom endpoint.
+  - Risk Severity: Medium
+  - Current Mitigations: No direct provider mitigation. Documentation mentions custom endpoints but lacks explicit HTTPS warnings.
+  - Missing Mitigations:
+    - **Documentation should strongly recommend HTTPS for custom endpoints**:  This recommendation is still crucial and should be highlighted in the general provider documentation and any resource-specific documentation where custom endpoints might be relevant (though less likely for feed resources).
+    - **Input validation for custom endpoints**:  Provider could validate `https://` for custom endpoint URLs and warn on HTTP usage.
 
-*   **Attack Surface:** Rule Injection via `rule_text`
-    *   **Description:** The `chronicle_rule` resource allows users to define YARA-L rules using the `rule_text` attribute, which can be sourced from a local file using `file("path/to/yararule")`. If the source of these rule files is not properly controlled or validated, an attacker could potentially inject malicious YARA-L rules.
-    *   **How chronicle contributes to the attack surface:** The `chronicle_rule` resource, defined in `resource_rule.go` and tested in `resource_rule_test.go`, by design, takes user-provided YARA-L rule text. If the provider is used in a context where rule definitions are not strictly controlled (e.g., in a shared environment or when rules are sourced from untrusted locations), it opens up the possibility of rule injection. Example usage is shown in `examples/resources/detection/rule/main.tf`.
-    *   **Example:** In a multi-tenant environment, if users can define Chronicle rules through Terraform and rule definitions are not properly reviewed, a malicious user could inject a rule via `rule_text` that is designed to exfiltrate data, cause denial of service within Chronicle, or bypass security controls.
-    *   **Impact:** Medium. Malicious rules could lead to data exfiltration, false positives/negatives in alerts, performance degradation within Chronicle, or bypassing intended security logic.
-    *   **Risk Severity:** Medium
-    *   **Current Mitigations:**
-        *   None apparent from the provided files. The provider itself does not perform any validation or sanitization of the `rule_text` content beyond what the Chronicle API might enforce. Basic validation of rule text ending with a newline is present in `validation.go` using `validateRuleText`.
-    *   **Missing Mitigations:**
-        *   **Rule Text Validation (Consideration):** Explore options to implement client-side validation of `rule_text` to detect potentially malicious patterns or syntax before sending it to the Chronicle API. However, YARA-L is complex, and robust client-side validation might be challenging.
-        *   **Documentation and Best Practices:**  Document the risks of rule injection and emphasize the importance of carefully reviewing and controlling the source of YARA-L rule definitions. Recommend using version control and code review processes for rule management.
-        *   **Principle of Least Privilege for Rule Creation:** Restrict the ability to create or modify Chronicle rules to authorized users or roles only, limiting the attack surface in shared environments.
-        *   **Rule Review Process:** Recommend establishing a formal review process for all rule changes, especially in security-sensitive environments, to detect and prevent the introduction of malicious rules.
+- Attack Surface: **Debug Port Exposure**
+  - Description: `debug.sh` script exposes a debug port, risking unauthorized remote debugging access if exposed to a network.
+  - How `terraform-provider-chronicle` contributes to the attack surface: `debug.sh` script remains in the project. No changes in new files to mitigate this.
+  - Example: Running `debug.sh` on a publicly accessible development server.
+  - Impact: Medium. Exposed debug port can allow attackers to inspect provider internals and potentially extract sensitive information or manipulate behavior. Risk primarily in development/testing if debugging is not secured.
+  - Risk Severity: Medium
+  - Current Mitigations: Implicit mitigation by debuggers being for development, not production. `debug.sh` not for normal operation.
+  - Missing Mitigations:
+    - **Documentation for `debug.sh` should include security warnings**:  Warnings about debug port exposure risks should be maintained and potentially reinforced in `README.md` or comments in `debug.sh`.
+    - **Consider removing or securing `debug.sh` further**:  Restricting `debug.sh` to `localhost` by default or requiring a flag for network listening remains a valid mitigation consideration.
+
+These attack surfaces remain relevant and are not significantly changed by the newly added resources. The focus should be on implementing the missing mitigations, particularly enhancing documentation around secure credential management and state file security, and considering input validation for custom endpoints and debug port security.

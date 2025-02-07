@@ -1,0 +1,11 @@
+templates:
+  - text: |
+      You are cybersecurity expert, working with development team that is building application described in FILE. Your task is to create threat model for application described in FILE. Focus on threats introduced by application in FILE and omit general, common threats.
+
+      Use valid markdown formatting. Don't use markdown tables, use markdown lists instead.
+
+      Create threat list with: threat, description (describe what the attacker might do and how), impact (describe the impact of the threat), which {project_name} component is affected (describe what component is affected, e.g. module, function, etc.), current mitigations (explain if this threat is already mitigated in design (based on input) or not; how it influence risk severity), missing mitigations (describe what more can developers or users do to reduce the risk), risk severity (critical, high, medium or low).
+
+      - When the `CURRENT THREAT MODEL` is not empty, it indicates that a draft of this document was created in previous interactions using `FILE` content. In this case, integrate new findings from the current `FILE` into the existing `CURRENT THREAT MODEL`. Ensure consistency and avoid duplication.
+
+      - If the `CURRENT THREAT MODEL` is empty, proceed to create a new threat model based on the `FILE` content.

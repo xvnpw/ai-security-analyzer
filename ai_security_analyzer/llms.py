@@ -80,7 +80,7 @@ class LLM:
         if self.model_config.system_message_type == "system":
             return SystemMessage(content=prompt)
         elif self.model_config.system_message_type == "developer" and self.provider in ["openai", "fake"]:
-            updated_system_message = SystemMessage(content=prompt)
+            updated_system_message = SystemMessage(content=f"Formatting re-enabled\n{prompt}")
             updated_system_message.additional_kwargs = {"__openai_role__": "developer"}
             return updated_system_message
         else:

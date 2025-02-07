@@ -1,162 +1,162 @@
-Below is the detailed threat modeling analysis—organized as an attack tree—for the “screenshot‐to‐code” project. This project is an open source tool that converts screenshots, mockups, Figma designs and even video recordings into web application code. It uses a modern stack including a React/Vite front end, a FastAPI backend running under Python with Poetry/Docker support, and integrates several AI models (from OpenAI, Anthropic, Gemini, and even image generation via Replicate) to dynamically generate code.
+Below is an attack‐tree analysis that focuses on weaknesses intrinsic to the “screenshot‐to‐code” project (as evidenced by the repository’s files) and on ways an attacker might exploit them to compromise a system that uses the project. In this analysis we concentrate on vulnerabilities that stem from how the application assembles and processes inputs, its handling of file and network parameters, and its integration with large‐language model (LLM) APIs. (Note that we explicitly omit “general” threats such as audit, backup issues, etc.)
 
-The analysis below shows how an attacker might compromise systems that use this project by abusing input channels, misconfigurations, insecure credential/key handling, container and API weaknesses, or by inducing harmful behavior through the automated prompt and code generation chain.
+---
 
-────────────────────────────
-1. ROOT GOAL
+## 1. Project Overview
 
-“Compromise systems using the screenshot‐to‐code project by exploiting its weaknesses so as to inject malicious code, exfiltrate sensitive data, or disrupt intended operations.”
+**Purpose and Functionality:**
+“screenshot‐to‐code” is an open–source tool that uses AI (via models like GPT‐4 Vision, Claude Sonnet, Gemini, etc.) to convert screenshots, mockups, and design snapshots into clean, functional code (HTML/CSS, React, Vue, etc.). Its architecture features a React/Vite frontend and a FastAPI backend. The project includes multiple evaluation and testing scripts, Dockerfiles for both backend and frontend deployments, and extensive prompt–assembly logic for commanding different LLMs. It also integrates with third–party APIs for taking screenshots and even processing videos to extract frames for further input to the code generator.
 
-────────────────────────────
-2. HIGH‐LEVEL ATTACK PATHS
+**Key Components:**
 
+- **Backend API Endpoints:**
+  – `/generate-code` (via WebSocket) which accepts parameters (including image URLs, API keys, generation history) and streams code completions obtained from providers (OpenAI, Anthropic, Gemini).
+  – `/api/screenshot` that accepts a URL and API key and calls an external screenshot API.
+  – Evaluation routes (e.g. `/evals`, `/pairwise-evals`, `/best-of-n-evals`) that list local HTML files and images from a designated eval folder.
+
+- **Prompt Assembly and LLM Integration:**
+  Files under “prompts” and “llm.py” show that the project constructs composite messages (with image URL parts and text prompts) to instruct the models. There is also functionality to handle “imported code” as part of an update.
+
+- **Utilities and Logging:**
+  Utility modules (e.g. for extracting HTML from an LLM’s output, image processing, logging) that perform minimal sanitization and version tracking.
+
+- **Deployment and Development:**
+  Dockerfiles, Poetry configuration, and environment variable usage for API keys.
+
+---
+
+## 2. Root Goal of the Attack Tree
+
+**Attacker’s Ultimate Objective:**
+*“Compromise target systems that use ‘screenshot‐to‐code’ by exploiting weaknesses in the project’s code‐assembly, file–handling, API integration, and prompt processing mechanisms.”*
+
+---
+
+## 3. High–Level Attack Paths & Expansion (Attack Tree)
+
+Below is a text–based visualization of the attack tree. The top–level node splits (with logical [OR] branches) into several distinct strategies an attacker might use.
+
+```
+Root Goal: Compromise systems using weaknesses in the screenshot-to-code project
 [OR]
-+-- A. Prompt Injection and Malicious Code Generation
-+-- B. API Key and Credential Exposure
-+-- C. WebSocket and Communication Channel Exploitation
-+-- D. Docker Deployment and Container Misconfiguration Exploitation
-+-- E. SSRF and Malicious URL Injection via the Screenshot API
-+-- F. Video-to-App / Image Processing Abuse
-+-- G. Evaluation/ File Access Exploitation
++-- 1. Exploit Eval Endpoints for Arbitrary File Access and Disclosure
+|     [OR]
+|     +-- 1.1 Manipulate the "folder" query parameter in the /evals endpoint
+|           to traverse directories and list/return arbitrary files.
+|     +-- 1.2 Abuse folder parameters in /pairwise-evals and /best-of-n-evals
+|           to force the server to open files from sensitive directories.
+|
++-- 2. Exploit the Code Generation Endpoint (/generate-code)
+|     [OR]
+|     +-- 2.1 Perform Prompt Injection Attacks:
+|           - Supply specially crafted image URLs or history entries
+|             that cause the downstream LLM (via unsanitized prompt messages)
+|             to output malicious code (e.g. code that creates hidden iframes or
+|             executes unexpected JavaScript).
+|     +-- 2.2 Inject Malicious Code Payloads:
+|           - Manipulate inputs so that the resulting HTML includes XSS or
+|             client-side malicious scripts which can compromise a user’s browser.
+|
++-- 3. Exploit SSRF via the /api/screenshot Endpoint
+|     [AND]
+|     +-- Supply a malicious "url" parameter that forces the server's HTTP
+|         client to initiate requests against internal networks or unintended targets.
+|
++-- 4. Abuse LLM Integration Vulnerabilities in Prompt Processing
+|     [OR]
+|     +-- 4.1 Manipulate the composite prompt messages (both system and user parts)
+|           to force the LLM to reveal sensitive internal logic or output harmful code.
+|     +-- 4.2 Interfere with the streaming callback mechanism to disrupt or poison
+|           the code generation process.
+|
++-- 5. Denial-of-Service (DoS) via WebSocket Flooding
+|     [AND]
+|     +-- Flood the /generate-code WebSocket with rapid/malicious input requests,
+|         leading to resource exhaustion on the backend.
+|
++-- 6. Exploit Debug and Log Handling for Information Disclosure
+      [AND]
+      +-- Poison or read the log files (written by fs_logging) to leak sensitive
+          prompt, key, or model–related information.
+```
 
-────────────────────────────
-3. EXPANSION OF ATTACK PATHS
+---
 
-A. Prompt Injection / Malicious Code Generation
-   [AND]
-   +-- A1. Attacker controls user-supplied inputs (e.g. the “image”, “history” or settings values) submitted from the front end.
-   +-- A2. The prompt assembly function (which combines a hard–coded “system” message with a user “image_url” and a text prompt) is manipulated so that malicious payloads are included.
-   +-- A3. The chosen LLM (via OpenAI or Anthropic) returns generated code that contains back–doors, script injections, or other malicious modifications which are then served to clients or deployed in production.
+## 4. Node Attributes Summary
 
-B. API Key and Credential Exposure
-   [OR]
-   +-- B1. API keys (for OpenAI, Anthropic, Gemini, etc.) are provided via environment variables or UI settings; these may be intercepted if transmitted insecurely.
-   +-- B2. Excessive “allow_origins” (CORS * in FastAPI) and loose endpoint access may let an attacker read or abuse API keys stored on the server or in browser–local settings.
+Below is a summary table with rough risk–attributes for each node. (These ratings are estimative and meant to guide prioritization.)
 
-C. WebSocket Communication Exploitation
-   [OR]
-   +-- C1. The generated code is streamed via a WebSocket connection that is accepted from any origin—this can be abused by flooding the channel (DoS) or tampering with messages.
-   +-- C2. Weak error handling (with custom close codes) may allow injection of malicious “chunk” messages to alter the final delivered code.
+| Attack Step                                               | Likelihood | Impact   | Effort    | Skill Level  | Detection Difficulty |
+|-----------------------------------------------------------|------------|----------|-----------|--------------|----------------------|
+| **1. Exploit Eval Endpoints**                             | Medium     | High     | Low–Med   | Low          | Low                  |
+| &nbsp;&nbsp;1.1 Manipulate folder parameter in /evals      | Medium     | High     | Low       | Low          | Low                  |
+| &nbsp;&nbsp;1.2 Abuse folder parameters in pairwise evals    | Medium     | High     | Low       | Low          | Low                  |
+| **2. Exploit /generate-code Endpoint**                    | Medium     | High     | Medium    | Medium       | Medium               |
+| &nbsp;&nbsp;2.1 Prompt Injection Attack                    | Medium     | High     | Medium    | Medium       | Medium               |
+| &nbsp;&nbsp;2.2 Malicious Code Payload Injection (XSS)     | Low–Med    | High     | Medium    | Medium       | Medium               |
+| **3. Exploit SSRF in /api/screenshot Endpoint**           | Low–Med    | Medium   | Low       | Medium       | Medium               |
+| **4. Abuse LLM Integration Vulnerabilities**              | Medium     | High     | Medium    | High         | High                 |
+| &nbsp;&nbsp;4.1 Force LLM to reveal sensitive data/code      | Medium     | High     | Medium    | High         | High                 |
+| &nbsp;&nbsp;4.2 Disrupt streaming callback processing       | Medium     | High     | Medium    | High         | High                 |
+| **5. Denial-of-Service (DoS) via WebSocket Flooding**       | Medium     | Medium   | Low       | Low          | Medium               |
+| **6. Exploit Logging Mechanism for Info Disclosure**      | Low        | Medium   | Low       | Low          | High                 |
 
-D. Docker Deployment / Container Exploitation
-   [AND]
-   +-- D1. Dockerfiles and docker-compose configurations (which expose ports such as 7001 and 5173 without strong restriction) may be misconfigured.
-   +-- D2. The containerized environment (running Python libraries, uvicorn and Node–based tooling) might be exploitable via privilege escalation or container breakout if images or dependencies have unpatched vulnerabilities.
+---
 
-E. SSRF and Malicious URL Injection via Screenshot API
-   [AND]
-   +-- E1. The /api/screenshot endpoint accepts arbitrary URLs and calls an external screenshot service; an attacker may supply an internal URL or specially crafted URL.
-   +-- E2. This can trigger a server–side request forgery (SSRF) attack and lead to sensitive internal resource discovery or unintended API calls.
+## 5. Mitigation Strategies (Actionable Insights)
 
-F. Video-to-App / Image Processing Abuse
-   [AND]
-   +-- F1. The video-to-code module decodes videos (using moviepy, PIL) without heavy validation; a crafted video file may exhaust CPU/memory (DoS) or cause image library errors (buffer overflow/logic bugs).
-   +-- F2. Malformed image data could be injected so that when re–encoded to JPEG the altered payload might lead to further exploitation if downstream consumers execute the generated HTML/JS blindly.
+For each identified attack path, consider the following countermeasures (tailored to the project’s context):
 
-G. Evaluation / File Access Exploitation
-   [AND]
-   +-- G1. The eval endpoints (e.g. /evals, /pairwise-evals) take folder paths or filenames from parameters; if not fully sanitized, an attacker may force unintended file access (path traversal) or leak sensitive files.
-   +-- G2. This also covers manipulation of file–naming schemes in the eval outputs to cause confusion or expose backend logs.
+- **For Eval Endpoints (Node 1):**
+  • Validate and sanitize folder and file–related parameters.
+  • Restrict file system access to only the designated eval directories.
 
-────────────────────────────
-4. VISUALIZATION OF THE ATTACK TREE
+- **For the Code Generation Endpoint (Node 2):**
+  • Rigorously sanitize all inputs that become part of the prompt.
+  • Enforce strict output validation on generated HTML before rendering it in clients.
+  • Consider “whitelisting” acceptable structures or post–processing generated code.
 
-Root Goal: Compromise systems using screenshot‐to‐code project vulnerabilities
-   [OR]
-   +-- A. Prompt Injection / Malicious Code Generation
-         [AND]
-         +-- A1. Control of user input (image URL, history messages, “settings” dialog)
-         +-- A2. Manipulation of prompt assembly (unsanitized concatenation of system and user messages)
-         +-- A3. Malicious LLM output (backdoor code injection)
-   +-- B. API Key and Credential Exposure
-         [OR]
-         +-- B1. Interception of API keys via insecure transmission or weak browser storage
-         +-- B2. Exploitation of open CORS and environment misconfiguration
-   +-- C. WebSocket Communication Exploitation
-         [OR]
-         +-- C1. WebSocket flooding/DoS via uncontrolled connections
-         +-- C2. Injection/tampering in streaming messages
-   +-- D. Docker Deployment / Container Exploitation
-         [AND]
-         +-- D1. Misconfigured container/network settings exposing ports and services
-         +-- D2. Container escape via vulnerable dependencies or privileged execution
-   +-- E. SSRF via Screenshot API Endpoint
-         [AND]
-         +-- E1. Malicious URL input to /api/screenshot
-         +-- E2. SSRF to internal services
-   +-- F. Video-to-App / Image Processing Abuse
-         [AND]
-         +-- F1. Malicious video input causing resource exhaustion or errors
-         +-- F2. Exploitation of PIL image processing vulnerabilities
-   +-- G. Evaluation / File Access Exploitation
-         [AND]
-         +-- G1. Manipulation of eval folder/filename parameters for unauthorized file reads
-         +-- G2. Exploitation of eval API to access sensitive logs or historical responses
+- **For SSRF in /api/screenshot (Node 3):**
+  • Validate the “url” parameter against a list of allowed domains or patterns.
+  • Use timeouts and safe defaults when making outbound HTTP calls.
 
-────────────────────────────
-5. RISK ATTRIBUTE ASSIGNMENT (per high–level node)
+- **For LLM Integration (Node 4):**
+  • Harden the prompt–assembly routines (for both system and user parts) so that input data cannot alter critical instructions.
+  • Monitor and limit the content of streaming callbacks to detect anomalies.
 
-                                Likelihood    Impact    Effort    Skill Level    Detection Difficulty
-A. Prompt Injection                Medium      High      Medium       Medium             Medium
-B. API Key Exposure                Medium      High      Low          Low                Medium
-C. WebSocket Exploitation          Low         Medium    Medium       Medium             Medium
-D. Docker Exploitation             Medium      High      Medium       High               High
-E. SSRF via Screenshot            Low-Medium   High      Low          Medium             Medium
-F. Video-to-App Abuse              Low         Medium    High         High               High
-G. Eval/File Access Exploitation   Low         Medium    Low          Low                Low
+- **For WebSocket Flooding (Node 5):**
+  • Implement rate–limiting on the WebSocket endpoint and enforce quotas per client.
 
-────────────────────────────
-6. MITIGATION STRATEGIES
+- **For Log–Based Information Leakage (Node 6):**
+  • Sanitize logged data and restrict access to log directories.
+  • Avoid logging sensitive API keys or detailed prompt contents in production.
 
-For each class of threat, the following countermeasures are recommended:
+---
 
-• For Prompt Injection (Path A):
-  – Sanitize and validate all user–supplied input (image URLs, “history” messages, settings values).
-  – Enforce strict formatting rules when building prompt messages for the LLM.
-  – Consider using a whitelist and static templates rather than free–form concatenation.
-  – Add logging and anomaly detection on unexpected prompt contents or LLM output.
+## 6. Summary of Findings
 
-• For API Key Exposure (Path B):
-  – Ensure all API key transmissions occur only over HTTPS/TLS.
-  – Do not store sensitive API keys in browser–accessible storage; use secure vaults or server–side abstractions.
-  – Limit CORS origins to trusted domains only.
-  – Rotate keys periodically and conduct security audits of environment variable exposures.
+The “screenshot–to–code” project—though a powerful tool for converting visual designs into deployable code—contains several areas where an attacker could exploit weaknesses intrinsic to its prompt processing, file access logic, and network–based endpoints. In particular:
 
-• For WebSocket Exploitation (Path C):
-  – Rate–limit connections and data frames on the WebSocket endpoint.
-  – Implement robust error handling and authentication of WebSocket clients.
-  – Monitor anomalous behavior in streaming communications.
+- Unsanitized query parameters in eval endpoints may allow arbitrary file disclosure.
+- The code generation WebSocket endpoint (which handles dynamic prompt assembly for LLMs) is potentially vulnerable to prompt injection and even DoS if flooded.
+- The integration with third–party APIs (both for screenshots and LLMs) may be subject to remote request forgery or injection attacks if inputs are not properly validated.
+- Finally, any leakage or misuse of logs (or unsanitized generated code) could expose sensitive configuration details or lead to client–side exploits.
 
-• For Docker/Container Hardening (Path D):
-  – Follow best practices for container security including running as non–root and minimizing exposed ports.
-  – Regularly scan container images for vulnerabilities.
-  – Use network segmentation and firewall rules to limit external access.
+Given these risks—and their relatively moderate to high impact—it is critical to add proper validation, sanitization, and rate limiting when deploying this project in environments that are publicly accessible.
 
-• For SSRF in Screenshot API (Path E):
-  – Validate and filter URLs submitted to the screenshot endpoint.
-  – Enforce network isolation so that requests cannot reach internal resources.
-  – Limit responses and add timeouts on external API calls.
+---
 
-• For Video and Image Processing Abuse (Path F):
-  – Impose resource limits (CPU, memory, processing time) on video processing operations.
-  – Validate video and image formats and sizes before processing.
-  – Use well–maintained libraries and keep them updated.
+## 7. Assumptions & Questions
 
-• For Evaluation/File Access (Path G):
-  – Sanitize any folder or file name inputs provided by users.
-  – Use secure coding practices (such as avoiding directory traversal) when reading files.
-  – Restrict access only to known safe directories.
+- **Assumptions:**
+  • The project is deployed as provided, with minimal additional hardening on the backend endpoints.
+  • API keys are expected to be provided by users via settings; however, the project itself does not re–validate these keys once received.
+  • The project’s integration with LLM APIs trusts the structure of generated outputs without thorough sanitization.
 
-────────────────────────────
-7. SUMMARY OF FINDINGS
+- **Questions:**
+  • Is the evaluation endpoint intended to be accessible by end–users, or only by trusted administrators?
+  • What measures (if any) are already in place on deployed instances (e.g. behind authentication or in a private network) that might mitigate some of these file system or WebSocket–based attacks?
 
-Key risks include the potential for an attacker to manipulate the prompt–generation process (Path A) to produce malicious code; exposure or interception of API keys and credentials (Path B) via lax CORS and insecure client–server key handling; and the possibility of container and network misconfiguration (Path D) that could be leveraged for privilege escalation. In addition, endpoints such as the screenshot API (Path E) and video–to–app conversion process (Path F) provide channels by which an attacker might induce unintended behavior or force a denial of service.
+---
 
-The recommended countermeasures focus on careful sanitization and validation of inputs, tightening of API key protection and network policies, hardening of the container deployment, rate limiting and monitoring of streaming communications, and overall adherence to secure coding practices throughout the project.
-
-Addressing the critical nodes—especially in the prompt assembly and API key management—is paramount to reducing the risk that attackers can compromise systems that use the “screenshot-to-code” project.
-
-By applying these mitigations, project maintainers and implementers can significantly lower the attack surface and help ensure that the automated code–generation process is not subverted for malicious ends.
-
-────────────────────────────
-End of Threat Modeling Analysis.
+This attack tree should guide defenders in prioritizing fixes on input validation (both for file system paths and API parameters), prompt integrity in LLM integration, and protections against flooding and log leakage.

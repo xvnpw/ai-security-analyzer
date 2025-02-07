@@ -1,99 +1,77 @@
-# Attack Surface Analysis for `screenshot-to-code`
+Here's the updated attack surface analysis integrating findings from the new project files:
 
-## Attack Surface Identification
+### Key Attack Surfaces (Updated)
 
-### Digital Assets & Entry Points (Updated)
-7. **Eval Endpoints (routes/evals.py)**
-   - `/evals` and `/pairwise-evals` endpoints accepting folder paths
-   - File system access for HTML evaluation files
-   - Image input processing via `image_to_data_url`
+1. **External CDN Script Inclusion in Generated Code**
+   - **Description**: Generated code includes third-party scripts (Tailwind, React, Bootstrap) loaded from external CDNs without integrity checks
+   - **Impact**: Compromised CDN could lead to XSS attacks in all generated applications
+   - **Risk Severity**: High
+   - **Current Mitigations**: None
+   - **Missing Mitigations**:
+     - Subresource Integrity (SRI) hashes for CDN scripts
+     - Option to self-host critical libraries
+     - User-configurable allowlist for external resources
 
-8. **Screenshot API (routes/screenshot.py)**
-   - `/api/screenshot` endpoint interacting with external service (screenshotone.com)
-   - API key handling for third-party service
-   - Image data URL conversion
+2. **Unsanitized AI-Generated Code Execution** (Updated)
+   - **Description**: Generated code now includes framework-specific vulnerabilities from React/Vue/Ionic components
+   - **Impact**: Component-based XSS vulnerabilities could persist in generated code
+   - **Risk Severity**: High
+   - **Current Mitigations**:
+     - Preview rendered in sandboxed iframe (existing)
+   - **Missing Mitigations**:
+     - Framework-specific sanitization (e.g., React DOM purification)
+     - CSP headers blocking unauthorized scripts
+     - Automatic vulnerability scanning of generated code
 
-9. **Video Processing Utilities (video/utils.py)**
-   - Video frame extraction and temporary file handling
-   - Base64 video data processing
-   - Claude API integration for video analysis
+3. **Video Processing Vulnerabilities** (New)
+   - **Description**: Video processing using moviepy introduces new attack vectors
+   - **Impact**: Malicious video files could exploit vulnerabilities in video processing stack
+   - **Risk Severity**: High
+   - **Current Mitigations**:
+     - Temporary file handling for video processing
+   - **Missing Mitigations**:
+     - Containerized video processing
+     - Strict file type validation
+     - FFmpeg sandboxing
 
-### Potential Vulnerabilities (Updated)
-7. **Directory Traversal Risks**
-   - Path injection in eval endpoints through user-controlled folder parameters
-   - Lack of path sanitization in `get_evals` and `get_pairwise_evals`
+4. **AI API Key Exposure** (Existing - No Changes)
+   - **Description**: Multiple AI provider keys stored in frontend/backend
+   - **Impact**: Key compromise enables API abuse
+   - **Risk Severity**: Critical
+   - **Current Mitigations**:
+     - Keys stored in localStorage and .env
+   - **Missing Mitigations**:
+     - Key rotation mechanism
+     - Usage monitoring
 
-8. **Third-party Service Integration**
-   - ScreenshotOne API key exposure in client requests
-   - Dependency on external service availability/security
+5. **Multi-Model Code Generation Risks** (New)
+   - **Description**: Parallel use of Claude/GPT-4/Gemini introduces inconsistent security postures
+   - **Impact**: Weakest model security determines overall system vulnerability
+   - **Risk Severity**: Medium
+   - **Current Mitigations**:
+     - Unified output processing
+   - **Missing Mitigations**:
+     - Model-specific output validation
+     - Differential testing across providers
+     - Provider-specific sanitization rules
 
-9. **Video Processing Vulnerabilities**
-   - Temporary file handling risks in video processing
-   - Potential memory exhaustion from large video files
-   - Frame extraction without size validation
+6. **WebSocket Protocol Handling** (New)
+   - **Description**: Code generation via WebSockets exposes long-lived connections
+   - **Impact**: Potential for DoS attacks through connection exhaustion
+   - **Risk Severity**: Medium
+   - **Current Mitigations**:
+     - FastAPI's default WebSocket implementation
+   - **Missing Mitigations**:
+     - Connection rate limiting
+     - Input size validation
+     - Timeout enforcement
 
-## Threat Enumeration (STRIDE Model) - Updated
+### Updated Recommendations by Priority
 
-### 2. Tampering (Expanded)
-- **Eval Result Manipulation**: Alteration of stored HTML evaluation files
-- **Video Payload Injection**: Malicious video metadata affecting processing
+1. Implement SRI hashes for all CDN resources in generated code
+2. Containerize video processing with resource constraints
+3. Add model-specific output validation pipelines
+4. Enforce WebSocket connection quotas
+5. Expand dependency scanning to include video processing stack
 
-### 4. Information Disclosure (Expanded)
-- **Path Traversal**: Access to arbitrary files via eval endpoint folder parameters
-- **Screenshot API Key Leakage**: Exposure of ScreenshotOne credentials in network traffic
-
-### 5. Denial of Service (Expanded)
-- **Video Processing Bombs**: Specially crafted video files causing resource exhaustion
-- **Eval System Overload**: Malicious path parameters triggering excessive file operations
-
-## Impact Assessment - Updates
-
-### New Critical Risks
-| Threat | CIA Impact | Severity | Likelihood |
-|--------|------------|----------|------------|
-| Directory Traversal via Eval Endpoints | Confidentiality | High | Medium |
-| Third-party Service Compromise | Availability/Integrity | Medium | Low |
-| Video Processing Resource Exhaustion | Availability | Medium | Low |
-
-## Threat Ranking - Updated
-
-1. **AI API Key Exposure** (High)
-2. **Directory Traversal in Eval Endpoints** (High)
-3. **Unrestricted CORS** (Medium)
-4. **Third-party Service Dependency** (Medium)
-5. **Video Processing DoS** (Medium)
-
-## Mitigation Recommendations - Additions
-
-6. **Path Handling Security**
-   - Implement strict path sanitization in eval endpoints (routes/evals.py)
-   - Add allowlist validation for acceptable file paths
-   - Use relative paths constrained to designated directories
-
-7. **Third-party Service Protection**
-   - Proxy ScreenshotOne API calls through backend (routes/screenshot.py)
-   - Encrypt API keys in transit and at rest
-   - Implement circuit breaker pattern for external service calls
-
-8. **Video Processing Safeguards**
-   - Add file size validation in video processing (video/utils.py)
-   - Implement resource quotas for video operations
-   - Use secure temporary file handling with automatic cleanup
-
-9. **Enhanced Input Validation**
-   - Add MIME type verification for video uploads
-   - Implement maximum frame extraction limits
-   - Add timeout mechanisms for long-running video operations
-
-## QUESTIONS & ASSUMPTIONS - Updated
-
-2. New Questions:
-   - Are eval endpoints protected by authentication/authorization?
-   - What security audits have been performed on ScreenshotOne API?
-   - Is there validation for maximum video upload size?
-   - Are temporary video files securely wiped after processing?
-
-3. New Assumptions:
-   - Eval functionality is only used by trusted internal users
-   - Video processing occurs in isolated environments
-   - All third-party API keys are rotated regularly
+The analysis now reflects risks introduced by the expanded framework support, video processing capabilities, and multi-model architecture shown in the project files. Critical risks remain centered around third-party resource trust and AI-generated code execution.

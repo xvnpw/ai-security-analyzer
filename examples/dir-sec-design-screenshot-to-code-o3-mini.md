@@ -1,228 +1,205 @@
-# Project Design Document for screenshot-to-code
+# Screenshot-to-Code Design Document
 
-This document details the design of screenshot-to-code – an open source tool that converts screenshots, design mockups, and even video recordings into functional code using AI. The system supports multiple technology stacks (HTML/Tailwind, HTML/CSS, React/Tailwind, Vue/Tailwind, Bootstrap, Ionic/Tailwind, and SVG) and integrates with several AI models (GPT-4, Claude, Gemini, and image generation models such as DALL-E 3/Flux Schnell).
-
----
-
-# BUSINESS POSTURE
-
-The primary business goal is to accelerate the transition from design to code by automating the coding of user interfaces based on visual inputs. The solution targets startups to large enterprises that want to reduce the turnaround time for prototyping web applications with high fidelity. Key priorities include:
-- Rapid prototyping and iterative development.
-- Support for multiple frontend stacks to cater to diverse customer requirements.
-- Enabling side-by-side evaluation of generated results and continuous model integration.
-- Offering a hosted version (with paid subscriptions) and an open source version.
-
-Important business risks to address include:
-- Dependence on third-party AI services and potential changes in API pricing, availability, or performance.
-- Quality and correctness concerns in generated code that may require manual review.
-- Potential misuse or exposure of sensitive API keys if not handled properly.
-- Competitive risks from similar code generation services in the market.
+This document describes the system architecture, business and security considerations, and design details for the Screenshot-to-Code project. The tool leverages AI to convert screenshots, mockups, and even video screen recordings into functional code targets across multiple stacks and frameworks.
 
 ---
 
-# SECURITY POSTURE
+## BUSINESS POSTURE
 
-Existing security controls and accepted risks include:
-- security control: The backend is built with FastAPI and uses a CORS middleware configured to allow all origins (open for development). This is acceptable for initial testing but requires tightening in production.
-- security control: API keys (OpenAI, Anthropic, Gemini, Replicate) are managed via environment variables (.env file) and are not stored permanently on the server. Keys provided through the settings dialog are retained only in the user’s browser.
-- accepted risk: The current CORS policy and the immediate exposure of API keys on clients are acceptable during the prototyping phase.
-- security control: Standard logging and error handling are implemented, and debugging artifacts can be enabled for development purposes.
+The Screenshot-to-Code tool is designed to accelerate the design-to-development process. Its primary business goals are to:
+- Enable designers and developers to rapidly generate production‐ready code from visual designs or screen recordings.
+- Support multiple technology stacks (HTML/CSS, HTML/Tailwind, React, Vue, Bootstrap, Ionic, and SVG) to appeal to a wide range of users.
+- Integrate with multiple cutting-edge AI models (GPT‑4, Claude, Gemini, Replicate) to provide competitive and comparative code generation capabilities.
+- Provide both a free open source version and a hosted paid version—with enhanced features for enterprises.
 
-Recommended high-priority security controls:
-- Implement strict CORS policies and network security in production.
-- Enforce input validation and sanitized processing for user-supplied URLs and images.
-- Introduce robust authentication and authorization mechanisms (especially for hosted paid versions) to prevent unauthorized access.
-- Use supply‐chain security measures for dependency management and regular vulnerability scanning.
-- Encrypt sensitive data in transit using HTTPS for all external API calls.
-- Monitor and rate-limit API requests to third‐party AI services to avoid abuse and unexpected costs.
+**Critical business priorities include:**
+- Quality and fidelity of the generated code compared to input designs.
+- Rapid turnaround and the ability to support iterative evaluations.
+- Scalability and integration with third‑party AI services.
+- Monetization and enterprise-grade support for larger organizations.
 
-Key security requirements for the project include:
-- Authentication: Securely manage and validate API keys provided by users.
-- Authorization: Implement access controls for paid features and sensitive endpoints.
-- Input Validation: Proper check and sanitization of all user inputs, including URLs and file data.
-- Cryptography: Use secure channels (HTTPS, TLS) for all communications with external services and enforce encryption for sensitive environment data.
+**Key business risks:**
+- Variability in AI model outputs may affect the quality and consistency of the generated code.
+- Operational costs associated with external API usage may increase over time.
+- Intellectual property risks in handling proprietary designs.
+- Market competitiveness if the generated code does not closely match complex designs.
 
 ---
 
-# DESIGN
+## SECURITY POSTURE
 
-The system is architected as a multi-container application with a separate frontend and backend. The frontend (developed using React with Vite) provides the main user interface for uploading screenshots or video, setting API keys, and viewing generated code. The backend (using FastAPI) manages prompt assembly, communication with multiple third-party AI models, image generation, evaluation processing, and logging.
+### Existing Security Controls
 
-## C4 CONTEXT
+- **Security Control:** API keys (e.g., OpenAI, Anthropic, Gemini, Replicate) are handled via environment variables and/or client‑side configuration; keys entered in the settings dialog are not stored on server-side.
+- **Security Control:** The backend FastAPI application applies a permissive CORS policy (allowing all origins) to enable cross‑origin communication with the frontend.
+- **Security Control:** Dependency management is done with Poetry (backend) and Yarn (frontend) to lock package versions.
+- **Accepted Risk:** An open CORS policy increases exposure to cross‑site scripting and other web-based attacks.
+- **Security Control:** The architecture leverages Docker containers to isolate the frontend and backend processes.
 
-The context diagram below illustrates the high-level interactions between the various entities in the system.
+### Recommended Security Controls
+
+- **Security Control:** Tighten CORS policies in production to restrict access to trusted origins.
+- **Security Control:** Implement robust input validation and sanitization for all user-supplied data (e.g., URLs, API keys) on both client and server sides.
+- **Security Control:** Integrate static application security testing (SAST) into the CI/CD pipeline and perform regular dependency vulnerability scans.
+- **Security Control:** Apply rate limiting and request throttling on backend endpoints to mitigate abuse.
+- **Security Control:** Enable audit logging and monitoring across all API endpoints.
+- **Security Requirement:** Ensure end-to-end encryption (HTTPS) for all communications.
+- **Security Requirement:** Clearly document secure key management best practices for users submitting API keys.
+
+*Implementation Points:*
+- API key usage is configured via environment files (e.g., `.env`) and settings dialogs.
+- CORS is configured in the FastAPI middleware.
+- Docker containers provide process isolation.
+- Automated testing (e.g., `pytest` and `pyright`) and evaluation scripts (e.g., in `Evaluation.md`) support a secure SDLC.
+
+---
+
+## DESIGN
+
+The system is composed of a browser-based frontend that interacts with a FastAPI backend. The backend coordinates requests to external AI services for code and image generation, processes user inputs, and supports evaluation workflows.
+
+### C4 CONTEXT
+
+Below is the context diagram illustrating the primary external actors and systems interacting with Screenshot-to-Code:
 
 ```mermaid
 graph LR
-    User[User (Browser)]
-    Frontend[Frontend Application<br/>(React/Vite)]
-    Backend[Backend Service<br/>(FastAPI)]
-    OpenAI[OpenAI API]
-    Anthropic[Anthropic API]
-    Gemini[Gemini API]
-    Replicate[Replicate API<br/>(Image Generation)]
-    ScreenshotAPI[Screenshot Service<br/>(ScreenshotOne)]
-
-    User -->|Interacts via Web UI| Frontend
-    Frontend -->|REST/WebSocket API Calls| Backend
-    Backend -->|Invokes| OpenAI
-    Backend -->|Invokes| Anthropic
-    Backend -->|Invokes| Gemini
-    Backend -->|Invokes| Replicate
-    Frontend -->|Optional: User triggers screenshot| ScreenshotAPI
+    A[User / Designer] -->|Uploads Screenshots/Video| B[Frontend (React/Vite)]
+    B -->|REST API & WebSocket Communication| C[Backend (FastAPI)]
+    C -->|Code Generation Request| D[OpenAI API]
+    C -->|Alternative Code Generation| E[Anthropic API]
+    C -->|Image Generation Request| F[Gemini API]
+    C -->|Image Generation Request| G[Replicate API]
+    C -->|Screenshot Request| H[ScreenshotOne API]
 ```
 
-Below is the table describing the elements of the context diagram:
+Below is a table describing each element:
 
-| Name           | Type               | Description                                                     | Responsibilities                                                  | Security Controls                                  |
-|----------------|--------------------|-----------------------------------------------------------------|-------------------------------------------------------------------|----------------------------------------------------|
-| User           | External Actor     | End user interacting with the application via a browser         | Upload screenshots/video, configure API keys, review generated code | Client-side storage of settings; Use HTTPS         |
-| Frontend       | Web Application    | React/Vite application that renders the UI                      | Provide an interactive interface; capture user input              | Validate user input; Secure handling of API keys   |
-| Backend        | API Service        | FastAPI server handling prompt assembly and AI integration        | Process requests; aggregate AI responses; generate code            | CORS configuration; use environment variables      |
-| OpenAI API     | Third-Party Service| Offers AI completions for code generation (GPT-4 models)           | Generate code based on text/image prompts                           | Secure HTTPS communication; rate limiting          |
-| Anthropic API  | Third-Party Service| Provides alternative AI completions (Claude models)                | Generate code based on text/image prompts                           | Secure HTTPS communication; API key management      |
-| Gemini API     | Third-Party Service| Provides AI completions (Gemini models)                            | Complement code generation                                              | Secure HTTPS communication; API key management      |
-| Replicate API  | Third-Party Service| Provides image generation for replacing placeholder images         | Generate high-quality images using models like Flux Schnell         | Secure HTTPS communication; dependency on API key  |
-| ScreenshotAPI  | Third-Party Service| External API to capture screenshots of web pages                   | Capture website screenshots when required                           | API key management; HTTPS communication            |
+| Name              | Type                      | Description                                                                  | Responsibilities                                               | Security Controls                                   |
+|-------------------|---------------------------|------------------------------------------------------------------------------|----------------------------------------------------------------|-----------------------------------------------------|
+| User / Designer   | External Actor            | End-user providing screenshots or videos via the UI.                        | Provide input assets; evaluate output code.                    | Educate on safe API key usage; secure local storage.|
+| Frontend          | Web Application           | React/Vite app hosted on screenshottocode.com.                               | Collect user inputs (images, API keys); display generated code.  | Client-side input validation and secure user settings. |
+| Backend (API)     | Microservice (FastAPI)    | Core service handling prompt assembly and code generation.                  | Process requests; call external AI APIs; coordinate image generation. | CORS configuration; environment variable management; logging. |
+| OpenAI API        | External Service          | Provides GPT‑4/Vision based code generation services.                       | Generate code from prompts.                                     | API key authentication.                             |
+| Anthropic API     | External Service          | Provides Claude-based code generation services.                            | Alternative code generation leveraging Claude models.          | API key authentication.                             |
+| Gemini API        | External Service          | Provides Gemini based code generation services.                            | Alternative AI model for code generation.                      | API key authentication.                             |
+| Replicate API     | External Service          | Generates images (e.g., placeholder images) via Flux Schnell or DALL‑E.       | Replace placeholder images in generated code.                  | API key authentication.                             |
+| ScreenshotOne API | External Service          | Captures screenshots of public web pages.                                   | Generate screenshots if needed as input.                       | API key authentication.                             |
 
----
+### C4 CONTAINER
 
-## C4 CONTAINER
-
-The container diagram shows the high-level architecture and distribution of responsibilities between major containers.
-
-```mermaid
-graph LR
-    subgraph Client Side
-        FE[Frontend Container<br/>(React/Vite)]
-        User[User Browser]
-    end
-
-    subgraph Server Side
-        BE[Backend Container<br/>(FastAPI)]
-        Eval[Eval & Testing Module]
-    end
-
-    subgraph External Services
-        AI1[OpenAI API]
-        AI2[Anthropic API]
-        AI3[Gemini API]
-        IMG[Replicate API<br/>(Image Generation)]
-        SS[Screenshot Service]
-    end
-
-    User --> FE
-    FE --> BE
-    BE --> AI1
-    BE --> AI2
-    BE --> AI3
-    BE --> IMG
-    FE -- Optional screenshot --> SS
-    BE --> Eval
-```
-
-The following table describes the container elements:
-
-| Name        | Type             | Description                                                           | Responsibilities                                           | Security Controls                                             |
-|-------------|------------------|-----------------------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------------|
-| Frontend    | Web Container    | React-based client application built with Vite                        | Render UI; manage settings; communicate with backend        | Input validation; use HTTPS; secure handling of keys          |
-| Backend     | API Container    | FastAPI application running Python code in a container (via Poetry)     | Process requests; manage prompt generation; interface with AI APIs; serve evaluations | CORS (currently open); environment variable management; logging |
-| Eval Module | Internal Module  | Part of the backend dedicated to running evaluations and tests          | Run model evaluations; orchestrate batch processing           | Internal network protection; proper error signaling            |
-| External AI | Third-Party APIs | External providers (OpenAI, Anthropic, Gemini) for code generation       | Perform AI completions for code and prompt responses           | Use secure channels (HTTPS); API key management                 |
-| Image Gen   | External API     | Replicate API for generating images from placeholders                   | Convert placeholder URLs to generated images                  | Use secure channels and API key protection                      |
-| Screenshot  | External Service | ScreenshotOne or similar service capturing live webpage screenshots      | Provide captured screenshots when required                    | API key management; secured access via HTTPS                    |
-
----
-
-## DEPLOYMENT
-
-The system is deployed as a multi-container solution orchestrated by Docker Compose. The backend container is built from a Python slim image using Poetry for dependency management, while the frontend is built using a Node container with Yarn. They communicate over a shared network, with ports mapped externally (default: Frontend on 5173 and Backend on 7001).
+The following container diagram shows the high‑level distribution of responsibilities among the frontend, backend, and supporting modules.
 
 ```mermaid
 graph TD
-    Host[Deployment Host]
-    subgraph Docker Host
-        FE_Docker[Frontend Container<br/>(Node/Vite)]
-        BE_Docker[Backend Container<br/>(Python/FastAPI)]
+    subgraph FE[Frontend Container]
+      A[React/Vite Application]
     end
-    Host -- HTTP/WS Ports --> FE_Docker
-    Host -- HTTP Port --> BE_Docker
+    subgraph BE[Backend Container]
+      B[FastAPI Application]
+      C[Code Generation Module]
+      D[Image Processing & Generation Module]
+      E[Routing and Evaluation Modules]
+    end
+    A --> B
+    B --> C
+    B --> D
+    B --> E
 ```
 
-The table below describes the deployment elements:
+Below is a table describing the container elements:
 
-| Name           | Type            | Description                                                  | Responsibilities                                          | Security Controls                                                |
-|----------------|-----------------|--------------------------------------------------------------|-----------------------------------------------------------|------------------------------------------------------------------|
-| Frontend Docker| Docker Container| Container built using Node 22 image running the React/Vite app| Serve the web UI; provide interactive front end            | Container isolation; non-root user; secure dependency versions   |
-| Backend Docker | Docker Container| Container built on python:3.12-slim with Poetry for FastAPI   | Handle API requests; communicate with AI APIs; process evaluations | Container isolation; use of environment variables; minimal privileges |
-| Docker Compose | Orchestration   | Docker Compose file coordinating multi-container deployment   | Define build contexts, environment variables, port mapping  | Use managed networks; secure Docker host configuration            |
+| Name                       | Type              | Description                                              | Responsibilities                                                          | Security Controls                                |
+|----------------------------|-------------------|----------------------------------------------------------|---------------------------------------------------------------------------|--------------------------------------------------|
+| React/Vite Application     | Frontend Container| Node-based container serving the web UI.               | Present UI; handle user input; initiate WebSocket/REST calls.             | Client-side input sanitization; secure UI practices. |
+| FastAPI Application        | Backend Container | Python-based container built with FastAPI.             | Process API requests; orchestrate code generation and image processing.   | Enforced CORS; environment variable isolation; logging. |
+| Code Generation Module     | Module (Backend)  | Handles prompt assembly and interaction with AI APIs.  | Assemble prompts, invoke AI services (OpenAI, Anthropic, Gemini).           | Input validation; API key management.            |
+| Image Processing Module    | Module (Backend)  | Manages image generation and processing tasks.         | Generate and replace placeholder images; process videos into screenshots.| Data validation; secure temporary file handling. |
+| Routing & Evaluation       | Module (Backend)  | Exposes REST and WebSocket endpoints and evaluation scripts. | Handle routes (generate-code, screenshot, evals, video, home).              | HTTP security headers; error logging.            |
 
----
+### DEPLOYMENT
 
-## BUILD
+The project is deployed as Docker containers orchestrated via Docker Compose. The typical deployment configuration includes two primary services (frontend and backend) that run on separate ports and communicate over an internal network.
 
-The build process follows an automated pipeline incorporating code analysis, testing, and container image creation:
-- Developers work locally using pre-commit hooks, automated testing (pytest, pyright), and linters.
-- The backend is built using Poetry (dependencies defined in pyproject.toml) and packaged into a Docker image.
-- The frontend uses Yarn for dependency management and Vite as the build tool to bundle assets.
-- Docker Compose is used both for local development and for production deployment.
-- Security controls in the build process include SAST scanning, dependency scan tools, and enforcement of coding best practices via pre-commit and CI testing.
+```mermaid
+graph LR
+    A[User Browser] -->|HTTP/HTTPS| B[Frontend Container<br/>(http://localhost:5173)]
+    B -->|REST/WebSocket| C[Backend Container<br/>(http://localhost:7001)]
+    C -->|API Calls| D[External AI & Screenshot Services]
+```
 
-The following diagram illustrates the build process:
+Below is a table describing the deployment elements:
+
+| Name                | Type               | Description                                                     | Responsibilities                                           | Security Controls                                    |
+|---------------------|--------------------|-----------------------------------------------------------------|------------------------------------------------------------|------------------------------------------------------|
+| Frontend Container  | Docker Container   | Container running the React/Vite frontend built from Node.      | Serve the web application; handle user interactions.     | Container isolation; HTTPS termination.            |
+| Backend Container   | Docker Container   | Container hosting the FastAPI backend application.              | Process code generation requests; interact with external APIs. | Environment variable isolation; secure network communications. |
+| External Services   | Third-Party APIs   | APIs provided by OpenAI, Anthropic, Gemini, Replicate, ScreenshotOne. | Generate AI code responses; create images; capture screenshots. | API key authentication; TLS/HTTPS.                   |
+
+### BUILD
+
+The build process is automated via a CI/CD pipeline integrated with GitHub and Docker. The typical workflow is as follows:
+
+1. **Developer Commit:** Code changes are committed to the repository.
+2. **CI Pipeline:** Automated testing (unit tests with pytest, type checking with pyright) and linting are triggered.
+3. **Docker Build:** Dockerfiles in the `frontend` and `backend` directories are used to build container images.
+4. **Artifact Generation:** Build artifacts (container images) are tagged and stored in a container registry.
+5. **Deployment:** Docker Compose deploys the containers on the cloud server or local environment.
 
 ```mermaid
 flowchart TD
-    A[Developer Code Commit]
-    B[Local Linters & Pre-commit Hooks]
-    C[Run Automated Tests (pytest, pyright)]
-    D[Build Frontend Bundle (Yarn/Vite)]
-    E[Build Backend Image (Poetry/Docker)]
-    F[Docker Compose Orchestration]
-    G[Deploy to Production Environment]
-
-    A --> B
-    B --> C
-    C --> D
-    C --> E
-    D & E --> F
-    F --> G
+    A[Developer Commit] --> B[CI Pipeline<br/>(Tests, Lint, SAST)]
+    B --> C[Docker Build<br/>(Frontend & Backend Images)]
+    C --> D[Container Registry]
+    D --> E[Deployment via Docker Compose]
+    E --> F[Live Production Environment]
 ```
 
-Key build security controls:
-- Automatic linting and static code analysis.
-- Enforced testing and code review before image build.
-- Verification of external dependency security (via Poetry lock file and Yarn lock file).
+Below is a table describing the build process elements:
+
+| Name              | Type            | Description                                                  | Responsibilities                                         | Security Controls                           |
+|-------------------|-----------------|--------------------------------------------------------------|----------------------------------------------------------|---------------------------------------------|
+| CI Pipeline       | Automation Tool | Automated testing and build system (e.g., GitHub Actions).     | Run tests, perform static code analysis, trigger Docker builds. | Use secret management for sensitive keys; SAST scanning. |
+| Docker Build      | Build Process   | Uses Dockerfiles (frontend and backend) as defined in the repo. | Build reproducible images; cache dependencies.           | Signed images; vulnerability scanning.      |
+| Deployment        | CD Process      | Docker Compose orchestrates container deployment.            | Deploy services to production environment.               | Secure configuration; network segmentation. |
 
 ---
 
-# RISK ASSESSMENT
+## RISK ASSESSMENT
 
-Critical business processes include the conversion of visual design inputs (screenshots, video) into high-fidelity code. The accuracy and quality of generated code directly affect user satisfaction and downstream development costs.
+**Critical Business Processes:**
+- The conversion of design assets (screenshots, videos) to production‑ready code.
+- The evaluation workflows that benchmark and compare multiple AI models.
 
-Data being protected:
-- API keys for third-party services (OpenAI, Anthropic, Gemini, Replicate) are highly sensitive.
-- User-supplied images and video data that may contain proprietary or sensitive design information.
-- Generated code output which might include business logic or design elements proprietary to the customer.
+**Data to Protect & Their Sensitivity:**
+- **User Uploaded Assets:** Screenshots and video recordings that may contain proprietary designs.
+- **User API Keys:** Sensitive credentials for external AI services.
+- **Generated Code:** Intellectual property that may require confidentiality.
+- **Evaluation Data:** Benchmark results that inform product quality and enhancements.
 
-Sensitivity:
-- API keys must be protected from exposure; any leak could lead to unauthorized access and unexpected charges.
-- Design assets may be confidential and should be transmitted over secure channels.
-- The transformation process itself must validate inputs to prevent injection attacks.
+**Key Risks:**
+- Exposure or leakage of API keys due to misconfiguration or insecure handling.
+- Injection of malicious code if input validation is insufficient.
+- Compromise of sensitive design information supplied by users.
+- Dependency vulnerabilities in open source packages and container images.
 
 ---
 
-# QUESTIONS & ASSUMPTIONS
+## QUESTIONS & ASSUMPTIONS
 
-Questions:
-- Will the production deployment enforce a stricter CORS policy and secure API gateway?
-- What are the scalability expectations regarding load for AI API calls and image generation?
-- How frequently will API keys be rotated and what is the process for secure key management in production?
-- Is there an audit/logging requirement for prompt interactions with third-party AI services?
-- What is the fallback process if one of the AI services becomes unavailable or rate-limited?
+**Questions:**
+- What are the plans for production hardening of the open CORS policy once user data increases?
+- Will additional authentication or user account management be incorporated in future iterations?
+- How will sensitive API keys be safeguarded beyond client‑side storage if the solution scales enterprise‑wide?
+- What monitoring and incident response measures will be established for backend API abuse?
 
-Assumptions:
-- The initial risk tolerance is moderate given the experimental nature of the open source project.
-- Users (especially enterprise clients) will provide their own API keys and are expected to manage them securely.
-- The hosted version will have additional layers of security (authentication, authorization, HTTPs) implemented beyond the current open development configuration.
-- The Dockerized environment provides sufficient isolation and control for the production deployment.
-- The development environment is trusted and all API interactions occur over secure channels (HTTPS).
+**Assumptions:**
+- The current risk appetite is moderate—with an emphasis on rapid innovation balanced by continuous monitoring.
+- API keys are assumed to be short‑lived or user‑entered per session and not persisted on the backend.
+- Deployment will occur in a controlled environment using Docker containers secured by external network policies.
+- Evaluation and testing artifacts are used primarily for internal quality control and are not exposed externally.
+- The product is designed to be modular and extensible, with future upgrades addressing authentication, logging, and more granular security controls.
+
+---
+
+This design document provides a detailed overview of the architectural components, security considerations, and deployment strategies for Screenshot-to-Code, forming the basis for subsequent threat modeling and risk mitigation planning.
