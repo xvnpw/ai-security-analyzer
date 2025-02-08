@@ -22,7 +22,7 @@ from ai_security_analyzer.utils import format_filename
 )
 @pytest.mark.integration
 def test_app_github_mode(agent_prompt_type, agent_provider, agent_model, agent_temperature):
-    output_path = f"tests-output/github-{agent_prompt_type}-flask-{format_filename(agent_model)}.md"
+    output_path = f"tests-output/github-{agent_prompt_type}-flask-{format_filename(agent_model)}-{agent_temperature}.md"
 
     # Create output directory if it doesn't exist
     os.makedirs("tests-output", exist_ok=True)

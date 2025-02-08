@@ -1,105 +1,125 @@
-### Key Attack Surface List for screenshot-to-code
+### Attack Surface Analysis for screenshot-to-code
 
-- **Attack Surface:** Exposure of API Keys
-  - **Description:** The application requires API keys for OpenAI, Anthropic, and Gemini to function, and now also for ScreenshotOne. These keys, if compromised, could allow unauthorized access to the respective services, leading to financial charges, data breaches, or service disruption.
-  - **How screenshot-to-code contributes to the attack surface:** The application is designed to use and manage these API keys. It reads them from environment variables for backend and allows users to input them via the frontend settings dialog, storing them in browser's local storage. Instructions in `README.md` and `Troubleshooting.md` guide users on obtaining and using LLM keys. The `screenshot.py` file introduces the use of ScreenshotOne API key, passed from the frontend in `ScreenshotRequest`.
-  - **Example:** An attacker gains access to a developer's `.env` file, frontend local storage, or intercepts the API request to `/api/screenshot` and retrieves the ScreenshotOne API key. They could then use these keys to make requests to the respective providers under the project's account.
-  - **Impact:** Financial loss due to unauthorized API usage (LLM and ScreenshotOne), potential data leaks if LLM APIs are misused to access or generate sensitive data, and service disruption if API accounts are suspended due to abuse.
-  - **Risk Severity:** High
-  - **Current Mitigations:**
-    - API keys are intended to be stored securely by the user, either as environment variables (backend) or in browser's local storage (frontend). ScreenshotOne API key is passed from frontend to backend only during screenshot capture.
-    - The application itself does not store API keys on its server persistently.
-    - Instructions in `Troubleshooting.md` mention that LLM keys are "only stored in your browser. Never stored on our servers." This implies a design consideration for client-side storage only for LLM keys, reducing server-side exposure.
-  - **Missing Mitigations:**
-    - **Secret Scanning:** Implement secret scanning in the repository and CI/CD pipelines to prevent accidental commits of API keys into the codebase.
-    - **Environment Variable Security Best Practices:**  Provide more detailed guidance to users on securely managing environment variables, especially in production deployments (e.g., using secure vault solutions instead of plain `.env` files).
-    - **Frontend Key Management:** While local storage is client-side, it's not inherently secure. Consider warning users about the risks of storing sensitive keys in browser local storage and explore more secure client-side key management options if feasible, or emphasize backend API key usage for production. For ScreenshotOne API key, consider backend proxying to avoid exposing it to the frontend at all.
-    - **Rate Limiting and Usage Monitoring:** Implement rate limiting on the backend to control API usage and prevent abuse if keys are compromised. Monitor API usage and spending for all APIs (LLM and ScreenshotOne) to detect anomalies early.
+- **Attack Surface: API Key Exposure**
+  - Description: API keys for accessing AI models (OpenAI, Anthropic, Gemini, Replicate) are required for the application to function. If these keys are compromised, attackers can incur costs, disrupt services, or potentially access sensitive data through the AI provider APIs.
+  - How screenshot-to-code contributes to the attack surface: The application requires users to provide and manage their own API keys. Instructions encourage storing keys in `.env` files for local development and browser local storage for the application itself. The `backend/routes/generate_code.py` file retrieves these keys from environment variables or client-side settings.
+  - Example: A developer accidentally commits a `.env` file containing API keys to a public GitHub repository. An attacker finds the keys and uses them to make unauthorized requests to the AI APIs.
+  - Impact: Financial costs due to unauthorized API usage, disruption of service, potential exposure of data processed by the AI models if used maliciously.
+  - Risk Severity: High
+  - Current Mitigations: The application stores API keys in browser local storage, explicitly stating "Never stored on our servers" in `Troubleshooting.md`. This mitigates server-side key compromise for the hosted version.
+  - Missing Mitigations:
+    - For local development, strongly discourage the use of `.env` files and recommend using environment variables, with clear instructions on secure handling and avoiding commits to version control.
+    - For both local and hosted versions, provide guidance on securely obtaining and managing API keys, emphasizing the risks of exposure.
+    - For enterprise plans, consider offering or recommending more robust secrets management solutions.
 
-- **Attack Surface:** Server-Side Request Forgery (SSRF) via Image URLs
-  - **Description:** The application fetches images from URLs (screenshots, video frames) provided by users to send to LLMs for analysis. If not properly validated, an attacker could manipulate these URLs to make the backend server perform requests to internal resources or external services, potentially exposing sensitive information or causing denial of service.
-  - **How screenshot-to-code contributes to the attack surface:** The core functionality of `screenshot-to-code` involves processing images. The backend, as seen in files like `llm.py`, `evals/core.py`, `video_to_app.py`, and now also in `evals.py` and `video/utils.py` (via `video_data_url`), takes image URLs as input and uses them in requests to LLM APIs or for video processing. If URL validation is insufficient, SSRF becomes a risk.
-  - **Example:** An attacker provides a manipulated image URL like `http://localhost:7001/api/internal-admin-endpoint` as a screenshot or video data URL. The backend might attempt to fetch this URL, potentially exposing internal API endpoints or data if they are not properly secured and accessible from the backend server itself.
-  - **Impact:** Access to internal resources, reading sensitive data from internal services, denial of service by targeting external or internal services, and potentially arbitrary code execution in vulnerable internal services if exploited further.
-  - **Risk Severity:** High
-  - **Current Mitigations:**
-    - Based on the provided files, there is no explicit input validation or sanitization of image URLs before they are processed and sent to LLM APIs or used in video processing.
-    - The application relies on external services (LLMs, ScreenshotOne) which might have their own input validation, but this is not a mitigation controlled by `screenshot-to-code`.
-  - **Missing Mitigations:**
-    - **URL Validation and Sanitization:** Implement strict validation and sanitization of all user-provided URLs. Use a whitelist of allowed protocols (e.g., `http`, `https`) and consider using a URL parsing library to prevent URL manipulation attacks. This should be applied to image URLs in all relevant routes (`llm.py`, `evals.py`, `video/utils.py`, `screenshot.py`).
-    - **Blocklist of Internal/Sensitive Networks:** Configure the HTTP client used for fetching images (e.g., `httpx` in `backend/image_generation/replicate.py` and potentially in `evals.py` and `video/utils.py` if fetching external URLs directly) to block requests to internal networks, private IP ranges, and sensitive ports.
-    - **Response Handling and Error Prevention:** Implement robust error handling when fetching images to prevent exposing error messages that could reveal internal network configurations or service details. Avoid directly returning fetched content to the user if possible.
+- **Attack Surface: Client-Side Storage Vulnerability**
+  - Description: Storing API keys and potentially other sensitive data in browser local storage makes them vulnerable to client-side attacks, particularly Cross-Site Scripting (XSS).
+  - How screenshot-to-code contributes to the attack surface: The application design relies on browser local storage for persisting API keys and potentially user settings. The `backend/routes/generate_code.py` file retrieves API keys that might be stored in local storage.
+  - Example: An XSS vulnerability is introduced in the frontend code. An attacker exploits this vulnerability to execute malicious JavaScript in a user's browser, stealing the API keys stored in local storage.
+  - Impact: Unauthorized access to AI services using stolen API keys, potential data breaches if other sensitive user data is stored client-side and compromised.
+  - Risk Severity: Medium
+  - Current Mitigations: The project description acknowledges client-side storage but does not include explicit mitigations against client-side vulnerabilities in the provided files.
+  - Missing Mitigations:
+    - Implement robust input validation and output encoding across the frontend application to prevent XSS vulnerabilities.
+    - Conduct regular security audits and penetration testing of the frontend to identify and remediate potential XSS vulnerabilities.
+    - If storing sensitive user data client-side becomes necessary, evaluate more secure client-side storage options or encryption methods.
 
-- **Attack Surface:** Cross-Origin Resource Sharing (CORS) Misconfiguration
-  - **Description:** CORS is configured to allow requests from any origin (`allow_origins=["*"]`). While this can be convenient for development, in a production environment, it weakens security by allowing any website to make requests to the backend API. This could be exploited for CSRF attacks or data exfiltration if combined with other vulnerabilities.
-  - **How screenshot-to-code contributes to the attack surface:** The `backend/main.py` file explicitly sets up CORS middleware with `allow_origins=["*"]`. This configuration is applied to all routes defined in the FastAPI application, including new routes in `evals.py` and `screenshot.py`.
-  - **Example:** A malicious website could embed JavaScript code that makes requests to the `screenshot-to-code` backend API. If the application relies on browser-based authentication (which it currently doesn't seem to, but could in future iterations), or if there are other vulnerabilities, this relaxed CORS policy could facilitate attacks.
-  - **Impact:** Increased risk of Cross-Site Request Forgery (CSRF) attacks, potential data exfiltration if the API exposes sensitive data and other vulnerabilities are present.
-  - **Risk Severity:** Medium
-  - **Current Mitigations:**
-    - The current configuration is likely for ease of local development and testing, as indicated by the development setup instructions in `README.md`.
-    - There might be an assumption that in a production deployment, CORS would be configured more restrictively. However, the default configuration in the code is permissive.
-  - **Missing Mitigations:**
-    - **Restrictive CORS Policy for Production:** In production deployments, configure CORS to allow only specific, trusted origins (domains) that are authorized to access the backend API. Avoid using `allow_origins=["*"]` in production.
-    - **Environment-Based CORS Configuration:** Use environment variables to control the CORS policy. For development, `allow_origins=["*"]` might be acceptable, but for production, it should be restricted to specific origins.
-    - **Documentation on CORS Configuration:** Provide clear documentation on how to configure CORS properly for different deployment scenarios (development, staging, production), emphasizing the security implications of a permissive CORS policy.
+- **Attack Surface: Evaluation Data Exposure**
+  - Description: The application includes evaluation datasets (screenshots and potentially expected outputs) in the `backend/evals_data` directory. If these datasets contain sensitive or proprietary information and are inadvertently exposed, it could lead to data leaks.
+  - How screenshot-to-code contributes to the attack surface: The project includes evaluation data within the codebase and accessible in the repository. The `backend/routes/evals.py` file reads and processes files from directories, including those under `EVALS_DIR`.
+  - Example: The evaluation dataset includes screenshots of internal dashboards or proprietary UI designs. If the repository becomes publicly accessible or is compromised, this data could be leaked.
+  - Impact: Exposure of proprietary designs, sensitive testing data, or internal application details.
+  - Risk Severity: Medium
+  - Current Mitigations: No explicit mitigations are mentioned in the provided files regarding the security of evaluation data.
+  - Missing Mitigations:
+    - Review the evaluation datasets to ensure they do not contain any sensitive or confidential information. Use anonymized or synthetic data where possible.
+    - Restrict access to the evaluation datasets, especially in production deployments and consider removing them from production builds if not required.
+    - If sensitive evaluation data is necessary, store it securely outside the application repository and manage access controls appropriately.
 
-- **Attack Surface:** Unvalidated User Input to LLMs
-  - **Description:** User-provided screenshots, video frames, text prompts, and now potentially folder paths for evaluations are directly passed to LLMs or used in evaluation processes. While LLMs are generally robust, malicious or crafted inputs could potentially lead to unexpected behavior, prompt injection attacks, expose vulnerabilities in the LLM interaction logic, or in evaluation logic.
-  - **How screenshot-to-code contributes to the attack surface:** The application's core function is to send user-provided screenshots and video frames to LLMs for code generation. Files like `llm.py`, `evals/core.py`, `prompts/__init__.py`, `video/utils.py`, and now `evals.py` show how user inputs (images, video data URLs, folder paths, and potentially text in future features) are assembled into prompts, used for video processing, or in evaluation workflows. Lack of input validation before processing increases risk.
-  - **Example:** An attacker could craft a screenshot, video, text prompt, or a malicious folder path designed to exploit prompt injection vulnerabilities in the LLM, path traversal in evaluation endpoints, or cause unexpected behavior in video processing. This could potentially lead to the LLM generating malicious code, bypassing intended functionalities, revealing sensitive information, or accessing unintended files in the evaluation context.
-  - **Impact:** Generation of unexpected or malicious code, potential bypass of intended application logic, information leakage if LLM responses inadvertently reveal sensitive data, potential denial of service if crafted prompts cause excessive LLM processing or errors, and unauthorized file access or manipulation in evaluation workflows.
-  - **Risk Severity:** Medium
-  - **Current Mitigations:**
-    - The application relies on the inherent robustness of the LLM models to handle various inputs.
-    - System prompts in `prompts/` directory are designed to guide the LLM's behavior, but they may not fully prevent all forms of prompt injection or unexpected outputs from malicious inputs.
-  - **Missing Mitigations:**
-    - **Input Sanitization and Filtering:** Implement input sanitization and filtering on user-provided screenshots, video data URLs, text prompts, and folder paths before sending them to LLMs or using them in evaluations. This could include stripping potentially malicious code or control characters, validating input formats, and path validation to prevent traversal attacks in `evals.py`.
-    - **Prompt Engineering Security:**  Refine system prompts to be more resilient to prompt injection attacks. Follow secure prompt engineering best practices to minimize the risk of malicious prompt manipulation.
-    - **Output Validation and Sanitization:**  Validate and sanitize the code generated by the LLM before presenting it to the user or executing it (if applicable in future features). This could include static code analysis or sandboxing to detect potentially harmful code patterns.
-    - **Content Security Policy (CSP):** Implement a strong Content Security Policy in the frontend to mitigate the risk of executing potentially malicious code generated by the LLM in the user's browser.
+- **Attack Surface: Docker Image Vulnerabilities**
+  - Description: The Docker images used for building and deploying the application (defined in `backend/Dockerfile` and `frontend/Dockerfile`) may contain vulnerabilities present in the base images or installed dependencies.
+  - How screenshot-to-code contributes to the attack surface: Docker is used for containerization and deployment, inheriting the inherent risks of container image vulnerabilities.
+  - Example: A known vulnerability exists in the `node:22-bullseye-slim` base image used for the frontend. An attacker exploits this vulnerability to gain unauthorized access to the running frontend container.
+  - Impact: Container compromise, potentially leading to further host system compromise or service disruption.
+  - Risk Severity: Medium
+  - Current Mitigations: Standard Docker security practices are implicitly assumed but not explicitly configured or mentioned in the provided Dockerfiles.
+  - Missing Mitigations:
+    - Implement a process for regularly scanning Docker images for vulnerabilities using tools like vulnerability scanners.
+    - Choose minimal and regularly updated base images for Dockerfiles.
+    - Keep dependencies within Docker images updated to their latest secure versions.
+    - Follow Docker security best practices, such as using least privilege principles for container processes and applying security profiles.
 
-- **Attack Surface:** Local File System Access for Debugging
-  - **Description:** Debug mode, enabled by the `MOCK` or `IS_DEBUG_ENABLED` environment variables and controlled by `config.py`, allows writing debug artifacts (like LLM prompts and responses, generated code) to the local file system under the `DEBUG_DIR`. If `DEBUG_DIR` is misconfigured or not properly secured, it could lead to unauthorized access to sensitive debug information.
-  - **How screenshot-to-code contributes to the attack surface:** The `backend/config.py` file defines `IS_DEBUG_ENABLED` and `DEBUG_DIR`. The `backend/debug/DebugFileWriter.py` class uses these settings to write debug information to files. This functionality is intended for development and debugging but introduces a risk if enabled in production or if the debug directory is accessible to unauthorized users.
-  - **Example:** If `DEBUG_DIR` is set to a publicly accessible directory or if permissions on the debug directory are too permissive, an attacker could potentially access log files containing prompts, generated code, or other debug information that might reveal application internals or user data.
-  - **Impact:** Information disclosure of potentially sensitive data logged for debugging purposes, including prompts, generated code, and application behavior details.
-  - **Risk Severity:** Medium
-  - **Current Mitigations:**
-    - Debug mode is intended for development and debugging purposes and is likely not enabled by default in production.
-    - The code in `DebugFileWriter.py` checks `IS_DEBUG_ENABLED` before writing files, suggesting that debug logging is intended to be controlled via configuration.
-  - **Missing Mitigations:**
-    - **Disable Debug Mode in Production:** Ensure that debug mode (`IS_DEBUG_ENABLED` and `MOCK` environment variables) is strictly disabled in production deployments.
-    - **Secure Debug Directory:** If debug mode is necessary in non-production environments, ensure that `DEBUG_DIR` is set to a secure location with restricted access permissions, preventing unauthorized users from accessing debug logs.
-    - **Limit Debug Logging Scope:** Minimize the amount of sensitive information logged in debug mode. Avoid logging API keys, user credentials, or other highly sensitive data in debug logs.
-    - **Regularly Review and Rotate Debug Logs:** If debug logging is used, regularly review and rotate debug logs to limit the exposure window of sensitive information.
+- **Attack Surface: Backend Dependency Vulnerabilities**
+  - Description: The backend application relies on numerous Python dependencies listed in `backend/pyproject.toml`. These dependencies may contain known security vulnerabilities that could be exploited.
+  - How screenshot-to-code contributes to the attack surface: The application's functionality is directly dependent on these external libraries. Files like `backend/routes/evals.py` and `backend/routes/generate_code.py` import and use various libraries.
+  - Example: A critical vulnerability is discovered in the `fastapi` or `openai` library. An attacker exploits this vulnerability to compromise the backend server.
+  - Impact: Backend server compromise, potential data breaches, service disruption, and unauthorized access to application functionalities.
+  - Risk Severity: Medium to High
+  - Current Mitigations: The project uses Poetry for dependency management, which aids in version control and dependency resolution. However, it does not inherently prevent or mitigate dependency vulnerabilities.
+  - Missing Mitigations:
+    - Implement regular dependency scanning using tools like `poetry audit` or dedicated vulnerability scanning tools to identify known vulnerabilities in dependencies.
+    - Establish a policy and process for promptly updating vulnerable dependencies.
+    - Monitor security advisories and vulnerability databases related to the project's dependencies.
 
-- **Attack Surface:** Rate Limiting and API Abuse
-  - **Description:** The application relies on paid LLM APIs (OpenAI, Anthropic, Gemini) and now also the ScreenshotOne API. Without proper rate limiting, the application could be abused, either intentionally by attackers or unintentionally by excessive legitimate usage, leading to unexpected and potentially high API costs.
-  - **How screenshot-to-code contributes to the attack surface:** The application directly integrates with and calls external LLM APIs and ScreenshotOne API as part of its core functionality. Files like `llm.py`, `evals/core.py`, and `screenshot.py` demonstrate API calls to these services. Lack of rate limiting in the application itself can lead to cost-related issues and potential service disruption if API usage exceeds limits.
-  - **Example:** An attacker could repeatedly send requests to the `screenshot-to-code` backend, triggering numerous calls to the LLM APIs or the ScreenshotOne API. Without rate limiting, this could quickly exhaust API credits and lead to significant financial charges for the application owner. In extreme cases, it could also lead to API account suspension due to abuse.
-  - **Impact:** Unexpected financial costs due to API abuse, potential service disruption if API usage exceeds quotas or leads to account suspension.
-  - **Risk Severity:** Medium
-  - **Current Mitigations:**
-    - The provided files do not show any explicit rate limiting mechanisms implemented within the `screenshot-to-code` application itself.
-    - LLM providers (OpenAI, Anthropic, Gemini) and ScreenshotOne likely have their own rate limits and usage quotas, but relying solely on provider-side rate limiting is not sufficient to prevent abuse at the application level.
-  - **Missing Mitigations:**
-    - **Implement Application-Level Rate Limiting:** Implement rate limiting on the backend API endpoints that trigger LLM calls or ScreenshotOne API calls. This can be based on IP address, API key, or user session to control the number of requests within a given time window.
-    - **API Usage Quotas and Monitoring:** Set up API usage quotas and monitoring to track API consumption for all APIs and detect unusual spikes in usage that might indicate abuse.
-    - **Cost Control Measures:** Implement mechanisms to control and cap API spending, such as budget alerts and spending limits provided by the API providers.
-    - **User Authentication and Authorization (Future):** In future iterations, implementing user authentication and authorization could help in tracking and controlling API usage on a per-user basis, making it easier to identify and mitigate abuse.
+- **Attack Surface: Debug Mode Exposure**
+  - Description: The backend configuration (`backend/config.py`) includes debug flags (`IS_DEBUG_ENABLED`, `SHOULD_MOCK_AI_RESPONSE`). If debug mode is unintentionally enabled in production, it could expose sensitive information, bypass security checks, or introduce unintended functionalities.
+  - How screenshot-to-code contributes to the attack surface: The application provides configuration options to enable debug features. `backend/routes/generate_code.py` checks `SHOULD_MOCK_AI_RESPONSE` to use mock completions.
+  - Example: The `MOCK=true` environment variable is accidentally set in a production deployment, causing the backend to use mock AI responses, potentially bypassing intended security or rate limiting mechanisms and leading to inconsistent behavior. Enabling `IS_DEBUG_ENABLED` in production could expose verbose logs or debugging endpoints.
+  - Impact: Information disclosure through verbose error messages or debug logs, potential bypass of security controls, inconsistent application behavior.
+  - Risk Severity: Medium
+  - Current Mitigations: The configuration file exists, but there are no explicit controls or safeguards mentioned in the provided files to prevent debug mode exposure in production.
+  - Missing Mitigations:
+    - Strictly enforce disabling debug mode in production environments.
+    - Implement environment-specific configurations to ensure debug flags are always set to `False` in production.
+    - Add runtime checks to prevent debug mode from being enabled in production deployments.
+    - Clearly document the security implications of enabling debug mode and restrict its use to development and testing environments only.
 
-- **Attack Surface:** Path Traversal in Evaluation Folder Access
-  - **Description:** The `/evals`, `/pairwise-evals`, and `/best-of-n-evals` endpoints in `evals.py` take folder paths as input to read evaluation files. If these folder paths are not properly validated and sanitized, an attacker could potentially use path traversal techniques to access files and directories outside the intended evaluation directories, potentially reading sensitive files on the server.
-  - **How screenshot-to-code contributes to the attack surface:** The `evals.py` routes directly use user-provided folder paths to access the file system using `os.listdir` and `os.path.join`. Lack of validation on these paths can lead to path traversal vulnerabilities.
-  - **Example:** An attacker could provide a folder path like `../../../../etc/passwd` to the `/evals` endpoint. If the backend does not properly validate the path, it might attempt to list files in the `/etc/passwd` directory (or attempt to open it if the code tries to read files based on the path), potentially exposing sensitive system files.
-  - **Impact:** Unauthorized access to the server's file system, potentially leading to reading sensitive configuration files, application code, or other data.
-  - **Risk Severity:** High
-  - **Current Mitigations:**
-    - Currently, there is no explicit validation or sanitization of the `folder`, `folder1`, `folder2`, etc. parameters in the `evals.py` routes. The code checks if the folder exists using `os.path.exists()`, but this does not prevent path traversal within allowed existing folders or access to parent directories if not restricted.
-  - **Missing Mitigations:**
-    - **Path Validation and Sanitization:** Implement strict validation and sanitization of all user-provided folder paths in `evals.py`. Validate that the provided paths are within the intended evaluation directories (e.g., under `EVALS_DIR`) and prevent traversal to parent directories. Use secure path handling functions and avoid directly concatenating user input into file paths without validation.
-    - **Principle of Least Privilege:** Ensure that the backend process runs with the minimum necessary privileges to access only the required files and directories. This can limit the impact of a path traversal vulnerability.
-    - **Input Whitelisting:** If possible, instead of allowing arbitrary folder paths, consider whitelisting specific allowed evaluation folders or using identifiers that map to predefined safe paths on the server.
+- **Attack Surface: Backend Code Vulnerabilities (General)**
+  - Description: The backend application code may contain various software vulnerabilities such as injection flaws, insecure deserialization, authentication or authorization bypasses, or business logic flaws.
+  - How screenshot-to-code contributes to the attack surface: The backend code handles user requests, processes images, interacts with AI APIs, and generates code, all of which are potential areas for vulnerabilities. Files like `backend/routes/evals.py`, `backend/routes/generate_code.py`, and `backend/routes/screenshot.py` handle user inputs and perform backend logic.
+  - Example: An SQL injection vulnerability in a future database interaction (not evident in provided files but a general backend risk). A path traversal vulnerability in file handling if the application were to process user-uploaded files directly.
+  - Impact: Full backend server compromise, data breaches, unauthorized access to application functionality, service disruption.
+  - Risk Severity: High to Critical
+  - Current Mitigations: The project includes type checking (`pyright`) and unit tests (`pytest`) as mentioned in `backend/README.md`, which are positive development practices but do not guarantee the absence of security vulnerabilities.
+  - Missing Mitigations:
+    - Conduct thorough code reviews, focusing on security aspects, especially for code handling user inputs, API interactions, and core application logic.
+    - Implement Static Application Security Testing (SAST) and Dynamic Application Security Testing (DAST) tools in the development pipeline to automatically detect potential vulnerabilities.
+    - Follow secure coding practices throughout the Software Development Life Cycle (SDLC), including input validation, output sanitization, and principle of least privilege.
 
-These are the updated medium, high, and critical attack surfaces based on the provided project files. Low severity attack surfaces are excluded as requested.
+- **Attack Surface: AI Model Vulnerabilities and Misuse**
+  - Description: The application relies on external AI models from providers like OpenAI, Anthropic, Gemini, and Replicate. These models themselves or the way the application interacts with them could introduce vulnerabilities or risks of misuse.
+  - How screenshot-to-code contributes to the attack surface: The core functionality depends on integrating with and utilizing external AI models for code generation and image processing. `backend/routes/generate_code.py` handles interactions with different AI models.
+  - Example: A prompt injection attack is crafted by a user, causing the AI model to generate malicious code or leak sensitive information. The AI model hallucinates and generates code with security flaws or backdoors. Rate limiting on AI APIs is insufficient, leading to denial-of-service or unexpected costs.
+  - Impact: Generation of vulnerable or malicious code, potential misuse of AI services leading to unexpected costs or service disruption, information leakage through AI model responses.
+  - Risk Severity: Medium
+  - Current Mitigations: The application uses multiple AI models, potentially diversifying risk, and allows users to select models. However, there are no explicit mitigations in place for AI model-specific vulnerabilities or misuse in the provided files.
+  - Missing Mitigations:
+    - Implement robust prompt engineering techniques to mitigate prompt injection attacks and control AI model behavior.
+    - Monitor AI model outputs for unexpected or potentially malicious code patterns and implement filters or validation mechanisms.
+    - Implement rate limiting and usage monitoring for AI APIs to prevent abuse and manage costs.
+    - Educate users about the limitations and potential security risks associated with AI-generated code and encourage manual review and security checks of the generated output.
+
+- **Attack Surface: Path Traversal in Evaluation Endpoints**
+  - Description: The evaluation endpoints in `backend/routes/evals.py` (`/evals`, `/pairwise-evals`, `/best-of-n-evals`) take user-provided folder paths as input. Insufficient validation of these paths could allow attackers to access files outside the intended evaluation directories.
+  - How screenshot-to-code contributes to the attack surface: The application exposes endpoints that directly use user-provided folder paths to read files.
+  - Example: An attacker provides a folder path like `/../../etc/passwd` to the `/evals` endpoint. If path validation is missing, the application might attempt to read `/etc/passwd`, leading to unauthorized file access.
+  - Impact: Unauthorized access to sensitive files on the server, information disclosure.
+  - Risk Severity: Medium to High
+  - Current Mitigations: The code checks if the provided folder exists using `os.path.exists()`, but it doesn't sanitize or validate the path to prevent traversal beyond intended directories.
+  - Missing Mitigations:
+    - Implement robust path validation and sanitization for the `folder` parameters in `/evals.py` endpoints.
+    - Use secure path handling functions to prevent traversal outside of allowed directories.
+    - Consider using relative paths or whitelisting allowed base directories for evaluations.
+
+- **Attack Surface: Server-Side Request Forgery (SSRF) in Screenshot Endpoint**
+  - Description: The `/api/screenshot` endpoint in `backend/routes/screenshot.py` takes a `target_url` as input and uses an external service (`screenshotone.com`) to capture a screenshot. If the application doesn't properly validate the `target_url`, an attacker could potentially abuse this endpoint to perform SSRF attacks.
+  - How screenshot-to-code contributes to the attack surface: The application provides a functionality to take screenshots of arbitrary URLs provided by the user.
+  - Example: An attacker provides a `target_url` pointing to an internal service or a cloud metadata endpoint (e.g., `http://localhost:8080/internal-admin` or `http://169.254.169.254/latest/meta-data`). The backend server will make a request to this URL using `screenshotone.com`, potentially exposing internal resources or sensitive information.
+  - Impact: Access to internal resources, information disclosure, potential for further exploitation depending on the internal services exposed.
+  - Risk Severity: Medium
+  - Current Mitigations: The code uses `httpx` to make requests to `screenshotone.com`, but there is no explicit validation of the `target_url` to prevent SSRF.
+  - Missing Mitigations:
+    - Implement strict validation and sanitization of the `target_url` in the `/api/screenshot` endpoint.
+    - Use a URL parsing library to validate the URL scheme (e.g., only allow `http` and `https`), hostname, and path.
+    - Consider using a blocklist to prevent requests to internal networks or sensitive IP ranges.
+    - Implement rate limiting for the screenshot endpoint to mitigate potential abuse.

@@ -1,148 +1,99 @@
-Below are several mitigation strategies identified after reviewing the complete codebase. Each strategy targets specific risks that the provider’s design and implementation may introduce. Note that these recommendations focus on issues unique to this project rather than generic best practices.
+Below are several mitigation strategies derived specifically from security‐relevant aspects of this provider’s code and configuration. Each strategy targets threats that arise due to design–or implementation–decisions specific to the terraform‑provider‑chronicle application.
 
----
+- **Mitigation Strategy: Restrict Debug Mode in Production**
+  **Description:**
+  The provider supports a “debug” mode (see the flag in `main.go` and the accompanying `debug.sh` script) to facilitate running under a debugger (Delve). If inadvertently enabled in a production deployment it may expose internal state and debugging endpoints (via gRPC) that could be abused. To mitigate this risk, developers should (1) ensure that debug mode is only activated in controlled development environments, (2) remove or disable the debug flag in production builds, and (3) document prominently that production deployments must never enable debug mode.
+  **List of Threats Mitigated:**
+  - Unauthorized debugger attachment
+  - Leaking of internal state and potential sensitive information
+  *(Severity: High)*
+  **Impact:**
+  Preventing debug mode in production drastically reduces the risk that an attacker might use debugging facilities as a stepping stone to access process memory or sensitive runtime data.
+  **Currently Implemented:**
+  - Debug support is available via a command‐line flag and a dedicated debug script.
+  **Missing Implementation:**
+  - No built‑in enforcement (or build–time flag) currently prevents production deployments from enabling debug mode. Additional build or runtime controls as well as clear documentation are needed.
 
-### 1. Mark Sensitive Credential Fields in the Provider Schema
+- **Mitigation Strategy: Secure Handling of Sensitive Credentials**
+  **Description:**
+  Many resources (for feeds, RBAC subjects, etc.) require API credentials and keys. The provider marks fields such as AWS secret access keys, OAuth client secrets, SAS tokens, and other similar values as “Sensitive” in the schema. Developers and users should (1) verify that all credential fields are consistently marked as sensitive, (2) audit logging and error‐handling code (e.g. in functions that flatten or read resource data) to ensure these values are never written in plaintext to logs or error messages, and (3) encourage the use of environment variables (or other secure storage mechanisms) so that credentials are not hard‑coded in configuration files.
+  **List of Threats Mitigated:**
+  - Credential leakage via log files or error messages
+  - Unauthorized access from exposed secrets in state files
+  *(Severity: High)*
+  **Impact:**
+  Properly handling and “masking” sensitive credentials minimizes the exposure risk if logs or state files are compromised.
+  **Currently Implemented:**
+  - In many resource definitions (e.g. in `resource_feed_amazon_s3.go`, `resource_feed_microsoft_office_365_management_activity.go`, etc.), sensitive fields are flagged with `Sensitive: true`.
+  **Missing Implementation:**
+  - Additional centralized measures (such as automatic sanitization in debug output) are not present, and documentation should further stress secure input (for example, using environment variables versus plaintext in configuration).
 
-**Mitigation Strategy**
-Ensure that every input field carrying sensitive API credentials (for example, Backstory, BigQuery, Ingestion, Forwarder credentials) is explicitly marked as sensitive in the Terraform schema.
+- **Mitigation Strategy: Validate Custom Endpoint URLs Rigorously**
+  **Description:**
+  The provider permits overriding default API endpoints (e.g. `events_custom_endpoint`, `alert_custom_endpoint`) so that the consumer can point to alternate URLs. The custom endpoints are validated using a function (`validateCustomEndpoint`) that calls Go’s URL parsing routines. Developers must (1) ensure that this validation is applied to every such setting, (2) consider adding further whitelisting controls if only known safe domains should be allowed, and (3) clearly document acceptable endpoint formats.
+  **List of Threats Mitigated:**
+  - Server-side request forgery (SSRF)
+  - Malicious endpoint redirection
+  *(Severity: Medium)*
+  **Impact:**
+  Ensuring that any endpoint override is syntactically valid—and, if needed, within an allowed set—guards against attackers forcing the provider to make calls to untrusted destinations.
+  **Currently Implemented:**
+  - The `validateCustomEndpoint` function is implemented and applied in the provider schema.
+  **Missing Implementation:**
+  - No further restrictions (such as domain whitelisting) beyond URL validation; if a more restrictive policy is desired in some environments, it must be added.
 
-**Description**
-1. Audit all provider configuration attributes (e.g. “backstoryapi_credentials”, “bigqueryapi_credentials”, “ingestionapi_credentials”, “forwarderapi_credentials”) and confirm that they really contain secrets or tokens.
-2. For each sensitive field, update its schema definition by setting the property `Sensitive: true`.
-   _Example:_
-   In the provider’s schema (see provider.go) update:
-   ```go
-   "backstoryapi_credentials": {
-       Type:             schema.TypeString,
-       Optional:         true,
-       Sensitive:        true,  // <<–– Mark secret as sensitive
-       ValidateDiagFunc: validateCredentials,
-       ConflictsWith:    []string{"backstoryapi_access_token"},
-       Description: `Backstory API credential...`,
-   },
-   ```
-3. Remove any debug or log statements that print the raw values of these fields.
-4. Test the changes to verify that sensitive values do not appear in any plan output or state file (Terraform automatically hides marked “Sensitive” values).
+- **Mitigation Strategy: Enforce Robust Input Validation**
+  **Description:**
+  The project makes use of many validation functions (for example, to check UUID formats, AWS key formats, bucket URIs, etc.). Developers must (1) continue to verify that every input from users is validated against strict regular expressions or semantic checks, (2) review validators such as `validateAWSAccessKeyID`, `validateGCSURI`, and `validateUUID` periodically for adherence to current standards, and (3) expand validation coverage to any resource attribute that currently relies on less robust checking.
+  **List of Threats Mitigated:**
+  - Injection attacks or malformed input leading to misconfiguration
+  - Improper API calls from invalid parameters
+  *(Severity: Medium)*
+  **Impact:**
+  Strong input validation reduces the chance that invalid or malicious input can lead to unexpected provider behavior or vulnerabilities in how API calls are composed.
+  **Currently Implemented:**
+  - Several dedicated validators already exist and are in use throughout the code.
+  **Missing Implementation:**
+  - Comprehensive coverage should be periodically reviewed to ensure that every external input (for example, any custom string values) is adequately validated.
 
-**List of Threats Mitigated**
-- **Credential Exposure via state/logs:** Without proper marking, secret credentials may appear in Terraform state files or be printed to logs.
-  **Severity:** High
+- **Mitigation Strategy: Maintain Appropriate API Rate Limiting and Retries**
+  **Description:**
+  The client code makes heavy use of rate limiters and a retry mechanism (using the “retry-go” package) to protect against overwhelming the Chronicle API as well as to handle transient network issues. Developers should (1) review the preset rate limiting parameters (defined in files such as `client/endpoints.go` and `client/transport.go`) to ensure they match realistic production conditions, (2) allow for configuration of these limits where possible, and (3) monitor actual API usage to adjust the thresholds appropriately.
+  **List of Threats Mitigated:**
+  - Denial of Service (DoS) due to rapid repeated API calls
+  - Overloading backend systems
+  *(Severity: Medium)*
+  **Impact:**
+  Effective rate limiting combined with retries helps stabilize communications with external APIs. This prevents abuse or accidental overload that might otherwise lead to service denial or throttling.
+  **Currently Implemented:**
+  - Rate limiters are declared and used for different API calls in the client code.
+  **Missing Implementation:**
+  - There is no dynamic, user‑configurable adjustment of these limits; future enhancements might allow operators to tailor these values based on usage patterns.
 
-**Impact**
-- Risk reduction of sensitive data leakage by up to 80–90% as Terraform will treat such inputs as secret and avoid logging them.
+- **Mitigation Strategy: Secure Terraform State File Handling**
+  **Description:**
+  Although Terraform state management is outside of the provider’s direct code, state files may contain copies of sensitive information (such as secret keys and API tokens) managed by this provider. It is crucial that users (and operators) secure their state files using encrypted remote back ends, tight access controls, and, if possible, state file locking. Documentation should clearly remind users that the Terraform state should be stored securely and that sensitive data might be present.
+  **List of Threats Mitigated:**
+  - Unauthorized access to Terraform state leading to credential or configuration exposure
+  *(Severity: High)*
+  **Impact:**
+  Securing Terraform state greatly reduces the chance that sensitive data (which might be visible due to the provider’s resource flattening) falls into the wrong hands.
+  **Currently Implemented:**
+  - This responsibility is largely left to Terraform’s state backend configuration and user practices.
+  **Missing Implementation:**
+  - The provider itself cannot enforce secure state storage; however, additional warnings in documentation could help remind users of best practices specific to Chronicle resources.
 
-**Currently Implemented**
-- Some resource–specific authentication blocks (for example, in the S3 or Okta resources) correctly set fields like “secret_access_key” as sensitive.
+- **Mitigation Strategy: Apply the Principle of Least Privilege for API Credentials**
+  **Description:**
+  Users must supply API credentials that ideally have only the permissions absolutely necessary for the operations the provider performs. In the client code, specific OAuth scopes (and other permission granularity) are used. Developers should (1) ensure that only the minimal scopes (for example, those declared in `defaultClientScopes`) are requested, (2) clearly document which permissions are required for which API calls, and (3) advise in the documentation that credentials should be created with a least‑privilege mindset.
+  **List of Threats Mitigated:**
+  - Abuse of overly broad credentials if they become compromised
+  *(Severity: High)*
+  **Impact:**
+  By limiting the privileges attached to API credentials, any potential abuse after a compromise is contained to a smaller set of actions, reducing overall risk.
+  **Currently Implemented:**
+  - The client code requests specific scopes for various Chronicle APIs and makes use of environment variables to isolate credentials.
+  **Missing Implementation:**
+  - There is no built‑in check to automatically verify that the provided credentials only have minimal required permissions. Documentation and user education must fill this gap.
 
-**Missing Implementation**
-- The top‑level provider credentials (e.g. “backstoryapi_credentials”, “bigqueryapi_credentials”, etc.) are not marked as sensitive. This gap could lead to inadvertent exposure when the provider is configured.
-
----
-
-### 2. Enhance Validation of YARA Rule Text
-
-**Mitigation Strategy**
-Improve the validation of the “rule_text” field used to create rules so that only well‐formed and “safe” YARA content is accepted.
-
-**Description**
-1. Integrate a YARA parser (or use an existing library) to analyze the structure of the YARA rule text before sending it to the API.
-2. Enforce not only that the text ends with a newline (already implemented) but also that the rule’s syntax follows a known safe structure.
-3. Consider implementing a whitelist or pattern check on allowed functions and keywords.
-4. If the rule does not pass the structural validation, return a descriptive error without including any details that might help an attacker refine their injection.
-
-**List of Threats Mitigated**
-- **Malicious Rule Injection:** A malformed or deliberately crafted rule might be used to force the backend to execute unintended searches or even trigger resource‐intensive operations.
-  **Severity:** Medium
-
-**Impact**
-- Reduces the chance that dangerous YARA rules get submitted by up to 70%, thereby diminishing the risk of backend DoS or unexpected behavior.
-
-**Currently Implemented**
-- There is a minimal check in the validation function to ensure that “rule_text” ends with a newline.
-
-**Missing Implementation**
-- No deep syntactical or semantic validation against the YARA rule language is present; the provider would benefit from a more comprehensive parser/validator.
-
----
-
-### 3. Securely Validate and Restrict Credential File Paths
-
-**Mitigation Strategy**
-Improve the “pathOrContents” function so that any file path provided for credentials is thoroughly checked to avoid path‐traversal or the reading of unexpected files.
-
-**Description**
-1. When a credential is provided as a file path, first expand “~” and then verify that the resulting absolute path lies within an allowed directory (for example, a dedicated “credentials” folder or a temporary directory with restricted permissions).
-2. Add a check that the file permissions (e.g. owner‑read only) match security best practices.
-3. If the path falls outside the allowable area or the file has insecure permissions, reject the value and return an instructive error message.
-4. Update unit tests to simulate attempts to provide relative paths or unexpected directories.
-
-**List of Threats Mitigated**
-- **Arbitrary File Access / Path Traversal:** An attacker might supply a malicious file path (or arrive at one via a misconfiguration) and read sensitive files on the file system.
-  **Severity:** Medium
-
-**Impact**
-- By enforcing a whitelist of acceptable directories and permission checks, you can reduce this risk by approximately 60%.
-
-**Currently Implemented**
-- The function already calls `filepath.Clean` and uses `homedir.Expand` to expand “~”, but it does not restrict the file to a known safe directory or check file permissions.
-
-**Missing Implementation**
-- No check exists to ensure that the resolved file path is within an approved directory, nor is there logic to verify file mode/ownership.
-
----
-
-### 4. Expose and Monitor Rate Limiting Configuration
-
-**Mitigation Strategy**
-Allow fine‐tuning of rate limiter parameters and log occurrences when limits are hit to quickly detect potential abuse or misconfiguration.
-
-**Description**
-1. Document the current fixed rate limits used in the client (which are set to one call per second for many endpoints).
-2. Provide options (through environment variables or provider configuration) to adjust the rate limiter thresholds.
-   _For example:_ Allow users to override default limits if they notice their API calls are being throttled unnecessarily.
-3. Integrate detailed logging when a rate limiter delays a request so that unusual bursts in API usage can be detected.
-4. Optionally, build in a mechanism that monitors the number of rate-limited events over time and alerts if there is abnormal activity.
-
-**List of Threats Mitigated**
-- **DoS via API Abuse:** Without rate limiting—or if it is misconfigured—an attacker (or misbehaving configuration) might send too many API calls, overwhelming the backend.
-  **Severity:** High
-
-**Impact**
-- Proper tuning and monitoring can reduce the risk of DoS attacks by 50–70% and help with early detection of unexpected usage patterns.
-
-**Currently Implemented**
-- The code already uses golang.org/x/time/rate to impose a fixed rate on API calls.
-
-**Missing Implementation**
-- There is no mechanism to dynamically adjust limits nor is there dedicated logging/monitoring for rate limiter events that might help detect if a malicious pattern is emerging.
-
----
-
-### 5. Strengthen Validation on Environment‑Supplied Credentials
-
-**Mitigation Strategy**
-Enforce stricter pattern and format validation for credentials provided via environment variables.
-
-**Description**
-1. Review the code in `validateCredentials` and similar functions to add regex or JSON schema validations that ensure the credential string is in the expected format (for example, a proper JSON structure, correct length for tokens, etc.).
-2. Reject any credentials that do not match the expected pattern—and log only a generic error message without printing the faulty input.
-3. Update tests to check that if a malformed credential is provided via an environment variable, the provider fails securely.
-4. Document acceptable formats clearly so that users can provide credentials only in those formats.
-
-**List of Threats Mitigated**
-- **Injection of Malformed Credentials:** If an attacker can control an environment variable, they might feed in a deliberately malformed string that could trigger unexpected parsing behavior or errors.
-  **Severity:** Medium
-
-**Impact**
-- More stringent validation can cut down the risk of mis-parsed or malicious credentials by 40–60%.
-
-**Currently Implemented**
-- The provider calls `googleoauth.CredentialsFromJSON` which does some level of checking but does not enforce strict pattern matching on all inputs (especially when credentials are fed via the environment variable as base64 encoded data).
-
-**Missing Implementation**
-- There is an opportunity to add more explicit checks (for example, regexes) to “validateCredentials” to ensure that the credential string exactly meets the expected JSON schema.
-
----
-
-These targeted strategies address a number of risks that are more unique to this provider’s implementation (for example, the way credentials are loaded and how rule texts are handled) rather than broader best practices. Addressing these suggestions should help reduce the risk that an attacker could leverage misconfigurations or subtle implementation flaws to compromise sensitive data or degrade service performance.
+Each of these mitigation strategies targets realistic threats introduced expressly by aspects of the terraform-provider-chronicle’s design and implementation. In many cases the code already implements part of the defense; further controls (build‐time restrictions, enhanced logging sanitization, or improved documentation) are recommended to fully address the associated risks.

@@ -1,181 +1,117 @@
-## Mitigation Strategies
+- **Mitigation Strategy**: Validate user-supplied URLs for Screenshot/Video endpoints
+  - **Description**:
+    Enforce domain or IP checks when users provide a URL for screenshot capture (`/api/screenshot`) or video uploads. Reject private, localhost, or non-public addresses to prevent internal network scans. For videos, reject or limit formats that MoviePy can process safely.
+    1. Inspect incoming URL or file before forwarding to external screenshot service or processing the video.
+    2. If a private IP or suspicious domain is detected, reject the request.
+    3. For videos larger than a set threshold, return an error.
+    4. Only permit safe formats to avoid crashes or exploits in `moviepy.editor`.
+  - **List of Threats Mitigated**:
+    - SSRF and internal network scanning (High severity)
+    - Potential DoS from malformed or oversized media (Medium severity)
+  - **Impact**:
+    Significantly reduces SSRF risk and large-file exploitation attempts, ensuring only valid external URLs and manageable media.
+  - **Currently Implemented**:
+    None. The code in `routes/screenshot.py` and `video_to_app.py` does not currently restrict URLs or file sizes.
+  - **Missing Implementation**:
+    - URL validation and private IP blacklist in `routes/screenshot.py`.
+    - File size and format checks in `video_to_app.py`.
 
-Below are mitigation strategies specifically tailored to the unique threats present in the “screenshot-to-code” application as described in the PROJECT FILES. Each strategy focuses on risks introduced by this particular codebase and omits general, common best practices.
+- **Mitigation Strategy**: Enforce usage and rate limits on code/image generation
+  - **Description**:
+    Impose per-user or global rate limits on the `/generate-code` WebSocket route and image-generation endpoints. Enforce usage quotas to prevent misuse or cost overruns.
+    1. Track each client session or API key usage.
+    2. Apply request throttling (e.g., X requests per minute).
+    3. If usage is exceeded, return an error or require additional authentication.
+  - **List of Threats Mitigated**:
+    - Potential cost exhaustion from unbounded requests (High severity)
+    - System resource strains or denial-of-service from excessive calls (Medium severity)
+  - **Impact**:
+    Significantly reduces potential billing exploitation and lowers likelihood of DoS.
+  - **Currently Implemented**:
+    None. The project code does not show usage-tracking or rate-limiting logic.
+  - **Missing Implementation**:
+    - Rate-limiting middleware or logic around relevant FastAPI routes.
+    - Quota monitoring system for code generation or large batch calls.
 
----
+- **Mitigation Strategy**: Restrict modifying OpenAI/Anthropic base URL in production
+  - **Description**:
+    Prevent untrusted overrides of `OPENAI_BASE_URL` (or Anthropic base URL) to avoid proxying requests to malicious endpoints.
+    1. In production (`IS_PROD=True`), ignore user-supplied base URLs.
+    2. Validate any custom base URL to ensure it’s recognized and not internal or local.
+  - **List of Threats Mitigated**:
+    - SSRF if an attacker sets `OPENAI_BASE_URL` to an internal domain (High severity)
+    - Unauthorized scanning or bridging to local network (Medium severity)
+  - **Impact**:
+    Ensures LLM traffic only goes to legitimate endpoints. High reduction of internal scanning risk.
+  - **Currently Implemented**:
+    Partial. The code checks `IS_PROD` to skip user-defined base URLs, but no thorough domain validation.
+  - **Missing Implementation**:
+    - Strict domain allowlist logic for non-production environments if custom endpoints are permitted.
 
-### 1. Validate and Restrict Screenshot URLs (Prevent SSRF)
+- **Mitigation Strategy**: Enforce file size and format checks for image/video uploads
+  - **Description**:
+    Reject or limit huge images/videos in `mock_llm.py`, `image_generation` modules, or video endpoints.
+    1. Check the `Content-Length` header or read file size in memory.
+    2. Enforce an upper bound (configurable).
+    3. Validate supported formats (e.g., PNG/JPEG for images, MP4/MOV for video).
+  - **List of Threats Mitigated**:
+    - Memory exhaustion or DoS from massive file uploads (Medium severity)
+    - Potential crashes in `moviepy.editor` or PIL from unsupported/harmful formats (Medium severity)
+  - **Impact**:
+    Reduces resource exhaustion or unexpected server crashes.
+  - **Currently Implemented**:
+    None. Current code does not cap file size or handle partial reads.
+  - **Missing Implementation**:
+    - Server-side checks for `Content-Length` before reading.
+    - Rejection or fallback for unsupported or oversized files.
 
-- **Mitigation Strategy**
-  Implement server-side filtering of user-provided URLs in the “/api/screenshot” route to block access to internal or private network addresses.
+- **Mitigation Strategy**: Sanitize or disclaim generated code outputs
+  - **Description**:
+    Clarify that rendered “screenshot-to-code” HTML/JS could contain unsafe scripts if an attacker manipulates prompts. Alternatively, apply HTML sanitization if the app itself tries to display generated markup in the browser.
+    1. Tag all generated code as untrusted.
+    2. If the code is displayed in-app, apply a sanitization library or run it in a sandboxed iframe.
+    3. Warn users that generated code can contain vulnerabilities or malicious scripts.
+  - **List of Threats Mitigated**:
+    - XSS from malicious code generation (High severity)
+    - Unintended script injection (Medium severity)
+  - **Impact**:
+    Greatly reduces risk to end-users if code is auto-rendered. Sets correct expectation that code is unverified.
+  - **Currently Implemented**:
+    None. The app streams code directly to the front-end.
+  - **Missing Implementation**:
+    - Sanitization or sandbox usage in the front-end after code generation.
+    - Clear disclaimers that code from the LLM is not automatically safe.
 
-- **Description**
-  1. On receiving a user-submitted URL, parse and check its hostname/IP.
-  2. Reject or sanitize any request targeting internal IP ranges (e.g., 127.0.0.1, 169.254.x.x, RFC1918 private networks).
-  3. Optionally use a DNS resolution step to ensure the requested domain is external and not a loopback.
-  4. Maintain an allowlist or blocklist if necessary for known safe or unsafe addresses.
+- **Mitigation Strategy**: Protect environment variables and secret tokens
+  - **Description**:
+    Avoid embedding secret keys in logs, commits, or front-end code. Keep `.env` out of version control and confirm it’s in `.gitignore`.
+    1. Confirm `.env` is never checked in.
+    2. Mask or redact keys in logs.
+    3. Restrict who can set or read secret environment variables.
+  - **List of Threats Mitigated**:
+    - Secret leakage leading to unauthorized API usage (High severity)
+    - Potential credential compromise (High severity)
+  - **Impact**:
+    High reduction in risk of stolen credentials and expensive misuse of Anthropic/OpenAI/Replicate endpoints.
+  - **Currently Implemented**:
+    Partial. The instructions in `README.md` show writing the key to `.env`, but no mention of .gitignore usage.
+  - **Missing Implementation**:
+    - Checking that `.env` is strictly excluded from the repo.
+    - Redacting secrets in debug output or logs.
 
-- **List of Threats Mitigated**
-  - Server-Side Request Forgery (SSRF) (High severity): Attackers could force the backend to perform unauthorized requests to internal services.
-
-- **Impact**
-  - Significantly reduces the risk of SSRF attacks that could compromise internal infrastructure or access sensitive internal endpoints.
-
-- **Currently Implemented**
-  - None (the code calls ScreenshotOne’s API directly with user-submitted URLs without validation).
-
-- **Missing Implementation**
-  - Entire logic for validating external URLs before making screenshot requests.
-
----
-
-### 2. Sanitize AI-Generated Code to Prevent XSS
-
-- **Mitigation Strategy**
-  Before displaying or embedding code returned by LLMs (Claude, GPT, etc.) in the front end, strip or neutralize any malicious scripts or HTML that could cause cross-site scripting in the user’s browser.
-
-- **Description**
-  1. Use a robust HTML sanitization library in the frontend (e.g., DOMPurify or a React HTML sanitizer) when rendering code blocks.
-  2. Render AI-generated code as text or within an isolated sandbox/IFrame that does not have access to the parent DOM.
-  3. For “live preview” functionality, ensure the preview is either sandboxed or served from a different domain to prevent arbitrary script execution.
-
-- **List of Threats Mitigated**
-  - Cross-Site Scripting (XSS) (High severity): Attackers could hijack user sessions or carry out malicious operations by injecting scripts.
-
-- **Impact**
-  - Greatly reduces the likelihood of XSS exploits by default. Without sanitization, any 3rd party or malicious prompt could produce harmful HTML/JS.
-
-- **Currently Implemented**
-  - None (the code extracts <html> tags but does not sanitize the contents before returning them to the front end).
-
-- **Missing Implementation**
-  - Proper sanitization or “safe rendering” for AI-generated HTML in the frontend.
-
----
-
-### 3. Limit Debug Logging of Sensitive Data
-
-- **Mitigation Strategy**
-  Mask or omit environment variables, API keys, and user inputs from verbose debug logs to prevent accidental exposure in logs or version control.
-
-- **Description**
-  1. When logging prompts or responses with “IS_DEBUG_ENABLED,” exclude or redact secrets from output.
-  2. Restrict logs to minimal relevant data, e.g., error messages or short event traces only.
-  3. Confirm that environment variables (OPENAI_API_KEY, ANTHROPIC_API_KEY) are never directly logged.
-
-- **List of Threats Mitigated**
-  - Information Disclosure (Medium severity): Exposing secrets or sensitive user data in logs can lead to unauthorized key usage.
-
-- **Impact**
-  - Ensures that accidental leak of API credentials or user-provided data is minimized, preventing a major pivot point for attackers.
-
-- **Currently Implemented**
-  - Partial: The code logs all prompt messages if “IS_DEBUG_ENABLED” is set but does not appear to mask secrets.
-
-- **Missing Implementation**
-  - Redaction logic for sensitive fields in logs and thorough checks to ensure no secrets are printed to console or stored on disk.
-
----
-
-### 4. Validate Custom AI Endpoint URLs
-
-- **Mitigation Strategy**
-  Only allow certain trusted domain patterns for OPENAI_BASE_URL or Anthropic Base URL to prevent malicious re-routing or SSRF.
-
-- **Description**
-  1. Maintain an allowlist of official endpoints (e.g., *.openai.com, *.anthropic.com).
-  2. If a custom base URL is absolutely necessary, perform a DNS lookup to ensure it does not resolve to internal IPs, similarly to SSRF checks.
-  3. Reject or fail gracefully if the domain is unrecognized or points to a private network address.
-
-- **List of Threats Mitigated**
-  - SSRF (Medium severity): Attackers could re-route requests to hidden or internal services.
-  - Credential Leakage (Medium severity): Could inadvertently send secrets to an untrusted domain.
-
-- **Impact**
-  - Substantially reduces the risk of malicious or rogue endpoints capturing or misusing requests and environment credentials.
-
-- **Currently Implemented**
-  - None: The code allows environment variable override for the OpenAI base URL, with no domain check.
-
-- **Missing Implementation**
-  - Domain/URL validation mechanism in the environment variable reading logic.
-
----
-
-### 5. Enforce File Size Limits on Images and Videos
-
-- **Mitigation Strategy**
-  Restrict maximum allowed file size for images/screenshots/videos the user can submit, to prevent resource exhaustion or denial-of-service conditions (e.g., by uploading extremely large files).
-
-- **Description**
-  1. Add a maximum file size check when receiving data URLs or file uploads in the “/generate-code” or video processing routes.
-  2. If a file exceeds the limit, reject the request and return an appropriate error.
-  3. Implement early checks (e.g., reading Content-Length headers or partial data to detect large files).
-
-- **List of Threats Mitigated**
-  - Denial of Service via large file processing (Medium severity).
-  - Excessive resource usage leading to server instability (Medium severity).
-
-- **Impact**
-  - Significantly reduces the risk that an attacker can crash or slow the application by sending massive inputs.
-
-- **Currently Implemented**
-  - None: The screenshot or video input simply iterates frames (MoviePy) with no mention of input size constraints.
-
-- **Missing Implementation**
-  - File size check before reading the entire data into memory or submitting to the AI APIs.
-
----
-
-### 6. Store Environment Keys Securely and Exclude .env from Commits
-
-- **Mitigation Strategy**
-  Ensure environment variables containing API keys (OpenAI, Anthropic, Replicate, etc.) are never pushed to public repository and are handled via secrets management.
-
-- **Description**
-  1. Use a secrets manager (like Vault or GitHub Actions secrets) or container orchestration secrets to pass keys into containers.
-  2. Confirm .env is in .gitignore and that local dev instructions do not accidentally commit real credentials.
-  3. Rotate credentials regularly to mitigate risk if a key is leaked.
-
-- **List of Threats Mitigated**
-  - Credential Leakage (High severity): Direct commits of secrets can allow immediate unauthorized usage.
-  - Lateral Movement (Medium severity): Attackers reusing these keys for further compromise.
-
-- **Impact**
-  - Very high reduction in risk of code leaks containing real production secrets, preventing a broad range of attacks.
-
-- **Currently Implemented**
-  - Some mention of “.env” usage in documentation, but no built-in secrets manager approach. .env is presumably .gitignored, but it depends on local developer adherence.
-
-- **Missing Implementation**
-  - Verified secrets manager or environment-based approach that disallows accidental commit.
-  - Automatic rotation or forced reissuance of keys.
-
----
-
-### 7. Sandbox or Containerize Generated Code Execution (Future Feature)
-
-- **Mitigation Strategy**
-  If the application ever moves toward executing or previewing the generated code on the server side, run it in a hardened sandbox or ephemeral container with minimal privileges.
-
-- **Description**
-  1. Use a container or VM that isolates the environment from the host.
-  2. Drop all unnecessary capabilities and apply seccomp/apparmor profiles.
-  3. Automatically discard the container after execution to ensure no persistent side effects.
-
-- **List of Threats Mitigated**
-  - Remote Code Execution (High severity): If the AI output is run server-side, an attacker might craft malicious code.
-  - Privilege Escalation (Medium severity): Minimizes damage if malicious code tries to break out of the environment.
-
-- **Impact**
-  - Practically eliminates persistent infiltration from malicious code by confining any processes to a short-lived, permissions-limited environment.
-
-- **Currently Implemented**
-  - Not applicable yet (the code is not executing user-generated code server-side). Docker is used for deployment, but not for dynamic code sandboxing.
-
-- **Missing Implementation**
-  - Automated ephemeral container or sandbox if the product evolves to server-based code previews or builds.
-
----
-
-These mitigation strategies directly address the key risks introduced by the application’s unique features—particularly SSRF through screenshot endpoints, potential XSS from AI-generated code, large file ingestion, and insecure handling of environment-based secrets. By implementing these measures, “screenshot-to-code” can significantly reduce its attack surface and maintain a safer development and production environment.
+- **Mitigation Strategy**: Implement concurrency and resource limits for video processing
+  - **Description**:
+    Limit how many videos the server processes concurrently. For example, queue incoming requests or run them asynchronously with a cap.
+    1. Use a job queue for video tasks.
+    2. Limit concurrency to a configured maximum.
+    3. Gracefully reject or defer tasks if the limit is exceeded.
+  - **List of Threats Mitigated**:
+    - Server overload from multiple large videos at the same time (Medium severity)
+    - Crash or performance degradation leading to downtime (Medium severity)
+  - **Impact**:
+    Strongly reduces risk of DoS from parallel video requests.
+  - **Currently Implemented**:
+    None. The existing `video_to_app.py` processes each file without concurrency checks.
+  - **Missing Implementation**:
+    - A concurrency limit or queue system.
+    - Mechanism to handle request overflow (e.g., 503 to new requests).

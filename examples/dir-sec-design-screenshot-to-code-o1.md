@@ -1,198 +1,153 @@
-# BUSINESS POSTURE
+## BUSINESS POSTURE
+The screenshot-to-code project aims to reduce development time by automatically generating front-end code (HTML, CSS, and JavaScript frameworks) from screenshots, mockups, or video recordings. Its commercial footprint includes an open source offering and a paid hosted version to drive revenue. This positions the project to serve both individual developers (hobbyists, small teams) as well as enterprises requiring automated code generation solutions for prototype and production.
 
-The "screenshot-to-code" project is an open source tool designed to convert screenshots, mockups, or recorded screen interactions into code through the use of Large Language Model (LLM) APIs. The major business priorities and goals include:
+Key business priorities and goals:
+1. Simplify and accelerate the UI development process by converting visuals to code in multiple frameworks.
+2. Maintain an open source community that contributes to testing and improvements.
+3. Generate revenue through a paid hosted service for medium and large enterprises.
+4. Expand usage by integrating advanced AI models (OpenAI GPT-4, Anthropic Claude, Replicate image generation).
 
-1. Enable fast prototyping of UI elements by automatically generating clean front-end code.
-2. Integrate with multiple AI models or image generation services to provide flexibility.
-3. Offer both a self-hosted (open source) and a paid/hosted enterprise solution to cater to a wide range of users, from small teams to large enterprises.
+Most important business risks to address based on these priorities:
+1. Unauthorized access or usage of sensitive designs shared by enterprise clients could diminish confidence and lead to reputational loss.
+2. Inadvertent exposure of proprietary code or internal designs when code generation logs are mismanaged or publicly shared.
+3. Key dependencies on third-party AI services whose changes in policy or pricing may affect cost or availability.
 
-From a business perspective, the main benefits are:
-- Reduced time to transform design assets into working code.
-- Lower overhead for front-end coding of basic or repeated UI patterns.
-- Potential to scale and monetize the tool in an enterprise context.
+## SECURITY POSTURE
 
-Most important business risks to address:
-- Potential unauthorized access or misuse of API keys for LLMs, resulting in unexpected costs or data exposure.
-- Reputational risks if the AI-generated code fails to meet certain quality or security expectations.
-- Handling of proprietary screenshots or designs that might contain sensitive or IP-protected content.
+Below are the existing security controls and some accepted risks identified for the project.
 
-# SECURITY POSTURE
+Existing security controls:
+- security control: Environment-based secret injection. Credentials for service providers (OpenAI, Anthropic, Replicate) are loaded from environment variables or .env files.
+- security control: Docker-based containerization. Provides isolated environments for the backend (FastAPI) and frontend (React/Vite).
+- security control: Testing and type-checking in development. The project includes pytest for automated testing and pyright for type checking.
+- security control: Optional mock mode for local debugging to avoid unnecessary usage of external keys.
 
-## Existing Security Controls
+Accepted risks:
+- accepted risk: Storing API keys in plain text .env files. This simplifies development but may allow unauthorized access if .env is accidentally committed or leaked.
+- accepted risk: Project does not strongly enforce data retention policies for user-submitted screenshots or code generation outputs.
+- accepted risk: No built-in user account system for open source usage or local setups, leading to limited authentication/authorization.
 
-security control: Environment variable usage for secrets. The project stores secrets (OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.) in environment variables rather than in code, reducing direct code exposure of secrets.
+Recommended high-priority security controls (not explicitly mentioned in project files):
+- security control: Secret management using vault or environment injection with automated scanning to prevent accidental commits of secrets.
+- security control: Rate-limiting and usage auditing for external API calls to protect from misuse or excessive cost.
+- security control: Role-based access or minimal authentication layer (especially for the hosted service) to limit unauthorized invocation.
+- security control: Logging/tracing that obfuscates or excludes sensitive content so user designs are not stored unencrypted.
 
-security control: Dockerized deployment. Docker configuration isolates the application environment, making it simpler to deploy consistently and reducing some classes of misconfiguration.
+Key security requirements:
+1. Authentication: For the hosted version, ensure at least basic authentication or token-based access to the code generation service.
+2. Authorization: Enforce usage quotas, especially for API-based usage, to block accounts from making excessive requests.
+3. Input validation: Carefully sanitize inputs such as user-provided image URLs to prevent injection or malicious file handling.
+4. Cryptography: Use HTTPS/TLS for all service communications. Ensure environment variables remain encrypted at rest in a secret manager if used in production.
 
-security control: Minimal data persistence. The project does not persist user-generated screenshots or data at rest by default. Images and code are typically processed in memory or ephemeral containers.
+## DESIGN
 
-security control: Log-based debugging. The code includes optional debugging functionalities, which can be enabled via environment variables. This centralizes logs and can help in auditing.
+### C4 CONTEXT
 
-## Accepted Risks
+```mermaid
+flowchart LR
+    User((User)) --> Project[ screenshot-to-code Project ]
+    Project --> AIProviders[External AI Services\n(OpenAI, Anthropic, Replicate)]
+```
 
-accepted risk: Developer-supplied environment variables might be inadvertently exposed if the container or environment is not well-protected. The project currently instructs users to manage these secrets through .env files or environment variables without a robust key management system.
+#### Context Diagram Elements
 
-accepted risk: Code snippets or screenshots used for generation are handled in memory and can be stored in logs for debug or auditing. If logs are not suitably protected, sensitive design data could be exposed.
+| Name                | Type      | Description                                                            | Responsibilities                                                              | Security controls                                                         |
+|---------------------|----------|------------------------------------------------------------------------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| User                | External  | Developer or end-user accessing the service                           | Initiates requests, provides screenshots or videos for code generation       | Not applicable (end-user outside system scope)                            |
+| screenshot-to-code Project | System    | Main service converting screenshots or videos to code                | Receives input from user, coordinates with external APIs, returns generated code | security control: Docker containerization, environment-based secrets       |
+| External AI Services (OpenAI, Anthropic, Replicate) | External  | Third-party APIs utilized for language and image generation            | Process advanced ML tasks ( vision-based code generation or text completions ) | Accepted risk: reliant on third party changes; recommended encryption in transit |
 
-## Recommended Security Controls
-
-- Centralized secret management. Use a secure vault or cloud-managed secret store to handle LLM API keys, rather than relying on .env files.
-- Role-based authentication for enterprise usage. Introduce optional user login with role separation, so only authorized individuals can trigger code generation.
-- Transport security. Enforce TLS/HTTPS by default on both front-end and back-end to prevent data tampering and eavesdropping.
-- Limit inbound connections to the back-end server behind a reverse proxy or WAF, with firewall rules to minimize the attack surface.
-- Implement scanning of logs for sensitive data or consider implementing log sanitization to avoid storing confidential or personal data from screenshots.
-
-## Security Requirements
-
-The following high-priority requirements for robust security should be considered:
-
-1. Authentication
-   - Provide a mechanism for user authentication and, optionally, Single Sign-On or LDAP integration for enterprise deployments.
-2. Authorization
-   - If multi-user usage is desired, define user roles (e.g., Admin, Developer) that control who can initiate code generation or see logs.
-3. Input Validation
-   - Validate incoming requests and ensure user-provided URLs or screenshot data cannot be used for SSRF or injection attacks.
-4. Cryptography
-   - Encrypt traffic between front-end and back-end (TLS).
-   - Ensure safe storage of secrets in an encrypted form or inside a secrets manager.
-
-Where each existing control is implemented or described:
-- Environment variable usage is documented in the README and in the Dockerfiles.
-- Docker-based deployments are described in docker-compose.yml and the Dockerfiles.
-- The code’s ephemeral data handling is not extensively documented but is implied in the code for image processing (in-memory transformations).
-
-# DESIGN
-
-## C4 CONTEXT
+### C4 CONTAINER
 
 ```mermaid
 flowchart TB
-    user(Developer or End User) --> system(Screenshot to Code)
-    system -- "LLM calls" --> openAI[OpenAI]
-    system -- "LLM calls" --> anthropic[Anthropic]
-    system -- "Image generation calls" --> replicate[Replicate]
-    system -- "Screenshot capturing calls" --> screenshotOne[ScreenshotOne]
-```
-
-### Context Diagram Elements
-
-| Name             | Type              | Description                                                                                   | Responsibilities                                                                                                 | Security controls                                                                                                                                 |
-|------------------|-------------------|-----------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| Developer (User) | External Person   | Person uploading screenshots or requesting conversions                                       | Provides input images/screenshots, configures LLM references (API keys), reviews generated code                   | Typically relies on environment security. No direct authentication in open source version.                                                         |
-| Screenshot to Code | Internal System | Main system that processes user inputs and delegates tasks to LLM or image generation services | Receives images or video from front-end, calls external LLMs, and returns code to the user                        | security control: usage of environment variables for secrets, ephemeral memory usage, optional logs.                                              |
-| OpenAI           | External System   | GPT-4 or GPT-4-Vision LLM provider                                                            | Provides AI services to transform screenshots or textual input into code                                         | Requires openai_api_key. Unexpected usage or misuse can lead to cost or data exfiltration.                                                         |
-| Anthropic        | External System   | Claude-based LLM provider                                                                     | Alternative or additional LLM for code generation                                                                 | Requires anthropic_api_key. Similar cost and usage concerns.                                                                                       |
-| Replicate        | External System   | Image generation service (e.g. Flux Schnell)                                                 | Used to generate or manipulate images if needed                                                                   | Requires replicate_api_key. Same cost or usage concerns.                                                                                           |
-| ScreenshotOne    | External System   | API for capturing screenshots of web pages                                                   | Lets users fetch site captures for code generation                                                                | Also uses an API key. Risk of SSRF or spamming if not controlled.                                                                                  |
-
-## C4 CONTAINER
-
-Below is a high-level view of the main containers and how responsibilities are distributed:
-
-```mermaid
-flowchart LR
-    subgraph Screenshot to Code
-        frontend[React Front-end Container]
-        backend[FastAPI Back-end Container]
+    subgraph screenshot-to-code System
+    Frontend(React/Vite Frontend) -- REST/WebSocket --> Backend(FastAPI Service)
     end
-
-    user(Developer) --> frontend
-    frontend --> backend
-    backend --> openAI[OpenAI LLM Provider]
-    backend --> anthropic[Anthropic LLM Provider]
-    backend --> replicate[Replicate API]
-    backend --> screenshotOne[ScreenshotOne]
+    Backend --> OpenAI
+    Backend --> Anthropic
+    Backend --> Replicate
 ```
 
-### Container Diagram Elements
+#### Container Diagram Elements
 
-| Name                         | Type         | Description                                                                     | Responsibilities                                                                                                                     | Security controls                                                                             |
-|------------------------------|-------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
-| React Front-end Container    | UI Container | A Vite-based or React-based user interface container                            | Renders the UI for screenshot uploads, config input, and displays generated code. Communicates with the back-end over HTTP/WebSocket. | security control: potential for client-side sanitization, environment-based routing, warnings about storing keys in the browser.     |
-| FastAPI Back-end Container   | API Container | Python with FastAPI, orchestrates LLM calls and image processing                | Receives user inputs, handles code generation logic, communicates with LLM/builder services, and returns stream responses.           | security control: environment variables for secrets, ephemeral memory usage, potential HTTPS termination, optional logging.          |
-| OpenAI LLM Provider          | External API | GPT-4 or GPT-4-Vision endpoint used to parse images or textual instructions     | Receives calls from the back-end about generating code from the screenshot context.                                                 | security control: secret key in .env, possibility to limit usage or set budget constraints.                                         |
-| Anthropic LLM Provider       | External API | Claude endpoints used for alternate code generation or better context handling  | Similar role to OpenAI but using Claude.                                                                                             | security control: secret key in .env, possibility to limit usage or set budget constraints.                                         |
-| Replicate API                | External API | Optional image generation or manipulation                                                                             | Provides advanced image transformations or mockups.                                                                                  | security control: secret key in .env, usage restrictions.                                                                            |
-| ScreenshotOne                | External API | Allows capturing screenshots from a URL                                                                               | Accepts user-provided URLs to produce screenshots.                                                                                   | security control: secret key, risk of SSRF if malicious URLs are provided.                                                          |
+| Name                       | Type       | Description                                                     | Responsibilities                                               | Security controls                                                               |
+|----------------------------|-----------|-----------------------------------------------------------------|----------------------------------------------------------------|---------------------------------------------------------------------------------|
+| React/Vite Frontend        | Container | Serves the UI, receives user input (images, videos, keys etc.)  | Displays UI, configures settings, streams generation results   | security control: Minimal usage of user credentials stored client-side         |
+| FastAPI Service (Backend)  | Container | Python-based server providing code generation logic             | Receives requests from frontend, communicates with external AI | security control: Docker-based isolation, environment-based secrets, mocking   |
+| OpenAI/Anthropic/Replicate| External  | Third-party AI services                                         | Provide advanced model inferences or image generation          | accepted risk: reliance on external service integrity and SLA                   |
 
-## DEPLOYMENT
+### DEPLOYMENT
 
-The project can be deployed in multiple ways, such as:
-- Deploying via Docker Compose on a single host.
-- Deploying each container (front-end and back-end) in a Kubernetes cluster.
-- Separately deploying front-end as a static site (on Netlify, for example) and back-end on a cloud service.
+The project can be deployed:
 
-One common solution is Docker Compose on a single host:
+1. Locally without Docker:
+   - Install dependencies (Poetry for Python, Yarn for Node)
+   - Run the FastAPI backend on port 7001
+   - Run the React frontend on port 5173
+2. Using Docker Compose (default recommended for production or standardized dev setups):
+   - The docker-compose file builds separate images for the backend and frontend.
+   - Both containers run in a shared network.
+   - The host exposes front-end on port 5173 and back-end on port 7001.
+
+Below is a sample deployment diagram (using Docker Compose):
 
 ```mermaid
 flowchart LR
-    server[Host Server / VM] --> dockerEngine[Docker Engine]
-    dockerEngine --> backendContainer(FastAPI Container)
-    dockerEngine --> frontendContainer(React Container)
-    backendContainer --> userSecrets[.env / Secrets]
-    backendContainer --> externalLLM[OpenAI / Anthropic / etc via Internet]
-    frontendContainer --> userBrowser[Developer Browser]
+    Developer --> DockerCompose
+    DockerCompose --> BackendContainer
+    DockerCompose --> FrontendContainer
+    BackendContainer --> ExternalAI[(OpenAI/Anthropic/Replicate)]
 ```
 
-### Deployment Diagram Elements
+#### Deployment Diagram Elements
 
-| Name                 | Type           | Description                                                                          | Responsibilities                                                                                                                        | Security controls                                                                                              |
-|----------------------|---------------|--------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
-| Host Server / VM     | Infrastructure | Physical or virtual machine hosting Docker                                           | Provides OS-level environment for Docker containers                                                                                    | Should implement OS hardening, patch management, firewall configurations                                        |
-| Docker Engine        | Container Runtime | Manages and runs containers for front-end and back-end                              | Handles container orchestration, networking, and resource isolation                                                                     | security control: Docker isolation, Docker network segmentation                                                 |
-| FastAPI Container    | Container      | Python-based back-end environment, runs uvicorn                                     | Serves API routes, coordinates code generation with external LLMs, ephemeral memory usage                                              | security control: environment variables for secrets, possible IAM integration, TLS termination if configured    |
-| React Container      | Container      | Front-end environment using Node / Yarn for building and serving the React app       | Renders the user interface, can also be deployed as a static build on an external CDN if needed                                        | security control: minimal user data, no secrets stored in front-end container by default, possible CSP headers  |
-| .env / Secrets       | Secret Storage  | Environment variables stored in container or in a manager like Docker secrets         | Contains keys for LLM/service provider, other configuration secrets                                                                     | accepted risk: potential exfiltration if logs or container environment is compromised                           |
-| External LLM         | External Services | Any of the integrated LLM or image generation endpoints (OpenAI, Anthropic, Replicate) | Provide code transformation, completions, or image generation analysis                                                                 | security control: rate limiting, usage monitoring, API bounding                                                |
-| Developer Browser    | Client         | End-user's client runtime environment                                                | Initiates screenshot uploads, sees generated code in the front-end                                                                     | recommended measure: use HTTPS to connect to the front-end                                                      |
+| Name               | Type          | Description                                                                 | Responsibilities                                               | Security controls                                                                       |
+|--------------------|--------------|-----------------------------------------------------------------------------|----------------------------------------------------------------|-----------------------------------------------------------------------------------------|
+| DockerCompose      | Deployment    | Orchestrates containers for backend and frontend                            | Builds images, sets env variables, runs containers in the same network | security control: environment-based secrets, isolated Docker networks, volume constraints |
+| BackendContainer   | Container     | Python-based container with FastAPI                                         | Coordinates with AI providers, processes user input, runs code gen logic | security control: restricted to port 7001, external secrets injection, minimal OS footprint  |
+| FrontendContainer  | Container     | Node-based (React/Vite) container that serves the web UI                    | Presents user interface, static assets, config for connecting to backend | security control: limited inbound ports exposed                                          |
+| ExternalAI         | External Node | The external providers used to perform LLM or image generation tasks        | Provide ML features to the backend                                                               | accepted risk: no direct control of external service                                     |
 
-## BUILD
+### BUILD
 
-The project is typically built and published through Docker, though local workflows are common as well. An example build pipeline:
+The local build relies on standard Node + Python tooling, with possible automation:
 
 ```mermaid
 flowchart LR
-    dev(Developer) --> commitCode(Commit to GitHub)
-    commitCode --> buildSystem(CI/CD: e.g. GitHub Actions)
-    buildSystem --> testPass(Run Tests: Pytest, Lint, SAST)
-    testPass --> dockerBuild(Build Docker images for backend/frontend)
-    dockerBuild --> pushImages(Push images to container registry)
-    pushImages --> deploy(Deploy containers)
+    Developer --> GitRepository
+    GitRepository --> BuildSystem
+    BuildSystem --> SAST(Static Analysis Tools e.g. pyright)
+    BuildSystem --> Tests(pytest)
+    BuildSystem --> DockerImages(Built Docker Images)
+    DockerImages --> Deployment
 ```
 
-Build and Security Checks:
-- Poetry is used to manage Python dependencies. Developers run poetry install, then run type checks (pyright) and tests (pytest).
-- Node environment uses yarn for front-end builds.
-- Additional recommended checks:
-  - SAST scanners or linters integrated into the pipeline (e.g. GitHub code scanning).
-  - Container image scanning to detect vulnerabilities in the base images (e.g. Grype).
-  - Automated scans for secret exposures in code or logs.
+1. Developer commits code to the repository.
+2. Build system (could be GitHub Actions, local script, or Jenkins) runs:
+   - SAST checks with pyright (type checks)
+   - Automated tests with pytest
+   - Lint checks on the frontend (eslint or similar)
+3. Docker images are built and tested.
+4. Artifacts are deployed to desired environment (local or production).
 
-# RISK ASSESSMENT
+Security controls of build process:
+- Potential for additional scanning (SAST for vulnerabilities, container scanning).
+- Pre-commit hooks can be used to prevent committing secrets.
+- Docker image vulnerabilities can be scanned with container security tools (e.g. Trivy).
 
-What are the critical business processes we are trying to protect?
-- The generation of code from proprietary or sensitive design assets, ensuring confidentiality and availability.
-- Preservation of API keys to third-party LLM services to avoid misuse or financial losses.
+## RISK ASSESSMENT
 
-What data are we trying to protect and what is their sensitivity?
-- Screenshots, which may include sensitive or proprietary UI designs or personal data. These are usually ephemeral, but if logged or cached, may pose data exposure risks.
-- LLM API keys are highly sensitive, as unauthorized use could incur high costs or reveal usage patterns.
+What are the critical business processes to protect?
+- Image-to-code and video-to-code flow, ensuring that private designs and intellectual property are neither leaked nor stored insecurely.
+- Protection of personal API keys used by the developers and enterprise customers.
 
-# QUESTIONS & ASSUMPTIONS
+What data are we trying to protect, and what is its sensitivity?
+- User-submitted screenshots or video content, which may contain confidential UI designs, remains sensitive intellectual property.
+- API keys and other credentials are also sensitive, requiring protection from unauthorized access.
 
-1. Business Posture
-- Do we anticipate enterprise customers requiring multi-tenant capabilities or advanced user management?
-- Are there budgets or rate limiting set at the LLM provider level to minimize cost overrun risk?
-
-2. Security Posture
-- Are logs purged regularly or is encryption at-rest required for any ephemeral data storage?
-- Will this system run in an environment that requires compliance frameworks such as SOC 2 or ISO 27001?
-
-3. Design
-- Is HTTPS termination handled externally or is the container expected to manage TLS certificates?
-- Does the solution need to scale across multiple nodes, or is single-host adequate?
-
-Default assumptions:
-- Environment variables are managed securely by the deployment environment or the responsible DevOps team.
-- The system is not storing images or user code at rest, so data is ephemeral.
-- External LLM calls and screenshot captures are done over secure, reputable APIs with valid keys and adequate rate-limiting in place.
+## QUESTIONS & ASSUMPTIONS
+1. Are enterprise teams relying on the hosted version or mostly self-hosting? This affects the complexity of authentication and data retention policies.
+2. Does the project plan to maintain logs or store screenshots for future training or analysis? Currently, no explicit data retention policy is stated.
+3. Assumption: The hosting environment enforces HTTPS for the front-end and back-end communications, ensuring in-transit encryption.
+4. Assumption: Further advanced usage (like bridging to a dedicated secrets manager or implementing multi-factor authentication) can be introduced for enterprises but is outside the minimal open source scope.

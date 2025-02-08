@@ -1,156 +1,154 @@
-# THREAT MODEL
+# APPLICATION THREAT MODEL
 
-## APPLICATION THREAT MODEL
+## ASSETS
+- API Keys (OpenAI, Anthropic, Gemini)
+- User-uploaded images/videos
+- Generated code output
+- AI model configurations/prompts
+- Session data between frontend/backend
+- Third-party CDN resources (Tailwind/Bootstrap scripts, Google Fonts, Font Awesome)
 
-### ASSETS
-- AI-generated code: Valuable intellectual property and core functionality
-- User-provided screenshots/designs: Potential sensitive information in uploaded images
-- Video input data: User-uploaded video content containing potential sensitive visual information
-- API keys (OpenAI/Anthropic/Gemini): Financial and access credentials
-- User session data: Potential tracking of user interactions
-- Configuration files (.env): Contains sensitive API keys and settings
-- Evaluation datasets: Proprietary test data for AI model validation
+## TRUST BOUNDARIES
+- Between user browser (frontend) and backend API
+- Between backend and external AI providers (OpenAI/Anthropic/Gemini)
+- Between user-uploaded content and processing system
+- Between Docker containers in production deployment
+- Between third-party CDN providers and client browsers
 
-### TRUST BOUNDARIES
-- Frontend (React) <-> Backend (FastAPI)
-- Backend <-> External AI APIs (OpenAI/Anthropic/Gemini)
-- User browser <-> Third-party CDNs (Tailwind, Google Fonts, Font Awesome, Vue/React scripts)
-- Application <-> Image processing services (Replicate/Flux)
-- Backend <-> Video processing services (MoviePy/Claude video analysis)
-- Application <-> ScreenshotOne API
+## DATA FLOWS
+1. User upload -> Frontend -> Backend (crosses boundary)
+2. Backend -> OpenAI/Anthropic/Gemini APIs (crosses boundary)
+3. AI Response -> Backend -> Frontend -> User
+4. Env vars (API keys) -> Backend configuration
+5. Docker internal network communication
+6. Client browser -> Third-party CDNs (crosses boundary)
 
-### DATA FLOWS
-1. User uploads image -> Backend (crosses trust boundary)
-2. Backend -> AI API (crosses trust boundary)
-3. AI API -> Generated code -> User (crosses trust boundary)
-4. Frontend <-> Backend via WebSocket (within trust boundary)
-5. Backend <-> Image hosting services (crosses trust boundary)
-6. User uploads video -> Backend video processing (crosses trust boundary)
-7. Backend <-> ScreenshotOne API for website captures (crosses trust boundary)
-8. Video frames -> Claude API for analysis (crosses trust boundary)
-
-### APPLICATION THREATS
-- Malicious video uploads
-  - Attacker uploads exploit-containing video files
-  - Impact: Server compromise via video processing vulnerabilities
-  - Affects: backend/video/utils.py
-  - Current mitigations: Temporary file storage during processing
-  - Missing: Video format validation, sandboxed processing
-  - Severity: Medium
-
-- Third-party script integrity
-  - Compromised CDN serving Vue/React/Tailwind scripts
-  - Impact: XSS attacks through malicious library versions
-  - Affects: All generated HTML outputs using CDN resources
-  - Current mitigations: None evident in code
-  - Missing: Subresource Integrity (SRI) hashes for external scripts
+## APPLICATION THREATS
+- **Third-party CDN Compromise**
+  - Description: Generated code includes scripts from external CDNs (Tailwind, Bootstrap, Font Awesome) that could be modified to serve malicious content
+  - Impact: Client-side XSS attacks, data exfiltration
+  - Affected: All code generation modules using CDN resources
+  - Current Mitigations: None evident in prompt configurations
+  - Missing: Subresource Integrity (SRI) hashes, self-hosting critical resources
   - Severity: High
 
-- Video data leakage
-  - Exposure of sensitive information in video frames
-  - Impact: Privacy violations from unprocessed video data
-  - Affects: video/utils.py split_video_into_screenshots()
-  - Current mitigations: Temporary storage during processing
-  - Missing: Encryption of video data at rest
+- **Video Frame Processing Attacks**
+  - Description: Malicious video files could exploit vulnerabilities in moviepy/PIL image processing
+  - Impact: Remote code execution via malformed video frames
+  - Affected: video/utils.py split_video_into_screenshots
+  - Current Mitigations: Temporary file cleanup
+  - Missing: Sandboxed processing environment, strict file validation
   - Severity: Medium
 
-- Prompt injection via video frames
-  - Hidden visual prompts in video content manipulating AI output
-  - Impact: Code injection in generated HTML
-  - Affects: backend/llm.py video processing path
-  - Current mitigations: None evident
-  - Missing: Visual content sanitization
+- **WebSocket Session Hijacking**
+  - Description: Lack of WebSocket authentication allows attackers to intercept generation sessions
+  - Impact: Theft of API keys/IP through unauthenticated WS connections
+  - Affected: routes/generate_code.py WebSocket handler
+  - Current Mitigations: None mentioned
+  - Missing: Session tokens, origin validation
   - Severity: Medium
 
-- Screenshot API abuse
-  - Attacker abuses ScreenshotOne API through stolen credentials
-  - Impact: Financial loss from API overuse
-  - Affects: routes/screenshot.py
-  - Current mitigations: API key passed through client
-  - Missing: Rate limiting, key rotation
+- **Prompt Injection via Base64 Images**
+  - Description: Hidden text in images could alter system prompts through vision models
+  - Impact: Bypass of output sanitization controls
+  - Affected: backend/prompts/test_prompts.py
+  - Current Mitigations: None
+  - Missing: Image content analysis pre-processing
+  - Severity: Medium
+
+- **Eval File Path Traversal**
+  - Description: User-controlled folder paths could access sensitive system directories
+  - Impact: Arbitrary file read through path manipulation
+  - Affected: routes/evals.py get_evals endpoint
+  - Current Mitigations: Basic path existence checks
+  - Missing: Strict path validation, sandboxed directory access
+  - Severity: Medium
+
+# DEPLOYMENT THREAT MODEL
+
+## ASSETS
+- Docker host environment
+- Container orchestration
+- Internal API endpoints
+- Build pipeline artifacts
+
+## TRUST BOUNDARIES
+- Between Docker containers and host system
+- Between development and production environments
+- Between CI/CD pipelines and artifact repositories
+
+## DEPLOYMENT THREATS
+- **Exposed Backend Ports**
+  - Description: Backend port 7001 exposed without auth
+  - Impact: Direct API access
+  - Affected: docker-compose.yml
+  - Current Mitigations: None
+  - Missing: Authentication layer
   - Severity: High
 
-## DEPLOYMENT THREAT MODEL
+- **Insecure Docker Configuration**
+  - Description: Potential privilege escalation in containers
+  - Impact: Host system compromise
+  - Affected: frontend/Dockerfile, backend/Dockerfile
+  - Current Mitigations: Non-root users
+  - Missing: Seccomp profiles, read-only filesystems
+  - Severity: Medium
 
-### ASSETS
-- Docker configurations
-- Environment variables with secrets
-- CI/CD pipeline integrity
-- Container registry contents
-
-### TRUST BOUNDARIES
-- Docker host <-> Container runtime
-- Internal network <-> Public internet
-- Build servers <-> Docker registries
-
-### DEPLOYMENT THREATS
-- Compromised Docker images
-  - Attacker injects malware into built images
-  - Impact: Containerized environment compromise
-  - Affects: docker-compose.yml, Dockerfiles
-  - Current mitigations: Official base images
-  - Missing: Image signing/verification
-  - Severity: High
-
-- Exposed environment variables
-  - Attacker reads .env files through misconfiguration
-  - Impact: API key leakage
-  - Affects: Docker deployment setup
-  - Current mitigations: File-based configuration
-  - Missing: Runtime secret injection
+- **CI/CD Secret Exposure**
+  - Description: API keys in build scripts
+  - Impact: Credential leakage
+  - Affected: docker-compose.yml env_file
+  - Current Mitigations: .env file exclusion
+  - Missing: Secret management system
   - Severity: Critical
 
-## BUILD THREAT MODEL
+# BUILD THREAT MODEL
 
-### ASSETS
-- Source code repository
+## ASSETS
 - Third-party dependencies
-- Build artifacts
-- CI/CD configuration
+- CI/CD pipelines
+- Docker build cache
+- Testing environments
 
-### TRUST BOUNDARIES
-- CI/CD system <-> Package repositories
-- Developer machines <-> Version control
-- Build pipelines <-> External services
+## TRUST BOUNDARIES
+- Between development workstations and CI systems
+- Between npm/PyPI repositories and build process
+- Between Docker Hub and image pulls
 
-### BUILD THREATS
-- Compromised dependencies
-  - Attacker poisons PyPI/npm packages
+## BUILD THREATS
+- **Compromised Dependencies**
+  - Description: Malicious packages in 300+ dependencies
   - Impact: Build chain compromise
-  - Affects: poetry.lock, package.json
-  - Current mitigations: Lock files
-  - Missing: Dependency auditing
+  - Affected: package.json, pyproject.toml
+  - Current Mitigations: Version pinning
+  - Missing: SBOM analysis, sigstore verification
   - Severity: High
 
-- Malicious CI scripts
-  - Attacker modifies GitHub Actions workflows
-  - Impact: Backdoor insertion
-  - Affects: .github/workflows
-  - Current mitigations: None shown
-  - Missing: Workflow signing
+- **Debug Artifact Leakage**
+  - Description: Debug files left in production images
+  - Impact: Sensitive data exposure
+  - Affected: backend/DebugFileWriter.py
+  - Current Mitigations: IS_DEBUG_ENABLED flag
+  - Missing: Build-time exclusion
   - Severity: Medium
 
-## QUESTIONS & ASSUMPTIONS
-1. How are video files cleaned up after processing?
-   - Assumption: Temporary files deleted after processing
-2. Is there validation for maximum video upload size?
-   - Assumption: No size limits implemented
-3. Are third-party CDNs reviewed for security compliance?
-   - Assumption: CDN providers considered trustworthy
-4. How often are dependency audits performed?
-   - Assumption: Manual audit process
-5. Is there monitoring for abnormal video processing times?
-   - Assumption: No performance monitoring
+- **Insecure Base Images**
+  - Description: Outdated python:3.12.3-slim-bullseye
+  - Impact: Known vulnerabilities
+  - Affected: backend/Dockerfile
+  - Current Mitigations: None
+  - Missing: Regular updates
+  - Severity: High
 
-### DEFAULT ASSUMPTIONS
-- Video processing occurs in memory without persistent storage
-- All third-party script providers maintain integrity
-- ScreenshotOne API credentials are properly rotated
-- MoviePy dependencies are kept up-to-date
-- Video frame extraction doesn't expose sensitive system information
+# QUESTIONS & ASSUMPTIONS
+1. Are third-party CDN resources monitored for integrity violations?
+2. Is there validation of video file formats before processing?
+3. How are temporary video processing files secured and cleaned?
+4. What mechanisms prevent path traversal in eval file handling?
 
-### UNLIKELY THREATS
-- Compromise of all CDN providers simultaneously
-- Zero-day in video processing library (MoviePy)
-- Physical tampering with screenshot API infrastructure
-- Quantum computing breaking TLS during video transmission
+**Default Assumptions**
+- Client browsers implement standard CSP protections
+- Video processing libraries receive regular security updates
+- WebSocket connections originate from trusted frontend
+- CDN providers maintain HTTPS integrity
+- Development environments are isolated from production

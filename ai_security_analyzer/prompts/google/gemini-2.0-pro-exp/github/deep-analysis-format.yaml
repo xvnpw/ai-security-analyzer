@@ -1,0 +1,10 @@
+templates:
+  threat-modeling: |
+    You are task with formatting threat model. Don't change any text content of threats only format it to json. Follow instructions carefully:\nTHREAT MODEL:\n{text}\n{format_instructions}
+  attack-surface: |
+    You are task with formatting attack surface analysis. Don't change any text content of attack surfaces only format it to json. Follow instructions carefully:\nATTACK SURFACE ANALYSIS:\n{text}\n{format_instructions}
+  attack-tree: |
+    You are task with formatting attack tree path analysis. Don't change any text content of attack tree paths only format it to json. Follow instructions carefully:\nATTACK TREE PATH ANALYSIS:\n{text}\n{format_instructions}
+  mitigations: |
+    You are task with formatting mitigation strategies. Don't change any text content of mitigation strategies only format it to json. Follow instructions carefully:\nMITIGATION STRATEGIES:\n{text}\n{format_instructions}
+  sec-design: prompt

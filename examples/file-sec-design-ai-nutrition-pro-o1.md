@@ -1,65 +1,70 @@
 # BUSINESS POSTURE
+The AI Nutrition-Pro application aims to provide AI-driven meal planning assistance by leveraging dietitians’ content samples and ChatGPT for content generation. The business priorities and goals include:
+- Delivering fast, reliable, and user-friendly AI-based nutrition suggestions to integrated Meal Planner applications.
+- Providing a scalable and flexible platform to manage clients, configuration, and billing.
+- Enabling administrators to efficiently configure and monitor the system.
+- Ensuring integration with external LLM services while maintaining confidentiality and integrity of dietitians’ data.
 
-- AI Nutrition-Pro aims to provide advanced AI-based nutrition content generation for Meal Planner applications.
-- The primary goal is to generate revenue by integrating with multiple Meal Planner applications, offering them automated, high-quality dietary content.
-- A secondary goal is to sustain a positive reputation by securely handling sensitive data (dietitian content, personal health data if any).
-- The business strategy includes ensuring scalability to handle potentially high volumes of requests.
-- Key business risks include potential reputational damage in the event of data breaches, compliance risks if sensitive health data is mishandled, scalability issues leading to service degradation, and cost overruns from external API usage (ChatGPT-3.5).
+Key business risks include:
+- Disruption of service (e.g., unavailability caused by scaling issues or attacks).
+- Inaccurate or inappropriate AI-generated content that might lead to reputational damage or liability concerns.
+- Data leakage or unauthorized access to sensitive dietitian or end-user data (e.g., personal dietary information).
+- Dependence on third-party LLM provider (ChatGPT) and potential vendor lock-in risks.
 
 # SECURITY POSTURE
 
-Existing security controls (from the file)
-- security control: Authentication with Meal Planner applications via individual API keys.
-- security control: Authorization of Meal Planner applications using ACL rules at the API Gateway.
-- security control: Encrypted network traffic via TLS between Meal Planner and API Gateway as well as between internal components.
+## Existing Security Controls
+- security control: Authentication with Meal Planner applications using individual API keys. (Implemented in the API Gateway.)
+- security control: Authorization of Meal Planner applications using API Gateway ACL rules that allow or deny certain actions. (Implemented in the API Gateway.)
+- security control: Encrypted network traffic with TLS between Meal Planner applications and API Gateway. (Described in the architecture sections outlining TLS usage.)
 
-Accepted risks
-- accepted risk: Reliance on OpenAI’s ChatGPT-3.5 for content generation, which may introduce external dependencies and potential data exposure if not configured properly.
-- accepted risk: Data at rest in the database (if not encrypted) could be disclosed if the underlying infrastructure is compromised.
+## Accepted Risks
+- accepted risk: Reliance on external LLM (ChatGPT) introduces potential vendor exposure of dietitian and meal-planner data.
+- accepted risk: Data stored in RDS might potentially be accessed if AWS misconfiguration occurs. Some organizations accept this risk if it is addressed with standard AWS best practices and security policies.
 
-Recommended security controls (high priority, not explicitly mentioned in the file)
-- security control: Implement a Web Application Firewall (WAF) in front of the API Gateway to help prevent common web vulnerabilities (SQL injection, XSS, etc.).
-- security control: Perform input validation at the API Application layer (backend_api) to mitigate injection and malformed data risks.
-- security control: Ensure encryption at rest for database instances (e.g., AWS RDS encryption).
-- security control: Establish secrets management (e.g., AWS Secrets Manager or HashiCorp Vault) for API keys and database credentials.
-- security control: Implement monitoring and logging (with real-time alerting) for anomaly detection and possible intrusion attempts.
+## Recommended Security Controls
+- security control: Implement Multi-Factor Authentication (MFA) for administrator login to the Web Control Plane.
+- security control: Integrate security scanners (SAST, DAST) in the build pipeline to detect code vulnerabilities and insecure dependencies.
+- security control: Implement Web Application Firewall (WAF) rules within or upstream of the API Gateway to further filter malicious input.
+- security control: Audit logging and centralized monitoring for all API calls and administrative actions.
+- security control: Role-Based Access Control (RBAC) for different types of administrator and system maintenance activities.
+- security control: Regular key rotation for API keys used by external Meal Planner applications.
 
-Security requirements
-- Authentication: The solution must authenticate every request from Meal Planner applications using unique API keys or other strong credential methods (e.g., JWT).
-- Authorization: Fine-grained authorization rules managed centrally by the API Gateway and enforced by the backend services.
-- Input validation: All inputs must be verified at both the API Gateway (where applicable) and the backend API to filter out malicious content.
+## Security Requirements
+- Authentication:
+  - API key-based authentication for Meal Planner applications.
+  - MFA for administrators in the Web Control Plane.
+- Authorization:
+  - ACL rules configured in API Gateway.
+  - RBAC for granular role management in the Web Control Plane.
+- Input Validation:
+  - Validate/purify user-provided or externally obtained data (especially content from Meal Planner applications).
+  - Limit potential prompt injection risks to ChatGPT by sanitizing data before forwarding.
 - Cryptography:
-  - All traffic in transit must be encrypted with TLS.
-  - Data at rest in databases should be encrypted with AES-256 (or equivalent).
-  - External API keys and secrets must be stored securely.
+  - TLS for all external and internal communications.
+  - Secure key storage for API keys and secrets.
 
 # DESIGN
 
 ## C4 CONTEXT
-
 ```mermaid
 flowchart LR
-    A(Administrator)
-    B(Meal Planner)
-    C(ChatGPT-3.5)
-
-    D[AI Nutrition-Pro]
-
-    A --> D : Management & Configuration
-    B --> D : API Requests (Content Generation)
-    D --> C : LLM Feature Integration
+    A((Meal Planner Application)) -->|AI queries & data| B[AI Nutrition-Pro]
+    C((Administrator)) -->|Configure system| B[AI Nutrition-Pro]
+    D((ChatGPT-3.5)) -->|LLM responses| B[AI Nutrition-Pro]
+    B[AI Nutrition-Pro] -->|AI results & responses| A((Meal Planner Application))
 ```
 
-### Context Diagram Elements
-
-| Name             | Type         | Description                                                                 | Responsibilities                                                                                   | Security controls                                                                  |
-|------------------|-------------|-----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
-| Administrator    | Person       | The internal user who manages AI Nutrition-Pro settings and deployments.    | Configures system properties. Tracks system health and manages user/tenant onboarding.             | Uses strong authentication and role-based access controls in the Web Control Plane. |
-| Meal Planner     | External App | One or more third-party meal planner applications that consume the AI API.  | Sends requests with dietitians' content samples, retrieves AI-generated nutrition plans.           | Must use API keys for authentication and enforced ACL rules at the API Gateway.    |
-| ChatGPT-3.5      | External API | The OpenAI LLM used to generate nutrition-related text content.             | Provides language-based nutritional guidance and diet intros upon request.                          | Communication over TLS, usage of secure API tokens if required.                     |
-| AI Nutrition-Pro | System       | The main system. Combines Web Control Plane, API Gateway, API Application.  | Core logic. Manages data, orchestrates requests to ChatGPT, and provides back-end functionalities. | TLS for in-transit data, access control via API Gateway, encryption at rest.        |
+### Context Diagram Table
+| Name                           | Type                    | Description                                                                             | Responsibilities                                                                       | Security controls                                                                                       |
+| ------------------------------ | ----------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| Meal Planner Application       | External System         | A web application that integrates AI content generation for dietitians.                 | - Upload samples of dietitians' content <br/> - Fetch AI-generated content and suggestions | API key authentication (API Gateway), TLS                                                                |
+| Administrator                  | Internal Person         | Performs system administration for AI Nutrition-Pro.                                    | - Manage server settings <br/> - Resolve system issues  | MFA (recommended), RBAC, TLS for connecting to the Web Control Plane                                     |
+| ChatGPT-3.5                    | External System (LLM)   | Third-party large language model used for generating nutrition-related text or advice.  | - Produce AI-generated suggestions based on requests and data from the API              | TLS, requests sanitized before being sent, API key management (to access external LLM)                   |
+| AI Nutrition-Pro (Core System) | Internal System (Center)| The overall system providing nutritional AI services and management interfaces.         | - Handle meal planner requests <br/> - Store and retrieve data <br/> - Interact with ChatGPT | TLS, secure configuration, input validation, RBAC, centralized audit logging                             |
 
 ## C4 CONTAINER
+Below is the container diagram representing AI Nutrition-Pro’s major components and how they communicate:
 
 ```mermaid
 C4Container
@@ -81,122 +86,120 @@ C4Container
     Rel(api_gateway, backend_api, "Uses for AI content generation", "HTTPS/REST")
     Rel(admin, app_control_plane, "Configure system properties")
     Rel(backend_api, chatgpt, "Utilizes ChatGPT for LLM-featured content creation", "HTTPS/REST")
-
     Rel(app_control_plane, control_plan_db, "read/write data", "TLS")
     Rel(backend_api, api_db, "read/write data", "TLS")
 ```
 
-### Container Diagram Elements
-
-| Name                | Type            | Description                                                                                                    | Responsibilities                                                                                | Security controls                                                                                                                      |
-|---------------------|----------------|----------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| API Gateway         | Container       | Kong API Gateway, handles inbound requests from Meal Planner apps.                                             | - Authenticates clients  <br/> - Performs rate limiting  <br/> - Filters input                   | - security control: API key authentication  <br/> - filtered input checks  <br/> - recommended WAF integration                            |
-| Web Control Plane   | Container       | Golang-based web application running on AWS ECS.                                                               | - Onboards and manages new clients  <br/> - Configures billing details  <br/> - Admin UI        | - security control: role-based access for administrators  <br/> - encryption at rest in DB  <br/> - secure session management          |
-| Control Plane DB    | Container (DB)  | Amazon RDS instance that stores control plane data (clients, billing, configurations).                          | - Persists all administrative and billing data  <br/> - Maintains tenant-related information    | - security control: RDS encryption  <br/> - access restricted to Web Control Plane only  <br/> - TLS in transit                         |
-| API Application     | Container       | Golang-based microservice on AWS ECS that handles logic for AI nutrition functionality.                         | - Receives requests from API Gateway  <br/> - Invokes ChatGPT for AI text generation            | - security control: TLS-based calls from API Gateway  <br/> - recommended input validation  <br/> - recommended logs & monitoring      |
-| API Database        | Container (DB)  | Amazon RDS instance used by the API Application to store dietitian content samples, requests, and responses.   | - Stores and retrieves content required for AI generation  <br/> - Maintains data for analytics | - security control: RDS encryption  <br/> - limited access only from API Application  <br/> - TLS in transit                            |
-| Administrator       | Person          | Internal person who manages AI Nutrition-Pro system administration.                                            | - Configures system properties  <br/> - Manages environment variables and secrets               | - security control: dedicated IAM roles in AWS  <br/> - enforced multi-factor authentication (MFA)                                      |
+### Container Diagram Table
+| Name                   | Type             | Description                                                                               | Responsibilities                                                                                         | Security controls                                                                                 |
+| ---------------------- | ---------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| API Gateway            | Container        | Kong API Gateway                                                                          | - Authentication <br/> - Input filtering <br/> - Rate limiting <br/> - Forwarding requests to backend    | API key authentication, ACL rules, TLS, potential WAF rules                                        |
+| Web Control Plane      | Container        | Golang web application, deployed on AWS ECS                                              | - Onboard and manage clients <br/> - System configuration <br/> - Billing data overview                   | TLS, MFA (recommended), RBAC, auditing of admin actions                                           |
+| Control Plane Database | Container (DB)   | Amazon RDS database for control plane data                                               | - Store control plane data <br/> - Store tenant information and billing data                             | Encrypted storage at rest (RDS encryption), TLS connections                                        |
+| API Application        | Container        | Golang web application, deployed on AWS ECS                                              | - Provides AI-based meal planning functionality via API <br/> - Integrates with ChatGPT                   | TLS, secure logging, input validation, scanning (SAST/DAST recommended)                            |
+| API Database           | Container (DB)   | Amazon RDS for storing request/response data and dietitians' content samples             | - Store content samples <br/> - Log requests/responses                                                   | Encrypted storage at rest (RDS encryption), TLS connections                                        |
+| Administrator          | Person           | Internal user with privileges to administer AI Nutrition-Pro                             | - Manage system configuration <br/> - Resolve issues                                                      | MFA (recommended), RBAC                                                                            |
+| Meal Planner (External)| External System  | Web application integrating with AI Nutrition-Pro                                        | - Upload dietitians' content <br/> - Fetch AI-generated content                                           | API key authentication, TLS                                                                        |
+| ChatGPT-3.5            | External System  | Third-party LLM service                                                                  | - Provide AI-generated responses                                                                          | TLS, API key management                                                                            |
 
 ## DEPLOYMENT
+AI Nutrition-Pro can be deployed in multiple ways, including on-premises or in a fully managed cloud environment. Here we focus on AWS ECS (Elastic Container Service) with Amazon RDS for database storage.
 
-Possible deployment solutions:
-- AWS ECS Fargate for container orchestration
-- AWS EKS (Kubernetes) or on-premises orchestrations
-- Traditional VMs hosting Docker containers
+Possible Deployment Approaches:
+- Docker containers on AWS ECS, with AWS RDS for relational data.
+- Kubernetes deployment on AWS EKS.
+- On-prem Docker orchestration with local or managed databases.
 
-Chosen deployment in detail (AWS ECS):
-- Services are defined as ECS tasks, each running in its own container environment.
-- Databases run on Amazon RDS with encryption at rest.
-- Networking is handled via Application Load Balancer in front of the API Gateway.
-- ChatGPT is accessed over public internet with secured TLS endpoints.
-
-Example deployment diagram:
-
+Chosen Deployment Approach (AWS ECS with RDS):
 ```mermaid
 flowchart LR
-    subgraph AWS Cloud
-    ALB[Application Load Balancer]
-    ECS_Tasks[ECS Tasks: Gateway / API / Control Plane]
-    RDS_Control[Amazon RDS: Control Plane]
-    RDS_API[Amazon RDS: API DB]
+    A[User / Meal Planner] -->|HTTPS| B(API Gateway)
+    B(API Gateway) -->|Forward Requests| C(API Application)
+    C(API Application) -->|TLS| D[API Database (RDS)]
+    E[Web Control Plane] -->|TLS| F[Control Plane Database (RDS)]
+    C(API Application) -->|HTTPS| G[ChatGPT-3.5]
+
+    subgraph AWS ECS
+    B(API Gateway)
+    C(API Application)
+    E[Web Control Plane]
     end
-
-    ALB --> ECS_Tasks
-    ECS_Tasks --> RDS_Control
-    ECS_Tasks --> RDS_API
-
-    subgraph External
-    MealPlanner
-    ChatGPT
-    Administrator
+    subgraph AWS RDS
+    D[API Database (RDS)]
+    F[Control Plane Database (RDS)]
     end
-
-    MealPlanner --> ALB
-    Administrator --> ALB
-    ECS_Tasks --> ChatGPT
+    G[ChatGPT-3.5]
 ```
 
-### Deployment Diagram Elements
-
-| Name                | Type           | Description                                                                                             | Responsibilities                                                     | Security controls                                                                                                              |
-|---------------------|---------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------|
-| AWS Cloud           | Infrastructure | The environment hosting ECS, ALB, and RDS instances.                                                    | Runs the entire AI Nutrition-Pro platform.                           | - security control: VPC isolation  <br/> - security control: Security groups, NACLS                                             |
-| Application LB      | Load Balancer  | AWS Application Load Balancer that routes traffic to ECS tasks.                                         | Directs inbound requests from external users and administrators.      | - security control: TLS termination with HTTPS only  <br/> - recommended WAF integration                                       |
-| ECS Tasks: Gateway / API / Control Plane | Deployment Units | Docker containers running Kong (API Gateway), Web Control Plane, and API Application on Fargate. | Provide main functionality: gateway, control plane, and business logic. | - security control: restricted IAM roles for ECS tasks  <br/> - recommended SAST/DAST scanning of container images             |
-| Amazon RDS: Control Plane            | Database        | Database instance for storing client, configuration, and billing data.                                  | Persists operational data for the control plane components.          | - security control: encryption at rest  <br/> - TLS in transit                                                                 |
-| Amazon RDS: API DB                  | Database        | Database instance for storing requests, responses, and nutrition content.                               | Persists business logic data for the backend APIs.                    | - security control: encryption at rest  <br/> - TLS in transit                                                                 |
-| ChatGPT                             | External System | OpenAI’s LLM endpoint.                                                                                  | Generates text responses based on prompts and samples.               | - security control: secure environment variables for API keys  <br/> - TLS in transit                                          |
+### Deployment Diagram Table
+| Name                      | Type                   | Description                                                                           | Responsibilities                                                                                       | Security controls                                                                                   |
+| ------------------------- | ---------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------- |
+| API Gateway (ECS)         | AWS ECS Service        | Kong Gateway container running on ECS instances                                       | - Routes requests from Meal Planner to the API Application <br/> - Provides authentication, ACL, etc.  | TLS in-transit, Amazon VPC security groups, WAF integration (recommended)                           |
+| API Application (ECS)     | AWS ECS Service        | Containers running Golang-based AI Nutrition-Pro backend                              | - Process requests <br/> - Integrate with ChatGPT <br/> - Query/store data in API DB                   | TLS in-transit, locked-down security groups, AWS IAM roles, scanning (recommended)                 |
+| Web Control Plane (ECS)   | AWS ECS Service        | Deployment of Golang-based administration and configuration interface                 | - Provides management interface for administrators <br/> - Interacts with the Control Plane Database   | TLS in-transit, IAM-based access, possible MFA enforcement, scanning (recommended)                 |
+| API Database (RDS)        | AWS RDS Instance       | Relational database storing API requests/responses and diet content                   | - Maintain consistent data for the API Application                                                    | Encryption at rest, TLS in-transit, AWS security best practices                                     |
+| Control Plane Database    | AWS RDS Instance       | Relational database storing tenant, billing, and control plane data                   | - Maintain data for the Web Control Plane                                                              | Encryption at rest, TLS in-transit, AWS security best practices                                     |
+| ChatGPT-3.5               | External Service (LLM) | OpenAI LLM service used for generating diet content                                   | - Respond to requests with AI-generated text, based on user inputs                                     | TLS, secret management for API keys                                                                 |
+| Meal Planner              | External System        | Consumer-facing web application that interacts with AI Nutrition-Pro                  | - Sends content samples, requests AI-based suggestions                                                 | TLS, API key authentication                                                                         |
 
 ## BUILD
-
-AI Nutrition-Pro uses a CI/CD pipeline to automate build and deployment:
-
-1. Developers commit code to a code repository (e.g., GitHub).
-2. The build system (e.g., GitHub Actions) is triggered.
-3. Automated pipelines run unit tests, static application security testing (SAST), and linters.
-4. Upon success, Docker images are built and pushed to a container registry (e.g., Amazon ECR).
-5. ECS is updated with the new container images for each service (API Gateway, Web Control Plane, API Application).
-
-Example build process diagram:
+The project uses Docker-based microservices built on Golang. The diagram below illustrates a possible pipeline for building and publishing AI Nutrition-Pro:
 
 ```mermaid
 flowchart LR
-    Dev(Developer) --> Repo(Code Repository)
-    Repo --> BuildSystem(CI/CD Pipeline)
-    BuildSystem --> SASTScanner(Static Security Scanner)
-    SASTScanner --> BuildSystem
-    BuildSystem --> DockerRegistry(Amazon ECR)
-    DockerRegistry --> ECSDeployment(ECS Service Deployment)
+    Developer -->|Push Code| SourceRepo
+    SourceRepo -->|Trigger Build| CI(Continuous Integration)
+    CI -->|Run SAST, Lint| CI
+    CI -->|Build Docker Images| DockerRegistry
+    DockerRegistry -->|ECS Deployment| AWS(ECS Cluster)
 ```
 
-Security controls of the build process:
-- Automated SAST scanning to detect potential vulnerabilities in code.
-- Automated linting and code testing.
-- Dependency scanning for known vulnerabilities.
-- Signing of Docker images before pushing to the registry.
-- Role-based access for pipeline stages to avoid tampering.
+Build Process Steps:
+- Developer writes code in Golang (including unit tests).
+- Code is pushed to a source repository (e.g., GitHub or AWS CodeCommit).
+- A CI pipeline (e.g., GitHub Actions, Jenkins, or AWS CodePipeline) is triggered:
+  - SAST and static linting checks are performed.
+  - Docker images are built and scanned for known vulnerabilities (container image scanning).
+  - The images are pushed to a container registry (e.g., Docker Hub, ECR).
+- A deployment pipeline (CD) releases the new images to AWS ECS.
+
+Security Controls in Build Process:
+- Source code scanning (SAST).
+- Container image scanning for vulnerabilities.
+- Automated tests to validate input handling and logic.
+- Access control on source repository and build environment.
+- Signed container images (recommended for supply chain security).
 
 # RISK ASSESSMENT
 
-What are the critical business processes we are trying to protect?
-- Onboarding and billing for new clients (ensuring accurate invoicing and revenue protection).
-- Generation and handling of nutrition data (ensuring content integrity and data privacy).
+- Critical Business Processes to Protect:
+  - Generating AI-based nutrition guidance and content for dietitians.
+  - Maintaining accurate billing and client/tenant data.
+  - Ensuring availability for integrated Meal Planner applications.
 
-What data are we trying to protect, and what is their sensitivity?
-- Client billing and account information: confidentiality must be maintained to protect financial data.
-- Dietitian content samples and AI-generated responses: might contain sensitive health-related content.
-- Access credentials and API keys: high sensitivity to prevent unauthorized system access.
+- Data to Protect and Their Sensitivity:
+  - Dietitian content samples and meal plan data (Potentially sensitive privacy data).
+  - Request and response logs stored in the API Database (Possibility of containing personal dietary information).
+  - Tenant and billing information (Confidential business data).
 
 # QUESTIONS & ASSUMPTIONS
 
-Questions:
-1. Are there any regulatory or compliance requirements (e.g., HIPAA) for storing or processing dietitian content?
-2. Do Meal Planner applications share personally identifiable health information (PII/PHI)?
-3. How is usage of ChatGPT-3.5 billed and monitored to control costs?
-4. Is a Web Application Firewall already part of the AWS stack or must it be newly implemented?
+1. What is the level of acceptable risk regarding potential data exposure through ChatGPT?
+   - Assumption: ChatGPT usage follows OpenAI’s compliance guidelines and no highly sensitive information is passed unless anonymized.
 
-Assumptions:
-1. TLS is enforced on all public endpoints and internal traffic where possible.
-2. ChatGPT-3.5 usage is governed by OpenAI’s standard agreements and usage policies.
-3. API Gateway (Kong) will remain the single ingress point for external requests.
-4. RDS instances will be encrypted by default, with limited inbound connectivity via security groups.
+2. How often are API keys rotated for external Meal Planner applications?
+   - Assumption: API key rotation is done periodically (e.g., every 90 days) and enforced through policy controls in the API Gateway.
+
+3. How do we handle user concurrency limits or scaling events in AI Nutrition-Pro if requests spike?
+   - Assumption: AWS ECS Fargate or EC2-based autoscaling is in place to handle usage surges.
+
+4. Are there any business continuity or disaster recovery SLAs?
+   - Assumption: Regular backups of RDS databases and minimal RTO/RPO are enforced.
+
+5. Is MFA enforced at the AWS IAM level for administrators?
+   - Assumption: Yes, it is enforced for all privileged IAM users.
+
+6. How is ChatGPT billing managed and monitored?
+   - Assumption: Billing data for ChatGPT usage is collected and monitored by the Web Control Plane for cost transparency.
+
+These questions and assumptions guide future threat modeling and solution refinement.

@@ -1,141 +1,139 @@
 # BUSINESS POSTURE
-The primary business goal of this project is to provide a Terraform provider for Chronicle, enabling automated provisioning and management of Chronicle resources (feeds, rules, reference lists, and RBAC subjects). This streamlines the integration between Terraform-based infrastructure-as-code workflows and Chronicle's security analytics service. The project aims to reduce manual efforts for security engineers and DevOps teams, allowing organizations to swiftly deploy and manage Chronicle resources in a consistent, repeatable way.
+The primary business objective of this Terraform provider is to facilitate the management of Google Chronicle resources using Infrastructure as Code (IaC) principles. By enabling users to define, deploy, and maintain Chronicle configurations in code form, this project aims to:
+1. Improve the efficiency and consistency of Chronicle resource provisioning.
+2. Reduce manual mistakes by automatizing environment configurations.
+3. Enhance integration with broader DevOps pipelines and workflows.
 
-Business priorities and goals include:
-1. Simplify management of Chronicle feeds, rules, and configurations via Terraform.
-2. Provide a stable integration point for automated pipelines, enabling version control and collaborative workflows.
-3. Reduce complexity and manual overhead when configuring Chronicle environments at scale.
-4. Ensure reliability and auditability of security configurations, supporting compliance requirements.
+Key business priorities include:
+• Reliability and stability of the provider so that end-users can trust it in production environments.
+• Rich feature coverage, supporting the most commonly used Chronicle resources (feeds, rules, reference lists, RBAC subjects, etc.).
+• Well-documented usage examples to reduce the learning curve and increase user adoption.
 
-Most important business risks to address:
-1. Misconfiguration leading to disruption of Chronicle ingest or alerts, impacting security visibility.
-2. Insecure handling of credentials or feed configuration, potentially exposing sensitive data.
-3. Unavailability or instability of the Terraform provider, delaying business operations and security investigations.
-4. Reputational risk if the provider fails to meet enterprise-grade security and reliability requirements.
+Most important business risks that must be addressed:
+• Risk of misconfigurations that could lead to unintended resource creation or data leakage in Chronicle.
+• Risk of security breaches if credentials and access tokens are misused or improperly stored.
+• Reputational risk if the provider fails to meet user expectations for reliability or if it introduces destructive bugs in production environments.
 
 # SECURITY POSTURE
+Below are the existing security controls already visible in the Terraform provider for Chronicle, along with accepted risks and recommended additional security controls.
+
 Existing security controls:
-security control: Authentication flows are handled via built-in environment variables or by reading local credential files. This is implemented in the provider's code (provider.go, client.go) where the code loads credentials from environment variables (CHRONICLE_*) or from local paths.
-security control: Input validation checks for AWS access keys, GCS URIs, and general resource properties (validation.go).
-security control: Basic rate limiting for each operation to prevent flooding Chronicle APIs (see client/endpoints.go).
-security control: Terraform state retains a restricted set of credentials or uses ephemeral environment variables.
+• security control: GitHub Actions-based CI pipelines to build, test, and release the project.
+• security control: Linting and code-style checks (golangci-lint, gofmt) enforced via CI workflows.
+• security control: Support for credential isolation using environment variables or local disk files.
+• security control: Environment variable fallback for various Chronicle credentials, thereby decoupling strictly from user-supplied tokens/JSON strings.
+• security control: GPG-signed releases (via goreleaser) ensuring integrity of published artifacts.
 
 Accepted risks:
-accepted risk: Reliance on Terraform state security. If state files are not protected, credentials could be exposed.
-accepted risk: Storing base64-encoded credentials in environment variables. If those environment variables are leaked, Chronicle secrets could be compromised.
+• accepted risk: Default reliance on environment variables that might store plaintext credentials if not managed securely by the user’s operating environment.
+• accepted risk: Potential for accidental exposure of environment variables in public logs or debug modes.
 
-Recommended security controls (high priority):
-1. security control: Consider using a dedicated secrets manager for Chronicle secrets rather than environment variables.
-2. security control: Enforce mandatory encryption at rest for any local or remote Terraform state (for example, storing state in an encrypted S3 bucket or Terraform Cloud with encryption).
-3. security control: Add code scanning tools (SAST and dependency checks) to the CI pipeline to detect vulnerable libraries and insecure coding patterns.
-4. security control: Enforce continuous vulnerability checks on dependencies.
-5. security control: Provide thorough documentation on rotating credentials, ensuring short-lived tokens where possible.
+Recommended security controls (high priority and not explicitly referenced in existing documentation or code):
+• security control: Implement or integrate a secrets scanning tool during CI to detect accidental commits of secrets.
+• security control: Configure automated dependency vulnerability scanning to ensure that third-party libraries used by the provider are free of known CVEs.
+• security control: Add static application security testing (SAST) beyond basic lint to catch potential logic flaws or insecure coding patterns.
 
-Important security requirements:
-1. Authentication: All Chronicle API calls must be authenticated using GCP or Chronicle-provided credentials/tokens. Rotate credentials regularly.
-2. Authorization: Limit the privileges of GCP credentials used by the provider to only necessary Chronicle API scopes.
-3. Input validation: Continue verifying user inputs for resource definitions (feed URIs, region constraints, etc.) to prevent misconfigurations.
-4. Cryptography: TLS must be enforced when communicating between the Terraform client and Chronicle APIs. Any stored credentials should be encrypted (for instance, in state or ephemeral environment variables).
+Security requirements important for this project:
+1. Authentication: The provider must handle OAuth or service account credentials securely using standard ephemeral tokens or environment variables with minimized secret exposure.
+2. Authorization: The provider should limit privileged actions to the least-privilege principle where possible, letting end-users supply only the required Chronicle roles.
+3. Input validation: The provider must validate resource input parameters (e.g., feed configuration, rule text) to prevent injection or unexpected runtime errors.
+4. Cryptography: All data in transit to Chronicle’s back-end is protected via TLS. The provider defers to Google’s standard authentication flows for encryption of credentials at rest.
 
 # DESIGN
+This Terraform provider is implemented in Go and integrates with Chronicle APIs to create, update, and delete Chronicle resources. It interacts with authentication tokens or credential files that are derived from environment variables or local paths. The provider code performs API transformations to map user-supplied Terraform definitions into Chronicle resource definitions.
 
 ## C4 CONTEXT
 ```mermaid
 flowchart LR
-    User([Security Engineer / DevOps]) -->|Runs Terraform| TerraformCLI(Terraform CLI)
-    TerraformCLI --> ProviderPlugin(Terraform Provider Chronicle)
-    ProviderPlugin --> ChronicleAPIs[Google Chronicle APIs]
+    A((Terraform User)) -->|Writes & runs Terraform files|B[Terraform CLI]
+    B -->|Invokes provider plugin|C((Chronicle Provider))
+    C -->|Calls Chronicle APIs|D{{Google Chronicle}}
 ```
 
-### Context Diagram Table
-
-| Name               | Type            | Description                                                                            | Responsibilities                                                     | Security controls                                              |
-|--------------------|----------------|-----------------------------------------------------------------------------------------|-----------------------------------------------------------------------|----------------------------------------------------------------|
-| User               | Person          | Security engineer or DevOps personnel.                                                | Provision Chronicle resources via Terraform.                          | Uses environment with restricted access privileges            |
-| TerraformCLI       | System          | Terraform CLI tool.                                                                    | Reads configuration, interacts with providers, applies plans.         | Access controlled by file system or CI pipeline permissions    |
-| ProviderPlugin     | Software System | The Chronicle Terraform provider plugin.                                              | Implements logic to manage and configure Chronicle resources.         | Validates user inputs, loads credentials, rate limits requests |
-| ChronicleAPIs      | External System | Google Chronicle endpoints (feeds, rules, etc.).                                      | Executes the creation, update, deletion of Chronicle resources.       | Requires valid API credentials and TLS                         |
+### Context Diagram Elements
+| Name                    | Type               | Description                                                           | Responsibilities                                                          | Security controls                                                                   |
+|-------------------------|--------------------|-----------------------------------------------------------------------|----------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Terraform User          | External Actor     | A person or system that writes Terraform configuration files.         | 1. Defines .tf files specifying Chronicle resources.                      | Typically relies on local machine security; external to project scope.               |
+| Terraform CLI           | Software System    | The main Terraform executable that processes .tf files.               | 1. Reads config files. 2. Loads provider plugins. 3. Executes user’s plan. | Standard Terraform approach with plugin architecture; user environment constraints.  |
+| Chronicle Provider      | Software Component | The compiled Go-based plugin that orchestrates Chronicle resources.   | 1. Translates .tf definitions to Chronicle API calls. 2. Manages state.    | security control: Environment-based credentials; security control: CI tests, linting |
+| Google Chronicle        | External System    | Chronicle’s cloud-based platform holding logs, feeds, and references. | 1. Stores logs and detection rules. 2. Exposes REST APIs for management.   | Google-managed security, including TLS in transit, identity, and data protection.    |
 
 ## C4 CONTAINER
-```mermaid
-flowchart LR
-    A(Terraform CLI Container) --> B(Provider Plugin Container)
-    B --> C(Chronicle GCP Access Library)
-    B --> D(HTTP Transport)
-    D --> E(Google Chronicle Endpoints)
-```
-
-### Container Diagram Table
-
-| Name                           | Type        | Description                                                                                 | Responsibilities                                                                   | Security controls                                              |
-|--------------------------------|------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| Terraform CLI Container        | Container  | Running user commands to parse .tf files, initialize providers, and run user plans.         | Orchestrates any Terraform plan/apply operations.                                   | Local security context for storing state, environment variables |
-| Provider Plugin Container      | Container  | Runs as a separate process that implements the Terraform plugin interface.                 | Translates Terraform resource configuration to Chronicle API calls.                | Input validation, environment variable usage, rate limiting     |
-| Chronicle GCP Access Library   | Library    | Google OAuth2 or other GCP-based credentials library used by the plugin.                   | Loads credentials from environment or file, obtains valid OAuth2 tokens.           | Validates or loads credentials from secure sources if configured |
-| HTTP Transport                 | Component  | Handles HTTP requests to Chronicle endpoints.                                              | Facilitates secure communication with the Chronicle APIs over HTTPS.               | TLS in transit, uses tokens from the GCP Access Library         |
-| Google Chronicle Endpoints     | External   | Chronicle's managed SIEM endpoints for feed management, rule management, etc.              | Receives validated requests from the provider, performs changes in Chronicle.      | Google-managed security and authentication                      |
-
-## DEPLOYMENT
-Below is one possible deployment approach, where the Terraform CLI and plugin run on a CI/CD instance with access to the necessary environment variables or secrets. Another approach is running on a developer's local machine.
+The high-level container architecture of this system focuses on how the Terraform CLI, the Chronicle Provider plugin, and the Chronicle APIs interact.
 
 ```mermaid
-flowchart LR
-    subgraph Infrastructure
-        subgraph CI/CD Agent
-        TerraformCLI_Build
-        ProviderPlugin_Build
-        end
-        GCPChronicle[Google Chronicle APIs]
+flowchart TB
+    subgraph Local Environment
+    A(Terraform CLI)
+    B(Chronicle Provider Plugin)
     end
 
-    TerraformCLI_Build --> ProviderPlugin_Build
-    ProviderPlugin_Build --> GCPChronicle
+    A --> B
+    B -->|HTTPS| C((Chronicle APIs))
 ```
 
-### Deployment Diagram Table
+### Container Diagram Elements
+| Name                    | Type               | Description                                                                   | Responsibilities                                                                     | Security controls                                                                     |
+|-------------------------|--------------------|-------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| Terraform CLI           | Container          | HashiCorp Terraform engine that loads the provider plugin at runtime.         | 1. Processes user .tf files. 2. Coordinates resource actions. 3. Reports plan output. | Depends on user machine environment security; standard Terraform verification.         |
+| Chronicle Provider      | Container          | The compiled plugin using Go-based code and Chronicle client libraries.       | 1. Maps Terraform resource definitions to Chronicle API endpoints. 2. Manages CRUD.   | security control: CI tests, environment-based credential usage, code lint, goreleaser. |
+| Chronicle APIs          | External Container | Google Chronicle’s managed APIs for feeds, rules, and reference lists.        | 1. Validates calls from the provider. 2. Persists or modifies Chronicle resources.    | TLS encryption, Google identity management, user-supplied service account or OAuth.    |
 
-| Name              | Type         | Description                                                                             | Responsibilities                          | Security controls                                               |
-|-------------------|-------------|-----------------------------------------------------------------------------------------|--------------------------------------------|-----------------------------------------------------------------|
-| CI/CD Agent       | Node         | The virtual machine or container that runs the Terraform CLI and provider plugin.       | Executes Terraform commands in a pipeline | Requires restricted network access, stores short-lived secrets   |
-| TerraformCLI_Build       | Process      | Terraform CLI binary installed in the CI/CD instance or developer workstation.        | Responsible for reading .tf files, applying changes in Chronicle     | Local or ephemeral environment variables for credentials         |
-| ProviderPlugin_Build     | Process      | The Chronicle Terraform provider plugin.                                             | Translates user configuration to Chronicle API calls                 | Verified through checksums, version pinned                      |
-| GCPChronicle      | External Node| Production Chronicle environment.                                                      | Applies or rejects feed / rule changes                                | Enforces TLS, requires valid credentials                         |
+## DEPLOYMENT
+Below are potential deployment strategies. One common approach is that users install the Terraform provider plugin locally, or retrieve it from an official registry, then run Terraform on a workstation or in a CI environment.
 
-## BUILD
-Below is an example simplified build pipeline from source to artifact:
+We will detail a local installation approach:
 
 ```mermaid
 flowchart LR
-    Developer --> CommitCode --> GitHubActions
-    GitHubActions --> LintTest(SAST / Lint / Unit Tests)
-    LintTest --> BuildBinary
-    BuildBinary --> ReleaseArtifact
+    subgraph Developer Workstation
+    A[Terraform CLI & Chronicle Provider]
+    A -- credentials & .tf config --> A
+    end
+    A -->|HTTPS request| B((Google Chronicle Cloud))
 ```
-1. Developer makes changes locally.
-2. Code is pushed to GitHub.
-3. GitHub Actions runs lint, format checks, and unit tests (potentially including SAST scanners).
-4. If successful, the plugin is built.
-5. Final artifacts are uploaded as a release.
+
+### Deployment Diagram Elements
+| Name                                | Type         | Description                                                                                                                   | Responsibilities                                                                                 | Security controls                                                                                         |
+|-------------------------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| Developer Workstation               | Host         | Local machine or CI runner where Terraform CLI and the Chronicle provider plugin are installed.                               | 1. Stores local credentials. 2. Configures & runs Terraform. 3. Communicates with Chronicle.      | security control: OS-level environment variable protection, optional encryption at rest.                  |
+| Terraform CLI & Chronicle Provider  | Software     | Combined environment with Terraform engine and installed Chronicle provider plugin binary.                                     | 1. Applies IaC logic to Chronicle resources. 2. Maintains state locally or in remote back-end.    | security control: environment-based authentication, code scanning, acceptance tests.                      |
+| Google Chronicle Cloud              | Cloud System | Hosted by Google. Receives requests from the Terraform provider to create or update resources.                                | 1. Authenticates requests. 2. Provisions or modifies data.                                       | Managed by Google, subject to GCP’s standard security controls (TLS, identity, roles).                   |
+
+## BUILD
+This project’s build process is defined by a Makefile and GitHub Actions workflows. The typical flow, from local development to published artifacts, is shown below:
+
+```mermaid
+flowchart LR
+    DEV[Developer] -->|Writes code| GIT[GitHub Repository]
+    GIT -->|Push or PR triggers| CI[GitHub Actions CI]
+    CI -->|Build & Lint| ARTEFACTS[Build Artifacts]
+    ARTEFACTS -->|Goreleaser| RELEASE[Published Release]
+```
+
+During build:
+• The developer modifies the Go code and commits changes.
+• A GitHub Actions pipeline is triggered, running lint (golangci-lint), unit and acceptance tests.
+• Once tests pass, goreleaser is used to build and package provider binaries for multiple OS/architectures, then publishes them as release assets on GitHub.
+
+Security considerations for build:
+• SAST-like checks or advanced code scanning can be integrated into the pipeline.
+• Secure storage and redaction of any credentials used during acceptance tests.
+• SBOM production or other supply chain attestations (recommended).
 
 # RISK ASSESSMENT
-Critical business processes to protect:
-1. Automated provisioning and update of Chronicle resources (feeds, rules, roles).
-2. Maintenance and audit of security analytics pipeline.
+Critical business processes we aim to protect:
+• Management of Chronicle resources that, if compromised, could lead to unauthorized log access, rules manipulation, or feed misconfiguration.
+• Preservation of infrastructure-as-code reproducibility so that changes to logging and detection rules remain consistent and controlled.
 
-Data to protect and their sensitivity:
-1. Chronicle credentials (environment variables, potential in Terraform state). High sensitivity.
-2. Configuration data for feeds and rules (could reveal internal structure or logging strategies). Medium to high sensitivity.
-3. Terraform state files with partial secrets or references to environment data. Medium to high sensitivity.
+Data we are trying to protect and its sensitivity:
+• OAuth tokens or service account JSON credentials used to authenticate to Chronicle. These credentials can grant broad read/write abilities in Chronicle. Exposure could allow a malicious actor to manipulate or retrieve logs or detection data.
+• The high-value data includes user-supplied feed configurations and detection rules that define security posture. If misused, attackers could hamper detection capabilities.
 
 # QUESTIONS & ASSUMPTIONS
-1. Questions:
-   - Who is responsible for rotation and management of Chronicle credentials (platform team, security team, or DevOps)?
-   - Is there a dedicated secrets manager or do we rely solely on environment variables?
-   - Is encryption enforced by default in Terraform state (for instance, Terraform Cloud with encryption at rest)?
-   - Do we require multi-factor or short-lived tokens for API calls?
-
-2. Assumptions:
-   - Chronicle credentials are managed securely outside of version control.
-   - The organization is comfortable with environment variables as a short-term method of injecting credentials, provided the environment is locked down.
-   - The provided Terraform plugin code is built and distributed through a secure CI environment, with code scanning and artifact validation.
-   - TLS is always enforced when communicating between the provider and Chronicle endpoints.
+1. We assume that end-users will manage environment variables or credential files securely (for instance, by storing them in a safe location or using a secrets manager).
+2. We assume that only authorized staff will have commit access to the repository, and PRs undergo mandatory review.
+3. We assume that the Google Chronicle environment has robust security for data at rest and data in transit.
+4. Are there any existing organization-wide scanning or artifact signing policies that can complement the recommended security controls?
+5. Under what conditions should additional test coverage (integration or acceptance) be run, and should it be integrated with external scanning services?
+6. We assume that usage logs or debug outputs will not inadvertently leak environment variables in typical user scenarios.

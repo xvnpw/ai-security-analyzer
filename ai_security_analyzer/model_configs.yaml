@@ -38,6 +38,16 @@ models:
     tokenizer_model_name: 'gpt2'
     supports_structured_output: false
 
+  gemini-2.0-pro-exp:
+    max_number_of_tools: 0
+    use_system_message: true
+    system_message_type: 'system'
+    documents_chunk_size: 60000
+    documents_chunk_overlap: 0
+    documents_context_window: 71000
+    tokenizer_model_name: 'gpt2'
+    supports_structured_output: false
+
   deepseek/deepseek-r1:
     max_number_of_tools: 0
     use_system_message: true

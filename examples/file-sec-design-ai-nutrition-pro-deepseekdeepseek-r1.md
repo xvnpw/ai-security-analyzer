@@ -1,49 +1,71 @@
+mermaid
+C4Context
+    title Context Diagram for AI Nutrition-Pro
+
+    System_Boundary(c0, "AI Nutrition-Pro Ecosystem") {
+        System(api_gateway, "API Gateway", "Handles client authentication and traffic management")
+        System(app_control_plane, "Web Control Plane", "Management interface for administrators")
+        System(backend_api, "API Application", "Core AI processing functionality")
+    }
+
+    Person(admin, "Administrator", "System administrator")
+    System_Ext(mealApp, "Meal Planner", "External dietitian application")
+    System_Ext(chatgpt, "ChatGPT-3.5", "LLM provider")
+
+    Rel(mealApp, api_gateway, "HTTPS/REST API calls")
+    Rel(api_gateway, backend_api, "HTTPS/REST")
+    Rel(admin, app_control_plane, "Management operations")
+    Rel(backend_api, chatgpt, "LLM API requests")
+```
+
 ## BUSINESS POSTURE
-**Primary Business Goals:**
-1. Provide AI-driven content generation for dietitians
-2. Enable integration with third-party meal planning applications
-3. Monetize through API usage-based billing model
+
+**Business Priorities:**
+1. Enable dietitians to enhance meal planning through AI-generated content
+2. Maintain seamless integration with various meal planner applications
+3. Ensure scalable infrastructure for growing client base
+4. Monetize API usage through subscription model
 
 **Key Business Risks:**
-- Dependency on third-party LLM (ChatGPT) performance and availability
-- Potential data privacy concerns with health-related content
-- Competitive pressure in AI nutrition space
-- API service reliability impacting customer retention
+- Service disruptions impacting dietitians' workflows
+- Data breaches exposing proprietary dietitian content
+- Overdependence on third-party LLM (ChatGPT)
+- Compliance challenges with health-related data processing
 
 ## SECURITY POSTURE
 
-### Existing Security Controls
-1. **security control** API key authentication for external systems
-2. **security control** TLS encryption for all external communications
-3. **security control** ACL-based authorization at API Gateway
-4. **security control** Database encryption at rest (RDS)
+**Existing Security Controls:**
+1. security control: API Key Authentication (Implemented in Kong API Gateway)
+2. security control: TLS Encryption (All external communications)
+3. security control: Rate Limiting (API Gateway layer)
+4. security control: Input Validation (API Gateway and Application layers)
 
-### Recommended Security Controls
-1. Implement input validation framework for API endpoints
-2. Add secrets management system for API keys
-3. Introduce audit logging for administrative actions
-4. Deploy Web Application Firewall (WAF) for API protection
+**Accepted Risks:**
+1. accepted risk: Dependency on ChatGPT API security
+2. accepted risk: API Key storage responsibility delegated to clients
+3. accepted risk: Shared RDS instances for multi-tenant data
 
-### Security Requirements
-**Authentication:**
-- Mutual TLS for internal service communication
-- API key rotation every 90 days
-- JWT for admin console access
+**Recommended Security Controls:**
+1. Implement Web Application Firewall (WAF) for API protection
+2. Add application-level authorization checks
+3. Introduce secrets management system for database credentials
+4. Enable database encryption at rest
+5. Implement audit logging for admin actions
 
-**Authorization:**
-- Role-based access control for admin portal
-- Per-client API endpoint permissions
-- Separation of dev/prod environments
-
-**Input Validation:**
-- Strict schema validation for JSON payloads
-- Maximum payload size enforcement
-- Content-type whitelisting
-
-**Cryptography:**
-- AES-256 for data at rest
-- TLS 1.3 for data in transit
-- KMS-managed encryption keys
+**Security Requirements:**
+1. Authentication:
+   - API Key + HMAC signature for machine-to-machine
+   - MFA for admin console access
+2. Authorization:
+   - Role-Based Access Control (RBAC) for admin operations
+   - Tenant isolation in API operations
+3. Input Validation:
+   - Strict schema validation for LLM prompts
+   - Content size limits (max 10MB per request)
+4. Cryptography:
+   - AES-256 for data at rest
+   - TLS 1.3 for data in transit
+   - Key rotation every 90 days
 
 ## DESIGN
 
@@ -51,96 +73,111 @@
 
 ```mermaid
 C4Container
-    title Container diagram for AI Nutrition-Pro
-    Container_Boundary(c0, "AI Nutrition-Pro") {
-        Container(api_gateway, "API Gateway", "Kong", "AuthN/Z, rate limiting")
-        Container(app_control, "Control Plane", "Golang/ECS", "Client management")
-        ContainerDb(control_db, "Control DB", "RDS", "Tenant data")
-        Container(backend, "API Service", "Golang/ECS", "Content generation")
-        ContainerDb(api_db, "API DB", "RDS", "Content storage")
+    title Container Diagram for AI Nutrition-Pro
+
+    Container_Boundary(c1, "AI Nutrition-Pro") {
+        Container(api_gateway, "API Gateway", "Kong", "Edge security and traffic management")
+        Container(app_control_plane, "Web Control Plane", "Golang/ECS", "Tenant management and billing")
+        ContainerDb(control_db, "Control DB", "RDS PostgreSQL", "Tenant configurations")
+        Container(backend_api, "API Application", "Golang/ECS", "Core business logic")
+        ContainerDb(api_db, "API Database", "RDS PostgreSQL", "LLM interactions storage")
     }
-    System_Ext(mealApp, "Meal Planner", "Dietitian app")
-    System_Ext(chatgpt, "ChatGPT-3.5", "LLM API")
-    Rel(mealApp, api_gateway, "HTTPS/REST")
-    Rel(api_gateway, backend, "HTTPS/REST")
-    Rel(backend, chatgpt, "HTTPS/REST")
-    Rel(app_control, control_db, "TLS")
-    Rel(backend, api_db, "TLS")
+
+    System_Ext(mealApp, "Meal Planner", "External client")
+    System_Ext(chatgpt, "ChatGPT-3.5", "LLM Provider")
+    Person(admin, "Administrator")
+
+    Rel(mealApp, api_gateway, "API Requests", "HTTPS")
+    Rel(api_gateway, backend_api, "Process requests", "HTTPS")
+    Rel(backend_api, chatgpt, "LLM Queries", "HTTPS")
+    Rel(admin, app_control_plane, "Manage", "HTTPS")
+    Rel(app_control_plane, control_db, "CRUD Operations", "TLS")
+    Rel(backend_api, api_db, "Store interactions", "TLS")
 ```
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|-------------------|-------------------|
-| API Gateway | Container | Kong implementation | Request routing, AuthN/Z | TLS, Rate limiting |
-| Control Plane | Container | Golang service | Client onboarding | RBAC, Audit logs |
-| API Service | Container | Golang service | Content generation | Input validation |
-| Meal Planner | External | Client system | Content submission | API key auth |
-| ChatGPT | External | LLM provider | AI processing | TLS 1.3 |
+| API Gateway | Reverse Proxy | Kong implementation | Request validation, rate limiting, auth | TLS, API Keys, WAF |
+| Web Control Plane | Web App | Golang ECS container | Tenant management, billing | RBAC, MFA, Audit Logs |
+| API Application | Service | Golang ECS container | LLM interaction handling | Input validation, TLS |
+| Control DB | Database | RDS PostgreSQL | Tenant configurations | Encryption at rest, IAM auth |
+| API Database | Database | RDS PostgreSQL | LLM request storage | Encryption at rest, PII masking |
+| Meal Planner | External System | Client application | Initiate API requests | API Key rotation |
+| ChatGPT-3.5 | External Service | LLM provider | Content generation | API Key encryption |
 
 ### DEPLOYMENT
 
 ```mermaid
-C4Deployment
-    title Deployment Overview
-    Deployment_Node(AWS, "AWS Cloud", "Production") {
-        Deployment_Node(ECS, "ECS Cluster", "Docker") {
-            Container(api_gateway, "API Gateway")
-            Container(app_control, "Control Plane")
-            Container(backend, "API Service")
-        }
-        Deployment_Node(RDS, "Database Tier") {
-            ContainerDb(control_db, "Control DB")
-            ContainerDb(api_db, "API DB")
-        }
-    }
-    Rel(api_gateway, backend, "HTTPS")
-    Rel(backend, RDS, "TLS")
+graph TD
+    subgraph AWS_VPC
+        subgraph Public_Subnet
+            APIGateway[Kong API Gateway]
+        end
+        subgraph Private_Subnet
+            ControlPlane[Control Plane ECS]
+            BackendAPI[Backend API ECS]
+            RDS[(RDS Cluster)]
+        end
+    end
+    Client[Meal Planner] --> APIGateway
+    APIGateway --> BackendAPI
+    BackendAPI --> RDS
+    BackendAPI --> ChatGPT
+    Admin[Administrator] --> ControlPlane
 ```
 
-| Component | Type | Description | Security Controls |
-|-----------|------|-------------|-------------------|
-| ECS Cluster | Container Runtime | Docker containers in AWS ECS | Security groups, IAM roles |
-| RDS | Database | PostgreSQL instances | Encryption at rest, Backups |
-| VPC | Network | Isolated network | NACLs, Flow logs |
+| Name | Type | Description | Responsibilities | Security Controls |
+|------|------|-------------|-------------------|-------------------|
+| AWS VPC | Network | Isolated network | Resource grouping | Security Groups, NACLs |
+| Public Subnet | Network | External access | API Gateway hosting | Limited ingress rules |
+| Private Subnet | Network | Internal resources | App hosting | No direct internet access |
+| RDS Cluster | Database | PostgreSQL instances | Data storage | Encryption, Automated backups |
 
 ### BUILD
-**CI/CD Pipeline:**
-1. Developer commits to Git repository
-2. GitHub Actions triggers build
-3. Security checks (SAST, SCA)
-4. Container image scanning
-5. Deployment to ECR
-6. ECS service update
 
 ```mermaid
-graph TD
-    A[Developer] --> B[Git Commit]
-    B --> C[CI Pipeline]
-    C --> D[SAST Scan]
-    C --> E[SCA Scan]
-    C --> F[Build Image]
-    F --> G[ECR Push]
-    G --> H[ECS Deployment]
+graph LR
+    Dev[Developer] -->|Code| GH[GitHub Repo]
+    GH -->|Trigger| CI[ECS CI Pipeline]
+    CI -->|Scan| SAST[Static Analysis]
+    CI -->|Test| Unit[Unit Tests]
+    CI -->|Build| Docker[Container Image]
+    Docker -->|Push| ECR[ECR Registry]
+    ECR -->|Deploy| ECS[ECS Cluster]
 ```
 
-## RISK ASSESSMENT
-**Critical Business Processes:**
-- AI content generation reliability
-- Client onboarding workflow
-- Billing and usage tracking
+**Build Security Controls:**
+1. Code signing verification in CI pipeline
+2. SCA (Software Composition Analysis) for dependencies
+3. SAST scanning with Semgrep
+4. Container vulnerability scanning
+5. Immutable container tags
+6. Build log retention for 1 year
 
-**Protected Data Assets:**
-- Client API credentials (High sensitivity)
-- Dietitian content samples (Medium sensitivity)
-- LLM request/response logs (Medium sensitivity)
+## RISK ASSESSMENT
+
+**Critical Business Processes:**
+- LLM content generation availability
+- Tenant configuration management
+- Billing accuracy
+
+**Data Sensitivity:**
+1. PII: Dietitian contact information (Medium sensitivity)
+2. PHI: Meal plan examples (High sensitivity)
+3. API Keys: Authentication secrets (Critical)
+4. LLM Prompts: Proprietary diet formulas (High)
 
 ## QUESTIONS & ASSUMPTIONS
-1. What compliance requirements apply (HIPAA, GDPR)?
-2. Is multi-tenancy implemented at database level?
-3. Disaster recovery RTO/RPO requirements?
-4. Third-party dependency monitoring strategy?
 
-**Default Assumptions:**
-- AWS shared responsibility model applies
-- No PII processing in current scope
-- Weekly vulnerability scanning cadence
-- 30-day log retention period
+**Questions:**
+1. What compliance requirements apply (HIPAA, GDPR)?
+2. Disaster Recovery RTO/RPO targets?
+3. Monitoring requirements for LLM API costs?
+4. Data retention policy for LLM interactions?
+
+**Assumptions:**
+1. AWS shared responsibility model applies
+2. ChatGPT API usage complies with data policies
+3. Meal Planner clients implement API key security
+4. Admin access requires corporate credentials
+5. Database backups encrypted by default

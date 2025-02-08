@@ -1,199 +1,258 @@
 # BUSINESS POSTURE
 
-The terraform-provider-chronicle project is built to enable organizations to manage Chronicle security resources using Terraform. The provider translates Terraform configuration into API calls for resource types such as feeds (for data ingestion from sources like Amazon S3, Amazon SQS, Azure Blobstore, Google Cloud Storage, and various API feeds including Office365 management activity, Okta logs, Proofpoint SIEM, Qualys VM, and Thinkst Canary), rule management, RBAC subject configuration, and reference lists.
+The Terraform Chronicle Provider is designed to enable users to manage Chronicle resources using a declarative, infrastructure‐as‐code approach. The provider integrates with the Chronicle APIs to manage a variety of resources such as feeds (including ingestion from Amazon S3, Amazon SQS, Azure Blobstore, Google Cloud Storage, and several API feeds such as Microsoft Office 365 Management Activity, Okta, Proofpoint SIEM, Qualys VM, and Thinkst Canary), rules for detection, reference lists, and RBAC subjects. This enables security and operations teams to centrally manage configurations, automate deployments, and version-control their security configurations through Terraform.
 
-Business priorities include:
-- Enabling infrastructure-as-code management for Chronicle resources.
-- Providing automation and repeatability for security operations and incident response processes.
-- Facilitating multi-cloud and hybrid-cloud security integrations with a common configuration language.
-- Maintaining a high degree of reliability and agility while reducing manual intervention.
+**Business Priorities and Goals:**
+- Enable automation and consistency in the deployment and management of Chronicle resources.
+- Integrate tightly with Terraform so that organizations can incorporate Chronicle configurations into their CI/CD pipelines and infrastructure management suites.
+- Provide a uniform, declarative interface to manage multiple feed types and other Chronicle resources across cloud ecosystems.
+- Streamline the process of updating rules and feed configurations to improve response times to emerging threats.
 
-Key business risks involve:
-- Misconfiguration of critical security resources leading to unintended changes in log ingestion or detection rules.
-- Exposure of sensitive credentials and API tokens.
-- Supply-chain risks due to reliance on multiple third-party libraries and integrations.
-- Integration failures with underlying Chronicle API endpoints which may impact security monitoring.
+**Business Risks to Address:**
+- Misconfiguration of feeds or rules might lead to gaps in threat detection or undesired data ingestion.
+- Insecure management of credentials (API keys, access tokens, and other secrets) used to access Chronicle APIs.
+- Supply chain risks stemming from unverified third‐party dependencies and libraries.
+- Changes in Chronicle API versions or endpoints may affect the provider’s functionality and require prompt remediation.
+
+---
 
 # SECURITY POSTURE
 
-Existing security controls:
-- security control: Sensitive attributes (e.g. secret_access_key, client_secret, sas_token, etc.) are flagged as sensitive in the Terraform schema.
-- security control: Credentials can be provided either directly or via environment variables; environment variables are given the lowest precedence to minimize accidental exposure.
-- security control: Input validation is enforced via regular expressions and dedicated validation functions (see validation.go) for fields such as AWS keys, UUIDs, and URIs.
-- security control: HTTPS/TLS is used by the client for secure API communications.
-- security control: Rate limiters and retry logic (in client/transport.go) help prevent abuse and handle transient errors.
-- security control: Continuous integration pipelines (GitHub Actions workflows) enforce code formatting (gofmt), linting (golangci-lint), testing (unit and acceptance tests), and build verification.
-- security control: The build process in the Makefile incorporates dependency management using go mod and vendor directories.
+This project leverages several built‐in security controls and follows best practices for secure software development throughout its lifecycle.
 
-Accepted risks:
-- accepted risk: Acceptance tests may run using real resource creation and may require the use of production-like credentials.
-- accepted risk: A large number of external dependencies introduces inherent supply-chain risks that are managed by version pinning and vendor directories.
-- accepted risk: The provider’s API calls rely on the security model of external Chronicle services.
+### Existing Security Controls
+- **security control (input validation):** All resource schema fields use custom validation functions (e.g. validating AWS access key formats, UUIDs, URL formats) to enforce correct input.
+- **security control (credentials management):** Sensitive fields (e.g. API keys, client secrets) are marked as sensitive in the Terraform schema so that they are not inadvertently exposed.
+- **security control (conflict and precedence):** Configuration rules enforce that credentials and access tokens cannot be provided together, with clear precedence using environment variables.
+- **security control (build and CI/CD):** The provider includes strict CI pipelines (linter, gofmt, unit tests, acceptance tests) defined in GitHub Actions. Additionally, goreleaser is used to build and sign releases.
+- **security control (rate limiting):** The client package implements rate limiting across different API endpoints to mitigate spam and denial-of-service issues.
+- **security control (dependency management):** The go.mod file explicitly pins versions of dependencies that are used both directly and indirectly.
 
-Recommended additional security controls:
-- recommended security control: Integrate static application security testing (SAST) and dynamic application security testing (DAST) into the CI process.
-- recommended security control: Introduce dependency vulnerability scanning to automatically alert on insecure third-party packages.
-- recommended security control: Implement supply-chain security measures such as binary signing and reproducible builds.
-- recommended security control: Enhance audit logging of API requests (while ensuring that sensitive data is not logged) to improve incident detection.
-- recommended security control: Evaluate and implement secrets management integration so that credentials are rotated and stored safely.
+### Accepted Risks
+- **accepted risk (credentials exposure risk):** Although credentials are handled as sensitive inputs, users must ensure that their environment configurations (e.g. environment variables or files referenced for credentials) are securely managed.
+- **accepted risk (external API dependency):** The provider depends on external Chronicle APIs; changes in these APIs or unexpected behaviors may affect provider operations.
 
-Security requirements for the project:
-- authentication: Robust handling of credentials via environment variables and direct inputs with sensitive fields masked.
-- authorization: Rigid input validation and API token usage ensure only authorized calls are made to Chronicle endpoints.
-- input validation: All API inputs are validated using regex-based validators and schema constraints.
-- cryptography: Secure communications over HTTPS using TLS are enforced throughout the client code.
+### Recommended Security Controls
+- Implement automated SAST and dependency vulnerability scanning (e.g. using tools such as Snyk or GitHub Dependabot) within the CI/CD pipeline.
+- Consider adding code-signing for build artifacts to ensure build integrity.
+- Enhance logging and alerting around authentication failures and unusual API response patterns.
 
-Areas of implementation:
-- The Terraform schema explicitly marks sensitive fields.
-- Validation functions in validation.go enforce proper formats for credentials, UUIDs, URIs, and other inputs.
-- GitHub Actions workflows run multiple security-related steps (gofmtcheck, lint, tests) prior to merging.
+### Security Requirements for the Provider
+- **Authentication:** Must support secure OAuth2 flows and token-based authentication as provided through credentials, access tokens, or environment variables.
+- **Authorization:** Uses RBAC subject configuration to ensure that users have the minimum required privileges.
+- **Input Validation:** All inputs are strongly validated (e.g., UUID formats, valid URLs, AWS credential formats) to reduce injection vulnerabilities.
+- **Cryptography:** Communication with Chronicle APIs must use HTTPS and standard TLS practices. Sensitive data such as secrets must be handled with encryption in transit and at rest on user systems.
+- Implementation details are documented in the schema and validation functions within the code.
+
+---
 
 # DESIGN
 
+The Terraform Chronicle Provider is implemented in Go using the Terraform Plugin SDK v2. Its primary responsibility is to present a Terraform-compatible interface that maps configuration files into CRUD operations against Chronicle’s various API endpoints. The project is structured into several modules:
+
+- **Provider Entry & Configuration:**
+  – Located in `main.go` and `chronicle/provider.go`
+  – Initializes the provider, sets up schema for global configurations (e.g. region, credentials, API endpoints) and configures the client with rate limiters and authentication.
+
+- **Resource Implementations:**
+  – Located in the `chronicle/` directory. Each resource (feed, rule, rbac subject, reference list) is implemented as a Terraform resource with Create, Read, Update, Delete and Import functionality.
+  – These resources call into the common client library to perform HTTP requests to the appropriate Chronicle API endpoint.
+
+- **Client Library:**
+  – Located in the `client/` directory.
+  – Provides functions to build, sign, and send HTTP requests to Chronicle API endpoints.
+  – Implements rate limiting, error handling (including parsing of Google API errors), and helpers for building the request payload from resource configuration maps.
+
+- **Templates and Documentation:**
+  – The `templates/` and `docs/` directories include markdown templates for user documentation.
+  – The documentation is automatically generated using `tfplugindocs`.
+
+- **CI/CD and Build Automation:**
+  – Uses GitHub Actions workflows for continuous integration (lint, test, release) with scripts (e.g. `gofmtcheck.sh` and Make rules).
+  – Releases are built and packaged via goreleaser, ensuring multiplatform distribution.
+
+The design leverages separation of concerns:
+- The provider adapts Terraform’s resource lifecycle methods, while the client library abstracts API communications.
+- Validation and error handling are centralized using helper functions.
+- Rate limiting is implemented per API operation to ensure reliability and protection from API abuse.
+
+---
+
 ## C4 CONTEXT
 
-This diagram shows how the terraform-provider-chronicle sits at the center of its environment and interacts with external systems and users.
+Below is a mermaid diagram representing the system context of the Terraform Chronicle Provider:
 
 ```mermaid
 flowchart LR
-    TP[Terraform Provider Chronicle]
-    TC[Terraform Core]
-    API[Chronicle API]
-    CI[CI/CD System (GitHub Actions)]
-    Repo[Version Control (GitHub)]
-    User[Terraform User / DevOps]
-
-    TP --> TC
-    TP --> API
-    CI --> TP
-    Repo --> CI
-    User --> TC
+    A[Developer using Terraform CLI] --> B[Terraform Core]
+    B --> C[Chronicle Provider Plugin]
+    C --> D[Chronicle API Endpoints]
+    subgraph CI/CD Pipeline
+        E[GitHub Actions CI & Release]
+    end
+    A --- E
 ```
 
-The following table describes the elements in this context diagram:
+Below is a table describing the elements of the context diagram:
 
-| Name                          | Type                   | Description                                                                   | Responsibilities                                                           | Security Controls                                                                                                            |
-|-------------------------------|------------------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
-| Terraform Provider Chronicle  | Software Component     | The plugin binary that implements Chronicle resource management via Terraform | Translate Terraform configuration to API calls; handle resource CRUD.    | Sensitive fields validation; input validation; use of HTTPS/TLS; rate limiting.                                             |
-| Terraform Core                | Orchestrator           | The core engine of Terraform                                                | Orchestrates the execution of provider plugins and tracks state.           | Integration with provider ensures secure execution.                                                                        |
-| Chronicle API                 | External Service       | The set of Chronicle services providing endpoints for feeds, rules, etc.      | Process API calls for resource creation, read, update, and delete.         | API authentication; secure communication over HTTPS.                                                                       |
-| CI/CD System (GitHub Actions) | Automation Environment | The continuous integration and continuous deployment platform on GitHub       | Run tests, linting, and build automation; release artifacts.               | Automated linting; gofmt and security scanning in workflow; controlled build environments.                                  |
-| Version Control (GitHub)      | Repository             | The GitHub repository hosting the provider source code                        | Manage version control and collaboration.                                  | Source code review; branch protection; vulnerability scanning in repositories.                                             |
-| Terraform User / DevOps       | End User               | The operator or automation system that uses Terraform to manage Chronicle resources | Define Terraform configurations and deploy the provider.                  | Must follow secure credential management practices; proper configuration of provider in .terraformrc files.                   |
+| Name                          | Type             | Description                                                   | Responsibilities                                                                      | Security Controls                                        |
+|-------------------------------|------------------|---------------------------------------------------------------|---------------------------------------------------------------------------------------|----------------------------------------------------------|
+| Developer using Terraform CLI | External Actor   | End user who writes Terraform configurations and runs deployments | Author Terraform configuration; initiate deployment and manage state                  | Follows secure coding practices; manages local secrets   |
+| Terraform Core                | System Component | The Terraform CLI that loads the provider and executes plans  | Orchestrates Terraform operations; calls provider resource CRUD functions              | Enforces execution as per Terraform plugin security model |
+| Chronicle Provider Plugin     | Internal System  | The plugin that implements the Chronicle provider functionality | Translates HCL into API calls; implements provider resources; validates inputs         | Input validation; sensitive field masking; rate limiting |
+| Chronicle API Endpoints       | External System  | Chronicle’s back-end services for feeds, rules, RBAC, etc.      | Provide API operations (create, read, update, delete) and manage Chronicle resources     | HTTPS/TLS; authentication via OAuth2; API key validation   |
+| GitHub Actions CI & Release   | External System  | The CI/CD system that builds, tests, and releases the provider  | Automates linting, testing, and building; publishes releases using goreleaser           | Automated vulnerability scanning; code signing recommended |
+
+---
 
 ## C4 CONTAINER
 
-The provider is organized into multiple containers that separate concerns within the system.
+The container diagram illustrates the high-level architecture and distribution of responsibilities.
 
 ```mermaid
 flowchart TD
-    subgraph Infrastructure
-      TP[Provider Binary (terraform-provider-chronicle)]
-      CL[Client Library]
-      CI[CI/CD Pipeline (GitHub Actions)]
-      TC[Terraform Core]
-      API[Chronicle API]
-    end
+    A[Terraform Provider Entry<br/>(main.go, provider.go)]
+    B[Resource Handlers<br/>(chronicle/ resources)]
+    C[Client Library<br/>(client/)]
+    D[Validation & Utility Functions<br/>(resource_reader.go, validation.go, util.go)]
+    E[CI/CD Pipeline<br/>(GitHub Workflows, Makefile, goreleaser)]
+    F[Terraform Core]
+    G[Chronicle APIs]
 
-    TP --> CL
-    TC --> TP
-    CI --> TP
-    TP --> API
+    F --> A
+    A --> B
+    B --> C
+    B --> D
+    C --> G
+    E --> A
 ```
 
-The container diagram table is as follows:
+Below is a table describing each container:
 
-| Name                          | Type                  | Description                                                    | Responsibilities                                                      | Security Controls                                                                                   |
-|-------------------------------|-----------------------|----------------------------------------------------------------|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| Provider Binary               | Executable Container  | The compiled Go binary of the terraform-provider-chronicle     | Implements all resource operations for Chronicle management.       | Implements sensitive field handling; input validation; uses TLS for API communication.             |
-| Client Library                | Software Module       | A set of Go packages handling API communication and data models  | Encodes/decodes API payloads; handles rate limiting and retry logic. | Uses HTTPS with proper certificate verification; integrates OAuth2 and secure token sourcing.      |
-| CI/CD Pipeline (GitHub Actions)| Automated Build System| The automation scripts and workflows for building, testing, releasing the provider | Executes linting, tests, formatting checks, and build automation.    | CI workflows include linting, formatting, testing; environment variables used for credentials are managed. |
-| Terraform Core                | Orchestrator          | The Terraform engine that invokes the provider plugin            | Manages provisioning through provider plugin interfaces.           | Enforces plugin isolation; secure inter-process communication.                                  |
-| Chronicle API                 | External Service      | The operational services provided by Chronicle for resource management | Processes resource CRUD operations from the provider plugin.         | Expects secure authentication tokens; communicates over HTTPS.                                    |
+| Name                           | Type                | Description                                                          | Responsibilities                                                                             | Security Controls                                       |
+|--------------------------------|---------------------|----------------------------------------------------------------------|----------------------------------------------------------------------------------------------|---------------------------------------------------------|
+| Terraform Provider Entry       | Application Binary  | Main entry point (main.go) initializing the provider and configuration | Bootstrapping the plugin; registering schema, provider configuration, and resource mappings     | Enforces proper initialization; propagates secure credentials |
+| Resource Handlers              | Application Module  | Implements each Terraform resource type (feeds, rules, RBAC, etc.)    | Translate user configurations into API calls; implement lifecycle functions (CRUD, Import)      | Input validation; schema-sensitive fields; logging       |
+| Client Library                 | Application Module  | Centralized HTTP client and API interaction layer (client/ directory)   | Build and send HTTP requests to Chronicle endpoints; manage rate limiting and error handling      | Uses HTTPS/TLS; OAuth2 authentication; rate limiters       |
+| Validation & Utility Functions | Supporting Library  | Contains helper functions for reading resource data, performing validations, and converting structures | Convert resource data into maps; validate inputs; manage error wrapping                         | Strict input validation functions; secret handling       |
+| CI/CD Pipeline                 | Automation          | GitHub Actions workflows, Makefile, and goreleaser configuration         | Linting, testing, building, and releasing the provider binary                                   | Automated tests; linter checks; vulnerability scanning recommended |
+
+---
 
 ## DEPLOYMENT
 
-The terraform-provider-chronicle is deployed as a self-contained plugin binary. It is built via the Makefile and CI/CD pipelines and published using goreleaser. End users install the binary locally (or via the Terraform Registry) by configuring the provider installation in their .terraformrc file.
+The provider is distributed as a compiled plugin that Terraform downloads or that users install manually into their local Terraform plugin directory. Deployment occurs in the following ways:
 
-```mermaid
-flowchart LR
-    Dev[Developer]
-    Repo[GitHub Repository]
-    CI[CI/CD Pipeline (GitHub Actions)]
-    Release[GitHub Release (goreleaser)]
-    User[Terraform User]
+1. **For End Users:**
+   - The provider binary is either fetched from the Terraform Registry or installed from a local build (e.g., via `make install` that copies it into `~/.terraform.d/plugins/github.com/form3tech-oss/chronicle/<version>/<os>_<arch>`).
+   - Terraform CLI loads the provider dynamically during `terraform init` and executes it as part of the plan/apply workflow.
 
-    Dev --> Repo
-    Repo --> CI
-    CI --> Release
-    User --> Release
-    User --> TP[Installed Provider Binary in Plugin Folder]
-```
+2. **CI/CD Deployment:**
+   - Code pushes to GitHub trigger CI workflows (for linting, testing, and building).
+   - Merges to master trigger the release workflow which runs goreleaser to compile, package, and publish binaries.
 
-The deployment diagram table is as follows:
-
-| Name                           | Type                     | Description                                                            | Responsibilities                                         | Security Controls                                                                                      |
-|--------------------------------|--------------------------|------------------------------------------------------------------------|---------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
-| GitHub Repository              | Version Control          | Central repository for source code                                     | Hosts code, issues, and documentation.                  | Access control; branch protection; code reviews; vulnerability scanning in repository.               |
-| CI/CD Pipeline (GitHub Actions)| Automated Build System   | Executes build, tests, linting, and release flows                        | Automates building and package publishing.             | Enforces static code analysis; environment isolation; secure handling of secrets.                     |
-| GitHub Release (goreleaser)      | Release Distribution     | Publishes versioned provider binaries                                  | Packages and signs binaries and creates release artifacts.| Supply chain security by reproducible builds; possible binary signing; integrity checks via checksums.   |
-| Local Plugin Installation      | End-User Deployment      | The provider binary installed in the user's Terraform plugin directory   | Enables Terraform Core to use the provider for resource management.| Instructions to configure .terraformrc; integration with secure local file systems.                  |
-
-## BUILD
-
-The build process is orchestrated using a Makefile that defines targets for building, testing, linting, and formatting. GitHub Actions triggers these steps automatically upon code pushes and pull requests.
+Below is a mermaid deployment diagram:
 
 ```mermaid
 flowchart TD
-    Dev[Developer]
-    Local[Local Environment]
-    CI[CI/CD Pipeline]
-    Build[Make Build Process (go build, fmt, lint)]
-    Artifact[Build Artifact (Provider Binary)]
+    A[Developer Workstation]
+    B[GitHub Repository]
+    C[CI/CD Pipeline<br/>(GitHub Actions)]
+    D[Release Artifact<br/>(GitHub Releases)]
+    E[Terraform CLI]
+    F[Local Plugin Directory]
+    G[Chronicle API Endpoints]
 
-    Dev --> Local
-    Local --> Build
-    Build --> Artifact
-    CI --> Build
-    CI --> Artifact
+    A --> B
+    B --> C
+    C --> D
+    E --> F
+    F --> D
+    E --> G
 ```
 
-The build process table is as follows:
+Below is a table describing the deployment elements:
 
-| Name                 | Type                | Description                                                         | Responsibilities                                         | Security Controls                                                                                   |
-|----------------------|---------------------|---------------------------------------------------------------------|---------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| Developer Environment| Local Development   | Where developers write, test, and debug code                         | Code development and local testing.                     | Use of debugging scripts; adherence to coding standards enforced by gofmt and linting.             |
-| Make Build Process   | Build Automation    | Defined in GNUmakefile using commands like 'make build', 'make test', etc.| Compile binary, run linting and tests.                  | Checks code formatting; runs unit and acceptance tests; utilizes go mod vendor for dependency control. |
-| CI/CD Pipeline       | Automated Build System| GitHub Actions workflows for linting, testing, and releasing the provider.| Automates build and release process; ensures quality control.| Static analysis; integration tests; secure environment variables; artifacts are published after tests pass.|
-| Build Artifact       | Binary Package      | The final compiled terraform-provider-chronicle binary                 | Distributed as a plugin binary for Terraform.         | Use of checksums (SHA256); potential future improvements with code signing for supply-chain security.  |
+| Name                      | Type                      | Description                                                  | Responsibilities                                           | Security Controls                                       |
+|---------------------------|---------------------------|--------------------------------------------------------------|------------------------------------------------------------|---------------------------------------------------------|
+| Developer Workstation     | External Actor            | Machine where development and testing occur                | Code writing and local testing                             | Local secrets management; secure work environment       |
+| GitHub Repository         | Source Code Repository    | Hosts the provider source code and configuration files       | Source versioning; collaboration                           | Access controls; code review practices                  |
+| CI/CD Pipeline            | Automation Server         | GitHub Actions workflows execute tests, linting, build, and release automation | Automatic testing; build automation; release management    | Automated SAST scanning; verifying build integrity        |
+| Release Artifact          | Compiled Binary Artifact  | Compiled provider binaries distributed through GitHub Releases | Packaging and distribution                               | Code signing (if implemented); integrity checks           |
+| Terraform CLI             | Client Application        | Terraform tool used by end users to run infrastructure plans | Loads provider plugin; orchestrates plan and apply         | Ensures plugin isolation and secure environment via .terraformrc |
+| Local Plugin Directory    | Filesystem Location       | Directory where the provider binary is stored on a user’s system | Hosts the provider binary for Terraform (auto or manual install) | File system permissions; secure storage                    |
+| Chronicle API Endpoints   | External API Service      | Chronicle back-end systems that the provider manages         | Provide API operations (create, update, delete, etc.)      | HTTPS/TLS; backend authentication; rate limiting           |
+
+---
+
+## BUILD
+
+The build process incorporates standard Go build tools, Makefiles, and CI via GitHub Actions. The process is as follows:
+
+1. **Local Build:**
+   - Developers run `make build` to compile the provider binary with vendored dependencies.
+   - `gofmt`, `vet`, and lint checks (via `make fmtcheck` and `make lint`) are executed to ensure code quality.
+
+2. **Automated Testing:**
+   - Unit tests and acceptance tests (e.g. resource CRUD tests) are executed via `make test` and `make testacc`.
+   - Scripts such as `gofmtcheck.sh` enforce code style.
+
+3. **Release Packaging:**
+   - Upon merging to master and pushing a new tag (matching "v*.*.*"), the GitHub Actions release workflow triggers goreleaser.
+   - Goreleaser builds cross-platform binaries, packages them (e.g. in zip format), generates checksums, and publishes them to GitHub Releases.
+
+Below is a diagram of the build process:
+
+```mermaid
+flowchart TD
+    A[Developer Push / Merge]
+    B[GitHub Actions CI: Lint & Unit Tests]
+    C[Acceptance Tests]
+    D[Tag Push / Master Update]
+    E[Goreleaser Release Workflow]
+    F[Build Artifact (Binaries)]
+    G[GitHub Releases]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+```
+
+---
 
 # RISK ASSESSMENT
 
-Critical business processes:
-- Continuous ingestion of security logs from cloud storage and various API sources.
-- Management and update of detection rules for threat and incident response.
-- Configuration and maintenance of RBAC subjects and reference lists to enforce access controls.
+**Critical Business Processes to Protect:**
+- Deployment and configuration of Chronicle feeds, detection rules, and IAM-like RBAC subjects. Misconfigurations or security lapses in these processes can directly affect the organization’s ability to detect security incidents.
+- The CI/CD pipeline that builds, tests, and releases the provider. A compromised build process may allow malicious code injection.
 
-Data protection concerns:
-- API credentials and tokens along with sensitive authentication information need to be protected from exposure.
-- Detection rule texts and configuration details may contain sensitive information about an organization’s security posture.
-- Logs and metadata retrieved from Chronicle APIs are sensitive and must be communicated over secure channels.
+**Data to Protect and Their Sensitivity:**
+- **Credentials and API Tokens:**
+  Highly sensitive as they provide access to Chronicle’s back-end and other cloud services.
+- **Feed and Rule Configurations:**
+  While not as sensitive as credentials, incorrect configuration data could lead to gaps in security monitoring and impact operational security.
+- **User and RBAC Data:**
+  May include identifiers and roles that are critical to access management; compromise could lead to privilege escalation.
 
-Sensitivity:
-- The data managed by the provider is highly sensitive, as it directly impacts an organization’s security monitoring and incident response capabilities. Unauthorized access or misconfiguration may lead to security breaches and operational disruption.
+Due to the sensitivity of credentials and the central role of configuration in security monitoring, strong controls are required throughout the build, storage, transmission, and logging lifecycle.
+
+---
 
 # QUESTIONS & ASSUMPTIONS
 
-Questions:
-1. What are the organization’s procedures for rotating and revoking API credentials?
-2. How are audit logs from provider API interactions retained and monitored?
-3. What is the expected frequency of updates and releases for the provider?
-4. Which additional security scanning tools (SAST/DAST, dependency scanning) are planned for integration into the CI/CD pipeline?
-5. Are there any specific compliance requirements that govern the handling of sensitive data in this provider?
+**Questions:**
+1. What are the target deployment environments for the provider (e.g., enterprise vs. small teams), and are there specific compliance requirements (e.g., SOC2, ISO 27001) that must be met?
+2. How often are the Chronicle APIs expected to change, and what is the process for updating the provider accordingly?
+3. What measures are in place (or planned) for monitoring and alerting if the provider behaves unexpectedly in production?
+4. Is there a need or plan for additional integration tests that simulate failures from Chronicle APIs (e.g., rate limiting, authentication failures)?
 
-Assumptions:
-1. End users deploying the provider will follow best practices for credential management (using environment variables, secure storage, etc.).
-2. The underlying Chronicle APIs enforce strict authentication and authorization measures, reducing the risk at the provider level.
-3. The CI/CD environment is secured and access to secrets is tightly controlled.
-4. Dependency version pinning and vendor management are sufficient to mitigate supply-chain risks.
-5. Business risk tolerance is moderate, and any potential issues with misconfiguration or secret exposure are accepted if proper logging and audit trails are maintained.
+**Assumptions:**
+1. It is assumed that users will deploy the provider in environments that follow standard Terraform best practices (e.g., proper management of the .terraformrc file, secure environment variable management).
+2. The build and release pipelines (GitHub Actions, goreleaser) are maintained and secured, reducing the risk of supply chain compromise.
+3. The provider is mainly intended to be used as part of automated infrastructure deployments and not as a standalone service.
+4. Credentials and secrets will be injected via environment variables or secure file references, and users are responsible for protecting those values.
+5. The provider is expected to handle multiple types of feeds and configurations; the design assumes that the underlying Chronicle APIs follow documented and stable conventions.
+6. The project team accepts the moderate risk inherent in integrating with external APIs by implementing comprehensive testing, validation, and rate limiting measures.

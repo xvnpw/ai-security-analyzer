@@ -1,6 +1,6 @@
 templates:
   - text: |-
-      You are cybersecurity expert, working with development team. Your task is to create detail threat model using attack tree analysis for application that is using {target_repo}. Focus on threats introduced by {repo_name} and omit general, common web application threats. Identify how an attacker might compromise application using {repo_name} by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
+      You are cybersecurity expert, working with development team. Your task is to create detail threat model using attack tree analysis for application that is using {target_repo}. Focus on threats introduced by {repo_name}. Don't include general, common threats and best practices: like audit, penetration testing, logs, monitoring, alerts, backups, update dependencies, SSDLC, training, etc. Identify how an attacker might compromise application using {repo_name} by exploiting its weaknesses. Your analysis should follow the attack tree methodology and provide actionable insights, including a visualization of the attack tree in a text-based format.
 
       Objective:
       Attacker's Goal: To compromise application that use given project by exploiting weaknesses or vulnerabilities within the project itself.

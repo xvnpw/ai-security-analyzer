@@ -1,194 +1,98 @@
-# Attack Surface Analysis for screenshot-to-code
+Below is an analysis of several key (medium to high/critical) attack surfaces introduced by the “screenshot-to-code” application. Each point describes the issue, explains how the project contributes to the attack surface, provides an example scenario, outlines the potential impact and risk severity, and then lists current as well as missing mitigations.
 
-This document focuses on the digital attack surfaces of screenshot-to-code – an application that converts screenshots, designs, mockups, and videos into functional code via AI models. The system comprises a FastAPI backend (with WebSocket and HTTP endpoints), a React/Vite frontend, Docker/deployment configurations, and integrations with multiple third‑party APIs (OpenAI, Anthropic, Gemini, and Replicate).
+- **API Key Exposure & Mismanagement**
+  - **Description:** The application requires users to supply several sensitive API keys (for OpenAI, Anthropic, Gemini, Replicate, etc.) that are transmitted between the client and backend and may eventually be stored in environment variables.
+  - **How the Application Contributes:**
+    - The README and settings dialog instruct users to supply API keys.
+    - The backend makes calls directly using these keys and sometimes logs or streams parts of the process (for example, during code–generation and image processing).
+  - **Example:** An attacker who intercepts network traffic or gains access to environment files might obtain a user’s API key and abuse it (leading to unexpected charges or data breaches).
+  - **Impact:** Unauthorized use of external LLM or image-generation services, financial cost, and potential service abuse.
+  - **Risk Severity:** **High**
+  - **Current Mitigations:**
+    - Documentation instructs users to input keys via a settings dialog so that keys aren’t stored on public servers.
+    - Use of environment variables (in code and Dockerfiles) to isolate keys from code repositories.
+  - **Missing Mitigations:**
+    - Encryption and secure transmission for API key data in transit.
+    - Avoiding any logging of full key values.
+    - More granular access controls on the backend to ensure that keys are only used when strictly necessary.
 
----
+- **Permissive CORS Configuration**
+  - **Description:** The backend is configured to allow *any* origin by setting `allow_origins=["*"]` in CORS middleware.
+  - **How the Application Contributes:**
+    - In the main FastAPI app, the CORS middleware is set up with no origin restrictions.
+    - This open policy means that any website can interact with the API endpoints.
+  - **Example:** A malicious website might initiate requests to the code–generation or screenshot endpoints, especially if it can trick a user into supplying their API key via the UI.
+  - **Impact:** Although the user supplies sensitive keys manually, a permissive CORS policy can facilitate cross–site request forgery (CSRF)–like attacks or abuse of the API if other authentication measures are not in place.
+  - **Risk Severity:** **Medium**
+  - **Current Mitigations:**
+    - Sensitive API keys are not stored on the server; they are supplied by the user.
+  - **Missing Mitigations:**
+    - Restrict allowed origins to those known to belong to the front-end application.
+    - Require additional authentication tokens or same–site cookies for state–changing API calls.
 
-## Attack Surface Identification
+- **WebSocket Communication Vulnerabilities in Code Generation**
+  - **Description:** The code–generation endpoint streams output via a WebSocket connection. Any weakness in the handling of these message streams might enable injection attacks or DoS situations.
+  - **How the Application Contributes:**
+    - In the `/generate-code` route, code chunks and status messages are pushed to the client over an open WebSocket connection.
+    - The code does not re–sanitize the output from the LLM providers before sending it to the client.
+  - **Example:** A malformed or adversarially crafted LLM response could slip through and cause the client to render unexpected or even malicious HTML/JS content. Additionally, an attacker might attempt repeated connections or send specially crafted requests to overload the system.
+  - **Impact:** Service disruption, potential client–side injection (if used in scenarios where code is embedded into a live page), and possible resource exhaustion.
+  - **Risk Severity:** **Medium**
+  - **Current Mitigations:**
+    - Custom status and error messages are sent (with custom close codes) to signal problems.
+  - **Missing Mitigations:**
+    - Further sanitize and validate any content streamed over the WebSocket before it’s forwarded to the client.
+    - Implement rate limiting and more robust error handling on the WebSocket layer.
 
-•  **APIs & Endpoints**
- – Backend HTTP endpoints including:
-  • /api/screenshot – Accepts external URLs and API keys to capture screenshots (see backend/routes/screenshot.py)
-  • /evals, /pairwise-evals, /best-of-n-evals – Endpoints for evaluation and comparison of generated code (see backend/routes/evals.py)
-  • /generate-code – A WebSocket endpoint for streaming code generation responses (see backend/routes/generate_code.py)
-  • / (home) – A simple status endpoint (see backend/routes/home.py)
+- **SSRF (Server–Side Request Forgery) via the Screenshot Endpoint**
+  - **Description:** The `/api/screenshot` endpoint accepts a target URL from the client, then uses that URL (and a user–supplied API key) to call an external screenshot service.
+  - **How the Application Contributes:**
+    - The function `capture_screenshot` takes a URL from the request without implementing strict validation; it then passes that URL along as a parameter to an external service.
+  - **Example:** An attacker might supply an internal URL (e.g. “http://localhost/admin” or “http://192.168.1.1”) hoping that the external API or a poorly restricted internal network service would return confidential data.
+  - **Impact:** Unauthorized access to internal resources, potential mapping of internal network services, and leverage in further attacks.
+  - **Risk Severity:** **High**
+  - **Current Mitigations:**
+    - Basic parameter passing to the external API is performed but without additional filtering.
+  - **Missing Mitigations:**
+    - Validate and restrict acceptable target URLs (for example, by enforcing allowed schemes or domains).
+    - Use a whitelist of domains or further sanitize the URL input before forwarding it.
 
-•  **WebSocket Channels**
- – /generate-code is used to stream code generation chunks from interactions with integrated LLMs.
- – Custom close codes are defined (e.g., APP_ERROR_WEB_SOCKET_CODE in backend/ws/constants.py)
+- **File System Access and Directory Traversal in Evaluation Endpoints**
+  - **Description:** The eval endpoints (e.g., `/evals`, `/pairwise-evals`, `/best-of-n-evals`) accept folder paths as query parameters and then list or read files from disk.
+  - **How the Application Contributes:**
+    - User–supplied folder paths are directly passed to file system APIs (using `Path` or `os.listdir`) without strict sanitization or restriction to a safe directory.
+  - **Example:** An attacker could specify a folder path outside of the intended “evals” directory and potentially read sensitive files on the server’s filesystem.
+  - **Impact:** File disclosure or even directory traversal attacks could lead to exposure of sensitive data.
+  - **Risk Severity:** **Medium to High**
+  - **Current Mitigations:**
+    - Some checks exist (e.g. using `Path` and verifying existence) but without restricting the scope of allowed directories.
+  - **Missing Mitigations:**
+    - Restrict folder parameters to a predefined safe root directory.
+    - Sanitize and validate input folder paths to prevent directory traversal.
 
-•  **External Integrations & Third‑Party Services**
- – Multiple LLM integrations via third‑party APIs:
-  • OpenAI (GPT-4 variants, GPT‑4O)
-  • Anthropic (Claude models)
-  • Gemini (via google-genai)
-  • Replicate for image generation (“flux-schnell”)
- – These are invoked from modules such as backend/llm.py and backend/image_generation/ (e.g., replicate.py)
+- **Denial-of-Service via Costly LLM and Video Processing Operations**
+  - **Description:** The application performs expensive operations (LLM calls, video-to-app conversion, image generation) that consume considerable computational and monetary resources.
+  - **How the Application Contributes:**
+    - Endpoints like `/generate-code` and video processing in `video_to_app.py` trigger API calls to external services (OpenAI, Anthropic, Gemini, Replicate) as well as heavy local processing (video frame extraction, image resizing).
+  - **Example:** An attacker submitting a high–resolution video (or flooding the endpoint with many requests) could force the backend to process many expensive operations, leading to service disruption or excessive costs.
+  - **Impact:** Denial–of–Service (DoS) conditions, high operational or API usage cost, and potential resource exhaustion.
+  - **Risk Severity:** **High**
+  - **Current Mitigations:**
+    - Some timeouts and error handling (e.g., streaming functions with timeout parameters, use of asynchronous processing) are in place.
+  - **Missing Mitigations:**
+    - Implement rate limiting and request throttling; enforce limits on input file size and validate video dimensions or duration before processing.
 
-•  **Configuration & Secrets**
- – Environment variables defined in .env files and in Docker configurations (docker-compose.yml, backend/pyproject.toml, backend/config.py) carry sensitive API keys (OPENAI_API_KEY, ANTHROPIC_API_KEY, GEMINI_API_KEY, REPLICATE_API_KEY)
- – The frontend allows users to input API keys via a settings dialog; keys are then used for comparison between models
+- **Prompt Injection and Manipulation in LLM Calls**
+  - **Description:** The application programmatically assembles prompts that are sent to external LLM APIs. These prompts combine system–provided instructions with user–supplied image URLs and history messages without thorough sanitization.
+  - **How the Application Contributes:**
+    - The functions `assemble_prompt` and `create_prompt` directly incorporate user–provided values (including prior history) into the conversation sent to the LLM.
+  - **Example:** A malicious user could include crafted text in the “history” that alters the intended system prompt (for example, by injecting instructions that cause the LLM to produce untrusted or adversarial code).
+  - **Impact:** Generation of malicious or unintended code, exposure of internal prompting instructions, and potential circumvention of safety measures.
+  - **Risk Severity:** **Medium**
+  - **Current Mitigations:**
+    - The system and imported code prompts are carefully constructed to instruct the LLMs on expected output.
+  - **Missing Mitigations:**
+    - Sanitize and/or limit the user–supplied history and input fields before merging into the prompt.
+    - Implement strict schema validation and possibly escape or filter out control tokens before sending the prompt externally.
 
-•  **Frontend Application**
- – React/Vite based frontend (see frontend/README.md and Dockerfile) that communicates with the backend using HTTP/WebSocket protocols
- – User settings for API keys and backend URL configurations (e.g., VITE_WS_BACKEND_URL), which may affect both functionality and security
-
-•  **Container & Deployment Setup**
- – Dockerfiles for backend and frontend are provided. The use of public base images (e.g., python:3.12.3-slim-bullseye and node:22-bullseye-slim) increases the risk of vulnerabilities if not kept updated
-
-•  **Inter-process Communication & Logging**
- – Communication with external LLM services is performed asynchronously. Logging is implemented (see fs_logging/core.py) to capture request/response data (may include sensitive information if not protected)
- – CORS is configured with "allow_origins=[*]" (in backend/main.py), exposing the API to any origin
-
----
-
-## Threat Enumeration
-
-Using an approach similar to STRIDE, we identify and outline the following potential threats:
-
-1. **Spoofing**
- – An attacker might impersonate legitimate clients due to the lack of authentication (e.g., no API user authentication on backend endpoints).
-  • Entry Points: WebSocket (/generate-code) and HTTP endpoints (/evals, /api/screenshot).
-  • Details: Attackers could send forged requests to trigger expensive LLM queries or induce unauthorized code generation.
-
-2. **Tampering**
- – Malicious modification of requests or responses within the system.
-  • Entry Points:
-   – Manipulated HTTP request data (e.g., supplying crafted URL parameters to /api/screenshot)
-   – Altered WebSocket payloads to inject unexpected input into code generation flows.
-  • Details: Injection attacks, parameter tampering, or malicious payloads could adversely affect LLM input or output integrity.
-
-3. **Repudiation**
- – Insufficient logging or audit trails may allow clients to deny actions.
-  • Entry Points: Logging mechanisms (fs_logging/core.py) and API request records.
-  • Details: Lack of robust authentication and request identification complicates non‑repudiation.
-
-4. **Information Disclosure**
- – Exposure of sensitive data such as API keys or generated source code.
-  • Entry Points:
-   – Environment configurations (e.g., .env variables, settings transmitted from frontend to backend)
-   – Overly permissive CORS configuration.
-  • Details: Insecure transport or logging practices may inadvertently reveal API keys or internal code, risking financial and operational data.
-
-5. **Denial of Service (DoS)**
- – Exhaustion of system resources or abuse of expensive external APIs from unauthenticated, high‑rate requests.
-  • Entry Points:  – Publicly exposed endpoints (/generate-code, /evals, /api/screenshot).
-  • Details: An attacker can flood the system with requests causing service degradation, high costs (from third‑party API calls), and potential unavailability.
-
-6. **Elevation of Privilege**
- – Exploitation of backend or container vulnerabilities could result in unauthorized access to system resources or broader network compromise.
-  • Entry Points:
-   – Docker containers and underlying host OS (if base images or third‑party libraries are exploited).
-  • Details: A successful container breakout could lead to complete system compromise.
-
----
-
-## Impact Assessment
-
-1. **Spoofing**
- – *Confidentiality:* Medium to High – If attackers misuse API keys or impersonate legitimate users, sensitive operations may be initiated.
- – *Integrity:* Medium – Unauthorized code generation may inject malicious code.
- – *Availability:* Medium – Attackers can overload the system.
- • **Severity:** High due to potential financial and operational consequences.
-
-2. **Tampering**
- – *Confidentiality:* Medium – Tampered messages might leak sensitive internal state.
- – *Integrity:* High – Incorrect or malicious code outputs may be generated, affecting system behavior.
- – *Availability:* Medium – Manipulated payloads could crash services.
- • **Severity:** High when it affects the core functionality.
-
-3. **Repudiation**
- – *Confidentiality:* Low – Doesn’t directly expose data.
- – *Integrity:* Medium – Lack of audit trails affects accountability.
- – *Availability:* Low – Limited impact on service uptime.
- • **Severity:** Medium, particularly in forensic investigations.
-
-4. **Information Disclosure**
- – *Confidentiality:* Critical – Exposure of API keys and internal code can lead to further attacks or financial loss (e.g., excessive billing on LLM services).
- – *Integrity:* Medium – Leaked data might be used to craft more sophisticated attacks.
- – *Availability:* Low to Medium – Indirectly, through misuse of credentials leading to abuse.
- • **Severity:** Critical.
-
-5. **Denial of Service (DoS)**
- – *Confidentiality:* Low – Not directly affecting data secrecy.
- – *Integrity:* Low – Service content remains unchanged, though availability is compromised.
- – *Availability:* Critical – Disrupts service, leading to potential financial loss and user dissatisfaction.
- • **Severity:** Critical.
-
-6. **Elevation of Privilege**
- – *Confidentiality:* Critical – Full system compromise could expose all data.
- – *Integrity:* Critical – Unauthorized modifications to system components.
- – *Availability:* Critical – Complete shutdown or misuse of system resources.
- • **Severity:** Critical.
-
----
-
-## Threat Ranking
-
-1. **Critical Threats:**
- – **Information Disclosure:** Misconfigured environment variables, permissive CORS, and insecure logging can expose API keys and sensitive operational details.
- – **Denial of Service (DoS):** Unauthenticated endpoints can be flooded, causing service outages and high operational costs.
- – **Elevation of Privilege:** Exploitable vulnerabilities in underlying containers or dependencies could result in complete system compromise.
-
-2. **High Threats:**
- – **Spoofing:** Lack of authentication can allow attackers to impersonate users and abuse the system.
- – **Tampering:** Manipulated requests can corrupt code generation outputs and undermine system integrity.
-
-3. **Medium Threats:**
- – **Repudiation:** Although important for audit trails, its impact is less immediate on system availability or integrity compared to other threats.
-
----
-
-## Mitigation Recommendations
-
-1. **Authentication & Access Control:**
- – Implement robust authentication on API endpoints and WebSocket connections. Use tokens or API keys for client verification before processing requests.
- – Apply role‑based access controls (RBAC) to restrict access to sensitive operations.
-
-2. **Input Validation & Sanitization:**
- – Rigorously validate and sanitize all user‑provided inputs (URLs, settings) to prevent injection and tampering attacks.
- – Use schema validation for incoming JSON and sanitize text-based inputs before processing.
-
-3. **CORS & Communication Security:**
- – Replace the overly permissive CORS policy (allow_origins=["*"]) with a whitelist of trusted domains.
- – Ensure all communications occur over TLS/HTTPS to protect data in transit.
-
-4. **Rate Limiting & Throttling:**
- – Introduce rate-limiting mechanisms on public endpoints (HTTP and WebSocket) to mitigate DoS attacks and resource exhaustion.
- – Monitor request patterns and throttle abnormal client behavior.
-
-5. **Secrets Management:**
- – Secure storage of API keys and environment variables (e.g., using secret management tools).
- – Avoid exposing sensitive keys in frontend code; consider server‑side key management and proxying of requests.
-
-6. **Logging, Monitoring & Audit Trails:**
- – Strengthen logging mechanisms to capture robust audit logs while ensuring that sensitive data is redacted.
- – Integrate real‑time monitoring and alerting for abnormal activities (e.g., spikes in API requests, unusual error rates).
-
-7. **Container & Dependency Security:**
- – Regularly update base images and software dependencies to patch known vulnerabilities.
- – Use container hardening techniques (minimal privileges, read‑only filesystems) and perform security scans on Docker images.
-
-8. **Third‑Party API Integration Safeguards:**
- – Validate responses from external APIs and implement fallbacks if responses deviate from expected schemas.
- – Enforce authentication with third‑party services and monitor API usage closely to detect abuse.
-
----
-
-## QUESTIONS & ASSUMPTIONS
-
-•  **Questions:**
- – Are communications between the frontend and backend always secured via TLS/HTTPS in production?
- – Is there an existing plan for authenticating API requests, or is the system intended mainly for internal use?
- – How are sensitive logs managed and stored to ensure that API keys and secret tokens are not leaked?
- – What is the current process for monitoring external API usage to mitigate potential financial abuse?
-
-•  **Assumptions:**
- – The system is assumed to be deployed in an environment where HTTPS is enforced in production, even though the code defaults to permissive CORS.
- – User inputs and settings (such as API keys) provided via the frontend are assumed to be transmitted securely even if not currently authenticated.
- – Docker/container security configurations follow best practices in production deployments, but the current public base images require regular audits.
- – The primary focus of the threat model is on digital vectors; human and physical security aspects are out‑of‑scope.
-
----
-
-By addressing these threats with appropriate technical controls, the screenshot-to-code project can significantly reduce its digital attack surface while delivering its innovative code-generation capabilities securely.
+Each of these attack surfaces represents a realistic risk to the system in a real–world deployment—even though some measures exist already, further work is needed to harden the application. Developers and operators should carefully review and address these areas to minimize potential damage from exploitation.

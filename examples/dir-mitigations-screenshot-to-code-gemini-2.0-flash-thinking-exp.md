@@ -1,137 +1,110 @@
-- Mitigation Strategy: Secure API Key Management
-  - Description:
-    1. **Environment Variables:** Store API keys (OpenAI, Anthropic, Gemini, Replicate, ScreenshotOne) as environment variables in the backend, as currently suggested in `README.md` and `docker-compose.yml`. Avoid hardcoding keys in the code.
-    2. **`.env` File Security:** Ensure the `.env` file (containing API keys) is not committed to version control (already good practice, but explicitly mention). Add `.env` to `.gitignore`.
-    3. **Restrict Access:** Limit access to the server or environment where the backend is deployed to authorized personnel only.
-    4. **Key Rotation:** Implement a process for regularly rotating API keys to minimize the impact of potential key compromise.
-    5. **Vault/Secret Management:** For production environments, consider using a dedicated secret management system (like HashiCorp Vault, AWS Secrets Manager, or similar) to store and manage API keys more securely instead of relying solely on `.env` files.
-  - Threats Mitigated:
-    - API Key Exposure (High Severity): Prevents unauthorized access to AI models and ScreenshotOne API by securing the API keys.
-  - Impact:
-    - API Key Exposure: High reduction in risk. Makes it significantly harder for attackers to obtain API keys.
-  - Currently Implemented:
-    - Partially implemented. `.env` file usage is mentioned in `README.md` and `docker-compose.yml`.
-  - Missing Implementation:
-    - Key rotation process is not mentioned.
-    - Use of a dedicated secret management system for production is not mentioned.
-    - Explicit instruction to add `.env` to `.gitignore` is missing in documentation.
-    - Secure management of ScreenshotOne API key is not explicitly mentioned.
+Here are the updated mitigation strategies for the `screenshot-to-code` application based on the provided project files:
 
-- Mitigation Strategy: Implement Rate Limiting and Cost Controls
-  - Description:
-    1. **Backend Rate Limiting:** Implement rate limiting on the backend API endpoints that interact with LLMs and ScreenshotOne API. This can be done using libraries available in FastAPI (e.g., `slowapi`). Limit requests per user or IP address within a specific time window.
-    2. **Budget Monitoring:** Set up budget alerts and monitoring for the AI API usage (OpenAI, Anthropic, Gemini, Replicate) and ScreenshotOne API to track costs and prevent unexpected overspending. Utilize the billing dashboards provided by these API providers.
-    3. **Usage Quotas:** Define and enforce usage quotas for different user tiers or usage scenarios if applicable.
-    4. **Error Handling for API Limits:** Implement proper error handling in the backend to gracefully manage API rate limit errors and inform users appropriately, suggesting retry mechanisms with backoff.
-  - Threats Mitigated:
-    - Rate Limiting and Cost Management (Medium Severity): Prevents budget overruns and service disruptions due to excessive API usage for both LLMs and ScreenshotOne.
-    - Denial of Service (DoS) (Medium Severity): Rate limiting can help mitigate simple DoS attacks by limiting the request rate from a single source.
-  - Impact:
-    - Rate Limiting and Cost Management: High reduction in risk. Provides control over API costs and prevents unexpected bills.
-    - Denial of Service (DoS): Medium reduction in risk. Makes it harder to overwhelm the backend with requests from a single source.
-  - Currently Implemented:
-    - Not implemented. No rate limiting or cost control mechanisms are evident in the provided files.
-  - Missing Implementation:
-    - Rate limiting logic in backend API endpoints for both LLM and ScreenshotOne APIs.
-    - Budget monitoring and alerting system for both LLM and ScreenshotOne APIs.
-    - Usage quota enforcement.
-    - Error handling for API rate limits.
+- Mitigation strategy: Secure API Key Management
+    - Description:
+        - Developers should avoid storing API keys directly in `.env` files, especially in production environments.
+        - For local development, `.env` files are acceptable but should be excluded from version control systems (e.g., using `.gitignore`).
+        - In production, API keys for OpenAI, Anthropic, Gemini, Replicate, and ScreenshotOne should be managed using environment variables or dedicated secrets management services provided by hosting platforms (e.g., AWS Secrets Manager, HashiCorp Vault, cloud provider's secret management).
+        - For the frontend, instead of storing AI API keys in the browser's local storage, implement a backend proxy. The frontend should send requests to the backend, which then securely uses the API keys to interact with AI services. This prevents exposing AI API keys directly to the client-side code and reduces the risk of client-side vulnerabilities leading to key exposure.
+        - Similarly, the ScreenshotOne API key used in `screenshot.py` should also be managed securely on the backend and not exposed in client-side code or configuration files accessible to users.
+    - List of threats mitigated:
+        - API Key Exposure (Severity: High) - Unauthorized access and usage of AI services and ScreenshotOne service, potential financial loss, data breaches if keys are misused to access other services.
+    - Impact:
+        - Significantly reduces the risk of API key compromise by moving key storage and usage to secure server-side environments and avoiding client-side storage.
+    - Currently implemented:
+        - `.env` files are used for local development to store API keys (mentioned in README).
+        - Frontend stores OpenAI key in browser local storage (mentioned in Troubleshooting.md).
+    - Missing implementation:
+        - Secure API key management in production backend using environment variables or secrets management services for all API keys (OpenAI, Anthropic, Gemini, Replicate, ScreenshotOne).
+        - Backend proxy for frontend API calls to prevent client-side AI API key exposure.
+        - Secure management of ScreenshotOne API key on the backend, ensuring it's not exposed client-side.
 
-- Mitigation Strategy: Enhance Data Security and Privacy
-  - Description:
-    1. **HTTPS for All Communication:** Ensure all communication between the frontend and backend, and between the backend and AI APIs, and ScreenshotOne API is over HTTPS to encrypt data in transit. This is standard practice but should be explicitly verified.
-    2. **Secure Storage (Browser):** While `Troubleshooting.md` mentions keys are stored in the browser, clarify the security measures for browser storage (e.g., `localStorage` or `IndexedDB`). Emphasize that browser storage is not fully secure and sensitive data should be minimized client-side. Reiterate that API keys are only stored in the browser and not on servers as stated in `Troubleshooting.md`.
-    3. **Data Minimization:** Minimize the amount of user data stored and processed. Only collect and process data that is strictly necessary for the application's functionality.
-    4. **No Server-Side Logging of User Data:** Avoid logging user-uploaded screenshots, video recordings, or captured website screenshots on the server-side. If logging is necessary for debugging, ensure it does not include sensitive user data and is securely managed. Review `fs_logging/core.py` to ensure no sensitive data is logged.
-    5. **Privacy Policy:** Implement a clear privacy policy that informs users about how their data is collected, used, and protected.
-  - Threats Mitigated:
-    - Data Security and Privacy (Medium to High Severity): Reduces the risk of data leakage and unauthorized access to user-uploaded screenshots and videos, and captured website screenshots.
-  - Impact:
-    - Data Security and Privacy: Medium to High reduction in risk. Improves user data protection and builds trust.
-  - Currently Implemented:
-    - Partially implemented. HTTPS is generally expected for web applications, but explicit confirmation and enforcement are needed. `Troubleshooting.md` mentions browser storage.
-  - Missing Implementation:
-    - Explicit HTTPS enforcement.
-    - Detailed explanation of browser storage security and its limitations.
-    - Data minimization strategy is not explicitly mentioned.
-    - Server-side logging review to prevent sensitive data logging, especially for website screenshots.
-    - Privacy policy is not mentioned in the provided files.
+- Mitigation strategy: Implement Rate Limiting and Cost Monitoring
+    - Description:
+        - Implement rate limiting on backend API endpoints that interact with external AI services (OpenAI, Anthropic, Gemini, Replicate) and the ScreenshotOne service. This can be done using libraries or frameworks that provide rate limiting capabilities (e.g., `fastapi-limiter` for FastAPI).
+        - Configure rate limits based on expected usage patterns and the API service's rate limits to prevent abuse and unexpected costs. Rate limiting should be applied to both code generation endpoints (`/generate-code`) and screenshot capture endpoints (`/api/screenshot`).
+        - Implement cost monitoring by tracking API usage and spending for all external services. Utilize the usage dashboards provided by AI service providers (OpenAI, Anthropic, Google Cloud, Replicate, ScreenshotOne) to monitor consumption and set up budget alerts to notify administrators of unusual spending.
+        - For hosted versions or enterprise plans, consider implementing user-level quotas to manage individual user consumption and prevent resource exhaustion or cost overruns by single users.
+    - List of threats mitigated:
+        - Rate Limiting and Cost Control (Severity: Medium) - Unexpectedly high API costs for AI services and ScreenshotOne, service disruption due to exceeding API limits, potential financial impact.
+        - Resource Exhaustion (Severity: Medium) - Prevent abuse of screenshot and code generation services that could lead to server overload.
+    - Impact:
+        - Reduces the risk of unexpected API costs and service disruptions by controlling API usage and providing visibility into spending. Protects against resource exhaustion due to excessive requests.
+    - Currently implemented:
+        - No explicit rate limiting or cost monitoring mechanisms are mentioned in the provided files.
+    - Missing implementation:
+        - Backend rate limiting on API calls to external AI services and ScreenshotOne.
+        - Cost monitoring dashboards or integration with existing monitoring tools for all external services.
+        - User-level quotas for hosted or enterprise versions.
 
-- Mitigation Strategy: Dependency Scanning and Management
-  - Description:
-    1. **Regular Dependency Scanning:** Implement automated dependency scanning for both frontend (Yarn/npm) and backend (Poetry) dependencies using tools like `npm audit`, `yarn audit`, and `poetry check` or dedicated vulnerability scanning tools (e.g., Snyk, OWASP Dependency-Check). Integrate these scans into the CI/CD pipeline.
-    2. **Dependency Updates:** Regularly update dependencies to the latest versions to patch known vulnerabilities. Follow security advisories and patch releases from dependency maintainers.
-    3. **Lock Files:** Ensure lock files (`yarn.lock`, `poetry.lock`) are used and committed to version control to maintain consistent dependency versions across environments and prevent supply chain attacks.
-    4. **Vulnerability Monitoring:** Set up alerts for newly discovered vulnerabilities in used dependencies to proactively address them.
-  - Threats Mitigated:
-    - Dependency Vulnerabilities (Medium Severity): Reduces the risk of exploiting known vulnerabilities in third-party libraries like `openai`, `moviepy`, `Pillow`, `fastapi`, `httpx` and others.
-  - Impact:
-    - Dependency Vulnerabilities: Medium reduction in risk. Keeps the application protected against known dependency vulnerabilities.
-  - Currently Implemented:
-    - Partially implemented. `pyproject.toml`, `package.json`, `yarn.lock` and Dockerfiles exist, indicating dependency management is in place. `poetry run pyright` and `poetry run pytest` in `backend/README.md` suggest some level of code quality checks.
-  - Missing Implementation:
-    - Automated dependency scanning is not explicitly mentioned or integrated into CI/CD.
-    - Regular dependency update process is not documented.
-    - Vulnerability monitoring and alerting are not mentioned.
+- Mitigation strategy: Enforce HTTPS for all Communication Channels
+    - Description:
+        - Ensure that HTTPS is enabled and enforced for all communication between the frontend and backend, and between the backend and external AI services and ScreenshotOne.
+        - Configure the backend and frontend servers to use HTTPS certificates.
+        - For API calls to external services, always use HTTPS endpoints to encrypt data in transit.
+        - Consider using HTTP Strict Transport Security (HSTS) headers to instruct browsers to always use HTTPS for the application.
+    - List of threats mitigated:
+        - Data Security and Privacy (Severity: Medium) - Man-in-the-middle attacks, interception of sensitive data (API keys, user screenshots, generated code, URLs) during transmission.
+    - Impact:
+        - Protects the confidentiality and integrity of data transmitted between different components of the application, reducing the risk of data breaches during transit.
+    - Currently implemented:
+        - HTTPS usage is generally a standard practice for web applications, but it is not explicitly configured or verified in the provided files.
+    - Missing implementation:
+        - Explicit configuration of HTTPS on frontend and backend servers.
+        - Verification that all API calls to external services are made over HTTPS.
+        - Implementation of HSTS headers.
 
-- Mitigation Strategy: Input Validation and Sanitization
-  - Description:
-    1. **File Path Validation:** In `evals.py`, thoroughly validate user-provided folder paths to prevent path traversal vulnerabilities. Ensure paths are within expected directories and sanitize input to remove malicious characters.
-    2. **Limit Input File Sizes:** Implement limits on the size of uploaded screenshots and video files in `generate_code.py` and `video/utils.py` to prevent excessively large files that could cause resource exhaustion or DoS.
-    3. **File Type Validation:** Validate the file types of uploaded images and videos to ensure they are expected formats (e.g., PNG, JPG, MOV, MP4) in `generate_code.py` and `video/utils.py`.
-    4. **Image/Video Processing Limits:** Implement safeguards in image/video processing functions (`image_processing/utils.py`, `video/utils.py`) to prevent processing of maliciously crafted files that could exploit vulnerabilities in image/video libraries (e.g., Pillow, moviepy). Consider using secure processing libraries and keeping them updated.
-    5. **URL Validation:** In `screenshot.py`, validate the input URL to `capture_screenshot` to prevent unexpected behavior or SSRF vulnerabilities. Use a URL parsing library to ensure the URL is well-formed and potentially restrict allowed schemes (e.g., `http`, `https`).
-    6. **Content Security Policy (CSP):** Implement a Content Security Policy in the frontend to mitigate potential XSS risks if the generated code is directly rendered in the application.
-  - Threats Mitigated:
-    - Path Traversal (Medium Severity): Prevents attackers from accessing files outside of the intended directories in `evals.py`.
-    - Denial of Service (DoS) (Medium Severity): Prevents resource exhaustion from processing excessively large files or maliciously crafted files.
-    - Code Injection (Indirect) (Low to Medium Severity): Reduces the risk of vulnerabilities in generated code by limiting input types and sizes, and through CSP (though indirect).
-    - Server-Side Request Forgery (SSRF) (Low Severity): Reduces the risk of unintended external requests via `screenshot.py`.
-  - Impact:
-    - Path Traversal: Medium reduction in risk. Prevents unauthorized file access.
-    - Denial of Service (DoS): Low to Medium reduction in risk. Makes it harder to cause resource exhaustion through malicious inputs.
-    - Code Injection (Indirect): Low reduction in risk. Provides a layer of defense against potential vulnerabilities in generated code.
-    - Server-Side Request Forgery (SSRF): Low reduction in risk. Limits the scope of potential SSRF issues.
-  - Currently Implemented:
-    - Not explicitly implemented. File path validation, file type validation and size limits are not evident in the provided files. `image_processing/utils.py` and `video/utils.py` exist for image/video processing, but security aspects are not detailed. URL validation in `screenshot.py` is missing.
-  - Missing Implementation:
-    - File path validation in `evals.py`.
-    - Input file size limits in `generate_code.py` and `video/utils.py`.
-    - File type validation in `generate_code.py` and `video/utils.py`.
-    - Security review of image/video processing logic and libraries in `image_processing/utils.py` and `video/utils.py`.
-    - URL validation in `screenshot.py`.
-    - Content Security Policy (CSP) implementation in frontend.
+- Mitigation strategy: Implement Input Validation and Sanitization for Image, Video, and URL Processing
+    - Description:
+        - Implement server-side input validation for all uploaded images and videos, and for URLs provided for screenshots.
+        - Validate file types for images and videos to ensure only expected formats (e.g., PNG, JPEG, MOV, MP4) are accepted.
+        - Limit file sizes for images and videos to prevent processing of excessively large files that could lead to resource exhaustion or denial-of-service.
+        - Sanitize image and video data to remove potentially malicious metadata or embedded code before processing them with AI models. Libraries like Pillow (for images) and appropriate video processing libraries can be used for sanitization and validation.
+        - For URLs used in screenshot capture, implement basic URL validation to ensure they are well-formed URLs and potentially restrict allowed schemes (e.g., only `http` and `https`). While full SSRF protection might be complex due to the nature of the ScreenshotOne service, basic validation can prevent obvious misuse.
+    - List of threats mitigated:
+        - Data Security and Privacy (Severity: Low to Medium) - Processing of malicious files, potential vulnerabilities in image/video processing libraries, resource exhaustion, basic SSRF attempts via URL input.
+        - Resource Exhaustion (Severity: Medium) - Prevent processing of excessively large files that could lead to server overload.
+    - Impact:
+        - Reduces the risk of processing malicious files and potential exploits related to image, video, and URL handling. Mitigates resource exhaustion from large files. Provides basic protection against URL-based attacks.
+    - Currently implemented:
+        - Image processing is performed using the PIL library, but explicit input validation and sanitization are not detailed in the provided files.
+    - Missing implementation:
+        - Input validation checks for file types and sizes for images and videos in backend.
+        - Sanitization of image and video data before AI processing.
+        - URL validation for screenshot capture functionality.
+        - File size limits for video uploads to prevent resource exhaustion during video processing.
 
-- Mitigation Strategy: Disable or Secure Mock Mode in Production
-  - Description:
-    1. **Environment-Based Configuration:** Ensure the `MOCK` environment variable (used for mock mode in `backend/config.py`) is strictly set to `False` or not defined in production deployments.
-    2. **Code Review:** Conduct code reviews before deployments to ensure mock mode is not accidentally enabled in production code.
-    3. **Feature Flags:** Consider using a more robust feature flag system instead of a simple environment variable to manage mock mode and other development/debugging features. This allows for more controlled activation and deactivation.
-  - Threats Mitigated:
-    - Mock Mode Misuse (Low to Medium Severity): Prevents accidental or malicious use of mock mode in production, which could bypass intended functionality or security measures.
-  - Impact:
-    - Mock Mode Misuse: Medium reduction in risk. Ensures production environment uses real AI API calls and intended application logic.
-  - Currently Implemented:
-    - Partially implemented. `backend/config.py` uses `MOCK` environment variable to control mock mode.
-  - Missing Implementation:
-    - Explicit instructions to disable mock mode in production deployment documentation.
-    - Code review process to verify mock mode is disabled in production.
-    - Consideration of a more robust feature flag system.
+- Mitigation strategy: Establish Regular Dependency Update Process
+    - Description:
+        - Implement a process for regularly updating both backend (Python) and frontend (Node.js) dependencies.
+        - Utilize dependency management tools (Poetry for backend, Yarn/npm for frontend) to keep dependencies up-to-date.
+        - Integrate dependency scanning tools (e.g., Snyk, Dependabot, or GitHub's dependency scanning) into the development pipeline to automatically identify and report known vulnerabilities in dependencies.
+        - Regularly review and apply dependency updates, prioritizing security patches.
+        - Consider using automated dependency update tools to streamline the update process and ensure timely patching of vulnerabilities.
+    - List of threats mitigated:
+        - Dependency Vulnerabilities (Severity: Medium) - Exploitation of known vulnerabilities in outdated dependencies, potentially leading to system compromise or data breaches.
+    - Impact:
+        - Reduces the risk of security vulnerabilities arising from outdated dependencies by ensuring timely updates and vulnerability patching.
+    - Currently implemented:
+        - Dependency management is used (Poetry for backend, Yarn for frontend), but no automated update process or dependency scanning is mentioned.
+    - Missing implementation:
+        - Automated dependency update process (e.g., using CI/CD pipelines).
+        - Integration of dependency scanning tools for vulnerability detection.
+        - Scheduled dependency review and update cycles.
 
-- Mitigation Strategy: Server-Side API Key Management (instead of Client-Side)
-  - Description:
-    1. **Backend API Proxy:** Move API key handling entirely to the backend. The frontend should not directly handle or store API keys. Implement backend API endpoints that act as proxies to the AI APIs and ScreenshotOne API. The backend will authenticate requests and securely manage the API keys.
-    2. **Frontend Authentication:** Implement a proper authentication mechanism for frontend users to access the backend API endpoints. This could be session-based authentication, JWT, or similar.
-    3. **Authorization:** Implement authorization checks in the backend to ensure users only have access to the features and data they are permitted to access.
-  - Threats Mitigated:
-    - Rate Limiting Bypass (Client-Side Keys) (Low to Medium Severity): Prevents malicious users from easily bypassing rate limits or abusing the service by hiding API keys on the server-side.
-    - API Key Exposure (High Severity): Further reduces API key exposure risk by removing client-side key handling.
-  - Impact:
-    - Rate Limiting Bypass (Client-Side Keys): Medium reduction in risk. Makes it significantly harder to bypass rate limits.
-    - API Key Exposure: High reduction in risk. Centralizes API key management on the server, making it much more secure.
-  - Currently Implemented:
-    - Not implemented. `Troubleshooting.md` suggests client-side key input and storage in browser. `generate_code.py` retrieves API keys from client-side parameters.
-  - Missing Implementation:
-    - Backend API proxy for AI API calls and ScreenshotOne API calls.
-    - Frontend authentication and backend authorization mechanisms.
-    - Removal of client-side API key handling.
+- Mitigation strategy: Implement Input Validation for Folder Paths in Evaluation Endpoints
+    - Description:
+        - In the `evals.py` routes (`/evals`, `/pairwise-evals`, `/best-of-n-evals`), implement server-side validation for the `folder`, `folder1`, `folder2`, etc. parameters.
+        - Validate that the provided folder paths are within the expected evaluation directories and prevent access to arbitrary file system paths.
+        - Use secure path handling functions to avoid path traversal vulnerabilities (e.g., ensure paths are absolute and within allowed base directories, sanitize paths to remove `..` components).
+        - Consider using a whitelist approach to define allowed evaluation directories and validate user-provided paths against this whitelist.
+    - List of threats mitigated:
+        - Path Traversal Vulnerability (Severity: Medium) - Unauthorized access to files and directories outside of the intended evaluation folders, potential information disclosure or other malicious activities.
+    - Impact:
+        - Reduces the risk of path traversal attacks by restricting access to allowed evaluation directories.
+    - Currently implemented:
+        - Basic checks for folder existence are present in `evals.py`, but no explicit path traversal prevention measures are implemented.
+    - Missing implementation:
+        - Server-side validation of folder paths to prevent path traversal vulnerabilities in evaluation endpoints.
+        - Whitelist of allowed evaluation directories and validation against this whitelist.
+        - Secure path handling functions to sanitize and validate folder paths.

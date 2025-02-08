@@ -50,6 +50,8 @@ templates:
 
       - This should be a complete list of threats that addresses the real-world risk to the system in question, as opposed to any fantastical concerns that the input might have included.
 
+      - Threat models should include only threats introduced by application from PROJECT FILES. Don't include general, common threats and best practices: like audit, penetration testing, logs, monitoring, alerts, backups, update dependencies, SSDLC, training, etc.
+
       - Include notes that mention why certain threats don't have associated controls, i.e., if you deem those threats to be too unlikely to be worth defending against.
 
       # OUTPUT INSTRUCTIONS

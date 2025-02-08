@@ -1,202 +1,135 @@
-# Attack Surface Analysis for "AI Nutrition-Pro"
+## ATTACK SURFACE ANALYSIS
 
-## Attack Surface Identification
+### 1) External Malicious or Unauthorized Requests
 
-Below is an overview of the system's digital assets, components, and entry points, as described in tests/EXAMPLE_ARCHITECTURE.md. Potential vulnerabilities or insecure configurations are listed alongside each component.
+- **Description**
+  Meal Planner applications and other external clients send requests to AI Nutrition-Pro. Attackers could exploit stolen or weak API keys, or craft malicious requests to gain unauthorized access or disrupt services.
 
-1. API Gateway (Kong)
-   - Entry Point(s):
-     - Internet-facing endpoint for Meal Planner applications
-     - Provides authentication (API key-based), rate limiting, and input filtering
-   - Potential Vulnerabilities:
-     - Insecure or improperly managed API keys
-     - Insufficient input validation or weak filtering rules
-     - Misconfiguration of rate limiting or access control lists (ACL)
+- **How AI Nutrition-Pro Contributes to the Attack Surface**
+  AI Nutrition-Pro exposes endpoints through the API Gateway, granting external access for content generation and data storage. This external integration broadens the system's entry points.
 
-2. Web Control Plane (Golang, AWS Elastic Container Service)
-   - Entry Point(s):
-     - Internal web application accessible by the Administrator
-   - Potential Vulnerabilities:
-     - Unauthenticated or insufficiently protected admin interface
-     - Weak session management or access control
-     - Insecure configuration data handling
+- **Example**
+  An attacker obtains the Meal Planner application’s API key and floods the backend API with high-volume requests or queries for unauthorized data.
 
-3. Control Plane Database (Amazon RDS)
-   - Entry Point(s):
-     - Receives traffic from the Web Control Plane over TLS
-   - Potential Vulnerabilities:
-     - SQL injection vulnerabilities, if queries are not properly parameterized
-     - Misconfiguration leading to potential exposure or lack of encryption at rest
+- **Impact**
+  Could lead to unauthorized data access, denial-of-service, or compromise of sensitive nutrition content and user information.
 
-4. API Application (Golang, AWS Elastic Container Service)
-   - Entry Point(s):
-     - Receives requests from API Gateway over HTTPS/REST
-     - Sends requests to ChatGPT-3.5
-   - Potential Vulnerabilities:
-     - Potential injection points (e.g., malicious data from external integrations)
-     - Improper error handling or insufficient server-side validation
+- **Risk Severity**
+  **High**
 
-5. API Database (Amazon RDS)
-   - Entry Point(s):
-     - Database connections from API Application over TLS
-   - Potential Vulnerabilities:
-     - Unauthorized data access if credentials or ACLs are misconfigured
-     - Lack of encryption or compliance measures for sensitive dietitians’ content
+- **Current Mitigations**
+  - Authentication via API key
+  - ACL rules at the API Gateway
+  - TLS-encrypted network traffic
+  - Rate limiting and input filtering
 
-6. External Integrations
-   - Meal Planner Application (HTTPS/REST)
-     - Potential Vulnerability:
-       - Compromised API key or unauthorized requests from impersonating user/application
-   - ChatGPT-3.5 (HTTPS/REST)
-     - Potential Vulnerability:
-       - Reliance on third-party service that may expose or leak user data if not handled properly
+- **Missing Mitigations**
+  - Use short-lived or more secure credential mechanisms
+  - Strict server-side validation of request parameters
+  - Restrict known untrusted IP sources or apply stricter access controls
 
-7. Administrator Account
-   - Privileged Internal Person
-   - Potential Vulnerabilities:
-     - Compromised credentials granting full administrative access
-     - Insider threat risk if user monitoring and auditing are insufficient
 
-## Threat Enumeration
+### 2) Misconfiguration or Compromise of the API Gateway
 
-This section lists potential threats using a STRIDE-based approach:
+- **Description**
+  The API Gateway (Kong) is critical for authentication, rate limiting, and filtering. If misconfigured or compromised, an attacker could bypass safeguards and directly access the backend services or databases.
 
-1. Spoofing (S)
-   - Threat: Attacker spoofs Meal Planner Application or obtains legitimate API keys to imitate authorized requests.
-     - Attack Vector: Steal or guess API keys; exploit misconfigured API Gateway authentication.
-     - Affected Components: API Gateway, API Application.
+- **How AI Nutrition-Pro Contributes to the Attack Surface**
+  The entire architecture relies on the Gateway for secure entry, making it a high-value target.
 
-2. Tampering (T)
-   - Threat: Malicious actor alters requests or responses between Meal Planner Application and AI Nutrition-Pro or tampers with data in transit to the databases.
-     - Attack Vector: MITM attacks or replay attacks if TLS is improperly configured or vulnerable.
-     - Affected Components: API Gateway, API Application, Control Plane Database, API Database.
+- **Example**
+  A misapplied ACL policy or vulnerability in the Kong API Gateway container allowing unrestricted access from the internet.
 
-3. Repudiation (R)
-   - Threat: Lack of proper logging or auditing allows attackers or malicious insiders to deny having performed specific actions or transactions.
-     - Attack Vector: Incomplete or insufficient logging on the API Gateway, Web Control Plane, or backend services.
-     - Affected Components: Web Control Plane, API Application, Databases.
+- **Impact**
+  Full exposure of backend APIs, leading to unauthorized operations, data theft, and potential system takeover.
 
-4. Information Disclosure (I)
-   - Threat: Sensitive data (e.g., dietitians’ content, billing data, or personal information) is leaked.
-     - Attack Vector: Misconfigured database access controls, insecure endpoints, insufficient encryption in storage or transit.
-     - Affected Components: Control Plane Database, API Database, Web Control Plane.
+- **Risk Severity**
+  **Critical**
 
-5. Denial of Service (D)
-   - Threat: High-volume requests overwhelm the API Gateway or the backend, preventing legitimate requests from being fulfilled.
-     - Attack Vector: Flooding with large requests or malicious traffic, exploiting insufficient rate limiting configuration.
-     - Affected Components: API Gateway, API Application.
+- **Current Mitigations**
+  - ACL rules in Kong
+  - Rate limiting and some input filtering
+  - TLS for transport encryption
 
-6. Elevation of Privilege (E)
-   - Threat: An attacker, initially with limited access, escalates privileges to gain administrator or root-level access in the system.
-     - Attack Vector: Exploiting vulnerabilities in the Web Control Plane, misconfigured IAM roles, or lacking access controls.
-     - Affected Components: Web Control Plane, API Gateway, Databases (if admin privileges can be obtained).
+- **Missing Mitigations**
+  - Ensure only trusted administrators can configure or manage Kong
+  - Restrict management endpoints and enforce robust configuration reviews
+  - Segment the Gateway so it is not directly exposed to all external networks
 
-## Impact Assessment
 
-Assessing the potential damage, likelihood, and overall severity of each threat:
+### 3) Malicious Data Stored or Injection Within Databases
 
-1. Spoofing API Keys
-   - Impact: High (Compromised or cloned keys could expose the entire application functionality).
-   - Likelihood: Medium (API keys can be stolen or guessed if not handled properly).
-   - Existing Controls: API Gateway authentication; rate limiting.
+- **Description**
+  The system stores dietitian content, requests, and LLM responses in its databases. Untrusted or improperly validated inputs could lead to malicious data being injected, stored, and later processed or displayed in unsafe ways.
 
-2. Tampering of Data in Transit
-   - Impact: Medium (Could lead to corrupted or malicious data reaching the system).
-   - Likelihood: Low to Medium (Requires bypass or break of TLS, but possible if misconfigured).
-   - Existing Controls: TLS encryption between components.
+- **How AI Nutrition-Pro Contributes to the Attack Surface**
+  AI Nutrition-Pro accepts content from multiple external Meal Planner applications and can store large volumes of user-supplied data, increasing the risk of ingestion of malicious payloads.
 
-3. Repudiation (Insufficient Logging)
-   - Impact: Medium (Harder to investigate and demonstrate malicious actions; compliance issues).
-   - Likelihood: Medium (Commonly overlooked area if logging is not enforced).
-   - Existing Controls: Potential basic cloud logs; depends on specific logging configurations.
+- **Example**
+  An attacker includes hidden scripts or malicious payloads within dietitian sample content that later executes when viewed in the admin panel or triggers undesired processes in the backend.
 
-4. Information Disclosure
-   - Impact: High (Sensitive dietary and billing data could be leaked, resulting in reputational, legal, and financial consequences).
-   - Likelihood: Medium (Depends on database security, data access policies, and encryption at rest).
-   - Existing Controls: TLS in transit; role-based access or ACLs (assumed).
+- **Impact**
+  Possible data corruption, unauthorized code execution, or unexpected behavior in the application.
 
-5. Denial of Service (DoS)
-   - Impact: High (Service disruptions can affect all Meal Planner applications and reputation).
-   - Likelihood: Medium (APIs can be targeted with DoS or DDoS attacks).
-   - Existing Controls: Rate limiting in API Gateway, AWS auto-scaling (partially).
+- **Risk Severity**
+  **Medium**
 
-6. Elevation of Privilege
-   - Impact: Critical (Full administrative access could compromise the entire system: data, billing, etc.).
-   - Likelihood: Low to Medium (Requires specific vulnerabilities, but consequences are severe).
-   - Existing Controls: IAM roles, strong administrative controls (assumed).
+- **Current Mitigations**
+  - Basic input filtering at the API Gateway
+  - TLS to secure data in transit
 
-## Threat Ranking
+- **Missing Mitigations**
+  - Server-side content sanitization and stricter validation routines
+  - Robust checks on user-supplied fields before storing in databases
 
-Based on impact and likelihood:
 
-1. Elevation of Privilege (Critical)
-2. Information Disclosure (High)
-3. Denial of Service (High)
-4. Spoofing API Keys (High)
-5. Tampering (Medium)
-6. Repudiation (Medium)
+### 4) Data Leakage or Malicious Prompt Injection via ChatGPT
 
-Justification:
-- Elevation of Privilege poses a system-wide compromise, increasing its criticality.
-- Information Disclosure and DoS carry high business and reputational risks.
-- Spoofing API keys could also lead to broad access but may require additional steps to exploit.
-- Tampering and Repudiation are moderate risks with potentially simpler existing mitigations.
+- **Description**
+  AI Nutrition-Pro forwards user-provided and dietitian-related data to ChatGPT for content generation. A malicious prompt or unclean data could trigger ChatGPT to disclose sensitive information or manipulate outputs in harmful ways.
 
-## Mitigation Recommendations
+- **How AI Nutrition-Pro Contributes to the Attack Surface**
+  By integrating with ChatGPT, AI Nutrition-Pro potentially sends private or sensitive user data to an external AI service, increasing the risk of unintentional exposure.
 
-1. Elevation of Privilege (Critical)
-   - Recommendation:
-     - Conduct thorough IAM review for AWS roles and container tasks.
-     - Enforce least privilege principles for database and system access.
-     - Implement Multi-Factor Authentication (MFA) for administrative accounts.
-   - Related Threat(s): Elevation of Privilege.
+- **Example**
+  A user crafts a prompt that coaxes ChatGPT to reveal data regarding other tenants' nutritional content or system details.
 
-2. Information Disclosure (High)
-   - Recommendation:
-     - Enforce encryption at rest for both control plane and API databases (e.g., AWS RDS encryption).
-     - Perform regular access reviews and tighten ACLs.
-     - Mask or tokenize sensitive data (dietitians’ content, billing info) as needed.
-   - Related Threat(s): Information Disclosure.
+- **Impact**
+  Leads to unauthorized disclosure of sensitive data, privacy violations, or brand damage from negative or harmful AI-generated output.
 
-3. Denial of Service (High)
-   - Recommendation:
-     - Improve or regularly test API Gateway rate limiting and ban lists.
-     - Consider DDoS protection services (e.g., AWS Shield).
-     - Implement circuit breakers or auto-scaling on critical components.
-   - Related Threat(s): Denial of Service.
+- **Risk Severity**
+  **High**
 
-4. Spoofing API Keys (High)
-   - Recommendation:
-     - Rotate API keys regularly and ensure keys are stored securely.
-     - Implement IP allowlisting or mutual TLS for partner applications if feasible.
-     - Log and alert on suspicious authentication attempts.
-   - Related Threat(s): Spoofing.
+- **Current Mitigations**
+  - Basic input filtering through API Gateway (though not specifically tailored to prompt injection)
 
-5. Tampering (Medium)
-   - Recommendation:
-     - Enforce HSTS and use up-to-date TLS configurations.
-     - Validate payloads server-side and ensure integrity checks.
-     - Use code scanning and container image security checks to detect vulnerabilities.
-   - Related Threat(s): Tampering.
+- **Missing Mitigations**
+  - Implement prompt moderation and filtering logic specific to AI requests
+  - Redact or remove sensitive data from prompts before sending them to ChatGPT
+  - Clearly define data-sharing boundaries with the external LLM service
 
-6. Repudiation (Medium)
-   - Recommendation:
-     - Implement centralized, tamper-evident logging and track key events (admin changes, database queries).
-     - Integrate logs with a SIEM or monitoring tool for real-time alerts.
-   - Related Threat(s): Repudiation.
 
-## QUESTIONS & ASSUMPTIONS
+### 5) Unauthorized Access or Privilege Escalation in the Web Control Plane
 
-1. Questions
-   - What logging frameworks are currently in use for both the Web Control Plane and the API Gateway?
-   - Are API keys stored and rotated via a secure secrets management system?
-   - Is ChatGPT-3.5 usage covered under strict data-handling policies to prevent sensitive data leakage?
+- **Description**
+  The Web Control Plane manages client onboarding, configuration, and billing. If an attacker gains access—especially at an Administrator level—they could manipulate settings or access all stored data.
 
-2. Assumptions
-   - TLS is properly configured and enforced across all AWS ECS components and RDS databases.
-   - Access to production systems is restricted to authorized administrators via secure IAM roles.
-   - Container images are regularly patched, and AWS responsibilities (e.g., underlying OS security) are managed following best practices.
+- **How AI Nutrition-Pro Contributes to the Attack Surface**
+  Centralized control over the entire application resides in a single interface. Any compromise here jeopardizes all downstream systems and data.
 
----
+- **Example**
+  An attacker leverages weak admin credentials to sign in and make destructive changes to the billing or client configuration.
 
-This threat model focuses solely on the digital attack surface for AI Nutrition-Pro. Additional reviews are encouraged for human and physical security considerations, but they are excluded per the current scope.
+- **Impact**
+  Full compromise of application data, denial of service, or operational takeover.
+
+- **Risk Severity**
+  **Critical**
+
+- **Current Mitigations**
+  - TLS for secure transport to the control plane
+
+- **Missing Mitigations**
+  - Enforce multi-factor authentication and strong password controls for administrative roles
+  - Implement granular role-based access to limit powerful actions
+  - Separate duties so that no single account has unrestricted control of all features
