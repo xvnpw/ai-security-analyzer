@@ -21,9 +21,9 @@ class AppConfig(BaseModel):
     verbose: bool = Field(default=False)
     debug: bool = Field(default=False)
 
-    agent_prompt_type: Literal["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations"] = Field(
-        default="sec-design"
-    )
+    agent_prompt_type: Literal[
+        "sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"
+    ] = Field(default="sec-design")
 
     # fake: only for testing
     agent_provider: Literal["openai", "openrouter", "anthropic", "google", "fake"] = Field(default="openai")

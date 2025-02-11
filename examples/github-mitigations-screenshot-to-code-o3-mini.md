@@ -1,0 +1,79 @@
+- Mitigation Strategy: Validate Image File Integrity
+  - Description:
+    - Upon receiving a screenshot input, first verify that the file extension belongs to an allowed set (for example, .png, .jpeg).
+    - Next, read the first few bytes of the file to confirm that its MIME type or signature matches a genuine image format.
+    - If the file fails any of these checks, immediately reject it before proceeding with any processing.
+    - Integrate these checks at the very start of the screenshot ingestion pipeline in the screenshot-to-code application.
+  - List of Threats Mitigated:
+    - Malicious file injection by disguising non-image files as images (severity: high).
+    - Execution or processing of corrupted data leading to potential remote code vulnerabilities (severity: high).
+  - Impact:
+    - Significantly reduces the chance of processing harmful or malformed files, thereby lowering the risk of remote code execution and system compromise within the screenshot-to-code workflow.
+  - Currently Implemented:
+    - The current system performs basic extension checks; however, it does not verify the actual file signature or MIME type before processing.
+  - Missing Implementation:
+    - Comprehensive step-by-step file signature and MIME-type validation across all screenshot ingestion functions is absent and should be added.
+
+- Mitigation Strategy: Enforce Strict File Size and Resolution Limits
+  - Description:
+    - Define fixed maximum limits for both the file size and the image resolution accepted by the application.
+    - As part of the file ingestion, inspect the uploaded screenshot’s file size and its image dimensions (width and height).
+    - If the file exceeds the defined limits, abort further processing and notify the client of the constraint.
+    - Ensure that these checks occur before any resource-intensive image processing routines are initiated.
+  - List of Threats Mitigated:
+    - Denial-of-Service (DoS) via resource exhaustion using oversized images (severity: high).
+    - Unexpected memory and processing strain causing instability in the application (severity: medium to high).
+  - Impact:
+    - Helps prevent resource exhaustion attacks by ensuring that only appropriately sized images are processed, thereby protecting the integrity and availability of the application.
+  - Currently Implemented:
+    - While the project accepts file uploads, there are no explicit, enforced limits on file size or resolution integrated into the processing workflow.
+  - Missing Implementation:
+    - A dedicated pre-check routine that validates file size and image dimensions against strict limits is missing and should be incorporated in the screenshot ingestion stage.
+
+- Mitigation Strategy: Secure File I/O with Controlled Directory Usage
+  - Description:
+    - Designate a specific and fixed directory for storing uploaded screenshots and any generated code files.
+    - Enforce a naming convention that completely avoids incorporating any user-provided data into filenames or directory paths.
+    - Use absolute paths and file system permissions to restrict file access strictly to this directory.
+    - Validate and sanitize any external input that might inadvertently influence file paths or names.
+  - List of Threats Mitigated:
+    - Directory traversal vulnerabilities allowing an attacker to access or overwrite sensitive system or application files (severity: high).
+    - Unauthorized file manipulation resulting from user-controlled input affecting file paths (severity: high).
+  - Impact:
+    - Assures that all file read/write operations are confined to a known safe location, greatly minimizing the risk of unauthorized file system access or manipulation related to the screenshot-to-code process.
+  - Currently Implemented:
+    - The project writes temporary files in a default location; however, there is no enforced controlled directory with a strict naming convention or tailored permissions.
+  - Missing Implementation:
+    - A robust implementation ensuring file operations occur exclusively within a pre-defined and secured directory is missing from the current file management subsystem.
+
+- Mitigation Strategy: Verify Integrity of Model and Intermediate Files
+  - Description:
+    - When loading machine-learning models or using intermediate files generated during the conversion process, compute a cryptographic hash (e.g., SHA-256) of each file.
+    - Compare the computed hash with a pre-defined, trusted hash value that is stored securely.
+    - If the hashes do not match, refuse to load or use the file and alert the system to potential tampering.
+    - Integrate this verification process into the initialization routines for model loading or just before a conversion process begins.
+  - List of Threats Mitigated:
+    - Tampering with machine-learning model files or intermediate assets, which may result in incorrect code conversion or manipulation (severity: medium).
+    - Corruption or unauthorized alteration of files that could undermine the application's reliability (severity: medium).
+  - Impact:
+    - Ensures that the critical components (the ML models and supporting files) remain unmodified and trustworthy, thereby reducing the risk of incorrect conversions and potential exploitation.
+  - Currently Implemented:
+    - There is no hash verification or other integrity-check mechanism present for model or intermediate file usage in the current version of screenshot-to-code.
+  - Missing Implementation:
+    - A systematic integrity verification process utilizing cryptographic hashes or digital signatures before employing these files in the conversion process is not implemented and should be developed.
+
+- Mitigation Strategy: Sanitize Generated Code for Web Contexts
+  - Description:
+    - Before displaying the generated code in a web or browser-based interface, pass the output through a robust sanitization routine.
+    - Use a reputable sanitization library to strip or escape HTML, JavaScript, and any other potentially dangerous tags or constructs.
+    - Ensure that the sanitization process occurs as the final step before rendering the code, so any accidental embedded scripts are neutralized.
+    - Provide documentation and easy-to-integrate methods for downstream users or developers to apply additional sanitization if the output is repurposed in other contexts.
+  - List of Threats Mitigated:
+    - Cross-site scripting (XSS) attacks arising from the direct rendering of unsanitized generated code (severity: high).
+    - Injection of malicious code into the output that could compromise user browsers (severity: high).
+  - Impact:
+    - Reduces the risk of client-side vulnerabilities by ensuring that any code generated by screenshot-to-code is rendered purely as text and not executed inadvertently in a web context.
+  - Currently Implemented:
+    - The core repository focuses on code generation and does not include a sanitization framework for web display; any sanitization is expected to be handled externally by the integrating application.
+  - Missing Implementation:
+    - A dedicated sanitization step within the screenshot-to-code output pipeline is absent. Adding an integrated sanitization mechanism would help safeguard applications that directly render the generated code in web environments.

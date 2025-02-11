@@ -26,15 +26,16 @@ def main():
         "attack-surface": "Attack Surface",
         "attack-tree": "Attack Tree",
         "mitigations": "Mitigation Strategies",
+        "vulnerabilities": "Vulnerabilities",
     }
     # Order in which columns should appear.
-    doc_order = ["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations"]
+    doc_order = ["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"]
 
     # For each mode we know which projects are expected.
     mode_projects = {
         "dir mode": ["screenshot-to-code", "terraform-provider-chronicle"],
         "file mode": ["ai-nutrition-pro"],
-        "github mode": ["flask"],
+        "github mode": ["flask", "screenshot-to-code"],
         "github deep dive mode": ["flask"],
     }
 

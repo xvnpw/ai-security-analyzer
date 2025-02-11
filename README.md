@@ -28,7 +28,7 @@
 - 🔍 Attack Surface Analysis
 - 🌳 Attack Tree Analysis
 - 🛡️ Mitigation Strategies
-
+- 🐛 Vulnerabilities
 The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
 
 ## Key Features
@@ -236,6 +236,7 @@ The application accepts various command-line arguments to tailor its behavior.
   - `attack-surface`: Perform attack surface analysis for the project.
   - `attack-tree`: Perform attack tree analysis for the project.
   - `mitigations`: Perform mitigation strategies analysis for the project.
+  - `vulnerabilities`: **For `dir` and `github` modes only** Perform vulnerabilities analysis for the project (read more about this mode in [vulnerabilities](#vulnerabilities)).
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis. (for now only supported by gemini-2.0-flash-thinking-exp model)
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
 - `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `0`).
@@ -455,7 +456,7 @@ poetry run python ai_security_analyzer/app.py \
     --include "**/*.java"
 ```
 
-## Deep Analysis in GitHub Mode (Experimental)
+## Deep Analysis in GitHub Mode
 
 Enable **Deep Analysis** in **GitHub Mode** to perform an in-depth examination of specific attack surfaces, threats, or attack trees within a GitHub repository. Deep analysis is currently supported only by Gemini 2.0 Flash Thinking Experimental model.
 
@@ -524,6 +525,21 @@ The application supports checkpointing to help recover from failures during long
 
 4. **Limitations**
    - Checkpoints are implemented using Langchain's checkpoint saver, which is not fully implemented yet. It might work incorrectly. Hope it will be fixed in future.
+
+## Vulnerabilities
+
+Vulnerabilities mode is experimental and cannot be completely trusted. It's recommended to use it with caution and verify the results. LLMs at current state of development are not able to find vulnerabilities in code. They are able to find potential vulnerabilities and suggest mitigations, but this is far from being reliable.
+
+### Enabling Vulnerabilities Mode
+
+Use the `--agent-prompt-type vulnerabilities` flag when running the tool in `dir` mode:
+
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    --agent-prompt-type vulnerabilities
+```
 
 ## Troubleshooting
 

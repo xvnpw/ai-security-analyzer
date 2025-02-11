@@ -155,15 +155,16 @@ def parse_arguments() -> AppConfig:
     )
     agent_group.add_argument(
         "--agent-prompt-type",
-        choices=["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations"],
+        choices=["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"],
         default="sec-design",
         help=(
             "Prompt to use in agent (default: sec-design):\n"
             " - sec-design: Generate a security design document for the project\n"
             " - threat-modeling: Perform threat modeling for the project\n"
             " - attack-surface: Perform attack surface analysis for the project\n"
-            " - attack-tree: Perform attack tree analysis for the project"
-            " - mitigations: Perform mitigation strategies analysis for the project"
+            " - attack-tree: Perform attack tree analysis for the project\n"
+            " - mitigations: Perform mitigation strategies analysis for the project\n"
+            " - vulnerabilities: Perform vulnerabilities analysis for the project (read more about this mode in README.md)"
         ),
     )
     agent_group.add_argument(
