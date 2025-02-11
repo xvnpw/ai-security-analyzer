@@ -29,6 +29,7 @@
 - 🌳 Attack Tree Analysis
 - 🛡️ Mitigation Strategies
 - 🐛 Vulnerabilities
+
 The tool supports multiple project types and utilizes advanced language models (LLMs) to create insightful security documentation tailored to your project's specific needs.
 
 ## Key Features
