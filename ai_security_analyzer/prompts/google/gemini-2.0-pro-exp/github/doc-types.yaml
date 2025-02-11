@@ -4,3 +4,4 @@ doc-types:
   attack-surface: "ATTACK SURFACE ANALYSIS"
   attack-tree: "ATTACK TREE"
   mitigations: "MITIGATION STRATEGIES"
+  vulnerabilities: "VULNERABILITIES"
