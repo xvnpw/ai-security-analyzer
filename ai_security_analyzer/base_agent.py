@@ -21,6 +21,7 @@ class AgentType(Enum):
     GITHUB_DEEP_AT = "github-deep-at"
     GITHUB_DEEP_SD = "github-deep-sd"
     GITHUB_DEEP_MS = "github-deep-ms"
+    VULNERABILITIES_AGENT1 = "vulnerabilities-agent1"
 
     @staticmethod
     def create(config: AppConfig) -> "AgentType":
@@ -34,6 +35,8 @@ class AgentType(Enum):
             return AgentType.GITHUB_DEEP_SD
         elif config.deep_analysis and config.agent_prompt_type == "mitigations":
             return AgentType.GITHUB_DEEP_MS
+        elif config.mode == "dir" and config.agent_prompt_type == "vulnerabilities-workflow-1":
+            return AgentType.VULNERABILITIES_AGENT1
         else:
             return AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
 

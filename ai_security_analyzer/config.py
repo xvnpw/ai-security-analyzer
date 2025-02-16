@@ -22,7 +22,13 @@ class AppConfig(BaseModel):
     debug: bool = Field(default=False)
 
     agent_prompt_type: Literal[
-        "sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"
+        "sec-design",
+        "threat-modeling",
+        "attack-surface",
+        "attack-tree",
+        "mitigations",
+        "vulnerabilities",
+        "vulnerabilities-workflow-1",
     ] = Field(default="sec-design")
 
     # fake: only for testing
@@ -34,6 +40,7 @@ class AppConfig(BaseModel):
     agent_preamble: str = Field(default="##### (🤖 AI Generated)")
     deep_analysis: bool = Field(default=False)
     recursion_limit: int = Field(default=30)
+    vulnerabilities_iterations: int = Field(default=5)
 
     exclude: Optional[List[str]] = Field(default=None)
     exclude_mode: Literal["add", "override"] = Field(default="add")

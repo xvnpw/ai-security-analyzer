@@ -65,6 +65,39 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
         self.config.output_file.write(output_content)
 
 
+class VulnerabilitiesAgent1GraphExecutor(BaseGraphExecutor):
+    def execute(self, graph: CompiledStateGraph, target: str) -> None:
+        try:
+            runnable_config = self.get_runnable_config(target)
+
+            state = graph.invoke(
+                {
+                    "target_dir": target,
+                    "project_type": self.config.project_type,
+                    "exclude": self.config.exclude,
+                    "exclude_mode": self.config.exclude_mode,
+                    "include": self.config.include,
+                    "include_mode": self.config.include_mode,
+                    "filter_keywords": self.config.filter_keywords,
+                    "vulnerabilities_iterations": self.config.vulnerabilities_iterations,
+                },
+                runnable_config,
+            )
+            self._write_output(state)
+        except Exception as e:
+            logger.error(f"Graph execution failed: {e}")
+            raise
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc_final", "")
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
+
+
 class DryRunFullDirScanGraphExecutor(FullDirScanGraphExecutor):
     def _format_docs(self, documents: List[Document]) -> str:
         formatted_docs = []
@@ -217,6 +250,7 @@ class GraphExecutorFactory:
             AgentType.GITHUB_DEEP_AT: GithubDeepAtGraphExecutor,
             AgentType.GITHUB_DEEP_SD: GithubDeepSdGraphExecutor,
             AgentType.GITHUB_DEEP_MS: GithubDeepMsGraphExecutor,
+            AgentType.VULNERABILITIES_AGENT1: VulnerabilitiesAgent1GraphExecutor,
         }
         agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)

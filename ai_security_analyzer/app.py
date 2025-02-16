@@ -155,7 +155,15 @@ def parse_arguments() -> AppConfig:
     )
     agent_group.add_argument(
         "--agent-prompt-type",
-        choices=["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"],
+        choices=[
+            "sec-design",
+            "threat-modeling",
+            "attack-surface",
+            "attack-tree",
+            "mitigations",
+            "vulnerabilities",
+            "vulnerabilities-workflow-1",
+        ],
         default="sec-design",
         help=(
             "Prompt to use in agent (default: sec-design):\n"
@@ -164,7 +172,8 @@ def parse_arguments() -> AppConfig:
             " - attack-surface: Perform attack surface analysis for the project\n"
             " - attack-tree: Perform attack tree analysis for the project\n"
             " - mitigations: Perform mitigation strategies analysis for the project\n"
-            " - vulnerabilities: Perform vulnerabilities analysis for the project (read more about this mode in README.md)"
+            " - vulnerabilities: Perform vulnerabilities analysis for the project (read more about this mode in README.md)\n"
+            " - vulnerabilities-workflow-1: Perform vulnerabilities analysis for the project using a workflow-based approach"
         ),
     )
     agent_group.add_argument(
@@ -202,6 +211,12 @@ def parse_arguments() -> AppConfig:
         "--reasoning-effort",
         choices=["low", "medium", "high"],
         help="Reasoning effort for the agent (only for reasoning models, e.g. o1). Default is None",
+    )
+    agent_group.add_argument(
+        "--vulnerabilities-iterations",
+        type=int,
+        default=5,
+        help="Number of iterations to perform for vulnerabilities analysis (default: 5)",
     )
 
     # Checkpointing arguments
