@@ -7,7 +7,7 @@ from langgraph.graph import StateGraph
 from pydantic import BaseModel, Field
 
 from ai_security_analyzer.checkpointing import CheckpointManager
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, format_filename, clean_markdown
 from operator import add
 
@@ -55,14 +55,16 @@ class GithubAgent2At(BaseGithubDeepAnalysisAgent[AgentState, AttackTreeAnalysis]
 
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
+        structured_llm: LLM,
         step_prompts: List[str],
         deep_analysis_prompt_template: str,
         format_prompt_template: str,
         checkpoint_manager: CheckpointManager,
     ):
         super().__init__(
-            llm_provider=llm_provider,
+            llm=llm,
+            structured_llm=structured_llm,
             step_prompts=step_prompts,
             deep_analysis_prompt_template=deep_analysis_prompt_template,
             format_prompt_template=format_prompt_template,
@@ -72,8 +74,8 @@ class GithubAgent2At(BaseGithubDeepAnalysisAgent[AgentState, AttackTreeAnalysis]
             builder=StateGraph(AgentState),
         )
 
-    def _structured_parse_step(self, state: AgentState, llm_structured: LLM) -> dict[str, Any]:
-        result = super()._structured_parse_step(state, llm_structured)
+    def _structured_parse_step(self, state: AgentState) -> dict[str, Any]:
+        result = super()._structured_parse_step(state)
 
         tree_data = result["structured_data"]
         paths = tree_data.attack_sub_tree_paths
@@ -89,7 +91,7 @@ class GithubAgent2At(BaseGithubDeepAnalysisAgent[AgentState, AttackTreeAnalysis]
             return "get_item_details"
         return "items_final_response"
 
-    def _get_item_details(self, state: AgentState, llm: LLM) -> dict[str, Any]:
+    def _get_item_details(self, state: AgentState) -> dict[str, Any]:
         idx = state["attack_tree_paths_index"]
         paths = state["attack_tree_paths"]
         target_repo = state["target_repo"]
@@ -100,7 +102,7 @@ class GithubAgent2At(BaseGithubDeepAnalysisAgent[AgentState, AttackTreeAnalysis]
             text=paths[idx].text,
         )
         msg = HumanMessage(content=prompt)
-        response = llm.invoke([msg])
+        response = self.llm.invoke([msg])
         tokens = get_total_tokens(response)
         detail = clean_markdown(get_response_content(response))
 

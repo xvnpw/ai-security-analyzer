@@ -2,6 +2,13 @@ from pathlib import Path
 import yaml
 from typing import List
 
+from ai_security_analyzer.config import AppConfig
+
+THREAT_ACTOR_DESCRIPTION = {
+    "none": "",
+    "external_web": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
+}
+
 
 class PromptManager:
     def __init__(self) -> None:
@@ -24,6 +31,42 @@ class PromptManager:
         for char in unsafe_chars:
             sanitized = sanitized.replace(char, "_")
         return sanitized
+
+    def get_formatted_prompts(self, config: AppConfig) -> List[str]:
+        raw_prompts = self.get_prompt(config.agent_provider, config.agent_model, config.mode, config.agent_prompt_type)
+
+        if config.agent_prompt_type in ("vulnerabilities", "vulnerabilities-workflow-1"):
+            return [self.format_for_vulnerabilities(raw_prompt, config) for raw_prompt in raw_prompts]
+        else:
+            return raw_prompts
+
+    def format_for_vulnerabilities(self, agent_prompt: str, config: AppConfig) -> str:
+        if config.excluded_classes_of_vulnerabilities:
+            exclude_vulnerabilities = f"classes of vulnerabilities: {config.excluded_classes_of_vulnerabilities}"
+        else:
+            exclude_vulnerabilities = ""
+
+        if config.included_classes_of_vulnerabilities:
+            include_vulnerabilities = f"classes of vulnerabilities: {config.included_classes_of_vulnerabilities}"
+        else:
+            include_vulnerabilities = ""
+
+        if config.vulnerabilities_severity_threshold:
+            severity_threshold = f"has vulnerability rank at least: {config.vulnerabilities_severity_threshold}"
+        else:
+            severity_threshold = ""
+
+        if config.vulnerabilities_threat_actor and config.vulnerabilities_threat_actor in THREAT_ACTOR_DESCRIPTION:
+            threat_actor_description = THREAT_ACTOR_DESCRIPTION[config.vulnerabilities_threat_actor]
+        else:
+            threat_actor_description = ""
+
+        return agent_prompt.format(
+            include_vulnerabilities=include_vulnerabilities,
+            exclude_vulnerabilities=exclude_vulnerabilities,
+            severity_threshold=severity_threshold,
+            threat_actor_description=threat_actor_description,
+        )
 
     def get_prompt(self, provider: str, model: str, mode: str, prompt_type: str) -> List[str]:
         """

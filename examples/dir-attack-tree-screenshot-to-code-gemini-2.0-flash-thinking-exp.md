@@ -1,149 +1,116 @@
 # Attack Tree for screenshot-to-code Application
 
-**Attacker Goal:** Compromise the screenshot-to-code application
+## Root Goal: Compromise screenshot-to-code application
 
-- **1. Exploit API Key Vulnerabilities**
-    - Description: Attacker gains access to and misuses API keys (OpenAI, Anthropic, Gemini, Replicate, ScreenshotOne) used by the application.
-    - Actionable insights:
-        - Securely manage and store API keys using environment variables or secrets management systems.
-        - Implement rate limiting and usage monitoring for API keys to detect anomalies.
-        - Regularly rotate API keys.
-        - Avoid hardcoding API keys in the application code.
+### 1.0 Exploit API Key Exposure
+- Description: Attacker gains access to OpenAI, Anthropic, or Gemini API keys, or ScreenshotOne API key used by the application. These keys could be exposed through misconfigured environment variables, insecure storage, or frontend exposure.
+- Actionable Insights:
+    - Ensure all API keys are stored securely and not directly in the frontend code or publicly accessible configuration files.
+    - Use secure environment variable management practices.
+    - Consider using a secrets management system if deploying to production.
+- Likelihood: Medium
+- Impact: High - Full access to the AI models and ScreenshotOne service, potentially leading to unauthorized usage, data access, financial implications (API billing), and ability to take arbitrary screenshots.
+- Effort: Low - If keys are inadvertently exposed, it requires minimal effort.
+- Skill Level: Low - Basic understanding of web application architecture and configuration.
+- Detection Difficulty: Medium - Depends on monitoring of API key usage and configuration audits.
+
+### 2.0 Perform Prompt Injection
+- Description: Attacker crafts malicious input (screenshot or video) that, when processed by the AI model, causes unintended behavior. This could range from generating malicious code, bypassing intended functionality, or potentially gaining access to internal data or systems if the generated code is executed in a privileged context (less likely in this application).
+- Actionable Insights:
+    - Implement robust input validation and sanitization on the backend before sending data to AI models.
+    - Monitor AI model responses for suspicious or unexpected outputs.
+    - Consider sandboxing or isolating the execution environment of the generated code.
+- Likelihood: Medium
+- Impact: Medium - Could lead to generation of vulnerable code, unexpected application behavior, or in a worst-case scenario, limited backend compromise if the AI response is mishandled.
+- Effort: Medium - Requires understanding of AI prompt engineering and the application's workflow.
+- Skill Level: Medium - Requires some expertise in AI interaction and application logic.
+- Detection Difficulty: Medium - Requires monitoring of AI interactions and output analysis.
+
+### 3.0 Exploit Dependency Vulnerabilities
+- Description: Attacker exploits known vulnerabilities in third-party libraries used by the backend (Poetry managed Python packages) or frontend (Yarn managed Node.js packages).
+- Actionable Insights:
+    - Regularly audit and update backend and frontend dependencies to their latest secure versions.
+    - Use dependency scanning tools to identify and remediate known vulnerabilities.
+    - Implement a Software Bill of Materials (SBOM) for better dependency management.
+
+    #### 3.1 Backend Dependency Vulnerabilities
+    - Description: Exploiting vulnerabilities in Python packages listed in `backend/pyproject.toml`.
+    - Actionable Insights:
+        - Regularly run `poetry update` to update dependencies.
+        - Use `poetry audit` or similar tools to check for known vulnerabilities in dependencies.
     - Likelihood: Medium
-    - Impact: High
-    - Effort: Low
-    - Skill Level: Low to Medium
-    - Detection Difficulty: Medium
+    - Impact: Medium - Backend compromise, data access, service disruption depending on the vulnerability.
+    - Effort: Medium - Requires identifying vulnerable dependencies and exploiting them.
+    - Skill Level: Medium - Requires understanding of Python and common web application vulnerabilities.
+    - Detection Difficulty: Medium - Vulnerability scanners can detect known issues, but exploit detection might be harder.
 
-- **2. Server-Side Vulnerabilities (Backend)**
-    - Description: Attacker exploits vulnerabilities in the FastAPI backend, such as injection flaws, authentication bypasses, or insecure dependencies.
-    - Actionable insights:
-        - Implement robust input validation and sanitization to prevent injection attacks.
-        - Enforce strong authentication and authorization mechanisms.
-        - Conduct regular security audits and penetration testing to identify and remediate vulnerabilities.
-        - Keep FastAPI and its dependencies up to date with the latest security patches.
-        - Implement proper error handling and logging to avoid information leakage.
+    #### 3.2 Frontend Dependency Vulnerabilities
+    - Description: Exploiting vulnerabilities in Node.js packages listed in `frontend/package.json`.
+    - Actionable Insights:
+        - Regularly run `yarn upgrade` to update dependencies.
+        - Use `yarn audit` or similar tools to check for known vulnerabilities in dependencies.
     - Likelihood: Medium
-    - Impact: High
-    - Effort: Medium to High
-    - Skill Level: Medium to High
-    - Detection Difficulty: Medium
+    - Impact: Medium - Frontend compromise, potentially leading to XSS or other client-side attacks.
+    - Effort: Medium - Requires identifying vulnerable dependencies and exploiting them.
+    - Skill Level: Medium - Requires understanding of JavaScript and common web application vulnerabilities.
+    - Detection Difficulty: Medium - Vulnerability scanners can detect known issues, but exploit detection might be harder.
 
-- **3. Client-Side Vulnerabilities (Frontend)**
-    - Description: Attacker exploits vulnerabilities in the React/Vite frontend, such as Cross-Site Scripting (XSS), insecure dependencies, or client-side data manipulation.
-    - Actionable insights:
-        - Implement secure frontend development practices to prevent XSS vulnerabilities.
-        - Sanitize user inputs rendered in the frontend.
-        - Manage frontend dependencies securely and update them regularly.
-        - Implement Content Security Policy (CSP) to mitigate XSS risks.
-        - Avoid storing sensitive data in the frontend or local storage.
-    - Likelihood: Low to Medium
-    - Impact: Medium
-    - Effort: Medium
-    - Skill Level: Medium
-    - Detection Difficulty: Low to Medium
+### 4.0 Exploit Insecure Media Processing
+- Description: The application processes images using `PIL` library and videos using `moviepy` and `PIL`. Vulnerabilities in image and video processing libraries can be exploited by uploading maliciously crafted media files.
+- Actionable Insights:
+    - Keep `Pillow` (PIL) and `moviepy` libraries updated to the latest version to patch known vulnerabilities.
+    - Implement input validation on media uploads, checking file types, sizes, and formats.
+    - Consider using a sandboxed environment for media processing to limit the impact of potential exploits.
+- Likelihood: Medium
+- Impact: Medium - Backend compromise, potentially leading to arbitrary code execution depending on the vulnerability and exploit.
+- Effort: Medium to High - Requires deep understanding of media processing vulnerabilities and libraries used.
+- Skill Level: High - Requires expertise in vulnerability research and exploit development.
+- Detection Difficulty: Medium - Monitoring file uploads and system behavior might help, but exploit detection can be complex.
 
-- **4. Data Injection Attacks via Media Input**
-    - Description: Attacker crafts malicious screenshots or videos to inject code or manipulate application behavior during AI processing.
-    - Actionable insights:
-        - Implement robust input validation and sanitization for image and video processing.
-        - Limit the file size and types of uploaded media.
-        - Employ security scanning tools on uploaded media to detect malicious content.
-        - Monitor AI model outputs for unexpected or malicious code generation.
-    - Likelihood: Low to Medium
-    - Impact: Medium
-    - Effort: Medium
-    - Skill Level: Medium
-    - Detection Difficulty: Medium
+### 5.0 Denial of Service (DoS) via Resource Exhaustion
+- Description: Attacker sends a large number of requests to the backend, especially for AI code generation or evaluation endpoints, exhausting server resources or API quotas, leading to service disruption.
+- Actionable Insights:
+    - Implement rate limiting on API endpoints, especially code generation and evaluation endpoints.
+    - Monitor server resource usage and API request patterns.
+    - Implement request queuing and throttling mechanisms.
+- Likelihood: Medium
+- Impact: Medium - Service disruption, impacting application availability for legitimate users.
+- Effort: Low - Can be achieved with readily available DoS tools or scripts.
+- Skill Level: Low - Basic scripting skills and understanding of network requests.
+- Detection Difficulty: Medium - Detectable through monitoring network traffic and server load, but distinguishing from legitimate heavy usage can be challenging.
 
-- **5. Dependency Vulnerabilities**
-    - Description: Attacker exploits known vulnerabilities in frontend (yarn packages) or backend (poetry packages) dependencies.
-    - Actionable insights:
-        - Regularly update dependencies to their latest secure versions.
-        - Utilize dependency vulnerability scanning tools to identify and address known vulnerabilities.
-        - Monitor security advisories for reported vulnerabilities in used libraries.
-        - Implement a Software Bill of Materials (SBOM) to track and manage dependencies.
-    - Likelihood: Medium
-    - Impact: Medium to High
-    - Effort: Low
-    - Skill Level: Low to Medium
-    - Detection Difficulty: Low
+### 6.0 Exposure of Debug Artifacts
+- Description: Debugging features are enabled (`IS_DEBUG_ENABLED`) and debug artifacts are written to `DEBUG_DIR`. If `DEBUG_DIR` is publicly accessible or misconfigured, attackers could gain access to sensitive information logged during debugging, potentially including prompts, responses, or internal application states.
+- Actionable Insights:
+    - Ensure debugging features are disabled in production environments.
+    - If debugging is necessary in non-production environments, restrict access to the `DEBUG_DIR` and its contents.
+    - Review debug logs regularly and sanitize sensitive information before logging.
+- Likelihood: Low to Medium (depending on environment configuration)
+- Impact: Medium - Exposure of potentially sensitive information, aiding further attacks or revealing application internals.
+- Effort: Low - If debug directory is publicly accessible, it requires minimal effort.
+- Skill Level: Low - Basic understanding of web server configuration and file access.
+- Detection Difficulty: Medium - Configuration audits and access control monitoring can help detect misconfigurations.
 
-- **6. Docker Misconfiguration Exploitation**
-    - Description: Attacker exploits misconfigurations in the Docker setup (docker-compose.yml, Dockerfiles) to gain unauthorized access, escalate privileges, or compromise the host system.
-    - Actionable insights:
-        - Follow Docker security best practices, including least privilege and minimal image footprint.
-        - Regularly review and audit Docker configurations (docker-compose.yml, Dockerfiles).
-        - Avoid running containers in privileged mode.
-        - Implement network segmentation to isolate containers.
-        - Use security scanning tools to check Docker images for vulnerabilities.
-    - Likelihood: Low to Medium
-    - Impact: Medium to High
-    - Effort: Medium
-    - Skill Level: Medium
-    - Detection Difficulty: Medium
+### 7.0 Path Traversal in Evaluation Endpoints
+- Description: The `/evals`, `/pairwise-evals`, and `/best-of-n-evals` endpoints in `evals.py` take folder paths as input. If these paths are not properly validated and sanitized, an attacker could manipulate the folder parameter to access files and directories outside the intended evaluation directories.
+- Actionable Insights:
+    - Implement strict input validation and sanitization for folder paths in evaluation endpoints.
+    - Use absolute paths and avoid relative path constructions when handling file system operations based on user input.
+    - Consider using a whitelist approach to restrict access to specific allowed directories for evaluations.
+- Likelihood: Medium
+- Impact: Medium - Access to sensitive files on the server, potential data leakage or further exploitation depending on accessible files.
+- Effort: Medium - Requires understanding of path traversal techniques and the application's file handling logic.
+- Skill Level: Medium - Requires knowledge of web application vulnerabilities and file system operations.
+- Detection Difficulty: Medium - Input validation checks and path sanitization can prevent exploitation, but detecting attempted path traversal in logs might require specific monitoring rules.
 
-- **7. Path Traversal in Evaluation Endpoints**
-    - Description: Attacker exploits path traversal vulnerabilities in the `/evals` and `/pairwise-evals` endpoints by manipulating folder parameters to access sensitive files or directories outside the intended evaluation paths.
-    - Actionable insights:
-        - Implement strict input validation and sanitization for folder path parameters.
-        - Use absolute paths and avoid relative paths when handling file system operations.
-        - Employ allowlisting to restrict access to only authorized evaluation directories.
-        - Conduct security testing to identify and prevent path traversal vulnerabilities.
-    - Likelihood: Low to Medium
-    - Impact: Medium
-    - Effort: Medium
-    - Skill Level: Medium
-    - Detection Difficulty: Medium
-
-- **8. Server-Side Request Forgery (SSRF) in Screenshot Capture**
-    - Description: Attacker exploits the `/api/screenshot` endpoint to perform SSRF attacks by providing malicious URLs, potentially accessing internal resources or external services on behalf of the server.
-    - Actionable insights:
-        - Implement robust URL validation and sanitization to prevent SSRF attacks.
-        - Restrict the schemes and domains allowed for screenshot capture.
-        - Isolate the screenshot capture functionality in a separate network zone if possible.
-        - Monitor outbound network traffic for suspicious requests originating from the screenshot service.
-    - Likelihood: Low
-    - Impact: Medium to High
-    - Effort: Medium
-    - Skill Level: Medium to High
-    - Detection Difficulty: Medium
-
-- **9. ScreenshotOne API Key Exposure**
-    - Description: Attacker gains access to the ScreenshotOne API key, potentially leading to unauthorized usage, quota depletion, or abuse of the screenshot service.
-    - Actionable insights:
-        - Securely manage and store the ScreenshotOne API key using environment variables or secrets management systems.
-        - Implement rate limiting and usage monitoring for the ScreenshotOne API to detect anomalies.
-        - Regularly rotate the ScreenshotOne API key.
-        - Restrict access to the API key to only authorized components of the application.
-    - Likelihood: Low to Medium
-    - Impact: Medium
-    - Effort: Low
-    - Skill Level: Low to Medium
-    - Detection Difficulty: Medium
-
-- **10. Denial of Service via WebSocket**
-    - Description: Attacker floods the `/generate-code` WebSocket endpoint with excessive requests or malformed messages, leading to resource exhaustion and denial of service for legitimate users.
-    - Actionable insights:
-        - Implement rate limiting and connection limits for WebSocket connections.
-        - Implement input validation and sanitization for WebSocket messages to prevent processing of malformed data.
-        - Employ monitoring and alerting to detect and respond to potential DoS attacks.
-        - Consider using a WebSocket gateway or load balancer to distribute and manage WebSocket traffic.
-    - Likelihood: Low to Medium
-    - Impact: Medium
-    - Effort: Medium
-    - Skill Level: Low to Medium
-    - Detection Difficulty: Medium
-
-- **11. Vulnerabilities in Video Processing Libraries**
-    - Description: Attacker exploits known vulnerabilities in video processing libraries (e.g., moviepy, PIL) used in `video/utils.py` to compromise the application, potentially leading to arbitrary code execution or denial of service.
-    - Actionable insights:
-        - Regularly update video processing libraries to their latest secure versions.
-        - Utilize vulnerability scanning tools to identify and address known vulnerabilities in these libraries.
-        - Implement input validation and sanitization for video files to mitigate potential exploits.
-        - Consider sandboxing or isolating the video processing functionality to limit the impact of potential vulnerabilities.
-    - Likelihood: Low
-    - Impact: Medium to High
-    - Effort: Medium to High
-    - Skill Level: Medium to High
-    - Detection Difficulty: Medium
+### 8.0 Server-Side Request Forgery (SSRF) via Screenshot API
+- Description: The `/api/screenshot` endpoint in `screenshot.py` uses the `screenshotone.com` API to capture website screenshots based on user-provided URLs. If the application does not properly validate and sanitize the input URL, an attacker could provide a malicious URL, potentially leading to SSRF. This could allow the attacker to make requests to internal network resources or external websites, potentially bypassing firewalls or gaining access to sensitive information.
+- Actionable Insights:
+    - Implement strict validation and sanitization of URLs provided to the `/api/screenshot` endpoint.
+    - Consider using a URL whitelist to restrict screenshot capture to only trusted domains.
+    - Review the security policies and configurations of the `screenshotone.com` API to understand its security posture and potential risks.
+- Likelihood: Medium
+- Impact: High - Potential access to internal network resources, data leakage, or further exploitation depending on the internal network configuration and the attacker's goals.
+- Effort: Medium - Requires understanding of SSRF vulnerabilities and the application's screenshot functionality.
+- Skill Level: Medium - Requires knowledge of web application vulnerabilities and networking concepts.
+- Detection Difficulty: Medium - Monitoring outbound requests from the backend server and analyzing URL parameters in logs can help detect SSRF attempts.

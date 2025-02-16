@@ -22,7 +22,13 @@ class AppConfig(BaseModel):
     debug: bool = Field(default=False)
 
     agent_prompt_type: Literal[
-        "sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"
+        "sec-design",
+        "threat-modeling",
+        "attack-surface",
+        "attack-tree",
+        "mitigations",
+        "vulnerabilities",
+        "vulnerabilities-workflow-1",
     ] = Field(default="sec-design")
 
     # fake: only for testing
@@ -33,7 +39,8 @@ class AppConfig(BaseModel):
     agent_preamble_enabled: bool = Field(default=False)
     agent_preamble: str = Field(default="##### (🤖 AI Generated)")
     deep_analysis: bool = Field(default=False)
-    recursion_limit: int = Field(default=30)
+    recursion_limit: int = Field(default=35)
+    vulnerabilities_iterations: int = Field(default=5)
 
     exclude: Optional[List[str]] = Field(default=None)
     exclude_mode: Literal["add", "override"] = Field(default="add")
@@ -48,6 +55,20 @@ class AppConfig(BaseModel):
     clear_checkpoints: bool = Field(default=False)
     checkpoint_dir: str = Field(default=".checkpoints")
     reasoning_effort: Optional[str] = Field(default=None)
+
+    # Secondary agent configuration
+    secondary_agent_provider: Optional[Literal["openai", "openrouter", "anthropic", "google", "fake"]] = Field(
+        default=None
+    )
+    secondary_agent_model: Optional[str] = Field(default=None)
+    secondary_agent_temperature: Optional[float] = Field(default=None, ge=0, le=1)
+
+    # Vulnerabilities workflow configuration
+    vulnerabilities_severity_threshold: Literal["low", "medium", "high", "critical"] = Field(default="high")
+    vulnerabilities_threat_actor: Literal["none", "external_web"] = Field(default="external_web")
+    vulnerabilities_output_dir: str = Field(default="vulnerabilities-workflow")
+    included_classes_of_vulnerabilities: str = Field(default="")
+    excluded_classes_of_vulnerabilities: str = Field(default="deny of service")
 
     @field_validator("exclude", mode="before")
     def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:

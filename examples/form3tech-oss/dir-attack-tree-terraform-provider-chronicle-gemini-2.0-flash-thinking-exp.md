@@ -1,104 +1,115 @@
-## Attack Tree for Chronicle Terraform Provider
+# Attack Tree for Terraform Chronicle Provider
 
-**Attacker Goal:** Compromise Chronicle Application by Exploiting Terraform Provider Credential Handling
+**Attacker Goal:** Compromise Chronicle Application by Exploiting Terraform Provider
 
-### 1. Expose Sensitive Credentials via Terraform Configuration and State
+## Compromise Chronicle Application
 
-- **1.1. Credential Exposure in Terraform State File**
-    - Description: Terraform state file, if stored insecurely, can be accessed by an attacker. This file may contain sensitive credentials in plaintext or easily reversible format used to authenticate with Chronicle APIs or external log sources.
+- **1. Exploit Credential Exposure**
+  - Description: Attacker gains access to sensitive credentials used by the Terraform provider to authenticate with Chronicle APIs or external services integrated via feeds.
+  - Actionable Insights:
+    - Store Terraform state files securely and restrict access.
+    - Avoid storing sensitive credentials directly in Terraform configurations. Use secrets management tools or Terraform Cloud/Enterprise for secret handling.
+    - Educate users on the risks of exposing environment variables containing credentials.
+  - Likelihood: Medium
+  - Impact: High (Full access to Chronicle APIs and integrated services, potential data breach, unauthorized actions within Chronicle and connected systems)
+  - Effort: Low (If state files or environment are not properly secured)
+  - Skill Level: Low
+  - Detection Difficulty: Medium (Depends on monitoring of Chronicle API access and state file security)
+  - **1.1. Retrieve Credentials from Terraform State Files**
+    - Description: Attacker accesses Terraform state files (e.g., `.tfstate` or state stored in backend) which may contain plaintext credentials if not properly managed.
     - Actionable Insights:
-        - **Mandatory**: Use a secure Terraform backend with state encryption enabled (e.g., Terraform Cloud, S3 with encryption, Azure Storage with encryption, GCS with encryption).
-        - **Strongly Recommended**: Implement strict access control and audit logging for access to the Terraform state file storage location.
-    - Likelihood: Medium
-    - Impact: High
-    - Effort: Low
+      - Use a remote backend for Terraform state storage with access controls.
+      - Enable state file encryption at rest and in transit for the backend.
+      - Regularly audit access to Terraform state files.
+    - Likelihood: Medium (If state backend is not secured)
+    - Impact: High (Exposure of credentials)
+    - Effort: Low (If state files are accessible)
     - Skill Level: Low
-    - Detection Difficulty: Low
-
-- **1.2. Credential Exposure in Terraform Configuration Files**
-    - Description: Developers might inadvertently hardcode sensitive credentials (like API keys, secrets, passwords) directly into Terraform configuration files (e.g., `.tf` files). If these files are not properly secured (e.g., committed to public repositories, insecure file system permissions), attackers can access them and extract the credentials.
+    - Detection Difficulty: Low (If state file access is not logged and monitored)
+  - **1.2. Obtain Credentials from Environment Variables**
+    - Description: Attacker gains access to environment variables where credentials like `CHRONICLE_BACKSTORY_CREDENTIALS`, `CHRONICLE_BIGQUERY_CREDENTIALS`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AZURE_SHARED_KEY`, `AZURE_SAS_TOKEN`, `OFFICE365_CLIENT_SECRET`, `OKTA_API_TOKEN`, `PROOFPOINT_SECRET`, `QUALYS_SECRET`, `THINKST_CANARY_TOKEN` etc., might be stored.
     - Actionable Insights:
-        - **Mandatory**: Prohibit hardcoding credentials in Terraform configuration files. Implement automated checks to prevent this.
-        - **Strongly Recommended**: Use Terraform input variables and secure secret management solutions (e.g., HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, GCP Secret Manager) to inject credentials at runtime.
-    - Likelihood: Medium
-    - Impact: High
-    - Effort: Low
+      - Avoid storing credentials in environment variables if possible.
+      - If environment variables are necessary, secure the environment where the provider is running.
+      - Use more secure methods for credential management, such as credential files or access tokens.
+    - Likelihood: Medium (If environment is not properly secured or in CI/CD pipelines logs)
+    - Impact: High (Exposure of credentials)
+    - Effort: Low (If environment is accessible or logs are exposed)
     - Skill Level: Low
-    - Detection Difficulty: Low
-    - **1.2.1. API Feed Credentials Hardcoding**
-        - Description: Hardcoding API feed credentials (e.g., Thinkst Canary API token, Qualys VM credentials, Office 365 Client Secret, Okta API Key, Proofpoint SIEM Secret) within Terraform configuration files for resources like `chronicle_feed_thinkst_canary`, `chronicle_feed_qualys_vm`, `chronicle_feed_microsoft_office_365_management_activity`, `chronicle_feed_okta_system_log`, `chronicle_feed_okta_users`, `chronicle_feed_proofpoint_siem`.
-        - Actionable Insights:
-            - **Mandatory**:  Specifically prevent hardcoding API feed credentials. Enforce the use of external secret management for these resources.
-            - **Strongly Recommended**: Provide examples and documentation emphasizing secure credential management for API feed resources.
-        - Likelihood: Medium
-        - Impact: High
-        - Effort: Low
-        - Skill Level: Low
-        - Detection Difficulty: Low
-    - **1.2.2. Storage Feed Credentials Hardcoding**
-        - Description: Hardcoding storage feed credentials (e.g., AWS Access Keys/Secrets for S3/SQS, Azure Shared Keys/SAS Tokens for Blob Storage) within Terraform configuration files for resources like `chronicle_feed_amazon_s3`, `chronicle_feed_amazon_sqs`, `chronicle_azure_blobstore`, `chronicle_google_cloud_storage_bucket`.
-        - Actionable Insights:
-            - **Mandatory**: Specifically prevent hardcoding storage feed credentials. Enforce the use of external secret management or IAM roles/service principals where applicable.
-            - **Strongly Recommended**:  Provide examples and documentation emphasizing secure credential management for storage feed resources, including IAM roles/service principals for cloud providers.
-        - Likelihood: Medium
-        - Impact: High
-        - Effort: Low
-        - Skill Level: Low
-        - Detection Difficulty: Low
-
-- **1.3. Exposure via Verbose Logging or Debugging**
-    - Description: In development or debugging scenarios, verbose logging might inadvertently output sensitive credentials in plaintext. If these logs are accessible to attackers (e.g., insecure logging configurations, exposed debug endpoints), credentials can be compromised. While less likely in production, misconfigurations can occur.
+    - Detection Difficulty: Medium (Depends on environment and logging security)
+  - **1.3. Intercept Credentials during Input**
+    - Description: Attacker intercepts credentials as they are input into Terraform configuration or passed via command-line if not handled securely.
     - Actionable Insights:
-        - **Mandatory**: Review provider code and dependencies to ensure sensitive credentials are never logged in plaintext, even in debug mode.
-        - **Strongly Recommended**: Disable debug logging in production environments. Implement secure logging practices that sanitize or redact sensitive information. Regularly review logging configurations.
+      - Use secure input methods and avoid echoing credentials in logs or command history.
+      - Encourage use of credential files or access tokens instead of direct input.
     - Likelihood: Low
-    - Impact: Medium
-    - Effort: Medium
-    - Skill Level: Low
-    - Detection Difficulty: Medium
+    - Impact: Medium (Exposure of credentials)
+    - Effort: Medium (Requires local access or monitoring input methods)
+    - Skill Level: Medium
+    - Detection Difficulty: High (Difficult to detect real-time interception)
 
-### Attack Tree Visualization (Text-based)
+- **2. Man-in-the-Middle (MitM) Attack on Custom Endpoints**
+  - Description: Attacker intercepts communication between the Terraform provider and Chronicle API custom endpoints (e.g., `*_custom_endpoint`) if TLS is not enforced or misconfigured.
+  - Actionable Insights:
+    - Ensure TLS is always enabled and enforced for all Chronicle API endpoints, especially custom ones.
+    - Validate TLS certificates to prevent MitM attacks.
+    - Avoid using custom endpoints if not absolutely necessary and prefer official Chronicle API endpoints.
+    - Properly configure and secure the network infrastructure where custom endpoints are hosted.
+  - Likelihood: Medium (If custom endpoints are used without proper TLS configuration)
+  - Impact: High (Data interception, credential theft, potential API manipulation)
+  - Effort: Medium (Requires network access and MitM attack capabilities)
+  - Skill Level: Medium
+  - Detection Difficulty: Medium (Requires network monitoring and TLS inspection)
 
-```
-Attack Goal: Compromise Chronicle Application via Terraform Provider Credential Handling
-└── 1. Expose Sensitive Credentials via Terraform Configuration and State
-    ├── 1.1. Credential Exposure in Terraform State File
-    │   ├── Description: Insecure state file storage exposes credentials.
-    │   ├── Actionable Insights: Use state encryption, access control.
-    │   ├── Likelihood: Medium
-    │   ├── Impact: High
-    │   ├── Effort: Low
-    │   ├── Skill Level: Low
-    │   └── Detection Difficulty: Low
-    ├── 1.2. Credential Exposure in Terraform Configuration Files
-    │   ├── Description: Hardcoded credentials in configuration files.
-    │   ├── Actionable Insights: Prohibit hardcoding, use secret management.
-    │   ├── Likelihood: Medium
-    │   ├── Impact: High
-    │   ├── Effort: Low
-    │   ├── Skill Level: Low
-    │   └── Detection Difficulty: Low
-    │       ├── 1.2.1. API Feed Credentials Hardcoding
-    │       │   ├── Description: Hardcoding API feed credentials in config files.
-    │       │   ├── Actionable Insights: Prevent hardcoding, use secret management for API feeds.
-    │       │   ├── Likelihood: Medium
-    │       │   ├── Impact: High
-    │       │   ├── Effort: Low
-    │       │   ├── Skill Level: Low
-    │       │   └── Detection Difficulty: Low
-    │       └── 1.2.2. Storage Feed Credentials Hardcoding
-    │           ├── Description: Hardcoding storage feed credentials in config files.
-    │           ├── Actionable Insights: Prevent hardcoding, use secret management/IAM for storage feeds.
-    │           ├── Likelihood: Medium
-    │           ├── Impact: High
-    │           ├── Effort: Low
-    │           ├── Skill Level: Low
-    │           └── Detection Difficulty: Low
-    └── 1.3. Exposure via Verbose Logging or Debugging
-        ├── Description: Credentials logged in plaintext during debugging.
-        ├── Actionable Insights: Prevent logging secrets, disable debug logs in prod.
-        ├── Likelihood: Low
-        ├── Impact: Medium
-        ├── Effort: Medium
-        ├── Skill Level: Low
-        └── Detection Difficulty: Medium
+- **3. Exploit Debug Port Exposure**
+  - Description: Attacker gains unauthorized access to the debugging port (2345) exposed by the `debug.sh` script, potentially allowing control over the provider process.
+  - Actionable Insights:
+    - Never expose the debug port to untrusted networks or the internet.
+    - Only use the debug script in isolated, secure development environments.
+    - Ensure the debug port is only accessible from localhost or trusted IPs.
+    - Remove or disable debug functionality in production builds.
+  - Likelihood: Low (If debug script is used only in development and port is not exposed)
+  - Impact: Critical (Full control over provider process, potential credential extraction, manipulation of provider operations)
+  - Effort: Low (If debug port is inadvertently exposed)
+  - Skill Level: Medium
+  - Detection Difficulty: Low (If debug port exposure is not monitored by network security tools)
+
+- **4. Supply Chain Vulnerability via Dependencies**
+  - Description: Attacker compromises a dependency used by the Terraform provider, potentially injecting malicious code that could be executed during provider operations.
+  - Actionable Insights:
+    - Regularly audit and update dependencies to their latest secure versions.
+    - Use dependency scanning tools to identify known vulnerabilities in dependencies.
+    - Implement Software Bill of Materials (SBOM) to track dependencies and their versions.
+    - Use vendoring to manage dependencies and reduce reliance on external repositories during build time.
+  - Likelihood: Low (If dependencies are actively managed and scanned)
+  - Impact: High (Potential remote code execution within the provider, data exfiltration, manipulation of provider operations)
+  - Effort: Medium (Requires identifying and exploiting vulnerabilities in dependencies)
+  - Skill Level: High
+  - Detection Difficulty: Medium (Requires sophisticated monitoring and code analysis to detect malicious dependency behavior)
+
+- **5. Vulnerability in Feed Resource Logic**
+  - Description: Attacker exploits a vulnerability in the code that handles feed resources (e.g., `resource_feed_amazon_s3.go`, `resource_feed_okta_system_log.go`, `resource_feed_thinkst_canary.go`, etc.), potentially leading to unexpected behavior or security breaches when processing external data sources. This could include issues in input validation, data parsing, or handling of authentication details for external services.
+  - Actionable Insights:
+    - Implement robust input validation for all feed configurations and data sources.
+    - Conduct thorough security testing, including fuzzing and static analysis, of feed resource logic.
+    - Follow secure coding practices to prevent common vulnerabilities like injection flaws and buffer overflows in feed processing code.
+    - Isolate feed processing logic to limit the impact of potential vulnerabilities.
+    - Pay close attention to the handling of authentication credentials for external services within feed resources, ensuring secure storage and transmission.
+  - Likelihood: Medium (Given the complexity of handling various feed types and data sources)
+  - Impact: Medium (Denial of service, data corruption, potential information disclosure, unauthorized access to external services, depending on the vulnerability)
+  - Effort: Medium (Requires identifying and exploiting specific vulnerabilities in feed resource logic)
+  - Skill Level: Medium
+  - Detection Difficulty: Medium (Requires code review and monitoring of provider behavior for anomalies)
+
+- **6. Malicious Rule Injection**
+  - Description: Attacker injects malicious YARA-L rules via the `chronicle_rule` resource. This could lead to false positives/negatives in security detections, resource exhaustion within Chronicle, or potentially exploitation of vulnerabilities in Chronicle's rule processing engine.
+  - Actionable Insights:
+    - Implement strict input validation and sanitization for `rule_text` attribute to prevent injection of malicious code or unexpected rule syntax that could cause errors or bypass security checks within Chronicle.
+    - Perform static analysis and security scanning of YARA-L rules before applying them to Chronicle to detect potentially malicious patterns or logic.
+    - Implement monitoring and alerting for rule deployments and modifications to detect unauthorized or suspicious changes.
+    - Follow least privilege principles when granting permissions to manage Chronicle rules, limiting access to authorized personnel only.
+  - Likelihood: Low (Requires ability to modify Terraform configuration and apply changes)
+  - Impact: Medium (Potential for degraded security monitoring, false alerts, resource consumption within Chronicle)
+  - Effort: Medium (Requires understanding of YARA-L and Chronicle rule syntax, and access to Terraform configuration)
+  - Skill Level: Medium
+  - Detection Difficulty: Medium (Depends on monitoring of rule changes and anomaly detection in Chronicle rule behavior)

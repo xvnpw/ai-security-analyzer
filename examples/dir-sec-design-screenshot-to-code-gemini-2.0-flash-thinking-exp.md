@@ -1,460 +1,409 @@
-# BUSINESS POSTURE
+# DESIGN DOCUMENT
 
-- Business Priorities and Goals:
-  - The primary goal of the screenshot-to-code project is to provide a tool that simplifies and accelerates the process of converting visual designs (screenshots, mockups, Figma designs) into functional code.
-  - Key business priorities include:
-    - Accuracy and quality of the generated code.
-    - Support for a wide range of frontend stacks (HTML, React, Vue, etc.).
-    - Integration with leading AI models (Claude, GPT).
-    - Offering both open-source and hosted (paid) versions to cater to different user needs and generate revenue.
-    - Providing enterprise solutions for larger organizations.
-- Business Risks:
-  - Reliance on the accuracy and availability of third-party AI models. Inaccuracies in code generation can lead to user dissatisfaction and rework.
-  - Security risks associated with handling user-provided API keys and potentially sensitive screenshot data.
-  - Competition from other AI-powered code generation tools.
-  - Maintaining the open-source project and supporting the community while also developing and monetizing the hosted version.
-  - Scalability and reliability of the hosted version to handle enterprise demands.
+## BUSINESS POSTURE
 
-# SECURITY POSTURE
+The "screenshot-to-code" project aims to simplify and accelerate the process of converting visual designs into functional code. By leveraging AI, it targets users who need to quickly prototype web interfaces from screenshots, mockups, or design files, potentially bridging the gap between design and development.
 
-- Existing Security Controls:
-  - security control: API Key Management: The application requires users to provide their own OpenAI or Anthropic API keys to access the AI models. This is documented in `README.md` and `Troubleshooting.md`. API keys are stored locally in the browser's local storage, as mentioned in `Troubleshooting.md`.
-  - security control: Dockerization: Both frontend and backend are dockerized, as evidenced by `Dockerfile` and `docker-compose.yml`. This provides a consistent and isolated deployment environment.
-  - security control: Input Validation (Implicit): The application processes images and text prompts, implying some level of input handling, although explicit validation mechanisms are not detailed in the provided files.
-  - security control: CORS Configuration: CORS is configured in `backend/main.py` to allow requests from any origin (`allow_origins=["*"]`), which is suitable for an open application but might need to be restricted for production enterprise environments.
-- Accepted Risks:
-  - accepted risk: Reliance on User-Provided API Keys: The application relies on users to manage and secure their own API keys. This shifts the responsibility of API key security to the end-user.
-  - accepted risk: Open CORS Policy: The permissive CORS policy (`allow_origins=["*"]`) might expose the backend API to potential cross-site scripting attacks if not carefully managed.
-  - accepted risk: Limited Input Validation Transparency: The extent and rigor of input validation are not explicitly defined, which could lead to vulnerabilities if not implemented comprehensively.
-- Recommended Security Controls:
-  - security control: Implement robust input validation on both frontend and backend to sanitize screenshots and user inputs to prevent injection attacks and ensure data integrity. This is especially important for new routes like `/api/screenshot` which takes URL as input and `/generate-code` which handles video data.
-  - security control: For the hosted version, consider implementing secure API key management, potentially using a secrets management system to avoid storing keys directly in the browser or backend code.
-  - security control: Implement rate limiting and API usage monitoring to protect against abuse and potential denial-of-service attacks, especially for the hosted version and for routes like `/api/screenshot` that use external services.
-  - security control: Conduct regular security vulnerability scanning and penetration testing for both frontend and backend components to identify and remediate potential weaknesses.
-  - security control: Implement logging and monitoring of application activity, especially API requests and error events, to detect and respond to security incidents. Monitor usage of external services like screenshotone.com.
-  - security control: For enterprise deployments, consider restricting the CORS policy to only allow requests from authorized domains.
-  - security control: Implement a Content Security Policy (CSP) in the frontend to mitigate the risk of cross-site scripting (XSS) attacks.
-- Security Requirements:
-  - Authentication:
-    - For the open-source version, authentication is not explicitly required as it's designed for local use with user-provided API keys.
-    - For the hosted and enterprise versions, implement user authentication to manage access and potentially offer user-specific features and usage tracking.
-  - Authorization:
-    - For the hosted and enterprise versions, implement authorization controls to manage access to different features and data based on user roles or subscriptions. Consider authorization for evaluation routes (`/evals`, `/pairwise-evals`, `/best-of-n-evals`) to restrict access to sensitive evaluation data.
-  - Input Validation:
-    - Implement strict input validation for all user inputs, including:
-      - Screenshot uploads: Validate file types, sizes, and potentially scan for malicious content.
-      - API keys: Basic format validation.
-      - User settings and configurations.
-      - URLs for screenshot capture: Validate URL format and potentially sanitize to prevent Server-Side Request Forgery (SSRF) vulnerabilities in `/api/screenshot` route.
-      - Video uploads: Validate file types, sizes, and consider security implications of processing video data in `/generate-code` route.
-    - Backend API should validate all incoming requests to prevent injection attacks and ensure data integrity.
-  - Cryptography:
-    - API keys are currently stored in browser's local storage. While browsers offer some level of encryption for local storage, consider more robust client-side encryption for sensitive data if necessary, or move key management to a more secure backend service for hosted versions.
-    - Ensure secure communication (HTTPS) is enforced for all network traffic, especially for the hosted version, to protect data in transit.
+Business Priorities and Goals:
+- Primary goal: Provide a user-friendly and efficient tool for converting visual designs to code.
+- Secondary goal: Support a wide range of frontend stacks and AI models to cater to diverse user needs.
+- Tertiary goal: Offer both hosted (paid) and open-source versions to expand reach and monetization opportunities.
+- Key business priority: Accuracy and quality of the generated code to ensure user satisfaction and adoption. The addition of evaluation endpoints in `evals.py` highlights the importance of this priority and the project's focus on measuring and improving code generation quality.
+- Another business priority: Speed and efficiency of the conversion process to provide a rapid prototyping solution.
 
-# DESIGN
+Business Risks:
+- Risk of inaccurate or low-quality code generation, leading to user dissatisfaction and lack of adoption.
+- Reliance on third-party AI models (OpenAI, Anthropic, Google, Replicate) and their API availability, pricing, and performance.
+- Competition from similar or more advanced AI-powered code generation tools.
+- Security risks associated with handling user-uploaded screenshots, video inputs, and API keys. The introduction of screenshot API (`screenshot.py`) and video processing (`video/utils.py`) expands the attack surface and data handling requirements.
+- Maintaining and supporting both open-source and hosted versions of the tool.
+- Dependency on external screenshot service (ScreenshotOne API), including its availability, reliability, and security.
 
-## C4 CONTEXT
+## SECURITY POSTURE
+
+Existing Security Controls:
+- security control: API keys (OpenAI, Anthropic, Gemini, Replicate) are stored client-side in the browser's local storage or read from backend environment variables. Described in `Troubleshooting.md`, `README.md` and implemented in `generate_code.py` (`get_from_settings_dialog_or_env` function).
+- security control: Dockerfiles for backend and frontend are provided, enabling containerization and potentially more controlled deployment environments. Described in `Dockerfile` and `docker-compose.yml`.
+- security control: Use of Poetry for backend dependency management, potentially improving supply chain security by managing dependencies and their versions. Described in `backend\pyproject.toml` and `backend\README.md`.
+- security control: Pre-commit hooks are used in the backend, suggesting a focus on code quality and consistency. Described in `backend\pyproject.toml`.
+- security control: Usage of `httpx` library in `screenshot.py` with timeout to handle network requests to ScreenshotOne API, which can improve resilience.
+- security control: Input validation and error handling within backend routes (e.g., in `evals.py` and `generate_code.py`) to manage invalid requests and exceptions.
+
+Accepted Risks:
+- accepted risk: Reliance on user-provided API keys, with the risk of key compromise if users' systems are insecure.
+- accepted risk: Open-source nature of the project implies code is publicly accessible, potentially exposing vulnerabilities if not actively maintained and secured.
+- accepted risk:  Handling user-uploaded screenshots and video inputs involves potential data privacy risks if not processed and stored securely.
+- accepted risk: Dependency on external AI APIs and ScreenshotOne API for core functionalities.
+
+Recommended Security Controls:
+- security control: Implement robust input validation on the backend for all API endpoints, including screenshot URLs, video data URLs, and evaluation folder paths, to sanitize user inputs and prevent injection attacks. This is crucial for new features like screenshot capture and video processing.
+- security control: Consider server-side API key management for AI models and ScreenshotOne API for the hosted version to improve security and potentially offer different service tiers. Explore secure storage solutions for these server-side API keys (e.g., secrets management services).
+- security control: Implement rate limiting and API usage monitoring for all external APIs (AI models and ScreenshotOne) to protect against abuse, unexpected costs, and potential denial-of-service.
+- security control: Integrate SAST/DAST tools into the CI/CD pipeline to automatically detect and remediate potential vulnerabilities in both backend and frontend code.
+- security control: Regularly update dependencies for both frontend and backend to patch known vulnerabilities. Implement automated dependency scanning.
+- security control: For the hosted version, implement comprehensive logging and monitoring for security events, errors, and suspicious activities to enable incident detection and response.
+- security control: Implement secure coding practices and conduct security code reviews, especially for new features like video processing and screenshot capture, to minimize vulnerabilities.
+- security control: Implement proper error handling and prevent exposing sensitive information in error messages, as seen in `generate_code.py` where specific error handling is in place for OpenAI API errors.
+- security control: Review and secure temporary file handling, especially in video processing (`video/utils.py`), to prevent potential vulnerabilities related to temporary files.
+
+Security Requirements:
+- Authentication: Not explicitly mentioned, but for a hosted version, user authentication will be needed to manage subscriptions and usage. For the open-source version, authentication might not be a requirement.
+- Authorization: Authorization might be needed in the hosted version to control access to features based on subscription level. Open-source version might not require authorization.
+- Input Validation: Crucial for processing user-uploaded screenshots, video inputs, and URLs to prevent malicious uploads, injection attacks, and SSRF vulnerabilities. Needs to be implemented on the backend for all relevant API endpoints.
+- Cryptography: API keys for AI models and ScreenshotOne should be handled securely. While currently stored client-side, consider encryption in local storage or server-side management for hosted version. Data in transit to AI APIs and ScreenshotOne API should use HTTPS. Secure storage and access control for server-side API keys are essential.
+
+## DESIGN
+
+### C4 CONTEXT
 
 ```mermaid
 flowchart LR
     subgraph Internet
-        OpenAI_API("OpenAI API")
-        Anthropic_API("Anthropic API")
-        Replicate_API("Replicate API")
-        ScreenshotOne_API("ScreenshotOne API")
+        OpenAI[/"OpenAI API"/]
+        Anthropic[/"Anthropic API"/]
+        GoogleAI[/"Google AI API"/]
+        Replicate[/"Replicate API"/]
+        ScreenshotOne[/"ScreenshotOne API"/]
     end
-
-    User[/"Developer or Designer"\nUser/] --> Screenshot_to_Code[/"screenshot-to-code"\nApplication/]
-    Enterprise_User[/"Enterprise User"\nUser/] --> Screenshot_to_Code
-    Screenshot_to_Code --> OpenAI_API
-    Screenshot_to_Code --> Anthropic_API
-    Screenshot_to_Code --> Replicate_API
-    Screenshot_to_Code --> ScreenshotOne_API
-    Screenshot_to_Code --> Browser[/"Web Browser"\nClient Side/]
-    Browser --> User
-    Browser --> Enterprise_User
-
-    style Screenshot_to_Code fill:#f9f,stroke:#333,stroke-width:2px
+    User[/"User"/] -- Uses --> ScreenshotToCode[/"Screenshot to Code"/]
+    ScreenshotToCode -- Uses AI Models --> OpenAI
+    ScreenshotToCode -- Uses AI Models --> Anthropic
+    ScreenshotToCode -- Uses AI Models --> GoogleAI
+    ScreenshotToCode -- Uses AI Models --> Replicate
+    ScreenshotToCode -- Takes Screenshots --> ScreenshotOne
 ```
 
-### C4 Context Elements Description
+Context Diagram Elements:
 
-- Context Element List:
-  - Element:
+- Element:
     - Name: User
     - Type: Person
-    - Description: Individual developers or designers who use the screenshot-to-code tool to generate code from UI designs, evaluate different code generation outputs, and capture website screenshots.
-    - Responsibilities: Provides screenshots, video inputs, or design URLs, configures settings, uses the generated code, evaluates code quality.
-    - Security controls: Manages their own API keys, responsible for the security of the generated code and its integration into their projects.
-  - Element:
-    - Name: Enterprise User
-    - Type: Person
-    - Description: Users from medium to large enterprises who might use the hosted or enterprise version of screenshot-to-code, potentially with custom plans and support, requiring features like code evaluation and screenshot capture for internal websites.
-    - Responsibilities: Provides screenshots, video inputs, or design URLs, may have specific security and compliance requirements, uses the generated code within enterprise projects, evaluates code quality, captures screenshots of internal applications.
-    - Security controls: Subject to enterprise security policies, may require integration with enterprise authentication and authorization systems.
-  - Element:
-    - Name: screenshot-to-code
+    - Description: End-user who wants to convert screenshots or designs to code.
+    - Responsibilities: Uploads screenshots or video inputs, provides design URLs, configures settings (API keys, stacks, models), views and uses generated code.
+    - Security controls: Manages their own API keys (for open-source), authenticates (for hosted version - assumption).
+
+- Element:
+    - Name: Screenshot to Code
     - Type: Software System
-    - Description: The application itself, which takes screenshots, video, or design URLs as input, uses AI models to generate code, allows for evaluation of different code outputs, captures website screenshots using external service, and provides the generated code to the user. It has frontend and backend components.
-    - Responsibilities: Processing user inputs (screenshots, video, URLs), interacting with AI APIs, generating code, managing application state, serving the user interface, capturing screenshots, evaluating code outputs.
-    - Security controls: Input validation, API key management (for hosted version and ScreenshotOne API), secure coding practices, protection of backend API endpoints, logging and monitoring, rate limiting, secure handling of video and screenshot data.
-  - Element:
+    - Description: Application that converts screenshots, video inputs, and design URLs to code using AI models. It has a React/Vite frontend and a FastAPI backend.
+    - Responsibilities: Receives user input (screenshots, video URLs, design URLs, settings), interacts with AI model APIs and ScreenshotOne API, generates code, provides code output to the user. Handles evaluation requests and debug logging.
+    - Security controls: Input validation, API key handling (client-side for open-source, potentially server-side for hosted), rate limiting, logging, monitoring (for hosted version - assumption), secure handling of temporary files.
+
+- Element:
     - Name: OpenAI API
     - Type: External System
-    - Description: OpenAI's API, including models like GPT-4 Vision and GPT-4o, used for code generation from images and potentially video frames.
-    - Responsibilities: Provides AI-powered code generation capabilities based on image and video inputs.
-    - Security controls: OpenAI's security controls, user API key management, rate limiting.
-  - Element:
+    - Description: OpenAI's API, specifically GPT-4 Vision and GPT-4o models, used for code generation from images and text prompts.
+    - Responsibilities: Provides AI-powered code generation based on image and text inputs from Screenshot to Code.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS).
+
+- Element:
     - Name: Anthropic API
     - Type: External System
-    - Description: Anthropic's API, including Claude models, used as an alternative AI model for code generation, especially for video inputs.
-    - Responsibilities: Provides AI-powered code generation capabilities as an alternative to OpenAI, particularly for video processing.
-    - Security controls: Anthropic's security controls, user API key management, rate limiting.
-  - Element:
+    - Description: Anthropic's API, specifically Claude 3 models, used as an alternative AI model for code generation and video processing.
+    - Responsibilities: Provides AI-powered code generation based on image and text inputs from Screenshot to Code.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS).
+
+- Element:
+    - Name: Google AI API
+    - Type: External System
+    - Description: Google AI's Gemini API, used as an alternative AI model for code generation.
+    - Responsibilities: Provides AI-powered code generation based on image and text inputs from Screenshot to Code.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS).
+
+- Element:
     - Name: Replicate API
     - Type: External System
-    - Description: Replicate API, used to access image generation models like DALL-E 3 or Flux Schnell for generating placeholder images.
-    - Responsibilities: Provides image generation capabilities for placeholder images in the generated code.
-    - Security controls: Replicate's security controls, user API key management, rate limiting.
-  - Element:
+    - Description: Replicate's API, used to access DALL-E 3 or Flux Schnell models for image generation (optional feature).
+    - Responsibilities: Provides AI-powered image generation based on text prompts from Screenshot to Code.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS).
+
+- Element:
     - Name: ScreenshotOne API
     - Type: External System
-    - Description: ScreenshotOne API, used to capture website screenshots based on provided URLs.
-    - Responsibilities: Provides website screenshot capture functionality.
-    - Security controls: ScreenshotOne's security controls, API key management for ScreenshotOne, rate limiting.
-  - Element:
-    - Name: Browser
-    - Type: Software System
-    - Description: User's web browser running the frontend application. Stores user settings and potentially API keys in local storage.
-    - Responsibilities: Rendering the user interface, executing frontend logic, storing user data locally.
-    - Security controls: Browser's built-in security features, local storage encryption (browser-dependent), Content Security Policy (CSP) implemented by the application.
+    - Description: ScreenshotOne API, used to capture website screenshots from provided URLs.
+    - Responsibilities: Provides website screenshot capture service for Screenshot to Code.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS).
 
-## C4 CONTAINER
+### C4 CONTAINER
 
 ```mermaid
 flowchart LR
-    subgraph Browser[/"Web Browser"\nClient/]
-        Frontend[/"Frontend"\nReact/Vite/]
+    subgraph User's Browser
+        ReactFrontend[/"React Frontend"/]
     end
-    subgraph Server[/"Cloud or On-Premise Server"\nServer/]
-        Backend[/"Backend"\nFastAPI/]
+    subgraph Backend Server
+        FastAPIBackend[/"FastAPI Backend"/]
+        DebugFileWriter[/"Debug File Writer"/]
+        EvalData[/"Evaluation Data"/]
+        Logs[/"Logs"/]
+        VideoProcessor[/"Video Processor"/]
+        ScreenshotCapture[/"Screenshot Capture"/]
     end
-    Database[/"Settings Database"\nOptional/]
+    OpenAI[/"OpenAI API"/]
+    Anthropic[/"Anthropic API"/]
+    GoogleAI[/"Google AI API"/]
+    Replicate[/"Replicate API"/]
+    ScreenshotOneAPI[/"ScreenshotOne API"/]
 
-    User[/"Developer or Designer"\nUser/] --> Browser
-    Enterprise_User[/"Enterprise User"\nUser/] --> Browser
-    Browser --> Backend: API Calls (HTTPS)
-    Backend --> OpenAI_API: API Calls (HTTPS)
-    Backend --> Anthropic_API: API Calls (HTTPS)
-    Backend --> Replicate_API: API Calls (HTTPS)
-    Backend --> ScreenshotOne_API: API Calls (HTTPS)
-    Backend --> Database: (Optional) Settings Storage
-
-    style Frontend fill:#fcc,stroke:#333,stroke-width:2px
-    style Backend fill:#bec,stroke:#333,stroke-width:2px
-    style Database fill:#cbf,stroke:#333,stroke-width:2px
+    User -- HTTPS --> ReactFrontend
+    ReactFrontend -- HTTPS --> FastAPIBackend
+    FastAPIBackend -- HTTPS --> OpenAI
+    FastAPIBackend -- HTTPS --> Anthropic
+    FastAPIBackend -- HTTPS --> GoogleAI
+    FastAPIBackend -- HTTPS --> Replicate
+    FastAPIBackend -- HTTPS --> ScreenshotOneAPI
+    FastAPIBackend -- File System --> DebugFileWriter
+    FastAPIBackend -- File System --> EvalData
+    FastAPIBackend -- File System --> Logs
+    FastAPIBackend -- Calls --> VideoProcessor
+    FastAPIBackend -- Calls --> ScreenshotCapture
+    VideoProcessor -- File System --> TemporaryFiles[/"Temporary Files"/]
+    ScreenshotCapture -- HTTPS --> ScreenshotOneAPI
 ```
 
-### C4 Container Elements Description
+Container Diagram Elements:
 
-- Container Element List:
-  - Element:
-    - Name: Frontend
-    - Type: Container - Web Application
-    - Description: React/Vite based frontend application, served to the user's browser. Handles user interaction, UI rendering, and communication with the backend API for code generation, screenshot capture, and evaluation functionalities.
-    - Responsibilities:
-      - Presenting the user interface for code generation, screenshot capture, and evaluation.
-      - Handling user input (screenshots, video, URLs, settings).
-      - Making API requests to the backend for code generation, screenshot capture, and evaluation.
-      - Displaying generated code and evaluation results to the user.
-      - Storing user settings (and API keys in local storage).
-    - Security controls:
-      - Input sanitization on the client-side.
-      - Implementation of Content Security Policy (CSP).
-      - Secure storage of API keys in browser's local storage (consider encryption).
-      - Regular updates of frontend libraries to patch vulnerabilities.
-  - Element:
-    - Name: Backend
-    - Type: Container - API Application
-    - Description: FastAPI backend application, responsible for handling API requests from the frontend, interacting with AI models for code generation, processing images and video, capturing screenshots using ScreenshotOne API, and managing code evaluations. Exposes routes for `/generate-code` (websocket), `/api/screenshot`, `/evals`, `/pairwise-evals`, `/best-of-n-evals`, and `/models`.
-    - Responsibilities:
-      - Exposing API endpoints for frontend communication (code generation, screenshot, evaluation).
-      - Authenticating and authorizing requests (if authentication is implemented).
-      - Receiving and processing screenshots, video, and user prompts.
-      - Interacting with OpenAI, Anthropic, Replicate, and ScreenshotOne APIs.
-      - Generating code using AI models.
-      - Capturing website screenshots using ScreenshotOne API.
-      - Managing code evaluations and comparisons.
-      - Managing application configuration and settings (potentially storing in a database).
-      - Logging and monitoring application activity.
-    - Security controls:
-      - Input validation and sanitization for all routes, including URL validation for screenshot capture and video processing security.
-      - Secure API key management for accessing AI APIs and ScreenshotOne API.
-      - Rate limiting and API usage monitoring for all routes, especially for external API calls.
-      - Secure coding practices to prevent vulnerabilities.
-      - Regular security vulnerability scanning and patching.
-      - Secure configuration management.
-  - Element:
-    - Name: Database (Optional)
+- Element:
+    - Name: React Frontend
+    - Type: Container - Client-side Application
+    - Description: React/Vite frontend application, served to the user's browser. Handles user interface, input processing, and communication with the backend.
+    - Responsibilities: User interface rendering, handling user interactions, sending requests to the backend (including screenshot URLs and video data URLs), receiving and displaying generated code and evaluation results.
+    - Security controls:  Client-side input validation, secure handling of API keys in browser local storage, protection against XSS (handled by React framework).
+
+- Element:
+    - Name: FastAPI Backend
+    - Type: Container - Server-side Application
+    - Description: FastAPI backend application. Handles API requests from the frontend, interacts with AI models and ScreenshotOne API, processes code generation and evaluation logic, manages video processing and screenshot capture.
+    - Responsibilities: API endpoint management (including endpoints for code generation, screenshot capture, video processing, and evaluations), request handling, prompt assembly, interaction with AI model APIs (OpenAI, Anthropic, Google, Replicate) and ScreenshotOne API, code processing and response generation, managing evaluation runs, handling debug logging.
+    - Security controls: Server-side input validation for all API endpoints, API key management (for hosted version - assumption, for AI models and ScreenshotOne), rate limiting, logging, monitoring, protection against common web application vulnerabilities (handled by FastAPI framework and secure coding practices), secure handling of temporary files, secure communication with internal components (VideoProcessor, ScreenshotCapture).
+
+- Element:
+    - Name: Video Processor
+    - Type: Container - Component
+    - Description: Backend component responsible for processing video inputs. It splits videos into frames and prepares them for AI processing. Implemented in `video/utils.py`.
+    - Responsibilities: Receiving video data URLs from FastAPI Backend, decoding base64 video data, splitting video into screenshots, saving temporary files (for debugging), preparing image data for AI prompt assembly.
+    - Security controls: Secure handling of video data, secure temporary file management, input validation of video data URLs, error handling during video processing.
+
+- Element:
+    - Name: Screenshot Capture
+    - Type: Container - Component
+    - Description: Backend component responsible for capturing website screenshots using ScreenshotOne API. Implemented in `screenshot.py`.
+    - Responsibilities: Receiving target URLs and ScreenshotOne API keys from FastAPI Backend, interacting with ScreenshotOne API to capture screenshots, returning screenshot data URLs.
+    - Security controls: Secure API key handling for ScreenshotOne API, input validation of target URLs, error handling during screenshot capture, secure communication with ScreenshotOne API over HTTPS.
+
+- Element:
+    - Name: Debug File Writer
+    - Type: Container - Utility
+    - Description:  Component in the backend responsible for writing debug information to the file system when debugging is enabled.
+    - Responsibilities: Writing prompt messages, generated code, video processing debug artifacts, and other debug information to files for debugging and evaluation purposes.
+    - Security controls: Access control to debug logs, ensuring sensitive information is not inadvertently logged in production. Debugging should be disabled in production environment.
+
+- Element:
+    - Name: Evaluation Data
     - Type: Container - Data Store
-    - Description: An optional database to store user settings, configurations, or potentially user data in a hosted or enterprise version. Could be a relational database or a NoSQL database. May be used to store evaluation results or user preferences for code generation.
-    - Responsibilities:
-      - Persistently storing user settings and application configurations.
-      - Potentially storing user data in hosted/enterprise versions, including evaluation data.
-    - Security controls:
-      - Database access controls and authentication.
-      - Data encryption at rest and in transit.
-      - Regular database backups.
-      - Security hardening of the database system.
+    - Description: Directory on the backend server storing evaluation datasets (input screenshots and output code) used for model and prompt evaluation.
+    - Responsibilities: Storage and retrieval of evaluation data for running evaluation scripts and rating outputs, managing evaluation folders and files.
+    - Security controls: Access control to evaluation data, ensuring it is not publicly accessible and protected from unauthorized modification.
 
-## DEPLOYMENT
+- Element:
+    - Name: Logs
+    - Type: Container - Data Store
+    - Description: Directory on the backend server to store application logs, including request logs and potentially security-related events (for hosted version - assumption).
+    - Responsibilities: Logging application activity, errors, and security events for monitoring, debugging, and auditing purposes.
+    - Security controls: Secure log storage, log rotation and management, access control to logs, ensuring logs are not publicly accessible and protected from tampering.
 
-- Deployment Options:
-  - Local Development: Developers can run the frontend and backend locally using `yarn dev` and `poetry run uvicorn`, as described in `README.md`.
-  - Docker Compose: For local testing and potentially simple deployments, Docker Compose can be used to run both frontend and backend containers, as shown in `docker-compose.yml`.
-  - Cloud Deployment (Recommended for Hosted Version): For a production-ready hosted version, cloud platforms like AWS, Google Cloud, or Azure are suitable. Kubernetes or similar container orchestration platforms can be used for scalability and resilience.
+- Element:
+    - Name: Temporary Files
+    - Type: Container - Data Store
+    - Description: Temporary directory on the backend server used by Video Processor to store intermediate screenshots during video processing (for debugging purposes).
+    - Responsibilities: Temporary storage for video screenshots during processing.
+    - Security controls: Access control to temporary files, secure temporary file creation and deletion, ensuring temporary files are not accessible after processing. Debugging features using temporary files should be disabled in production.
 
-- Detailed Deployment Architecture (Cloud Deployment using Kubernetes on AWS - Example):
+- Element:
+    - Name: OpenAI API, Anthropic API, Google AI API, Replicate API, ScreenshotOne API
+    - Type: Container - External API
+    - Description: External APIs used by the backend for code generation, image generation, and screenshot capture.
+    - Responsibilities: Provide AI services for code and image generation and website screenshot service based on requests from the backend.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS), managed by respective API providers.
+
+### DEPLOYMENT
+
+Deployment Solution: Docker Container on Cloud Platform (e.g., AWS ECS, Google Cloud Run, Azure Container Instances)
 
 ```mermaid
 flowchart LR
-    subgraph AWS Cloud
-        subgraph Kubernetes Cluster
-            Ingress_Controller[/"Ingress Controller"/]
-            subgraph Pods
-                Frontend_Pod[/"Frontend Pod"\n(React/Vite Container)/]
-                Backend_Pod[/"Backend Pod"\n(FastAPI Container)/]
-            end
-            Service_Frontend[/"Frontend Service"/]
-            Service_Backend[/"Backend Service"/]
+    subgraph Cloud Platform
+        LoadBalancer[/"Load Balancer"/]
+        subgraph Compute Service
+            ContainerInstance1[/"Container Instance"/]
+            ContainerInstance2[/"Container Instance"/]
+            ContainerInstanceN[/"Container Instance"/]
         end
-        Load_Balancer[/"Elastic Load Balancer"/]
-        Route53[/"Route 53"/]
-        Secrets_Manager[/"AWS Secrets Manager"/]
-        CloudWatch[/"CloudWatch"/]
+        subgraph Data Storage (Optional)
+            LogStorage[/"Log Storage"/]
+            EvalDataStorage[/"Eval Data Storage"/]
+            TempFileStorage[/"Temp File Storage"/]
+        end
     end
-    Internet --> Route53
-    Route53 --> Load_Balancer
-    Load_Balancer --> Ingress_Controller
-    Ingress_Controller --> Service_Frontend
-    Ingress_Controller --> Service_Backend
-    Service_Frontend --> Frontend_Pod
-    Service_Backend --> Backend_Pod
-    Backend_Pod --> Secrets_Manager: API Keys Retrieval
-    Backend_Pod --> CloudWatch: Logging and Monitoring
-
-    style Ingress_Controller fill:#eee,stroke:#333
-    style Frontend_Pod fill:#fcc,stroke:#333
-    style Backend_Pod fill:#bec,stroke:#333
-    style Service_Frontend fill:#eee,stroke:#333
-    style Service_Backend fill:#eee,stroke:#333
-    style Load_Balancer fill:#eee,stroke:#333
-    style Route53 fill:#eee,stroke:#333
-    style Secrets_Manager fill:#cbf,stroke:#333
-    style CloudWatch fill:#cbf,stroke:#333
+    Internet -- HTTPS --> LoadBalancer
+    LoadBalancer -- HTTPS --> ComputeService
+    ComputeService -- FastAPIBackendContainer[/"FastAPI Backend Container"/]
+    ComputeService -- ReactFrontendContainer[/"React Frontend Container"/]
+    FastAPIBackendContainer -- OpenAIAPI[/"OpenAI API"/]
+    FastAPIBackendContainer -- AnthropicAPI[/"Anthropic API"/]
+    FastAPIBackendContainer -- GoogleAIAPI[/"Google AI API"/]
+    FastAPIBackendContainer -- ReplicateAPI[/"Replicate API"/]
+    FastAPIBackendContainer -- ScreenshotOneAPI[/"ScreenshotOne API"/]
+    FastAPIBackendContainer -- LogStorage
+    FastAPIBackendContainer -- EvalDataStorage
+    FastAPIBackendContainer -- TempFileStorage
+    ReactFrontendContainer -- FastAPIBackendContainer
 ```
 
-### Deployment Elements Description
+Deployment Diagram Elements:
 
-- Deployment Element List (Cloud Deployment on AWS):
-  - Element:
-    - Name: Internet
-    - Type: Environment
-    - Description: Public internet, from where users access the application.
-    - Responsibilities: Provides access to users globally.
-    - Security controls: Standard internet security protocols, DDoS protection at the cloud provider level.
-  - Element:
-    - Name: Route 53
-    - Type: AWS Service - DNS
-    - Description: AWS Route 53 for DNS management, mapping domain names to the Load Balancer.
-    - Responsibilities: DNS resolution, routing traffic to the Load Balancer.
-    - Security controls: AWS IAM for access control, DNSSEC.
-  - Element:
-    - Name: Elastic Load Balancer (ELB)
-    - Type: AWS Service - Load Balancer
-    - Description: AWS ELB to distribute incoming traffic across Kubernetes Ingress Controllers.
-    - Responsibilities: Load balancing, SSL termination, traffic distribution.
-    - Security controls: AWS security groups, SSL/TLS encryption, DDoS protection.
-  - Element:
-    - Name: Kubernetes Cluster
-    - Type: Environment - Container Orchestration
-    - Description: Kubernetes cluster to orchestrate and manage frontend and backend containers.
-    - Responsibilities: Container orchestration, scaling, health management, deployment management.
-    - Security controls: Kubernetes RBAC, network policies, pod security policies, regular security audits.
-  - Element:
-    - Name: Ingress Controller
-    - Type: Kubernetes Component
-    - Description: Ingress controller to manage external access to the Kubernetes services.
-    - Responsibilities: Routing external requests to the appropriate services within the cluster, SSL termination.
-    - Security controls: Ingress controller security configurations, rate limiting, WAF integration.
-  - Element:
-    - Name: Frontend Pod
-    - Type: Kubernetes Pod
-    - Description: Pod running the Frontend (React/Vite) container.
-    - Responsibilities: Serving the frontend application.
-    - Security controls: Container image security scanning, resource limits, network policies.
-  - Element:
-    - Name: Backend Pod
-    - Type: Kubernetes Pod
-    - Description: Pod running the Backend (FastAPI) container.
-    - Responsibilities: Handling API requests for code generation, screenshot capture, and evaluation, interacting with AI APIs and ScreenshotOne API.
-    - Security controls: Container image security scanning, resource limits, network policies, secure API key management (using Secrets Manager) for AI APIs and ScreenshotOne API.
-  - Element:
-    - Name: Frontend Service
-    - Type: Kubernetes Service
-    - Description: Kubernetes service to expose the Frontend Pods within the cluster.
-    - Responsibilities: Internal load balancing for frontend pods.
-    - Security controls: Network policies to restrict access.
-  - Element:
-    - Name: Backend Service
-    - Type: Kubernetes Service
-    - Description: Kubernetes service to expose the Backend Pods within the cluster.
-    - Responsibilities: Internal load balancing for backend pods.
-    - Security controls: Network policies to restrict access.
-  - Element:
-    - Name: AWS Secrets Manager
-    - Type: AWS Service - Secrets Management
-    - Description: AWS Secrets Manager to securely store and manage API keys for OpenAI, Anthropic, Replicate, and ScreenshotOne.
-    - Responsibilities: Secure storage and retrieval of sensitive API keys.
-    - Security controls: Encryption at rest and in transit, access control via IAM, audit logging.
-  - Element:
-    - Name: CloudWatch
-    - Type: AWS Service - Monitoring and Logging
-    - Description: AWS CloudWatch for logging and monitoring application and infrastructure metrics, including API usage and potential security events.
-    - Responsibilities: Centralized logging, performance monitoring, security monitoring, alerting.
-    - Security controls: Access control via IAM, data encryption, audit logging.
+- Element:
+    - Name: Load Balancer
+    - Type: Infrastructure - Network Component
+    - Description: Distributes incoming HTTPS traffic from the internet to multiple Container Instances. Provides high availability and scalability.
+    - Responsibilities: Traffic distribution, SSL termination, health checks, routing requests to healthy instances, DDoS protection.
+    - Security controls: SSL/TLS encryption, DDoS protection, access control lists (ACLs), web application firewall (WAF).
 
-## BUILD
+- Element:
+    - Name: Container Instance (Compute Service)
+    - Type: Infrastructure - Compute Resource
+    - Description: Virtual machines or container orchestration service (e.g., ECS, Cloud Run, ACI) that runs Docker containers for the backend and frontend applications.
+    - Responsibilities: Running and managing Docker containers, providing compute resources, scaling instances based on load, resource isolation.
+    - Security controls: Instance isolation, operating system hardening, security patching, network security groups (NSGs), IAM roles for access control, resource limits for containers.
 
-- Build Process:
-  - The project uses a standard CI/CD pipeline for building and publishing the application. Based on the files, it's likely using GitHub Actions, although it's not explicitly configured in the provided files.
-  - The build process involves building both the frontend and backend components and then creating Docker images for deployment.
+- Element:
+    - Name: FastAPI Backend Container
+    - Type: Container - Docker Image
+    - Description: Docker container running the FastAPI backend application, including Video Processor and Screenshot Capture components.
+    - Responsibilities:  Handles backend logic, API requests, AI model and ScreenshotOne API interactions, video processing, screenshot capture, as described in the Container Diagram.
+    - Security controls: Security controls inherited from the FastAPI Backend application, container image vulnerability scanning, least privilege container user, resource limits.
 
-- Build Diagram (Example using GitHub Actions):
+- Element:
+    - Name: React Frontend Container
+    - Type: Container - Docker Image
+    - Description: Docker container running the React frontend application. Served by a static file server (e.g., Nginx, within the same container or separate).
+    - Responsibilities: Serves the frontend application, handles client-side logic, as described in the Container Diagram.
+    - Security controls: Security controls inherited from the React Frontend application, container image vulnerability scanning, static file server security configurations.
+
+- Element:
+    - Name: Log Storage (Optional)
+    - Type: Infrastructure - Data Storage
+    - Description: Cloud-based storage service (e.g., AWS S3, Google Cloud Storage, Azure Blob Storage) for storing application logs persistently.
+    - Responsibilities: Secure and scalable storage for application logs, enabling long-term log retention and analysis.
+    - Security controls: Access control policies, encryption at rest and in transit, data retention policies, audit logging of storage access.
+
+- Element:
+    - Name: Eval Data Storage (Optional)
+    - Type: Infrastructure - Data Storage
+    - Description: Cloud-based storage for evaluation datasets. Might be the same as Log Storage or separate, depending on requirements and sensitivity of evaluation data.
+    - Responsibilities: Secure storage for evaluation datasets, potentially versioning and access control for different evaluation runs.
+    - Security controls: Access control policies, encryption at rest and in transit, data integrity checks.
+
+- Element:
+    - Name: Temp File Storage (Optional)
+    - Type: Infrastructure - Data Storage
+    - Description: Cloud-based temporary storage for video processing temporary files. Might be local disk on container instance or dedicated temporary storage service.
+    - Responsibilities: Temporary storage for video screenshots during processing, ensuring cleanup after processing.
+    - Security controls: Access control policies, secure temporary file handling, automated cleanup processes, considering security implications of using local disk vs. network storage.
+
+- Element:
+    - Name: OpenAI API, Anthropic API, Google AI API, Replicate API, ScreenshotOne API
+    - Type: External API
+    - Description: External APIs, as described in the Context and Container Diagrams, accessed from the FastAPI Backend Container.
+    - Responsibilities: Provide AI services for code and image generation and website screenshot service.
+    - Security controls: API key authentication, rate limiting, data encryption in transit (HTTPS), managed by respective API providers.
+
+### BUILD
 
 ```mermaid
 flowchart LR
-    Developer[/"Developer"\n(Code Changes)/] --> GitHub[/"GitHub Repository"\n(Source Code)/]
-    subgraph GitHub_Actions[/"GitHub Actions"\nCI/CD Pipeline/]
-        Build_Frontend[/"Build Frontend"\n(yarn build)/]
-        Build_Backend[/"Build Backend"\n(poetry build)/]
-        Test_Code[/"Test Code"\n(pytest, pyright)/]
-        Security_Scan[/"Security Scan"\n(SAST, Dependency Check)/]
-        Build_Docker_Images[/"Build Docker Images"\n(docker build)/]
-        Publish_Images[/"Publish Docker Images"\n(Docker Hub/ECR)/]
+    Developer[/"Developer"/] -- Code Changes --> SourceCodeRepo[/"Source Code Repository (e.g., GitHub)"/]
+    SourceCodeRepo -- Push/Merge --> CI_CD_Pipeline[/"CI/CD Pipeline (e.g., GitHub Actions)"/]
+    subgraph CI/CD Pipeline
+        BuildStage[/"Build Stage"/]
+        TestStage[/"Test Stage"/]
+        SecurityScanStage[/"Security Scan Stage"/]
+        PublishStage[/"Publish Stage"/]
     end
-    GitHub --> GitHub_Actions: Push Code
-    GitHub_Actions --> Build_Frontend
-    Build_Frontend --> Build_Backend
-    Build_Backend --> Test_Code
-    Test_Code --> Security_Scan
-    Security_Scan --> Build_Docker_Images
-    Build_Docker_Images --> Publish_Images
-    Publish_Images --> Deployment_Environment[/"Deployment Environment"\n(Kubernetes, etc.)/]
-
-    style Build_Frontend fill:#fcc,stroke:#333
-    style Build_Backend fill:#bec,stroke:#333
-    style Test_Code fill:#cce,stroke:#333
-    style Security_Scan fill:#cce,stroke:#333
-    style Build_Docker_Images fill:#eee,stroke:#333
-    style Publish_Images fill:#eee,stroke:#333
+    BuildStage -- Build Artifacts --> TestStage
+    TestStage -- Test Results --> SecurityScanStage
+    SecurityScanStage -- Scan Results --> PublishStage
+    PublishStage -- Container Registry --> ContainerRegistry[/"Container Registry (e.g., Docker Hub, ECR, GCR)"/]
 ```
 
-### Build Elements Description
+Build Process Description:
 
-- Build Element List (GitHub Actions CI/CD):
-  - Element:
-    - Name: Developer
-    - Type: Person
-    - Description: Software developers who write and commit code changes.
-    - Responsibilities: Writing code, committing changes, initiating the build process through code pushes.
-    - Security controls: Secure development practices, code review, access control to the repository.
-  - Element:
-    - Name: GitHub Repository
-    - Type: Code Repository
-    - Description: GitHub repository hosting the source code for the screenshot-to-code project.
-    - Responsibilities: Version control, source code management, triggering CI/CD pipelines.
-    - Security controls: Access control (branch protection, permissions), audit logging, vulnerability scanning (GitHub Advanced Security).
-  - Element:
-    - Name: GitHub Actions
-    - Type: CI/CD Pipeline
-    - Description: GitHub Actions workflow to automate the build, test, security scan, and deployment process.
-    - Responsibilities: Automated build process, testing, security checks, Docker image creation and publishing.
-    - Security controls: Secure workflow definitions, secret management (GitHub Actions secrets), isolation of build environments.
-  - Element:
-    - Name: Build Frontend
-    - Type: Build Step
-    - Description: Step in the CI/CD pipeline to build the React/Vite frontend application using `yarn build`.
-    - Responsibilities: Compiling frontend code, optimizing assets.
-    - Security controls: Dependency scanning, build process isolation.
-  - Element:
-    - Name: Build Backend
-    - Type: Build Step
-    - Description: Step in the CI/CD pipeline to build the FastAPI backend application using `poetry build`.
-    - Responsibilities: Packaging backend code and dependencies.
-    - Security controls: Dependency scanning, build process isolation.
-  - Element:
-    - Name: Test Code
-    - Type: Build Step - Security Check
-    - Description: Step to run automated tests (pytest) and static code analysis (pyright) to ensure code quality and catch potential bugs.
-    - Responsibilities: Code quality assurance, bug detection.
-    - Security controls: Unit tests, integration tests, static analysis tools.
-  - Element:
-    - Name: Security Scan
-    - Type: Build Step - Security Check
-    - Description: Step to perform security scans, including SAST (Static Application Security Testing) and dependency vulnerability checks, to identify potential security flaws.
-    - Responsibilities: Identifying security vulnerabilities in code and dependencies.
-    - Security controls: SAST tools, dependency scanning tools (e.g., Snyk, OWASP Dependency-Check).
-  - Element:
-    - Name: Build Docker Images
-    - Type: Build Step
-    - Description: Step to build Docker images for both frontend and backend applications using `docker build` based on `Dockerfile`s.
-    - Responsibilities: Creating container images for deployment.
-    - Security controls: Base image security scanning, Dockerfile best practices, image signing.
-  - Element:
-    - Name: Publish Docker Images
-    - Type: Build Step
-    - Description: Step to publish the built Docker images to a container registry (e.g., Docker Hub, AWS ECR).
-    - Responsibilities: Storing and distributing Docker images.
-    - Security controls: Access control to the registry, image scanning in the registry, image signing and verification.
-  - Element:
-    - Name: Deployment Environment
-    - Type: Environment
-    - Description: Target deployment environment (e.g., Kubernetes cluster, cloud platform) where the Docker images are deployed and run.
-    - Responsibilities: Running the application in production.
-    - Security controls: Environment-specific security controls (as described in Deployment section).
+1. Developer commits and pushes code changes to the Source Code Repository (e.g., GitHub).
+2. CI/CD Pipeline (e.g., GitHub Actions) is triggered upon code changes (push, merge to main branch).
+3. Build Stage:
+    - Backend: Uses Dockerfile in `backend/Dockerfile` to build a Docker image for the FastAPI backend. Includes steps to install dependencies using Poetry, run type checker (Pyright), and package the application.
+    - Frontend: Uses Dockerfile in `frontend/Dockerfile` to build a Docker image for the React frontend. Includes steps to install dependencies using Yarn and build the frontend application.
+4. Test Stage:
+    - Runs unit tests and integration tests for the backend (using pytest as indicated in `backend/README.md`).
+    - Optionally, runs frontend tests (if implemented).
+5. Security Scan Stage:
+    - Performs static application security testing (SAST) on the backend and frontend code to identify potential vulnerabilities.
+    - Scans Docker images for known vulnerabilities in base images and dependencies.
+    - Can include linters, dependency vulnerability checks, secret scanning, and potentially license compliance checks.
+6. Publish Stage:
+    - If tests and security scans pass, Docker images for backend and frontend are pushed to a Container Registry (e.g., Docker Hub, ECR, GCR).
+    - Optionally, deployment to staging/production environments can be automated in this stage.
 
-# RISK ASSESSMENT
+Build Process Security Controls:
 
-- Critical Business Processes:
-  - The core critical business process is the AI-powered code generation service itself. Any disruption or compromise to this process directly impacts the value proposition of the application.
-  - User data processing, including handling screenshots, video, and API keys, is also a critical process that needs to be protected to maintain user trust and comply with potential privacy regulations.
-  - Website screenshot capture service is also a critical business process, especially for enterprise users who might need to capture screenshots of internal applications.
-  - Code evaluation functionality is important for improving the quality of code generation and for users to compare different outputs.
-- Data to Protect and Sensitivity:
-  - API Keys: These are highly sensitive as they grant access to powerful AI models and the ScreenshotOne API. Compromise of API keys could lead to unauthorized usage, billing fraud, or data breaches if the AI models or screenshot service are misused.
-  - Screenshots and Video Data: User-uploaded screenshots and videos can contain sensitive information depending on the context of the UI being converted. The sensitivity level is medium to high, depending on the user and the content.
-  - Generated Code: While the generated code itself is less sensitive, it is the output of the service and its integrity is important for the functionality of the tool. Low sensitivity.
-  - User Settings: User preferences and configurations are less sensitive but contribute to user experience and customization. Low sensitivity.
-  - Evaluation Data: Data generated during code evaluations, including input images and generated code outputs, might contain sensitive information depending on the context. Medium sensitivity.
+- security control: Automated Build Process: CI/CD pipeline ensures consistent and repeatable builds, reducing manual errors and potential for tampering.
+- security control: Source Code Repository Security: Secure access control to the source code repository, branch protection policies, and code review processes to maintain code integrity and prevent unauthorized code changes.
+- security control: Dependency Management: Poetry and Yarn are used to manage dependencies, enabling control over dependency versions and reducing supply chain risks. Dependency scanning can be integrated to identify vulnerable dependencies.
+- security control: Automated Testing: Unit and integration tests help ensure code quality and catch bugs early in the development cycle, increasing code reliability and security.
+- security control: Security Scanning: SAST and container image scanning are integrated into the pipeline to identify and remediate vulnerabilities before deployment, minimizing security risks in deployed artifacts.
+- security control: Container Registry Security: Secure access control to the container registry, image signing to ensure image integrity, and vulnerability scanning of stored images to detect and remediate vulnerabilities in published images.
+- security control: Infrastructure as Code (IaC): Using Dockerfiles for build process enables Infrastructure as Code principles, making build environments reproducible and auditable, enhancing build process security and consistency.
 
-# QUESTIONS & ASSUMPTIONS
+## RISK ASSESSMENT
 
-- BUSINESS POSTURE:
-  - Assumption: The primary business model for screenshot-to-code is a combination of open-source availability and a paid hosted version with potentially enterprise-level offerings.
-  - Question: What are the specific features and pricing tiers for the hosted version and enterprise plans?
-  - Question: What are the key performance indicators (KPIs) for business success (e.g., user adoption, code generation accuracy, customer satisfaction, revenue)?
-- SECURITY POSTURE:
-  - Assumption: Security is a significant concern, especially for the hosted and enterprise versions, but the project is currently in the early stages of implementing comprehensive security controls.
-  - Question: What is the roadmap for implementing the recommended security controls, especially regarding API key management and input validation for new features like video processing and screenshot capture?
-  - Question: Are there any specific compliance requirements (e.g., SOC 2, GDPR, HIPAA) that the hosted or enterprise versions need to adhere to?
-  - Question: How is the API key for ScreenshotOne service managed and secured? Is it user-provided or managed by the application?
-  - Question: Are the evaluation routes (`/evals`, `/pairwise-evals`, `/best-of-n-evals`) intended to be exposed in the hosted version, and if so, what security measures are in place to protect evaluation data?
-- DESIGN:
-  - Assumption: The application follows a standard two-tier web architecture with a React frontend and a FastAPI backend.
-  - Question: How will user sessions and states be managed in the hosted version, especially for features requiring user accounts or persistent settings?
-  - Question: Is there a plan to integrate with other services or platforms in the future (e.g., Figma API, design collaboration tools, code repositories)?
-  - Assumption: The deployment environment for the hosted version will be a scalable and resilient cloud infrastructure like Kubernetes on AWS.
-  - Question: What is the disaster recovery and business continuity plan for the hosted version to ensure service availability and data protection in case of failures?
-  - Question: How is video data processed and stored temporarily during code generation? Are there any security considerations for temporary video file handling?
+Critical Business Processes to Protect:
+- Code generation service availability and reliability: Users rely on the tool to generate code quickly and accurately. Service disruptions or errors can impact user productivity and satisfaction.
+- Integrity of generated code: Ensuring the generated code is functional, secure, and accurately reflects the input design is crucial for user trust and adoption.
+- Confidentiality of user inputs (screenshots, video inputs, design URLs, API keys): User-uploaded screenshots, video inputs and design URLs might contain sensitive information, and API keys must be protected to prevent unauthorized access to AI models and ScreenshotOne API.
+- Availability of AI model APIs and ScreenshotOne API: Dependence on external APIs means the application's functionality is tied to the uptime and performance of these services.
+- Security and integrity of evaluation process and data: Evaluation features are important for improving code generation quality, and the integrity and confidentiality of evaluation data should be protected.
+
+Data to Protect and Sensitivity:
+- User-uploaded screenshots and video inputs: Potentially sensitive as they might contain design details, branding information, or even personal data depending on the content. Sensitivity level: Medium to High depending on context.
+- User provided design URLs: May contain sensitive information about design projects or internal systems. Sensitivity level: Low to Medium depending on context.
+- User API keys (for AI models and ScreenshotOne): Highly sensitive credentials that grant access to paid AI services and screenshot service. Sensitivity level: High.
+- Application logs: Might contain operational data, debugging information, and potentially user activity details (for hosted version). Sensitivity level: Low to Medium depending on content and retention policies.
+- Evaluation datasets: Used for internal evaluation, might contain input screenshots, video frames and generated code. Sensitivity level: Low to Medium.
+- Temporary files from video processing: May contain extracted video frames. Sensitivity level: Low to Medium, should be securely handled and cleaned up.
+
+## QUESTIONS & ASSUMPTIONS
+
+BUSINESS POSTURE:
+- Question: What is the primary target audience for this tool (developers, designers, non-technical users)?
+- Question: What is the intended monetization strategy for the hosted version (subscription, usage-based pricing)?
+- Assumption: The primary business goal is to provide a useful tool that gains user adoption, potentially leading to monetization through the hosted version.
+- Assumption: The project operates in a competitive market of AI-powered code generation tools.
+- Assumption: Evaluation features are crucial for demonstrating and improving the quality of the code generation service.
+
+SECURITY POSTURE:
+- Question: Is there a plan to offer a hosted version with server-side API key management for AI models and ScreenshotOne API? What are the chosen secure storage mechanisms for server-side API keys?
+- Question: Are there any compliance requirements (e.g., GDPR, HIPAA) to consider, especially for the hosted version? How will user data (screenshots, video inputs, design URLs, logs) be handled to meet these requirements?
+- Question: What is the strategy for managing and rotating API keys for external services (AI models, ScreenshotOne) in both open-source and hosted versions?
+- Assumption: Security is important but balanced with the need for ease of use and rapid development, especially for the open-source version.
+- Assumption: For the open-source version, client-side API key storage is an acceptable trade-off for simplicity. For the hosted version, more robust security measures will be necessary, including server-side API key management and stricter input validation.
+- Assumption: Secure coding practices and automated security checks will be implemented to minimize vulnerabilities.
+
+DESIGN:
+- Question: Will there be a database for storing user data, generated code history, evaluation results, or API keys in the hosted version? What type of database will be used and what are the security considerations for the database?
+- Question: What are the scalability requirements for the hosted version in terms of concurrent users, code generation requests, video processing load, and screenshot capture volume? How will the architecture scale to handle increased load?
+- Question: How will temporary files from video processing be managed in terms of storage, security, and cleanup, especially in a scaled-out hosted environment?
+- Assumption: The application is primarily stateless, with code generation, video processing, and screenshot capture being the main compute-intensive operations.
+- Assumption: Deployment will be containerized for both open-source (optional) and hosted versions for easier management and scalability.
+- Assumption: The build process will be automated using CI/CD for consistent and secure releases, including automated security checks.
+- Assumption: Input validation and sanitization will be implemented on the backend to protect against various injection attacks.
+- Assumption: HTTPS will be used for all external communication and sensitive internal communication.

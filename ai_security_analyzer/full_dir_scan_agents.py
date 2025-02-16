@@ -13,7 +13,7 @@ from tiktoken import Encoding
 
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.loaders import RepoDirectoryLoader
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
@@ -52,18 +52,18 @@ class AgentState(TypedDict):
 class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
-        agent_prompt: List[str],
+        agent_prompts: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
     ):
-        BaseAgent.__init__(self, llm_provider, checkpoint_manager)
+        BaseAgent.__init__(self, llm, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
-        self.agent_prompt = agent_prompt[0]
+        self.agent_prompt = agent_prompts[0]
         self.doc_type_prompt = doc_type_prompt
 
     def _load_files(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -195,8 +195,6 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
     def build_graph(self) -> CompiledStateGraph:
         logger.debug(f"[{FullDirScanAgent.__name__}] building graph...")
 
-        llm = self.llm_provider.create_agent_llm()
-
         def load_files(state: AgentState):  # type: ignore[no-untyped-def]
             return self._load_files(state)
 
@@ -207,10 +205,10 @@ class FullDirScanAgent(BaseAgent, DocumentProcessingMixin):
             return self._split_docs_to_window(state)
 
         def create_initial_draft(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._create_initial_draft(state, llm)
+            return self._create_initial_draft(state, self.llm)
 
         def update_draft_with_new_docs(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._update_draft_with_new_docs(state, llm)
+            return self._update_draft_with_new_docs(state, self.llm)
 
         def update_draft_condition(state: AgentState) -> Literal["update_draft_with_new_docs", "final_response"]:
             return self._update_draft_condition(state)

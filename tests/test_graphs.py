@@ -100,6 +100,7 @@ def test_graph_executor_factory_dir_executor():
     config.dry_run = False
     config.mode = "dir"
     config.deep_analysis = False
+    config.agent_prompt_type = "sec-design"
     # Act
     executor = GraphExecutorFactory.create(config)
     # Assert

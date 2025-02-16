@@ -1,65 +1,63 @@
 # BUSINESS POSTURE
 
-The AI Nutrition-Pro application aims to provide AI-powered content generation for meal planning applications used by dietitians. The primary business goal is to offer a valuable service that enhances the capabilities of existing meal planner applications by integrating AI-driven content creation. This will enable dietitians to create more engaging and personalized meal plans for their clients, potentially leading to increased user satisfaction and business growth for meal planner application providers.
+The AI Nutrition-Pro application aims to provide AI-powered content generation for meal planning applications, specifically for dietitians' content. The primary business goal is to offer a service that enhances the capabilities of meal planner applications by automating the creation of diet-related content using Large Language Models (LLMs). This service likely targets meal planner application providers as customers, enabling them to offer more engaging and personalized content to their users.
 
 Key business priorities include:
 - Seamless integration with existing meal planner applications.
-- Reliable and scalable AI content generation service.
-- Secure handling of sensitive dietitian and client data.
-- Cost-effective operation and infrastructure.
+- High availability and reliability of the content generation service.
+- Scalability to handle varying loads from different meal planner applications.
+- Security and privacy of dietitian content samples and generated content.
+- Cost-effectiveness of the solution.
 
 Important business risks to address:
-- Data breaches exposing sensitive dietitian content or client data.
-- Service disruptions impacting meal planner application functionality.
-- Compliance violations related to data privacy and security regulations.
-- Inaccurate or biased AI-generated content damaging reputation.
-- Integration challenges with diverse meal planner applications.
+- Data breaches of dietitian content samples or generated diet plans, potentially leading to loss of competitive advantage or regulatory fines.
+- Service unavailability impacting integrated meal planner applications and their users.
+- Inaccurate or inappropriate AI-generated content damaging the reputation of meal planner applications and AI Nutrition-Pro.
+- Integration challenges with diverse meal planner application architectures.
+- Cost overruns in infrastructure or LLM usage impacting profitability.
 
 # SECURITY POSTURE
 
 Existing security controls:
-- security control: Authentication with Meal Planner applications - each application uses individual API key. Described in "Security" section of the input document.
-- security control: Authorization of Meal Planner applications - API Gateway has ACL rules that allow or deny certain actions. Described in "Security" section of the input document.
-- security control: Encrypted network traffic - network traffic between Meal Planner applications and API Gateway is encrypted using TLS. Described in "Security" section of the input document.
-
-Accepted risks:
-- accepted risk: Reliance on API keys for authentication might be vulnerable to key compromise if not managed securely by Meal Planner applications.
-- accepted risk: Authorization rules in API Gateway need to be regularly reviewed and updated to prevent unauthorized access.
-- accepted risk: TLS encryption protects data in transit, but data at rest security needs to be addressed separately.
+- security control: Authentication with Meal Planner applications using individual API keys. Implemented in API Gateway.
+- security control: Authorization of Meal Planner applications using API Gateway ACL rules. Implemented in API Gateway.
+- security control: Encrypted network traffic between Meal Planner applications and API Gateway using TLS. Implemented in API Gateway and Meal Planner applications.
 
 Recommended security controls:
-- security control: Implement robust input validation on API Gateway to prevent injection attacks and ensure data integrity.
-- security control: Introduce rate limiting on API Gateway to protect against denial-of-service attacks and abuse.
-- security control: Implement security scanning (SAST/DAST) in the software development lifecycle to identify and remediate vulnerabilities.
-- security control: Establish a secure software development lifecycle (SSDLC) incorporating security best practices at each stage.
-- security control: Regularly perform security audits and penetration testing to identify and address security weaknesses.
-- security control: Implement monitoring and logging of security-relevant events for incident detection and response.
+- security control: Implement input validation and sanitization on API Gateway and Backend API to prevent injection attacks.
+- security control: Implement output encoding to protect against cross-site scripting (XSS) vulnerabilities in the Web Control Plane.
+- security control: Regular security vulnerability scanning and penetration testing of all components.
+- security control: Implement a Web Application Firewall (WAF) in front of the API Gateway and Web Control Plane to protect against common web attacks.
+- security control: Implement robust logging and monitoring for security events across all components.
+- security control: Data Loss Prevention (DLP) measures to protect sensitive data at rest and in transit.
+- security control: Secure Software Development Lifecycle (SSDLC) practices integrated into the development process.
+- security control: Implement Infrastructure as Code (IaC) for consistent and secure infrastructure deployments.
 
 Security requirements:
 - Authentication:
-    - Meal Planner applications must be securely authenticated to access the AI Nutrition-Pro API. API keys are currently used. Consider stronger authentication methods like OAuth 2.0 in the future for enhanced security and flexibility.
-    - Administrators accessing the Web Control Plane should use strong multi-factor authentication.
+    - Requirement: Meal Planner applications must authenticate to access the AI Nutrition-Pro API. Mechanism: API keys.
+    - Requirement: Administrators must authenticate to access the Web Control Plane. Mechanism: username/password or multi-factor authentication.
+    - Requirement: Securely manage and store API keys and administrative credentials.
 - Authorization:
-    - Access to API endpoints and control plane functionalities must be strictly authorized based on the principle of least privilege.
-    - API Gateway should enforce authorization policies based on the authenticated Meal Planner application and the requested action.
-    - Web Control Plane should enforce role-based access control (RBAC) for administrator and manager roles.
+    - Requirement: Meal Planner applications should only be authorized to access specific API endpoints and actions based on their roles and permissions. Mechanism: API Gateway ACLs.
+    - Requirement: Administrators should be authorized to perform specific actions within the Web Control Plane based on their roles. Mechanism: Role-Based Access Control (RBAC) within Web Control Plane application.
 - Input Validation:
-    - All inputs from Meal Planner applications and administrators must be thoroughly validated to prevent injection attacks (e.g., SQL injection, command injection, cross-site scripting).
-    - Input validation should be implemented at the API Gateway and within the API Application and Web Control Plane.
+    - Requirement: All API endpoints must validate and sanitize input data to prevent injection attacks (e.g., SQL injection, command injection). Implementation: API Gateway and Backend API.
+    - Requirement: Web Control Plane must validate user inputs to prevent injection attacks. Implementation: Web Control Plane application.
 - Cryptography:
-    - Sensitive data at rest in databases (Control Plane Database, API database) should be encrypted. Consider using database encryption features or transparent data encryption (TDE).
-    - All communication channels, both internal and external, should use TLS encryption.
-    - Securely store and manage API keys and other secrets using a secrets management solution.
+    - Requirement: All sensitive data at rest in databases must be encrypted. Mechanism: Database encryption at rest (e.g., Amazon RDS encryption).
+    - Requirement: All network communication containing sensitive data must be encrypted in transit using TLS. Mechanism: TLS for HTTPS and database connections.
+    - Requirement: Securely manage cryptographic keys. Mechanism: AWS Key Management Service (KMS) or similar.
 
 # DESIGN
 
-## C4 Context
+## C4 CONTEXT
 
 ```mermaid
 flowchart LR
     subgraph AI_Nutrition_Pro [AI Nutrition-Pro]
-        direction TB
-        api_gateway["API Gateway"]
+      direction LR
+      api_gateway("API Gateway")
     end
 
     mealApp["Meal Planner Application"]
@@ -67,45 +65,46 @@ flowchart LR
     admin["Administrator"]
 
     mealApp -- HTTPS/REST --> api_gateway
-    api_gateway -- HTTPS/REST --> chatgpt
-    admin -- HTTPS --> AI_Nutrition_Pro
+    api_gateway -- HTTPS/REST --> backend_api
+    backend_api -- HTTPS/REST --> chatgpt
+    admin -- HTTPS --> app_control_plane
+
+    style AI_Nutrition_Pro fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
-### C4 Context elements
+### Context Diagram Elements
 
 - Element:
     - Name: Meal Planner Application
     - Type: External System
-    - Description: Web application used by dietitians to create meal plans. Integrates with AI Nutrition-Pro for AI-powered content generation.
+    - Description: Web application used by dietitians to create meal plans and integrate AI-generated content.
     - Responsibilities:
-        - Uploads samples of dietitian content to AI Nutrition-Pro.
-        - Fetches AI-generated content (e.g., diet introductions) from AI Nutrition-Pro.
+        - Uploads dietitian content samples to AI Nutrition-Pro.
+        - Fetches AI-generated content from AI Nutrition-Pro.
     - Security controls:
-        - API key based authentication when accessing AI Nutrition-Pro.
-        - TLS encryption for communication with AI Nutrition-Pro.
+        - security control: Authenticates to AI Nutrition-Pro using API keys.
+        - security control: Encrypts communication using TLS.
 
 - Element:
     - Name: ChatGPT-3.5
     - Type: External System
-    - Description: OpenAI's Large Language Model (LLM) used for AI content generation.
+    - Description: OpenAI's Large Language Model used for content generation.
     - Responsibilities:
-        - Generates content based on provided dietitian content samples and prompts from AI Nutrition-Pro.
+        - Generates diet-related content based on provided samples.
     - Security controls:
-        - Rely on OpenAI's security measures for ChatGPT-3.5 API.
-        - Secure API key management for accessing ChatGPT-3.5.
+        - security control: Data processing and privacy policies of OpenAI.
+        - security control: Secure API communication via HTTPS.
 
 - Element:
     - Name: Administrator
     - Type: Person
-    - Description: Internal administrator responsible for managing and maintaining the AI Nutrition-Pro application.
+    - Description: Internal administrator of the AI Nutrition-Pro application.
     - Responsibilities:
-        - Manages server configuration.
-        - Resolves system problems.
-        - Monitors system health and performance.
+        - Manages system configuration.
+        - Resolves operational issues.
     - Security controls:
-        - Strong authentication (Multi-Factor Authentication) for accessing Web Control Plane.
-        - Role-Based Access Control (RBAC) within Web Control Plane.
-        - Audit logging of administrative actions.
+        - security control: Authenticates to Web Control Plane with username/password.
+        - security control: Authorization based on administrator roles within the Web Control Plane.
 
 - Element:
     - Name: AI Nutrition-Pro
@@ -113,15 +112,16 @@ flowchart LR
     - Description: AI-powered content generation application for meal planning.
     - Responsibilities:
         - Provides API for meal planner applications to request AI content generation.
-        - Manages dietitian content samples and AI model interactions.
-        - Provides control plane for administration and client management.
+        - Manages client onboarding, configuration, and billing.
+        - Securely stores dietitian content samples and generated content.
     - Security controls:
-        - API Gateway for authentication, authorization, and rate limiting.
-        - Securely designed and developed containers and databases.
-        - Encryption of data in transit and at rest.
-        - Security monitoring and logging.
+        - security control: API Gateway for authentication, authorization, and rate limiting.
+        - security control: Securely configured AWS infrastructure (ECS, RDS).
+        - security control: Data encryption at rest and in transit.
+        - security control: Input validation and output encoding.
+        - security control: Logging and monitoring.
 
-## C4 Container
+## C4 CONTAINER
 
 ```mermaid
 C4Container
@@ -149,365 +149,348 @@ C4Container
     Rel(backend_api, api_db, "read/write data", "TLS")
 ```
 
-### C4 Container elements
+### Container Diagram Elements
 
 - Element:
     - Name: API Gateway
     - Type: Container
-    - Description: Kong API Gateway. Handles external requests from Meal Planner applications.
+    - Description: Kong API Gateway, acting as the entry point for all external requests.
     - Responsibilities:
-        - Authenticates Meal Planner applications using API keys.
-        - Authorizes requests based on ACL rules.
-        - Rate limiting to prevent abuse and DoS attacks.
-        - Input filtering and validation.
-        - Routes requests to Backend API.
+        - Authentication of Meal Planner applications using API keys.
+        - Authorization using ACL rules.
+        - Rate limiting to prevent abuse.
+        - Request filtering and input validation.
+        - Routing requests to Backend API.
     - Security controls:
-        - API key authentication.
-        - Access Control Lists (ACLs) for authorization.
-        - Rate limiting policies.
-        - Input validation rules.
-        - TLS termination for external HTTPS traffic.
-        - Web Application Firewall (WAF) integration (recommended).
+        - security control: API Key authentication.
+        - security control: ACL based authorization.
+        - security control: Rate limiting configurations.
+        - security control: Input validation rules.
+        - security control: TLS termination for HTTPS.
 
 - Element:
     - Name: Web Control Plane
     - Type: Container
-    - Description: Golang application deployed on AWS ECS. Provides a web interface for administrators and managers.
+    - Description: Golang application deployed on AWS ECS, providing a web interface for administration and management.
     - Responsibilities:
-        - User authentication and authorization for administrators and managers.
+        - Administrator authentication and authorization.
         - Client onboarding and management.
-        - Configuration management for AI Nutrition-Pro.
-        - Billing data management and reporting.
+        - System configuration management.
+        - Billing data management.
+        - Monitoring and logging.
     - Security controls:
-        - Strong authentication for administrators (MFA recommended).
-        - Role-Based Access Control (RBAC).
-        - Input validation on web forms and API endpoints.
-        - Secure session management.
-        - Audit logging of administrative actions.
-        - TLS encryption for web interface and API communication.
+        - security control: Username/password or MFA based authentication for administrators.
+        - security control: Role-Based Access Control (RBAC) for administrator actions.
+        - security control: Input validation and output encoding.
+        - security control: Session management.
+        - security control: Secure logging and audit trails.
 
 - Element:
     - Name: Control Plane Database
     - Type: Container Database
-    - Description: Amazon RDS instance. Stores data for the Web Control Plane.
+    - Description: Amazon RDS instance, storing data for the Web Control Plane.
     - Responsibilities:
-        - Stores tenant information, billing data, user accounts, and configuration settings.
+        - Persistent storage for control plane data, including client information, configuration, and billing details.
     - Security controls:
-        - Database access control (least privilege).
-        - Encryption at rest (RDS encryption).
-        - Regular database backups.
-        - Database activity logging and monitoring.
-        - Network isolation (private subnet).
-        - Vulnerability scanning and patching.
+        - security control: Encryption at rest (RDS encryption).
+        - security control: Network security groups to restrict access.
+        - security control: Regular backups and disaster recovery.
+        - security control: Access control lists within RDS.
+        - security control: TLS encryption for database connections.
 
 - Element:
     - Name: API Application
     - Type: Container
-    - Description: Golang application deployed on AWS ECS. Implements the core AI Nutrition-Pro API functionality.
+    - Description: Golang application deployed on AWS ECS, providing the core AI Nutrition-Pro API functionality.
     - Responsibilities:
-        - Receives requests from API Gateway.
-        - Interacts with API database to retrieve and store data.
-        - Communicates with ChatGPT-3.5 for AI content generation.
-        - Implements business logic for AI content generation.
+        - Processing API requests for AI content generation.
+        - Interacting with ChatGPT-3.5 for content generation.
+        - Storing requests and responses in the API database.
+        - Retrieving dietitian content samples from the API database.
     - Security controls:
-        - Input validation for all API requests.
-        - Secure communication with ChatGPT-3.5 (API key management).
-        - Output encoding to prevent injection attacks.
-        - Error handling and logging.
-        - Rate limiting (if needed, in addition to API Gateway).
-        - Vulnerability scanning and patching of application dependencies.
+        - security control: Input validation and sanitization.
+        - security control: Secure handling of API keys and credentials for ChatGPT-3.5.
+        - security control: Output encoding.
+        - security control: Rate limiting (in conjunction with API Gateway).
+        - security control: Secure logging.
 
 - Element:
     - Name: API database
     - Type: Container Database
-    - Description: Amazon RDS instance. Stores data for the API Application.
+    - Description: Amazon RDS instance, storing data for the API Application, including dietitian content samples, requests, and responses.
     - Responsibilities:
-        - Stores dietitian content samples.
-        - Stores requests and responses to ChatGPT-3.5.
-        - Stores AI-generated content.
+        - Persistent storage for API data, including sensitive dietitian content samples and AI-generated content.
     - Security controls:
-        - Database access control (least privilege).
-        - Encryption at rest (RDS encryption).
-        - Regular database backups.
-        - Database activity logging and monitoring.
-        - Network isolation (private subnet).
-        - Vulnerability scanning and patching.
+        - security control: Encryption at rest (RDS encryption).
+        - security control: Network security groups to restrict access.
+        - security control: Regular backups and disaster recovery.
+        - security control: Access control lists within RDS.
+        - security control: TLS encryption for database connections.
 
 ## DEPLOYMENT
 
-Deployment Solution: AWS Cloud
-
-Detailed Deployment Architecture:
+Deployment Architecture: AWS Cloud
 
 ```mermaid
 flowchart LR
     subgraph AWS [AWS Cloud]
         subgraph VPC [Virtual Private Cloud]
-            subgraph PublicSubnet [Public Subnet]
-                api_gateway_instance["API Gateway (Kong) Instance"]
-                lb_api_gateway["Load Balancer (API Gateway)"]
+            subgraph Public_Subnet [Public Subnet]
+                API_Gateway_Instance("API Gateway (Kong)")
+                Web_Control_Plane_LB("Web Control Plane Load Balancer")
             end
-            subgraph PrivateSubnet [Private Subnet]
-                ecs_cluster["ECS Cluster"]
-                subgraph ECS_Service_API [ECS Service (API Application)]
-                    backend_api_container_1["Backend API Container 1"]
-                    backend_api_container_2["Backend API Container 2"]
-                    backend_api_container_N["Backend API Container N"]
-                end
-                 subgraph ECS_Service_ControlPlane [ECS Service (Web Control Plane)]
-                    control_plane_container_1["Web Control Plane Container 1"]
-                    control_plane_container_2["Web Control Plane Container 2"]
-                    control_plane_container_N["Web Control Plane Container N"]
-                end
-                api_db_instance["API Database (RDS)"]
-                control_plane_db_instance["Control Plane Database (RDS)"]
+            subgraph Private_Subnet [Private Subnet]
+                Web_Control_Plane_ECS["Web Control Plane ECS Cluster"]
+                API_Application_ECS["API Application ECS Cluster"]
+                API_Database_RDS("API Database (RDS)")
+                Control_Plane_Database_RDS("Control Plane Database (RDS)")
             end
         end
-        internet["Internet"]
-        mealApp_ext["Meal Planner Application"]
-        admin_ext["Administrator"]
     end
 
-    internet -- HTTPS --> lb_api_gateway
-    lb_api_gateway --> api_gateway_instance
-    api_gateway_instance -- HTTPS/REST --> ECS_Service_API
-    ECS_Service_API --> api_db_instance
-    admin_ext -- HTTPS --> ECS_Service_ControlPlane
-    ECS_Service_ControlPlane --> control_plane_db_instance
+    Internet["Internet"] --> API_Gateway_Instance
+    Internet --> Web_Control_Plane_LB
+    Web_Control_Plane_LB --> Web_Control_Plane_ECS
+    API_Gateway_Instance --> API_Application_ECS
+    API_Application_ECS --> API_Database_RDS
+    Web_Control_Plane_ECS --> Control_Plane_Database_RDS
 ```
 
-### Deployment elements
+### Deployment Diagram Elements
 
 - Element:
     - Name: Internet
     - Type: External Network
-    - Description: Public internet network.
+    - Description: Public internet, source of traffic from Meal Planner Applications and Administrators.
     - Responsibilities:
-        - Provides access for Meal Planner Applications and Administrators to AI Nutrition-Pro.
+        - Provides network connectivity for external users.
     - Security controls:
-        - N/A - external network.
+        - security control: Perimeter firewalls at VPC level.
+        - security control: DDoS protection services (e.g., AWS Shield).
 
 - Element:
-    - Name: Load Balancer (API Gateway)
-    - Type: AWS Service (Elastic Load Balancer)
-    - Description: Distributes incoming HTTPS traffic to API Gateway instances.
+    - Name: VPC (Virtual Private Cloud)
+    - Type: Cloud Network
+    - Description: Isolated network within AWS for AI Nutrition-Pro resources.
     - Responsibilities:
-        - Load balancing for API Gateway instances.
-        - TLS termination.
-        - Health checks for API Gateway instances.
+        - Network isolation and security boundary for the application.
     - Security controls:
-        - HTTPS listener configuration.
-        - Security groups to control inbound and outbound traffic.
+        - security control: Network Access Control Lists (NACLs) at subnet level.
+        - security control: Security Groups for instances and resources.
+        - security control: Route tables for network traffic management.
+
+- Element:
+    - Name: Public Subnet
+    - Type: Cloud Subnet
+    - Description: Subnet within VPC with internet access.
+    - Responsibilities:
+        - Hosting public-facing components like API Gateway and Web Control Plane Load Balancer.
+    - Security controls:
+        - security control: Internet Gateway for internet access.
+        - security control: Route tables directing traffic to Internet Gateway.
+        - security control: Security Groups allowing inbound traffic from the internet on specific ports (80, 443).
+
+- Element:
+    - Name: Private Subnet
+    - Type: Cloud Subnet
+    - Description: Subnet within VPC without direct internet access.
+    - Responsibilities:
+        - Hosting backend components like ECS clusters and RDS databases.
+    - Security controls:
+        - security control: No direct route to Internet Gateway.
+        - security control: NAT Gateway for outbound internet access if needed (for updates, etc.).
+        - security control: Security Groups restricting inbound traffic to only necessary sources within VPC.
 
 - Element:
     - Name: API Gateway (Kong) Instance
-    - Type: EC2 Instance (or Container in ECS)
-    - Description: Instance running Kong API Gateway software.
+    - Type: Compute Instance
+    - Description: Instance running Kong API Gateway in the Public Subnet.
     - Responsibilities:
-        - API Gateway functionalities (authentication, authorization, rate limiting, routing).
+        - Receives and processes external API requests.
+        - Enforces security controls (authentication, authorization, rate limiting).
+        - Routes requests to Backend API ECS cluster.
     - Security controls:
-        - Security hardening of the instance/container.
-        - Security groups to restrict access.
-        - Regular patching and updates.
+        - security control: Security Groups allowing inbound HTTPS traffic from the internet and outbound HTTPS to the Private Subnet.
+        - security control: Regular patching and updates.
+        - security control: Hardened OS configuration.
 
 - Element:
-    - Name: ECS Cluster
-    - Type: AWS Service (Elastic Container Service)
-    - Description: Managed container orchestration service for running containers.
+    - Name: Web Control Plane Load Balancer
+    - Type: Load Balancer
+    - Description: AWS Elastic Load Balancer distributing traffic to Web Control Plane ECS cluster.
     - Responsibilities:
-        - Container orchestration and management.
-        - Scaling and health management of containers.
+        - Load balancing traffic to Web Control Plane instances.
+        - Health checks for Web Control Plane instances.
+        - TLS termination.
     - Security controls:
-        - IAM roles for ECS tasks with least privilege.
-        - Container image security scanning (recommended).
-        - Network isolation using VPC and security groups.
+        - security control: Security Groups allowing inbound HTTPS traffic from the internet and outbound to the Private Subnet.
+        - security control: TLS configuration.
 
 - Element:
-    - Name: ECS Service (API Application)
-    - Type: AWS Service (Elastic Container Service)
-    - Description: ECS service running Backend API containers.
-    - Responsibilities:
-        - Running and managing Backend API containers.
-        - Scaling Backend API based on demand.
-    - Security controls:
-        - Security context for containers (least privilege).
-        - Resource limits for containers.
-        - Regular patching and updates of container images.
-
-- Element:
-    - Name: ECS Service (Web Control Plane)
-    - Type: AWS Service (Elastic Container Service)
-    - Description: ECS service running Web Control Plane containers.
+    - Name: Web Control Plane ECS Cluster
+    - Type: Container Orchestration Cluster
+    - Description: AWS ECS cluster hosting Web Control Plane containers in the Private Subnet.
     - Responsibilities:
         - Running and managing Web Control Plane containers.
-        - Scaling Web Control Plane based on demand.
     - Security controls:
-        - Security context for containers (least privilege).
-        - Resource limits for containers.
-        - Regular patching and updates of container images.
+        - security control: ECS security configurations.
+        - security control: IAM roles for ECS tasks with least privilege.
+        - security control: Container image scanning and vulnerability management.
+
+- Element:
+    - Name: API Application ECS Cluster
+    - Type: Container Orchestration Cluster
+    - Description: AWS ECS cluster hosting API Application containers in the Private Subnet.
+    - Responsibilities:
+        - Running and managing API Application containers.
+    - Security controls:
+        - security control: ECS security configurations.
+        - security control: IAM roles for ECS tasks with least privilege.
+        - security control: Container image scanning and vulnerability management.
 
 - Element:
     - Name: API Database (RDS)
-    - Type: AWS Service (Relational Database Service)
-    - Description: Managed relational database service for API database.
+    - Type: Managed Database Service
+    - Description: Amazon RDS instance for API database in the Private Subnet.
     - Responsibilities:
-        - Data persistence for API Application.
+        - Persistent storage for API data.
     - Security controls:
-        - Encryption at rest (RDS encryption).
-        - Database access control (security groups, IAM authentication).
-        - Regular backups.
-        - Vulnerability scanning and patching.
-        - Network isolation (private subnet).
+        - security control: RDS security configurations (encryption at rest, backups, etc.).
+        - security control: Security Groups restricting access from API Application ECS cluster.
+        - security control: Database access controls.
 
 - Element:
     - Name: Control Plane Database (RDS)
-    - Type: AWS Service (Relational Database Service)
-    - Description: Managed relational database service for Control Plane database.
+    - Type: Managed Database Service
+    - Description: Amazon RDS instance for Control Plane database in the Private Subnet.
     - Responsibilities:
-        - Data persistence for Web Control Plane.
+        - Persistent storage for control plane data.
     - Security controls:
-        - Encryption at rest (RDS encryption).
-        - Database access control (security groups, IAM authentication).
-        - Regular backups.
-        - Vulnerability scanning and patching.
-        - Network isolation (private subnet).
+        - security control: RDS security configurations (encryption at rest, backups, etc.).
+        - security control: Security Groups restricting access from Web Control Plane ECS cluster.
+        - security control: Database access controls.
 
 ## BUILD
-
-Build process will be based on CI/CD pipeline using GitHub Actions.
 
 ```mermaid
 flowchart LR
     subgraph Developer_Environment [Developer Environment]
-        developer["Developer"]
-        source_code["Source Code (GitHub)"]
-    end
-    subgraph CI_Pipeline [CI Pipeline (GitHub Actions)]
-        build_action["Build Action"]
-        test_action["Test Action"]
-        security_scan_action["Security Scan Action (SAST/DAST)"]
-        container_registry["Container Registry (AWS ECR)"]
+        Developer["Developer"]
+        Code_Repository["Code Repository (e.g., GitHub)"]
     end
 
-    developer -- Code Changes --> source_code
-    source_code -- Push --> build_action
-    build_action -- Build Artifacts --> test_action
-    test_action -- Test Results --> security_scan_action
-    security_scan_action -- Container Image --> container_registry
-    container_registry -- Deploy --> Deployment_Environment
+    subgraph CI_CD_Pipeline [CI/CD Pipeline (e.g., GitHub Actions)]
+        Build_Stage["Build Stage"]
+        Test_Stage["Test Stage (SAST, Unit Tests)"]
+        Security_Scan_Stage["Security Scan Stage (Container Scan, DAST)"]
+        Publish_Stage["Publish Stage (Container Registry)"]
+    end
 
-    style container_registry fill:#ccf,stroke:#99f,stroke-width:2px
+    Container_Registry["Container Registry (e.g., AWS ECR)"]
+    Deployment_Environment["Deployment Environment (AWS ECS)"]
+
+    Developer -- Code Changes --> Code_Repository
+    Code_Repository -- Webhook --> CI_CD_Pipeline
+    CI_CD_Pipeline -- Build Artifacts --> Container_Registry
+    Container_Registry -- Deploy --> Deployment_Environment
+
+    style CI_CD_Pipeline fill:#ccf,stroke:#333,stroke-width:2px
 ```
 
-### Build elements
+### Build Process Elements
 
 - Element:
     - Name: Developer
     - Type: Person
-    - Description: Software developer contributing to the project.
+    - Description: Software developer working on AI Nutrition-Pro application.
     - Responsibilities:
-        - Writing and committing code changes.
-        - Running local tests.
+        - Writes and commits code changes.
+        - Performs local testing.
     - Security controls:
-        - Secure coding practices training.
-        - Code review process.
-        - Access control to source code repository.
+        - security control: Secure coding practices training.
+        - security control: Code review process.
+        - security control: Secure workstation configuration.
 
 - Element:
-    - Name: Source Code (GitHub)
-    - Type: Code Repository
-    - Description: GitHub repository hosting the project's source code.
+    - Name: Code Repository
+    - Type: Version Control System
+    - Description: Git repository (e.g., GitHub, GitLab) storing source code.
     - Responsibilities:
         - Version control of source code.
-        - Collaboration platform for developers.
+        - Collaboration and code review.
+        - Triggering CI/CD pipeline.
     - Security controls:
-        - Access control (branch permissions, user roles).
-        - Audit logging of code changes.
-        - Branch protection rules.
+        - security control: Access control and permissions.
+        - security control: Branch protection rules.
+        - security control: Audit logs.
+        - security control: Vulnerability scanning of dependencies.
 
 - Element:
-    - Name: Build Action (GitHub Actions)
-    - Type: CI/CD Pipeline Stage
-    - Description: GitHub Actions workflow responsible for building the application.
+    - Name: CI/CD Pipeline
+    - Type: Automation System
+    - Description: Automated pipeline for building, testing, and deploying the application (e.g., GitHub Actions, Jenkins).
     - Responsibilities:
-        - Compiling code.
-        - Packaging application artifacts.
-        - Creating container images.
+        - Automated build process.
+        - Running unit tests and integration tests.
+        - Static Application Security Testing (SAST).
+        - Container image scanning for vulnerabilities.
+        - Dynamic Application Security Testing (DAST).
+        - Publishing container images to container registry.
+        - Triggering deployment to environments.
     - Security controls:
-        - Secure build environment (managed by GitHub Actions).
-        - Dependency scanning (e.g., using Dependabot).
-        - Secrets management for build process (GitHub Secrets).
+        - security control: Secure pipeline configuration and access control.
+        - security control: Secure storage of credentials and secrets.
+        - security control: Implemented security checks in pipeline stages (SAST, container scanning, DAST).
+        - security control: Audit logging of pipeline activities.
 
 - Element:
-    - Name: Test Action (GitHub Actions)
-    - Type: CI/CD Pipeline Stage
-    - Description: GitHub Actions workflow responsible for running automated tests.
-    - Responsibilities:
-        - Unit testing.
-        - Integration testing.
-    - Security controls:
-        - Automated security testing (SAST/DAST integration in security scan action).
-        - Test environment isolation.
-
-- Element:
-    - Name: Security Scan Action (SAST/DAST)
-    - Type: CI/CD Pipeline Stage
-    - Description: GitHub Actions workflow integrating security scanning tools.
-    - Responsibilities:
-        - Static Application Security Testing (SAST) to identify vulnerabilities in code.
-        - Dynamic Application Security Testing (DAST) to identify vulnerabilities in running application (optional in CI, can be in separate pipeline).
-        - Reporting security vulnerabilities.
-    - Security controls:
-        - Integration with SAST/DAST tools.
-        - Configuration of security scanning tools.
-        - Vulnerability reporting and tracking.
-
-- Element:
-    - Name: Container Registry (AWS ECR)
-    - Type: Container Image Registry
-    - Description: AWS Elastic Container Registry for storing container images.
+    - Name: Container Registry
+    - Type: Artifact Repository
+    - Description: Repository for storing container images (e.g., AWS ECR, Docker Hub).
     - Responsibilities:
         - Secure storage of container images.
-        - Versioning of container images.
-        - Distribution of container images to deployment environment.
+        - Versioning and tagging of images.
+        - Image scanning for vulnerabilities.
     - Security controls:
-        - Access control policies for container registry.
-        - Image scanning for vulnerabilities (AWS ECR image scanning).
-        - Encryption of container images at rest.
+        - security control: Access control and permissions.
+        - security control: Image scanning and vulnerability reports.
+        - security control: Immutable image tags.
+
+- Element:
+    - Name: Deployment Environment
+    - Type: Cloud Environment
+    - Description: Target environment for running the application (AWS ECS).
+    - Responsibilities:
+        - Running application containers.
+        - Providing runtime environment.
+    - Security controls:
+        - security control: Runtime security controls (as described in Deployment section).
+        - security control: Monitoring and logging.
 
 # RISK ASSESSMENT
 
-Critical business processes to protect:
-- AI Content Generation Service Availability: Disruption of the service would directly impact meal planner applications and their users.
-- Client Onboarding and Management: Compromise of control plane could lead to unauthorized access and data breaches.
-- Data Integrity and Confidentiality: Loss or exposure of dietitian content samples, AI generated content, or client data would have significant business and reputational impact.
+Critical business processes we are trying to protect:
+- AI content generation service availability and reliability for meal planner applications.
+- Secure onboarding and management of meal planner application clients.
+- Maintaining the integrity and confidentiality of dietitian content samples and generated content.
 
-Data to protect and their sensitivity:
-- Dietitian Content Samples: Sensitive. Contains proprietary content from dietitians, potentially including personal or health-related information. Confidentiality and integrity are important.
-- AI Generated Content: Sensitive. Output of AI models, may contain sensitive or business-critical information. Integrity and availability are important.
-- Requests and Responses to LLM: Sensitive. Contains prompts and responses exchanged with ChatGPT-3.5, potentially including sensitive data. Confidentiality is important.
-- Tenant Information: Sensitive. Client details, billing information, and configuration data. Confidentiality, integrity, and availability are critical.
-- Administrator Credentials: Highly Sensitive. Access to control plane and infrastructure. Confidentiality and integrity are paramount.
+Data we are trying to protect and their sensitivity:
+- Dietitian content samples: Highly sensitive. Represent intellectual property and competitive advantage for dietitians. Confidentiality and integrity are critical.
+- AI-generated diet plans: Sensitive. Can contain personal health-related information. Confidentiality and integrity are important.
+- Client (meal planner application) data: Moderately sensitive. Includes billing information and configuration details. Confidentiality and integrity are important.
+- Administrator credentials: Highly sensitive. Access to these credentials could compromise the entire system. Confidentiality and integrity are critical.
+- API Keys: Highly sensitive. Allow access to the API and content generation services. Confidentiality and integrity are critical.
 
 # QUESTIONS & ASSUMPTIONS
 
 Questions:
-- What is the data classification policy for AI Nutrition-Pro?
-- What are the specific compliance requirements (e.g., GDPR, HIPAA)?
-- What is the threat model for AI Nutrition-Pro? Are there specific threat actors or attack vectors of concern?
-- What is the incident response plan in case of a security breach?
-- What are the data retention policies for different types of data?
-- What are the performance and scalability requirements for the application?
+- What is the expected scale of meal planner applications integration? How many concurrent requests are anticipated?
+- What are the specific data retention policies for dietitian content samples and generated content?
+- Are there any specific compliance requirements (e.g., HIPAA, GDPR) that AI Nutrition-Pro needs to adhere to?
+- What is the process for managing and rotating API keys for meal planner applications?
+- What are the disaster recovery and business continuity requirements for AI Nutrition-Pro?
 
 Assumptions:
-- Business Posture:
-    - AI Nutrition-Pro is a new startup project with a moderate risk appetite, prioritizing speed of development and time to market.
-    - The primary business goal is to acquire customers and demonstrate value quickly.
-- Security Posture:
-    - Security is considered important but might be balanced against development speed and cost.
-    - Initial security controls are focused on basic authentication, authorization, and encryption.
-    - There is a willingness to implement recommended security controls in iterative phases.
-- Design:
-    - Cloud-native architecture on AWS is preferred for scalability and agility.
-    - Containerization and microservices are used for modularity and maintainability.
-    - Open-source technologies are favored where possible to reduce costs.
+- Business Posture: The primary business goal is to provide a scalable and reliable AI content generation service to meal planner applications. Security and data privacy are crucial for building trust and complying with regulations.
+- Security Posture:  Security is a high priority. A defense-in-depth approach will be implemented, covering network, application, and data security. Secure Software Development Lifecycle (SSDLC) practices are followed.
+- Design: AWS cloud is the target deployment environment. Containerization using Docker and orchestration using ECS are the chosen technologies. Kong API Gateway is used for API management. Relational databases (Amazon RDS) are used for data persistence.
