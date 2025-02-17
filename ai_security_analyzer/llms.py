@@ -227,6 +227,7 @@ class LLMProvider:
                 "temperature": llm_config.temperature,
                 "model": llm_config.model,
                 "google_api_key": api_key,
+                "max_output_tokens": 100000,
             }
         elif provider_config.model_class == ParrotFakeChatModel:
             kwargs = {

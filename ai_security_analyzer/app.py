@@ -101,6 +101,7 @@ def parse_arguments() -> AppConfig:
     )
     io_group.add_argument(
         "--filter-keywords",
+        type=comma_separated_list,
         help="Comma-separated list of keywords. Only files containing these keywords will be analyzed",
     )
     io_group.add_argument(
@@ -142,6 +143,23 @@ def parse_arguments() -> AppConfig:
         type=float,
         default=0,
         help="Sampling temperature for the agent model (between 0 and 1). Default is 0",
+    )
+    agent_group.add_argument(
+        "--secondary-agent-provider",
+        choices=["openai", "openrouter", "anthropic", "google"],
+        default=None,
+        help="LLM provider for the secondary agent (openai, openrouter, anthropic, google). Default is None",
+    )
+    agent_group.add_argument(
+        "--secondary-agent-model",
+        default=None,
+        help="Model name for the secondary agent. Default is None",
+    )
+    agent_group.add_argument(
+        "--secondary-agent-temperature",
+        type=float,
+        default=None,
+        help="Sampling temperature for the secondary agent model (between 0 and 1). Default is None",
     )
     agent_group.add_argument(
         "--agent-preamble-enabled",
@@ -212,11 +230,42 @@ def parse_arguments() -> AppConfig:
         choices=["low", "medium", "high"],
         help="Reasoning effort for the agent (only for reasoning models, e.g. o1). Default is None",
     )
-    agent_group.add_argument(
+
+    vulnerabilities_group = parser.add_argument_group("Vulnerabilities Workflows Options")
+    vulnerabilities_group.add_argument(
         "--vulnerabilities-iterations",
         type=int,
         default=5,
-        help="Number of iterations to perform for vulnerabilities analysis (default: 5)",
+        help="Number of iterations to perform for vulnerabilities workflow (default: 5)",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-severity-threshold",
+        choices=["low", "medium", "high", "critical"],
+        default="high",
+        help="Severity threshold for vulnerabilities workflow (default: high)",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-threat-actor",
+        choices=["none", "external"],
+        default="external",
+        help="Threat actor for vulnerabilities workflow (default: external)",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-output-dir",
+        default="vulnerabilities",
+        help="Directory to store intermediate data for vulnerabilities workflow. Default is `vulnerabilities`",
+    )
+    vulnerabilities_group.add_argument(
+        "--included-classes-of-vulnerabilities",
+        help="Comma-separated list of classes of vulnerabilities to include in the vulnerabilities workflow. Default is all classes of vulnerabilities. Cannot be used with --excluded-classes-of-vulnerabilities",
+        default=None,
+        type=comma_separated_list,
+    )
+    vulnerabilities_group.add_argument(
+        "--excluded-classes-of-vulnerabilities",
+        help="Comma-separated list of classes of vulnerabilities to exclude in the vulnerabilities workflow. Default is `deny of service`. Cannot be used with --included-classes-of-vulnerabilities",
+        default="deny of service",
+        type=comma_separated_list,
     )
 
     # Checkpointing arguments
@@ -239,6 +288,10 @@ def parse_arguments() -> AppConfig:
 
     args = parser.parse_args()
 
+    # Validate secondary agent arguments
+    if any([args.secondary_agent_model, args.secondary_agent_temperature]) and not args.secondary_agent_provider:
+        parser.error("--secondary-agent-model and --secondary-agent-temperature require --secondary-agent-provider")
+
     # Validate target based on mode
     if args.mode == "dir" and not os.path.isdir(args.target):
         parser.error("In 'dir' mode, target must be a valid directory path")
@@ -255,6 +308,12 @@ def parse_arguments() -> AppConfig:
 
     if args.dry_run and args.mode not in ("dir"):
         parser.error("--dry-run is only available in 'dir' mode")
+
+    # Validate vulnerabilities workflow arguments
+    if args.included_classes_of_vulnerabilities and args.excluded_classes_of_vulnerabilities:
+        parser.error(
+            "--included-classes-of-vulnerabilities and --excluded-classes-of-vulnerabilities cannot be used together"
+        )
 
     config = AppConfig(**vars(args))
     return config
@@ -295,6 +354,12 @@ def app(config: AppConfig) -> None:
         executor = GraphExecutorFactory.create(config)
         executor.execute(graph, config.target)
         checkpoint_manager.clear_current_checkpoint()
+
+
+def comma_separated_list(value):
+    if not value:
+        return []
+    return [item.strip() for item in value.split(",")]
 
 
 if __name__ == "__main__":

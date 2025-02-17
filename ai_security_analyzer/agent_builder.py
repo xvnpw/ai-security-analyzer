@@ -20,7 +20,7 @@ from ai_security_analyzer.github2ms_agents import GithubAgent2Ms
 from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.prompts.prompt_manager import PromptManager
-from ai_security_analyzer.vulnerabilities_agent1 import VulnerabilitiesAgent1
+from ai_security_analyzer.vulnerabilities_workflow1 import VulnerabilitiesWorkflow1
 
 logger = logging.getLogger(__name__)
 
@@ -48,7 +48,7 @@ class AgentBuilder:
             AgentType.GITHUB_DEEP_SD: GithubAgent2Sd,
             AgentType.GITHUB_DEEP_MS: GithubAgent2Ms,
             AgentType.FILE: FileAgent,
-            AgentType.VULNERABILITIES_AGENT1: VulnerabilitiesAgent1,
+            AgentType.VULNERABILITIES_WORKFLOW_1: VulnerabilitiesWorkflow1,
         }
         agent_type = AgentType.create(config)
 

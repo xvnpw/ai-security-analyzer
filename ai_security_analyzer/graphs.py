@@ -65,7 +65,10 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
         self.config.output_file.write(output_content)
 
 
-class VulnerabilitiesAgent1GraphExecutor(BaseGraphExecutor):
+class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
+    output_subdir_name = "vulnerabilities-workflow1"
+    output_state_key = "sec_repo_docs"
+
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
         try:
             runnable_config = self.get_runnable_config(target)
@@ -96,6 +99,20 @@ class VulnerabilitiesAgent1GraphExecutor(BaseGraphExecutor):
             output_content = f"{self.config.agent_preamble}\n\n{output_content}"
 
         self.config.output_file.write(output_content)
+
+        items = state.get(self.output_state_key, [])
+        if len(items) > 1:
+            output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
+            subdir_path = os.path.join(output_dir, self.output_subdir_name)
+
+            os.makedirs(subdir_path, exist_ok=True)
+
+            items = state.get(self.output_state_key, [])
+            for idx, item in enumerate(items, 1):
+                filename = os.path.splitext(self.config.output_file.name)[0]
+                item_path = os.path.join(subdir_path, f"{filename}-{idx}.md")
+                with open(item_path, "w") as f:
+                    f.write(item)
 
 
 class DryRunFullDirScanGraphExecutor(FullDirScanGraphExecutor):
@@ -250,7 +267,7 @@ class GraphExecutorFactory:
             AgentType.GITHUB_DEEP_AT: GithubDeepAtGraphExecutor,
             AgentType.GITHUB_DEEP_SD: GithubDeepSdGraphExecutor,
             AgentType.GITHUB_DEEP_MS: GithubDeepMsGraphExecutor,
-            AgentType.VULNERABILITIES_AGENT1: VulnerabilitiesAgent1GraphExecutor,
+            AgentType.VULNERABILITIES_WORKFLOW_1: VulnerabilitiesWorkflow1GraphExecutor,
         }
         agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)

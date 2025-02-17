@@ -21,10 +21,13 @@ class AgentType(Enum):
     GITHUB_DEEP_AT = "github-deep-at"
     GITHUB_DEEP_SD = "github-deep-sd"
     GITHUB_DEEP_MS = "github-deep-ms"
-    VULNERABILITIES_AGENT1 = "vulnerabilities-agent1"
+    VULNERABILITIES_WORKFLOW_1 = "vulnerabilities-workflow-1"
 
     @staticmethod
     def create(config: AppConfig) -> "AgentType":
+        if config.dry_run:
+            return AgentType(f"dry-run-{config.mode}")
+
         if config.deep_analysis and config.agent_prompt_type == "threat-modeling":
             return AgentType.GITHUB_DEEP_TM
         elif config.deep_analysis and config.agent_prompt_type == "attack-surface":
@@ -36,9 +39,9 @@ class AgentType(Enum):
         elif config.deep_analysis and config.agent_prompt_type == "mitigations":
             return AgentType.GITHUB_DEEP_MS
         elif config.mode == "dir" and config.agent_prompt_type == "vulnerabilities-workflow-1":
-            return AgentType.VULNERABILITIES_AGENT1
+            return AgentType.VULNERABILITIES_WORKFLOW_1
         else:
-            return AgentType(f"dry-run-{config.mode}") if config.dry_run else AgentType(config.mode)
+            return AgentType(config.mode)
 
 
 class BaseAgent(ABC):
