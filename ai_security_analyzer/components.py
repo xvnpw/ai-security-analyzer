@@ -26,3 +26,17 @@ class DeepAnalysisMixin:
     def __init__(self, deep_analysis_prompt_template: str, format_prompt_template: str):
         self.deep_analysis_prompt_template = deep_analysis_prompt_template
         self.format_prompt_template = format_prompt_template
+
+
+class VulnerabilitiesWorkflowMixin:
+    def __init__(
+        self,
+        included_classes_of_vulnerabilities: str,
+        excluded_classes_of_vulnerabilities: str,
+        vulnerabilities_severity_threshold: str,
+        vulnerabilities_threat_actor: str,
+    ):
+        self.included_classes_of_vulnerabilities = included_classes_of_vulnerabilities
+        self.excluded_classes_of_vulnerabilities = excluded_classes_of_vulnerabilities
+        self.vulnerabilities_severity_threshold = vulnerabilities_severity_threshold
+        self.vulnerabilities_threat_actor = vulnerabilities_threat_actor

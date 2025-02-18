@@ -101,7 +101,6 @@ def parse_arguments() -> AppConfig:
     )
     io_group.add_argument(
         "--filter-keywords",
-        type=comma_separated_list,
         help="Comma-separated list of keywords. Only files containing these keywords will be analyzed",
     )
     io_group.add_argument(
@@ -258,14 +257,12 @@ def parse_arguments() -> AppConfig:
     vulnerabilities_group.add_argument(
         "--included-classes-of-vulnerabilities",
         help="Comma-separated list of classes of vulnerabilities to include in the vulnerabilities workflow. Default is all classes of vulnerabilities. Cannot be used with --excluded-classes-of-vulnerabilities",
-        default=None,
-        type=comma_separated_list,
+        default="",
     )
     vulnerabilities_group.add_argument(
         "--excluded-classes-of-vulnerabilities",
         help="Comma-separated list of classes of vulnerabilities to exclude in the vulnerabilities workflow. Default is `deny of service`. Cannot be used with --included-classes-of-vulnerabilities",
         default="deny of service",
-        type=comma_separated_list,
     )
 
     # Checkpointing arguments
@@ -289,8 +286,12 @@ def parse_arguments() -> AppConfig:
     args = parser.parse_args()
 
     # Validate secondary agent arguments
-    if any([args.secondary_agent_model, args.secondary_agent_temperature]) and not args.secondary_agent_provider:
-        parser.error("--secondary-agent-model and --secondary-agent-temperature require --secondary-agent-provider")
+    secondary_agent_args = [args.secondary_agent_provider, args.secondary_agent_model, args.secondary_agent_temperature]
+    if any(secondary_agent_args) and not all(secondary_agent_args):
+        parser.error(
+            "If any secondary agent argument is provided (--secondary-agent-provider, "
+            "--secondary-agent-model, --secondary-agent-temperature), all must be provided"
+        )
 
     # Validate target based on mode
     if args.mode == "dir" and not os.path.isdir(args.target):
@@ -354,12 +355,6 @@ def app(config: AppConfig) -> None:
         executor = GraphExecutorFactory.create(config)
         executor.execute(graph, config.target)
         checkpoint_manager.clear_current_checkpoint()
-
-
-def comma_separated_list(value):
-    if not value:
-        return []
-    return [item.strip() for item in value.split(",")]
 
 
 if __name__ == "__main__":

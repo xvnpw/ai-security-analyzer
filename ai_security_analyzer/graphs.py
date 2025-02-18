@@ -66,7 +66,6 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
 
 
 class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
-    output_subdir_name = "vulnerabilities-workflow1"
     output_state_key = "sec_repo_docs"
 
     def execute(self, graph: CompiledStateGraph, target: str) -> None:
@@ -92,7 +91,7 @@ class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
             raise
 
     def _write_output(self, state: dict[str, Any] | Any) -> None:
-        actual_token_count = state.get("document_tokens", 0)
+        actual_token_count = state.get("total_document_tokens", 0)
         logger.info(f"Actual token usage: {actual_token_count}")
         output_content = state.get("sec_repo_doc_final", "")
         if self.config.agent_preamble_enabled:
@@ -103,7 +102,7 @@ class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
         items = state.get(self.output_state_key, [])
         if len(items) > 1:
             output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
-            subdir_path = os.path.join(output_dir, self.output_subdir_name)
+            subdir_path = os.path.join(output_dir, self.config.vulnerabilities_output_dir)
 
             os.makedirs(subdir_path, exist_ok=True)
 

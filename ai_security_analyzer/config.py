@@ -67,8 +67,8 @@ class AppConfig(BaseModel):
     vulnerabilities_severity_threshold: Literal["low", "medium", "high", "critical"] = Field(default="high")
     vulnerabilities_threat_actor: Literal["none", "external"] = Field(default="external")
     vulnerabilities_output_dir: str = Field(default="vulnerabilities")
-    included_classes_of_vulnerabilities: Optional[List[str]] = Field(default=None)
-    excluded_classes_of_vulnerabilities: Optional[List[str]] = Field(default=["deny of service"])
+    included_classes_of_vulnerabilities: str = Field(default="")
+    excluded_classes_of_vulnerabilities: str = Field(default="deny of service")
 
     @field_validator("exclude", mode="before")
     def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:
@@ -93,21 +93,3 @@ class AppConfig(BaseModel):
         if isinstance(value, set):
             return value
         return {s.strip() for s in value.split(",") if s.strip()}
-
-    @field_validator("included_classes_of_vulnerabilities", mode="before")
-    def parse_included_vulnerabilities(cls, value: Union[str, List[str], None]) -> Optional[List[str]]:
-        if not value:
-            return None
-        if isinstance(value, list):
-            return value
-        return [s.strip() for s in value.split(",") if s.strip()]
-
-    @field_validator("excluded_classes_of_vulnerabilities", mode="before")
-    def parse_excluded_vulnerabilities(cls, value: Union[str, List[str], None]) -> Optional[List[str]]:
-        if not value:
-            return None
-        if isinstance(value, list):
-            return value
-        if isinstance(value, str):
-            return [s.strip() for s in value.split(",") if s.strip()]
-        return None

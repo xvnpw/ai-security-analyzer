@@ -17,7 +17,7 @@ from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.llms import LLMProvider, LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
-from ai_security_analyzer.components import DocumentProcessingMixin
+from ai_security_analyzer.components import DocumentProcessingMixin, VulnerabilitiesWorkflowMixin
 import operator
 
 logger = logging.getLogger(__name__)
@@ -30,6 +30,10 @@ class GraphNodeType(Enum):
 
 
 MESSAGE_TYPE = Literal["create", "update"]
+
+THREAT_ACTOR_DESCRIPTION = {
+    "external": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
+}
 
 
 @dataclass
@@ -46,14 +50,14 @@ class AgentState(TypedDict):
     splitted_docs: List[Document]
     sec_repo_doc: str
     processed_docs_count: int
-    document_tokens: int
+    total_document_tokens: int
     vulnerabilities_iterations: int
     current_iteration: int
     sec_repo_docs: Annotated[List[str], operator.add]
     sec_repo_doc_final: str
 
 
-class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
+class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, VulnerabilitiesWorkflowMixin):
     def __init__(
         self,
         llm_provider: LLMProvider,
@@ -64,10 +68,21 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
         agent_prompt: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
+        included_classes_of_vulnerabilities: str,
+        excluded_classes_of_vulnerabilities: str,
+        vulnerabilities_severity_threshold: str,
+        vulnerabilities_threat_actor: str,
     ):
         BaseAgent.__init__(self, llm_provider, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
-        self.agent_prompt = agent_prompt[0]
+        VulnerabilitiesWorkflowMixin.__init__(
+            self,
+            included_classes_of_vulnerabilities,
+            excluded_classes_of_vulnerabilities,
+            vulnerabilities_severity_threshold,
+            vulnerabilities_threat_actor,
+        )
+        self.agent_prompt = self._create_agent_prompt(agent_prompt[0])
         self.doc_type_prompt = doc_type_prompt
 
         self.full_dir_scan_agent = FullDirScanAgent(
@@ -76,9 +91,37 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
             tokenizer=tokenizer,
             doc_processor=doc_processor,
             doc_filter=doc_filter,
-            agent_prompt=agent_prompt,
+            agent_prompt=[self.agent_prompt],
             doc_type_prompt=doc_type_prompt,
             checkpoint_manager=self.checkpoint_manager,
+        )
+
+    def _create_agent_prompt(self, agent_prompt: str) -> str:
+        if self.excluded_classes_of_vulnerabilities:
+            exclude_vulnerabilities = f"classes of vulnerabilities: {self.excluded_classes_of_vulnerabilities}"
+        else:
+            exclude_vulnerabilities = ""
+
+        if self.included_classes_of_vulnerabilities:
+            include_vulnerabilities = f"classes of vulnerabilities: {self.included_classes_of_vulnerabilities}"
+        else:
+            include_vulnerabilities = ""
+
+        if self.vulnerabilities_severity_threshold:
+            severity_threshold = f"has vulnerability rank at least: {self.vulnerabilities_severity_threshold}"
+        else:
+            severity_threshold = ""
+
+        if self.vulnerabilities_threat_actor and self.vulnerabilities_severity_threshold != "none":
+            threat_actor_description = THREAT_ACTOR_DESCRIPTION[self.vulnerabilities_threat_actor]
+        else:
+            threat_actor_description = ""
+
+        return agent_prompt.format(
+            include_vulnerabilities=include_vulnerabilities,
+            exclude_vulnerabilities=exclude_vulnerabilities,
+            severity_threshold=severity_threshold,
+            threat_actor_description=threat_actor_description,
         )
 
     def _init_state(self, state: AgentState) -> AgentState:
@@ -99,13 +142,32 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
             sec_repo_doc = get_response_content(response)
             sec_repo_doc = clean_markdown(sec_repo_doc)
 
-            document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
+            total_document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
             return {
                 "sec_repo_doc": sec_repo_doc,
-                "document_tokens": document_tokens,
+                "total_document_tokens": total_document_tokens,
             }
         except Exception as e:
             logger.error(f"Error updating vulnerabilities: {e}")
+            raise ValueError(str(e))
+
+    def _filter_response(self, state: AgentState, llm: LLM) -> AgentState:
+        logger.info("Filtering vulnerabilities")
+        try:
+            sec_repo_doc = state["sec_repo_doc"]
+            messages = self._create_filter_prompt(sec_repo_doc)
+
+            response = llm.invoke(messages)
+            sec_repo_doc = get_response_content(response)
+            sec_repo_doc = clean_markdown(sec_repo_doc)
+
+            total_document_tokens = state.get("total_document_tokens", 0) + get_total_tokens(response)
+            return {
+                "sec_repo_doc": sec_repo_doc,
+                "total_document_tokens": total_document_tokens,
+            }
+        except Exception as e:
+            logger.error(f"Error filtering vulnerabilities: {e}")
             raise ValueError(str(e))
 
     def _read_response(self, state: AgentState) -> AgentState:
@@ -137,10 +199,10 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
             final_response = get_response_content(response)
             final_response = clean_markdown(final_response)
 
-            document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
+            total_document_tokens = state.get("total_document_tokens", 0) + get_total_tokens(response)
             return {
                 "sec_repo_doc_final": final_response,
-                "document_tokens": document_tokens,
+                "total_document_tokens": total_document_tokens,
             }
         except Exception as e:
             logger.error(f"Error consolidating vulnerabilities: {e}")
@@ -157,6 +219,9 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
         def update_response(state: AgentState) -> AgentState:
             return self._update_response(state, llm)
 
+        def filter_response(state: AgentState) -> AgentState:
+            return self._filter_response(state, llm)
+
         def read_response(state: AgentState) -> AgentState:
             return self._read_response(state)
 
@@ -169,13 +234,15 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
         builder = StateGraph(AgentState)
         builder.add_node("init_state", init_state)
         builder.add_node("update_response", update_response)
+        builder.add_node("filter_response", filter_response)
         builder.add_node("read_response", read_response)
         builder.add_node("full_dir_scan_agent", self.full_dir_scan_agent.build_graph())
         builder.add_node(GraphNodeType.FINAL_RESPONSE.value, final_response)
         builder.add_edge(START, "init_state")
         builder.add_edge("init_state", "full_dir_scan_agent")
         builder.add_edge("full_dir_scan_agent", "update_response")
-        builder.add_edge("update_response", "read_response")
+        builder.add_edge("update_response", "filter_response")
+        builder.add_edge("filter_response", "read_response")
         builder.add_conditional_edges("read_response", iterate_condition)
         builder.add_edge(GraphNodeType.FINAL_RESPONSE.value, END)
         graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
@@ -216,5 +283,35 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin):
 Return complete list of vulnerabilities in markdown format.
             """
         )
+
+        return [agent_msg, HumanMessage(content=sec_repo_doc)]
+
+    def _create_filter_prompt(
+        self,
+        sec_repo_doc: str,
+    ) -> List[Union[SystemMessage, HumanMessage]]:
+        """Create messages for filtering the sec_repo_doc"""
+        prompt = """I will give you list of vulnerabilities. Please update the list according to instructions:
+{threat_actor_description}
+
+Exclude vulnerabilities that:
+- require developers that are using source code to use insecure constructs in code.
+- are only missing documentation to mitigate.
+- {exclude_vulnerabilities}
+
+Include only vulnerabilities that:
+- are valid and not already mitigated.
+- {severity_threshold}
+- {include_vulnerabilities}
+            """
+
+        prompt = prompt.format(
+            threat_actor_description=THREAT_ACTOR_DESCRIPTION[self.vulnerabilities_threat_actor],
+            exclude_vulnerabilities=self.excluded_classes_of_vulnerabilities,
+            severity_threshold=self.vulnerabilities_severity_threshold,
+            include_vulnerabilities=self.included_classes_of_vulnerabilities,
+        )
+
+        agent_msg = SystemMessage(content=prompt)
 
         return [agent_msg, HumanMessage(content=sec_repo_doc)]

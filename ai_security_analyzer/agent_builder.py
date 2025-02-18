@@ -5,7 +5,7 @@ import tiktoken
 from langchain_text_splitters import CharacterTextSplitter
 
 from ai_security_analyzer.base_agent import AgentType, BaseAgent
-from ai_security_analyzer.components import DocumentProcessingMixin, DeepAnalysisMixin
+from ai_security_analyzer.components import DocumentProcessingMixin, DeepAnalysisMixin, VulnerabilitiesWorkflowMixin
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
 from ai_security_analyzer.dry_run import DryRunFullDirScanAgent
@@ -59,7 +59,49 @@ class AgentBuilder:
         if not agent_class:
             raise ValueError(f"Unknown agent type: {self._agent_type.value}")
 
-        if issubclass(agent_class, DocumentProcessingMixin):
+        if issubclass(agent_class, VulnerabilitiesWorkflowMixin):
+            # Agents that need document processing
+            agent_model = self.llm_provider.create_agent_llm()
+            agent_model_config = agent_model.model_config
+
+            logger.debug(
+                f"Configured document splitter for chunk={agent_model_config.documents_chunk_size} and overlap={agent_model_config.documents_chunk_overlap}"
+            )
+
+            text_splitter = CharacterTextSplitter.from_tiktoken_encoder(
+                chunk_size=agent_model_config.documents_chunk_size,
+                chunk_overlap=agent_model_config.documents_chunk_overlap,
+            )
+            tokenizer = tiktoken.encoding_for_model(agent_model_config.tokenizer_model_name)
+            doc_processor = DocumentProcessor(tokenizer)
+            doc_filter = DocumentFilter()
+
+            agent_prompt = self.prompt_manager.get_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
+            if not agent_prompt:
+                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
+
+            doc_type_prompt = self.prompt_manager.get_doc_type_prompt(
+                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
+            )
+            if not doc_type_prompt:
+                raise ValueError(f"No update prompt for type: {self.config.agent_prompt_type}")
+            return agent_class(  # type: ignore[call-arg]
+                llm_provider=self.llm_provider,
+                text_splitter=text_splitter,
+                tokenizer=tokenizer,
+                doc_processor=doc_processor,
+                doc_filter=doc_filter,
+                agent_prompt=agent_prompt,
+                doc_type_prompt=doc_type_prompt,
+                checkpoint_manager=self.checkpoint_manager,
+                included_classes_of_vulnerabilities=self.config.included_classes_of_vulnerabilities,
+                excluded_classes_of_vulnerabilities=self.config.excluded_classes_of_vulnerabilities,
+                vulnerabilities_severity_threshold=self.config.vulnerabilities_severity_threshold,
+                vulnerabilities_threat_actor=self.config.vulnerabilities_threat_actor,
+            )
+        elif issubclass(agent_class, DocumentProcessingMixin):
             # Agents that need document processing
             agent_model = self.llm_provider.create_agent_llm()
             agent_model_config = agent_model.model_config
