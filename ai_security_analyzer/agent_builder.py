@@ -75,11 +75,9 @@ class AgentBuilder:
             doc_processor = DocumentProcessor(tokenizer)
             doc_filter = DocumentFilter()
 
-            agent_prompt = self.prompt_manager.get_prompt(
-                self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
-            )
-            if not agent_prompt:
-                raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
+            agent_prompts = self.prompt_manager.get_formatted_prompts(self.config)
+            if not agent_prompts:
+                raise ValueError(f"No agent prompts for type: {self.config.agent_prompt_type}")
 
             doc_type_prompt = self.prompt_manager.get_doc_type_prompt(
                 self.config.agent_provider, self.config.agent_model, self.config.mode, self.config.agent_prompt_type
@@ -89,12 +87,11 @@ class AgentBuilder:
             return agent_class(  # type: ignore[call-arg]
                 llm=agent_model,
                 secondary_llm=self.llm_provider.create_secondary_agent_llm(),
-                validation_llm=self.llm_provider.create_validation_agent_llm(),
                 text_splitter=text_splitter,
                 tokenizer=tokenizer,
                 doc_processor=doc_processor,
                 doc_filter=doc_filter,
-                agent_prompt=agent_prompt,
+                agent_prompts=agent_prompts,
                 doc_type_prompt=doc_type_prompt,
                 checkpoint_manager=self.checkpoint_manager,
                 included_classes_of_vulnerabilities=self.config.included_classes_of_vulnerabilities,

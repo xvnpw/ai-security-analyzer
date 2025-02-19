@@ -161,23 +161,6 @@ def parse_arguments() -> AppConfig:
         help="Sampling temperature for the secondary agent model (between 0 and 1). Default is None",
     )
     agent_group.add_argument(
-        "--validation-agent-provider",
-        choices=["openai", "openrouter", "anthropic", "google"],
-        default=None,
-        help="LLM provider for the validation agent (openai, openrouter, anthropic, google). Default is None",
-    )
-    agent_group.add_argument(
-        "--validation-agent-model",
-        default=None,
-        help="Model name for the validation agent. Default is None",
-    )
-    agent_group.add_argument(
-        "--validation-agent-temperature",
-        type=float,
-        default=None,
-        help="Sampling temperature for the validation agent model (between 0 and 1). Default is None",
-    )
-    agent_group.add_argument(
         "--agent-preamble-enabled",
         action="store_true",
         help="Enable preamble in the output",
@@ -308,18 +291,6 @@ def parse_arguments() -> AppConfig:
         parser.error(
             "If any secondary agent argument is provided (--secondary-agent-provider, "
             "--secondary-agent-model, --secondary-agent-temperature), all must be provided"
-        )
-
-    # Validate validation agent arguments
-    validation_agent_args = [
-        args.validation_agent_provider,
-        args.validation_agent_model,
-        args.validation_agent_temperature,
-    ]
-    if any(validation_agent_args) and not all(validation_agent_args):
-        parser.error(
-            "If any validation agent argument is provided (--validation-agent-provider, "
-            "--validation-agent-model, --validation-agent-temperature), all must be provided"
         )
 
     # Validate target based on mode

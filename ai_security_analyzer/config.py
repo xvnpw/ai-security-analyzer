@@ -63,12 +63,6 @@ class AppConfig(BaseModel):
     secondary_agent_model: Optional[str] = Field(default=None)
     secondary_agent_temperature: Optional[float] = Field(default=None, ge=0, le=1)
 
-    validation_agent_provider: Optional[Literal["openai", "openrouter", "anthropic", "google", "fake"]] = Field(
-        default=None
-    )
-    validation_agent_model: Optional[str] = Field(default=None)
-    validation_agent_temperature: Optional[float] = Field(default=None, ge=0, le=1)
-
     # Vulnerabilities workflow configuration
     vulnerabilities_severity_threshold: Literal["low", "medium", "high", "critical"] = Field(default="high")
     vulnerabilities_threat_actor: Literal["none", "external_web"] = Field(default="external_web")

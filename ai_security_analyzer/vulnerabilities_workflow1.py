@@ -18,6 +18,7 @@ from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.components import DocumentProcessingMixin, VulnerabilitiesWorkflowMixin
+from ai_security_analyzer.prompts.prompt_manager import THREAT_ACTOR_DESCRIPTION
 import operator
 
 logger = logging.getLogger(__name__)
@@ -30,10 +31,6 @@ class GraphNodeType(Enum):
 
 
 MESSAGE_TYPE = Literal["create", "update"]
-
-THREAT_ACTOR_DESCRIPTION = {
-    "external_web": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
-}
 
 
 @dataclass
@@ -68,7 +65,7 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         tokenizer: Encoding,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
-        agent_prompt: List[str],
+        agent_prompts: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
         included_classes_of_vulnerabilities: str,
@@ -76,7 +73,6 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         vulnerabilities_severity_threshold: str,
         vulnerabilities_threat_actor: str,
         secondary_llm: LLM,
-        validation_llm: LLM,
     ):
         BaseAgent.__init__(self, llm, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
@@ -87,10 +83,9 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
             vulnerabilities_severity_threshold,
             vulnerabilities_threat_actor,
         )
-        self.agent_prompt = self._create_agent_prompt(agent_prompt[0])
+        self.agent_prompt = agent_prompts[0]
         self.doc_type_prompt = doc_type_prompt
         self.secondary_llm = secondary_llm
-        self.validation_llm = validation_llm
 
         self.full_dir_scan_agent = FullDirScanAgent(
             llm=self.llm,
@@ -154,27 +149,6 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
     ) -> Literal["full_dir_scan_agent", "secondary_full_dir_scan_agent"]:
         return "secondary_full_dir_scan_agent" if state.get("use_secondary_agent", False) else "full_dir_scan_agent"
 
-    def _update_response(self, state: AgentState) -> AgentState:
-        logger.info("Updating vulnerabilities")
-        try:
-            sec_repo_doc = state["sec_repo_doc"]
-            messages = self._create_update_prompt(sec_repo_doc)
-
-            response = self.validation_llm.invoke(messages)
-            sec_repo_doc = get_response_content(response)
-            sec_repo_doc = clean_markdown(sec_repo_doc)
-
-            total_document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
-            use_secondary_agent = not state["use_secondary_agent"]
-            return {
-                "sec_repo_doc": sec_repo_doc,
-                "total_document_tokens": total_document_tokens + state.get("total_document_tokens", 0),
-                "use_secondary_agent": use_secondary_agent,
-            }
-        except Exception as e:
-            logger.error(f"Error updating vulnerabilities: {e}")
-            raise ValueError(str(e))
-
     def _filter_response(self, state: AgentState) -> AgentState:
         logger.info("Filtering vulnerabilities")
         try:
@@ -185,10 +159,12 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
             sec_repo_doc = get_response_content(response)
             sec_repo_doc = clean_markdown(sec_repo_doc)
 
-            total_document_tokens = state.get("total_document_tokens", 0) + get_total_tokens(response)
+            total_document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
+            use_secondary_agent = not state["use_secondary_agent"]
             return {
                 "sec_repo_doc": sec_repo_doc,
-                "total_document_tokens": total_document_tokens,
+                "total_document_tokens": total_document_tokens + state.get("total_document_tokens", 0),
+                "use_secondary_agent": use_secondary_agent,
             }
         except Exception as e:
             logger.error(f"Error filtering vulnerabilities: {e}")
@@ -243,9 +219,6 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         ) -> Literal["full_dir_scan_agent", "secondary_full_dir_scan_agent"]:
             return self._use_secondary_condition(state)
 
-        def update_response(state: AgentState) -> AgentState:
-            return self._update_response(state)
-
         def filter_response(state: AgentState) -> AgentState:
             return self._filter_response(state)
 
@@ -260,7 +233,6 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
 
         builder = StateGraph(AgentState)
         builder.add_node("init_state", init_state)
-        builder.add_node("update_response", update_response)
         builder.add_node("filter_response", filter_response)
         builder.add_node("read_response", read_response)
         builder.add_node("full_dir_scan_agent", self.full_dir_scan_agent.build_graph())
@@ -268,9 +240,8 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         builder.add_node(GraphNodeType.FINAL_RESPONSE.value, final_response)
         builder.add_edge(START, "init_state")
         builder.add_conditional_edges("init_state", use_secondary_condition)
-        builder.add_edge("full_dir_scan_agent", "update_response")
-        builder.add_edge("secondary_full_dir_scan_agent", "update_response")
-        builder.add_edge("update_response", "filter_response")
+        builder.add_edge("full_dir_scan_agent", "filter_response")
+        builder.add_edge("secondary_full_dir_scan_agent", "filter_response")
         builder.add_edge("filter_response", "read_response")
         builder.add_conditional_edges("read_response", iterate_condition)
         builder.add_edge(GraphNodeType.FINAL_RESPONSE.value, END)
@@ -300,21 +271,6 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         separator = "\n\n" + "=" * 100 + "\n\n"
         return "Lists of vulnerabilities:\n" + separator.join(sec_repo_docs)
 
-    def _create_update_prompt(
-        self,
-        sec_repo_doc: str,
-    ) -> List[Union[SystemMessage, HumanMessage]]:
-        """Create messages for updating the sec_repo_doc"""
-        agent_msg = SystemMessage(
-            content="""I will give you list of vulnerabilities. Please update the list according to instructions:
-- For each vulnerability, check if severity is correctly set. Compare impact to preconditions and steps that attacker needs to perform. This should address the real-world risk to the system in question, as opposed to any fantastical concerns.
-
-Return complete list of vulnerabilities in markdown format.
-            """
-        )
-
-        return [agent_msg, HumanMessage(content=sec_repo_doc)]
-
     def _create_filter_prompt(
         self,
         sec_repo_doc: str,
@@ -333,7 +289,7 @@ Include only vulnerabilities that:
 - {severity_threshold}
 - {include_vulnerabilities}
 
-Return list of vulnerabilities in markdown format.
+Return list of vulnerabilities in markdown format. Keep existing descriptions of vulnerabilities: vulnerability name, description (describe in details step by step how someone can trigger vulnerability), impact (describe the impact of the vulnerability), vulnerability rank (low,medium,high or critical), currently implemented mitigations (describe if this vulnerability is mitigated in the project and where), missing mitigations (describe what mitigations are missing in the project), preconditions (describe any preconditions that are needed to trigger this vulnerability), source code analysis (go step by step through code and describe how vulnerability can be triggered; if needed use visualization; be detail and descriptive), security test case (describe step by step test for the vulnerability to prove it's valid; assume that threat actor will be external attacker with access to publicly available instance of application).
             """
 
         prompt = self._create_agent_prompt(prompt)
