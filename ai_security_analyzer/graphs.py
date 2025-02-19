@@ -82,6 +82,8 @@ class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
                     "include_mode": self.config.include_mode,
                     "filter_keywords": self.config.filter_keywords,
                     "vulnerabilities_iterations": self.config.vulnerabilities_iterations,
+                    "use_secondary_agent_for_vulnerabilities": False,
+                    "use_secondary_agent": False,
                 },
                 runnable_config,
             )

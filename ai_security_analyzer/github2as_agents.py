@@ -8,7 +8,7 @@ from ai_security_analyzer.github2_deep_base_agents import (
     BaseGithubDeepAnalysisAgent,
     BaseDeepAnalysisState,
 )
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.utils import (
     clean_markdown,
@@ -54,14 +54,16 @@ class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalys
 
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
+        structured_llm: LLM,
         step_prompts: List[str],
         deep_analysis_prompt_template: str,
         format_prompt_template: str,
         checkpoint_manager: CheckpointManager,
     ):
         super().__init__(
-            llm_provider=llm_provider,
+            llm=llm,
+            structured_llm=structured_llm,
             step_prompts=step_prompts,
             deep_analysis_prompt_template=deep_analysis_prompt_template,
             format_prompt_template=format_prompt_template,
@@ -77,9 +79,9 @@ class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalys
         else:
             return "items_final_response"
 
-    def _structured_parse_step(self, state: AgentState, llm_structured: LLM) -> dict[str, Any]:
+    def _structured_parse_step(self, state: AgentState) -> dict[str, Any]:
         # Call the base method to parse
-        result = super()._structured_parse_step(state, llm_structured)
+        result = super()._structured_parse_step(state)
 
         surfaces = result["structured_data"].attack_surfaces
         result["attack_surfaces"] = surfaces
@@ -87,7 +89,7 @@ class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalys
         result["attack_surfaces_count"] = len(surfaces)
         return result
 
-    def _get_item_details(self, state: AgentState, llm: LLM) -> dict[str, Any]:
+    def _get_item_details(self, state: AgentState) -> dict[str, Any]:
         idx = state["attack_surfaces_index"]
         surfaces = state["attack_surfaces"]
         target_repo = state["target_repo"]
@@ -100,7 +102,7 @@ class GithubAgent2As(BaseGithubDeepAnalysisAgent[AgentState, AttackSurfaceAnalys
             text=text,
         )
         msg = HumanMessage(content=prompt)
-        response = llm.invoke([msg])
+        response = self.llm.invoke([msg])
         tokens = get_total_tokens(response)
         detail = clean_markdown(get_response_content(response))
 

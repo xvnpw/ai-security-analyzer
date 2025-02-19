@@ -26,7 +26,7 @@ from pydantic import BaseModel
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.components import DeepAnalysisMixin
 from ai_security_analyzer.checkpointing import CheckpointManager
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.utils import (
     get_response_content,
     get_total_tokens,
@@ -61,7 +61,8 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
 
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
+        structured_llm: LLM,
         step_prompts: List[str],
         deep_analysis_prompt_template: str,
         format_prompt_template: str,
@@ -72,15 +73,16 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
         # By default, we do iteration if there's a structured parser
         do_iteration: bool = True,
     ):
-        BaseAgent.__init__(self, llm_provider, checkpoint_manager)
+        BaseAgent.__init__(self, llm, checkpoint_manager)
         DeepAnalysisMixin.__init__(self, deep_analysis_prompt_template, format_prompt_template)
         self.step_prompts = step_prompts
         self.step_count = len(step_prompts)
         self.structured_parser_model = structured_parser_model
         self.do_iteration = do_iteration
         self.builder = builder
+        self.structured_llm = structured_llm
 
-    def _internal_step(self, state: StateType, llm: LLM) -> dict[str, Any]:
+    def _internal_step(self, state: StateType) -> dict[str, Any]:
         step_index = int(state.get("step_index", 0))  # type: ignore
         if step_index >= len(self.step_prompts):
             logger.warning("Internal step called after all step_prompts are exhausted.")
@@ -94,7 +96,7 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
 
         step_msg = HumanMessage(content=step_prompt)
         messages = state["messages"] + [step_msg]
-        response = llm.invoke(messages)
+        response = self.llm.invoke(messages)
         doc_tokens = get_total_tokens(response)
 
         return {
@@ -118,7 +120,7 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
 
         return {"sec_repo_doc": final_response}
 
-    def _structured_parse_step(self, state: StateType, llm_structured: Any) -> dict[str, Any]:
+    def _structured_parse_step(self, state: StateType) -> dict[str, Any]:
         if not self.structured_parser_model:
             logger.info("No structured parser model provided; skipping parse step.")
             return {}
@@ -127,7 +129,7 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
         parser: PydanticOutputParser[ModelType] = PydanticOutputParser(pydantic_object=self.structured_parser_model)
         fmtted = self.format_prompt_template.format(text=doc_text, format_instructions=parser.get_format_instructions())
         parse_msg = HumanMessage(content=fmtted)
-        response = llm_structured.invoke([parse_msg])
+        response = self.structured_llm.invoke([parse_msg])
         doc_tokens = get_total_tokens(response)
 
         content = get_response_content(response)
@@ -142,7 +144,7 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
         # Default: skip iteration. Child classes override if needed.
         return "items_final_response"
 
-    def _get_item_details(self, state: StateType, llm: Any) -> dict[str, Any]:
+    def _get_item_details(self, state: StateType) -> dict[str, Any]:
         logger.debug("No iteration in base class. Child classes should override if do_iteration=True.")
         return {}
 
@@ -150,11 +152,8 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
         return {}
 
     def _build(self) -> None:
-        llm = self.llm_provider.create_agent_llm()
-        structured_llm = self.llm_provider.create_agent_llm_for_structured_queries()
-
         def internal_step(state: StateType) -> dict[str, Any]:
-            return self._internal_step(state, llm)
+            return self._internal_step(state)
 
         def internal_step_condition(
             state: StateType,
@@ -165,10 +164,10 @@ class BaseGithubDeepAnalysisAgent(BaseAgent, DeepAnalysisMixin, Generic[StateTyp
             return self._final_response(state)
 
         def structured_parse_step(state: StateType) -> dict[str, Any]:
-            return self._structured_parse_step(state, structured_llm)
+            return self._structured_parse_step(state)
 
         def get_item_details(state: StateType) -> dict[str, Any]:
-            return self._get_item_details(state, llm)
+            return self._get_item_details(state)
 
         def items_final_response(state: StateType) -> dict[str, Any]:
             return self._items_final_response(state)

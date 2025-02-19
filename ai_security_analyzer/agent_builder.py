@@ -58,12 +58,11 @@ class AgentBuilder:
         agent_class = self._agents.get(self._agent_type)
         if not agent_class:
             raise ValueError(f"Unknown agent type: {self._agent_type.value}")
+        agent_model = self.llm_provider.create_agent_llm()
+        agent_model_config = agent_model.model_config
 
         if issubclass(agent_class, VulnerabilitiesWorkflowMixin):
             # Agents that need document processing
-            agent_model = self.llm_provider.create_agent_llm()
-            agent_model_config = agent_model.model_config
-
             logger.debug(
                 f"Configured document splitter for chunk={agent_model_config.documents_chunk_size} and overlap={agent_model_config.documents_chunk_overlap}"
             )
@@ -88,7 +87,9 @@ class AgentBuilder:
             if not doc_type_prompt:
                 raise ValueError(f"No update prompt for type: {self.config.agent_prompt_type}")
             return agent_class(  # type: ignore[call-arg]
-                llm_provider=self.llm_provider,
+                llm=agent_model,
+                secondary_llm=self.llm_provider.create_secondary_agent_llm(),
+                validation_llm=self.llm_provider.create_validation_agent_llm(),
                 text_splitter=text_splitter,
                 tokenizer=tokenizer,
                 doc_processor=doc_processor,
@@ -103,9 +104,6 @@ class AgentBuilder:
             )
         elif issubclass(agent_class, DocumentProcessingMixin):
             # Agents that need document processing
-            agent_model = self.llm_provider.create_agent_llm()
-            agent_model_config = agent_model.model_config
-
             logger.debug(
                 f"Configured document splitter for chunk={agent_model_config.documents_chunk_size} and overlap={agent_model_config.documents_chunk_overlap}"
             )
@@ -130,7 +128,7 @@ class AgentBuilder:
             if not doc_type_prompt:
                 raise ValueError(f"No update prompt for type: {self.config.agent_prompt_type}")
             return agent_class(  # type: ignore[call-arg]
-                llm_provider=self.llm_provider,
+                llm=agent_model,
                 text_splitter=text_splitter,
                 tokenizer=tokenizer,
                 doc_processor=doc_processor,
@@ -159,7 +157,8 @@ class AgentBuilder:
                 raise ValueError(f"No format prompt for type: {self.config.agent_prompt_type}")
 
             return agent_class(  # type: ignore[call-arg]
-                llm_provider=self.llm_provider,
+                llm=agent_model,
+                structured_llm=self.llm_provider.create_structured_agent_llm(),
                 step_prompts=agent_prompt,
                 deep_analysis_prompt_template=deep_analysis_prompt,
                 format_prompt_template=format_prompt,
@@ -173,4 +172,4 @@ class AgentBuilder:
             if not agent_prompt:
                 raise ValueError(f"No agent prompt for type: {self.config.agent_prompt_type}")
 
-            return agent_class(llm_provider=self.llm_provider, step_prompts=agent_prompt, checkpoint_manager=self.checkpoint_manager)  # type: ignore[call-arg]
+            return agent_class(llm=agent_model, step_prompts=agent_prompt, checkpoint_manager=self.checkpoint_manager)  # type: ignore[call-arg]

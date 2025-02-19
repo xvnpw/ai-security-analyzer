@@ -14,7 +14,7 @@ from tiktoken import Encoding
 from ai_security_analyzer.full_dir_scan_agents import FullDirScanAgent
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from ai_security_analyzer.checkpointing import CheckpointManager
 from ai_security_analyzer.components import DocumentProcessingMixin, VulnerabilitiesWorkflowMixin
@@ -32,7 +32,7 @@ class GraphNodeType(Enum):
 MESSAGE_TYPE = Literal["create", "update"]
 
 THREAT_ACTOR_DESCRIPTION = {
-    "external": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
+    "external_web": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
 }
 
 
@@ -50,17 +50,20 @@ class AgentState(TypedDict):
     splitted_docs: List[Document]
     sec_repo_doc: str
     processed_docs_count: int
+    document_tokens: int
     total_document_tokens: int
     vulnerabilities_iterations: int
     current_iteration: int
     sec_repo_docs: Annotated[List[str], operator.add]
     sec_repo_doc_final: str
+    use_secondary_agent: bool
+    use_secondary_agent_for_vulnerabilities: bool
 
 
 class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, VulnerabilitiesWorkflowMixin):
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
         doc_processor: DocumentProcessor,
@@ -72,8 +75,10 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         excluded_classes_of_vulnerabilities: str,
         vulnerabilities_severity_threshold: str,
         vulnerabilities_threat_actor: str,
+        secondary_llm: LLM,
+        validation_llm: LLM,
     ):
-        BaseAgent.__init__(self, llm_provider, checkpoint_manager)
+        BaseAgent.__init__(self, llm, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
         VulnerabilitiesWorkflowMixin.__init__(
             self,
@@ -84,9 +89,21 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         )
         self.agent_prompt = self._create_agent_prompt(agent_prompt[0])
         self.doc_type_prompt = doc_type_prompt
+        self.secondary_llm = secondary_llm
+        self.validation_llm = validation_llm
 
         self.full_dir_scan_agent = FullDirScanAgent(
-            llm_provider=self.llm_provider,
+            llm=self.llm,
+            text_splitter=text_splitter,
+            tokenizer=tokenizer,
+            doc_processor=doc_processor,
+            doc_filter=doc_filter,
+            agent_prompt=[self.agent_prompt],
+            doc_type_prompt=doc_type_prompt,
+            checkpoint_manager=self.checkpoint_manager,
+        )
+        self.secondary_full_dir_scan_agent = FullDirScanAgent(
+            llm=self.secondary_llm,
             text_splitter=text_splitter,
             tokenizer=tokenizer,
             doc_processor=doc_processor,
@@ -132,32 +149,39 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
             "processed_docs_count": 0,
         }
 
-    def _update_response(self, state: AgentState, llm: LLM) -> AgentState:
+    def _use_secondary_condition(
+        self, state: AgentState
+    ) -> Literal["full_dir_scan_agent", "secondary_full_dir_scan_agent"]:
+        return "secondary_full_dir_scan_agent" if state.get("use_secondary_agent", False) else "full_dir_scan_agent"
+
+    def _update_response(self, state: AgentState) -> AgentState:
         logger.info("Updating vulnerabilities")
         try:
             sec_repo_doc = state["sec_repo_doc"]
             messages = self._create_update_prompt(sec_repo_doc)
 
-            response = llm.invoke(messages)
+            response = self.validation_llm.invoke(messages)
             sec_repo_doc = get_response_content(response)
             sec_repo_doc = clean_markdown(sec_repo_doc)
 
             total_document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
+            use_secondary_agent = not state["use_secondary_agent"]
             return {
                 "sec_repo_doc": sec_repo_doc,
-                "total_document_tokens": total_document_tokens,
+                "total_document_tokens": total_document_tokens + state.get("total_document_tokens", 0),
+                "use_secondary_agent": use_secondary_agent,
             }
         except Exception as e:
             logger.error(f"Error updating vulnerabilities: {e}")
             raise ValueError(str(e))
 
-    def _filter_response(self, state: AgentState, llm: LLM) -> AgentState:
+    def _filter_response(self, state: AgentState) -> AgentState:
         logger.info("Filtering vulnerabilities")
         try:
             sec_repo_doc = state["sec_repo_doc"]
             messages = self._create_filter_prompt(sec_repo_doc)
 
-            response = llm.invoke(messages)
+            response = self.llm.invoke(messages)
             sec_repo_doc = get_response_content(response)
             sec_repo_doc = clean_markdown(sec_repo_doc)
 
@@ -183,7 +207,7 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
             "init_state" if current_iteration < vulnerabilities_iterations - 1 else GraphNodeType.FINAL_RESPONSE.value
         )
 
-    def _final_response(self, state: AgentState, llm: LLM):
+    def _final_response(self, state: AgentState):
         logger.info("Consolidating vulnerabilities")
         try:
             sec_repo_docs = state["sec_repo_docs"]
@@ -195,7 +219,7 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
 
             messages = self._create_consolidated_prompt(sec_repo_docs)
 
-            response = llm.invoke(messages)
+            response = self.llm.invoke(messages)
             final_response = get_response_content(response)
             final_response = clean_markdown(final_response)
 
@@ -211,16 +235,19 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
     def build_graph(self) -> CompiledStateGraph:
         logger.debug(f"[{VulnerabilitiesWorkflow1.__name__}] building graph...")
 
-        llm = self.llm_provider.create_agent_llm()
-
         def init_state(state: AgentState) -> AgentState:
             return self._init_state(state)
 
+        def use_secondary_condition(
+            state: AgentState,
+        ) -> Literal["full_dir_scan_agent", "secondary_full_dir_scan_agent"]:
+            return self._use_secondary_condition(state)
+
         def update_response(state: AgentState) -> AgentState:
-            return self._update_response(state, llm)
+            return self._update_response(state)
 
         def filter_response(state: AgentState) -> AgentState:
-            return self._filter_response(state, llm)
+            return self._filter_response(state)
 
         def read_response(state: AgentState) -> AgentState:
             return self._read_response(state)
@@ -229,7 +256,7 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
             return self._iterate_condition(state)
 
         def final_response(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._final_response(state, llm)
+            return self._final_response(state)
 
         builder = StateGraph(AgentState)
         builder.add_node("init_state", init_state)
@@ -237,10 +264,12 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         builder.add_node("filter_response", filter_response)
         builder.add_node("read_response", read_response)
         builder.add_node("full_dir_scan_agent", self.full_dir_scan_agent.build_graph())
+        builder.add_node("secondary_full_dir_scan_agent", self.secondary_full_dir_scan_agent.build_graph())
         builder.add_node(GraphNodeType.FINAL_RESPONSE.value, final_response)
         builder.add_edge(START, "init_state")
-        builder.add_edge("init_state", "full_dir_scan_agent")
+        builder.add_conditional_edges("init_state", use_secondary_condition)
         builder.add_edge("full_dir_scan_agent", "update_response")
+        builder.add_edge("secondary_full_dir_scan_agent", "update_response")
         builder.add_edge("update_response", "filter_response")
         builder.add_edge("filter_response", "read_response")
         builder.add_conditional_edges("read_response", iterate_condition)
@@ -303,14 +332,11 @@ Include only vulnerabilities that:
 - are valid and not already mitigated.
 - {severity_threshold}
 - {include_vulnerabilities}
+
+Return list of vulnerabilities in markdown format.
             """
 
-        prompt = prompt.format(
-            threat_actor_description=THREAT_ACTOR_DESCRIPTION[self.vulnerabilities_threat_actor],
-            exclude_vulnerabilities=self.excluded_classes_of_vulnerabilities,
-            severity_threshold=self.vulnerabilities_severity_threshold,
-            include_vulnerabilities=self.included_classes_of_vulnerabilities,
-        )
+        prompt = self._create_agent_prompt(prompt)
 
         agent_msg = SystemMessage(content=prompt)
 

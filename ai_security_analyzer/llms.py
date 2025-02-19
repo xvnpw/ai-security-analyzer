@@ -256,6 +256,58 @@ class LLMProvider:
             )
         )
 
+    def create_secondary_agent_llm(self) -> LLM:
+        if not all(
+            [
+                self.config.secondary_agent_provider,
+                self.config.secondary_agent_model,
+                self.config.secondary_agent_temperature,
+            ]
+        ):
+            logger.debug("Secondary agent configuration is not set, using agent configuration")
+            provider = self.config.agent_provider
+            model = self.config.agent_model
+            temperature = self.config.agent_temperature
+        else:
+            provider = self.config.secondary_agent_provider
+            model = self.config.secondary_agent_model
+            temperature = self.config.secondary_agent_temperature
+
+        return self._get_llm_instance(
+            LLMConfig(
+                provider=provider,
+                model=model,
+                temperature=temperature,
+                for_structured_output=False,
+            )
+        )
+
+    def create_validation_agent_llm(self) -> LLM:
+        if not all(
+            [
+                self.config.validation_agent_provider,
+                self.config.validation_agent_model,
+                self.config.validation_agent_temperature,
+            ]
+        ):
+            logger.debug("Validation agent configuration is not set, using agent configuration")
+            provider = self.config.agent_provider
+            model = self.config.agent_model
+            temperature = self.config.agent_temperature
+        else:
+            provider = self.config.validation_agent_provider
+            model = self.config.validation_agent_model
+            temperature = self.config.validation_agent_temperature
+
+        return self._get_llm_instance(
+            LLMConfig(
+                provider=provider,
+                model=model,
+                temperature=temperature,
+                for_structured_output=False,
+            )
+        )
+
     def create_agent_llm_for_structured_queries(self) -> LLM:
         if self.config.agent_model in FIX_TEMPERATURE_MODELS:
             temperature = 1

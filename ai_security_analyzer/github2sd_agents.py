@@ -5,7 +5,7 @@ from typing import Any, List
 from langchain_core.messages import HumanMessage
 from langgraph.graph import StateGraph
 
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.utils import get_response_content, get_total_tokens
 from ai_security_analyzer.checkpointing import CheckpointManager
 from pydantic import BaseModel
@@ -39,14 +39,16 @@ class GithubAgent2Sd(BaseGithubDeepAnalysisAgent[AgentState, NoneBaseModel]):
 
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
+        structured_llm: LLM,
         step_prompts: List[str],
         deep_analysis_prompt_template: str,
         format_prompt_template: str,
         checkpoint_manager: CheckpointManager,
     ):
         super().__init__(
-            llm_provider=llm_provider,
+            llm=llm,
+            structured_llm=structured_llm,
             step_prompts=step_prompts,
             deep_analysis_prompt_template=deep_analysis_prompt_template,
             format_prompt_template=format_prompt_template,
@@ -56,7 +58,7 @@ class GithubAgent2Sd(BaseGithubDeepAnalysisAgent[AgentState, NoneBaseModel]):
             builder=StateGraph(AgentState),
         )
 
-    def _get_sec_design_details(self, state: AgentState, llm: LLM) -> dict[str, Any]:
+    def _get_sec_design_details(self, state: AgentState) -> dict[str, Any]:
         """
         Child-specific method. Called once after final_response,
         but we skip iteration. We'll do  "extra deep detail" step below if needed.
@@ -70,7 +72,7 @@ class GithubAgent2Sd(BaseGithubDeepAnalysisAgent[AgentState, NoneBaseModel]):
             text=doc,
         )
         msg = HumanMessage(content=prompt)
-        response = llm.invoke([msg])
+        response = self.llm.invoke([msg])
         tokens = get_total_tokens(response)
         details = get_response_content(response)
         return {
@@ -82,7 +84,7 @@ class GithubAgent2Sd(BaseGithubDeepAnalysisAgent[AgentState, NoneBaseModel]):
         super()._build()
 
         def get_sec_design_wrap(state: AgentState) -> dict[str, Any]:
-            return self._get_sec_design_details(state, self.llm_provider.create_agent_llm())
+            return self._get_sec_design_details(state)
 
         self.builder.add_node("get_sec_design_details", get_sec_design_wrap)
         self.builder.add_edge("final_response", "get_sec_design_details")

@@ -7,7 +7,7 @@ from langgraph.graph import START, StateGraph
 from langgraph.graph.state import CompiledStateGraph
 
 from ai_security_analyzer.base_agent import BaseAgent
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLMProvider
 from ai_security_analyzer.utils import get_response_content, get_total_tokens, clean_markdown
 from langgraph.graph import MessagesState
 from ai_security_analyzer.checkpointing import CheckpointManager
@@ -40,7 +40,7 @@ class GithubAgent2(BaseAgent):
         self.step_prompts = step_prompts
         self.step_count = len(step_prompts)
 
-    def _internal_step(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
+    def _internal_step(self, state: AgentState):  # type: ignore[no-untyped-def]
         logger.info(f"Internal step {state.get('step_index', 0)+1} of {self.step_count}")
         try:
             target_repo = state["target_repo"]
@@ -53,7 +53,7 @@ class GithubAgent2(BaseAgent):
 
             step_msg = HumanMessage(content=step_prompt)
 
-            response = llm.invoke(state["messages"] + [step_msg])
+            response = self.llm.invoke(state["messages"] + [step_msg])
             document_tokens = get_total_tokens(response)
             return {
                 "messages": state["messages"] + [step_msg, response],
@@ -92,10 +92,8 @@ class GithubAgent2(BaseAgent):
     def build_graph(self) -> CompiledStateGraph:
         logger.debug(f"[{GithubAgent2.__name__}] building graph...")
 
-        llm = self.llm_provider.create_agent_llm()
-
         def internal_step(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._internal_step(state, llm)
+            return self._internal_step(state)
 
         def internal_step_condition(state: AgentState) -> Literal["internal_step", "final_response"]:
             return self._internal_step_condition(state)

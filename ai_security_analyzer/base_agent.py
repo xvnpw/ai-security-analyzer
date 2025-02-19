@@ -6,7 +6,7 @@ from langgraph.graph.state import CompiledStateGraph
 
 from ai_security_analyzer.config import AppConfig
 from ai_security_analyzer.checkpointing import CheckpointManager
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLM
 
 logger = logging.getLogger(__name__)
 
@@ -45,8 +45,8 @@ class AgentType(Enum):
 
 
 class BaseAgent(ABC):
-    def __init__(self, llm_provider: LLMProvider, checkpoint_manager: CheckpointManager):
-        self.llm_provider = llm_provider
+    def __init__(self, llm: LLM, checkpoint_manager: CheckpointManager):
+        self.llm = llm
         self.checkpoint_manager = checkpoint_manager
 
     @abstractmethod
