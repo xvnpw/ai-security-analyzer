@@ -247,8 +247,6 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         builder.add_edge(GraphNodeType.FINAL_RESPONSE.value, END)
         graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
-        print(graph.get_graph().draw_mermaid())
-
         return graph
 
     def _create_consolidated_prompt(
@@ -282,8 +280,9 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
 {threat_actor_description}
 
 Exclude vulnerabilities that:
-- require developers that are using source code to use insecure constructs in code.
+- are caused by developers explicitly using insecure code patterns when using project from PROJECT FILES.
 - are only missing documentation to mitigate.
+- are deny of service vulnerabilities.
 - {exclude_vulnerabilities}
 
 Include only vulnerabilities that:

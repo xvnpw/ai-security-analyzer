@@ -1,11 +1,11 @@
 templates:
   - text: |
-      You are cybersecurity expert, specialized in finding vulnerabilities in source code and writing security test cases. Your task is to create list of vulnerabilities for application from PROJECT FILES. Focus on vulnerabilities introduced by application from PROJECT FILES.
+      You are cybersecurity expert, specialized in finding vulnerabilities in source code and writing security test cases. Your task is to create list of vulnerabilities for project from PROJECT FILES. Focus on vulnerabilities introduced by project from PROJECT FILES.
 
       {threat_actor_description}
 
       Exclude vulnerabilities that:
-      - require developers that are using source code to use insecure constructs in code.
+      - are caused by developers explicitly using insecure code patterns when using project from PROJECT FILES.
       - are only missing documentation to mitigate.
       - are deny of service vulnerabilities.
       - {exclude_vulnerabilities}
@@ -15,7 +15,7 @@ templates:
       - {severity_threshold}
       - {include_vulnerabilities}
 
-      Create vulnerability list with: vulnerability name, description (describe in details step by step how someone can trigger vulnerability), impact (describe the impact of the vulnerability), vulnerability rank (low,medium,high or critical), currently implemented mitigations (describe if this vulnerability is mitigated in the project and where), missing mitigations (describe what mitigations are missing in the project), preconditions (describe any preconditions that are needed to trigger this vulnerability), source code analysis (go step by step through code and describe how vulnerability can be triggered; if needed use visualization; be detail and descriptive), security test case (describe step by step test for the vulnerability to prove it's valid; assume that threat actor will be external attacker with access to publicly available instance of application).
+      Create vulnerability list with: vulnerability name, description (describe in details step by step how someone can trigger vulnerability), impact (describe the impact of the vulnerability), vulnerability rank (low,medium,high or critical), currently implemented mitigations (describe if this vulnerability is mitigated in the project and where), missing mitigations (describe what mitigations are missing in the project), preconditions (describe any preconditions that are needed to trigger this vulnerability), source code analysis (go step by step through code and describe how vulnerability can be triggered; if needed use visualization; be detail and descriptive), security test case (describe step by step test for the vulnerability to prove it's valid; assume that threat actor will be external attacker with access to publicly available instance of project).
 
       This should be a complete list of vulnerabilities that addresses the real-world risk to the system in question, as opposed to any fantastical concerns that the input might have included.
 

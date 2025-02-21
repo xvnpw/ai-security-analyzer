@@ -604,7 +604,7 @@ poetry run python ai_security_analyzer/app.py \
     --included-classes-of-vulnerabilities "Remote Code Execution" \
     --secondary-agent-provider openai \
     --secondary-agent-model o3-mini \
-    --secondary-agent-temperature 0.7
+    --secondary-agent-temperature 1
 ```
 
 Explanation:
@@ -620,7 +620,7 @@ Explanation:
 - `--included-classes-of-vulnerabilities "Remote Code Execution"` - only vulnerabilities of this class will be included in the analysis
 - `--secondary-agent-provider openai` - use openai provider for secondary agent
 - `--secondary-agent-model o3-mini` - use o3-mini model for secondary agent
-- `--secondary-agent-temperature 0.7` - set temperature to 0.7 for secondary agent
+- `--secondary-agent-temperature 1` - set temperature to 1 for secondary agent
 
 ### Vulnerabilities Workflow Flow
 

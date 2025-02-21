@@ -27,9 +27,18 @@ def main():
         "attack-tree": "Attack Tree",
         "mitigations": "Mitigation Strategies",
         "vulnerabilities": "Vulnerabilities",
+        "vulnerabilitiesworkflow1": "Vulnerabilities Workflow 1",
     }
     # Order in which columns should appear.
-    doc_order = ["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"]
+    doc_order = [
+        "sec-design",
+        "threat-modeling",
+        "attack-surface",
+        "attack-tree",
+        "mitigations",
+        "vulnerabilities",
+        "vulnerabilitiesworkflow1",
+    ]
 
     # For each mode we know which projects are expected.
     mode_projects = {

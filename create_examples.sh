@@ -4,11 +4,11 @@ AGENT_PROMPT_TYPES="sec-design attack-surface attack-tree threat-modeling mitiga
 
 declare -A models
 declare -A deep_analysis_models
-# models["o1"]="openai"
-# models["o3-mini"]="openai"
+models["o1"]="openai"
+models["o3-mini"]="openai"
 models["gemini-2.0-flash-thinking-exp"]="google"
-# models["deepseek/deepseek-r1"]="openrouter"
-# models["gemini-2.0-pro-exp"]="google"
+models["deepseek/deepseek-r1"]="openrouter"
+models["gemini-2.0-pro-exp"]="google"
 
 # deep_analysis_models["gemini-2.0-pro-exp"]="google"
 deep_analysis_models["gemini-2.0-flash-thinking-exp"]="google"
@@ -116,7 +116,7 @@ for agent_model in "${!models[@]}"; do
 
     echo "Generating example for $agent_prompt_type with $agent_model"
 
-    ARGS="dir -t ../screenshot-to-code/ -v -o examples/dir-${agent_prompt_type}-screenshot-to-code-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 2 --secondary-agent-provider $secondary_agent_provider --secondary-agent-model $secondary_agent_model --secondary-agent-temperature $secondary_agent_temperature"
+    ARGS="dir -t ../screenshot-to-code/ -v -o examples/dir-vulnerabilitiesworkflow1-screenshot-to-code-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 2"
 
     CMD="python ai_security_analyzer/app.py $ARGS"
     echo "Running: $CMD"
