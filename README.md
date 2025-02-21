@@ -229,6 +229,9 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--agent-provider`: LLM provider for the agent (`openai`, `openrouter`, `anthropic`, `google`). Default is `openai`.
 - `--agent-model`: Model name for the agent. Default is `gpt-4o`.
 - `--agent-temperature`: Sampling temperature for the agent model (between `0` and `1`). Default is `0`.
+- `--secondary-agent-provider`: LLM provider for the secondary agent (`openai`, `openrouter`, `anthropic`, `google`). Default is `None`.
+- `--secondary-agent-model`: Model name for the secondary agent. Default is `None`.
+- `--secondary-agent-temperature`: Sampling temperature for the secondary agent model (between `0` and `1`). Default is `None`.
 - `--agent-preamble-enabled`: Enable preamble in the output.
 - `--agent-preamble`: Preamble text added to the beginning of the output. Default is `##### (🤖 AI Generated)`.
 - `--agent-prompt-type`: Prompt to use in agent (default: `sec-design`). Options are:
@@ -237,7 +240,8 @@ The application accepts various command-line arguments to tailor its behavior.
   - `attack-surface`: Perform attack surface analysis for the project.
   - `attack-tree`: Perform attack tree analysis for the project.
   - `mitigations`: Perform mitigation strategies analysis for the project.
-  - `vulnerabilities`: **For `dir` and `github` modes only** Perform vulnerabilities analysis for the project (read more about this mode in [vulnerabilities](#vulnerabilities)).
+  - `vulnerabilities`: **For `dir` mode only** Perform vulnerabilities analysis for the project (read more about this mode in [vulnerabilities](#vulnerabilities)).
+  - `vulnerabilities-workflow`: **For `dir` mode only** Perform vulnerabilities analysis for the project using vulnerabilities workflow (read more about this mode in [vulnerabilities-workflow](#vulnerabilities-workflow)).
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis. (for now only supported by gemini-2.0-flash-thinking-exp model)
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
 - `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `0`).
@@ -250,6 +254,15 @@ The application accepts various command-line arguments to tailor its behavior.
 - `--resume`: Resume from last checkpoint if available.
 - `--clear-checkpoints`: Clear existing checkpoints before starting.
 - `--checkpoint-dir`: Directory to store checkpoints. Default is `.checkpoints`.
+
+### Vulnerabilities Workflow Options
+
+- `--vulnerabilities-iterations`: Number of iterations to perform for vulnerabilities workflow. Default is `3`.
+- `--vulnerabilities-severity-threshold`: Severity threshold for vulnerabilities workflow (`low`, `medium`, `high`, `critical`). Default is `high`.
+- `--vulnerabilities-threat-actor`: Threat actor for vulnerabilities workflow (`none`, `external_web`). Default is `external_web`.
+- `--vulnerabilities-output-dir`: Directory to store intermediate data for vulnerabilities workflow. Default is `vulnerabilities-workflow`.
+- `--included-classes-of-vulnerabilities`: Comma-separated list of classes of vulnerabilities to include. Default is all classes. Cannot be used with `--excluded-classes-of-vulnerabilities`.
+- `--excluded-classes-of-vulnerabilities`: Comma-separated list of classes of vulnerabilities to exclude. Default is empty. Cannot be used with `--included-classes-of-vulnerabilities`.
 
 ## Environment Variables
 
@@ -540,6 +553,100 @@ poetry run python ai_security_analyzer/app.py \
     dir \
     -t /path/to/your/project \
     --agent-prompt-type vulnerabilities
+```
+
+### Additional Options
+
+For more control over the vulnerabilities analysis, you can use the following options:
+
+- `--vulnerabilities-severity-threshold`: Severity threshold for vulnerabilities analysis (`low`, `medium`, `high`, `critical`). Default is `high`.
+- `--vulnerabilities-threat-actor`: Threat actor for vulnerabilities analysis (`none`, `external_web`). Default is `external_web`.
+- `--included-classes-of-vulnerabilities`: Comma-separated list of classes of vulnerabilities to include. Default is all classes. Cannot be used with `--excluded-classes-of-vulnerabilities`.
+- `--excluded-classes-of-vulnerabilities`: Comma-separated list of classes of vulnerabilities to exclude. Default is empty. Cannot be used with `--included-classes-of-vulnerabilities`.
+
+**Example:**
+
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -t /path/to/your/project \
+    --agent-prompt-type vulnerabilities \
+    --included-classes-of-vulnerabilities "Remote Code Execution" \
+    --vulnerabilities-severity-threshold medium \
+    --vulnerabilities-threat-actor "none"
+```
+
+Explanation:
+- `--included-classes-of-vulnerabilities "Remote Code Execution"` - only vulnerabilities of this class will be included in the analysis
+- `--vulnerabilities-severity-threshold medium` - only vulnerabilities of medium, high or critical severity will be included in the analysis
+- `--vulnerabilities-threat-actor "none"` - there will be no specific threat actor in the analysis
+
+## Vulnerabilities Workflow
+
+Vulnerabilities workflow is a more advanced mode that uses an optional secondary agent to perform vulnerabilities analysis.
+
+### Enabling Vulnerabilities Workflow
+
+Use the `--agent-prompt-type vulnerabilities-workflow-1` flag when running the tool in `dir` mode:
+
+```bash
+poetry run python ai_security_analyzer/app.py \
+    dir \
+    -v \
+    -t ../django-unicorn \
+    --agent-prompt-type vulnerabilities-workflow-1 \
+    -o DIR-VULNERABILITIES-workflow-1-django-unicorn-rce.md \
+    --agent-provider google \
+    --agent-model gemini-2.0-flash-thinking-exp \
+    --agent-temperature 0.7 \
+    --vulnerabilities-iterations 2 \
+    --exclude "**/.github/**,**/CODE_OF_CONDUCT.md,**/CONTRIBUTING.md,**/DEVELOPING.md" \
+    --included-classes-of-vulnerabilities "Remote Code Execution" \
+    --secondary-agent-provider openai \
+    --secondary-agent-model o1-mini \
+    --secondary-agent-temperature 0.7
+```
+
+Explanation:
+- `-v` - verbose mode
+- `-t ../django-unicorn` - target is django-unicorn project
+- `--agent-prompt-type vulnerabilities-workflow-1` - use vulnerabilities workflow 1
+- `-o DIR-VULNERABILITIES-workflow-1-django-unicorn-rce.md` - output file
+- `--agent-provider google` - use google provider for primary agent
+- `--agent-model gemini-2.0-flash-thinking-exp` - use gemini-2.0-flash-thinking-exp model for primary agent
+- `--agent-temperature 0.7` - set temperature to 0.7 for primary agent
+- `--vulnerabilities-iterations 2` - perform 2 iterations of vulnerabilities analysis - first will be performed by primary agent, second will be performed by secondary agent
+- `--exclude "**/.github/**,**/CODE_OF_CONDUCT.md,**/CONTRIBUTING.md,**/DEVELOPING.md"` - exclude github, code of conduct, contributing, developing files
+- `--included-classes-of-vulnerabilities "Remote Code Execution"` - only vulnerabilities of this class will be included in the analysis
+- `--secondary-agent-provider openai` - use openai provider for secondary agent
+- `--secondary-agent-model o1-mini` - use o1-mini model for secondary agent
+- `--secondary-agent-temperature 0.7` - set temperature to 0.7 for secondary agent
+
+### Vulnerabilities Workflow Flow
+
+```mermaid
+%%{init: {'flowchart': {'curve': 'linear'}}}%%
+graph TD;
+        __start__([<p>__start__</p>]):::first
+        init_state(init_state)
+        filter_response(filter_response)
+        read_response(read_response)
+        full_dir_scan_agent(full_dir_scan_agent)
+        secondary_full_dir_scan_agent(secondary_full_dir_scan_agent)
+        final_response(final_response)
+        __end__([<p>__end__</p>]):::last
+        __start__ --> init_state;
+        filter_response --> read_response;
+        final_response --> __end__;
+        full_dir_scan_agent --> filter_response;
+        secondary_full_dir_scan_agent --> filter_response;
+        init_state -.-> full_dir_scan_agent;
+        init_state -.-> secondary_full_dir_scan_agent;
+        read_response -.-> init_state;
+        read_response -.-> final_response;
+        classDef default fill:#f2f0ff,line-height:1.2
+        classDef first fill-opacity:0
+        classDef last fill:#bfb6fc
 ```
 
 ## Troubleshooting

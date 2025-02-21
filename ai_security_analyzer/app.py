@@ -257,12 +257,10 @@ def parse_arguments() -> AppConfig:
     vulnerabilities_group.add_argument(
         "--included-classes-of-vulnerabilities",
         help="Comma-separated list of classes of vulnerabilities to include in the vulnerabilities workflow. Default is all classes of vulnerabilities. Cannot be used with --excluded-classes-of-vulnerabilities",
-        default="",
     )
     vulnerabilities_group.add_argument(
         "--excluded-classes-of-vulnerabilities",
-        help="Comma-separated list of classes of vulnerabilities to exclude in the vulnerabilities workflow. Default is `deny of service`. Cannot be used with --included-classes-of-vulnerabilities",
-        default="deny of service",
+        help="Comma-separated list of classes of vulnerabilities to exclude in the vulnerabilities workflow. Default is empty. Cannot be used with --included-classes-of-vulnerabilities",
     )
 
     # Checkpointing arguments

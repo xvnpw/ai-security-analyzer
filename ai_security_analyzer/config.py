@@ -67,8 +67,8 @@ class AppConfig(BaseModel):
     vulnerabilities_severity_threshold: Literal["low", "medium", "high", "critical"] = Field(default="high")
     vulnerabilities_threat_actor: Literal["none", "external_web"] = Field(default="external_web")
     vulnerabilities_output_dir: str = Field(default="vulnerabilities-workflow")
-    included_classes_of_vulnerabilities: str = Field(default="")
-    excluded_classes_of_vulnerabilities: str = Field(default="deny of service")
+    included_classes_of_vulnerabilities: Optional[str] = Field(default=None)
+    excluded_classes_of_vulnerabilities: Optional[str] = Field(default=None)
 
     @field_validator("exclude", mode="before")
     def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:

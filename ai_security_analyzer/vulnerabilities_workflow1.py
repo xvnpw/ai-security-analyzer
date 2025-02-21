@@ -247,6 +247,8 @@ class VulnerabilitiesWorkflow1(BaseAgent, DocumentProcessingMixin, Vulnerabiliti
         builder.add_edge(GraphNodeType.FINAL_RESPONSE.value, END)
         graph = builder.compile(checkpointer=self.checkpoint_manager.get_checkpointer())
 
+        print(graph.get_graph().draw_mermaid())
+
         return graph
 
     def _create_consolidated_prompt(
