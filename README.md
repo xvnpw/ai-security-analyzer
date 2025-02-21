@@ -241,7 +241,7 @@ The application accepts various command-line arguments to tailor its behavior.
   - `attack-tree`: Perform attack tree analysis for the project.
   - `mitigations`: Perform mitigation strategies analysis for the project.
   - `vulnerabilities`: **For `dir` mode only** Perform vulnerabilities analysis for the project (read more about this mode in [vulnerabilities](#vulnerabilities)).
-  - `vulnerabilities-workflow`: **For `dir` mode only** Perform vulnerabilities analysis for the project using vulnerabilities workflow (read more about this mode in [vulnerabilities-workflow](#vulnerabilities-workflow)).
+  - `vulnerabilities-workflow-1`: **For `dir` mode only** Perform vulnerabilities analysis for the project using vulnerabilities workflow 1 (read more about this mode in [vulnerabilities-workflow](#vulnerabilities-workflow)).
 - `--deep-analysis`: **For `github` mode only**. Enable deep analysis. (for now only supported by gemini-2.0-flash-thinking-exp model)
 - `--recursion-limit`: Graph recursion limit. Default is `35`.
 - `--refinement-count`: **For `file` mode only**. Number of iterations to refine the generated documentation (default: `0`).
