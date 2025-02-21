@@ -652,19 +652,14 @@ graph TD;
 The workflow consists of the following nodes:
 
 1. **init_state**: Initializes the workflow state for each iteration. It tracks the current iteration count and resets processing counters.
-
 2. **full_dir_scan_agent**: Primary agent that performs the initial vulnerability scan of the project directory. This agent analyzes the codebase for potential security issues.
-
 3. **secondary_full_dir_scan_agent**: Optional secondary agent that performs an additional vulnerability scan using a different model. This provides a different perspective on potential vulnerabilities.
-
 4. **filter_response**: Filters the vulnerabilities found by either agent based on configured criteria:
    - Severity threshold
    - Included/excluded vulnerability classes
    - Threat actor context
    - Removes duplicates and invalid findings
-
 5. **read_response**: Processes the filtered vulnerabilities and prepares them for the next iteration or final consolidation.
-
 6. **final_response**: After all iterations are complete, this node consolidates all findings into a final report, removing any remaining duplicates and formatting the output as a comprehensive markdown document.
 
 The workflow supports multiple iterations between primary and secondary agents to achieve more thorough analysis, with each iteration building upon and refining the previous findings.
