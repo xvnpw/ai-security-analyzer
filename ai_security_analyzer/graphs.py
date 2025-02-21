@@ -65,6 +65,56 @@ class FullDirScanGraphExecutor(BaseGraphExecutor):
         self.config.output_file.write(output_content)
 
 
+class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
+    output_state_key = "sec_repo_docs"
+
+    def execute(self, graph: CompiledStateGraph, target: str) -> None:
+        try:
+            runnable_config = self.get_runnable_config(target)
+
+            state = graph.invoke(
+                {
+                    "target_dir": target,
+                    "project_type": self.config.project_type,
+                    "exclude": self.config.exclude,
+                    "exclude_mode": self.config.exclude_mode,
+                    "include": self.config.include,
+                    "include_mode": self.config.include_mode,
+                    "filter_keywords": self.config.filter_keywords,
+                    "vulnerabilities_iterations": self.config.vulnerabilities_iterations,
+                    "use_secondary_agent_for_vulnerabilities": False,
+                    "use_secondary_agent": False,
+                },
+                runnable_config,
+            )
+            self._write_output(state)
+        except Exception as e:
+            logger.error(f"Graph execution failed: {e}")
+            raise
+
+    def _write_output(self, state: dict[str, Any] | Any) -> None:
+        actual_token_count = state.get("total_document_tokens", 0)
+        logger.info(f"Actual token usage: {actual_token_count}")
+        output_content = state.get("sec_repo_doc_final", "")
+        if self.config.agent_preamble_enabled:
+            output_content = f"{self.config.agent_preamble}\n\n{output_content}"
+
+        self.config.output_file.write(output_content)
+
+        items = state.get(self.output_state_key, [])
+        if len(items) > 1:
+            output_dir = os.path.dirname(os.path.abspath(self.config.output_file.name))
+            subdir_path = os.path.join(output_dir, self.config.vulnerabilities_output_dir)
+
+            os.makedirs(subdir_path, exist_ok=True)
+
+            for idx, item in enumerate(items, 1):
+                filename = os.path.splitext(os.path.basename(self.config.output_file.name))[0]
+                item_path = os.path.join(subdir_path, f"{filename}-{idx}.md")
+                with open(item_path, "w") as f:
+                    f.write(item)
+
+
 class DryRunFullDirScanGraphExecutor(FullDirScanGraphExecutor):
     def _format_docs(self, documents: List[Document]) -> str:
         formatted_docs = []
@@ -217,6 +267,7 @@ class GraphExecutorFactory:
             AgentType.GITHUB_DEEP_AT: GithubDeepAtGraphExecutor,
             AgentType.GITHUB_DEEP_SD: GithubDeepSdGraphExecutor,
             AgentType.GITHUB_DEEP_MS: GithubDeepMsGraphExecutor,
+            AgentType.VULNERABILITIES_WORKFLOW_1: VulnerabilitiesWorkflow1GraphExecutor,
         }
         agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)

@@ -1,15 +1,142 @@
-- Mitigation strategy: Securely configure RBAC Subjects with least privilege roles
+- Mitigation strategy: Secure Credential Handling in Terraform
   - Description:
-    - Step 1: In the provider documentation for the `chronicle_rbac_subject` resource, add a dedicated security considerations section.
-    - Step 2: Clearly document the principle of least privilege as it applies to RBAC subject roles. Emphasize the importance of assigning only the necessary roles required for the subject's intended function.
-    - Step 3: Provide concrete examples of role assignments for different use cases (e.g., a subject for viewing alerts should only have the 'Viewer' role, not 'Editor' or 'Administrator').
-    - Step 4: Warn against assigning overly permissive roles like 'Administrator' unless absolutely necessary, highlighting the potential risks of unauthorized actions and data access.
+    - Developers and users should avoid hardcoding sensitive credentials directly into Terraform configuration files.
+    - Step 1: Utilize Terraform's built-in features for secret management, such as using environment variables to supply sensitive values.  For example, instead of `backstoryapi_credentials = "sensitive_credential_string"`, use `backstoryapi_credentials = var.backstory_credentials` and set the variable via environment variable `TF_VAR_backstory_credentials`.
+    - Step 2: Explore and implement external secret management solutions like HashiCorp Vault or cloud provider secret services (e.g., AWS Secrets Manager, Azure Key Vault, Google Cloud Secret Manager) to store and retrieve credentials. Use Terraform data sources to fetch secrets from these external stores.
+    - Step 3: Ensure Terraform state files are stored securely. Enable state file encryption at rest if the storage backend supports it (e.g., AWS S3 encryption). Restrict access to the state file storage location to authorized personnel only.
+    - Step 4:  For sensitive attributes within resource configurations (like `secret_access_key`, `client_secret`, `value`, `shared_key`, `sas_token`, `backstoryapi_credentials`, `bigqueryapi_credentials`, `ingestionapi_credentials`, `forwarderapi_credentials`, `user` and `secret` in `chronicle_feed_qualys_vm`, and `value` in `chronicle_feed_thinkst_canary`), mark them as `Sensitive = true` in the Terraform provider schema. This prevents these values from being displayed in Terraform plan outputs, although they might still be stored in the state file.
   - List of threats mitigated:
-    - Threat: RBAC Subject Misconfiguration
-      - Severity: Medium. Assigning excessive roles to subjects can lead to unauthorized access to sensitive Chronicle data and functionalities, potentially leading to data breaches or unauthorized modifications.
+    - Credential Exposure
+      - Severity: High. Exposed credentials can lead to unauthorized access to Chronicle and connected services (AWS, Azure, Okta, etc.), data breaches, and service disruption.
+    - Insecure Storage of Secrets in Terraform State
+      - Severity: Medium. If Terraform state files are compromised, plaintext secrets within them could be exposed.
   - Impact:
-    - Reduces the risk of unauthorized access and actions within Chronicle by guiding users to configure RBAC subjects with appropriate and minimal roles.
+    - Credential Exposure: Risk reduced from High to Low. Using external secret stores or environment variables significantly decreases the likelihood of accidental credential exposure in code or version control.
+    - Insecure Storage of Secrets in Terraform State: Risk reduced from Medium to Low. Encryption and access control for state files minimize the impact of state file compromise. Marking attributes as sensitive prevents accidental display in outputs.
   - Currently implemented:
-    - Not implemented. Documentation for `chronicle_rbac_subject` resource currently focuses on usage and parameters, but lacks security best practices guidance on role assignments.
+    - The provider supports credential and access token inputs via Terraform configuration and environment variables as documented in `docs/index.md` and `templates/index.md.tmpl`.
+    - Sensitive attributes like `secret_access_key`, `client_secret`, `sas_token`, `shared_key`, and `value` are marked as `Sensitive = true` in the resource schemas (e.g., `resource_feed_amazon_s3.go`, `resource_feed_azure_blobstore.go`, `resource_feed_okta_system_log.go`, `resource_feed_proofpoint_siem.go`, `resource_feed_qualys_vm.go`, `resource_feed_amazon_sqs.go`, `resource_feed_microsoft_office_365_management_activity.go`, `resource_feed_thinkst_canary.go`). This is further confirmed in test files like `resource_feed_qualys_vm_test.go` and `resource_feed_thinkst_canary_test.go` where import state ignore lists include sensitive attributes: `"details.0.authentication.0.secret"`, `"details.0.authentication.0.value"`.
   - Missing implementation:
-    - Add security considerations and best practices for RBAC subject role configurations to the documentation of the `chronicle_rbac_subject` resource.
+    - Documentation should be enhanced to strongly recommend using environment variables or external secret stores for managing credentials instead of directly embedding them in Terraform code.
+    - Consider adding examples in documentation showcasing how to use environment variables and integrate with secret management solutions like HashiCorp Vault.
+    - No enforcement within the provider to prevent hardcoded secrets; this relies on user best practices and documentation.
+
+- Mitigation strategy: Input Validation and Sanitization
+  - Description:
+    - Implement comprehensive input validation within the Terraform provider code for all user-supplied input fields.
+    - Step 1: For each input field in resource schemas (e.g., `s3_uri`, `hostname`, `region`, `account_number`, `tenant_id`, `bucket_uri`, `queue`, `uri`, `hostname` in `resource_feed_thinkst_canary.go`, `content_type` in `resource_feed_microsoft_office_365_management_activity.go`), define validation rules based on expected format, type, and allowed values.
+    - Step 2: Utilize Terraform SDK's `ValidateDiagFunc` to enforce these validation rules during Terraform plan and apply operations. Implement custom validation functions (e.g., `validateRegion`, `validateAWSAccessKeyID`, `validateGCSURI`, `validateUUID`, `validateFeedS3SourceType`, `validateFeedS3SourceDeleteOption`, `validateFeedGCSSourceType`, `validateFeedGCSSourceDeleteOption`, `validateFeedAzureBlobStoreSourceType`, `validateFeedAzureBlobStoreSourceDeleteOption`, `validateFeedMicrosoftOffice365ManagementActivityContentType`, `validateThinkstCanaryHostname`, `validateSubjectType`, `validateReferenceListContentType`) as seen in the provided code to check inputs against defined criteria.
+    - Step 3: Sanitize inputs where necessary to prevent injection attacks. For example, if constructing API requests based on user inputs, ensure proper encoding and escaping to avoid command injection or other vulnerabilities.
+  - List of threats mitigated:
+    - Insufficient Input Validation
+      - Severity: Medium. Lack of input validation can lead to unexpected provider behavior, API errors, or potentially exploitable vulnerabilities if malicious input is processed.
+  - Impact:
+    - Insufficient Input Validation: Risk reduced from Medium to Low. Robust input validation prevents many common issues arising from malformed or malicious user inputs, improving stability and security.
+  - Currently implemented:
+    - The provider already implements input validation for several fields using `ValidateDiagFunc` as seen in files like `chronicle/provider.go`, `chronicle/resource_feed_amazon_s3.go`, `chronicle/resource_feed_azure_blobstore.go`, `chronicle/resource_feed_google_cloud_storage_bucket.go`, `chronicle/resource_feed_microsoft_office_365_management_activity.go`, `chronicle/validation.go`, `chronicle/resource_feed_thinkst_canary.go`, `chronicle/resource_rbac_subject.go`, `chronicle/resource_reference_list.go`, and `chronicle/resource_rule.go`. This includes validation for regions, credentials, URIs, UUIDs, specific feed source types and delete options, hostname format for Thinkst Canary, subject types for RBAC, content types for Office 365 Management Activity and Reference Lists, and rule text format.
+  - Missing implementation:
+    - Review all resource and data source schemas to ensure that every user-provided input field has appropriate validation implemented.
+    - Consider adding more specific validation rules for fields like hostnames (e.g., preventing invalid characters), account numbers (e.g., format and length checks), and URIs (e.g., protocol checks, preventing local file paths where not intended).
+    - Explore sanitization needs for inputs that are used in string concatenation or command execution within the provider (although this should ideally be avoided).
+
+- Mitigation strategy: Enforce HTTPS for API Communication
+  - Description:
+    - Ensure that the Terraform provider exclusively uses HTTPS for all communication with both Chronicle APIs and external service APIs (AWS S3/SQS, Azure Blob Storage, Okta, Proofpoint, Qualys, Thinkst Canary, Office 365).
+    - Step 1: Within the provider's HTTP client configuration (likely within the `client` package), explicitly enforce HTTPS protocol for all API endpoint URLs.
+    - Step 2: Verify TLS certificate validation is enabled and performed by the HTTP client to prevent Man-in-the-Middle (MITM) attacks. Ensure that the provider is using a trusted certificate store.
+    - Step 3: Document in the provider documentation that all API communication is secured via HTTPS and that users should ensure their network environment also supports HTTPS for these connections.
+  - List of threats mitigated:
+    - Man-in-the-Middle Attacks
+      - Severity: Medium. If communication is not encrypted, attackers could intercept sensitive data, including credentials and log data, during transit.
+  - Impact:
+    - Man-in-the-Middle Attacks: Risk reduced from Medium to Low. Enforcing HTTPS ensures that all data transmitted between the provider and APIs is encrypted, protecting against eavesdropping and tampering.
+  - Currently implemented:
+    - It is highly probable that the `chronicle.NewClient` function and the underlying Go HTTP client libraries use HTTPS as the default protocol for API requests. Review of `client/client.go` and `client/endpoints.go` shows basepaths are constructed using `https://`. Standard Go libraries generally enforce TLS certificate verification.
+  - Missing implementation:
+    - Explicitly confirm and document that HTTPS is enforced for all API communications. This should be stated clearly in the documentation, potentially within the "Configuration" section of the provider documentation (`docs/index.md` and `templates/index.md.tmpl`).
+    - Consider adding explicit code checks or configuration options within the provider to strictly enforce HTTPS and potentially log warnings or errors if non-HTTPS endpoints are configured (although custom endpoints are optional).
+    - Investigate if there's a need for more advanced TLS settings, like specifying minimum TLS versions or cipher suites, based on security best practices and compliance requirements, although default Go TLS settings are usually secure.
+
+- Mitigation strategy: Principle of Least Privilege for API Credentials
+  - Description:
+    - Guide users to configure API credentials used by the Terraform provider with the minimum necessary permissions required for its intended functionality.
+    - Step 1: For each external service (AWS, Azure, Okta, Proofpoint, Qualys, Thinkst Canary, Office 365) and for Chronicle APIs, clearly document the specific permissions and API scopes that are required for the Terraform provider to create, read, update, and delete resources.
+    - Step 2: In documentation examples and guides, emphasize the importance of creating dedicated service accounts or IAM roles with narrowly scoped policies that grant only the documented necessary permissions.
+    - Step 3: Discourage the use of overly permissive credentials (e.g., administrator accounts or broad wildcard permissions) and highlight the security risks associated with them.
+    - Step 4:  Potentially provide Terraform code examples in documentation that demonstrate how to create least privilege IAM roles or service accounts for each supported service.
+  - List of threats mitigated:
+    - Unauthorized Access to Chronicle API
+      - Severity: Medium. If overly permissive credentials are compromised, attackers could gain broader access to Chronicle resources than necessary.
+    - Credential Exposure
+      - Severity: Medium. Even if credentials are exposed, limiting their permissions reduces the potential damage an attacker can inflict.
+  - Impact:
+    - Unauthorized Access to Chronicle API: Risk reduced from Medium to Low. Least privilege significantly limits the actions an attacker can take even if they compromise credentials.
+    - Credential Exposure: Impact reduced from Medium to Low. Damage from exposed credentials is minimized due to restricted permissions.
+  - Currently implemented:
+    - Not directly implemented by the provider code itself. This is a security best practice that users need to adopt when configuring the provider.
+  - Missing implementation:
+    - Documentation needs to be expanded to thoroughly explain the principle of least privilege and provide clear guidance on the minimum permissions required for each resource type.
+    - Create dedicated documentation sections or guides detailing the necessary IAM policies, Azure RBAC roles, Okta API scopes, etc., for each service integration.
+    - Include example Terraform configurations within the documentation showing how to create and use least privilege credentials.
+
+- Mitigation strategy: Secure Logging Practices
+  - Description:
+    - Implement secure logging practices within the Terraform provider to prevent unintentional logging of sensitive information, especially credentials.
+    - Step 1: Review the entire provider codebase to identify all instances where logging is performed (using `log` package, `fmt.Printf`, etc.).
+    - Step 2: Analyze each logging statement to ensure that sensitive data (credentials, API tokens, secrets, PII, etc.) is not being logged in plaintext.
+    - Step 3: If logging of request/response details or potentially sensitive data is necessary for debugging purposes, implement conditional logging that is enabled only during development or troubleshooting, and ensure these logs are not exposed in production environments. Use debug flags or environment variables to control verbose logging.
+    - Step 4: If sensitive data must be logged temporarily for debugging, redact or mask sensitive parts of the logs before writing them to persistent storage or output streams.
+    - Step 5:  Consider using structured logging (e.g., using a logging library that supports structured output like JSON) to better control what is logged and how it is formatted, making it easier to analyze logs securely and efficiently.
+  - List of threats mitigated:
+    - Credential Exposure
+      - Severity: Low. Accidental logging of credentials could expose them, although less likely than direct code exposure or insecure state storage.
+    - Information Disclosure
+      - Severity: Low. Logging sensitive operational details could unintentionally reveal information to unauthorized parties if logs are not properly secured.
+  - Impact:
+    - Credential Exposure: Risk reduced from Low to Minimal. Secure logging practices minimize the chance of credentials being leaked through logs.
+    - Information Disclosure: Risk reduced from Low to Minimal. Controlled and reviewed logging prevents unintentional disclosure of sensitive information.
+  - Currently implemented:
+    - The code uses the `log` package for logging (e.g., `chronicle/errors_helper.go`, `chronicle/resource_rbac_subject.go`, `chronicle/resource_reference_list.go`, `chronicle/resource_rule.go`, `client/client.go`, `client/transport.go`). However, it's unclear from the provided files if sensitive data is currently being logged. The `debug.sh` script suggests debugging capabilities are present.
+  - Missing implementation:
+    - Conduct a thorough code review focused specifically on logging sensitive data. Identify and remove or secure any instances where credentials or other sensitive information might be logged.
+    - Implement secure logging practices, potentially including conditional debug logging, log redaction/masking, and structured logging.
+    - Add documentation for developers on secure logging practices within the provider and guidelines for handling sensitive data during development and debugging.
+
+- Mitigation strategy: RBAC Subject Management
+  - Description:
+    - Implement proper management and security controls for RBAC Subject resources to restrict unauthorized access and modification of Chronicle resources and configurations via the Terraform provider.
+    - Step 1: Clearly document the purpose and implications of RBAC Subject resources in the provider documentation, emphasizing their role in access control within Chronicle.
+    - Step 2:  In documentation and examples, guide users on how to create and manage RBAC Subjects effectively, including defining appropriate subject types (`SUBJECT_TYPE_ANALYST`, `SUBJECT_TYPE_IDP_GROUP`) and assigning roles based on the principle of least privilege.
+    - Step 3:  Recommend regular review and audit of RBAC Subject configurations to ensure that access controls remain appropriate and are not overly permissive.
+    - Step 4:  Consider implementing examples in documentation that demonstrate how to manage RBAC Subjects for different use cases and access control scenarios.
+  - List of threats mitigated:
+    - Unauthorized RBAC Configuration Changes
+      - Severity: Medium.  Malicious or accidental modification of RBAC subjects could lead to unauthorized access to Chronicle resources, privilege escalation, or denial of service for legitimate users.
+  - Impact:
+    - Unauthorized RBAC Configuration Changes: Risk reduced from Medium to Low.  Proper documentation, guidance, and user awareness regarding RBAC subject management will reduce the risk of misconfiguration and unauthorized changes. Regular audits can further minimize the impact.
+  - Currently implemented:
+    - The provider implements the `chronicle_rbac_subject` resource (`resource_rbac_subject.go`, `resource_rbac_subject_test.go`) which allows managing RBAC subjects via Terraform.
+  - Missing implementation:
+    - Documentation needs to be enhanced to provide comprehensive guidance on secure RBAC subject management, best practices, and potential security implications of misconfiguration.
+    - No specific enforcement within the provider code to prevent insecure RBAC configurations; this relies on user understanding and best practices.
+
+- Mitigation strategy: Reference List Security
+  - Description:
+    - Implement security measures for Reference List resources to prevent unauthorized modification and potential injection vulnerabilities if list content is used in security rules or other sensitive contexts.
+    - Step 1:  Document the purpose and usage of Reference Lists, highlighting that content of these lists might be used in security rules and could impact detection logic.
+    - Step 2:  Advise users to carefully manage access to Reference List resources, ensuring that only authorized personnel can create, update, or delete them. Leverage RBAC features of Chronicle and the provider itself if applicable to control access to Reference List resources.
+    - Step 3:  If Reference List content is used in rule text or other dynamic contexts, implement appropriate sanitization or validation to prevent injection vulnerabilities. While the code doesn't show dynamic rule generation, it's a good practice to consider if future features might use reference lists in rule logic.
+    - Step 4:  Consider adding documentation examples showcasing secure management of Reference Lists and highlighting potential security considerations when using them in rules.
+  - List of threats mitigated:
+    - Unauthorized Reference List Modification
+      - Severity: Low to Medium. Unauthorized changes to reference lists could lead to bypassing security rules, false negatives in detection, or unintended application behavior.
+    - Injection Vulnerabilities via Reference List Content
+      - Severity: Low. If reference list content is improperly handled when used in rules (e.g., rule text injection), it could potentially lead to rule compilation errors or unexpected rule behavior.
+  - Impact:
+    - Unauthorized Reference List Modification: Risk reduced from Low to Minimal with proper access control and user awareness.
+    - Injection Vulnerabilities via Reference List Content: Risk reduced from Low to Minimal by emphasizing secure coding practices and considering sanitization if list content is used dynamically in rules.
+  - Currently implemented:
+    - The provider implements the `chronicle_reference_list` resource (`resource_reference_list.go`, `resource_reference_list_test.go`) for managing reference lists. Input validation for `content_type` is implemented in `validation.go`.
+  - Missing implementation:
+    - Documentation should include security considerations for Reference Lists, especially regarding access control and potential use in security rules.
+    - Explore if sanitization is needed for Reference List content if it's used dynamically in rule generation or other sensitive contexts in future provider enhancements.

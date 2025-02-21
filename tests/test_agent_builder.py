@@ -146,7 +146,7 @@ def test_build_github_deep_ms_agent(mock_components):
 def test_build_no_agent_prompt(mock_components):
     mock_llm_provider, mock_checkpoint_manager, mock_prompt_manager = mock_components
     config = _create_config(mode="dir")
-    mock_prompt_manager.get_prompt.return_value = None  # Simulate no prompt found
+    mock_prompt_manager.get_formatted_prompts.return_value = None  # Simulate no prompt found
     builder = AgentBuilder(mock_llm_provider, mock_checkpoint_manager, config, mock_prompt_manager)
     with pytest.raises(ValueError) as context:
         builder.build()

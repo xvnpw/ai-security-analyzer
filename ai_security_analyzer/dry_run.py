@@ -10,7 +10,7 @@ from ai_security_analyzer.full_dir_scan_agents import (
     AgentState,
 )
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.llms import LLMProvider
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.checkpointing import CheckpointManager
 from typing import List
 
@@ -20,22 +20,22 @@ logger = logging.getLogger(__name__)
 class DryRunFullDirScanAgent(FullDirScanAgent):
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
-        agent_prompt: List[str],
+        agent_prompts: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
     ):
         super().__init__(
-            llm_provider=llm_provider,
+            llm=llm,
             text_splitter=text_splitter,
             tokenizer=tokenizer,
             doc_processor=doc_processor,
             doc_filter=doc_filter,
-            agent_prompt=agent_prompt,
+            agent_prompts=agent_prompts,
             doc_type_prompt=doc_type_prompt,
             checkpoint_manager=checkpoint_manager,
         )

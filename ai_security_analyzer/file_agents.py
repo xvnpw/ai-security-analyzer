@@ -15,7 +15,7 @@ from typing_extensions import TypedDict
 from ai_security_analyzer.base_agent import BaseAgent
 from ai_security_analyzer.components import DocumentProcessingMixin
 from ai_security_analyzer.documents import DocumentFilter, DocumentProcessor
-from ai_security_analyzer.llms import LLMProvider, LLM
+from ai_security_analyzer.llms import LLM
 from ai_security_analyzer.utils import clean_markdown, get_response_content, get_total_tokens
 from ai_security_analyzer.checkpointing import CheckpointManager
 
@@ -44,18 +44,18 @@ class AgentState(TypedDict):
 class FileAgent(BaseAgent, DocumentProcessingMixin):
     def __init__(
         self,
-        llm_provider: LLMProvider,
+        llm: LLM,
         text_splitter: CharacterTextSplitter,
         tokenizer: Encoding,
         doc_processor: DocumentProcessor,
         doc_filter: DocumentFilter,
-        agent_prompt: List[str],
+        agent_prompts: List[str],
         doc_type_prompt: str,
         checkpoint_manager: CheckpointManager,
     ):
-        BaseAgent.__init__(self, llm_provider, checkpoint_manager)
+        BaseAgent.__init__(self, llm, checkpoint_manager)
         DocumentProcessingMixin.__init__(self, text_splitter, tokenizer, doc_processor, doc_filter)
-        self.agent_prompt = agent_prompt[0]
+        self.agent_prompt = agent_prompts[0]
         self.doc_type_prompt = doc_type_prompt
 
     def _load_file(self, state: AgentState):  # type: ignore[no-untyped-def]
@@ -69,7 +69,7 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
             logger.error(f"Error loading file: {e}")
             raise ValueError(f"Failed to load file: {str(e)}")
 
-    def _create_initial_draft(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
+    def _create_initial_draft(self, state: AgentState):  # type: ignore[no-untyped-def]
         logger.info("Creating initial draft")
         try:
             agent_msg = SystemMessage(content=self.agent_prompt)
@@ -82,7 +82,7 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
             )
             messages = [agent_msg, HumanMessage(content=human_prompt)]
 
-            response = llm.invoke(messages)
+            response = self.llm.invoke(messages)
             document_tokens = get_total_tokens(response)
             return {
                 "sec_repo_doc": get_response_content(response),
@@ -92,7 +92,7 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
             logger.error(f"Error creating initial draft: {e}")
             raise ValueError(str(e))
 
-    def _refine_draft(self, state: AgentState, llm: LLM):  # type: ignore[no-untyped-def]
+    def _refine_draft(self, state: AgentState):  # type: ignore[no-untyped-def]
         logger.info("Refining draft")
         try:
             current_description = state.get("sec_repo_doc", "")
@@ -101,7 +101,7 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
 
             messages = self._create_update_messages(current_description, repo_doc)
 
-            response = llm.invoke(messages)
+            response = self.llm.invoke(messages)
             document_tokens = state.get("document_tokens", 0) + get_total_tokens(response)
             return {
                 "sec_repo_doc": get_response_content(response),
@@ -133,16 +133,14 @@ class FileAgent(BaseAgent, DocumentProcessingMixin):
     def build_graph(self) -> CompiledStateGraph:
         logger.debug(f"[{FileAgent.__name__}] building graph...")
 
-        llm = self.llm_provider.create_agent_llm()
-
         def load_file(state: AgentState):  # type: ignore[no-untyped-def]
             return self._load_file(state)
 
         def create_initial_draft(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._create_initial_draft(state, llm)
+            return self._create_initial_draft(state)
 
         def refine_draft(state: AgentState):  # type: ignore[no-untyped-def]
-            return self._refine_draft(state, llm)
+            return self._refine_draft(state)
 
         def refine_draft_condition(state: AgentState) -> Literal["refine_draft", "final_response"]:
             return self._refine_draft_condition(state)

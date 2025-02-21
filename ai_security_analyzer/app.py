@@ -144,6 +144,23 @@ def parse_arguments() -> AppConfig:
         help="Sampling temperature for the agent model (between 0 and 1). Default is 0",
     )
     agent_group.add_argument(
+        "--secondary-agent-provider",
+        choices=["openai", "openrouter", "anthropic", "google"],
+        default=None,
+        help="LLM provider for the secondary agent (openai, openrouter, anthropic, google). Default is None",
+    )
+    agent_group.add_argument(
+        "--secondary-agent-model",
+        default=None,
+        help="Model name for the secondary agent. Default is None",
+    )
+    agent_group.add_argument(
+        "--secondary-agent-temperature",
+        type=float,
+        default=None,
+        help="Sampling temperature for the secondary agent model (between 0 and 1). Default is None",
+    )
+    agent_group.add_argument(
         "--agent-preamble-enabled",
         action="store_true",
         help="Enable preamble in the output",
@@ -155,7 +172,15 @@ def parse_arguments() -> AppConfig:
     )
     agent_group.add_argument(
         "--agent-prompt-type",
-        choices=["sec-design", "threat-modeling", "attack-surface", "attack-tree", "mitigations", "vulnerabilities"],
+        choices=[
+            "sec-design",
+            "threat-modeling",
+            "attack-surface",
+            "attack-tree",
+            "mitigations",
+            "vulnerabilities",
+            "vulnerabilities-workflow-1",
+        ],
         default="sec-design",
         help=(
             "Prompt to use in agent (default: sec-design):\n"
@@ -164,7 +189,8 @@ def parse_arguments() -> AppConfig:
             " - attack-surface: Perform attack surface analysis for the project\n"
             " - attack-tree: Perform attack tree analysis for the project\n"
             " - mitigations: Perform mitigation strategies analysis for the project\n"
-            " - vulnerabilities: Perform vulnerabilities analysis for the project (read more about this mode in README.md)"
+            " - vulnerabilities: Perform vulnerabilities analysis for the project (read more about this mode in README.md)\n"
+            " - vulnerabilities-workflow-1: Perform vulnerabilities analysis for the project using a workflow-based approach"
         ),
     )
     agent_group.add_argument(
@@ -204,6 +230,41 @@ def parse_arguments() -> AppConfig:
         help="Reasoning effort for the agent (only for reasoning models, e.g. o1). Default is None",
     )
 
+    vulnerabilities_group = parser.add_argument_group("Vulnerabilities Workflows Options")
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-iterations",
+        type=int,
+        default=3,
+        help="Number of iterations to perform for vulnerabilities workflow (default: 3)",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-severity-threshold",
+        choices=["low", "medium", "high", "critical"],
+        default="high",
+        help="Severity threshold for vulnerabilities workflow (default: high)",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-threat-actor",
+        choices=["none", "external_web"],
+        default="external_web",
+        help="Threat actor for vulnerabilities workflow (default: external_web)",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-output-dir",
+        default="vulnerabilities-workflow",
+        help="Directory to store intermediate data for vulnerabilities workflow. Default is `vulnerabilities-workflow`",
+    )
+    vulnerabilities_group.add_argument(
+        "--included-classes-of-vulnerabilities",
+        help="Comma-separated list of classes of vulnerabilities to include in the vulnerabilities workflow. Default is all classes of vulnerabilities. Cannot be used with --excluded-classes-of-vulnerabilities",
+        default="",
+    )
+    vulnerabilities_group.add_argument(
+        "--excluded-classes-of-vulnerabilities",
+        help="Comma-separated list of classes of vulnerabilities to exclude in the vulnerabilities workflow. Default is `deny of service`. Cannot be used with --included-classes-of-vulnerabilities",
+        default="deny of service",
+    )
+
     # Checkpointing arguments
     checkpoint_group = parser.add_argument_group("Checkpointing Options")
     checkpoint_group.add_argument(
@@ -224,6 +285,14 @@ def parse_arguments() -> AppConfig:
 
     args = parser.parse_args()
 
+    # Validate secondary agent arguments
+    secondary_agent_args = [args.secondary_agent_provider, args.secondary_agent_model, args.secondary_agent_temperature]
+    if any(secondary_agent_args) and not all(secondary_agent_args):
+        parser.error(
+            "If any secondary agent argument is provided (--secondary-agent-provider, "
+            "--secondary-agent-model, --secondary-agent-temperature), all must be provided"
+        )
+
     # Validate target based on mode
     if args.mode == "dir" and not os.path.isdir(args.target):
         parser.error("In 'dir' mode, target must be a valid directory path")
@@ -240,6 +309,12 @@ def parse_arguments() -> AppConfig:
 
     if args.dry_run and args.mode not in ("dir"):
         parser.error("--dry-run is only available in 'dir' mode")
+
+    # Validate vulnerabilities workflow arguments
+    if args.included_classes_of_vulnerabilities and args.excluded_classes_of_vulnerabilities:
+        parser.error(
+            "--included-classes-of-vulnerabilities and --excluded-classes-of-vulnerabilities cannot be used together"
+        )
 
     config = AppConfig(**vars(args))
     return config
