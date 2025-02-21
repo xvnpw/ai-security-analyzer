@@ -603,7 +603,7 @@ poetry run python ai_security_analyzer/app.py \
     --exclude "**/.github/**,**/CODE_OF_CONDUCT.md,**/CONTRIBUTING.md,**/DEVELOPING.md" \
     --included-classes-of-vulnerabilities "Remote Code Execution" \
     --secondary-agent-provider openai \
-    --secondary-agent-model o1-mini \
+    --secondary-agent-model o3-mini \
     --secondary-agent-temperature 0.7
 ```
 
@@ -619,7 +619,7 @@ Explanation:
 - `--exclude "**/.github/**,**/CODE_OF_CONDUCT.md,**/CONTRIBUTING.md,**/DEVELOPING.md"` - exclude github, code of conduct, contributing, developing files
 - `--included-classes-of-vulnerabilities "Remote Code Execution"` - only vulnerabilities of this class will be included in the analysis
 - `--secondary-agent-provider openai` - use openai provider for secondary agent
-- `--secondary-agent-model o1-mini` - use o1-mini model for secondary agent
+- `--secondary-agent-model o3-mini` - use o3-mini model for secondary agent
 - `--secondary-agent-temperature 0.7` - set temperature to 0.7 for secondary agent
 
 ### Vulnerabilities Workflow Flow
@@ -648,6 +648,26 @@ graph TD;
         classDef first fill-opacity:0
         classDef last fill:#bfb6fc
 ```
+
+The workflow consists of the following nodes:
+
+1. **init_state**: Initializes the workflow state for each iteration. It tracks the current iteration count and resets processing counters.
+
+2. **full_dir_scan_agent**: Primary agent that performs the initial vulnerability scan of the project directory. This agent analyzes the codebase for potential security issues.
+
+3. **secondary_full_dir_scan_agent**: Optional secondary agent that performs an additional vulnerability scan using a different model. This provides a different perspective on potential vulnerabilities.
+
+4. **filter_response**: Filters the vulnerabilities found by either agent based on configured criteria:
+   - Severity threshold
+   - Included/excluded vulnerability classes
+   - Threat actor context
+   - Removes duplicates and invalid findings
+
+5. **read_response**: Processes the filtered vulnerabilities and prepares them for the next iteration or final consolidation.
+
+6. **final_response**: After all iterations are complete, this node consolidates all findings into a final report, removing any remaining duplicates and formatting the output as a comprehensive markdown document.
+
+The workflow supports multiple iterations between primary and secondary agents to achieve more thorough analysis, with each iteration building upon and refining the previous findings.
 
 ## Troubleshooting
 
