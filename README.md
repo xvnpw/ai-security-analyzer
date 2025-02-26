@@ -259,7 +259,7 @@ The application accepts various command-line arguments to tailor its behavior.
 
 - `--vulnerabilities-iterations`: Number of iterations to perform for vulnerabilities workflow. Default is `3`.
 - `--vulnerabilities-severity-threshold`: Severity threshold for vulnerabilities workflow (`low`, `medium`, `high`, `critical`). Default is `high`.
-- `--vulnerabilities-threat-actor`: Threat actor for vulnerabilities workflow (`none`, `external_web`). Default is `external_web`.
+- `--vulnerabilities-threat-actor`: Threat actor for vulnerabilities workflow (`none`, `external_web`, `vscode_extension`). Default is `external_web`.
 - `--vulnerabilities-output-dir`: Directory to store intermediate data for vulnerabilities workflow. Default is `vulnerabilities-workflow`.
 - `--included-classes-of-vulnerabilities`: Comma-separated list of classes of vulnerabilities to include. Default is all classes. Cannot be used with `--excluded-classes-of-vulnerabilities`.
 - `--excluded-classes-of-vulnerabilities`: Comma-separated list of classes of vulnerabilities to exclude. Default is empty. Cannot be used with `--included-classes-of-vulnerabilities`.

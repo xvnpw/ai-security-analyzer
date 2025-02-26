@@ -7,6 +7,7 @@ from ai_security_analyzer.config import AppConfig
 THREAT_ACTOR_DESCRIPTION = {
     "none": "",
     "external_web": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
+    "vscode_extension": "Assume that threat actor is external attacker that will try to trigger vulnerability in VSCode extension.",
 }
 
 

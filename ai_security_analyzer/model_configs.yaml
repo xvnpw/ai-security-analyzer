@@ -94,6 +94,16 @@ models:
     supports_structured_output: false
     reasoning_effort: 'high'
 
+  anthropic/claude-3.7-sonnet:
+    max_number_of_tools: 0
+    use_system_message: true
+    system_message_type: 'system'
+    documents_chunk_size: 90000
+    documents_chunk_overlap: 0
+    documents_context_window: 100000
+    tokenizer_model_name: 'gpt2'
+    supports_structured_output: false
+
 
 default:
   max_number_of_tools: 1000
