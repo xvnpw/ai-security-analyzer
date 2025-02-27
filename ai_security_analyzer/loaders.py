@@ -41,7 +41,7 @@ FILES_GLOB: dict[str, List[str]] = {
     "javascript": GENERIC_FILES_GLOB + JAVASCRIPT_FILES_GLOB,
 }
 
-DEFAULT_EXCLUDE = ["LICENSE", "**/dist/*", "**/bin/*"]
+DEFAULT_EXCLUDE = ["LICENSE", "**/dist/**", "**/bin/**", "**/build/**", "**/node_modules/**", "**/lib/**", "**/libs/**"]
 
 
 def _is_visible(p: Path) -> bool:
