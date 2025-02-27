@@ -30,7 +30,7 @@ JAVA_FILES_GLOB = [
 
 ANDROID_FILES_GLOB = ["**/AndroidManifest.xml", "**/proguard-rules.pro", "**/*.kts", "**/*.kt"]
 
-JAVASCRIPT_FILES_GLOB = ["**/*.js", "**/*.js", "**/*.ts", "**/*.ts"]
+JAVASCRIPT_FILES_GLOB = ["**/*.js", "**/*.ts"]
 
 FILES_GLOB: dict[str, List[str]] = {
     "generic": GENERIC_FILES_GLOB,
