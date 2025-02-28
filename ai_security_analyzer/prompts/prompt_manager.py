@@ -8,6 +8,7 @@ THREAT_ACTOR_DESCRIPTION = {
     "none": "",
     "external_web": "Assume that threat actor is external attacker that will try to trigger vulnerability in publicly available instance of application.",
     "vscode_extension": "Assume that threat actor is external attacker that will try to trigger vulnerability in VSCode extension.",
+    "vscode_extension_malicious_repo": "Assume that threat actor will try to trigger vulnerability in VSCode extension by providing malicious repository to victim with manipulated content.",
 }
 
 

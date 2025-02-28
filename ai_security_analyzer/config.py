@@ -65,7 +65,9 @@ class AppConfig(BaseModel):
 
     # Vulnerabilities workflow configuration
     vulnerabilities_severity_threshold: Literal["low", "medium", "high", "critical"] = Field(default="high")
-    vulnerabilities_threat_actor: Literal["none", "external_web", "vscode_extension"] = Field(default="external_web")
+    vulnerabilities_threat_actor: Literal[
+        "none", "external_web", "vscode_extension", "vscode_extension_malicious_repo"
+    ] = Field(default="external_web")
     vulnerabilities_output_dir: str = Field(default="vulnerabilities-workflow")
     included_classes_of_vulnerabilities: Optional[str] = Field(default=None)
     excluded_classes_of_vulnerabilities: Optional[str] = Field(default=None)

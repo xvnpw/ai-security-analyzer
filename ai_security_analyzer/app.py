@@ -245,7 +245,7 @@ def parse_arguments() -> AppConfig:
     )
     vulnerabilities_group.add_argument(
         "--vulnerabilities-threat-actor",
-        choices=["none", "external_web", "vscode_extension"],
+        choices=["none", "external_web", "vscode_extension", "vscode_extension_malicious_repo"],
         default="external_web",
         help="Threat actor for vulnerabilities workflow (default: external_web)",
     )
