@@ -1,75 +1,72 @@
 # BUSINESS POSTURE
 
-The Chronicle Terraform provider project enables infrastructure automation for Google Cloud's Chronicle security platform. The main business priorities of this project are:
+Google Chronicle is a cloud-native security analytics platform designed to help organizations detect, investigate, and respond to cybersecurity threats. This Terraform provider enables infrastructure-as-code management of Chronicle resources, allowing security teams to automate the setup and configuration of data feeds, detection rules, access control, and reference lists.
 
-1. Enable security operations teams to define, deploy, and manage Chronicle resources through infrastructure as code
-2. Support various data ingestion methods (feeds) to consolidate security data from multiple sources
-3. Provide a consistent, programmable interface for managing security rules, reference lists, and access controls
-4. Improve operational efficiency by automating Chronicle resource management
+The primary business priorities and goals include:
+
+1. Enabling security teams to manage Chronicle resources through infrastructure-as-code practices
+2. Automating the configuration of data ingestion feeds from various sources
+3. Standardizing security controls and configurations across environments
+4. Providing a consistent way to deploy and update security detection rules
+5. Managing access control (RBAC) through code
+6. Supporting various authentication methods for different Chronicle APIs
 
 Key business risks that need to be addressed:
 
-1. API credential management and security
-2. Consistency and reliability in resource state management
-3. Compatibility with Chronicle API changes
-4. Maintaining accurate documentation for complex feed configurations
+1. Credential exposure in Terraform state files and version control systems
+2. Complexity in managing credential authorization for multiple APIs and data sources
+3. Ensuring consistent security controls across different deployment environments
+4. Maintaining version compatibility with the Chronicle API
+5. Potential service disruption during updates or reconfigurations
 
 # SECURITY POSTURE
 
 ## Existing Security Controls
 
-- Security control: Credentials protection through sensitive attribute marking in schema definitions. Implemented in all authentication-related fields that contain secrets or access tokens.
-
-- Security control: Token-based authentication through various API endpoints. Implemented in provider.go with multiple authentication options.
-
-- Security control: Environment variable fallback for credentials, reducing hard-coded secrets in Terraform files. Implemented in provider configuration.
-
-- Security control: Request timeout and retry parameters to prevent hanging connections. Implemented in client configuration.
-
-- Security control: Region validation to ensure API endpoints are legitimate. Implemented in provider validation functions.
-
-- Security control: Rate limiting in API clients to prevent abuse or throttling. Implemented via ClientRateLimiters in endpoints.go.
-
-- Security control: Sensitive data handling for feed authentication credentials (e.g., Thinkst Canary tokens, Qualys VM credentials, AWS keys). Implemented in resource schemas with Sensitive: true attributes.
-
-- Security control: Validation functions for resource property formats to prevent misconfiguration. Implemented with ValidateDiagFunc across resources.
-
-- Accepted risk: The provider currently stores state containing resource identifiers in the Terraform state file.
+- Security control: Sensitive field protection for credentials marked with `Sensitive: true` to prevent logging of sensitive values (implemented in all resource files containing authentication blocks, including `resource_feed_qualys_vm.go`, `resource_feed_thinkst_canary.go`)
+- Security control: Multiple authentication methods including credential files and access tokens (implemented in provider.go)
+- Security control: Environment variable fallback for credentials to avoid hardcoding in configuration files (implemented in provider.go)
+- Security control: Region-specific endpoint configuration to ensure data locality compliance (implemented in provider.go)
+- Security control: Resource-level timeout configuration to prevent long-running operations (implemented in all resource files)
+- Security control: Validation functions for input parameters to prevent misconfiguration (implemented in validation.go)
+- Security control: Rate limiting for API requests to prevent accidental DoS conditions (implemented in client/endpoints.go)
+- Security control: Proper error handling with retry mechanisms (implemented in client/transport.go)
+- Security control: Validation of YARA rules before submission to ensure proper format (implemented in resource_rule.go)
+- Security control: Input validation for hostnames, authentication parameters, and other critical fields (implemented in validation.go)
+- Accepted risk: Credentials stored in Terraform state files are not encrypted by default
 
 ## Recommended Security Controls
 
-- Implement credential rotation capabilities within the provider
-- Add support for AWS IAM role-based authentication instead of just access keys
-- Implement logging with sensitive data filtering
-- Add support for service account impersonation
-- Add SAST scanning for YARA-L rule content to identify potentially harmful rules
-- Implement resource tagging for easier security auditing and management
-- Add detection rule testing simulation before enabling in production
+- Implement state file encryption or use remote state with encryption
+- Add support for Workload Identity Federation authentication to avoid using static credentials
+- Implement credential rotation capabilities
+- Add comprehensive logging for security-relevant operations
+- Add input validation for all custom parameters to prevent injection attacks
+- Implement mutual TLS for API communication to enhance transport security
 
 ## Security Requirements
 
 ### Authentication
-- Support for multiple authentication methods (credentials, access tokens, environment variables)
-- Secure handling of sensitive authentication data
-- Validation of authentication parameters
-- API-specific credential isolation (BigQuery, Backstory, Ingestion, Forwarder)
+- Support for multiple authentication methods including service account keys and access tokens
+- Clear separation of authentication contexts for different Chronicle APIs
+- Secure storage of credentials (preferably using environment variables or credential files)
+- Support for regional endpoints to meet data residency requirements
 
 ### Authorization
-- Support for RBAC subject management
-- Clear separation of responsibilities in resource access
 - Role-based access control for Chronicle resources
+- Management of subjects (users/groups) and their roles
+- Support for namespace-based resource segregation
 
 ### Input Validation
-- Parameter validation for all resource configurations
-- URI format validation for storage endpoints
-- UUID format validation for tenant and client IDs
-- Hostname format validation for service endpoints
-- YARA-L rule syntax validation
+- Validation of all input parameters to prevent misconfiguration
+- Format validation for identifiers, URIs, and configuration values
+- Type checking for all input values
+- Validation of YARA rules before deployment
 
 ### Cryptography
-- TLS for all API communications
-- Secure handling of encryption keys and tokens
-- Protection of sensitive authentication data
+- Secure handling of authentication tokens and credentials
+- Support for various authentication schemes including AWS IAM and Azure authentication
+- Potential support for encryption of data in transit
 
 # DESIGN
 
@@ -77,69 +74,76 @@ Key business risks that need to be addressed:
 
 ```mermaid
 graph TD
-    TerraformUser[DevOps/Security Engineer] -->|Uses| TerraformCLI[Terraform CLI]
-    TerraformCLI -->|Uses| ChronicleProvider[Chronicle Terraform Provider]
-    ChronicleProvider -->|Authenticates & Manages Resources| ChronicleAPI[Google Chronicle API]
-    DataSources[Various Data Sources] -->|Feed Data| ChronicleAPI
-
-    subgraph Sources
-        DataSources
-    end
-
-    subgraph Terraform
-        TerraformCLI
-        ChronicleProvider
-    end
-
-    subgraph Google Cloud
-        ChronicleAPI
-    end
+    U[User/DevOps Engineer] -->|uses| TP[Terraform Provider Chronicle]
+    TP -->|configures| GC[Google Chronicle]
+    TP -->|reads/writes| TF[Terraform State]
+    TP -->|authenticates with| GAC[Google Authentication]
+    DP[Data Producers] -->|send logs to| SRC[Chronicle Data Sources]
+    TP -->|configures| SRC
+    GC -->|analyzes data from| SRC
+    SA[Security Analyst] -->|views alerts in| GC
 ```
 
 ### Context Elements
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|-----------------|-------------------|
-| DevOps/Security Engineer | Person | User of the Terraform provider | Creates and maintains Terraform configurations for Chronicle resources | Follows secure coding practices, manages credentials securely |
-| Terraform CLI | System | Command-line tool for applying Terraform configurations | Executes resource creation, updating, and deletion based on configuration | State encryption, secure variable handling |
-| Chronicle Terraform Provider | System | Terraform provider for Chronicle | Translates Terraform configuration to Chronicle API calls | Credential protection, input validation, timeout management |
-| Google Chronicle API | System | API for Google's Chronicle security platform | Processes and authenticates API requests, manages security resources | Authentication, authorization, encryption in transit |
-| Various Data Sources | Systems | External systems providing security data | Generate security logs and data for ingestion | Varies by source |
+| Terraform Provider Chronicle | Software | Terraform provider to manage Chronicle resources | Translates Terraform configurations into Chronicle API calls, manages resource state | Credential handling, input validation, secure defaults |
+| Google Chronicle | External System | Cloud-based security analytics platform | Ingests, stores, analyzes security data, generates alerts | Data encryption, access control, compliance certifications |
+| Terraform State | Data Store | Storage of resource state | Tracks current state of Chronicle resources | State encryption (when configured) |
+| Google Authentication | External System | Authentication service for Google APIs | Validates credentials, provides tokens | Token rotation, multi-factor authentication |
+| Data Producers | External Systems | Systems generating security logs | Generate and forward security events | N/A |
+| Chronicle Data Sources | External Systems | Configured sources of security data | Connect to data producers to receive security logs | Authentication, authorization |
+| User/DevOps Engineer | Person | Person configuring Chronicle | Creates and maintains Terraform configurations | N/A |
+| Security Analyst | Person | Person analyzing security events | Reviews and responds to security alerts | N/A |
 
 ## C4 CONTAINER
 
 ```mermaid
 graph TD
-    TerraformCLI[Terraform CLI] -->|Plugin Protocol| ProviderServer[Provider Server]
+    U[User] -->|uses| TC[Terraform CLI]
+    TC -->|executes| TP[Terraform Provider Chronicle]
 
-    subgraph Chronicle Terraform Provider
-        ProviderServer -->|Configures| ProviderConfig[Provider Configuration]
-        ProviderServer -->|Manages| ResourceManager[Resource Manager]
-        ResourceManager -->|Handles| FeedResources[Feed Resources]
-        ResourceManager -->|Handles| RBACResources[RBAC Resources]
-        ResourceManager -->|Handles| RuleResources[Rule Resources]
-        ResourceManager -->|Handles| ReferenceListResources[Reference List Resources]
-
-        FeedResources -->|Uses| ChronicleClient[Chronicle Client]
-        RBACResources -->|Uses| ChronicleClient
-        RuleResources -->|Uses| ChronicleClient
-        ReferenceListResources -->|Uses| ChronicleClient
-
-        ProviderConfig -->|Configures| ChronicleClient
+    subgraph "Terraform Provider Chronicle"
+    TP -->|initializes| PC[Provider Configuration]
+    PC -->|configures| CC[Chronicle Client]
+    CC -->|uses| RE[Resource Engines]
+    RE -->|manage| R[Resources]
     end
 
-    ChronicleClient -->|HTTP Requests| BackstoryAPI[Backstory API]
-    ChronicleClient -->|HTTP Requests| FeedAPI[Feed Management API]
-    ChronicleClient -->|HTTP Requests| IngestionAPI[Ingestion API]
-    ChronicleClient -->|HTTP Requests| BigQueryAPI[BigQuery API]
-    ChronicleClient -->|HTTP Requests| ForwarderAPI[Forwarder API]
+    subgraph "Resources"
+    R --> RF[Feed Resources]
+    R --> RR[Rule Resources]
+    R --> RL[Reference List Resources]
+    R --> RS[RBAC Subject Resources]
+    end
 
-    subgraph Chronicle APIs
-        BackstoryAPI
-        FeedAPI
-        IngestionAPI
-        BigQueryAPI
-        ForwarderAPI
+    subgraph "Feed Resources"
+    RF --> RFS3[Amazon S3 Feed]
+    RF --> RFSQS[Amazon SQS Feed]
+    RF --> RFGCS[Google Cloud Storage Feed]
+    RF --> RFAZB[Azure Blob Store Feed]
+    RF --> RFAPI[API-based Feeds]
+    end
+
+    subgraph "API-based Feeds"
+    RFAPI --> RFO365[Office 365 Feed]
+    RFAPI --> RFOKTA[Okta Feed]
+    RFAPI --> RFQVM[Qualys VM Feed]
+    RFAPI --> RFPP[Proofpoint Feed]
+    RFAPI --> RFTC[Thinkst Canary Feed]
+    end
+
+    RF -->|configure| DF[Data Feeds API]
+    RR -->|configure| DR[Rules API]
+    RL -->|configure| DL[Lists API]
+    RS -->|configure| DS[Subjects API]
+
+    subgraph "Google Chronicle"
+    DF[Data Feeds API]
+    DR[Rules API]
+    DL[Lists API]
+    DS[Subjects API]
     end
 ```
 
@@ -147,145 +151,182 @@ graph TD
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|-----------------|-------------------|
-| Provider Server | Container | gRPC server implementing Terraform plugin protocol | Handles requests from Terraform CLI, initializes provider | Request validation, error handling |
-| Provider Configuration | Component | Provider-level settings | Manages region, authentication, endpoints, timeouts | Credential validation, endpoint validation |
-| Resource Manager | Component | Coordinates resource operations | Routes create/read/update/delete operations to appropriate handlers | Operation validation |
-| Feed Resources | Component | Resource handlers for various feed types | Manage feed configurations for different data sources | Input validation, type checking |
-| RBAC Resources | Component | Resource handler for subject management | Manage access control configurations | Permission validation |
-| Rule Resources | Component | Resource handler for detection rules | Manage YARA-L rules | Syntax validation |
-| Reference List Resources | Component | Resource handler for reference lists | Manage reference list content | Content validation |
-| Chronicle Client | Component | HTTP client for Chronicle APIs | Makes API requests, handles authentication | Request retry, timeout management, credential handling |
+| Terraform CLI | External System | Command-line interface for Terraform | Executes Terraform configurations | N/A |
+| Provider Configuration | Component | Configuration for the Chronicle provider | Stores connection details, authentication | Input validation, credential handling |
+| Chronicle Client | Component | Client library for Chronicle APIs | Makes API requests, handles errors | Request retry, timeout handling, rate limiting |
+| Resource Engines | Component | Logic for managing resource lifecycle | Create, read, update, delete operations | State validation, error handling |
+| Feed Resources | Component | Resources for data ingestion configuration | Configure data feeds from various sources | Authentication validation, input validation |
+| Amazon S3 Feed | Component | Feed from S3 buckets | Configure S3 data ingestion | AWS authentication handling |
+| Amazon SQS Feed | Component | Feed from SQS queues | Configure SQS data ingestion | AWS authentication handling |
+| Google Cloud Storage Feed | Component | Feed from GCS buckets | Configure GCS data ingestion | GCP authentication handling |
+| Azure Blob Store Feed | Component | Feed from Azure blob storage | Configure Azure data ingestion | Azure authentication handling |
+| API-based Feeds | Component | Feed from various API sources | Configure API data ingestion | API-specific authentication |
+| Office 365 Feed | Component | Feed from Microsoft Office 365 | Configure Office 365 data ingestion | Microsoft authentication handling |
+| Okta Feed | Component | Feed from Okta | Configure Okta data ingestion | Token authentication handling |
+| Qualys VM Feed | Component | Feed from Qualys VM | Configure Qualys VM data ingestion | User/password authentication handling |
+| Proofpoint Feed | Component | Feed from Proofpoint | Configure Proofpoint data ingestion | User/password authentication handling |
+| Thinkst Canary Feed | Component | Feed from Thinkst Canary | Configure Thinkst Canary data ingestion | Token authentication handling |
+| Rule Resources | Component | Resources for detection rules | Manage security detection rules | Rule validation |
+| Reference List Resources | Component | Resources for reference lists | Manage lists used in detections | Content validation |
+| RBAC Subject Resources | Component | Resources for access control | Manage user/group permissions | Role validation |
+| Data Feeds API | External System | Chronicle API for data feeds | Process feed configurations | API-level authentication |
+| Rules API | External System | Chronicle API for rules | Process rule definitions | API-level authentication |
+| Lists API | External System | Chronicle API for reference lists | Process list configurations | API-level authentication |
+| Subjects API | External System | Chronicle API for RBAC | Process subject configurations | API-level authentication |
 
 ## DEPLOYMENT
 
-Chronicle Terraform Provider is deployed as part of the Terraform ecosystem. The provider is typically installed in one of two ways:
+The Terraform Provider Chronicle can be deployed in various ways, depending on user needs:
 
-1. **Registry-based deployment**: The provider is published to the Terraform Registry and automatically downloaded by Terraform.
-2. **Local development deployment**: For development or custom builds, the provider can be built locally and configured via a local plugin directory.
+1. **Standard Terraform Registry Installation**
+   - Provider downloaded from Terraform Registry
+   - Used in standard Terraform workflows
+   - Credentials provided via Terraform configuration or environment variables
 
-For this design document, we'll focus on the standard registry-based deployment which is the most common approach.
+2. **Local Development Installation**
+   - Provider built locally using `make build`
+   - Configured via local filesystem mirror in ~/.terraform.d/plugins
+   - Used for development and testing
+
+3. **CI/CD Pipeline Integration**
+   - Provider used within CI/CD pipelines
+   - Credentials provided via secure pipeline variables
+   - Used for automated infrastructure management
+
+For this design document, we'll focus on the standard installation approach:
 
 ```mermaid
 graph TD
-    TerraformRegistry[Terraform Registry] -->|Provides Binary| TerraformInit[Terraform Init]
-    TerraformInit -->|Installs| ProviderBinary[Provider Binary]
-    ProviderBinary -->|Executes| ProviderProcess[Provider Process]
-    ProviderProcess -->|Communicates with| ChronicleAPI[Chronicle API]
-
-    subgraph Terraform Workflow
-        TerraformInit
-        ProviderBinary
-        ProviderProcess
-    end
-
-    subgraph Google Cloud
-        ChronicleAPI
-    end
+    U[User] -->|executes| TC[Terraform CLI]
+    TC -->|downloads| TR[Terraform Registry]
+    TR -->|provides| TP[Chronicle Provider]
+    TP -->|uses| CF[Provider Config]
+    CF -->|contains| CR[Credentials]
+    CF -->|specifies| EP[Endpoints]
+    TP -->|authenticates with| CA[Chronicle APIs]
+    TP -->|manages| CR1[Chronicle Resources]
+    TP -->|updates| TS[Terraform State]
+    TS -->|stored in| BS[Backend Storage]
 ```
 
 ### Deployment Elements
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|-----------------|-------------------|
-| Terraform Registry | External System | Public registry for Terraform providers | Distributes signed provider binaries | Binary signature verification, checksum validation |
-| Terraform Init | Process | Initialization process | Downloads and verifies providers | Version constraints, lockfile validation |
-| Provider Binary | Artifact | Compiled Go binary | Implements provider functionality | Code signing, binary hardening |
-| Provider Process | Process | Running provider instance | Serves gRPC interface for Terraform | Process isolation, controlled API access |
-| Chronicle API | External Service | Google's Chronicle security platform API | Provides security services | Authentication, authorization, TLS |
+| Terraform CLI | Software | Command-line tool for Terraform | Execute Terraform commands | N/A |
+| Terraform Registry | External System | Registry of Terraform providers | Distribute provider binaries | Package signature verification |
+| Chronicle Provider | Software | Provider for Chronicle resources | Interact with Chronicle APIs | Credential handling, input validation |
+| Provider Config | Configuration | Configuration for the provider | Specify credentials, region, settings | N/A |
+| Credentials | Secret | Authentication credentials | Authenticate with Chronicle APIs | Marked as sensitive to prevent logging |
+| Endpoints | Configuration | API endpoints for Chronicle | Direct requests to correct API endpoints | Validation |
+| Chronicle APIs | External System | APIs for Chronicle services | Process API requests | Authentication, authorization |
+| Chronicle Resources | External System | Resources managed in Chronicle | Store configurations and state | Access controls |
+| Terraform State | Data | State of managed resources | Track resource configuration | Potential encryption |
+| Backend Storage | External System | Storage for Terraform state | Persist state between operations | Access controls, potential encryption |
 
 ## BUILD
 
-The Chronicle Terraform provider build process uses GitHub Actions for continuous integration and release management.
+The Terraform provider is built using a standard Go build process, with additional tooling for testing, linting, and release management.
 
 ```mermaid
 graph TD
-    Developer[Developer] -->|Git Push| GitHubRepo[GitHub Repository]
-    GitHubRepo -->|Triggers| CIWorkflow[CI Workflow]
-    GitHubRepo -->|Tag Push Triggers| ReleaseWorkflow[Release Workflow]
+    D[Developer] -->|commits to| GR[GitHub Repository]
+    GR -->|triggers| GHA[GitHub Actions]
 
-    CIWorkflow -->|Runs| GoTests[Go Tests]
-    CIWorkflow -->|Runs| GoLint[Golangci-lint]
-
-    ReleaseWorkflow -->|Uses| GoReleaser[GoReleaser]
-    GoReleaser -->|Builds| ProviderBinaries[Provider Binaries]
-    GoReleaser -->|Creates| GitHubRelease[GitHub Release]
-    GoReleaser -->|Generates| Checksums[SHA256 Checksums]
-
-    subgraph GitHub Actions
-        CIWorkflow
-        ReleaseWorkflow
+    subgraph "CI Pipeline"
+    GHA -->|runs| LI[Lint Workflow]
+    GHA -->|runs| UT[Unit Tests]
+    GHA -->|runs| AT[Acceptance Tests]
     end
 
-    subgraph Build Artifacts
-        ProviderBinaries
-        GitHubRelease
-        Checksums
+    subgraph "Release Pipeline"
+    GHA -->|on tag| GR2[GoReleaser]
+    GR2 -->|builds| BP[Provider Binaries]
+    GR2 -->|creates| RN[Release Notes]
+    GR2 -->|generates| CS[Checksums]
+    GR2 -->|publishes| RL[GitHub Release]
     end
+
+    D -->|runs locally| MB[make build]
+    MB -->|produces| LB[Local Binary]
+    D -->|runs locally| MT[make test]
+    MT -->|validates| CD[Code]
 ```
-
-### Build Elements
-
-| Name | Type | Description | Responsibilities | Security Controls |
-|------|------|-------------|-----------------|-------------------|
-| Developer | Person | Provider developer | Writes code, creates releases | Follows secure coding practices |
-| GitHub Repository | System | Source code repository | Stores code, manages workflows | Access controls, branch protection rules |
-| CI Workflow | Process | Continuous Integration process | Runs tests and linting | Automated code review, vulnerability scanning |
-| Release Workflow | Process | Release management process | Creates official releases | Version control, artifact signing |
-| GoReleaser | Tool | Release automation tool | Builds cross-platform binaries | Reproducible builds, artifact signing |
-| Go Tests | Process | Automated testing | Validates functionality | Test coverage analysis |
-| Golangci-lint | Tool | Static code analysis | Identifies code issues | Security linting rules |
-| Provider Binaries | Artifact | Compiled provider for multiple platforms | Implements provider functionality | Binary hardening, reproducible builds |
-| GitHub Release | Artifact | Release metadata and assets | Packages provider for distribution | Asset checksums, release notes |
-| Checksums | Artifact | SHA256 checksums of binaries | Enables integrity verification | Checksum validation |
 
 The build process includes several security controls:
 
-- Security control: Automated testing to verify functionality
-- Security control: Static code analysis to identify potential issues
-- Security control: SHA256 checksums for binary verification
-- Security control: Reproducible builds through containerized build environment
-- Security control: Dependency verification and scanning
+- Security control: Dependency verification via go.mod/go.sum
+- Security control: Code linting via golangci-lint to catch potential issues
+- Security control: Unit and acceptance testing to validate functionality
+- Security control: Binary checksums for integrity verification
+- Security control: Versioned releases with proper tagging
+- Security control: Build automation via GitHub Actions to ensure consistent builds
 
-# RISK ASSESSMENT
+## RISK ASSESSMENT
 
-## Critical Business Processes to Protect
+### Critical Business Processes
 
-1. **Credential Management**: The provider handles sensitive authentication credentials for Chronicle APIs. Protecting these credentials is essential to prevent unauthorized access to security data.
+1. **Security Data Ingestion**
+   - Chronicle depends on reliable data ingestion from various sources
+   - The provider manages feed configurations that determine what data is ingested
+   - Misconfigurations could lead to missing security data or excessive costs
 
-2. **Resource Provisioning**: The accurate and consistent provisioning of Chronicle resources is critical for security monitoring and operations.
+2. **Security Detection and Response**
+   - Chronicle's ability to detect threats depends on properly configured rules
+   - The provider manages rule deployments and updates
+   - Errors in rule management could lead to missed detections or false positives
 
-3. **Data Feed Configuration**: Ensuring correct configuration of data feeds is essential for proper security monitoring and threat detection.
+3. **Access Control and Permissions**
+   - Chronicle requires proper access management for security
+   - The provider manages RBAC subjects and their roles
+   - Misconfiguration could lead to excessive privileges or access restrictions
 
-4. **Detection Rule Management**: The correct deployment and management of detection rules directly impacts an organization's security posture.
+### Data Protection
 
-## Data to Protect
+The provider handles various sensitive data types:
 
-1. **API Credentials**: The provider handles various API credentials and access tokens. These have high sensitivity as they provide direct access to Chronicle.
+1. **Authentication Credentials**
+   - Service account keys, access tokens, API credentials
+   - High sensitivity - must be protected from exposure
+   - Used to authenticate with Chronicle APIs
 
-2. **Feed Authentication Data**: The provider manages authentication details for various third-party systems. These have high sensitivity as they could provide access to external systems.
+2. **Feed Configuration Details**
+   - Connection information for various data sources
+   - Medium to high sensitivity - reveals information about security infrastructure
+   - Used to configure data ingestion
 
-3. **Detection Rules**: YARA-L rules managed by the provider may contain sensitive information about an organization's detection capabilities and security practices. These have medium sensitivity.
+3. **Detection Rules**
+   - Security detection logic
+   - Medium sensitivity - reveals security monitoring strategy
+   - Used to detect security threats
 
-4. **Reference Lists**: Lists managed by the provider might contain sensitive indicators or internal asset information. These have medium sensitivity.
+4. **Reference Lists**
+   - Lists used in security detections
+   - Medium sensitivity - reveals monitoring scope
+   - Used to support detection rules
 
-5. **Resource IDs and Names**: The provider manages identifiers for various resources which might reveal information about the security infrastructure. These have low sensitivity.
+## QUESTIONS & ASSUMPTIONS
 
-# QUESTIONS & ASSUMPTIONS
+### BUSINESS POSTURE
 
-## BUSINESS POSTURE
-- Question: What is the target customer profile for this provider?
-- Question: Are there specific compliance requirements this provider needs to adhere to?
-- Assumption: The provider is intended for security operations teams managing Chronicle deployments.
-- Assumption: The business priority is to enable security automation and infrastructure as code for Chronicle resources.
+1. What is the primary use case for this Terraform provider? (Assumed to be managing Chronicle resources through IaC)
+2. Who are the primary users of this provider? (Assumed to be security engineers and DevOps teams)
+3. What environments will this provider be used in? (Assumed to be both development and production)
+4. How critical is Chronicle to the overall security posture? (Assumed to be highly critical)
+5. What compliance requirements must be adhered to? (Unknown, depends on organization)
 
-## SECURITY POSTURE
-- Question: Are there specific encryption requirements for credential handling?
-- Question: Is there a need for audit logging of provider operations?
-- Assumption: All API communications use TLS encryption.
-- Assumption: Credentials are stored in Terraform state, which should be secured separately.
+### SECURITY POSTURE
 
-## DESIGN
-- Question: What is the expected scale of resources managed through this provider?
-- Question: Are there performance considerations for large-scale deployments?
-- Assumption: The provider follows the standard Terraform plugin architecture.
-- Assumption: Error handling and retries are implemented to handle transient API issues.
+1. What is the preferred authentication method? (Assumed to be service account credentials)
+2. How are credentials rotated and managed? (Assumed to be external to the provider)
+3. Is there a need for audit logging of provider operations? (Assumed yes, but not implemented)
+4. Are there specific security controls required for sensitive environments? (Unknown, depends on organization)
+5. What is the threat model for the provider? (Assumed to include credential theft, misconfiguration)
+
+### DESIGN
+
+1. Are there performance requirements for the provider? (Assumed to be standard Terraform provider performance)
+2. How should error handling be approached? (Assumed to follow Terraform provider best practices)
+3. What is the versioning strategy for the provider? (Assumed to follow semantic versioning)
+4. How should backward compatibility be maintained? (Assumed to follow Terraform provider guidelines)
+5. What is the expected release cadence? (Unknown, depends on project needs)

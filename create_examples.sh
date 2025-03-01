@@ -89,24 +89,46 @@ for agent_prompt_type in $AGENT_PROMPT_TYPES; do
     if [ "$agent_prompt_type" == "vulnerabilities" ]; then
         continue
     fi
-    for agent_model in "${!deep_analysis_models[@]}"; do
-        agent_provider="${deep_analysis_models[$agent_model]}"
+    # Iterate over the keys of the models array
+    for agent_model in "${!models[@]}"; do
+        agent_provider="${models[$agent_model]}"
         safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
 
         echo "Generating example for $agent_prompt_type with $agent_model"
 
-        mkdir -p examples/deep-analysis/${safe_agent_model}
-
-        ARGS="github -t https://github.com/pallets/flask -v -o examples/deep-analysis/${safe_agent_model}/github-da-${agent_prompt_type}-flask-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --deep-analysis"
+        ARGS="github -t https://github.com/pallets/flask -v -o examples/github-${agent_prompt_type}-flask-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
         CMD="python ai_security_analyzer/app.py $ARGS"
         echo "Running: $CMD"
 
         python ai_security_analyzer/app.py $ARGS
 
-        sleep 5
+        sleep 10
     done
 done
+
+# for agent_prompt_type in $AGENT_PROMPT_TYPES; do
+#     if [ "$agent_prompt_type" == "vulnerabilities" ]; then
+#         continue
+#     fi
+#     for agent_model in "${!deep_analysis_models[@]}"; do
+#         agent_provider="${deep_analysis_models[$agent_model]}"
+#         safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
+
+#         echo "Generating example for $agent_prompt_type with $agent_model"
+
+#         mkdir -p examples/deep-analysis/${safe_agent_model}
+
+#         ARGS="github -t https://github.com/pallets/flask -v -o examples/deep-analysis/${safe_agent_model}/github-da-${agent_prompt_type}-flask-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --deep-analysis"
+
+#         CMD="python ai_security_analyzer/app.py $ARGS"
+#         echo "Running: $CMD"
+
+#         python ai_security_analyzer/app.py $ARGS
+
+#         sleep 5
+#     done
+# done
 
 for agent_model in "${!models[@]}"; do
     agent_prompt_type="vulnerabilities-workflow-1"

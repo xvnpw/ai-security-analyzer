@@ -1,142 +1,175 @@
-# AI Nutrition-Pro: Attack Surface Analysis
+# Attack Surface Analysis: AI Nutrition-Pro
 
-## 1. LLM Prompt Injection Attacks
+## Critical Attack Surfaces
 
-- **Description**: Attackers could manipulate the input to ChatGPT-3.5 to bypass constraints or generate harmful content.
+### 1. Administrative Access Control
 
-- **How AI Nutrition-Pro contributes**: The application passes dietitians' content to ChatGPT-3.5 for AI-generated nutrition content without clear validation mechanisms.
+- **Description**: The application has an administrative interface for system configuration that could be compromised.
 
-- **Example**: A malicious actor could embed instructions in the dietitian samples that direct ChatGPT to generate harmful or inappropriate dietary advice.
+- **How AI Nutrition-Pro contributes**: Administrators access the Web Control Plane to manage system configuration, onboard clients, and handle billing data.
 
-- **Impact**: Generation of potentially harmful nutrition advice that could lead to health risks for end users, reputational damage, and liability issues.
+- **Example**: Attackers gaining administrative access could modify system configurations, access client data, or disrupt service.
+
+- **Impact**: Complete system compromise, unauthorized access to all client data, service disruption, or malicious configuration changes.
 
 - **Risk Severity**: Critical
 
-- **Current Mitigations**: Input filtering at API Gateway level is mentioned, but it's unclear if this is specifically designed to prevent LLM prompt injection.
+- **Current Mitigations**: The architecture doesn't specify authentication mechanisms for administrative access beyond basic authentication.
 
 - **Missing Mitigations**:
-  * LLM-specific input sanitization
-  * Implementation of prompt engineering safeguards
-  * Output validation before returning generated content
-  * Content moderation layer that reviews generated advice
-  * Prompt templates with strong guardrails
+  - Implement multi-factor authentication for admin accounts
+  - Establish privileged access management controls
+  - Create comprehensive audit logging for administrative actions
+  - Implement session timeout and management
+  - Develop detailed role-based access controls
 
-## 2. API Gateway Security Vulnerabilities
+## High Attack Surfaces
 
-- **Description**: The Kong API Gateway is the primary entry point for external applications and could be targeted for various attacks.
+### 2. LLM Prompt Injection
 
-- **How AI Nutrition-Pro contributes**: Exposes services through REST APIs to third-party Meal Planner applications.
+- **Description**: Vulnerabilities where malicious input can manipulate the ChatGPT-3.5 LLM to perform unintended actions.
 
-- **Example**: Attackers could attempt credential stuffing against API keys, DoS attacks, or exploit vulnerabilities in Kong's implementation.
+- **How AI Nutrition-Pro contributes**: The system takes content from Meal Planner applications and forwards it to ChatGPT.
 
-- **Impact**: Unauthorized access to backend services, data breaches, or service disruption.
+- **Example**: An attacker could inject prompts that instruct the LLM to ignore safety controls, generate harmful nutrition advice, or attempt to extract information.
+
+- **Impact**: Generation of inappropriate or harmful nutritional content, service manipulation, or exposure of system information.
 
 - **Risk Severity**: High
 
-- **Current Mitigations**: Authentication with API keys, rate limiting, input filtering, and TLS encryption for network traffic.
+- **Current Mitigations**: API Gateway performs input filtering, but specific LLM prompt sanitization isn't detailed.
 
 - **Missing Mitigations**:
-  * IP allowlisting for trusted Meal Planner applications
-  * API request logging and anomaly detection
-  * Regular vulnerability scanning of the API Gateway
-  * More sophisticated rate limiting based on user behavior patterns
+  - Implement LLM-specific input sanitization
+  - Create a robust prompt engineering framework with guardrails
+  - Establish content validation and review processes
+  - Deploy output filtering for generated content
+  - Design prompt templates that resist manipulation
 
-## 3. Cross-Tenant Data Leakage
+### 3. API Gateway Security
 
-- **Description**: In a multi-tenant environment, improper access controls could lead to one tenant accessing another's data.
+- **Description**: The API Gateway is the primary entry point for external applications and controls authentication.
 
-- **How AI Nutrition-Pro contributes**: System design allows multiple Meal Planner applications to store and retrieve dietitian content samples.
+- **How AI Nutrition-Pro contributes**: Uses Kong API Gateway to handle all external requests, authentication, and rate limiting.
 
-- **Example**: A vulnerability in authorization logic could allow one Meal Planner application to access another's proprietary content or user data.
+- **Example**: API key theft, authentication bypass attempts, or exploiting vulnerabilities in the gateway's filtering mechanisms.
 
-- **Impact**: Exposure of confidential content, competitive disadvantage, privacy violations.
+- **Impact**: Unauthorized system access, potential data breaches, or service abuse.
 
 - **Risk Severity**: High
 
-- **Current Mitigations**: Authentication with unique API keys per application and ACL rules in API Gateway.
+- **Current Mitigations**: Authentication with API keys, ACL rules, and input filtering.
 
 - **Missing Mitigations**:
-  * Strong tenant isolation in database design
-  * Robust data access controls with tenant context validation
-  * Comprehensive audit logging of cross-tenant access attempts
-  * Regular access control reviews and penetration testing
+  - Implement API key rotation mechanisms
+  - Add IP allowlisting for registered clients
+  - Deploy advanced request validation and sanitization
+  - Establish more comprehensive logging of authentication failures
+  - Create proactive monitoring for suspicious access patterns
 
-## 4. Database Exploitation
+### 4. Multi-tenancy Data Isolation
 
-- **Description**: Attackers could target database vulnerabilities to extract sensitive information.
+- **Description**: Risk of cross-tenant data access when multiple Meal Planner applications share the system.
 
-- **How AI Nutrition-Pro contributes**: Stores valuable data including dietitians' content samples and LLM interactions in RDS instances.
+- **How AI Nutrition-Pro contributes**: Stores data from different clients in shared databases (Control Plane Database and API Database).
 
-- **Example**: SQL injection or other database attacks could expose dietitians' proprietary content.
+- **Example**: A vulnerability could allow one Meal Planner application to access another client's dietitian content or user data.
 
-- **Impact**: Intellectual property theft, privacy violations, reputation damage.
+- **Impact**: Data privacy violations, breach of client trust, potential regulatory compliance issues.
 
 - **Risk Severity**: High
 
-- **Current Mitigations**: TLS for database connections, internal-only database exposure.
+- **Current Mitigations**: Basic ACL rules in the API Gateway, but specific tenant isolation mechanisms aren't detailed.
 
 - **Missing Mitigations**:
-  * Database encryption at rest
-  * Parameterized queries/ORM to prevent SQL injection
-  * Database activity monitoring
-  * Least privilege database access principles
+  - Implement strong logical data separation in databases
+  - Add tenant-specific encryption
+  - Create strict access controls at application and database levels
+  - Design comprehensive data access audit trails
+  - Establish data segregation testing procedures
 
-## 5. Control Plane Privilege Escalation
+### 5. Sensitive Health Information Handling
 
-- **Description**: The Web Control Plane for administration could be vulnerable to privilege escalation.
+- **Description**: The system likely processes health and nutrition data that may be subject to regulatory requirements.
 
-- **How AI Nutrition-Pro contributes**: Provides multiple roles with varying levels of access to configure and manage the system.
+- **How AI Nutrition-Pro contributes**: Stores and processes dietitians' content with potential personal health information before sending to external LLM.
 
-- **Example**: A user with App Onboarding Manager role exploits a vulnerability to gain Administrator privileges.
+- **Example**: Personal health data being exposed in transit or stored without proper protections, or sent to OpenAI without appropriate safeguards.
 
-- **Impact**: Unauthorized system configuration changes, access to sensitive tenant data, potential for system compromise.
+- **Impact**: Privacy violations, regulatory non-compliance (potential HIPAA or GDPR violations), reputational damage.
 
 - **Risk Severity**: High
 
-- **Current Mitigations**: Role-based access control is mentioned but details are limited.
+- **Current Mitigations**: TLS encryption for data in transit, but no specific data handling policies mentioned.
 
 - **Missing Mitigations**:
-  * Multi-factor authentication for administrative access
-  * Comprehensive audit logging of control plane actions
-  * Regular privilege reviews and access recertification
-  * Strict separation of duties between roles
+  - Implement data anonymization before LLM submission
+  - Establish clear policies on handling health information
+  - Deploy field-level encryption for sensitive data
+  - Create proper consent mechanisms for data processing
+  - Develop compliance framework for health data handling
 
-## 6. LLM Service Dependency Risk
+## Medium Attack Surfaces
 
-- **Description**: Heavy reliance on ChatGPT-3.5 creates operational and security risks if the service is compromised or unavailable.
+### 6. External LLM Service Dependency
 
-- **How AI Nutrition-Pro contributes**: Core content generation functionality depends entirely on OpenAI's services.
+- **Description**: Reliance on ChatGPT-3.5 creates dependencies and security considerations when sharing data with external services.
 
-- **Example**: ChatGPT service changes its API, experiences extended downtime, or has a security breach.
+- **How AI Nutrition-Pro contributes**: Sends requests to OpenAI's API and processes responses as a core part of its functionality.
 
-- **Impact**: Service disruption, inconsistent content generation, potential exposure of sensitive prompts.
+- **Example**: OpenAI service outage, API changes, or data handling policy changes affecting the application's functionality or security posture.
+
+- **Impact**: Service disruption, potential data privacy issues, or unexpected content generation.
 
 - **Risk Severity**: Medium
 
-- **Current Mitigations**: None explicitly mentioned.
+- **Current Mitigations**: TLS encryption for API communication.
 
 - **Missing Mitigations**:
-  * Fallback content generation mechanisms
-  * Content caching where appropriate
-  * Monitoring of API changes and service health
-  * Exploration of alternative LLM providers
+  - Implement secure API key management for OpenAI access
+  - Create fallback mechanisms for API outages
+  - Design content validation for LLM responses
+  - Establish clear data sharing agreements with OpenAI
+  - Develop alternative LLM provider options
 
-## 7. Content Poisoning
+### 7. Container and Cloud Infrastructure Security
 
-- **Description**: The system that stores and uses dietitians' content samples could be subject to gradual malicious manipulation.
+- **Description**: Security of the container and cloud infrastructure underlying the application.
 
-- **How AI Nutrition-Pro contributes**: Allows storage of content samples that influence AI generation without apparent review.
+- **How AI Nutrition-Pro contributes**: Deploys components as Docker containers in AWS ECS with connected AWS RDS databases.
 
-- **Example**: Gradual introduction of subtly biased or harmful nutrition guidance that influences future AI content generation.
+- **Example**: Container vulnerabilities, cloud misconfiguration, inadequate IAM policies, or insufficient network segmentation.
 
-- **Impact**: Degradation of content quality, potential for harmful nutrition advice, reputational damage.
+- **Impact**: System compromise, unauthorized data access, or service disruption.
 
 - **Risk Severity**: Medium
 
-- **Current Mitigations**: Authentication controls on who can upload content samples.
+- **Current Mitigations**: Uses managed AWS services which provide some security features by default.
 
 - **Missing Mitigations**:
-  * Content review process before samples are used for AI training
-  * Anomaly detection for unusual content patterns
-  * Regular auditing of stored content samples
-  * Version control and change tracking for content samples
+  - Implement container vulnerability scanning
+  - Create secure infrastructure-as-code templates
+  - Establish proper network segmentation
+  - Deploy cloud security posture management
+  - Design least-privilege IAM policies
+
+### 8. Rate Limiting and Resource Exhaustion
+
+- **Description**: Potential for system resource depletion through excessive API calls.
+
+- **How AI Nutrition-Pro contributes**: Processes potentially resource-intensive LLM operations through its API.
+
+- **Example**: Malicious or malfunctioning clients making excessive requests that overwhelm system resources or generate excessive costs.
+
+- **Impact**: Service degradation, denial of service for legitimate users, or unexpected billing costs.
+
+- **Risk Severity**: Medium
+
+- **Current Mitigations**: Basic rate limiting at the API Gateway level.
+
+- **Missing Mitigations**:
+  - Implement client-specific usage quotas
+  - Create more granular rate limiting policies
+  - Design cost control mechanisms for LLM API usage
+  - Establish anomaly detection for unusual usage patterns
+  - Deploy resource utilization monitoring with alerts

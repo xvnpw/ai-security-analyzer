@@ -1,192 +1,70 @@
-# ATTACK SURFACE ANALYSIS FOR TERRAFORM-PROVIDER-CHRONICLE
+# Attack Surface Analysis for Chronicle Terraform Provider
 
-## 1. Hardcoded Credentials and Secrets
+This analysis focuses on the security implications of using the Chronicle Terraform Provider to manage Chronicle resources. This provider manages interactions with Google Chronicle's security analytics platform, allowing for infrastructure-as-code management of Chronicle resources.
 
-**Description:**
-The code contains test files with hardcoded placeholder credentials and authentication tokens.
+## Key Attack Surfaces
 
-**How terraform-provider-chronicle contributes to the attack surface:**
-While most credentials appear to be placeholders (like `XXXXX` or random strings generated during tests), some test files contain patterns that might accidentally include real credentials in development environments. This could potentially lead to credential leakage if developers accidentally commit real credentials.
+### 1. Credential Management in Terraform State
+- **Description**: The provider handles various types of credentials that are stored in Terraform state.
+- **How terraform-provider-chronicle contributes**: Stores sensitive credentials like AWS access keys, API tokens, and OAuth client secrets in state files.
+- **Example**: Secret keys for S3 feeds (`secret_access_key`), Office 365 credentials (`client_secret`), Okta API tokens, Thinkst Canary authentication tokens, and Qualys VM credentials.
+- **Impact**: If the Terraform state is compromised, attackers could gain access to multiple external services and data sources integrated with Chronicle.
+- **Risk severity**: High
+- **Current mitigations**: Sensitive fields are properly marked in the schema to prevent logging, but they remain stored in state files.
+- **Missing mitigations**: Consider supporting integration with external secret management services instead of storing secrets directly in state.
 
-**Example:**
-In `resource_feed_thinkst_canary_test.go`, there are functions like:
-```go
-key := "auth_token"
-value := randString(10)
-```
+### 2. External Service Authentication
+- **Description**: The provider authenticates to various external services to ingest data.
+- **How terraform-provider-chronicle contributes**: Manages authentication to services like AWS, Azure, GCP, Okta, Microsoft, Qualys, and Thinkst Canary.
+- **Example**: When configuring feeds from Amazon S3, Microsoft Office 365, Thinkst Canary, or Qualys VM, the provider handles the authentication mechanisms to these services.
+- **Impact**: Improperly secured authentication credentials could lead to unauthorized access to external services beyond Chronicle itself.
+- **Risk severity**: High
+- **Current mitigations**: Authentication parameters are configured through structured schemas with sensitivity markings, and multiple authentication methods are supported.
+- **Missing mitigations**: Enable support for using instance roles/managed identities instead of explicit credentials when possible.
 
-**Impact:**
-If real credentials were accidentally committed, they could be used by attackers to gain unauthorized access to Chronicle resources or APIs.
+### 3. Custom API Endpoints
+- **Description**: The provider allows configuration of custom API endpoints for Chronicle.
+- **How terraform-provider-chronicle contributes**: Users can specify custom endpoints for various Chronicle APIs, potentially redirecting API calls.
+- **Example**: `rule_custom_endpoint`, `feed_custom_endpoint`, and other endpoint configurations.
+- **Impact**: Improperly validated endpoints could lead to Server-Side Request Forgery (SSRF) or data exfiltration.
+- **Risk severity**: Medium
+- **Current mitigations**: The code shows evidence of validation for custom endpoints.
+- **Missing mitigations**: Ensure validation includes proper URL sanitization and restriction to known-safe domains.
 
-**Risk Severity:**
-Medium
+### 4. Source URI Handling
+- **Description**: The provider configures URIs for data ingestion from various storage platforms.
+- **How terraform-provider-chronicle contributes**: Manages URIs that specify where to ingest security data from.
+- **Example**: S3 bucket URIs (`s3://s3-bucket/`), Azure Blob Storage container URIs, GCS bucket URIs.
+- **Impact**: Improperly validated URIs could lead to path traversal or resource exhaustion attacks.
+- **Risk severity**: Medium
+- **Current mitigations**: Different validation functions exist for various URI types.
+- **Missing mitigations**: Implement comprehensive URI validation to prevent unauthorized access to resources or malicious URI patterns.
 
-**Current Mitigations:**
-Most credentials appear to be placeholders or randomly generated values, reducing risk of real credential exposure. Random string generation is used for tests instead of hardcoded values.
+### 5. Feed Configuration Security
+- **Description**: The provider manages complex feed configurations for data ingestion.
+- **How terraform-provider-chronicle contributes**: Configures various feed parameters including deletion options that could affect source data.
+- **Example**: Source deletion options like `SOURCE_DELETION_ON_SUCCESS` which delete files after ingestion.
+- **Impact**: Misconfiguration could lead to data loss in source systems or excessive permissions.
+- **Risk severity**: Medium
+- **Current mitigations**: Schema validation helps prevent some misconfigurations.
+- **Missing mitigations**: Add explicit warnings before enabling destructive options like source deletion, and implement proper permission verification.
 
-**Missing Mitigations:**
-- Implement secret scanning in CI/CD pipelines
-- Add clear warnings in code comments about not using real credentials in tests
-- Use environment variables or secure vaults for all credentials, even in test code
+### 6. RBAC Subject Management
+- **Description**: The provider manages role-based access control (RBAC) subjects and their permissions.
+- **How terraform-provider-chronicle contributes**: Creates and assigns roles to subjects (users or groups) with various permission levels.
+- **Example**: Creating analyst subjects with Editor or Viewer roles through the `chronicle_rbac_subject` resource.
+- **Impact**: Misconfiguration could lead to privilege escalation or excessive permissions being granted.
+- **Risk severity**: Medium
+- **Current mitigations**: The provider uses a structured schema for role assignments and validates subject types.
+- **Missing mitigations**: Implement principle of least privilege defaults and include role validation against established permission sets.
 
-## 2. API Authentication Token Handling
+### 7. Regular Expression Handling in Reference Lists
+- **Description**: The provider supports reference lists with regular expression content types.
+- **How terraform-provider-chronicle contributes**: Allows users to create and manage reference lists containing regular expressions.
+- **Example**: Reference lists with content_type "REGEX" that might contain complex patterns.
+- **Impact**: Malformed regular expressions could lead to ReDoS (Regular Expression Denial of Service) attacks.
+- **Risk severity**: Medium
+- **Current mitigations**: Basic content type validation exists to ensure proper designation of regex content.
+- **Missing mitigations**: Implement regex complexity validation and potential runtime limits on regex evaluation.
 
-**Description:**
-The provider uses various authentication methods including credentials files and access tokens, with potential security implications in how they are handled.
-
-**How terraform-provider-chronicle contributes to the attack surface:**
-The application handles sensitive authentication data including API tokens, access keys, and credentials for multiple services (Chronicle, Google Cloud, AWS, Azure). Improper handling of these tokens could lead to security vulnerabilities.
-
-**Example:**
-In `client.go`, tokens are processed from various sources:
-```go
-func (cli *Client) GetCredentials(...) {
-    if accessToken != "" {
-        // Handling of access token...
-        token := &oauth2.Token{AccessToken: contents}
-        // ...
-    }
-}
-```
-
-**Impact:**
-Potential leak of authentication tokens could allow attackers to access Chronicle resources or underlying cloud resources.
-
-**Risk Severity:**
-High
-
-**Current Mitigations:**
-The code implements proper token source abstraction through OAuth2 libraries. Credentials can be provided through environment variables rather than in code.
-
-**Missing Mitigations:**
-- Implement token rotation capabilities
-- Add clear token lifecycle management
-- Improve logging practices to avoid accidentally logging sensitive token information
-
-## 3. Insufficient Input Validation
-
-**Description:**
-While the code contains some input validation, certain inputs aren't comprehensively validated before being used to make API calls.
-
-**How terraform-provider-chronicle contributes to the attack surface:**
-The provider accepts user input for various configuration parameters which are then used to construct API calls. Insufficient validation could potentially lead to injection attacks.
-
-**Example:**
-Some validation functions like `validateReferenceListContentType` check for specific values, but there might be other inputs that lack comprehensive validation:
-```go
-func validateReferenceListContentType(v interface{}, k cty.Path) diag.Diagnostics {
-    contentTypes := []string{string(chronicle.ReferenceListContentTypeCIDR),
-        string(chronicle.ReferenceListContentTypeREGEX),
-        string(chronicle.ReferenceListContentTypeDefault)}
-    // ...
-}
-```
-
-**Impact:**
-Malicious input could potentially lead to API injection attacks or unexpected behavior in the Chronicle service.
-
-**Risk Severity:**
-Medium
-
-**Current Mitigations:**
-The code includes validation functions for many parameters, including content types, hostnames, and other critical inputs.
-
-**Missing Mitigations:**
-- Implement more comprehensive input validation for all user-provided parameters
-- Use parameterized inputs for API calls where possible
-- Add sanitization for inputs used in URL construction
-
-## 4. Error Handling Exposing Sensitive Information
-
-**Description:**
-Error messages might include sensitive information that could be exposed to users or logs.
-
-**How terraform-provider-chronicle contributes to the attack surface:**
-The application handles errors from API calls and other operations, and in some cases may include detailed error information that could reveal implementation details or sensitive data.
-
-**Example:**
-In `error.go`, the error message includes potentially sensitive details:
-```go
-func (c *ChronicleAPIError) Error() string {
-    return fmt.Sprintf("%s: %s, HTTP status code: %d", c.Result, c.Message, c.HTTPStatusCode)
-}
-```
-
-**Impact:**
-Verbose error messages could leak implementation details or other sensitive information, aiding attackers in understanding the system.
-
-**Risk Severity:**
-Medium
-
-**Current Mitigations:**
-Some error handling is implemented to normalize error responses from the API.
-
-**Missing Mitigations:**
-- Implement a consistent approach to error handling that filters sensitive information
-- Add logging levels to control verbosity of error information
-- Sanitize error messages before returning them to users
-
-## 5. Insecure HTTP Connections
-
-**Description:**
-The code potentially allows unencrypted HTTP connections for API communications.
-
-**How terraform-provider-chronicle contributes to the attack surface:**
-While most URLs in the code use HTTPS, there's no explicit enforcement to prevent HTTP URLs from being used, potentially allowing unencrypted communications.
-
-**Example:**
-In `endpoints.go`, the URL construction doesn't explicitly force HTTPS:
-```go
-func getBasePathFromDomainsAndPath(basePath string, domain string) string {
-    return fmt.Sprintf("https://%s.%s%s", domain, APIDomain, basePath)
-}
-```
-
-**Impact:**
-Data transmitted over unencrypted connections could be intercepted by attackers through man-in-the-middle attacks.
-
-**Risk Severity:**
-Medium
-
-**Current Mitigations:**
-Default URLs are constructed with HTTPS, reducing the likelihood of unencrypted communications.
-
-**Missing Mitigations:**
-- Enforce HTTPS for all connections
-- Add TLS configuration options for controlling certificate validation
-- Implement certificate pinning for critical API endpoints
-
-## 6. Rate Limiting and Request Retry Vulnerabilities
-
-**Description:**
-The provider implements rate limiting and request retries, but improper implementation could lead to denial of service or request duplication issues.
-
-**How terraform-provider-chronicle contributes to the attack surface:**
-The application uses retry logic for API requests, with potential for causing unintended effects if retries are performed for non-idempotent operations.
-
-**Example:**
-In `transport.go`, there's a retry mechanism:
-```go
-err := retry.Do(
-    func() error {
-        // API request code...
-    },
-    retry.Attempts(client.requestAttempts),
-    retry.DelayType(retry.BackOffDelay),
-    // ...
-)
-```
-
-**Impact:**
-Improper retry logic could cause duplicate operations, resource exhaustion, or denial of service conditions.
-
-**Risk Severity:**
-Medium
-
-**Current Mitigations:**
-Rate limiters are implemented for different API operations, and retries use exponential backoff.
-
-**Missing Mitigations:**
-- Ensure all retried operations are idempotent
-- Add circuit breakers to prevent cascading failures
-- Implement more granular control over which operations can be retried
+This analysis identifies the primary attack surfaces introduced specifically by the Chronicle Terraform Provider. Organizations using this provider should particularly focus on securing Terraform state files and carefully managing the credentials used for external service authentication.

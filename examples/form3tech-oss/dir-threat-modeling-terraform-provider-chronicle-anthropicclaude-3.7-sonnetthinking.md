@@ -1,347 +1,360 @@
-I'll update the existing threat model with new information from these project files.
-
 # APPLICATION THREAT MODEL
 
 ## ASSETS
 
-1. Chronicle API Credentials:
-   - Backstory API credentials
-   - BigQuery API credentials
-   - Ingestion API credentials
-   - Forwarder API credentials
+1. Authentication Credentials
+   - Backend API credentials for various services (Backstory, BigQuery, Ingestion, Forwarder)
+   - Access tokens for authentication
+   - Third-party service credentials (AWS, Azure, Okta, Office 365, Proofpoint, Qualys VM, Thinkst Canary)
+   - Authentication header key-value pairs
+   - These credentials provide access to sensitive data sources and Chronicle services
 
-2. Third-party Service Credentials:
-   - AWS credentials (access keys, secret access keys)
-   - Azure authentication tokens and shared keys
-   - Okta API tokens
-   - Microsoft Office 365 client secrets
-   - Proofpoint authentication credentials
-   - Qualys VM authentication credentials
-   - Thinkst Canary authentication tokens
+2. Configuration Data
+   - Feed configurations specifying connection details and authentication
+   - RBAC configurations defining user and group permissions
+   - Reference lists used for detection or data enrichment
+   - YARA-L detection rules
 
-3. Feed Configurations:
-   - Data source configurations
-   - Connection parameters
-   - Authentication details
+3. Security Logs and Telemetry
+   - Data collected by configured feeds for security analysis
+   - This may include sensitive security event information from various systems
 
-4. Rule Definitions:
-   - YARA-L rules for threat detection
-   - Rule metadata and parameters
-
-5. RBAC Configuration:
-   - Subject definitions
-   - Role assignments
-
-6. Reference Lists:
-   - List contents
-   - List metadata
-
-7. Data Being Ingested:
-   - Security logs and events from various sources
-   - User and identity information
+4. User Identity Information
+   - RBAC subject information for users and groups
+   - Permission assignments and role definitions
 
 ## TRUST BOUNDARIES
 
-1. User/Provider Boundary:
-   - Terraform user provides configurations and credentials to the provider
-   - Provider operates with user privileges
+1. User to Terraform Provider Boundary
+   - Users supply configuration and credentials to the Terraform provider
+   - Terraform configuration may contain sensitive information
 
-2. Provider/Chronicle API Boundary:
-   - Provider makes API calls to Chronicle services
-   - Authentication required through credentials or tokens
+2. Terraform Provider to Chronicle API Boundary
+   - Provider makes authenticated API calls to Google Chronicle services
+   - Credentials are used to establish trust across this boundary
 
-3. Chronicle/Third-party Services Boundary:
-   - Chronicles feeds connect to various external services
-   - Authentication credentials flow across this boundary
+3. Chronicle to External Data Sources Boundary
+   - For feed configurations, Chronicle connects to external services
+   - Credentials for these services cross this boundary
 
-4. Internal Chronicle Service Boundaries:
-   - Between different Chronicle APIs (backstory, ingestion, forwarder)
-
-5. Terraform State/Environment Boundary:
-   - Sensitive configuration stored in Terraform state
+4. Terraform Provider to Terraform Core Boundary
+   - Provider interacts with Terraform's core functionality
+   - State data containing potentially sensitive information crosses this boundary
 
 ## DATA FLOWS
 
-1. User → Provider Configuration: User supplies configurations including credentials and feed definitions (crosses trust boundary)
+1. Configuration Management Flow
+   - User → Terraform Core → Chronicle Provider → Chronicle API
+   - Includes credentials, feed configurations, rules, and other settings
+   - Crosses trust boundary between user and provider
 
-2. Provider → Chronicle API: Provider makes API calls to create, read, update, and delete Chronicle resources (crosses trust boundary)
+2. Authentication Flow
+   - Credentials → Provider → Chronicle API
+   - Credentials may come from environment variables, provider configuration, or Terraform variables
+   - Crosses trust boundary between provider and Chronicle API
 
-3. Chronicle → Third-party Services: Chronicle establishes connections to configured data sources (crosses trust boundary)
+3. Feed Configuration Flow
+   - Provider → Chronicle API → External Data Sources
+   - Configures Chronicle to collect data from external sources
+   - Crosses trust boundary between Chronicle and external services
 
-4. Third-party Services → Chronicle: Security data flows from external sources into Chronicle (crosses trust boundary)
+4. State Data Flow
+   - Provider → Terraform Core → State Storage
+   - May contain sensitive configuration data including credentials
+   - Crosses trust boundary between provider and Terraform core
 
-5. Internal Chronicle Data Processing: Data flows between Chronicle internal services
+5. RBAC Management Flow
+   - Provider → Chronicle API → RBAC System
+   - Configures subjects (users/groups) and their roles
+   - Crosses trust boundary between provider and Chronicle API
 
-6. Provider → Terraform State: Configuration data including sensitive information stored in state file (crosses trust boundary)
+6. Rule Management Flow
+   - Provider → Chronicle API → Detection Engine
+   - Creates and updates detection rules
+   - Crosses trust boundary between provider and Chronicle API
 
 ## APPLICATION THREATS
 
-1. Credential Exposure in Terraform State
-   - Description: Credentials for Chronicle APIs and third-party services stored in Terraform state files could be exposed to unauthorized users.
-   - Impact: Unauthorized access to Chronicle and connected services, potential for data breach and security compromise.
-   - Affected component: State management for all provider resources containing credentials.
-   - Current mitigations: Marking fields as sensitive (prevents showing in logs but not in state), documentation recommending environment variables over hardcoded credentials.
-   - Missing mitigations: Encouraging use of encrypted remote state, documentation on secure credential management patterns, supporting external secret stores.
+1. Credential Leakage in Terraform State
+   - Threat: Sensitive credentials stored in Terraform state files
+   - Description: Credentials like AWS access keys, API tokens, and secrets could be stored in plaintext in Terraform state files
+   - Impact: Unauthorized access to Chronicle or data sources if state files are compromised
+   - Affected component: State handling in provider resources, especially in feed resources with authentication blocks
+   - Current mitigations: Provider marks sensitive fields with `Sensitive: true` attribute, but state still contains these values in encrypted form
+   - Missing mitigations: User education about securing state files; potential use of external secret management
    - Risk severity: High
 
-2. Insecure Credential Handling
-   - Description: Credentials passed as plain text in configurations or environment variables could be leaked through logs, environment inspection, or process monitoring.
-   - Impact: Credential theft leading to unauthorized access to Chronicle and third-party services.
-   - Affected component: All authentication-related code and configuration handling.
-   - Current mitigations: Marking fields as sensitive, supporting environment variables.
-   - Missing mitigations: Support for secret management services integration, secure credential rotation, encrypted configuration files.
+2. Insecure Default Configurations
+   - Threat: Provider defaults may lead to insecure configurations
+   - Description: Default values in schema definitions could create insecure configurations if users don't specify all parameters
+   - Impact: Unintended exposure or access to Chronicle resources due to insecure defaults
+   - Affected component: Schema definitions in resource files
+   - Current mitigations: Some required fields force user configuration; validation for fields like region and credential formats
+   - Missing mitigations: Security-focused review of all defaults; clear documentation on secure configuration patterns
    - Risk severity: Medium
 
-3. Man-in-the-Middle Attacks
-   - Description: Attackers could intercept API communication between the provider and Chronicle or between Chronicle and third-party services.
-   - Impact: Credential theft, data exposure, request tampering.
-   - Affected component: Network communications in the client implementation.
-   - Current mitigations: Likely using HTTPS for API calls by default.
-   - Missing mitigations: TLS certificate validation enforcement, API endpoint verification.
+3. Insufficient Input Validation
+   - Threat: Inadequate validation of user-provided configuration values
+   - Description: User inputs might not be properly validated before being used in API calls
+   - Impact: Potential for injection attacks or API manipulation
+   - Affected component: Input validation in provider resources, particularly in custom endpoints and authentication fields
+   - Current mitigations: Some validation is implemented via ValidateDiagFunc for credentials and regions
+   - Missing mitigations: Comprehensive input validation for all user-provided fields
    - Risk severity: Medium
 
-4. Excessive Permissions Through Feed Configurations
-   - Description: Feeds configured with unnecessarily broad permissions to third-party services.
-   - Impact: Violating principle of least privilege, increasing attack surface.
-   - Affected component: Feed resources (S3, SQS, Azure Blob, etc.).
-   - Current mitigations: None apparent; relies on user-supplied permissions.
-   - Missing mitigations: Documentation on least-privilege access patterns, examples of secure configurations.
+4. Credential Interception During Transmission
+   - Threat: Credentials intercepted during API communication
+   - Description: Authentication credentials could be intercepted during transmission to Chronicle API
+   - Impact: Unauthorized access to Chronicle or data sources
+   - Affected component: HTTP client implementation, API communication
+   - Current mitigations: Provider uses HTTPS for API communication
+   - Missing mitigations: Enforce TLS connection verification; implement proper certificate validation
    - Risk severity: Medium
 
-5. Insecure Access Control Configuration
-   - Description: RBAC subjects created with excessive permissions.
-   - Impact: Unauthorized access to Chronicle data and functionality.
-   - Affected component: RBAC subject resource.
-   - Current mitigations: Role-based access control implementation.
-   - Missing mitigations: Default-deny principle, validation of role assignments, privilege separation guidance.
+5. Authentication Bypass
+   - Threat: Insufficient validation of authentication responses
+   - Description: Inadequate verification of authentication success could lead to operations proceeding despite auth failures
+   - Impact: Operations might be attempted without proper authentication
+   - Affected component: Authentication logic in provider
+   - Current mitigations: Error handling exists with explicit checking of response status
+   - Missing mitigations: Consistent authentication response validation; proper error propagation
    - Risk severity: Medium
 
-6. Feed Data Leakage Through Misconfiguration
-   - Description: Improperly configured feeds could expose sensitive data or grant unintended access.
-   - Impact: Data exposure, potential compliance violations.
-   - Affected component: All feed resources.
-   - Current mitigations: Basic validation of inputs.
-   - Missing mitigations: Comprehensive validation, security best practices for each feed type.
-   - Risk severity: Medium
-
-7. API Abuse and Rate Limiting
-   - Description: Excessive API calls could lead to rate limiting, denial of service, or increased costs.
-   - Impact: Service disruption, increased operational costs.
-   - Affected component: All provider resources making API calls.
-   - Current mitigations: Request timeouts and retry mechanisms.
-   - Missing mitigations: Intelligent backoff, rate limiting awareness, quota management.
+6. Improper Error Handling Exposing Sensitive Information
+   - Threat: Error messages containing sensitive data
+   - Description: Detailed error messages might expose sensitive configuration or credential information
+   - Impact: Information disclosure that could aid attackers
+   - Affected component: Error handling throughout the provider
+   - Current mitigations: Some error wrapping is implemented
+   - Missing mitigations: Review all error messages for potential information disclosure; sanitize errors
    - Risk severity: Low
 
-8. Insufficient Validation of Rule Content
-   - Description: Malformed or malicious rule content could be submitted to Chronicle.
-   - Impact: False positives/negatives in security detections, potential resource consumption attacks.
-   - Affected component: Rule resource.
-   - Current mitigations: Server-side validation by Chronicle API.
-   - Missing mitigations: Client-side validation of rule syntax and content.
+7. Excessive Data Retention
+   - Threat: Unnecessary retention of sensitive data
+   - Description: Provider may retain sensitive data longer than needed for operations
+   - Impact: Increased risk window for data exposure
+   - Affected component: Resource data handling, authentication logic
+   - Current mitigations: Not clearly identified in the code
+   - Missing mitigations: Implement proper cleanup of sensitive data after use
    - Risk severity: Low
 
-9. Insecure Authentication Headers
-   - Description: Authentication headers for services like Thinkst Canary and Okta could be exposed.
-   - Impact: Unauthorized access to integrated security services.
-   - Affected component: Authentication configuration for API-based feeds.
-   - Current mitigations: Marking credentials as sensitive.
-   - Missing mitigations: Header value validation, output masking for diagnostic logs.
+8. Rule Validation Bypass
+   - Threat: Malicious or incorrect rule deployment
+   - Description: Attackers or errors could lead to deployment of invalid or malicious detection rules
+   - Impact: Potential for rule evasion, false positives, or resource exhaustion
+   - Affected component: Rule validation and deployment
+   - Current mitigations: YARA-L rule verification before deployment
+   - Missing mitigations: Additional rule safety checks; performance impact analysis
    - Risk severity: Medium
 
-10. Reference List Content Manipulation
-    - Description: Malformed or malicious content in reference lists could impact Chronicle operations.
-    - Impact: Security rule false positives/negatives, potential for evasion.
-    - Affected component: Reference list resource.
-    - Current mitigations: Basic content type validation.
-    - Missing mitigations: Comprehensive content validation, size limits, content filtering.
-    - Risk severity: Low
+## DEPLOYMENT THREAT MODEL
 
-# DEPLOYMENT THREAT MODEL
+Google Chronicle is a cloud-based security analytics platform. This Terraform provider would typically be deployed in one of these scenarios:
 
-Chronicle can be deployed in various ways within an organization's infrastructure. For this assessment, I'll focus on a common enterprise deployment where Chronicle is integrated with multiple data sources and managed through Terraform.
+1. Directly on an administrator's workstation
+2. Within a CI/CD pipeline for infrastructure-as-code
+3. On a dedicated Terraform management server
+
+For this threat model, I'll focus on the CI/CD pipeline deployment scenario as it's the most common enterprise approach.
 
 ## ASSETS
 
-1. Terraform State Files:
-   - Contains sensitive configuration including credentials
-   - Represents the "source of truth" for deployed infrastructure
+1. CI/CD Pipeline Secrets
+   - Chronicle API credentials stored in CI/CD secrets
+   - Access tokens for Chronicle and other services
+   - Service account credentials with Terraform permissions
 
-2. Terraform Configuration Files:
-   - Define Chronicle resources and integrations
-   - May contain sensitive values
+2. Terraform State Files
+   - Contains configuration details including sensitive values
+   - May be stored in remote backend (S3, GCS, etc.)
 
-3. Deployment Environment:
-   - Systems where Terraform is executed
-   - Access credentials to Chronicle and data sources
+3. Configuration Repositories
+   - Contains Terraform configurations
+   - May include hardcoded values or references to secrets
 
-4. Chronicle Tenant:
-   - The deployed Chronicle instance and its configurations
-   - Rules, feeds, and reference data
-
-5. Data Source Environments:
-   - The various third-party services connected to Chronicle
+4. Pipeline Infrastructure
+   - CI/CD runners that execute Terraform commands
+   - Network connections to Chronicle APIs
 
 ## TRUST BOUNDARIES
 
-1. Developer Workstations / Terraform Execution Environment:
-   - Where Terraform commands are executed
+1. CI/CD to Cloud Provider Boundary
+   - Pipeline needs authenticated access to state backend and Chronicle APIs
+   - Credentials cross this boundary
 
-2. Terraform State Storage:
-   - Where state is stored (local files or remote backend)
+2. Developer to CI/CD Boundary
+   - Developers commit configurations that are executed by CI/CD
+   - Code review and approval processes enforce this boundary
 
-3. Chronicle Environment:
-   - Chronicle SaaS environment
-
-4. Connected Data Source Environments:
-   - AWS, Azure, Google Cloud, Okta, etc.
+3. CI/CD Network Boundary
+   - Pipeline runners connect to external services
+   - Network controls and firewalls establish this boundary
 
 ## DEPLOYMENT THREATS
 
-1. Insecure State Storage
-   - Description: Terraform state files containing Chronicle credentials and configurations stored without adequate protection.
-   - Impact: Exposure of sensitive information, potential for unauthorized access to Chronicle and data sources.
-   - Affected component: Terraform state storage.
-   - Current mitigations: Documentation recommending secure state handling.
-   - Missing mitigations: Enforced encryption for state files, access controls on state storage, state file cleanup procedures.
+1. Insecure Terraform State Storage
+   - Threat: Unprotected or weakly protected Terraform state
+   - Description: State files containing sensitive configurations stored without proper access controls
+   - Impact: Unauthorized access to configurations and embedded secrets
+   - Affected component: Terraform state backend configuration
+   - Current mitigations: Not specified in provider; up to users
+   - Missing mitigations: Encryption of state at rest; strict access controls; state locking
+   - Risk severity: Critical
+
+2. CI/CD Secrets Exposure
+   - Threat: Improper handling of secrets in CI/CD pipelines
+   - Description: Chronicle credentials or access tokens exposed in logs, environment variables, or pipeline artifacts
+   - Impact: Credential theft leading to unauthorized access
+   - Affected component: CI/CD configuration, GitHub Actions workflows
+   - Current mitigations: GitHub Secrets can be used for workflow secrets
+   - Missing mitigations: Secrets rotation; least privilege for CI/CD identities; audit logging
    - Risk severity: High
 
-2. Credentials in Version Control
-   - Description: Chronicle or third-party service credentials hardcoded in Terraform configuration files and committed to version control.
-   - Impact: Long-term credential exposure, increased risk of unauthorized access.
-   - Affected component: Terraform configuration files.
-   - Current mitigations: Documentation suggesting the use of environment variables instead of hardcoded values.
-   - Missing mitigations: Pre-commit hooks to detect credentials, secret scanning in repositories, secure alternatives documentation.
+3. Unauthorized Configuration Changes
+   - Threat: Insufficient controls on who can modify configurations
+   - Description: Attackers or malicious insiders modify Terraform configurations to gain access
+   - Impact: Unauthorized resource creation or permission escalation
+   - Affected component: Git repository permissions, code review process
+   - Current mitigations: Standard Git protections and pull request workflows
+   - Missing mitigations: Enforced code review; automated policy checks; signed commits
    - Risk severity: High
 
-3. Unauthorized Terraform Execution
-   - Description: Unauthorized users executing Terraform to modify Chronicle configurations.
-   - Impact: Security control bypass, unauthorized data access, disruption of security monitoring.
-   - Affected component: Terraform execution environment.
-   - Current mitigations: None directly in provider code.
-   - Missing mitigations: Execution environment access controls, approval workflows for changes.
+4. Network Eavesdropping
+   - Threat: Interception of traffic between CI/CD and Chronicle API
+   - Description: Man-in-the-middle attack capturing API communication
+   - Impact: Credential theft, data tampering
+   - Affected component: Network connection from CI/CD to Chronicle API
+   - Current mitigations: Standard TLS encryption for API calls
+   - Missing mitigations: Network-level protections; API endpoint IP restrictions
    - Risk severity: Medium
 
-4. Inconsistent Security Configurations
-   - Description: Drift between Terraform-defined security configurations and actual Chronicle settings.
-   - Impact: Security control gaps, monitoring blind spots.
-   - Affected component: Chronicle tenant configuration.
-   - Current mitigations: Terraform state tracking.
-   - Missing mitigations: Regular configuration validation, drift detection, compliance checking.
+5. Insufficient Logging and Monitoring
+   - Threat: Lack of visibility into deployment operations
+   - Description: Changes made through the provider not properly logged or monitored
+   - Impact: Difficulty detecting unauthorized changes or compromises
+   - Affected component: Operational monitoring systems
+   - Current mitigations: Basic GitHub Actions logs
+   - Missing mitigations: Comprehensive audit logging; alerting on suspicious activities
    - Risk severity: Medium
 
-5. Insecure Feed Deployment
-   - Description: Deploying feeds with insecure configurations or unnecessary access to data sources.
-   - Impact: Increased attack surface, potential for data leakage.
-   - Affected component: Feed resources and their configurations.
-   - Current mitigations: Basic validation of configurations.
-   - Missing mitigations: Security baseline templates, pre-deployment security validation.
+6. Credential Scope Creep
+   - Threat: Over-privileged service accounts
+   - Description: Service accounts with excessive permissions used for Terraform operations
+   - Impact: Increased blast radius if credentials compromised
+   - Affected component: Chronicle API credentials, service accounts
+   - Current mitigations: API scopes defined in client configuration
+   - Missing mitigations: Fine-grained permissions; least privilege principle implementation
    - Risk severity: Medium
 
-6. Cross-Service Authentication Leaks
-   - Description: Authentication to multiple services creating amplified risk if compromised.
-   - Impact: Cascading compromise across multiple security systems.
-   - Affected component: Multi-service deployment configurations.
-   - Current mitigations: Isolation of credential configuration.
-   - Missing mitigations: Service-to-service authentication, credential scope limitations.
-   - Risk severity: Medium
+## BUILD THREAT MODEL
 
-# BUILD THREAT MODEL
-
-This section examines how the Terraform provider itself is built and distributed.
+This Terraform provider is built using Go and uses GitHub Actions for CI/CD. The build process includes compilation, testing, and publishing of releases.
 
 ## ASSETS
 
-1. Source Code:
-   - Provider implementation code
-   - Dependencies and libraries
+1. Source Code Repository
+   - Application code and build configurations
+   - Access to commit to the repository
 
-2. Build Pipeline:
-   - GitHub Actions workflows
-   - Build environment and configurations
+2. Build Infrastructure
+   - GitHub Actions runners
+   - Build artifacts and dependencies
 
-3. Build Artifacts:
+3. Release Artifacts
    - Compiled provider binaries
-   - Release packages
+   - Checksums and signatures
 
-4. Release Distribution:
-   - GitHub releases
-   - Terraform Registry
+4. Build Secrets
+   - GitHub tokens
+   - Signing keys (if used)
+   - Test credentials
 
 ## TRUST BOUNDARIES
 
-1. Developer Environments:
-   - Local development machines
+1. Developer to Repository Boundary
+   - Developers push code to the repository
+   - Repository access controls enforce this boundary
 
-2. Source Code Repository:
-   - GitHub repository hosting code
+2. Repository to Build System Boundary
+   - GitHub repository triggers GitHub Actions
+   - Actions runners execute in isolated environments
 
-3. CI/CD Environment:
-   - GitHub Actions execution environment
-
-4. Release Distribution Channels:
-   - GitHub Releases
-   - Terraform Registry
+3. Build System to Release Distribution Boundary
+   - Build artifacts are published to GitHub Releases
+   - Authentication controls this boundary
 
 ## BUILD THREATS
 
 1. Supply Chain Compromise
-   - Description: Attackers introducing malicious code through dependencies or compromised build process.
-   - Impact: Distribution of backdoored provider, potential credential theft from Chronicle users.
-   - Affected component: Build pipeline, dependencies.
-   - Current mitigations: Vendored dependencies with go mod, pinned GitHub Action versions.
-   - Missing mitigations: Dependency scanning, SBOM generation, binary signing and verification.
+   - Threat: Malicious dependencies or tools in the build process
+   - Description: Introduction of backdoors through compromised Go modules or build tools
+   - Impact: Backdoored provider could exfiltrate credentials or enable unauthorized access
+   - Affected component: Go modules, vendor dependencies, build tools
+   - Current mitigations: Go module checksums; use of specific dependency versions
+   - Missing mitigations: Dependency scanning; Software Bill of Materials (SBOM); dependency pinning
    - Risk severity: High
 
 2. Unauthorized Code Modifications
-   - Description: Attackers modifying source code to introduce vulnerabilities or backdoors.
-   - Impact: Insecure or compromised provider distribution.
-   - Affected component: Source code repository.
-   - Current mitigations: GitHub pull request workflow, presumably code reviews.
-   - Missing mitigations: Signed commits, branch protection rules, code ownership rules.
+   - Threat: Insertion of malicious code into the codebase
+   - Description: Attacker gains repository access and introduces backdoors or vulnerabilities
+   - Impact: Distribution of compromised provider to users
+   - Affected component: GitHub repository, access controls
+   - Current mitigations: Standard GitHub access controls; branch protections visible in workflows
+   - Missing mitigations: Required code reviews; commit signing; automated security scanning
+   - Risk severity: High
+
+3. CI/CD Pipeline Compromise
+   - Threat: Tampering with GitHub Actions workflows
+   - Description: Modifications to build processes to include malicious steps
+   - Impact: Compromised build outputs; potential credential theft
+   - Affected component: GitHub Actions configuration (.github/workflows)
+   - Current mitigations: Repository protections for workflow files
+   - Missing mitigations: Workflow file validation; restricted workflow permissions
    - Risk severity: Medium
 
-3. Compromised Build Environment
-   - Description: Attackers gaining access to build systems to tamper with the build process.
-   - Impact: Backdoored builds, leaked build secrets.
-   - Affected component: GitHub Actions environment.
-   - Current mitigations: Using specific versions of GitHub Actions.
-   - Missing mitigations: Hardened build environments, ephemeral build instances, minimal build privileges.
+4. Build Artifact Tampering
+   - Threat: Modification of compiled binaries after build
+   - Description: Attacker replaces legitimate binaries with malicious versions
+   - Impact: Distribution of compromised provider
+   - Affected component: GitHub release process, artifacts
+   - Current mitigations: Checksums generated during release
+   - Missing mitigations: Code signing; reproducible builds; artifact verification
    - Risk severity: Medium
 
-4. Artifact Tampering
-   - Description: Modification of compiled binaries after build but before distribution.
-   - Impact: Distribution of compromised provider.
-   - Affected component: Build artifacts, release packages.
-   - Current mitigations: SHA256 checksums for releases.
-   - Missing mitigations: Signed binaries, provenance attestation, chain of custody validation.
+5. Secret Leakage in Build Logs
+   - Threat: Sensitive information exposed in build outputs
+   - Description: Build logs or debugging information revealing secrets
+   - Impact: Credential theft or information disclosure
+   - Affected component: GitHub Actions logs, build scripts
+   - Current mitigations: GitHub Secrets mechanism for sensitive values
+   - Missing mitigations: Log sanitization; secret scanning in logs
    - Risk severity: Medium
 
-5. Insecure Go Module Dependencies
-   - Description: Vulnerabilities in Go module dependencies affecting provider security.
-   - Impact: Potential vulnerabilities in the provider code.
-   - Affected component: Third-party Go modules.
-   - Current mitigations: Vendored dependencies and version pinning.
-   - Missing mitigations: Automated dependency scanning, vulnerability management process.
-   - Risk severity: Medium
+6. Test Credential Exposure
+   - Threat: Exposure of test credentials used in integration tests
+   - Description: Real or functionally valid credentials used in tests could be leaked
+   - Impact: Unauthorized access to test or production environments
+   - Affected component: Test files (resource_*_test.go files)
+   - Current mitigations: Test files use random strings for credentials in most cases
+   - Missing mitigations: Ensure no real credentials are stored in tests; isolate test environments
+   - Risk severity: Low
 
-# QUESTIONS & ASSUMPTIONS
+## QUESTIONS & ASSUMPTIONS
 
-1. Authentication Methods: This threat model assumes that Chronicle APIs use either credential files or access tokens for authentication, as indicated in the provider's configuration options.
+1. I assume the provider communicates with Chronicle API endpoints using HTTPS, which is confirmed in the code where the endpoints are constructed with "https://" prefixes.
 
-2. Deployment Model: Chronicle is assumed to be a SaaS offering that integrates with various data sources but is not self-hosted by the user organization.
+2. I assume the provider is intended to be used with Terraform's remote state capabilities rather than local state files, though this isn't enforced.
 
-3. Access Control: It's assumed that Chronicle's RBAC implementation is the primary means of controlling user access to the platform.
+3. I assume authentication to Chronicle APIs is handled securely with proper token management, which is confirmed in the client implementation.
 
-4. Data Sensitivity: This model assumes that data ingested from various sources may contain sensitive information requiring protection.
+4. How are expired or revoked credentials handled by the provider? Is there graceful error handling and clear messages to users?
 
-5. Additional Security Features: Are there any additional Chronicle security features not exposed through the Terraform provider that could mitigate some of the threats identified?
+5. Does the provider implement any rate limiting or backoff strategies to prevent API abuse? The code shows rate limiting implementation with a default of 1 request per second.
 
-6. Encryption: What encryption capabilities does Chronicle provide for data at rest and in transit? How are these configured through the provider?
+6. What testing is performed specifically for security aspects of the provider?
 
-7. Compliance Requirements: Are there specific compliance frameworks that Chronicle implementations typically need to adhere to, which would impact the threat model?
+7. Is there any telemetry or logging from the provider that could contain sensitive information?
 
-8. Integration Security: How does Chronicle validate the security of connections to third-party data sources beyond the authentication credentials provided?
+8. How are updates and security patches to the provider communicated to users?
 
-9. Rate Limiting Implementation: The code shows rate limiting implementations, but are these limits configurable and aligned with Chronicle API quotas?
-
-10. Terraform Provider Version Update Process: How are users notified of security-related updates to the provider, and what is the recommended update process?
+9. Are there any specific requirements or recommendations for securing access to the various third-party services that can be configured as feeds?

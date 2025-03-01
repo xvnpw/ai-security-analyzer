@@ -2,273 +2,242 @@
 
 ## BUSINESS POSTURE
 
-Screenshot-to-Code is an innovative tool designed to convert design screenshots into functional code. The project aims to accelerate the development process for frontend engineers and designers by using AI to translate visual designs into implementation-ready code.
+Screenshot-to-Code is a tool that takes a screenshot as input and generates corresponding HTML/CSS code, effectively reverse engineering web pages from their visual appearance. This project addresses several business priorities:
 
-### Business Priorities and Goals:
-1. Simplify and accelerate the UI development process
-2. Bridge the gap between design and implementation
-3. Provide a zero-installation web tool accessible to anyone
-4. Support multiple frontend frameworks (HTML/CSS, Tailwind, React, Vue)
-5. Build an open-source community around AI-powered development tools
+1. Accelerating UI Development: Converting design mockups to functional code quickly, reducing the time between design and implementation.
+2. Design-to-Code Automation: Eliminating manual coding of visual elements, reducing human error and inconsistency.
+3. Accessibility for Non-Developers: Allowing designers and product managers to generate code without deep technical expertise.
+4. Educational Tool: Helping beginners learn web development by seeing how UIs translate to code.
 
-### Business Risks:
-1. Dependency on third-party AI services (particularly OpenAI), creating potential availability and cost concerns
-2. Accuracy limitations in code generation may affect user satisfaction and adoption
-3. Scaling challenges as the service grows in popularity
-4. Competition from similar tools or integrated features in design platforms
-5. Managing the cost of AI API usage while maintaining the service's accessibility
+Key business risks include:
+1. Quality and Accuracy: The fidelity and performance of generated code directly impacts user trust and adoption.
+2. API Dependency: Heavy reliance on OpenAI's GPT-4 Vision API creates dependency risk.
+3. Cost Management: API costs could scale unexpectedly with increased usage.
+4. Competitive Landscape: Similar tools may emerge, requiring continuous innovation to maintain relevance.
+5. Technical Debt: Rapid development may lead to architectural decisions that limit future scale or features.
 
 ## SECURITY POSTURE
 
-### Existing Security Controls and Accepted Risks:
+Existing security controls and accepted risks:
 
-- Security control: Environment variable management for sensitive API keys, implemented through Next.js environment configuration
-- Security control: Client-side processing of screenshots reducing data transfer risk, implemented in the frontend code
-- Security control: Third-party authentication for the hosted version, implemented through Vercel deployment
-- Security control: Input validation for image uploads, implemented in the frontend code
-- Security control: Rate limiting through OpenAI API proxy, implemented in the backend code
+- Security control: API key authentication for OpenAI GPT-4 Vision API access, implemented via environment variables in the deployment platform.
+- Security control: Client-side validation of image uploads to ensure proper format and prevent malicious file uploads.
+- Security control: Using Next.js's built-in security features including automatic input sanitization.
+- Security control: Deployment on Vercel platform providing TLS/SSL encryption for all communications.
+- Accepted risk: Generated code quality and security are dependent on GPT-4 Vision's capabilities.
+- Accepted risk: No user authentication system, making it difficult to implement personalized rate limiting or tracking.
+- Accepted risk: Limited server-side validation for inputs.
 
-- Accepted risk: Reliance on third-party AI providers (OpenAI) for critical functionality
-- Accepted risk: Potential exposure of user designs through screenshot uploads
-- Accepted risk: Limited logging and audit capabilities in the current implementation
-- Accepted risk: No encryption for screenshots during local processing
-- Accepted risk: Limited protection against prompt injection attacks
+Recommended high-priority security controls:
 
-### Recommended Security Controls:
+1. Implement comprehensive server-side validation for all user inputs.
+2. Add Content Security Policy headers to prevent XSS attacks.
+3. Implement rate limiting to prevent API abuse and manage costs.
+4. Establish a vulnerability management process for dependencies.
+5. Add telemetry and logging for security-relevant events.
+6. Implement user authentication for personalized experiences and better security controls.
 
-1. Implementation of Content Security Policy (CSP) to mitigate XSS risks
-2. Comprehensive input validation for screenshots to prevent malicious uploads
-3. Secure storage and rotation of API keys
-4. Enhanced rate limiting and abuse prevention mechanisms
-5. Implementation of audit logging for operations
-6. Regular dependency scanning and updates
-7. Sandboxed execution of generated code preview
+Security requirements:
 
-### Security Requirements:
+Authentication:
+- Consider implementing user authentication to associate generated content with specific users.
+- If implementing authentication, use industry standard protocols like OAuth 2.0 or OIDC.
+- Store authentication tokens securely with proper expiration policies.
 
-#### Authentication
-- Implement strong authentication for API access
-- Consider optional user accounts for the web interface with secure credential management
-- Employ secure token handling for session management
+Authorization:
+- Implement role-based access control if adding multi-user capabilities.
+- Ensure users can only access their own generated code and uploaded screenshots.
+- Apply rate limiting per user or IP address to prevent abuse.
 
-#### Authorization
-- Restrict access to API endpoints based on user roles/permissions
-- Implement resource-based access controls for saved projects
-- Enforce usage limits based on user tiers
+Input Validation:
+- Validate all user inputs both client-side and server-side.
+- Implement strict file validation for uploaded screenshots (type, size, dimensions).
+- Sanitize generated code before rendering to prevent XSS attacks.
 
-#### Input Validation
-- Validate all screenshot uploads for size, format, and content
-- Sanitize all user inputs to prevent injection attacks
-- Implement secure file handling practices
-
-#### Cryptography
-- Encrypt API keys at rest and in transit
-- Consider encrypting saved screenshots if implementing persistence
-- Use secure, modern TLS configurations for all communications
+Cryptography:
+- Ensure all API communications use TLS 1.2+ with strong cipher suites.
+- Store API keys in secure environment variables, never in client-side code.
+- Consider implementing encryption for stored user data if persistence is added.
 
 ## DESIGN
+
+The Screenshot-to-Code application follows a modern web application architecture, designed to be simple yet effective for its specific use case.
 
 ### C4 CONTEXT
 
 ```mermaid
 graph TD
-    User[User: Developer/Designer] -->|Uploads screenshot| ScreenshotToCode[Screenshot to Code System]
-    ScreenshotToCode -->|Sends image for analysis| OpenAI[OpenAI API]
-    OpenAI -->|Returns code generation| ScreenshotToCode
-    ScreenshotToCode -->|Returns generated code| User
-    ScreenshotToCode -->|Stores settings| BrowserStorage[Browser LocalStorage]
-    CLI[Command Line Interface] -->|Uses| ScreenshotToCode
+    User[User] -->|Uploads screenshot| ScreenshotToCode[Screenshot-to-Code Application]
+    ScreenshotToCode -->|Sends image data| OpenAI[OpenAI GPT-4 Vision API]
+    OpenAI -->|Returns generated code| ScreenshotToCode
+    ScreenshotToCode -->|Displays rendered code| User
+    Developer[Developer] -->|Maintains| ScreenshotToCode
 ```
 
-#### Context Diagram Elements
+#### Context Elements Table
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|------------------|-------------------|
-| User | Person | Developer or designer using the system | Provides screenshots, configures outputs, uses generated code | N/A |
-| Screenshot to Code System | Software System | Core system that converts screenshots to code | Process screenshots, generate code, render preview | Input validation, secure API key handling, client-side processing |
-| OpenAI API | External System | AI service for image analysis and code generation | Analyze images, generate code based on prompts | Rate limiting, authentication via API keys |
-| Browser LocalStorage | External System | Client-side storage | Store user preferences and settings | Client-side data isolation |
-| Command Line Interface | Software System | Alternative interface for the tool | Provide command-line access to core functionality | Local execution security |
+| User | Person | End user of the application | Uploads screenshots, configures generation options, views and exports generated code | Input validation, client-side security |
+| Screenshot-to-Code Application | System | Web application for converting screenshots to code | Accepts user inputs, processes images, communicates with OpenAI API, renders generated code | Input validation, API key protection, secure communication |
+| OpenAI GPT-4 Vision API | External System | AI service that processes images and generates code | Analyzes screenshot content, generates HTML/CSS based on visual elements | API authentication, data encryption in transit |
+| Developer | Person | Creates and maintains the application | Implements features, fixes bugs, manages deployments | Code reviews, secure development practices, dependency management |
 
 ### C4 CONTAINER
 
 ```mermaid
 graph TD
-    User[User: Developer/Designer] -->|Accesses| WebUI[Web Interface]
-    User -->|Uses| CLI[CLI Tool]
-
-    subgraph "Screenshot to Code System"
-        WebUI -->|Captures input| FrontendLogic[Frontend Logic]
-        CLI -->|Provides input| CLIProcessor[CLI Processor]
-
-        FrontendLogic -->|Processes screenshots| ImageProcessor[Image Processor]
-        CLIProcessor -->|Processes screenshots| ImageProcessor
-
-        ImageProcessor -->|Sends to| AIProxyService[AI Proxy Service]
-
-        AIProxyService -->|Communicates with| OpenAI[OpenAI API]
-
-        OpenAI -->|Returns results| AIProxyService
-        AIProxyService -->|Returns code| ImageProcessor
-
-        ImageProcessor -->|Provides results| CodeGenerator[Code Generator]
-
-        CodeGenerator -->|Outputs to| FrontendLogic
-        CodeGenerator -->|Outputs to| CLIProcessor
-
-        FrontendLogic -->|Renders| CodePreview[Code Preview]
-    end
-
-    CLI -->|Returns results| User
-    CodePreview -->|Displays to| User
+    User[User] -->|Interacts with| FrontendUI[React Frontend UI]
+    FrontendUI -->|API requests| BackendServices[Next.js API Routes]
+    BackendServices -->|Image processing| AIInteraction[GPT-4 Vision Integration]
+    AIInteraction -->|API calls| OpenAI[OpenAI API]
+    OpenAI -->|Code generation| AIInteraction
+    AIInteraction -->|Generated code| BackendServices
+    BackendServices -->|Response data| FrontendUI
+    FrontendUI -->|Rendered preview| User
 ```
 
-#### Container Diagram Elements
+#### Container Elements Table
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|------------------|-------------------|
-| Web Interface | Container | Browser-based UI | Provide user interface, capture screenshots, display results | Input validation, CSP implementation |
-| CLI Tool | Container | Command-line interface | Process command-line arguments, capture local screenshots | Local file system validation |
-| Frontend Logic | Component | Core web application logic | Handle user interactions, manage application state | State validation, input sanitization |
-| CLI Processor | Component | Core CLI application logic | Process CLI commands, manage execution flow | Input validation, error handling |
-| Image Processor | Component | Processes screenshots | Prepare images for AI processing | Image validation, content verification |
-| AI Proxy Service | Component | Interface to AI services | Manage API communication, format prompts | API key protection, rate limiting |
-| Code Generator | Component | Creates code from AI responses | Transform AI output to usable code | Output sanitization |
-| Code Preview | Component | Renders generated code | Show live preview of generated code | Sandbox execution, CSP controls |
+| React Frontend UI | Container | User interface built with React and Tailwind CSS | Provides screenshot upload interface, displays code preview, allows framework selection | Client-side input validation, secure rendering practices, XSS prevention |
+| Next.js API Routes | Container | Backend API functionality | Processes requests, handles business logic, integrates with external services | Server-side validation, API key management, rate limiting |
+| GPT-4 Vision Integration | Container | Integration layer with OpenAI | Formats requests to OpenAI, processes responses, handles errors | Secure API communication, error handling, input sanitization |
+| OpenAI API | External System | Third-party AI service | Processes images, generates corresponding code | Authentication via API keys, TLS encryption, rate limiting |
 
 ### DEPLOYMENT
 
-The Screenshot-to-Code project can be deployed in several ways:
+The Screenshot-to-Code application can be deployed in several ways:
 
-1. Self-hosted web application
-2. Locally installed CLI tool
-3. Vercel-hosted web application (current primary deployment)
+1. Vercel Deployment (Primary): Leveraging Next.js native integration with Vercel for serverless deployment.
+2. Traditional Web Hosting: Deploying to traditional web servers after building the Next.js application.
+3. Self-Hosted: Organizations can deploy on-premises for greater control.
 
-We'll focus on the Vercel-hosted deployment as this is the primary method used by the project.
+We'll focus on the primary Vercel deployment model:
 
 ```mermaid
 graph TD
-    Developer[Developer] -->|Push code| GitHub[GitHub Repository]
-    GitHub -->|Trigger deployment| VercelCI[Vercel CI/CD]
-    VercelCI -->|Build & deploy| VercelProd[Vercel Production]
-    VercelProd -->|Host| WebApp[Web Application]
-    WebApp -->|Connect to| OpenAI[OpenAI API]
-    User[End User] -->|Access| WebApp
-
-    subgraph "Vercel Platform"
-        VercelCI
-        VercelProd
-    end
+    Developer[Developer] -->|Git push| GitHubRepo[GitHub Repository]
+    GitHubRepo -->|Trigger deployment| VercelBuild[Vercel Build Process]
+    VercelBuild -->|Build and deploy| VercelInfra[Vercel Infrastructure]
+    VercelInfra -->|Host frontend| VercelEdge[Vercel Edge Network]
+    VercelInfra -->|Host API routes| VercelServerless[Vercel Serverless Functions]
+    VercelServerless -->|API calls| OpenAI[OpenAI API]
+    User[User] -->|Access application| VercelEdge
+    User -->|API requests| VercelServerless
 ```
 
-#### Deployment Diagram Elements
+#### Deployment Elements Table
 
 | Name | Type | Description | Responsibilities | Security Controls |
 |------|------|-------------|------------------|-------------------|
-| GitHub Repository | External System | Source code repository | Store and version code | Access control, branch protection |
-| Vercel CI/CD | External System | Continuous integration | Build and test application | Dependency scanning, environment isolation |
-| Vercel Production | Infrastructure | Hosting environment | Run the web application | HTTPS enforcement, environment variable protection |
-| Web Application | Container | Deployed application | Serve the application to users | Input validation, API security |
-| OpenAI API | External System | AI service provider | Process AI requests | Authentication, rate limiting |
-| End User | Person | Application user | Interact with application | N/A |
+| GitHub Repository | Infrastructure | Source code repository | Stores application code, manages versions | Access controls, branch protection, code scanning |
+| Vercel Build Process | Service | CI/CD pipeline | Builds and tests the application | Secret management, dependency scanning |
+| Vercel Infrastructure | Infrastructure | Cloud hosting platform | Manages deployment, scaling, and infrastructure | Infrastructure security, DDoS protection |
+| Vercel Edge Network | Infrastructure | CDN for static assets | Delivers frontend assets globally | TLS encryption, edge security |
+| Vercel Serverless Functions | Infrastructure | Serverless compute | Hosts API routes and business logic | Function isolation, execution timeouts, secure environment variables |
+| OpenAI API | External Service | AI service provider | Processes images, generates code | API authentication, rate limiting |
 
 ### BUILD
 
-The Screenshot-to-Code project uses GitHub and Vercel for its build and deployment processes.
+The Screenshot-to-Code project uses a modern CI/CD pipeline centered around GitHub and Vercel:
 
 ```mermaid
 graph TD
-    Developer[Developer] -->|Commits code| LocalRepo[Local Git Repository]
-    LocalRepo -->|Push changes| GitHub[GitHub Repository]
-    GitHub -->|Trigger| GithubActions[GitHub Actions]
-    GitHub -->|Trigger| VercelDeploy[Vercel Deployment]
-
-    GithubActions -->|Run tests| Testing[Testing]
-    GithubActions -->|Run linting| Linting[Linting]
-
-    Testing -->|Results| BuildResults[Build Results]
-    Linting -->|Results| BuildResults
-
-    VercelDeploy -->|Install dependencies| NPMInstall[NPM Install]
-    NPMInstall -->|Build application| NextBuild[Next.js Build]
-    NextBuild -->|Deploy| VercelHosting[Vercel Hosting]
-
-    VercelHosting -->|Publish| ProductionApp[Production Application]
-
-    subgraph "CI/CD Pipeline"
-        GithubActions
-        VercelDeploy
-        Testing
-        Linting
-        NPMInstall
-        NextBuild
-    end
+    Developer[Developer] -->|Code changes| LocalDev[Local Development]
+    LocalDev -->|Run tests| LocalTests[Local Testing]
+    LocalTests -->|Commit code| GitRepo[GitHub Repository]
+    GitRepo -->|Push to main| GHActions[GitHub Actions]
+    GHActions -->|Run checks| Linting[Code Linting]
+    GHActions -->|Run tests| Testing[Automated Tests]
+    GHActions -->|Scan dependencies| DependencyCheck[Dependency Scanning]
+    Linting -->|Pass| VercelDeploy[Vercel Deployment]
+    Testing -->|Pass| VercelDeploy
+    DependencyCheck -->|Pass| VercelDeploy
+    VercelDeploy -->|Build| VercelBuild[Build Process]
+    VercelBuild -->|Deploy| Production[Production Environment]
+    Production -->|Available to| Users[End Users]
 ```
 
-The build process for Screenshot-to-Code follows these steps:
+The build process incorporates several security controls:
 
-1. Developers work locally and commit code to the GitHub repository
-2. GitHub Actions runs tests and linting checks
-3. Vercel's deployment process installs dependencies via NPM
-4. Next.js builds the application
-5. The built application is deployed to Vercel's hosting platform
-
-Security controls in the build process include:
-- Dependency integrity verification through package lock files
-- Automated testing to catch issues before deployment
-- Linting to enforce code quality standards
-- Environment variable management for API keys and secrets
-- Vercel's built-in security controls for deployment
-
-The project could benefit from additional build-time security controls:
-- SAST (Static Application Security Testing) scanning
-- Secret scanning to prevent accidental credential exposure
-- Dependency vulnerability scanning
-- Container scanning if containerization is implemented in the future
+1. Automated linting to enforce code quality standards
+2. Dependency scanning to identify vulnerable packages
+3. Environment variable protection for API keys and secrets
+4. Automated testing to verify functionality
+5. Controlled deployment process through Vercel
 
 ## RISK ASSESSMENT
 
-### Critical Business Processes to Protect:
-1. Screenshot processing and code generation
-2. User interaction with the web interface
-3. API communication with OpenAI
-4. CLI tool functionality and security
-5. Deployment and release processes
+Critical business processes to protect:
 
-### Data to Protect and Sensitivity:
+1. Screenshot Processing: The core functionality of analyzing uploaded screenshots
+2. Code Generation: The accuracy and quality of the generated HTML/CSS
+3. User Experience: The responsiveness and reliability of the application
+4. API Integration: The secure and cost-effective use of the OpenAI API
 
-| Data Type | Sensitivity | Reason |
-|-----------|-------------|--------|
-| User Screenshots | Medium | May contain proprietary designs or sensitive information |
-| OpenAI API Keys | High | Could be used to rack up charges if exposed |
-| Generated Code | Medium | Represents intellectual property of users |
-| User Preferences | Low | Limited personal information, but still requires protection |
-| System Configuration | Medium | Could expose system details useful for attackers |
+Data to protect and sensitivity:
+
+1. User-Uploaded Screenshots (Medium Sensitivity):
+   - May contain proprietary design information
+   - Could potentially include sensitive information if users upload screenshots containing confidential data
+   - Temporary storage only during processing
+
+2. Generated Code (Medium Sensitivity):
+   - Represents intellectual property derived from user inputs
+   - May reveal information about proprietary designs or implementations
+   - Currently not persistently stored on server
+
+3. OpenAI API Credentials (High Sensitivity):
+   - Access credentials to paid third-party services
+   - Unauthorized use could result in financial impact
+   - Protected via environment variables
+
+4. User Session Data (Low Sensitivity):
+   - Basic usage information
+   - No personal identifiable information currently collected
+   - Used only for current session functionality
 
 ## QUESTIONS & ASSUMPTIONS
 
-### BUSINESS POSTURE
-1. Is this tool intended for commercial use or primarily as an open-source community project?
-   - Assumption: It's an open-source project with potential for commercial applications or services built on top.
-2. What is the target scale for this service?
-   - Assumption: Initially targeted at individual developers and small teams, with potential to scale.
-3. What is the business model for sustaining API costs?
-   - Assumption: Currently relies on users providing their own API keys, may evolve to a freemium model.
+### Business Posture Questions & Assumptions
 
-### SECURITY POSTURE
-1. What level of data protection is required for user uploads?
-   - Assumption: Standard web application security practices are sufficient, with no long-term storage of screenshots.
-2. Are there compliance requirements for the project?
-   - Assumption: No specific regulatory compliance requirements beyond standard security practices.
-3. What is the threat model for potential attackers?
-   - Assumption: Primary concerns are API key theft, prompt injection, and potential exposure of proprietary designs.
+Assumptions:
+- The project is currently in early development with focus on feature completeness over scalability
+- Target users are developers, designers, and those learning web development
+- Project prioritizes ease of use and accuracy of generated code over advanced features
 
-### DESIGN
-1. How will the system scale as usage increases?
-   - Assumption: Vercel provides auto-scaling capabilities; the bottleneck would be OpenAI API quotas.
-2. Is there a plan to support user accounts and persistence?
-   - Assumption: Not currently implemented but may be added in future iterations.
-3. How is testing implemented for the AI components?
-   - Assumption: Limited structured testing for AI outputs; relies on user feedback for quality assessment.
-4. Is there a disaster recovery plan?
-   - Assumption: Relies on GitHub for code recovery and Vercel for deployment recovery.
+Questions:
+1. Is there a monetization strategy planned or will this remain an open-source utility?
+2. What is the expected scale of usage? Will it serve thousands or millions of users?
+3. Are there plans to expand beyond web interfaces to other types of UI (mobile, desktop)?
+4. What metrics define success for this project (user adoption, code accuracy, etc.)?
+
+### Security Posture Questions & Assumptions
+
+Assumptions:
+- The project currently operates with minimal persistent data storage
+- Security controls rely primarily on the underlying platforms (Vercel, OpenAI)
+- Users are expected to review generated code before production use
+
+Questions:
+1. Is there a plan to implement user accounts and authentication?
+2. What is the data retention policy for uploaded screenshots and generated code?
+3. How will API costs be controlled as usage scales?
+4. Is there a security review process for code changes?
+5. What is the incident response plan for security breaches?
+
+### Design Questions & Assumptions
+
+Assumptions:
+- The application is designed as a client-side heavy application with minimal backend logic
+- OpenAI's GPT-4 Vision will remain the primary AI service
+- The application prioritizes ease of use over customization options
+
+Questions:
+1. How will the application scale if usage increases significantly?
+2. Are there plans to support offline functionality?
+3. Will the application evolve to support more frameworks beyond the current options?
+4. Is there a performance budget for response times and application size?
+5. How will the application handle complex, nested UI components in screenshots?

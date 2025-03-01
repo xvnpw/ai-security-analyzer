@@ -2,96 +2,84 @@
 
 ## BUSINESS POSTURE
 
-AI Nutrition-Pro is a software-as-a-service application designed to provide AI-enhanced nutrition content generation capabilities to meal planning applications. The system leverages large language models (specifically ChatGPT-3.5) to generate personalized nutritional content based on dietitians' sample content.
+AI Nutrition-Pro is a service that leverages artificial intelligence to assist dietitians and meal planning applications in creating high-quality nutritional content. The system integrates with third-party Meal Planner applications and utilizes ChatGPT-3.5 to enhance content creation for dietary planning.
 
-Business priorities and goals include:
-1. Enabling dietitians to scale their expertise through AI-assisted content generation
-2. Providing a multi-tenant platform that can serve multiple meal planning applications
-3. Offering high-quality, personalized nutrition content generation
-4. Maintaining data separation between different clients
-5. Establishing a reliable and scalable cloud infrastructure
+Business priorities and goals:
+1. Provide AI-powered content generation for nutritional and dietary planning
+2. Enable integration with multiple Meal Planner applications
+3. Streamline onboarding and billing for client applications
+4. Maintain high-quality AI-generated content based on dietitians' samples
 
-Key business risks that need to be addressed:
-1. Dependency on third-party LLM provider (OpenAI's ChatGPT)
-2. Content quality and accuracy risks when generating nutritional advice
-3. Cost management of LLM API usage
-4. Multi-tenant data separation and privacy concerns
-5. Scaling challenges as the platform grows
+Key business risks:
+1. Dependency on third-party LLM service (ChatGPT) which could impact service availability
+2. Quality and accuracy of AI-generated nutritional content potentially affecting health advice
+3. Protection of intellectual property (dietitians' content samples)
+4. Service reliability and performance for connected client applications
+5. Compliance with relevant regulations regarding nutritional and health advice
 
 ## SECURITY POSTURE
 
-Existing security controls and accepted risks:
+Existing security controls:
+- Security control: Authentication with individual API keys for Meal Planner applications (Implemented in Kong API Gateway)
+- Security control: Authorization through ACL rules that allow or deny specific actions (Implemented in API Gateway)
+- Security control: TLS encryption for network traffic between Meal Planner applications and API Gateway
+- Security control: Input filtering to sanitize incoming requests (Implemented in Kong API Gateway)
+- Security control: Rate limiting to prevent abuse and ensure fair usage (Implemented in Kong API Gateway)
+- Security control: Isolation between control plane and application data (Implemented through separate RDS databases)
 
-- Security control: Authentication with API keys for each Meal Planner application integration
-- Security control: Authorization via API Gateway ACL rules that allow or deny specific actions
-- Security control: Network traffic encryption using TLS between Meal Planner applications and API Gateway
-- Security control: Containerized applications running on AWS Elastic Container Service
-- Security control: Database isolation using Amazon RDS
-- Accepted risk: Dependency on third-party LLM provider (OpenAI) security
-
-Recommended high-priority security controls:
-- Security control: Implement proper secrets management for API keys and credentials
-- Security control: Add input validation and content filtering before requests reach the LLM
-- Security control: Implement logging and monitoring for security events
-- Security control: Add data encryption at rest for all databases
-- Security control: Implement regular security scanning of container images
-- Security control: Deploy web application firewall (WAF) in front of API Gateway
+Recommended additional security controls:
+- Security control: Data encryption at rest for all sensitive information stored in databases
+- Security control: Secure secret management for API keys and credentials
+- Security control: Comprehensive logging and monitoring of all API access and system operations
+- Security control: Regular vulnerability scanning and security assessments
+- Security control: Content validation before sending to LLM service
+- Security control: Response sanitization before returning AI-generated content to clients
+- Security control: Multi-factor authentication for administrative access
 
 Security requirements:
 
 Authentication:
-- Strong API key management with key rotation capabilities
-- Multi-factor authentication for administrator access to control plane
-- Token-based authentication with short expiration times
+- All external API requests must be authenticated with valid API keys
+- Administrative access should require strong credentials and possibly MFA
+- API keys should be unique per client application and stored securely
+- Failed authentication attempts should be logged and monitored for potential attacks
 
 Authorization:
-- Role-based access control (RBAC) for administrative functions
-- Fine-grained permissions for API access based on client subscription level
-- Tenant data isolation enforced at the database and application level
+- ACL rules should implement least privilege principle
+- Different client applications must be isolated from accessing each other's data
+- Administrative functions should have appropriate access controls and separation of duties
 
-Input Validation:
-- Sanitization of all client inputs before processing
-- Schema validation for API requests
-- Rate limiting to prevent abuse
-- Content filtering to prevent prompt injection attacks
+Input validation:
+- All client input must be validated for format, size, and content before processing
+- Potentially malicious inputs should be blocked before reaching internal systems
+- Content samples should be validated before being sent to the LLM
 
 Cryptography:
-- TLS 1.2+ for all communications
-- Data encryption at rest for databases
-- Secure key management for encryption keys
-- Strong hashing algorithms for sensitive data
+- All network communication must use TLS 1.2 or higher
+- Sensitive data should be encrypted at rest
+- Database connections must use encrypted channels
+- Strong hashing algorithms should be used for any stored credentials
 
 ## DESIGN
 
 ### C4 CONTEXT
 
 ```mermaid
-C4Context
-    title System Context diagram for AI Nutrition-Pro
-
-    Person(dietitian, "Dietitian", "A nutrition professional who creates meal plans")
-    Person(admin, "Administrator", "Administrator of the AI Nutrition-Pro platform")
-
-    System(aiNutritionPro, "AI Nutrition-Pro", "Generates AI-enhanced nutrition content based on dietitians' samples")
-
-    System_Ext(mealPlannerApp, "Meal Planner", "Application used by dietitians to create meal plans")
-    System_Ext(openai, "OpenAI ChatGPT", "Large Language Model provider")
-
-    Rel(dietitian, mealPlannerApp, "Uses to create meal plans")
-    Rel(mealPlannerApp, aiNutritionPro, "Sends sample content and receives AI-generated nutrition content", "HTTPS/REST")
-    Rel(aiNutritionPro, openai, "Sends prompts and receives generated content", "HTTPS/REST")
-    Rel(admin, aiNutritionPro, "Manages platform, clients, and configuration")
+flowchart TB
+    MealApp[Meal Planner\nApplication] --> AISystem
+    subgraph AISystem[AI Nutrition-Pro]
+        direction TB
+    end
+    Admin[Administrator] --> AISystem
+    AISystem --> ChatGPT[ChatGPT-3.5]
 ```
 
-#### Context Elements
-
 | Name | Type | Description | Responsibilities | Security Controls |
-| --- | --- | --- | --- | --- |
-| Dietitian | Person | Nutrition professional who creates meal plans | - Creates meal plans<br>- Provides sample content<br>- Reviews AI-generated content | - Training on system usage<br>- Content quality review |
-| Administrator | Person | Admin of AI Nutrition-Pro platform | - Onboard new clients<br>- Configure system<br>- Monitor usage and billing<br>- Troubleshoot issues | - MFA authentication<br>- RBAC authorization<br>- Activity logging |
-| AI Nutrition-Pro | System | Core system providing AI-enhanced nutrition content | - Process nutrition content requests<br>- Interface with OpenAI<br>- Manage client accounts<br>- Track usage and billing | - API authentication<br>- Data encryption<br>- Input validation<br>- Rate limiting |
-| Meal Planner | External System | Third-party application used by dietitians | - Provide UI for meal planning<br>- Send requests to AI Nutrition-Pro<br>- Display AI-generated content | - API key management<br>- TLS encryption |
-| OpenAI ChatGPT | External System | LLM provider used for content generation | - Process prompts<br>- Generate nutrition content | - API authentication<br>- Data handling policies |
+|------|------|-------------|-----------------|-------------------|
+| AI Nutrition-Pro | System | Cloud-based service providing AI-powered content generation for nutritional and meal planning | - Process dietitians' content samples<br>- Generate AI-enhanced content<br>- Manage client applications and billing | - API authentication<br>- TLS encryption<br>- Rate limiting<br>- Input validation |
+| Meal Planner Application | External System | Third-party applications used by dietitians for meal planning | - Upload content samples<br>- Request AI-generated content<br>- Display results to dietitians | - Secure API key storage<br>- Proper content handling |
+| Administrator | Person | System administrators who manage the platform | - Configure system<br>- Onboard clients<br>- Monitor system health<br>- Manage billing | - Access controls<br>- Audit logging |
+| ChatGPT-3.5 | External System | OpenAI's LLM service | - Process nutrition-related prompts<br>- Generate content based on samples | - Secure API communication<br>- Response validation |
 
 ### C4 CONTAINER
 
@@ -99,264 +87,182 @@ C4Context
 C4Container
     title Container diagram for AI Nutrition-Pro
 
-    Person(dietitian, "Dietitian", "A nutrition professional who creates meal plans")
-    Person(admin, "Administrator", "Administrator of AI Nutrition-Pro application")
-
-    System_Ext(mealApp, "Meal Planner", "Application to create diets by dietitians")
-    System_Ext(chatgpt, "ChatGPT-3.5", "LLM")
-
     Container_Boundary(c0, "AI Nutrition-Pro") {
         Container(api_gateway, "API Gateway", "Kong", "Authentication of clients, filtering of input, rate limiting")
         Container(app_control_plane, "Web Control Plane", "Golang, AWS Elastic Container Service", "Provides control plane to onboard and manage clients, configuration and check billing data")
         ContainerDb(control_plan_db, "Control Plane Database", "Amazon RDS", "Stores all data related to control plan, tenants, billing")
         Container(backend_api, "API Application", "Golang, AWS Elastic Container Service", "Provides AI Nutrition-Pro functionality via API")
         ContainerDb(api_db, "API database", "Amazon RDS", "Stores dietitian' content samples, request and responses to LLM.")
+        Person(admin, "Administrator", "Administrator of AI Nutrition-Pro application")
     }
 
-    Rel(dietitian, mealApp, "Uses to create meal plans")
+    System_Ext(mealApp, "Meal Planner", "Application to create diets by dietitians")
+
+    System_Ext(chatgpt, "ChatGPT-3.5", "LLM")
+
     Rel(mealApp, api_gateway, "Uses for AI content generation", "HTTPS/REST")
-    Rel(api_gateway, backend_api, "Routes authenticated requests", "HTTPS/REST")
-    Rel(admin, app_control_plane, "Configure system properties", "HTTPS")
+    Rel(api_gateway, backend_api, "Uses for AI content generation", "HTTPS/REST")
+    Rel(admin, app_control_plane, "Configure system properties")
     Rel(backend_api, chatgpt, "Utilizes ChatGPT for LLM-featured content creation", "HTTPS/REST")
-    Rel(app_control_plane, control_plan_db, "Read/write data", "TLS")
-    Rel(backend_api, api_db, "Read/write data", "TLS")
-    Rel(backend_api, app_control_plane, "Checks tenant configuration", "HTTPS/REST")
+
+    Rel(app_control_plane, control_plan_db, "read/write data", "TLS")
+    Rel(backend_api, api_db, "read/write data", "TLS")
 ```
 
-#### Container Elements
-
 | Name | Type | Description | Responsibilities | Security Controls |
-| --- | --- | --- | --- | --- |
-| API Gateway | Container (Gateway) | Kong API Gateway | - Authentication of clients<br>- Rate limiting<br>- Input filtering<br>- Request routing | - API key validation<br>- TLS termination<br>- Request validation<br>- Rate limiting<br>- WAF integration |
-| Web Control Plane | Container (Web Application) | Golang application for system administration | - Client onboarding<br>- System configuration<br>- Billing management<br>- Usage reporting | - MFA authentication<br>- RBAC authorization<br>- Audit logging<br>- Input validation |
-| Control Plane Database | Container (Database) | Amazon RDS database for control plane | - Store tenant information<br>- Store billing data<br>- Store system configuration | - Data encryption at rest<br>- Network isolation<br>- Access control<br>- Backup encryption |
-| API Application | Container (API Service) | Golang application providing core functionality | - Process content requests<br>- Communicate with OpenAI<br>- Store request/response data<br>- Tenant data isolation | - Request validation<br>- Content filtering<br>- Tenant isolation<br>- Error handling<br>- Logging |
-| API Database | Container (Database) | Amazon RDS database for API service | - Store dietitian content samples<br>- Store LLM requests/responses<br>- Store usage metrics | - Data encryption at rest<br>- Tenant data isolation<br>- Access control<br>- Backup encryption |
+|------|------|-------------|-----------------|-------------------|
+| API Gateway | Container | Kong API Gateway | - Authentication of clients<br>- Rate limiting<br>- Input filtering<br>- Request routing | - API key validation<br>- Request throttling<br>- Input sanitization<br>- TLS termination |
+| Web Control Plane | Container | Golang application on AWS ECS | - Client onboarding<br>- System configuration<br>- Billing management<br>- User administration | - Access controls<br>- Audit logging<br>- Input validation<br>- Session management |
+| Control Plane Database | Database | Amazon RDS instance | - Store tenant information<br>- Store billing data<br>- Store system configuration | - Encrypted connections<br>- Data encryption at rest<br>- Access controls |
+| API Application | Container | Golang application on AWS ECS | - Process content samples<br>- Communicate with ChatGPT<br>- Format and return content | - Input validation<br>- Output sanitization<br>- Secure API communication |
+| API Database | Database | Amazon RDS instance | - Store dietitian content samples<br>- Cache LLM requests/responses<br>- Track usage metrics | - Encrypted connections<br>- Data encryption at rest<br>- Access controls |
+| Administrator | Person | Human system administrator | - Configure system<br>- Resolve issues<br>- Manage clients | - Role-based access<br>- Action logging |
+| Meal Planner | External System | Third-party application | - Upload content samples<br>- Request AI-generated content | - API key management<br>- TLS communication |
+| ChatGPT-3.5 | External System | OpenAI's LLM service | - Generate content based on prompts | - Secure API communication<br>- Response validation |
 
 ### DEPLOYMENT
 
-AI Nutrition-Pro is deployed on AWS cloud infrastructure, utilizing containerized services for scalability and reliability. The primary deployment architecture is a multi-region AWS deployment for high availability.
+For the AI Nutrition-Pro application, we can consider several deployment options:
 
-Possible deployment architectures:
-1. Single-region AWS deployment
+1. Single-region AWS deployment (most straightforward)
 2. Multi-region AWS deployment for high availability
-3. Hybrid deployment with on-premise components
+3. Hybrid cloud deployment with some on-premises components
+4. Multi-cloud deployment across different providers
 
-For this document, we'll focus on the multi-region AWS deployment.
+For this document, we'll focus on the single-region AWS deployment architecture.
 
 ```mermaid
-C4Deployment
-    title Deployment Diagram for AI Nutrition-Pro
+flowchart TB
+    subgraph "AWS Cloud"
+        subgraph "VPC"
+            subgraph "Public Subnet"
+                ALB["Application Load Balancer"]
+            end
 
-    Deployment_Node(aws, "Amazon Web Services", "Cloud Provider") {
-        Deployment_Node(primary_region, "Primary Region", "us-east-1") {
-            Deployment_Node(primary_vpc, "VPC", "Virtual Private Cloud") {
-                Deployment_Node(public_subnet, "Public Subnet", "Network Zone") {
-                    Deployment_Node(alb, "Application Load Balancer", "AWS ALB") {
-                        Container(waf, "Web Application Firewall", "AWS WAF", "Protects against common web exploits")
-                    }
-                }
+            subgraph "Private Subnet 1"
+                ECS1["ECS Cluster\n(Web Control Plane\nAPI Application)"]
+                Kong["API Gateway (Kong)"]
+            end
 
-                Deployment_Node(private_subnet_1, "Private Subnet - Web Tier", "Network Zone") {
-                    Deployment_Node(ecs_cluster_1, "ECS Cluster", "Container Orchestration") {
-                        Deployment_Node(api_gateway_task, "API Gateway Task", "ECS Task") {
-                            Container(api_gateway_instance, "API Gateway", "Kong", "API Gateway for authentication and routing")
-                        }
-                        Deployment_Node(control_plane_task, "Control Plane Task", "ECS Task") {
-                            Container(control_plane_instance, "Web Control Plane", "Golang", "Admin interface")
-                        }
-                    }
-                }
+            subgraph "Private Subnet 2"
+                RDS1["RDS Instance\n(Control Plane DB)"]
+                RDS2["RDS Instance\n(API DB)"]
+            end
+        end
 
-                Deployment_Node(private_subnet_2, "Private Subnet - App Tier", "Network Zone") {
-                    Deployment_Node(ecs_cluster_2, "ECS Cluster", "Container Orchestration") {
-                        Deployment_Node(api_app_task, "API App Task", "ECS Task") {
-                            Container(api_app_instance, "API Application", "Golang", "Core application logic")
-                        }
-                    }
-                }
+        CloudWatch["CloudWatch\n(Logging & Monitoring)"]
+        S3["S3 Bucket\n(Backups & Artifacts)"]
 
-                Deployment_Node(private_subnet_3, "Private Subnet - Data Tier", "Network Zone") {
-                    Deployment_Node(rds_cp, "RDS Instance", "Database") {
-                        ContainerDb(control_plane_db_instance, "Control Plane DB", "PostgreSQL", "Control plane database")
-                    }
-                    Deployment_Node(rds_api, "RDS Instance", "Database") {
-                        ContainerDb(api_db_instance, "API DB", "PostgreSQL", "API application database")
-                    }
-                }
-            }
-        }
+        ALB --> Kong
+        Kong --> ECS1
+        ECS1 --> RDS1
+        ECS1 --> RDS2
+        ECS1 --> CloudWatch
+        RDS1 --> S3
+        RDS2 --> S3
+    end
 
-        Deployment_Node(dr_region, "DR Region", "us-west-2") {
-            Deployment_Node(dr_vpc, "VPC", "Virtual Private Cloud") {
-                Deployment_Node(dr_private_subnet_3, "Private Subnet - Data Tier", "Network Zone") {
-                    Deployment_Node(dr_rds_cp, "RDS Instance", "Database") {
-                        ContainerDb(dr_control_plane_db, "Control Plane DB", "PostgreSQL", "Replica of control plane database")
-                    }
-                    Deployment_Node(dr_rds_api, "RDS Instance", "Database") {
-                        ContainerDb(dr_api_db, "API DB", "PostgreSQL", "Replica of API database")
-                    }
-                }
-            }
-        }
-    }
-
-    Rel(waf, api_gateway_instance, "Forwards filtered traffic", "HTTPS")
-    Rel(api_gateway_instance, api_app_instance, "Routes authenticated requests", "HTTPS")
-    Rel(api_app_instance, control_plane_instance, "Checks tenant configuration", "HTTPS")
-    Rel(api_app_instance, api_db_instance, "Reads/writes data", "TLS")
-    Rel(control_plane_instance, control_plane_db_instance, "Reads/writes data", "TLS")
-    Rel(control_plane_db_instance, dr_control_plane_db, "Replicates data", "TLS")
-    Rel(api_db_instance, dr_api_db, "Replicates data", "TLS")
+    Internet((Internet)) --> ALB
+    ECS1 --> OpenAI["OpenAI API\n(ChatGPT)"]
+    Admin[Administrator] --> ALB
+    MealApp[Meal Planner App] --> ALB
 ```
 
-#### Deployment Elements
-
 | Name | Type | Description | Responsibilities | Security Controls |
-| --- | --- | --- | --- | --- |
-| AWS WAF | Security Component | Web Application Firewall | - Block common web attacks<br>- Filter malicious traffic | - Rule-based filtering<br>- DDoS protection<br>- Bot control |
-| Application Load Balancer | Network Component | AWS Load Balancer | - Distribute traffic<br>- Health checking<br>- TLS termination | - TLS 1.2+ support<br>- Security groups<br>- Access logging |
-| API Gateway Task | Container Host | ECS Task for API Gateway | - Host Kong API Gateway<br>- Auto-scale based on demand | - Task IAM roles<br>- Task isolation<br>- Security groups |
-| Control Plane Task | Container Host | ECS Task for Control Plane | - Host Control Plane application<br>- Auto-scale based on demand | - Task IAM roles<br>- Task isolation<br>- Security groups |
-| API App Task | Container Host | ECS Task for API Application | - Host API application<br>- Auto-scale based on demand | - Task IAM roles<br>- Task isolation<br>- Security groups |
-| RDS Instances | Database Host | AWS RDS for PostgreSQL | - Host databases<br>- Auto backup<br>- Replicate to DR region | - Database encryption<br>- Network isolation<br>- IAM authentication<br>- Backup encryption |
-| VPC | Network Component | AWS Virtual Private Cloud | - Network isolation<br>- Security zoning | - NACL filtering<br>- VPC flow logs<br>- Private subnets |
+|------|------|-------------|-----------------|-------------------|
+| Application Load Balancer | AWS Service | Entry point for all web traffic | - Traffic distribution<br>- TLS termination<br>- Health checking | - TLS 1.2+ configuration<br>- Security groups<br>- WAF integration |
+| API Gateway (Kong) | Container Service | API management platform | - API authentication<br>- Rate limiting<br>- Request routing | - API key validation<br>- Request throttling<br>- Input filtering |
+| ECS Cluster | AWS Service | Container orchestration | - Run application containers<br>- Auto-scaling<br>- Health monitoring | - IAM roles<br>- Security groups<br>- Container isolation |
+| RDS Instances | AWS Service | Managed database service | - Data storage<br>- Automated backups<br>- Database management | - Encryption at rest<br>- Network isolation<br>- Access controls |
+| CloudWatch | AWS Service | Monitoring and logging | - Collect logs<br>- Monitor metrics<br>- Generate alerts | - Log encryption<br>- Access controls<br>- Retention policies |
+| S3 Bucket | AWS Service | Object storage | - Store backups<br>- Store deployment artifacts | - Server-side encryption<br>- Access controls<br>- Versioning |
+| OpenAI API | External Service | ChatGPT API service | - Process LLM requests<br>- Generate content | - Secure API communication<br>- API key protection |
 
 ### BUILD
 
-The build process for AI Nutrition-Pro components follows a secure DevOps pipeline approach, utilizing GitHub for source control, GitHub Actions for CI/CD, and various security tools integrated throughout the process.
+The AI Nutrition-Pro build and deployment process includes several security-focused steps:
 
 ```mermaid
-graph TD
-    A[Developer] -->|Git Commit| B[GitHub Repository]
-    B -->|Trigger Build| C[GitHub Actions CI Pipeline]
-    C -->|Static Code Analysis| D[SonarQube]
-    C -->|Dependency Scanning| E[OWASP Dependency Check]
-    C -->|Secret Scanning| F[GitGuardian]
-    C -->|Build Containers| G[Docker Build]
-    G -->|Scan Container Images| H[Trivy Scanner]
-    H -->|Push Images| I[ECR Repository]
-    I -->|Deploy to Dev| J[AWS Dev Environment]
-    J -->|Run Integration Tests| K[Integration Tests]
-    K -->|Manual Approval| L[Release Manager Approval]
-    L -->|Promote to Staging| M[AWS Staging Environment]
-    M -->|Run Performance Tests| N[Performance Tests]
-    N -->|Final Approval| O[Security Team Review]
-    O -->|Promote to Production| P[AWS Production Environment]
+flowchart TB
+    Dev[Developer] -- Git Push --> GitRepo[Git Repository]
+    GitRepo -- Trigger --> CI[CI Pipeline]
+
+    subgraph "CI Pipeline"
+        CodeCheck[Code Quality Check] --> SecScan[Security Scanning]
+        SecScan --> UnitTest[Unit Tests]
+        UnitTest --> Build[Build Container]
+        Build --> IntTest[Integration Tests]
+        IntTest --> PushImage[Push to Registry]
+    end
+
+    PushImage --> Registry[Container Registry]
+    Registry -- Pull Image --> CD[CD Pipeline]
+
+    subgraph "CD Pipeline"
+        DeployDev[Deploy to Dev] --> TestDev[Test in Dev]
+        TestDev --> Approval[Manual Approval]
+        Approval --> DeployProd[Deploy to Production]
+    end
 ```
 
-The build process incorporates several security controls:
+The build and release process includes these security controls:
 
-1. Source code management:
-   - Code reviews required for all changes
-   - Branch protection rules
-   - Signed commits requirement
-
-2. Dependency management:
-   - OWASP Dependency Check scans for vulnerable dependencies
-   - Approved dependency sources only
-   - Regular dependency updates
-
-3. Static analysis:
-   - SonarQube for static code analysis
-   - Gosec for Go-specific security checks
-   - Linting for code quality and security issues
-
-4. Container security:
-   - Minimal base images (distroless/alpine)
-   - Trivy scanner for container vulnerabilities
-   - No root user in containers
-   - Immutable file systems
-
-5. Secret management:
-   - GitGuardian for secret scanning
-   - AWS Secrets Manager for runtime secrets
-   - No hardcoded secrets in code/configuration
-
-6. Artifact integrity:
-   - Container image signing
-   - SHA256 verification of all artifacts
-   - Immutable tags in container registry
-
-7. Deployment security:
-   - Infrastructure as Code (Terraform) with security checks
-   - Least privilege IAM roles
-   - Blue/green deployment strategy
+1. Code repositories use branch protection rules to prevent direct commits to main branches
+2. All code changes require peer review through pull requests
+3. Static Application Security Testing (SAST) is performed on all code changes
+4. Dependency scanning identifies vulnerable third-party libraries
+5. Container scanning checks for vulnerabilities in the container images
+6. All secrets are managed through AWS Secrets Manager, not stored in code
+7. Container images are signed and verified before deployment
+8. Infrastructure is defined as code and undergoes security review
+9. Deployment to production requires manual approval after testing in development
+10. Continuous security monitoring occurs during and after deployment
 
 ## RISK ASSESSMENT
 
 Critical business processes we are trying to protect:
-1. AI-powered nutrition content generation
-2. Multi-tenant client management
-3. User data handling and storage
-4. Integration with external LLM providers
-5. Billing and subscription management
+1. AI-powered content generation for nutritional and dietary planning
+2. Client application authentication and authorization
+3. Billing and tenant management
+4. Protection of dietitians' intellectual property (content samples)
+5. System availability and reliability
 
 Data we are trying to protect and their sensitivity:
-
-1. Client API keys and credentials (High sensitivity)
-   - Used for authentication between meal planning applications and AI Nutrition-Pro
-   - Compromise would allow unauthorized access to API
-
-2. Dietitian content samples (Medium-High sensitivity)
-   - Original content written by dietitians
-   - May contain intellectual property
-   - Could contain personal nutrition information
-
-3. LLM requests and responses (Medium sensitivity)
-   - Contains prompts and generated content
-   - Could reveal prompt engineering techniques
-   - May contain trace amounts of nutritional advice
-
-4. Client billing information (High sensitivity)
-   - Contains usage metrics
-   - Pricing information
-   - Payment details
-
-5. System configuration data (Medium sensitivity)
-   - Contains integration settings
-   - System parameters
-   - API endpoints
-
-6. User credentials for admin portal (High sensitivity)
-   - Admin account credentials
-   - Session information
-   - Access control settings
+1. Dietitian content samples (Medium-High sensitivity) - Intellectual property of dietitians
+2. Client API keys (High sensitivity) - Could enable unauthorized access if compromised
+3. AI-generated content (Medium sensitivity) - Represents business value and potentially affects health advice
+4. Billing information (High sensitivity) - Contains financial data of clients
+5. System configuration (Medium sensitivity) - Could expose operational details
+6. Administrative credentials (High sensitivity) - Could enable system compromise
 
 ## QUESTIONS & ASSUMPTIONS
 
-### Business Posture Questions
-1. What service level objectives are required for the platform?
-2. Is there a specific target market or industry vertical for the service?
-3. Are there specific compliance requirements for nutritional advice?
-4. What is the target scale in terms of number of clients and request volume?
+### BUSINESS POSTURE
+1. What is the expected scale of operation in terms of number of clients and request volume?
+   Assumption: The system is designed to handle dozens of client applications with moderate traffic.
 
-### Business Posture Assumptions
-1. The platform aims to serve multiple meal planning applications (multi-tenant).
-2. Cost efficiency of LLM API usage is a business priority.
-3. Content quality and accuracy are critical for maintaining trust.
-4. The platform needs to scale horizontally as demand grows.
+2. What are the regulatory requirements for nutritional advice in target markets?
+   Assumption: The system provides AI assistance but does not make medical claims.
 
-### Security Posture Questions
-1. What specific regulatory requirements apply to the nutritional content?
-2. Is there a need for data residency requirements in specific regions?
-3. What is the incident response process for security events?
-4. How are API keys revoked if compromised?
+3. What are the SLA requirements for availability and response time?
+   Assumption: High availability (99.9%+) with response times under 2 seconds for most operations.
 
-### Security Posture Assumptions
-1. The system will need to comply with data protection regulations (GDPR, CCPA).
-2. Client data must be logically separated at minimum, physical separation preferred.
-3. All sensitive data should be encrypted at rest and in transit.
-4. Penetration testing will be conducted regularly.
+### SECURITY POSTURE
+1. Is there a need for compliance with specific regulations (HIPAA, GDPR, etc.)?
+   Assumption: Basic GDPR compliance and best security practices are required.
 
-### Design Questions
-1. What is the anticipated request volume per client?
-2. What is the required response time for API requests?
-3. Are there requirements for offline operation if OpenAI is unavailable?
-4. Is there a need for custom LLM fine-tuning?
+2. What is the data retention policy for dietitian content samples?
+   Assumption: Content is retained only as long as needed for service operation.
 
-### Design Assumptions
-1. The system will be deployed on AWS using containerized applications.
-2. Database backups will be encrypted and stored securely.
-3. The system will be designed for high availability with multi-region capabilities.
-4. API Gateway will handle authentication, rate limiting, and input validation.
+3. How sensitive is the content being processed by the system?
+   Assumption: Content is professionally valuable but does not contain personal health information.
+
+### DESIGN
+1. How are database backups handled?
+   Assumption: Automated backups via AWS RDS with appropriate retention periods.
+
+2. Is there a disaster recovery plan?
+   Assumption: Basic disaster recovery through database backups and infrastructure-as-code.
+
+3. How is the system scaled during peak demand?
+   Assumption: Auto-scaling is configured for the application containers based on CPU/memory metrics.

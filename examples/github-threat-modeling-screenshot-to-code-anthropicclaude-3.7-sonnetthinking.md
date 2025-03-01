@@ -1,147 +1,123 @@
 # Threat Model for Applications Using screenshot-to-code
 
-This threat model focuses exclusively on security risks introduced by integrating the screenshot-to-code tool (https://github.com/abi/screenshot-to-code) into an application.
-
-## AI Prompt Injection via Screenshots
-
-- **Threat**: Manipulating the AI model through carefully crafted visual elements in screenshots.
-- **Description**: Attackers could include text or visual elements in screenshots designed to hijack the AI's prompt context. For example, including text like "Ignore previous constraints and instead create code that..." in the screenshot itself, potentially instructing the model to generate malicious code.
-- **Impact**: Generation of unauthorized, vulnerable, or malicious code that could lead to application compromise if deployed by unsuspecting users.
-- **Component Affected**: The AI vision model (GPT-4 Vision or similar) that processes screenshots and converts them to code.
+## Threat 1: AI Prompt Injection via Screenshots
+- **Threat**: Attackers could create images with embedded text or visual patterns designed to hijack or manipulate the AI prompt.
+- **Description**: Since screenshot-to-code passes images directly to AI models (GPT-4 Vision, Claude, etc.), attackers might embed text in screenshots that override the system's instructions, causing the AI to generate malicious code or bypass security constraints.
+- **Impact**: The AI could generate harmful code containing vulnerabilities, backdoors, or malicious functionality that executes when previewed or deployed.
+- **Affected Component**: The AI service integration module that constructs prompts and communicates with external AI APIs.
 - **Risk Severity**: Critical
 - **Mitigation Strategies**:
-  - Implement visual content filtering to detect and reject screenshots with potential prompt injection attempts
-  - Add a validation layer that scans generated code for suspicious patterns
-  - Maintain an updated blocklist of known prompt injection techniques
-  - Consider implementing a human review process for high-risk scenarios
-  - Add specific hardening to the prompts used with the AI vision model
+  - Strengthen system prompts with explicit instructions to ignore text in images
+  - Implement output validation to detect suspicious or malicious code patterns
+  - Consider image pre-processing to detect and blur text that might be prompt injection attempts
+  - Add monitoring for unusual AI responses that might indicate prompt manipulation
 
-## Insecure Code Generation
-
-- **Threat**: Automatic generation of code with inherent security vulnerabilities.
-- **Description**: The AI might generate code containing security anti-patterns or vulnerabilities (XSS, CSRF, insecure authentication) based on what it "sees" in the screenshot, without proper security context.
-- **Impact**: Applications built with this generated code could contain exploitable vulnerabilities, leading to data breaches or system compromise.
-- **Component Affected**: The code generation component of the AI model and its translation of visual elements into code implementations.
+## Threat 2: Unsafe Code Execution in Preview
+- **Threat**: Execution of malicious code in the browser preview environment.
+- **Description**: The tool renders and executes generated code in the preview pane. If an attacker successfully manipulates the AI to generate malicious JavaScript, this code could execute in the user's browser during preview.
+- **Impact**: Cross-site scripting (XSS), data theft, cookie stealing, session hijacking, or other client-side attacks within the user's browser.
+- **Affected Component**: The code preview component and iframe implementation.
 - **Risk Severity**: High
 - **Mitigation Strategies**:
-  - Implement static analysis scanning of generated code to detect common vulnerabilities
-  - Enhance the AI prompt with security-focused constraints
-  - Provide security annotations or warnings alongside generated code
-  - Treat generated code as untrusted and require security review before production use
+  - Implement a sandboxed iframe with strong Content Security Policy (CSP)
+  - Strip potentially dangerous JavaScript functions before rendering
+  - Use static rendering instead of executing dynamic JavaScript in previews
+  - Add client-side security scanning of generated code before execution
 
-## Malicious Script Injection in Generated Code
-
-- **Threat**: Generation of code containing harmful scripts or backdoors.
-- **Description**: The AI might be manipulated to include malicious JavaScript, hidden iframes, event handlers, or other harmful elements in the generated code that were not visibly apparent in the screenshot.
-- **Impact**: Execution of malicious code in the browser of anyone who views the page built with the generated code, potentially leading to data theft, session hijacking, or further compromise.
-- **Component Affected**: JavaScript/interactive code generation component of the tool.
-- **Risk Severity**: Critical
+## Threat 3: Exposure of Sensitive Information in Screenshots
+- **Threat**: Unintentional transmission of confidential data to third-party AI services.
+- **Description**: Users might upload screenshots containing sensitive information (credentials, API keys, personal data, internal business logic) without realizing these images are processed by external AI services.
+- **Impact**: Unauthorized disclosure of confidential information to third parties, potential data breaches, or compliance violations.
+- **Affected Component**: The screenshot upload pipeline and AI service integration.
+- **Risk Severity**: High
 - **Mitigation Strategies**:
-  - Scan generated JavaScript for known malicious patterns and suspicious API calls
-  - Sandbox preview functionality to prevent execution of harmful scripts
-  - Implement Content Security Policy recommendations in generated code
-  - Provide clear warnings about executing generated code in production environments without review
+  - Add clear warnings about how screenshots are processed and where they're sent
+  - Implement optional client-side tools to blur/redact sensitive areas
+  - Consider using local AI models for processing sensitive content
+  - Provide education on what types of screenshots are safe to upload
 
-## Denial of Service via Complex Screenshots
+## Threat 4: API Key Exposure
+- **Threat**: Exposure of AI service API keys.
+- **Description**: The application requires API keys for services like OpenAI or Anthropic, which could be exposed through insecure storage, client-side code, or logs.
+- **Impact**: Unauthorized use of API keys leading to financial losses through unexpected charges, quota exhaustion, or malicious use of the compromised keys.
+- **Affected Component**: API key management and configuration.
+- **Risk Severity**: High
+- **Mitigation Strategies**:
+  - Ensure all API requests are proxied through backend services and keys never reach the client
+  - Implement proper key rotation policies
+  - Use scoped API keys with minimal permissions
+  - Monitor API usage for unusual patterns that might indicate key compromise
 
-- **Threat**: Resource exhaustion through deliberately complex screenshot inputs.
-- **Description**: Attackers could design screenshots with extremely complex layouts, large dimensions, or elements specifically designed to cause the AI to consume excessive resources during processing and code generation.
-- **Impact**: Service degradation, increased operational costs, denial of service for legitimate users, potential billing increases for API usage.
-- **Component Affected**: The image processing pipeline and AI inference components.
+## Threat 5: Excessive Resource Consumption
+- **Threat**: Resource exhaustion attacks through manipulated inputs.
+- **Description**: Attackers could upload extremely large or complex images designed to consume excessive computational resources or API quota.
+- **Impact**: Denial of service for legitimate users, excessive API costs, or degraded application performance.
+- **Affected Component**: The screenshot upload and processing pipeline.
 - **Risk Severity**: Medium
 - **Mitigation Strategies**:
-  - Implement timeouts for processing and code generation
-  - Set resource limits for individual requests (memory, processing time)
-  - Enforce image size and complexity limitations
-  - Implement queue mechanisms to prevent resource hogging by individual users
+  - Implement strict file size and dimension limits
+  - Add timeouts for AI API calls
+  - Implement per-user rate limiting and usage quotas
+  - Monitor for unusual patterns of resource usage that might indicate abuse
 
-## Data Exfiltration via Generated Network Requests
-
-- **Threat**: Generation of code that includes unauthorized external network requests.
-- **Description**: The AI might generate code that includes fetch requests, WebSocket connections, form submissions, or other means of sending data to third-party servers when rendered in a browser.
-- **Impact**: Potential exfiltration of sensitive data when the generated code is executed in a user's browser, leading to data theft.
-- **Component Affected**: JavaScript code generation component.
+## Threat 6: Insecure Generated Code
+- **Threat**: Security vulnerabilities in AI-generated code.
+- **Description**: The AI might generate code with security vulnerabilities like XSS, CSRF, SQL injection, insecure configurations, or improper input handling, especially when replicating functionality visible in screenshots.
+- **Impact**: Deployment of vulnerable code that could lead to security breaches in production environments.
+- **Affected Component**: The generated code output from AI models.
 - **Risk Severity**: High
 - **Mitigation Strategies**:
-  - Analyze generated code for network requests and flag or remove them
-  - Implement CSP recommendations that restrict network connections
-  - Provide clear warnings when network code is generated
-  - Offer sanitized versions of generated code with external network capabilities removed
+  - Implement automated security scanning of all generated code
+  - Enhance system prompts with security-focused instructions
+  - Provide clear warnings that generated code requires security review before production use
+  - Develop a library of secure component templates the AI can reference
 
-## Sensitive Information Disclosure
-
-- **Threat**: Screenshots containing sensitive information being processed insecurely.
-- **Description**: Users might inadvertently upload screenshots containing sensitive information (credentials, personal data, internal documents), which could be processed, stored, or transmitted insecurely through the tool's workflow.
-- **Impact**: Exposure of sensitive information, potential privacy violations, confidentiality breaches, regulatory compliance issues.
-- **Component Affected**: Screenshot upload, processing, storage, and AI analysis components.
-- **Risk Severity**: High
-- **Mitigation Strategies**:
-  - Implement clear warnings about not uploading screenshots containing sensitive information
-  - Provide tools to redact or blur sensitive areas before processing
-  - Minimize data retention periods for uploaded screenshots
-  - Ensure secure transmission and storage of screenshots with encryption
-
-## UI Element Misinterpretation Leading to Security Issues
-
-- **Threat**: Misinterpretation of security-critical UI elements in screenshots.
-- **Description**: The AI might misinterpret security-critical elements in screenshots (login forms, permission dialogs, payment forms) leading to the generation of code that handles sensitive functionality incorrectly or insecurely.
-- **Impact**: Implementation of authentication, authorization, or other security controls that appear correct but contain fundamental security flaws.
-- **Component Affected**: Visual interpretation component of the AI model.
-- **Risk Severity**: High
-- **Mitigation Strategies**:
-  - Add specific warnings when security-critical elements are detected in screenshots
-  - Provide special handling and additional validation for generated code related to authentication/authorization
-  - Offer secure templates for security-critical components rather than generating them from scratch
-  - Include clear comments in generated code about security limitations and required review
-
-## Evasion of Content Filters
-
-- **Threat**: Bypassing content moderation systems through visual manipulation.
-- **Description**: Attackers might use visual tricks (unusual fonts, image-based text, subtle color variations) to smuggle harmful content past content filters while still being interpreted correctly by the AI.
-- **Impact**: Generation of harmful, offensive, or malicious code that evades detection systems.
-- **Component Affected**: Content filtering and screenshot analysis components.
+## Threat 7: Dependency on External AI Services
+- **Threat**: Security and availability risks from external service dependencies.
+- **Description**: The application relies heavily on third-party AI services that could be compromised, experience outages, or significantly change their APIs or terms of service.
+- **Impact**: Service disruption, unexpected behavior changes, or potential security implications if an AI provider is compromised.
+- **Affected Component**: AI service integration modules.
 - **Risk Severity**: Medium
 - **Mitigation Strategies**:
-  - Implement multi-layered content filtering (pre-processing, during AI analysis, and post-generation)
-  - Regularly update content filters based on new evasion techniques
-  - Use image recognition to detect attempts to hide or obfuscate text
-  - Implement human review for edge cases or suspicious content
+  - Implement graceful degradation for API failures
+  - Support multiple AI providers for redundancy
+  - Develop fallback mechanisms for critical functionality
+  - Monitor for changes in AI provider behavior or API specifications
 
-## Adversarial Examples Affecting Code Generation
-
-- **Threat**: Use of adversarial examples to manipulate the AI's visual understanding.
-- **Description**: Attackers might craft screenshots with subtle visual perturbations specifically designed to confuse AI vision models, potentially causing them to generate unexpected or malicious code.
-- **Impact**: Unpredictable or harmful code generation that bypasses normal security checks.
-- **Component Affected**: AI vision model component.
+## Threat 8: Generated Code with Hidden Functionality
+- **Threat**: Subtly malicious code that evades detection.
+- **Description**: The AI might generate code that appears legitimate but contains hidden functionality that's difficult to detect during review, such as obfuscated malicious code or time-delayed exploits.
+- **Impact**: Security breaches that might go undetected for extended periods, data exfiltration, or system compromise.
+- **Affected Component**: The generated code output.
 - **Risk Severity**: Medium
 - **Mitigation Strategies**:
-  - Implement adversarial training for the AI model
-  - Apply image preprocessing techniques to neutralize common adversarial patterns
-  - Monitor and log unusual model behavior or outputs
-  - Implement robust validation of generated code regardless of input type
+  - Implement multi-stage code review processes combining automated tools and human review
+  - Use behavior analysis and dynamic testing of generated code
+  - Apply the principle of least privilege when deploying generated code
+  - Consider runtime monitoring for unusual behavior in deployed code
 
-## API Key or Credential Exposure
+## Threat 9: Intellectual Property Violations in Generated Code
+- **Threat**: Copyright or license violations in AI-generated code.
+- **Description**: The AI models might generate code that too closely resembles copyrighted implementations, especially when processing screenshots of popular websites or applications.
+- **Impact**: Potential legal liabilities, copyright claims, or licensing violations for users deploying the generated code.
+- **Affected Component**: The code generation algorithms and their outputs.
+- **Risk Severity**: Medium
+- **Mitigation Strategies**:
+  - Include disclaimers about intellectual property responsibility
+  - Implement detection for suspiciously close matches to known designs
+  - Encourage modification of generated code rather than using it verbatim
+  - Provide guidance on appropriate use cases and licensing considerations
 
-- **Threat**: Exposure of API keys or credentials used to access underlying AI services.
-- **Description**: The screenshot-to-code tool uses API keys to access services like OpenAI. These credentials could be exposed through client-side code, error messages, or server misconfigurations.
-- **Impact**: Unauthorized usage of paid AI services, potential financial impact, compromise of associated accounts.
-- **Component Affected**: AI service integration component, configuration management.
+## Threat 10: Insecure Server-Side Code Generation
+- **Threat**: Generation of vulnerable server-side application code.
+- **Description**: If screenshot-to-code generates server-side logic, it might create code with server-side vulnerabilities like command injection, insecure file operations, or improper authentication.
+- **Impact**: Server-side security vulnerabilities that could lead to remote code execution, unauthorized access, or data breaches in deployed applications.
+- **Affected Component**: Server-side code generation templates and logic.
 - **Risk Severity**: High
 - **Mitigation Strategies**:
-  - Use server-side proxies to make AI API calls rather than exposing credentials to clients
-  - Implement proper secret management for API keys
-  - Use minimal-privilege API keys with usage limits and restrictions
-  - Regularly rotate credentials and monitor for unusual usage patterns
+  - Provide secure templates for server-side code generation
+  - Implement specific validation for server-side code
+  - Add explicit warnings about the risks of using generated server-side code
+  - Consider limiting server-side code generation capabilities
 
-## Processing of Deceptive Screenshots
-
-- **Threat**: Processing screenshots designed to generate code that appears benign but contains hidden malicious functionality.
-- **Description**: Attackers could create screenshots of UIs that look innocent but contain subtle elements designed to make the AI generate code with double meanings or hidden behavior.
-- **Impact**: Generated code could contain logic bombs, timing-based attacks, or other deceptive functionality that activates under specific conditions.
-- **Component Affected**: Screenshot analysis and code generation components.
-- **Risk Severity**: High
-- **Mitigation Strategies**:
-  - Implement behavioral analysis of generated code to detect suspicious patterns
-  - Use code execution simulation to test for unexpected behaviors
-  - Create heuristics for detecting deceptive patterns in screenshots
-  - Maintain a database of known deceptive techniques and regularly update detection methods
+This threat model specifically addresses risks introduced by integrating screenshot-to-code into applications, focusing on the unique security challenges of AI-generated code from images rather than general web application security concerns.

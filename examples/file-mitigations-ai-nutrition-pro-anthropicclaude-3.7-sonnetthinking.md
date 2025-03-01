@@ -1,237 +1,210 @@
 # AI Nutrition-Pro Mitigation Strategies
 
-## 1. Enhanced API Key Management
+## 1. Enhanced API Authentication and Authorization
 
-**Description:**
-Implement secure API key management for Meal Planner applications:
-- Establish a regular rotation schedule (e.g., every 90 days)
-- Create capability to immediately revoke compromised keys
-- Generate keys with high entropy
-- Implement key usage monitoring to detect suspicious activities
-- Use separate keys for different environments (dev, test, prod)
+- **Description**:
+  - Implement multiple layers of authentication beyond just API keys:
+    1. Use short-lived tokens with automatic rotation (max 1-hour validity)
+    2. Add IP address restrictions for API access
+    3. Implement mutual TLS authentication for highly sensitive operations
+    4. Create fine-grained authorization rules based on tenant roles and permissions
 
-**Threats Mitigated:**
-- Unauthorized API access via compromised API keys (High severity)
-- Credential theft attacks targeting API keys (Medium severity)
-- Potential lateral movement if keys are compromised (Medium severity)
+- **Threats Mitigated**:
+  - API key theft (High severity) - Compromised keys have limited usefulness due to short validity and IP restrictions
+  - Unauthorized API access (High severity) - Multiple authentication factors significantly reduce unauthorized access risk
 
-**Impact:**
-- Significantly reduces the risk window if keys are exposed
-- Provides rapid response capability for suspected compromise
-- Creates better visibility into abnormal access patterns
+- **Impact**:
+  - Reduces unauthorized access risk by 80-90% by implementing defense in depth
+  - Limits blast radius if credentials are compromised
 
-**Currently Implemented:**
-- Basic API key authentication is implemented at the API Gateway level
-- Individual API keys for each Meal Planner application
+- **Currently Implemented**:
+  - Basic API key authentication at the Kong API Gateway
+  - Basic ACL rules for authorization
 
-**Missing Implementation:**
-- Key rotation mechanisms
-- Key usage monitoring and alerting
-- Environment-specific key separation
-- Secure key storage procedures
+- **Missing Implementation**:
+  - Token rotation mechanism
+  - IP-based restrictions
+  - Mutual TLS for sensitive operations
+  - Granular permission system
 
-## 2. Data Encryption Strategy
+## 2. Tenant Data Isolation
 
-**Description:**
-Implement comprehensive encryption for sensitive data:
-- Encrypt all data at rest in the Control Plane Database and API Database
-- Implement field-level encryption for particularly sensitive data
-- Use AWS KMS or similar for encryption key management
-- Ensure all internal component communications use TLS encryption
-- Implement proper encryption for any database backups
+- **Description**:
+  - Implement strict isolation between different Meal Planner applications:
+    1. Add tenant_id as a required field in all database tables
+    2. Implement row-level security in API database and Control Plane Database
+    3. Create middleware that validates tenant context on every request
+    4. Use separate encryption keys for each tenant's sensitive data
 
-**Threats Mitigated:**
-- Data breach exposing sensitive dietitian content (High severity)
-- Unauthorized access to stored samples and LLM interactions (Medium severity)
-- Database export or snapshot compromise (Medium severity)
+- **Threats Mitigated**:
+  - Cross-tenant data access (Critical severity) - Prevents one tenant from accessing another's data
+  - Privilege escalation (High severity) - Limits access even if authentication controls are bypassed
 
-**Impact:**
-- Protects sensitive data even if database access controls are compromised
-- Reduces attack surface for data exfiltration
-- Creates defense-in-depth for data protection
+- **Impact**:
+  - Ensures complete separation between tenants' data even if application logic is flawed
+  - Prevents data leakage between different Meal Planner applications
 
-**Currently Implemented:**
-- TLS encryption for traffic between Meal Planner applications and API Gateway
-- TLS for communications with databases
+- **Currently Implemented**:
+  - Not explicitly mentioned in the architecture document
 
-**Missing Implementation:**
-- Database encryption at rest
-- Field-level encryption for sensitive data
-- Secure encryption key management
-- Encrypted database backups
+- **Missing Implementation**:
+  - Database schema changes to support tenant isolation
+  - Row-level security policies
+  - Application-level tenant context validation
 
-## 3. LLM Data Protection Controls
+## 3. LLM Prompt Security Controls
 
-**Description:**
-Implement controls to protect data sent to ChatGPT:
-- Create data scrubbing mechanisms to remove PII/PHI before sending to ChatGPT
-- Implement content filtering to prevent sensitive information leakage
-- Develop a data minimization process to send only necessary information
-- Create retention policies for data sent to and received from ChatGPT
-- Establish data classification guidelines for dietitian content
+- **Description**:
+  - Create a security layer between the application and ChatGPT:
+    1. Develop a library of pre-approved prompt templates with parameterized inputs
+    2. Sanitize all user inputs before including in prompts
+    3. Implement prompt injection detection
+    4. Create an allowlist of acceptable response formats and content types
 
-**Threats Mitigated:**
-- Exposure of sensitive customer or dietitian data to third parties (High severity)
-- Unintended data leakage through LLM prompts (Medium severity)
-- Privacy violations for dietitians' content (Medium severity)
+- **Threats Mitigated**:
+  - Prompt injection attacks (High severity) - Prevents attackers from manipulating the LLM
+  - Data leakage via LLM (Medium severity) - Reduces risk of sensitive data being included in prompts
+  - Malicious content generation (Medium severity) - Limits what the LLM can generate
 
-**Impact:**
-- Prevents sensitive information from being sent to external LLM service
-- Reduces risk of data leakage through API interactions
-- Ensures appropriate data handling practices with third-party services
+- **Impact**:
+  - Significantly reduces the attack surface related to LLM integration
+  - Prevents malicious use of the AI capabilities
 
-**Currently Implemented:**
-- No specific LLM data protection controls are mentioned in the architecture
+- **Currently Implemented**:
+  - No LLM-specific security controls mentioned in the architecture
 
-**Missing Implementation:**
-- Data scrubbing/anonymization procedures
-- Content filtering for LLM requests
-- Data minimization processes
-- Data classification guidelines
+- **Missing Implementation**:
+  - Prompt templates system
+  - Input sanitization specific to LLM context
+  - Response validation mechanism
 
-## 4. LLM Prompt Injection Protection
+## 4. Enhanced Input Validation Framework
 
-**Description:**
-Implement safeguards against prompt injection attacks:
-- Create strict input validation specific to LLM prompts
-- Define templates and schema validation for all LLM interactions
-- Implement monitoring for detecting prompt injection attempts
-- Apply context boundaries in prompts to prevent instruction hijacking
-- Develop output filtering to catch potential harmful responses
+- **Description**:
+  - Build a comprehensive input validation framework:
+    1. Create strict schemas for all API inputs with proper type checking
+    2. Implement context-aware validation (e.g., nutritional content validation)
+    3. Add sanitization for all inputs that will be used in database queries
+    4. Deploy validation at both API Gateway and application levels
 
-**Threats Mitigated:**
-- Prompt injection attacks leading to information disclosure (High severity)
-- Manipulation of the LLM to generate harmful content (Medium severity)
-- Extraction of system information via carefully crafted prompts (Medium severity)
+- **Threats Mitigated**:
+  - SQL injection (High severity) - Prevents malicious database queries
+  - XSS in stored content (Medium severity) - Sanitizes content that might be displayed in the Meal Planner app
+  - Format string attacks (Medium severity) - Ensures proper formatting of all inputs
 
-**Impact:**
-- Prevents attackers from manipulating the LLM for malicious purposes
-- Reduces risk of inappropriate or harmful content generation
-- Maintains integrity of the AI-generated nutrition content
+- **Impact**:
+  - Prevents most injection-based attacks
+  - Creates multiple layers of defense against malformed inputs
 
-**Currently Implemented:**
-- API Gateway is mentioned to filter input, but specific LLM prompt protections are not evident
+- **Currently Implemented**:
+  - Basic "filtering of input" is mentioned at the API Gateway level
 
-**Missing Implementation:**
-- LLM-specific input validation
-- Prompt templates and schema validation
-- Monitoring for prompt injection patterns
-- Output content filtering
+- **Missing Implementation**:
+  - Application-level validation
+  - Context-aware validation specific to nutritional content
+  - Comprehensive input sanitization
 
-## 5. Enhanced Service-to-Service Authentication
+## 5. API Rate Limiting Enhancement
 
-**Description:**
-Implement strong authentication between internal services:
-- Deploy mutual TLS (mTLS) for all service-to-service communication
-- Use short-lived service tokens for internal API calls
-- Implement role-based access controls for different services
-- Adopt least privilege principles for service accounts
-- Regularly rotate service credentials
+- **Description**:
+  - Implement multi-dimensional rate limiting:
+    1. Global rate limits to protect the entire system
+    2. Per-tenant limits based on subscription tiers
+    3. Per-endpoint limits to prevent abuse of specific functionality
+    4. Graduated response to potential abuse (warnings, temporary blocks, permanent blocks)
 
-**Threats Mitigated:**
-- Lateral movement between services after perimeter breach (High severity)
-- Man-in-the-middle attacks on internal communications (Medium severity)
-- Unauthorized service-to-service access (Medium severity)
+- **Threats Mitigated**:
+  - Denial of service attacks (Medium severity) - Prevents resource exhaustion
+  - Cost inflation attacks (Medium severity) - Prevents excessive billing from OpenAI API usage
+  - Brute force attacks (Medium severity) - Limits authentication attempts
 
-**Impact:**
-- Creates strong boundaries between services
-- Limits blast radius if one component is compromised
-- Ensures only authorized service interactions occur
+- **Impact**:
+  - Ensures system availability even under heavy or malicious load
+  - Protects against excessive costs from API abuse
 
-**Currently Implemented:**
-- TLS for communications with databases
-- Basic authentication at API Gateway
+- **Currently Implemented**:
+  - Basic rate limiting is mentioned at the API Gateway level
 
-**Missing Implementation:**
-- mTLS between internal services
-- Service token authentication
-- Role-based access controls for services
-- Service credential rotation
+- **Missing Implementation**:
+  - Tenant-specific rate limits
+  - Endpoint-specific protections
+  - Cost-based rate limiting for LLM API calls
 
-## 6. Tenant Isolation Strategy
+## 6. Data Minimization for LLM Interactions
 
-**Description:**
-Implement strong isolation between different Meal Planner application tenants:
-- Deploy logical separation of tenant data in databases
-- Implement tenant context validation for all API requests
-- Use row-level security in databases to enforce tenant boundaries
-- Add tenant identifiers in all logs and monitoring
-- Create controls to prevent cross-tenant data access
+- **Description**:
+  - Implement a strict data control system for LLM interactions:
+    1. Create a process to review and approve what types of data can be sent to ChatGPT
+    2. Implement anonymization for all dietitian content samples before sending to the LLM
+    3. Remove all personally identifiable information from prompts
+    4. Develop a system to audit what data is being sent to the LLM
 
-**Threats Mitigated:**
-- Cross-tenant data leakage (High severity)
-- Unauthorized access to other tenants' dietitian content (High severity)
-- Privilege escalation across tenant boundaries (Medium severity)
+- **Threats Mitigated**:
+  - Privacy violations (High severity) - Prevents exposure of personal data to third parties
+  - Training data poisoning (Medium severity) - Limits what OpenAI could potentially learn from your data
+  - Intellectual property leakage (Medium severity) - Protects proprietary nutritional content
 
-**Impact:**
-- Prevents one tenant from accessing another tenant's data
-- Reduces scope of potential breaches
-- Enables compliance with data privacy requirements
+- **Impact**:
+  - Maintains privacy of dietitian content and end-user data
+  - Reduces regulatory and compliance risks
 
-**Currently Implemented:**
-- The architecture indicates multi-tenant design but doesn't specify isolation mechanisms
+- **Currently Implemented**:
+  - No data minimization controls are mentioned in the architecture
 
-**Missing Implementation:**
-- Database-level tenant isolation
-- Tenant context validation in API requests
-- Cross-tenant access prevention
-- Tenant-aware logging and monitoring
+- **Missing Implementation**:
+  - Data anonymization process
+  - PII detection and removal system
+  - LLM data audit mechanism
 
-## 7. Rate Limiting and Resource Protection
+## 7. Database Encryption
 
-**Description:**
-Enhance the existing rate limiting with more granular controls:
-- Implement per-tenant and per-endpoint rate limits
-- Create resource quotas for expensive operations (especially LLM calls)
-- Deploy circuit breakers to protect system stability
-- Add escalating response for repeated abuse (temporary blocks)
-- Implement anomaly detection for unusual API usage patterns
+- **Description**:
+  - Implement comprehensive database encryption:
+    1. Enable encryption at rest for both RDS instances
+    2. Implement column-level encryption for sensitive data fields
+    3. Use separate encryption keys for different data classifications
+    4. Implement key rotation policies
 
-**Threats Mitigated:**
-- Denial of service attacks (High severity)
-- Resource exhaustion from excessive LLM API calls (Medium severity)
-- Financial impact from API abuse (Medium severity)
-- Performance degradation affecting all users (Medium severity)
+- **Threats Mitigated**:
+  - Database data theft (High severity) - Protects data if database backups or storage is compromised
+  - Internal data access abuse (Medium severity) - Prevents unauthorized viewing of sensitive data
 
-**Impact:**
-- Protects system availability and performance
-- Prevents unexpected costs from LLM API abuse
-- Ensures fair resource allocation across tenants
+- **Impact**:
+  - Ensures data remains protected even if database storage is compromised
+  - Adds protection against insider threats
 
-**Currently Implemented:**
-- Basic rate limiting at the API Gateway level
+- **Currently Implemented**:
+  - TLS for database connections is mentioned, but no encryption at rest is specified
 
-**Missing Implementation:**
-- Granular per-endpoint rate limits
-- Resource quotas for expensive operations
-- Circuit breakers and graceful degradation
-- Usage anomaly detection
+- **Missing Implementation**:
+  - RDS encryption configuration
+  - Column-level encryption for sensitive fields
+  - Key management system
 
-## 8. Enhanced Administrator Access Controls
+## 8. Secure Administrator Access Controls
 
-**Description:**
-Implement strong controls for administrator access:
-- Require multi-factor authentication for all administrative access
-- Implement just-in-time privileged access
-- Create separation of duties for critical administrative functions
-- Log and monitor all administrative actions
-- Establish secure admin workstations for privileged operations
+- **Description**:
+  - Implement strict controls for administrator access:
+    1. Require multi-factor authentication for all admin access
+    2. Create approval workflows for sensitive operations
+    3. Implement session timeouts and context validation
+    4. Create audit trails for all administrative actions
+    5. Establish separation of duties for critical functions
 
-**Threats Mitigated:**
-- Compromise of administrator accounts (High severity)
-- Insider threats from privileged users (Medium severity)
-- Unauthorized system configuration changes (High severity)
+- **Threats Mitigated**:
+  - Administrator account compromise (High severity) - Limits damage from stolen credentials
+  - Insider threats (Medium severity) - Creates accountability and prevents single-person actions
+  - Privilege escalation (High severity) - Prevents lateral movement within admin systems
 
-**Impact:**
-- Significantly reduces risk of unauthorized admin actions
-- Creates accountability for administrative activities
-- Provides early detection of admin account compromise
+- **Impact**:
+  - Significantly reduces the risk of administrator account misuse
+  - Creates accountability for all administrative actions
 
-**Currently Implemented:**
-- Administrator role is defined but specific security controls aren't detailed
+- **Currently Implemented**:
+  - Administrator role is mentioned but without specific security controls
 
-**Missing Implementation:**
-- Multi-factor authentication for admin access
-- Just-in-time privileged access
-- Separation of duties
-- Comprehensive admin activity logging
+- **Missing Implementation**:
+  - Multi-factor authentication for admin access
+  - Approval workflows
+  - Separation of duties
+  - Comprehensive audit logging

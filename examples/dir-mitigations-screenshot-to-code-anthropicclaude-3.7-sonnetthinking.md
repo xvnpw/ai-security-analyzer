@@ -2,211 +2,300 @@
 
 ## 1. Secure API Key Management
 
-- **Description**:
-  Implement comprehensive API key protection throughout the application lifecycle. When users provide API keys (OpenAI, Anthropic, Replicate, etc.), store them only in the browser's local storage on the frontend or in environment variables on the backend. Implement key rotation policies and usage monitoring to detect unusual patterns. For self-hosted deployments, provide clear guidance on securely managing API keys.
-
-- **Threats Mitigated**:
-  API key exposure (High severity) - Unauthorized actors could use exposed API keys to make requests to AI services, potentially incurring large costs or performing malicious actions.
-
-- **Impact**:
-  Significantly reduces the risk of API key theft and unauthorized usage. Limits potential financial impact from compromised keys.
-
-- **Currently Implemented**:
-  The application uses environment variables (`.env` files) for storing API keys on the backend. The frontend stores keys in browser local storage. The README states "Your key is only stored in your browser. Never stored on our servers." The code in `generate_code.py` extracts API keys either from client-side settings dialog or environment variables.
-
-- **Missing Implementation**:
-  No key rotation mechanisms or API usage monitoring/alerts. No explicit validation of API key formats before use. No encryption for API keys stored in browser local storage.
-
-## 2. Content Security Policy for Generated Code
+- **Mitigation strategy**: Implement secure storage and handling of API keys for external services (OpenAI, Anthropic, Gemini, Replicate).
 
 - **Description**:
-  Implement a strict Content Security Policy when rendering generated code previews. Create a sandboxed environment for code previews that prevents the execution of potentially malicious scripts. Use iframe sandboxing with appropriate restrictions (e.g., `allow-scripts` but not `allow-same-origin`). Add CSP headers that restrict resource loading and script execution.
+  1. Move all API key validation and usage to the backend only
+  2. Implement key rotation mechanisms
+  3. Add usage monitoring to detect abnormal patterns
+  4. Store keys in a secure credential store rather than .env files
+  5. Implement server-side validation of API keys before use
 
-- **Threats Mitigated**:
-  Cross-Site Scripting (XSS) (High severity) - Generated code could contain malicious JavaScript that executes in the context of the user's browser.
-  Data exfiltration (Medium severity) - Malicious code could steal sensitive information from the user's browser.
+- **Threats mitigated**:
+  - API key leakage (High severity) - prevents unauthorized access to paid AI services
+  - Financial exposure (High severity) - prevents potential charges from unauthorized API usage
+  - Account compromise (Medium severity) - prevents misuse of user accounts on third-party services
 
 - **Impact**:
-  Significantly reduces the risk of XSS attacks and data theft through code previews.
+  - Significantly reduces the risk of API key exposure
+  - Limits financial impact if keys are compromised
+  - Provides early detection of potential misuse
 
-- **Currently Implemented**:
-  No evidence of CSP implementation in the provided code files.
+- **Currently implemented**:
+  - Basic environment variable storage for API keys in the backend
+  - Client-side key storage in browser (not secure) with fallback to environment variables in `generate_code.py`
 
-- **Missing Implementation**:
-  No CSP headers or sandbox restrictions for code previews. No content sanitization for generated code.
+- **Missing implementation**:
+  - Server-side only API key validation
+  - Key rotation mechanisms
+  - Usage monitoring and alerting
+  - Secure credential storage beyond environment variables
 
-## 3. Input Validation and Image Processing Controls
+## 2. Restrictive CORS Policy
+
+- **Mitigation strategy**: Implement a restrictive CORS policy that only allows access from trusted domains.
 
 - **Description**:
-  Enhance the existing image processing pipeline to enforce stricter controls. Implement comprehensive validation for all inputs, including size, format, and content type validation. Continue enforcing maximum dimensions and file size limits for uploaded images. Add additional checks for potentially malicious image content.
+  1. Replace the current permissive CORS policy that allows all origins ("*")
+  2. Explicitly define allowed origins based on where the frontend is hosted
+  3. Implement appropriate headers for cookies, credentials, and allowed methods
 
-- **Threats Mitigated**:
-  Denial of Service (Medium severity) - Extremely large images could consume excessive server resources.
-  Server-side vulnerabilities (Medium severity) - Malformed images could potentially exploit vulnerabilities in image processing libraries.
+- **Threats mitigated**:
+  - Cross-Origin Request Forgery (Medium severity) - prevents malicious websites from making requests to the API
+  - Unauthorized API access (Medium severity) - limits access to the API from unknown origins
 
 - **Impact**:
-  Reduces the risk of resource exhaustion attacks and potential image-based exploits.
+  - Prevents malicious websites from accessing the API endpoints
+  - Reduces the attack surface by limiting which origins can interact with the backend
 
-- **Currently Implemented**:
-  The application has basic image processing that enforces maximum dimensions and file size limits before sending to AI APIs.
+- **Currently implemented**:
+  - CORS middleware is configured in main.py but allows all origins with: `allow_origins=["*"]`
 
-- **Missing Implementation**:
-  No comprehensive validation for all image inputs. No checks for malicious image content or format validation.
+- **Missing implementation**:
+  - Restrictive origin list based on deployment environments
+  - Proper configuration of other CORS options (credentials, methods, headers)
 
-## 4. Resource Limiting and Timeouts
+## 3. Input Validation and Sanitization
+
+- **Mitigation strategy**: Implement comprehensive validation and sanitization for all user inputs.
 
 - **Description**:
-  Implement more comprehensive resource controls throughout the application. Set appropriate timeouts for all external API calls to prevent hanging connections. Add request size limits to prevent excessive resource consumption. Implement queue-based processing for resource-intensive operations to maintain system stability under load.
+  1. Validate image uploads for file type, size, and content
+  2. Implement size limits for screenshots and video uploads
+  3. Sanitize text inputs before processing
+  4. Validate imported code to prevent injection attacks
+  5. Validate URLs provided to the screenshot API endpoint
 
-- **Threats Mitigated**:
-  Denial of Service (Medium severity) - Resource exhaustion from processing extremely complex or large inputs.
-  API service disruptions (Medium severity) - Hanging connections to external services.
+- **Threats mitigated**:
+  - Server resource exhaustion (High severity) - prevents uploading extremely large files
+  - XSS through code imports (Medium severity) - prevents injection of malicious code
+  - File upload vulnerabilities (Medium severity) - prevents uploading malicious files disguised as images
+  - URL injection in screenshot service (Medium severity) - prevents attacks via malicious URLs
 
 - **Impact**:
-  Ensures the application remains stable and responsive even when processing complex inputs or during API service disruptions.
+  - Prevents server overload from malicious inputs
+  - Reduces the risk of processing potentially harmful content
+  - Improves overall application reliability
 
-- **Currently Implemented**:
-  Some API calls include timeout parameters (e.g., for OpenAI). The screenshot endpoint in `routes/screenshot.py` uses a 60-second timeout for httpx.AsyncClient.
+- **Currently implemented**:
+  - Basic image processing in image_processing/utils.py that includes resizing
+  - Some size checks for Claude API requirements
+  - Some frame limiting in video/utils.py with TARGET_NUM_SCREENSHOTS
 
-- **Missing Implementation**:
-  No consistent timeout policies across all API integrations. No queuing system for expensive operations. No comprehensive request size limits.
+- **Missing implementation**:
+  - Comprehensive file type validation
+  - Content validation for imported code
+  - Input sanitization for text inputs
+  - URL validation for the screenshot API
+  - Video file validation and size limits
 
-## 5. Secure External API Communication
+## 4. LLM Prompt Injection Protection
+
+- **Mitigation strategy**: Implement safeguards against prompt injection attacks.
 
 - **Description**:
-  Enhance the security of communication with external APIs (OpenAI, Anthropic, etc.). Always use HTTPS for API requests. Implement validation of API responses before processing. Add explicit error handling for various API failure scenarios. When users configure custom OpenAI proxy URLs, validate these URLs to ensure they include the required path components and use HTTPS.
+  1. Sanitize user inputs before incorporating them into prompts
+  2. Structure prompts to resist manipulation
+  3. Validate LLM outputs for potentially harmful content
+  4. Use template isolation techniques to separate user input from prompt instructions
 
-- **Threats Mitigated**:
-  Data interception (Medium severity) - Sensitive data could be intercepted if not transmitted securely.
-  Server-Side Request Forgery (Medium severity) - Malicious proxy configurations could redirect requests to internal services.
+- **Threats mitigated**:
+  - Prompt injection (High severity) - prevents attackers from manipulating AI model instructions
+  - Generation of malicious code (Medium severity) - reduces risk of AI generating harmful content
+  - Information disclosure (Medium severity) - prevents extraction of sensitive prompt data
 
 - **Impact**:
-  Ensures secure and reliable communication with external services and prevents potential SSRF attacks through proxy configurations.
+  - Ensures AI models receive only legitimate inputs
+  - Reduces the risk of generating harmful or unexpected code
+  - Maintains the integrity of the generation process
 
-- **Currently Implemented**:
-  The application uses HTTPS for API calls and has error handling for common OpenAI API errors in `generate_code.py` (AuthenticationError, NotFoundError, RateLimitError).
+- **Currently implemented**:
+  - Basic prompt structuring in prompts directory
+  - Some separation between system prompts and user content
 
-- **Missing Implementation**:
-  No validation of user-provided OpenAI proxy URLs. Inconsistent error handling across different API integrations.
+- **Missing implementation**:
+  - Input sanitization specifically for AI model interactions
+  - Output scanning for potentially harmful patterns
+  - Prompt boundary enforcement
 
-## 6. Rate Limiting
+## 5. Generated Code Sandboxing
+
+- **Mitigation strategy**: Implement sandboxing for previewing and executing generated code.
 
 - **Description**:
-  Implement rate limiting for all API endpoints to prevent abuse. Add per-IP and per-user rate limits for resource-intensive operations. Implement progressive backoff for repeated requests. Set up monitoring to detect abnormal request patterns.
+  1. Use sandboxed iframes for code preview
+  2. Implement Content Security Policy (CSP) for the preview environment
+  3. Disable potentially dangerous JavaScript features in the preview
+  4. Add warnings about potential risks of running generated code
 
-- **Threats Mitigated**:
-  API abuse (Medium severity) - Excessive requests could lead to service degradation.
-  Financial impact (Medium severity) - Excessive API calls to paid services could result in unexpected costs.
+- **Threats mitigated**:
+  - XSS in generated code (High severity) - prevents execution of malicious JavaScript
+  - Client-side injection (Medium severity) - limits damage from potentially harmful generated code
+  - Data exfiltration (Medium severity) - prevents generated code from accessing sensitive data
 
 - **Impact**:
-  Prevents API abuse, reduces costs from excessive API usage, and helps maintain service stability.
+  - Ensures generated code cannot harm users' environments
+  - Provides a safe preview environment
+  - Reduces risk even if AI generates potentially harmful code
 
-- **Currently Implemented**:
-  No evidence of rate limiting in the provided code files.
+- **Currently implemented**:
+  - No evident sandboxing mechanisms in the provided code
 
-- **Missing Implementation**:
-  No rate limiting middleware for API endpoints. No progressive backoff mechanisms for repeated requests.
+- **Missing implementation**:
+  - Sandboxed iframes
+  - Content Security Policy for previews
+  - JavaScript execution limitations
+  - User warnings about executing generated code
 
-## 7. Secure Configuration Management
+## 6. Secure WebSocket Implementation
+
+- **Mitigation strategy**: Enhance security of WebSocket communication between frontend and backend.
 
 - **Description**:
-  Enhance configuration management practices to prevent security issues. Validate all user-provided configuration settings (like OpenAI proxy URLs) before use. Implement secure defaults for all configuration options. Provide clear documentation on secure configuration practices for self-hosted deployments.
+  1. Implement TLS for all WebSocket connections
+  2. Add authentication for WebSocket connections
+  3. Implement message validation and sanitization
+  4. Add timeout and disconnection policies
 
-- **Threats Mitigated**:
-  Insecure configuration (Medium severity) - Misconfigured settings could introduce security vulnerabilities.
-  Server-Side Request Forgery (Medium severity) - Malicious configuration could lead to unauthorized internal requests.
+- **Threats mitigated**:
+  - Man-in-the-middle attacks (High severity) - prevents eavesdropping on communications
+  - Unauthorized WebSocket access (Medium severity) - prevents unauthorized streaming of data
+  - WebSocket hijacking (Medium severity) - prevents takeover of established connections
 
 - **Impact**:
-  Prevents security issues stemming from misconfiguration and reduces the attack surface.
+  - Ensures secure communication during the entire code generation process
+  - Protects sensitive data in transit
+  - Prevents unauthorized access to streaming API results
 
-- **Currently Implemented**:
-  The application uses environment variables for configuration and has some default settings.
+- **Currently implemented**:
+  - Basic WebSocket implementation for streaming results in generate_code.py
+  - Custom error code defined in ws/constants.py for application errors
 
-- **Missing Implementation**:
-  No validation of user-provided configuration settings. No secure defaults for all configuration options.
+- **Missing implementation**:
+  - TLS enforcement
+  - Authentication for WebSocket connections
+  - Comprehensive message validation
+  - Proper connection timeout policies
 
-## 8. Secure Error Handling
+## 7. Secure Image and Video Processing
+
+- **Mitigation strategy**: Enhance security of image and video processing operations.
 
 - **Description**:
-  Implement consistent error handling practices that prevent information disclosure. Show generic error messages to users in production while logging detailed error information server-side. Ensure debug information is only available in development environments. Add structured error logging to facilitate troubleshooting without exposing sensitive information.
+  1. Implement strict validation of image and video formats before processing
+  2. Use memory limits during image and video processing
+  3. Handle processing in a controlled environment
+  4. Implement timeouts for processing operations
+  5. Limit video length and frame rate to prevent resource exhaustion
 
-- **Threats Mitigated**:
-  Information disclosure (Low severity) - Sensitive information could be leaked through detailed error messages.
+- **Threats mitigated**:
+  - Image/video-based exploits (Medium severity) - prevents exploitation of processing libraries
+  - Resource exhaustion (High severity) - prevents denial of service through malicious inputs
+  - File upload vulnerabilities (Medium severity) - ensures only valid media are processed
 
 - **Impact**:
-  Prevents leakage of sensitive information while maintaining troubleshooting capabilities.
+  - Protects against vulnerabilities in media processing libraries
+  - Prevents server resource exhaustion
+  - Ensures reliable processing of legitimate media
 
-- **Currently Implemented**:
-  The application has error handling in `generate_code.py` that catches and processes specific OpenAI errors. The WebSocket endpoint in this file uses a custom error code `APP_ERROR_WEB_SOCKET_CODE` for app errors.
+- **Currently implemented**:
+  - Basic frame limiting in video/utils.py (TARGET_NUM_SCREENSHOTS)
+  - Some size checks for Claude API requirements
+  - Temporary file handling for video processing
 
-- **Missing Implementation**:
-  No consistent error handling across all components. No structured error logging system. No guarantee that detailed errors are never exposed to users in production.
+- **Missing implementation**:
+  - Comprehensive format validation for images and videos
+  - Memory and CPU usage limits during processing
+  - Explicit timeouts for long-running operations
+  - Video size and duration limits
 
-## 9. Secure Temporary File Management
+## 8. User Data Privacy Protection
+
+- **Mitigation strategy**: Implement measures to protect user data privacy.
 
 - **Description**:
-  Implement secure practices for managing temporary files generated during debugging or evaluation processes. Use randomly generated filenames to prevent path traversal. Set appropriate file permissions. Implement automatic cleanup of temporary files after use. Store sensitive temporary files outside of web-accessible directories.
+  1. Implement data retention policies (delete uploaded images and videos after processing)
+  2. Add privacy controls for users to delete their data
+  3. Store only the minimum necessary data
+  4. Implement secure deletion of sensitive data
 
-- **Threats Mitigated**:
-  Unauthorized access to temporary files (Low severity) - Temporary debug or output files could be accessed if not properly secured.
+- **Threats mitigated**:
+  - Data leakage (High severity) - prevents unauthorized access to user designs
+  - Privacy violations (Medium severity) - protects users' intellectual property
+  - Regulatory compliance issues (Medium severity) - helps meet data protection requirements
 
 - **Impact**:
-  Prevents unauthorized access to temporary files that might contain sensitive information.
+  - Protects sensitive user designs and intellectual property
+  - Reduces risk in case of a data breach
+  - Builds user trust in the application
 
-- **Currently Implemented**:
-  The application uses temporary file storage for debugging and in `video/utils.py` for video processing. The video processing code uses `tempfile.NamedTemporaryFile(delete=True)` which automatically cleans up files after use, and uses `uuid.uuid4()` to generate unique directory names.
+- **Currently implemented**:
+  - No evident data retention policies in the code
+  - Debug mode in video/utils.py saves frames to temporary directories
 
-- **Missing Implementation**:
-  No explicit file permission controls. No consistent cleanup for all temporary files across the application.
+- **Missing implementation**:
+  - Automatic deletion of processed media files
+  - User controls for data management
+  - Privacy policy implementation
+  - Secure data deletion mechanisms
 
-## 10. Client-Side Data Protection
+## 9. Path Traversal Prevention
+
+- **Mitigation strategy**: Prevent directory traversal attacks when working with file paths.
 
 - **Description**:
-  Implement measures to protect user data on the client side. Use secure browser storage (localStorage) with clear expiration policies. Add options for users to clear stored data. Implement client-side encryption for sensitive data when appropriate. Provide clear privacy notices about data handling.
+  1. Sanitize all file paths and folder names provided by users
+  2. Use path normalization to prevent relative path exploitation
+  3. Restrict file access to specific predefined directories
+  4. Validate that paths are within allowed boundaries before access
 
-- **Threats Mitigated**:
-  Unauthorized access to stored data (Medium severity) - Data stored in browser could be accessed by other applications in shared environments.
+- **Threats mitigated**:
+  - Directory traversal (High severity) - prevents unauthorized access to files outside allowed directories
+  - File system exposure (Medium severity) - prevents revealing sensitive system information
+  - Unauthorized file access (Medium severity) - prevents reading or writing to protected files
 
 - **Impact**:
-  Enhances protection of user data stored in the browser and gives users more control over their data.
+  - Ensures file operations are restricted to authorized locations
+  - Protects system files from unauthorized access
+  - Prevents information disclosure via path manipulation
 
-- **Currently Implemented**:
-  The application stores user API keys in browser localStorage.
+- **Currently implemented**:
+  - Basic folder existence checks in evals.py
 
-- **Missing Implementation**:
-  No data expiration policies. No client-side encryption for sensitive data. No clear data clearing options for users.
+- **Missing implementation**:
+  - Path sanitization and normalization
+  - Path boundary validation
+  - Directory access restrictions
+  - Use of secure file handling methods
 
-## 11. Path Traversal Prevention in Evaluation Processing
+## 10. Resource Exhaustion Prevention
+
+- **Mitigation strategy**: Implement controls to prevent resource exhaustion attacks.
 
 - **Description**:
-  Implement strict path validation and sanitization in the evals-related routes to prevent path traversal attacks. Use path normalization to resolve and validate all user-provided folder paths. Restrict access to only authorized evaluation directories. Use safe path joining methods that prevent directory traversal.
+  1. Set maximum limits for video length and size
+  2. Implement request rate limiting
+  3. Set timeouts for all external API calls
+  4. Monitor and limit resource usage during processing
+  5. Implement circuit breakers for external services
 
-- **Threats Mitigated**:
-  Path Traversal (High severity) - Attackers could potentially access unauthorized files or directories on the server through crafted folder path parameters in evals routes.
-
-- **Impact**:
-  Prevents unauthorized file access through evaluation folder parameters, protecting sensitive server files and configurations.
-
-- **Currently Implemented**:
-  The application uses `Path` from `pathlib` in `routes/evals.py` which helps with path manipulation, but doesn't include specific validation against traversal.
-
-- **Missing Implementation**:
-  No validation or sanitization of user-provided folder paths in evals endpoints. No explicit checks against directory traversal attempts. No restriction of allowed evaluation directories.
-
-## 12. Video Processing Security Controls
-
-- **Description**:
-  Enhance security of the video processing pipeline. Implement strict validation of video formats, sizes, and durations before processing. Set limits on number of frames processed to prevent resource exhaustion. Ensure the temporary files created during video processing are properly secured and cleaned up after processing.
-
-- **Threats Mitigated**:
-  Resource Exhaustion (Medium severity) - Maliciously crafted videos could consume excessive server resources.
-  Temporary File Disclosure (Low severity) - Temporary frames extracted from videos could be accessible if not properly secured.
+- **Threats mitigated**:
+  - Denial of service (High severity) - prevents server crashes from excessive resource usage
+  - API abuse (Medium severity) - prevents exploitation of external API quotas
+  - Processing timeouts (Medium severity) - prevents hanging operations blocking resources
 
 - **Impact**:
-  Prevents video-based denial of service attacks and protects potentially sensitive content from video frames.
+  - Ensures application stability under heavy load
+  - Protects external API costs from spiking due to abuse
+  - Maintains responsive service for legitimate users
 
-- **Currently Implemented**:
-  The application uses `tempfile.NamedTemporaryFile(delete=True)` for video processing in `video/utils.py`, which automatically deletes files when closed. There is a `TARGET_NUM_SCREENSHOTS` constant set to 20 to limit frame extraction.
+- **Currently implemented**:
+  - Some frame limiting for video processing
+  - Basic timeout for external HTTP request in screenshot.py
 
-- **Missing Implementation**:
-  No validation of video format, size, or duration before processing. No explicit error handling for malformed videos. No validation of the video data URL format.
+- **Missing implementation**:
+  - Comprehensive rate limiting
+  - Request size limitations
+  - Resource monitoring
+  - Circuit breakers for external API calls
+  - Timeout policies for all long-running operations
