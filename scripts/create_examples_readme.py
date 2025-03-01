@@ -68,6 +68,8 @@ def main():
 
     # Walk through the examples/ directory recursively.
     for root, dirs, files in os.walk(examples_dir):
+        if root == "examples\\vulnerabilities-workflow":
+            continue
         for filename in files:
             if not filename.endswith(".md"):
                 continue
