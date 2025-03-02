@@ -158,13 +158,13 @@ files = [
 
 [[package]]
 name = "anthropic"
-version = "0.47.2"
+version = "0.49.0"
 description = "The official Python library for the anthropic API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "anthropic-0.47.2-py3-none-any.whl", hash = "sha256:61b712a56308fce69f04d92ba0230ab2bc187b5bce17811d400843a8976bb67f"},
-    {file = "anthropic-0.47.2.tar.gz", hash = "sha256:452f4ca0c56ffab8b6ce9928bf8470650f88106a7001b250895eb65c54cfa44c"},
+    {file = "anthropic-0.49.0-py3-none-any.whl", hash = "sha256:bbc17ad4e7094988d2fa86b87753ded8dce12498f4b85fe5810f208f454a8375"},
+    {file = "anthropic-0.49.0.tar.gz", hash = "sha256:c09e885b0f674b9119b4f296d8508907f6cff0009bc20d5cf6b35936c40b4398"},
 ]
 
 [package.dependencies]
@@ -1211,13 +1211,13 @@ langchain-core = ">=0.3.34,<1.0.0"
 
 [[package]]
 name = "langgraph"
-version = "0.2.74"
+version = "0.2.76"
 description = "Building stateful, multi-actor applications with LLMs"
 optional = false
 python-versions = "<4.0,>=3.9.0"
 files = [
-    {file = "langgraph-0.2.74-py3-none-any.whl", hash = "sha256:91a522df764e66068f1a6de09ea748cea0687912838f29218c1d1b92b1ca025f"},
-    {file = "langgraph-0.2.74.tar.gz", hash = "sha256:db6e63e0771e2e8fb17dc0e040007b32f009e0f114e35d8348e336eb15f068e5"},
+    {file = "langgraph-0.2.76-py3-none-any.whl", hash = "sha256:076b8b5d2fc5a9761c46a7618430cfa5c978a8012257c43cbc127b27e0fd7872"},
+    {file = "langgraph-0.2.76.tar.gz", hash = "sha256:688f8dcd9b6797ba78384599e0de944773000c75156ad1e186490e99e89fa5c0"},
 ]
 
 [package.dependencies]
@@ -1696,13 +1696,13 @@ files = [
 
 [[package]]
 name = "openai"
-version = "1.64.0"
+version = "1.65.2"
 description = "The official Python library for the openai API"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "openai-1.64.0-py3-none-any.whl", hash = "sha256:20f85cde9e95e9fbb416e3cb5a6d3119c0b28308afd6e3cc47bf100623dac623"},
-    {file = "openai-1.64.0.tar.gz", hash = "sha256:2861053538704d61340da56e2f176853d19f1dc5704bc306b7597155f850d57a"},
+    {file = "openai-1.65.2-py3-none-any.whl", hash = "sha256:27d9fe8de876e31394c2553c4e6226378b6ed85e480f586ccfe25b7193fb1750"},
+    {file = "openai-1.65.2.tar.gz", hash = "sha256:729623efc3fd91c956f35dd387fa5c718edd528c4bed9f00b40ef290200fb2ce"},
 ]
 
 [package.dependencies]
@@ -2166,13 +2166,13 @@ typing-extensions = ">=4.6.0,<4.7.0 || >4.7.0"
 
 [[package]]
 name = "pydantic-settings"
-version = "2.8.0"
+version = "2.8.1"
 description = "Settings management using Pydantic"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pydantic_settings-2.8.0-py3-none-any.whl", hash = "sha256:c782c7dc3fb40e97b238e713c25d26f64314aece2e91abcff592fcac15f71820"},
-    {file = "pydantic_settings-2.8.0.tar.gz", hash = "sha256:88e2ca28f6e68ea102c99c3c401d6c9078e68a5df600e97b43891c34e089500a"},
+    {file = "pydantic_settings-2.8.1-py3-none-any.whl", hash = "sha256:81942d5ac3d905f7f3ee1a70df5dfb62d5569c12f51a5a647defc1c3d9ee2e9c"},
+    {file = "pydantic_settings-2.8.1.tar.gz", hash = "sha256:d5c663dfbe9db9d5e1c646b2e161da12f0d734d422ee56f567d0ea2cee4e8585"},
 ]
 
 [package.dependencies]
@@ -2511,13 +2511,13 @@ files = [
 
 [[package]]
 name = "setuptools"
-version = "75.8.1"
+version = "75.8.2"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "setuptools-75.8.1-py3-none-any.whl", hash = "sha256:3bc32c0b84c643299ca94e77f834730f126efd621de0cc1de64119e0e17dab1f"},
-    {file = "setuptools-75.8.1.tar.gz", hash = "sha256:65fb779a8f28895242923582eadca2337285f0891c2c9e160754df917c3d2530"},
+    {file = "setuptools-75.8.2-py3-none-any.whl", hash = "sha256:558e47c15f1811c1fa7adbd0096669bf76c1d3f433f58324df69f3f5ecac4e8f"},
+    {file = "setuptools-75.8.2.tar.gz", hash = "sha256:4880473a969e5f23f2a2be3646b2dfd84af9028716d398e46192f84bc36900d2"},
 ]
 
 [package.extras]
