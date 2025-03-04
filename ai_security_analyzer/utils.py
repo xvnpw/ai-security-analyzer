@@ -1,6 +1,7 @@
 from langchain_core.messages import BaseMessage, AIMessage
 from pathvalidate import sanitize_filename
 import hashlib
+from typing import Any
 
 
 def clean_markdown(markdown: str) -> str:
@@ -34,22 +35,18 @@ def get_total_tokens(message: BaseMessage) -> int:
     return 0
 
 
-def get_response_content(message: BaseMessage) -> str:
-    """
-    Extract content from a BaseMessage, handling both string and list content types.
-    Returns the content if it's a string, or the last element if it's a list.
-
-    Args:
-        message: BaseMessage object containing the response content
-
-    Returns:
-        str: The message content or the last element if content is a list
-    """
+def get_response_content(message: BaseMessage) -> Any:
     content = message.content
     if isinstance(content, str):
         return content
     elif isinstance(content, list):
-        return str(content[-1])
+        last_element = content[-1]
+        if isinstance(last_element, str):
+            return last_element
+        elif isinstance(last_element, dict):
+            return last_element["text"]
+        else:
+            return str(last_element)
     return str(content)  # Fallback case for other types
 
 
