@@ -6,10 +6,12 @@ declare -A models
 declare -A deep_analysis_models
 # models["o1"]="openai"
 # models["o3-mini"]="openai"
-models["gemini-2.0-flash-thinking-exp"]="google"
+# models["gpt-4.5-preview"]="openai"
+# models["gemini-2.0-flash-thinking-exp"]="google"
 # models["deepseek/deepseek-r1"]="openrouter"
 # models["gemini-2.0-pro-exp"]="google"
 # models["anthropic/claude-3.7-sonnet:thinking"]="openrouter"
+models["claude-3-7-sonnet-latest"]="anthropic"
 
 # deep_analysis_models["gemini-2.0-pro-exp"]="google"
 # deep_analysis_models["gemini-2.0-flash-thinking-exp"]="google"
@@ -17,11 +19,12 @@ models["gemini-2.0-flash-thinking-exp"]="google"
 declare -A temperatures
 temperatures["o1"]="1"
 temperatures["o3-mini"]="1"
+temperatures["gpt-4.5-preview"]="1"
 temperatures["gemini-2.0-flash-thinking-exp"]="0.7"
 temperatures["deepseek/deepseek-r1"]="0.7"
 temperatures["gemini-2.0-pro-exp"]="0.7"
 temperatures["anthropic/claude-3.7-sonnet:thinking"]="1"
-
+temperatures["claude-3-7-sonnet-latest"]="1"
 # for agent_prompt_type in $AGENT_PROMPT_TYPES; do
 #     # Iterate over the keys of the models array
 #     for agent_model in "${!models[@]}"; do
@@ -41,27 +44,27 @@ temperatures["anthropic/claude-3.7-sonnet:thinking"]="1"
 #     done
 # done
 
-# for agent_prompt_type in $AGENT_PROMPT_TYPES; do
-#     if [ "$agent_prompt_type" == "vulnerabilities" ]; then
-#         continue
-#     fi
-#     # Iterate over the keys of the models array
-#     for agent_model in "${!models[@]}"; do
-#         agent_provider="${models[$agent_model]}"
-#         safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
+for agent_prompt_type in $AGENT_PROMPT_TYPES; do
+    if [ "$agent_prompt_type" == "vulnerabilities" ]; then
+        continue
+    fi
+    # Iterate over the keys of the models array
+    for agent_model in "${!models[@]}"; do
+        agent_provider="${models[$agent_model]}"
+        safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
 
-#         echo "Generating example for $agent_prompt_type with $agent_model"
+        echo "Generating example for $agent_prompt_type with $agent_model"
 
-#         ARGS="file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-${agent_prompt_type}-ai-nutrition-pro-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
+        ARGS="file -t tests/EXAMPLE_ARCHITECTURE.md -v -o examples/file-${agent_prompt_type}-ai-nutrition-pro-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
-#         CMD="python ai_security_analyzer/app.py $ARGS"
-#         echo "Running: $CMD"
+        CMD="python ai_security_analyzer/app.py $ARGS"
+        echo "Running: $CMD"
 
-#         python ai_security_analyzer/app.py $ARGS
+        python ai_security_analyzer/app.py $ARGS
 
-#         sleep 10
-#     done
-# done
+        sleep 10
+    done
+done
 
 # for agent_prompt_type in $AGENT_PROMPT_TYPES; do
 #     if [ "$agent_prompt_type" == "vulnerabilities" ]; then
@@ -192,139 +195,3 @@ temperatures["anthropic/claude-3.7-sonnet:thinking"]="1"
 #         sleep 10
 #     done
 # done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t0.7-i8-c71000.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t1-i8-c71000.md --agent-model $agent_model --agent-temperature 1 --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t0.7-i8-c150000.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript --files-context-window 150000 --files-chunk-size 140000"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t1-i8-c150000.md --agent-model $agent_model --agent-temperature 1 --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript  --files-context-window 150000 --files-chunk-size 140000"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t0.7-i8-c250000.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript --files-context-window 250000 --files-chunk-size 240000"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t1-i8-c250000.md --agent-model $agent_model --agent-temperature 1 --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript  --files-context-window 250000 --files-chunk-size 240000"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t0.7-i8-c500000.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript --files-context-window 500000 --files-chunk-size 490000"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done
-
-for agent_model in "${!models[@]}"; do
-    agent_prompt_type="vulnerabilities-workflow-1"
-    agent_provider="${models[$agent_model]}"
-    safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
-
-    echo "Generating example for $agent_prompt_type with $agent_model"
-
-    ARGS="dir -t ../vscode-laravel-extra-intellisense/ -v -o examples-2/vscode-laravel-extra-intellisense-${safe_agent_model}-t1-i8-c500000.md --agent-model $agent_model --agent-temperature 1 --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8 --exclude '**/.github/**' --vulnerabilities-threat-actor vscode_extension_malicious_repo --included-classes-of-vulnerabilities 'RCE, Command Injection, Code Injection' -p javascript  --files-context-window 500000 --files-chunk-size 490000"
-
-    CMD="python ai_security_analyzer/app.py $ARGS"
-    echo "Running: $CMD"
-
-    python ai_security_analyzer/app.py $ARGS
-
-    sleep 10
-done

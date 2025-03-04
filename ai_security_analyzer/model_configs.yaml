@@ -123,6 +123,7 @@ models:
     documents_context_window: 100000
     tokenizer_model_name: 'gpt-4'
     supports_structured_output: false
+    max_tokens: 16384
 
   claude-3-7-sonnet-latest:
     max_number_of_tools: 0
@@ -135,6 +136,7 @@ models:
     supports_structured_output: false
     thinking: true
     thinking_budget_tokens: 32000
+    max_tokens: 64000
 
 default:
   max_number_of_tools: 1000
@@ -145,3 +147,4 @@ default:
   documents_context_window: 70000
   tokenizer_model_name: 'gpt2'
   supports_structured_output: false
+  max_tokens: 100000

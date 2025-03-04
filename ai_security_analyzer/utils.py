@@ -49,7 +49,13 @@ def get_response_content(message: BaseMessage) -> str:
     if isinstance(content, str):
         return content
     elif isinstance(content, list):
-        return str(content[-1])
+        last_element = content[-1]
+        if isinstance(last_element, str):
+            return last_element
+        elif isinstance(last_element, dict):
+            return last_element["text"]
+        else:
+            return str(last_element)
     return str(content)  # Fallback case for other types
 
 

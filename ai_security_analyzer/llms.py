@@ -41,6 +41,9 @@ class ModelConfig:
     structured_output_supports_temperature: bool
     reasoning_effort: Optional[str] = None
     system_message_type: Optional[Literal["system", "developer"]] = None
+    max_tokens: Optional[int] = None
+    thinking: Optional[bool] = None
+    thinking_budget_tokens: Optional[int] = None
 
     def __post_init__(self) -> None:
         if self.use_system_message and self.system_message_type is None:
@@ -166,6 +169,9 @@ class LLMProvider:
                     supports_structured_output=mc.get("supports_structured_output", False),
                     reasoning_effort=mc.get("reasoning_effort", None),
                     structured_output_supports_temperature=mc.get("structured_output_supports_temperature", False),
+                    max_tokens=mc.get("max_tokens", None),
+                    thinking=mc.get("thinking", None),
+                    thinking_budget_tokens=mc.get("thinking_budget_tokens", None),
                 )
 
             # Define default model configuration
@@ -181,6 +187,9 @@ class LLMProvider:
                 supports_structured_output=default_mc.get("supports_structured_output", False),
                 reasoning_effort=default_mc.get("reasoning_effort", None),
                 structured_output_supports_temperature=default_mc.get("structured_output_supports_temperature", False),
+                max_tokens=default_mc.get("max_tokens", 100000),
+                thinking=default_mc.get("thinking", False),
+                thinking_budget_tokens=default_mc.get("thinking_budget_tokens", None),
             )
         except Exception as e:
             logger.error(f"Failed to load model configurations: {e}")
@@ -208,7 +217,7 @@ class LLMProvider:
                 "model_name": llm_config.model,
                 "openai_api_key": api_key,
                 "reasoning_effort": model_config.reasoning_effort,
-                "max_tokens": MAX_OUTPUT_TOKENS,
+                "max_tokens": model_config.max_tokens or MAX_OUTPUT_TOKENS,
             }
             if provider_config.api_base:
                 kwargs["openai_api_base"] = provider_config.api_base
@@ -223,7 +232,14 @@ class LLMProvider:
                 "temperature": llm_config.temperature,
                 "model": llm_config.model,
                 "anthropic_api_key": api_key,
+                "max_tokens": model_config.max_tokens or MAX_OUTPUT_TOKENS,
             }
+
+            if model_config.thinking and model_config.thinking_budget_tokens:
+                kwargs["thinking"] = {
+                    "type": "enabled",
+                    "budget_tokens": model_config.thinking_budget_tokens,
+                }
         elif provider_config.model_class == ChatGoogleGenerativeAI:
             kwargs = {
                 "temperature": llm_config.temperature,
