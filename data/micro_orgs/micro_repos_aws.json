@@ -1,0 +1,998 @@
+[
+    {
+        "name": "aws-sdk-php-zf2",
+        "full_name": "aws/aws-sdk-php-zf2",
+        "url": "https://github.com/aws/aws-sdk-php-zf2",
+        "stars": 104,
+        "updated_at": "2025-02-27T09:12:50Z",
+        "description": "ZF2 module for using the AWS SDK for PHP to interact with AWS services like S3, DynamoDB, SQS, EC2, etc.",
+        "size_kb": 158,
+        "languages": {
+            "PHP": 33803,
+            "Makefile": 831
+        }
+    },
+    {
+        "name": "aws-sdk-php-laravel",
+        "full_name": "aws/aws-sdk-php-laravel",
+        "url": "https://github.com/aws/aws-sdk-php-laravel",
+        "stars": 1669,
+        "updated_at": "2025-03-05T17:20:46Z",
+        "description": "A Laravel 6+ service provider for the AWS SDK for PHP",
+        "size_kb": 153,
+        "languages": {
+            "PHP": 7468,
+            "Makefile": 1311
+        }
+    },
+    {
+        "name": "opsworks-cookbooks",
+        "full_name": "aws/opsworks-cookbooks",
+        "url": "https://github.com/aws/opsworks-cookbooks",
+        "stars": 1050,
+        "updated_at": "2025-02-28T14:41:49Z",
+        "description": "Chef Cookbooks for the AWS OpsWorks Service",
+        "size_kb": 5702,
+        "languages": {
+            "Ruby": 472919,
+            "HTML": 156120,
+            "Shell": 11445,
+            "Perl": 8443,
+            "Python": 4550,
+            "JavaScript": 406
+        }
+    },
+    {
+        "name": "aws-sdk-rails",
+        "full_name": "aws/aws-sdk-rails",
+        "url": "https://github.com/aws/aws-sdk-rails",
+        "stars": 610,
+        "updated_at": "2025-02-26T19:05:59Z",
+        "description": "Official repository for the aws-sdk-rails gem, which integrates the AWS SDK for Ruby with Ruby on Rails.",
+        "size_kb": 585,
+        "languages": {
+            "Ruby": 72186,
+            "HTML": 10749,
+            "Dockerfile": 2117,
+            "JavaScript": 939,
+            "CSS": 721,
+            "Shell": 381
+        }
+    },
+    {
+        "name": "aws-php-sns-message-validator",
+        "full_name": "aws/aws-php-sns-message-validator",
+        "url": "https://github.com/aws/aws-php-sns-message-validator",
+        "stars": 212,
+        "updated_at": "2025-03-05T22:23:04Z",
+        "description": "Amazon SNS message validation for PHP",
+        "size_kb": 75,
+        "languages": {
+            "PHP": 40054
+        }
+    },
+    {
+        "name": "aws-record-ruby",
+        "full_name": "aws/aws-record-ruby",
+        "url": "https://github.com/aws/aws-record-ruby",
+        "stars": 323,
+        "updated_at": "2025-02-26T19:05:51Z",
+        "description": "Official repository for the aws-record gem, an abstraction for Amazon DynamoDB.",
+        "size_kb": 659,
+        "languages": {
+            "Ruby": 457097,
+            "Gherkin": 51306,
+            "HTML": 1065
+        }
+    },
+    {
+        "name": "aws-sdk-php-symfony",
+        "full_name": "aws/aws-sdk-php-symfony",
+        "url": "https://github.com/aws/aws-sdk-php-symfony",
+        "stars": 352,
+        "updated_at": "2025-03-05T15:01:12Z",
+        "description": null,
+        "size_kb": 121,
+        "languages": {
+            "PHP": 18635,
+            "Makefile": 904
+        }
+    },
+    {
+        "name": "aws-iot-device-sdk-embedded-C",
+        "full_name": "aws/aws-iot-device-sdk-embedded-C",
+        "url": "https://github.com/aws/aws-iot-device-sdk-embedded-C",
+        "stars": 1014,
+        "updated_at": "2025-03-06T02:27:22Z",
+        "description": "SDK for connecting to AWS IoT from a device using embedded C.",
+        "size_kb": 38977,
+        "languages": {
+            "C": 292654,
+            "CMake": 45250,
+            "Python": 19460,
+            "Shell": 6680
+        }
+    },
+    {
+        "name": "aws-iot-device-sdk-arduino-yun",
+        "full_name": "aws/aws-iot-device-sdk-arduino-yun",
+        "url": "https://github.com/aws/aws-iot-device-sdk-arduino-yun",
+        "stars": 162,
+        "updated_at": "2024-10-01T19:15:32Z",
+        "description": "SDK for connecting to AWS IoT from an Arduino Y\u00fan. ",
+        "size_kb": 236,
+        "languages": {
+            "Python": 92756,
+            "C++": 51081,
+            "Shell": 6287,
+            "C": 3503
+        }
+    },
+    {
+        "name": "aws-iot-device-sdk-js",
+        "full_name": "aws/aws-iot-device-sdk-js",
+        "url": "https://github.com/aws/aws-iot-device-sdk-js",
+        "stars": 965,
+        "updated_at": "2025-02-21T02:37:06Z",
+        "description": "SDK for connecting to AWS IoT from a device using JavaScript/Node.js",
+        "size_kb": 478,
+        "languages": {
+            "JavaScript": 308448,
+            "Shell": 36315,
+            "Batchfile": 2745
+        }
+    },
+    {
+        "name": "aws-iot-device-sdk-java",
+        "full_name": "aws/aws-iot-device-sdk-java",
+        "url": "https://github.com/aws/aws-iot-device-sdk-java",
+        "stars": 211,
+        "updated_at": "2025-03-03T07:57:34Z",
+        "description": "Java SDK for connecting to AWS IoT from a device. ",
+        "size_kb": 270,
+        "languages": {
+            "Java": 419106,
+            "Shell": 979
+        }
+    },
+    {
+        "name": "elastic-load-balancing-tools",
+        "full_name": "aws/elastic-load-balancing-tools",
+        "url": "https://github.com/aws/elastic-load-balancing-tools",
+        "stars": 281,
+        "updated_at": "2025-02-17T02:28:48Z",
+        "description": "AWS Elastic Load Balancing Tools",
+        "size_kb": 3149,
+        "languages": {
+            "Java": 149476,
+            "Python": 116513,
+            "HTML": 3213
+        }
+    },
+    {
+        "name": "amazon-ecs-logs-collector",
+        "full_name": "aws/amazon-ecs-logs-collector",
+        "url": "https://github.com/aws/amazon-ecs-logs-collector",
+        "stars": 187,
+        "updated_at": "2025-02-26T17:23:46Z",
+        "description": "The script will be used to collect general os logs as well as Docker and ecs-agent logs, it also support to enable debug mode for docker and ecs-agent in Amazon Linux. ",
+        "size_kb": 101,
+        "languages": {
+            "Shell": 25815
+        }
+    },
+    {
+        "name": "aws-logging-dotnet",
+        "full_name": "aws/aws-logging-dotnet",
+        "url": "https://github.com/aws/aws-logging-dotnet",
+        "stars": 301,
+        "updated_at": "2024-12-18T10:33:56Z",
+        "description": ".NET Libraries for integrating Amazon CloudWatch Logs with popular .NET logging libraries",
+        "size_kb": 4889,
+        "languages": {
+            "C#": 211747
+        }
+    },
+    {
+        "name": "aws-toolkit-azure-devops",
+        "full_name": "aws/aws-toolkit-azure-devops",
+        "url": "https://github.com/aws/aws-toolkit-azure-devops",
+        "stars": 253,
+        "updated_at": "2025-03-04T11:55:10Z",
+        "description": "AWS Toolkit for Azure DevOps",
+        "size_kb": 7961,
+        "languages": {
+            "TypeScript": 406369,
+            "PowerShell": 147316,
+            "JavaScript": 1744,
+            "Shell": 1129
+        }
+    },
+    {
+        "name": "aws-xray-sdk-go",
+        "full_name": "aws/aws-xray-sdk-go",
+        "url": "https://github.com/aws/aws-xray-sdk-go",
+        "stars": 280,
+        "updated_at": "2025-03-06T15:41:03Z",
+        "description": "AWS X-Ray SDK for the Go programming language.",
+        "size_kb": 935,
+        "languages": {
+            "Go": 457988,
+            "Makefile": 2604,
+            "HCL": 2450,
+            "Dockerfile": 287
+        }
+    },
+    {
+        "name": "homebrew-tap",
+        "full_name": "aws/homebrew-tap",
+        "url": "https://github.com/aws/homebrew-tap",
+        "stars": 111,
+        "updated_at": "2025-02-28T23:48:44Z",
+        "description": "Homebrew formulae that allows installation of AWS tools through the Homebrew package manager.",
+        "size_kb": 1179,
+        "languages": {
+            "Ruby": 35088,
+            "Shell": 8265
+        }
+    },
+    {
+        "name": "aws-xray-sdk-python",
+        "full_name": "aws/aws-xray-sdk-python",
+        "url": "https://github.com/aws/aws-xray-sdk-python",
+        "stars": 329,
+        "updated_at": "2025-02-27T22:36:21Z",
+        "description": "AWS X-Ray SDK for the Python programming language",
+        "size_kb": 901,
+        "languages": {
+            "Python": 425091,
+            "HCL": 2447,
+            "HTML": 212,
+            "Dockerfile": 112,
+            "Smarty": 53
+        }
+    },
+    {
+        "name": "aws-cdk-rfcs",
+        "full_name": "aws/aws-cdk-rfcs",
+        "url": "https://github.com/aws/aws-cdk-rfcs",
+        "stars": 551,
+        "updated_at": "2025-02-26T18:30:40Z",
+        "description": "RFCs for the AWS CDK",
+        "size_kb": 5150,
+        "languages": {
+            "JavaScript": 6232,
+            "Shell": 392
+        }
+    },
+    {
+        "name": "aws-ops-wheel",
+        "full_name": "aws/aws-ops-wheel",
+        "url": "https://github.com/aws/aws-ops-wheel",
+        "stars": 336,
+        "updated_at": "2025-02-20T14:51:38Z",
+        "description": "The AWS Ops Wheel is a randomizer that biases for options that haven\u2019t come up recently; you can also outright cheat and specify the next result to be generated.",
+        "size_kb": 3695,
+        "languages": {
+            "JavaScript": 138266,
+            "Python": 95794,
+            "Shell": 1599,
+            "CSS": 1463,
+            "HTML": 792
+        }
+    },
+    {
+        "name": "sagemaker-tensorflow-training-toolkit",
+        "full_name": "aws/sagemaker-tensorflow-training-toolkit",
+        "url": "https://github.com/aws/sagemaker-tensorflow-training-toolkit",
+        "stars": 270,
+        "updated_at": "2025-02-11T01:29:15Z",
+        "description": "Toolkit for running TensorFlow training scripts on SageMaker. Dockerfiles used for building SageMaker TensorFlow Containers are at https://github.com/aws/deep-learning-containers. ",
+        "size_kb": 14782,
+        "languages": {
+            "Python": 175806,
+            "Shell": 2436
+        }
+    },
+    {
+        "name": "aws-xray-daemon",
+        "full_name": "aws/aws-xray-daemon",
+        "url": "https://github.com/aws/aws-xray-daemon",
+        "stars": 189,
+        "updated_at": "2025-02-12T17:57:20Z",
+        "description": "The AWS X-Ray daemon listens for traffic on UDP port 2000, gathers raw segment data, and relays it to the AWS X-Ray API.",
+        "size_kb": 302,
+        "languages": {
+            "Go": 177405,
+            "Shell": 12515,
+            "HCL": 9930,
+            "Makefile": 3497,
+            "Dockerfile": 607
+        }
+    },
+    {
+        "name": "sagemaker-pytorch-training-toolkit",
+        "full_name": "aws/sagemaker-pytorch-training-toolkit",
+        "url": "https://github.com/aws/sagemaker-pytorch-training-toolkit",
+        "stars": 201,
+        "updated_at": "2025-02-11T01:29:05Z",
+        "description": "Toolkit for running PyTorch training scripts on SageMaker. Dockerfiles used for building SageMaker Pytorch Containers are at https://github.com/aws/deep-learning-containers.",
+        "size_kb": 47021,
+        "languages": {
+            "Python": 94458,
+            "C": 1240,
+            "Shell": 818
+        }
+    },
+    {
+        "name": "git-remote-codecommit",
+        "full_name": "aws/git-remote-codecommit",
+        "url": "https://github.com/aws/git-remote-codecommit",
+        "stars": 279,
+        "updated_at": "2025-02-27T07:39:02Z",
+        "description": "An implementation of Git Remote Helper that makes it easier to interact with AWS CodeCommit",
+        "size_kb": 43,
+        "languages": {
+            "Python": 21938
+        }
+    },
+    {
+        "name": "aws-ec2-instance-connect-cli",
+        "full_name": "aws/aws-ec2-instance-connect-cli",
+        "url": "https://github.com/aws/aws-ec2-instance-connect-cli",
+        "stars": 162,
+        "updated_at": "2025-02-19T08:26:53Z",
+        "description": "This is an all-in-one client for EC2 Instance Connect that handles key brokerage and establishing connection to EC2 Instances through an interface near-identical to standard system ssh, sftp, and other utilities. ",
+        "size_kb": 59,
+        "languages": {
+            "Python": 81807,
+            "Batchfile": 3178
+        }
+    },
+    {
+        "name": "aws-dotnet-extensions-configuration",
+        "full_name": "aws/aws-dotnet-extensions-configuration",
+        "url": "https://github.com/aws/aws-dotnet-extensions-configuration",
+        "stars": 185,
+        "updated_at": "2025-02-24T07:25:13Z",
+        "description": "This repository hosts various libraries that help developers configure .NET applications using AWS services.",
+        "size_kb": 323,
+        "languages": {
+            "C#": 146558
+        }
+    },
+    {
+        "name": "aws-sdk-net-extensions-cognito",
+        "full_name": "aws/aws-sdk-net-extensions-cognito",
+        "url": "https://github.com/aws/aws-sdk-net-extensions-cognito",
+        "stars": 100,
+        "updated_at": "2024-10-16T20:31:53Z",
+        "description": "An extension library to assist in the Amazon Cognito User Pools authentication process",
+        "size_kb": 782,
+        "languages": {
+            "C#": 227038
+        }
+    },
+    {
+        "name": "aws-aspnet-cognito-identity-provider",
+        "full_name": "aws/aws-aspnet-cognito-identity-provider",
+        "url": "https://github.com/aws/aws-aspnet-cognito-identity-provider",
+        "stars": 220,
+        "updated_at": "2024-12-18T10:33:50Z",
+        "description": "ASP.NET Core Identity Provider for Amazon Cognito",
+        "size_kb": 1201,
+        "languages": {
+            "C#": 243229
+        }
+    },
+    {
+        "name": "aws-secretsmanager-caching-python",
+        "full_name": "aws/aws-secretsmanager-caching-python",
+        "url": "https://github.com/aws/aws-secretsmanager-caching-python",
+        "stars": 139,
+        "updated_at": "2025-02-13T22:51:48Z",
+        "description": "The AWS Secrets Manager Python caching client enables in-process caching of secrets for Python applications.",
+        "size_kb": 78,
+        "languages": {
+            "Python": 51368
+        }
+    },
+    {
+        "name": "aws-secretsmanager-jdbc",
+        "full_name": "aws/aws-secretsmanager-jdbc",
+        "url": "https://github.com/aws/aws-secretsmanager-jdbc",
+        "stars": 167,
+        "updated_at": "2025-03-04T05:37:48Z",
+        "description": "The AWS Secrets Manager JDBC Library enables Java developers to easily connect to SQL databases using secrets stored in AWS Secrets Manager.",
+        "size_kb": 133,
+        "languages": {
+            "Java": 160846
+        }
+    },
+    {
+        "name": "sagemaker-scikit-learn-container",
+        "full_name": "aws/sagemaker-scikit-learn-container",
+        "url": "https://github.com/aws/sagemaker-scikit-learn-container",
+        "stars": 176,
+        "updated_at": "2025-02-17T18:27:52Z",
+        "description": "Support code for building and running Amazon SageMaker compatible Docker containers based on the open source framework Scikit-learn (http://scikit-learn.org/stable/)",
+        "size_kb": 1012,
+        "languages": {
+            "Python": 81128,
+            "Java": 3485
+        }
+    },
+    {
+        "name": "containers-roadmap",
+        "full_name": "aws/containers-roadmap",
+        "url": "https://github.com/aws/containers-roadmap",
+        "stars": 5252,
+        "updated_at": "2025-03-06T14:19:16Z",
+        "description": "This is the public roadmap for AWS container services (ECS, ECR, Fargate, and EKS). ",
+        "size_kb": 187,
+        "languages": {
+            "Shell": 5010,
+            "PowerShell": 4815
+        }
+    },
+    {
+        "name": "aws-elastic-beanstalk-cli-setup",
+        "full_name": "aws/aws-elastic-beanstalk-cli-setup",
+        "url": "https://github.com/aws/aws-elastic-beanstalk-cli-setup",
+        "stars": 529,
+        "updated_at": "2025-02-19T05:06:26Z",
+        "description": "Simplified EB CLI installation mechanism.",
+        "size_kb": 534,
+        "languages": {
+            "Python": 29998
+        }
+    },
+    {
+        "name": "amazon-cloudwatch-logs-for-fluent-bit",
+        "full_name": "aws/amazon-cloudwatch-logs-for-fluent-bit",
+        "url": "https://github.com/aws/amazon-cloudwatch-logs-for-fluent-bit",
+        "stars": 177,
+        "updated_at": "2025-03-06T13:59:15Z",
+        "description": "A Fluent Bit output plugin for CloudWatch Logs",
+        "size_kb": 310,
+        "languages": {
+            "Go": 95178,
+            "Makefile": 1660,
+            "Shell": 1513
+        }
+    },
+    {
+        "name": "sagemaker-xgboost-container",
+        "full_name": "aws/sagemaker-xgboost-container",
+        "url": "https://github.com/aws/sagemaker-xgboost-container",
+        "stars": 133,
+        "updated_at": "2025-02-19T10:32:26Z",
+        "description": "This is the Docker container based on open source framework XGBoost (https://xgboost.readthedocs.io/en/latest/) to allow customers use their own XGBoost scripts in SageMaker.",
+        "size_kb": 849,
+        "languages": {
+            "Python": 462580,
+            "Java": 3485
+        }
+    },
+    {
+        "name": "sagemaker-inference-toolkit",
+        "full_name": "aws/sagemaker-inference-toolkit",
+        "url": "https://github.com/aws/sagemaker-inference-toolkit",
+        "stars": 400,
+        "updated_at": "2025-03-04T22:50:16Z",
+        "description": "Serve machine learning models within a \ud83d\udc33 Docker container using \ud83e\udde0 Amazon SageMaker.",
+        "size_kb": 683,
+        "languages": {
+            "Python": 117344,
+            "Dockerfile": 6440
+        }
+    },
+    {
+        "name": "amazon-eks-pod-identity-webhook",
+        "full_name": "aws/amazon-eks-pod-identity-webhook",
+        "url": "https://github.com/aws/amazon-eks-pod-identity-webhook",
+        "stars": 635,
+        "updated_at": "2025-03-06T14:16:38Z",
+        "description": "Amazon EKS Pod Identity Webhook",
+        "size_kb": 16191,
+        "languages": {
+            "Go": 93265,
+            "Makefile": 2445,
+            "Shell": 1603,
+            "Dockerfile": 552
+        }
+    },
+    {
+        "name": "sagemaker-pytorch-inference-toolkit",
+        "full_name": "aws/sagemaker-pytorch-inference-toolkit",
+        "url": "https://github.com/aws/sagemaker-pytorch-inference-toolkit",
+        "stars": 137,
+        "updated_at": "2025-03-04T22:54:13Z",
+        "description": "Toolkit for allowing inference and serving with PyTorch on SageMaker. Dockerfiles used for building SageMaker Pytorch Containers are at https://github.com/aws/deep-learning-containers.",
+        "size_kb": 131969,
+        "languages": {
+            "Python": 197365
+        }
+    },
+    {
+        "name": "eks-charts",
+        "full_name": "aws/eks-charts",
+        "url": "https://github.com/aws/eks-charts",
+        "stars": 1232,
+        "updated_at": "2025-03-06T18:45:13Z",
+        "description": "Amazon EKS Helm chart repository",
+        "size_kb": 109337,
+        "languages": {
+            "Mustache": 29961,
+            "Shell": 15960,
+            "Smarty": 4266,
+            "Makefile": 812
+        }
+    },
+    {
+        "name": "sagemaker-training-toolkit",
+        "full_name": "aws/sagemaker-training-toolkit",
+        "url": "https://github.com/aws/sagemaker-training-toolkit",
+        "stars": 505,
+        "updated_at": "2025-03-03T13:47:56Z",
+        "description": "Train machine learning models within a \ud83d\udc33 Docker container using \ud83e\udde0 Amazon SageMaker.",
+        "size_kb": 1084,
+        "languages": {
+            "Python": 399516,
+            "C": 13272,
+            "Dockerfile": 2755,
+            "Shell": 611
+        }
+    },
+    {
+        "name": "sagemaker-experiments",
+        "full_name": "aws/sagemaker-experiments",
+        "url": "https://github.com/aws/sagemaker-experiments",
+        "stars": 127,
+        "updated_at": "2024-11-14T04:56:48Z",
+        "description": "Experiment tracking and metric logging for Amazon SageMaker notebooks and model training.",
+        "size_kb": 491,
+        "languages": {
+            "Python": 285865,
+            "Dockerfile": 1371
+        }
+    },
+    {
+        "name": "aws-node-termination-handler",
+        "full_name": "aws/aws-node-termination-handler",
+        "url": "https://github.com/aws/aws-node-termination-handler",
+        "stars": 1660,
+        "updated_at": "2025-03-03T04:30:48Z",
+        "description": "Gracefully handle EC2 instance shutdown within Kubernetes",
+        "size_kb": 1941,
+        "languages": {
+            "Go": 394430,
+            "Shell": 262081,
+            "Mustache": 9224,
+            "Makefile": 8397,
+            "PowerShell": 4239,
+            "Dockerfile": 1643
+        }
+    },
+    {
+        "name": "aws-for-fluent-bit",
+        "full_name": "aws/aws-for-fluent-bit",
+        "url": "https://github.com/aws/aws-for-fluent-bit",
+        "stars": 482,
+        "updated_at": "2025-03-05T20:10:47Z",
+        "description": "The source of the amazon/aws-for-fluent-bit container image",
+        "size_kb": 19905,
+        "languages": {
+            "Shell": 117902,
+            "PowerShell": 63297,
+            "C++": 58724,
+            "Python": 55763,
+            "Go": 54527,
+            "Java": 10841,
+            "Makefile": 9419,
+            "Dockerfile": 3110,
+            "C": 2395,
+            "Batchfile": 437
+        }
+    },
+    {
+        "name": "aws-eks-best-practices",
+        "full_name": "aws/aws-eks-best-practices",
+        "url": "https://github.com/aws/aws-eks-best-practices",
+        "stars": 2088,
+        "updated_at": "2025-03-05T15:02:55Z",
+        "description": "A best practices guide for day 2 operations, including operational excellence, security, reliability, performance efficiency, and cost optimization.",
+        "size_kb": 74913,
+        "languages": {
+            "Python": 9282,
+            "Go": 2799,
+            "Shell": 1991,
+            "HTML": 614,
+            "Dockerfile": 530
+        }
+    },
+    {
+        "name": "constructs",
+        "full_name": "aws/constructs",
+        "url": "https://github.com/aws/constructs",
+        "stars": 419,
+        "updated_at": "2025-03-06T00:24:16Z",
+        "description": "Define composable configuration models through code",
+        "size_kb": 9163,
+        "languages": {
+            "TypeScript": 47762,
+            "Shell": 1117,
+            "Dockerfile": 124
+        }
+    },
+    {
+        "name": "aws-graviton-getting-started",
+        "full_name": "aws/aws-graviton-getting-started",
+        "url": "https://github.com/aws/aws-graviton-getting-started",
+        "stars": 914,
+        "updated_at": "2025-03-02T07:00:25Z",
+        "description": "Helping developers to use AWS Graviton2, Graviton3, and Graviton4 processors which power the 6th, 7th, and 8th generation of Amazon EC2 instances (C6g[d], M6g[d], R6g[d], T4g, X2gd, C6gn, I4g, Im4gn, Is4gen, G5g, C7g[d][n], M7g[d], R7g[d], R8g).",
+        "size_kb": 2261,
+        "languages": {
+            "Python": 65832,
+            "Shell": 42078,
+            "C": 16991,
+            "JavaScript": 624,
+            "Dockerfile": 130
+        }
+    },
+    {
+        "name": "amazon-ec2-metadata-mock",
+        "full_name": "aws/amazon-ec2-metadata-mock",
+        "url": "https://github.com/aws/amazon-ec2-metadata-mock",
+        "stars": 275,
+        "updated_at": "2025-02-24T19:53:27Z",
+        "description": "A tool to simulate Amazon EC2 instance metadata",
+        "size_kb": 561,
+        "languages": {
+            "Go": 133510,
+            "Shell": 112727,
+            "Makefile": 6934,
+            "Mustache": 3629,
+            "Dockerfile": 690
+        }
+    },
+    {
+        "name": "amazon-ec2-instance-selector",
+        "full_name": "aws/amazon-ec2-instance-selector",
+        "url": "https://github.com/aws/amazon-ec2-instance-selector",
+        "stars": 871,
+        "updated_at": "2025-03-05T09:50:07Z",
+        "description": "A CLI tool and go library which recommends instance types based on resource criteria like vcpus and memory",
+        "size_kb": 646,
+        "languages": {
+            "Go": 352336,
+            "Shell": 38827,
+            "Makefile": 4335,
+            "Dockerfile": 1025,
+            "HCL": 407
+        }
+    },
+    {
+        "name": "http-desync-guardian",
+        "full_name": "aws/http-desync-guardian",
+        "url": "https://github.com/aws/http-desync-guardian",
+        "stars": 262,
+        "updated_at": "2025-01-16T13:06:53Z",
+        "description": "Analyze HTTP requests to minimize risks of HTTP Desync attacks (precursor for HTTP request smuggling/splitting). ",
+        "size_kb": 468,
+        "languages": {
+            "Rust": 202537,
+            "C": 34198
+        }
+    },
+    {
+        "name": "ec2-macos-init",
+        "full_name": "aws/ec2-macos-init",
+        "url": "https://github.com/aws/ec2-macos-init",
+        "stars": 152,
+        "updated_at": "2025-01-07T03:15:48Z",
+        "description": "EC2 macOS Init is the launch daemon used to initialize Mac instances within EC2.",
+        "size_kb": 110,
+        "languages": {
+            "Go": 98657,
+            "Makefile": 880,
+            "Shell": 781
+        }
+    },
+    {
+        "name": "aws-lambda-nodejs-runtime-interface-client",
+        "full_name": "aws/aws-lambda-nodejs-runtime-interface-client",
+        "url": "https://github.com/aws/aws-lambda-nodejs-runtime-interface-client",
+        "stars": 197,
+        "updated_at": "2025-03-02T00:41:47Z",
+        "description": null,
+        "size_kb": 38689,
+        "languages": {
+            "JavaScript": 138369,
+            "Shell": 16011,
+            "C++": 6069,
+            "Makefile": 1521,
+            "Python": 1310,
+            "TypeScript": 76
+        }
+    },
+    {
+        "name": "aws-msk-iam-auth",
+        "full_name": "aws/aws-msk-iam-auth",
+        "url": "https://github.com/aws/aws-msk-iam-auth",
+        "stars": 151,
+        "updated_at": "2025-02-23T04:10:50Z",
+        "description": "Enables developers to use AWS Identity and Access Management (IAM) to connect to their Amazon Managed Streaming for Apache Kafka (Amazon MSK) clusters.",
+        "size_kb": 392,
+        "languages": {
+            "Java": 148421
+        }
+    },
+    {
+        "name": "aws-lambda-python-runtime-interface-client",
+        "full_name": "aws/aws-lambda-python-runtime-interface-client",
+        "url": "https://github.com/aws/aws-lambda-python-runtime-interface-client",
+        "stars": 272,
+        "updated_at": "2025-02-27T17:04:11Z",
+        "description": null,
+        "size_kb": 32571,
+        "languages": {
+            "Python": 123172,
+            "Shell": 13729,
+            "C++": 5528,
+            "Makefile": 2042
+        }
+    },
+    {
+        "name": "eks-distro",
+        "full_name": "aws/eks-distro",
+        "url": "https://github.com/aws/eks-distro",
+        "stars": 1400,
+        "updated_at": "2025-03-04T17:43:07Z",
+        "description": "Amazon EKS Distro (EKS-D) is a Kubernetes distribution based on and used by Amazon Elastic Kubernetes Service (EKS) to create reliable and secure Kubernetes clusters.",
+        "size_kb": 60384,
+        "languages": {
+            "Shell": 199504,
+            "Makefile": 147745,
+            "Go": 77895,
+            "Dockerfile": 18754,
+            "Smarty": 12943
+        }
+    },
+    {
+        "name": "aws-cdk-go",
+        "full_name": "aws/aws-cdk-go",
+        "url": "https://github.com/aws/aws-cdk-go",
+        "stars": 171,
+        "updated_at": "2025-03-06T09:17:50Z",
+        "description": "AWS CDK bindings for Go.",
+        "size_kb": 18666378,
+        "languages": {
+            "Go": 49399
+        }
+    },
+    {
+        "name": "amazon-s3-plugin-for-pytorch",
+        "full_name": "aws/amazon-s3-plugin-for-pytorch",
+        "url": "https://github.com/aws/amazon-s3-plugin-for-pytorch",
+        "stars": 167,
+        "updated_at": "2025-02-12T06:39:13Z",
+        "description": null,
+        "size_kb": 15557,
+        "languages": {
+            "Python": 46053,
+            "C++": 19108,
+            "CMake": 662,
+            "Shell": 391
+        }
+    },
+    {
+        "name": "secrets-store-csi-driver-provider-aws",
+        "full_name": "aws/secrets-store-csi-driver-provider-aws",
+        "url": "https://github.com/aws/secrets-store-csi-driver-provider-aws",
+        "stars": 495,
+        "updated_at": "2025-03-05T20:01:12Z",
+        "description": "The AWS provider for the Secrets Store CSI Driver allows you to fetch secrets from AWS Secrets Manager and AWS Systems Manager Parameter Store, and mount them into Kubernetes pods.",
+        "size_kb": 203,
+        "languages": {
+            "Go": 199074,
+            "Shell": 14208,
+            "Makefile": 2702,
+            "Smarty": 1718,
+            "Dockerfile": 416
+        }
+    },
+    {
+        "name": "aws-mwaa-local-runner",
+        "full_name": "aws/aws-mwaa-local-runner",
+        "url": "https://github.com/aws/aws-mwaa-local-runner",
+        "stars": 740,
+        "updated_at": "2025-03-06T19:11:41Z",
+        "description": "This repository provides a command line interface (CLI) utility that replicates an Amazon Managed Workflows for Apache Airflow (MWAA) environment locally.",
+        "size_kb": 180,
+        "languages": {
+            "Shell": 17030,
+            "Python": 3523,
+            "Dockerfile": 1913
+        }
+    },
+    {
+        "name": "session-manager-plugin",
+        "full_name": "aws/session-manager-plugin",
+        "url": "https://github.com/aws/session-manager-plugin",
+        "stars": 275,
+        "updated_at": "2025-03-04T07:56:56Z",
+        "description": "This plugin helps you to use the AWS Command Line Interface (AWS CLI) to start and end sessions to your managed instances",
+        "size_kb": 55937,
+        "languages": {
+            "Go": 329253,
+            "Shell": 50885,
+            "Makefile": 13465,
+            "Batchfile": 5071,
+            "Python": 3416,
+            "Dockerfile": 207
+        }
+    },
+    {
+        "name": "sagemaker-huggingface-inference-toolkit",
+        "full_name": "aws/sagemaker-huggingface-inference-toolkit",
+        "url": "https://github.com/aws/sagemaker-huggingface-inference-toolkit",
+        "stars": 247,
+        "updated_at": "2025-03-03T21:38:40Z",
+        "description": null,
+        "size_kb": 2991,
+        "languages": {
+            "Python": 111925,
+            "Makefile": 636
+        }
+    },
+    {
+        "name": "amazon-ivs-react-native-player",
+        "full_name": "aws/amazon-ivs-react-native-player",
+        "url": "https://github.com/aws/amazon-ivs-react-native-player",
+        "stars": 302,
+        "updated_at": "2025-03-06T06:57:39Z",
+        "description": "A React Native wrapper for the Amazon IVS iOS and Android player SDKs.",
+        "size_kb": 2289,
+        "languages": {
+            "TypeScript": 104300,
+            "Kotlin": 21758,
+            "Swift": 19009,
+            "Java": 17089,
+            "C++": 7023,
+            "Objective-C++": 4469,
+            "Objective-C": 3333,
+            "Ruby": 3214,
+            "JavaScript": 1646,
+            "Makefile": 1532,
+            "Shell": 637,
+            "C": 103
+        }
+    },
+    {
+        "name": "amazon-ecs-ami",
+        "full_name": "aws/amazon-ecs-ami",
+        "url": "https://github.com/aws/amazon-ecs-ami",
+        "stars": 213,
+        "updated_at": "2025-03-04T18:33:54Z",
+        "description": "Packer recipes for building the official ECS-optimized Amazon Linux AMIs",
+        "size_kb": 400,
+        "languages": {
+            "Shell": 78489,
+            "HCL": 42899,
+            "Makefile": 4240
+        }
+    },
+    {
+        "name": "clock-bound",
+        "full_name": "aws/clock-bound",
+        "url": "https://github.com/aws/clock-bound",
+        "stars": 278,
+        "updated_at": "2025-03-03T09:39:37Z",
+        "description": "Used to generate and compare bounded timestamps.",
+        "size_kb": 451,
+        "languages": {
+            "Rust": 166890,
+            "C": 3213
+        }
+    },
+    {
+        "name": "pg_tle",
+        "full_name": "aws/pg_tle",
+        "url": "https://github.com/aws/pg_tle",
+        "stars": 350,
+        "updated_at": "2025-03-06T05:46:40Z",
+        "description": "Framework for building trusted language extensions for PostgreSQL",
+        "size_kb": 501,
+        "languages": {
+            "C": 269462,
+            "PLpgSQL": 185608,
+            "Perl": 43365,
+            "Lex": 14254,
+            "Shell": 9781,
+            "Makefile": 1039
+        }
+    },
+    {
+        "name": "rolesanywhere-credential-helper",
+        "full_name": "aws/rolesanywhere-credential-helper",
+        "url": "https://github.com/aws/rolesanywhere-credential-helper",
+        "stars": 139,
+        "updated_at": "2025-03-05T20:48:38Z",
+        "description": null,
+        "size_kb": 1993,
+        "languages": {
+            "Go": 225421,
+            "Makefile": 14735,
+            "Shell": 6198
+        }
+    },
+    {
+        "name": "credentials-fetcher",
+        "full_name": "aws/credentials-fetcher",
+        "url": "https://github.com/aws/credentials-fetcher",
+        "stars": 108,
+        "updated_at": "2025-01-28T18:25:45Z",
+        "description": "Credentials-fetcher is a Linux daemon that retrieves gMSA credentials from Active Directory over LDAP. It creates and refreshes kerberos tickets from gMSA credentials. Kerberos tickets can be used by containers to run apps/services that authenticate using Active Directory.",
+        "size_kb": 9480,
+        "languages": {
+            "C++": 278239,
+            "C": 276690,
+            "Python": 80015,
+            "CMake": 21050,
+            "PowerShell": 14093,
+            "Shell": 8490,
+            "Dockerfile": 966,
+            "C#": 863,
+            "Batchfile": 437
+        }
+    },
+    {
+        "name": "porting-advisor-for-graviton",
+        "full_name": "aws/porting-advisor-for-graviton",
+        "url": "https://github.com/aws/porting-advisor-for-graviton",
+        "stars": 174,
+        "updated_at": "2025-02-20T17:05:16Z",
+        "description": null,
+        "size_kb": 192,
+        "languages": {
+            "Python": 298526,
+            "Java": 27105,
+            "HTML": 20795,
+            "Shell": 13174,
+            "PowerShell": 9622,
+            "Dockerfile": 764,
+            "Go": 215,
+            "Ruby": 19
+        }
+    },
+    {
+        "name": "aws-imds-packet-analyzer",
+        "full_name": "aws/aws-imds-packet-analyzer",
+        "url": "https://github.com/aws/aws-imds-packet-analyzer",
+        "stars": 130,
+        "updated_at": "2025-03-06T15:51:55Z",
+        "description": null,
+        "size_kb": 68,
+        "languages": {
+            "Python": 16210,
+            "Shell": 6061,
+            "C": 3717
+        }
+    },
+    {
+        "name": "aws-secretsmanager-agent",
+        "full_name": "aws/aws-secretsmanager-agent",
+        "url": "https://github.com/aws/aws-secretsmanager-agent",
+        "stars": 620,
+        "updated_at": "2025-03-05T20:01:20Z",
+        "description": "The AWS Secrets Manager Agent is a local HTTP service that you can install and use in your compute environments to read secrets from Secrets Manager and cache them in memory.",
+        "size_kb": 144,
+        "languages": {
+            "Rust": 155079,
+            "Shell": 6493,
+            "Dockerfile": 358
+        }
+    }
+]

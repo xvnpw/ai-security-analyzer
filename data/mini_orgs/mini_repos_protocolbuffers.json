@@ -1,0 +1,44 @@
+[
+    {
+        "name": "txtpbfmt",
+        "full_name": "protocolbuffers/txtpbfmt",
+        "url": "https://github.com/protocolbuffers/txtpbfmt",
+        "stars": 106,
+        "updated_at": "2025-02-27T13:17:53Z",
+        "description": "txtpbfmt parses, edits and formats text proto files in a way that preserves comments.",
+        "size_kb": 489,
+        "languages": {
+            "Go": 145533
+        }
+    },
+    {
+        "name": "protoscope",
+        "full_name": "protocolbuffers/protoscope",
+        "url": "https://github.com/protocolbuffers/protoscope",
+        "stars": 331,
+        "updated_at": "2025-03-05T22:58:25Z",
+        "description": "Protoscope is a simple, human-editable language for representing and emitting the Protobuf wire format. ",
+        "size_kb": 127,
+        "languages": {
+            "Go": 64922
+        }
+    },
+    {
+        "name": "rules_ruby",
+        "full_name": "protocolbuffers/rules_ruby",
+        "url": "https://github.com/protocolbuffers/rules_ruby",
+        "stars": 4,
+        "updated_at": "2024-11-15T04:55:48Z",
+        "description": "Ruby Rules for Bazel. This is a fork of https://github.com/bazelruby/rules_ruby exclusively for protobuf internal usage",
+        "size_kb": 4443,
+        "languages": {
+            "Starlark": 70112,
+            "Shell": 35669,
+            "Ruby": 16620,
+            "Smarty": 4677,
+            "Dockerfile": 4254,
+            "Makefile": 1868,
+            "C": 199
+        }
+    }
+]

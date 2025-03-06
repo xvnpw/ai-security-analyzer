@@ -1,0 +1,26 @@
+[
+    {
+        "name": "txtpbfmt",
+        "full_name": "protocolbuffers/txtpbfmt",
+        "url": "https://github.com/protocolbuffers/txtpbfmt",
+        "stars": 106,
+        "updated_at": "2025-02-27T13:17:53Z",
+        "description": "txtpbfmt parses, edits and formats text proto files in a way that preserves comments.",
+        "size_kb": 489,
+        "languages": {
+            "Go": 145533
+        }
+    },
+    {
+        "name": "protoscope",
+        "full_name": "protocolbuffers/protoscope",
+        "url": "https://github.com/protocolbuffers/protoscope",
+        "stars": 331,
+        "updated_at": "2025-03-05T22:58:25Z",
+        "description": "Protoscope is a simple, human-editable language for representing and emitting the Protobuf wire format. ",
+        "size_kb": 127,
+        "languages": {
+            "Go": 64922
+        }
+    }
+]

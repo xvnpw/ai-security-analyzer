@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Library",
+        "full_name": "OctopusDeploy/Library",
+        "url": "https://github.com/OctopusDeploy/Library",
+        "stars": 173,
+        "updated_at": "2025-02-26T15:24:40Z",
+        "description": "| Public |  A repository of step templates and other community-contributed extensions to Octopus Deploy",
+        "size_kb": 17120,
+        "languages": {
+            "PowerShell": 63494,
+            "JavaScript": 45965,
+            "SCSS": 9888,
+            "Shell": 3923,
+            "C#": 2593,
+            "Pug": 2082,
+            "Batchfile": 979
+        }
+    }
+]

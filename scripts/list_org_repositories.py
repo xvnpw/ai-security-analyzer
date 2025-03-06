@@ -29,7 +29,7 @@ whitelisted_repos = [
     "dotnet/WatsonWebserver",
 ]
 
-excluded_languages = ["HTML", "Jupyter Notebook", "Markdown", "YAML", "JSON", "XML", "CSS", "CartoCSS"]
+excluded_languages = ["HTML", "Jupyter Notebook", "Markdown", "YAML", "JSON", "XML", "CSS", "CartoCSS", "Vim Script"]
 
 
 def get_org_repos(
@@ -52,7 +52,7 @@ def get_org_repos(
     """
     all_repos = []
     now = datetime.datetime.now(datetime.timezone.utc)
-    one_year_ago = now - datetime.timedelta(days=365 * 5)
+    one_year_ago = now - datetime.timedelta(days=365 * 1)
     one_year_ago_str = one_year_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
 
     headers = {
@@ -106,6 +106,11 @@ def get_org_repos(
                         tzinfo=datetime.timezone.utc
                     )
 
+                    stars = repo.get("stargazers_count", 0)
+                    if stars < 100:
+                        print(f"Skipping {repo_full_name} because of stars: {stars}")
+                        continue
+
                     if updated_at > one_year_ago:
                         # Get Language Stats
                         languages = {}
@@ -125,7 +130,7 @@ def get_org_repos(
 
                         if main_lang:
                             main_lang_size = languages[main_lang]
-                            if main_lang_size > 5000_000:
+                            if main_lang_size > 500_000:
                                 print(f"Skipping {repo['full_name']} because of main language size: {main_lang_size}")
                                 continue
                         if main_lang in excluded_languages:

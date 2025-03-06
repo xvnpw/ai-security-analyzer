@@ -1,0 +1,262 @@
+[
+    {
+        "name": "SocketRocket",
+        "full_name": "facebookincubator/SocketRocket",
+        "url": "https://github.com/facebookincubator/SocketRocket",
+        "stars": 9583,
+        "updated_at": "2025-03-04T05:20:33Z",
+        "description": "A conforming Objective-C WebSocket client library.",
+        "size_kb": 2458,
+        "languages": {
+            "Objective-C": 167984,
+            "JavaScript": 2688,
+            "Python": 2211,
+            "Go": 1478,
+            "C": 1290,
+            "Shell": 1212,
+            "Ruby": 1084,
+            "HTML": 747,
+            "Makefile": 707
+        }
+    },
+    {
+        "name": "dhcplb",
+        "full_name": "facebookincubator/dhcplb",
+        "url": "https://github.com/facebookincubator/dhcplb",
+        "stars": 1049,
+        "updated_at": "2025-02-28T18:04:21Z",
+        "description": "dhcplb is Facebook's implementation of a load balancer for DHCP.",
+        "size_kb": 247,
+        "languages": {
+            "Go": 56831,
+            "Ruby": 5662,
+            "HTML": 1591
+        }
+    },
+    {
+        "name": "Battery-Metrics",
+        "full_name": "facebookincubator/Battery-Metrics",
+        "url": "https://github.com/facebookincubator/Battery-Metrics",
+        "stars": 750,
+        "updated_at": "2025-03-05T18:25:56Z",
+        "description": "Library that helps in instrumenting battery related system metrics.",
+        "size_kb": 945,
+        "languages": {
+            "Java": 435025,
+            "Kotlin": 18537
+        }
+    },
+    {
+        "name": "FBX2glTF",
+        "full_name": "facebookincubator/FBX2glTF",
+        "url": "https://github.com/facebookincubator/FBX2glTF",
+        "stars": 2135,
+        "updated_at": "2025-03-05T19:31:18Z",
+        "description": "A command-line tool for the conversion of 3D model assets on the FBX file format to the glTF file format.",
+        "size_kb": 8567,
+        "languages": {
+            "C++": 243653,
+            "CMake": 10664,
+            "JavaScript": 3127,
+            "Dockerfile": 1187,
+            "Python": 972
+        }
+    },
+    {
+        "name": "Bowler",
+        "full_name": "facebookincubator/Bowler",
+        "url": "https://github.com/facebookincubator/Bowler",
+        "stars": 1588,
+        "updated_at": "2025-03-01T18:59:08Z",
+        "description": "Safe code refactoring for modern Python.",
+        "size_kb": 1092,
+        "languages": {
+            "Python": 118593,
+            "JavaScript": 13346,
+            "CSS": 847,
+            "Makefile": 782,
+            "Shell": 481
+        }
+    },
+    {
+        "name": "senpai",
+        "full_name": "facebookincubator/senpai",
+        "url": "https://github.com/facebookincubator/senpai",
+        "stars": 316,
+        "updated_at": "2025-02-08T18:00:00Z",
+        "description": "Senpai is an automated memory sizing tool for container applications.",
+        "size_kb": 11,
+        "languages": {
+            "Python": 6335
+        }
+    },
+    {
+        "name": "fbjni",
+        "full_name": "facebookincubator/fbjni",
+        "url": "https://github.com/facebookincubator/fbjni",
+        "stars": 287,
+        "updated_at": "2025-02-26T03:06:31Z",
+        "description": "A library designed to simplify the usage of the Java Native Interface",
+        "size_kb": 747,
+        "languages": {
+            "C++": 427827,
+            "Java": 92515,
+            "CMake": 6500,
+            "C": 4432,
+            "Shell": 1272
+        }
+    },
+    {
+        "name": "FioSynth",
+        "full_name": "facebookincubator/FioSynth",
+        "url": "https://github.com/facebookincubator/FioSynth",
+        "stars": 144,
+        "updated_at": "2025-02-26T16:53:26Z",
+        "description": "Tool which enables the creation of synthetic storage workloads, automates the execution and results collection of synthetic storage benchmarks.",
+        "size_kb": 277,
+        "languages": {
+            "Python": 80494,
+            "Roff": 7999,
+            "Shell": 146
+        }
+    },
+    {
+        "name": "submitit",
+        "full_name": "facebookincubator/submitit",
+        "url": "https://github.com/facebookincubator/submitit",
+        "stars": 1386,
+        "updated_at": "2025-03-06T06:11:52Z",
+        "description": "Python 3.8+ toolbox for submitting jobs to Slurm",
+        "size_kb": 312,
+        "languages": {
+            "Python": 205019,
+            "Makefile": 3314,
+            "Shell": 451
+        }
+    },
+    {
+        "name": "reindeer",
+        "full_name": "facebookincubator/reindeer",
+        "url": "https://github.com/facebookincubator/reindeer",
+        "stars": 195,
+        "updated_at": "2025-03-06T11:52:49Z",
+        "description": "Reindeer is a tool to transform Rust Cargo dependencies into generated Buck build rules",
+        "size_kb": 6147,
+        "languages": {
+            "Rust": 272784,
+            "Shell": 662,
+            "Starlark": 234
+        }
+    },
+    {
+        "name": "meta-code-verify",
+        "full_name": "facebookincubator/meta-code-verify",
+        "url": "https://github.com/facebookincubator/meta-code-verify",
+        "stars": 156,
+        "updated_at": "2025-03-03T21:54:31Z",
+        "description": "Code Verify is an open source web browser extension that confirms that your Facebook, Messenger, Instagram, and WhatsApp Web code hasn\u2019t been tampered with or altered, and that the Web experience you\u2019re getting is the same as everyone else\u2019s.",
+        "size_kb": 802,
+        "languages": {
+            "TypeScript": 100155,
+            "JavaScript": 46033,
+            "HTML": 6723,
+            "CSS": 4707
+        }
+    },
+    {
+        "name": "GeoLift",
+        "full_name": "facebookincubator/GeoLift",
+        "url": "https://github.com/facebookincubator/GeoLift",
+        "stars": 195,
+        "updated_at": "2025-02-26T21:24:30Z",
+        "description": "GeoLift is an end-to-end geo-experimental methodology based on Synthetic Control Methods used to measure the true incremental effect (Lift) of ad campaign.",
+        "size_kb": 54257,
+        "languages": {
+            "R": 232825,
+            "JavaScript": 10337,
+            "CSS": 2218
+        }
+    },
+    {
+        "name": "superconsole",
+        "full_name": "facebookincubator/superconsole",
+        "url": "https://github.com/facebookincubator/superconsole",
+        "stars": 490,
+        "updated_at": "2025-03-05T17:19:24Z",
+        "description": "The superconsole crate provides a handler and building blocks for powerful, yet minimally intrusive TUIs.  It is cross platform, supporting Windows 7+, Linux, and MacOS.  Rustaceans who want to create non-interactive TUIs can use the component composition building block system to quickly deploy their code.",
+        "size_kb": 6691,
+        "languages": {
+            "Rust": 148491
+        }
+    },
+    {
+        "name": "tacquito",
+        "full_name": "facebookincubator/tacquito",
+        "url": "https://github.com/facebookincubator/tacquito",
+        "stars": 102,
+        "updated_at": "2025-03-05T01:15:51Z",
+        "description": "Tacquito is an open source TACACs+ server written in Go that implements RFC8907",
+        "size_kb": 289,
+        "languages": {
+            "Go": 367898
+        }
+    },
+    {
+        "name": "TTPForge",
+        "full_name": "facebookincubator/TTPForge",
+        "url": "https://github.com/facebookincubator/TTPForge",
+        "stars": 362,
+        "updated_at": "2025-03-04T23:03:08Z",
+        "description": "The TTPForge is a Cybersecurity Framework for developing, automating, and executing attacker Tactics, Techniques, and Procedures (TTPs).",
+        "size_kb": 606,
+        "languages": {
+            "Go": 379711,
+            "Shell": 14291
+        }
+    },
+    {
+        "name": "ForgeArmory",
+        "full_name": "facebookincubator/ForgeArmory",
+        "url": "https://github.com/facebookincubator/ForgeArmory",
+        "stars": 102,
+        "updated_at": "2025-03-04T23:03:28Z",
+        "description": "ForgeArmory provides TTPs that can be used with the TTPForge (https://github.com/facebookincubator/ttpforge).",
+        "size_kb": 434,
+        "languages": {
+            "Swift": 104187,
+            "PowerShell": 15513,
+            "C": 5601,
+            "JavaScript": 4558,
+            "Shell": 3040,
+            "Python": 2049,
+            "Makefile": 155
+        }
+    },
+    {
+        "name": "dataclassgenerate",
+        "full_name": "facebookincubator/dataclassgenerate",
+        "url": "https://github.com/facebookincubator/dataclassgenerate",
+        "stars": 156,
+        "updated_at": "2025-02-21T15:56:06Z",
+        "description": "DataClassGenerate (or simply DCG) is a Kotlin compiler plugin that addresses an Android APK size overhead from Kotlin data classes. ",
+        "size_kb": 202,
+        "languages": {
+            "Kotlin": 49943
+        }
+    },
+    {
+        "name": "strobelight",
+        "full_name": "facebookincubator/strobelight",
+        "url": "https://github.com/facebookincubator/strobelight",
+        "stars": 116,
+        "updated_at": "2025-03-06T18:57:58Z",
+        "description": "Meta's fleetwide profiler framework",
+        "size_kb": 58,
+        "languages": {
+            "C++": 19999,
+            "CMake": 10209,
+            "C": 3525,
+            "Shell": 3136
+        }
+    }
+]

@@ -1,0 +1,3903 @@
+[
+    {
+        "name": "ios-webkit-debug-proxy",
+        "full_name": "google/ios-webkit-debug-proxy",
+        "url": "https://github.com/google/ios-webkit-debug-proxy",
+        "stars": 6013,
+        "updated_at": "2025-03-05T22:33:41Z",
+        "description": "A DevTools proxy (Chrome Remote Debugging Protocol) for iOS devices (Safari Remote Web Inspector).",
+        "size_kb": 697,
+        "languages": {
+            "C": 253665,
+            "M4": 3368,
+            "Makefile": 2252,
+            "Shell": 418
+        }
+    },
+    {
+        "name": "ansicolor-dart",
+        "full_name": "google/ansicolor-dart",
+        "url": "https://github.com/google/ansicolor-dart",
+        "stars": 104,
+        "updated_at": "2024-12-11T22:07:27Z",
+        "description": null,
+        "size_kb": 197,
+        "languages": {
+            "Dart": 12376
+        }
+    },
+    {
+        "name": "data-layer-helper",
+        "full_name": "google/data-layer-helper",
+        "url": "https://github.com/google/data-layer-helper",
+        "stars": 438,
+        "updated_at": "2025-01-10T03:13:17Z",
+        "description": "JavaScript library for working with dataLayer message queues.",
+        "size_kb": 906,
+        "languages": {
+            "JavaScript": 167875,
+            "CSS": 4668
+        }
+    },
+    {
+        "name": "webdriver.dart",
+        "full_name": "google/webdriver.dart",
+        "url": "https://github.com/google/webdriver.dart",
+        "stars": 138,
+        "updated_at": "2025-03-05T03:09:59Z",
+        "description": "Dart WebDriver client",
+        "size_kb": 1086,
+        "languages": {
+            "Dart": 391780,
+            "JavaScript": 5178,
+            "HTML": 2465
+        }
+    },
+    {
+        "name": "quiver-dart",
+        "full_name": "google/quiver-dart",
+        "url": "https://github.com/google/quiver-dart",
+        "stars": 1044,
+        "updated_at": "2025-03-02T20:17:20Z",
+        "description": "A set of utility libraries for Dart",
+        "size_kb": 1370,
+        "languages": {
+            "Dart": 420760
+        }
+    },
+    {
+        "name": "go-querystring",
+        "full_name": "google/go-querystring",
+        "url": "https://github.com/google/go-querystring",
+        "stars": 2033,
+        "updated_at": "2025-03-05T03:35:51Z",
+        "description": "go-querystring is Go library for encoding structs into URL query strings.",
+        "size_kb": 68,
+        "languages": {
+            "Go": 25279
+        }
+    },
+    {
+        "name": "grinder.dart",
+        "full_name": "google/grinder.dart",
+        "url": "https://github.com/google/grinder.dart",
+        "stars": 265,
+        "updated_at": "2024-12-02T16:55:49Z",
+        "description": "Dart workflows, automated",
+        "size_kb": 2868,
+        "languages": {
+            "Dart": 134832
+        }
+    },
+    {
+        "name": "extra-keyboards-for-chrome-os",
+        "full_name": "google/extra-keyboards-for-chrome-os",
+        "url": "https://github.com/google/extra-keyboards-for-chrome-os",
+        "stars": 208,
+        "updated_at": "2025-02-23T15:06:26Z",
+        "description": "Extra keyboard layouts and input methods for Chrome OS",
+        "size_kb": 220,
+        "languages": {
+            "JavaScript": 136158,
+            "HTML": 4152
+        }
+    },
+    {
+        "name": "sre_yield",
+        "full_name": "google/sre_yield",
+        "url": "https://github.com/google/sre_yield",
+        "stars": 186,
+        "updated_at": "2024-12-30T22:21:40Z",
+        "description": "Python module to generate regular all expression matches",
+        "size_kb": 126,
+        "languages": {
+            "Python": 84907,
+            "Shell": 1755,
+            "Makefile": 949
+        }
+    },
+    {
+        "name": "snappy",
+        "full_name": "google/snappy",
+        "url": "https://github.com/google/snappy",
+        "stars": 6283,
+        "updated_at": "2025-03-06T17:19:11Z",
+        "description": "A fast compressor/decompressor",
+        "size_kb": 2802,
+        "languages": {
+            "C++": 267625,
+            "CMake": 16521,
+            "Starlark": 7668,
+            "C": 5414
+        }
+    },
+    {
+        "name": "vimdoc",
+        "full_name": "google/vimdoc",
+        "url": "https://github.com/google/vimdoc",
+        "stars": 294,
+        "updated_at": "2025-02-26T11:42:04Z",
+        "description": "Helpfile generation for vim ",
+        "size_kb": 146,
+        "languages": {
+            "Python": 84858
+        }
+    },
+    {
+        "name": "nsscache",
+        "full_name": "google/nsscache",
+        "url": "https://github.com/google/nsscache",
+        "stars": 146,
+        "updated_at": "2025-02-27T07:37:57Z",
+        "description": "asynchronously synchronise local NSS databases with remote directory services",
+        "size_kb": 1256,
+        "languages": {
+            "Python": 499317,
+            "Roff": 14335,
+            "Shell": 10115,
+            "Makefile": 513,
+            "Dockerfile": 427
+        }
+    },
+    {
+        "name": "cronutils",
+        "full_name": "google/cronutils",
+        "url": "https://github.com/google/cronutils",
+        "stars": 119,
+        "updated_at": "2025-01-15T16:39:33Z",
+        "description": "utilities to assist running periodic batch processing jobs",
+        "size_kb": 107,
+        "languages": {
+            "C": 24219,
+            "Roff": 3829,
+            "Shell": 2779,
+            "Makefile": 2038,
+            "Starlark": 1245
+        }
+    },
+    {
+        "name": "kernel-sanitizers",
+        "full_name": "google/kernel-sanitizers",
+        "url": "https://github.com/google/kernel-sanitizers",
+        "stars": 452,
+        "updated_at": "2025-02-24T03:55:15Z",
+        "description": "Linux Kernel Sanitizers, fast bug-detectors for the Linux kernel",
+        "size_kb": 2939274,
+        "languages": {
+            "Python": 12759
+        }
+    },
+    {
+        "name": "xsecurelock",
+        "full_name": "google/xsecurelock",
+        "url": "https://github.com/google/xsecurelock",
+        "stars": 892,
+        "updated_at": "2025-03-01T07:19:38Z",
+        "description": "X11 screen lock utility with security in mind",
+        "size_kb": 764,
+        "languages": {
+            "C": 227701,
+            "Shell": 18503,
+            "M4": 14912,
+            "Makefile": 6568
+        }
+    },
+    {
+        "name": "btree",
+        "full_name": "google/btree",
+        "url": "https://github.com/google/btree",
+        "stars": 4025,
+        "updated_at": "2025-03-06T10:02:06Z",
+        "description": "BTree provides a simple, ordered, in-memory data structure for Go programs.",
+        "size_kb": 64,
+        "languages": {
+            "Go": 100629
+        }
+    },
+    {
+        "name": "CausalImpact",
+        "full_name": "google/CausalImpact",
+        "url": "https://github.com/google/CausalImpact",
+        "stars": 1731,
+        "updated_at": "2025-03-04T14:05:13Z",
+        "description": "An R package for causal inference in time series",
+        "size_kb": 3308,
+        "languages": {
+            "R": 172817
+        }
+    },
+    {
+        "name": "macops",
+        "full_name": "google/macops",
+        "url": "https://github.com/google/macops",
+        "stars": 820,
+        "updated_at": "2025-02-27T08:40:50Z",
+        "description": "Utilities, tools, and scripts for managing and tracking a fleet of Macintoshes in a corporate environment",
+        "size_kb": 1218,
+        "languages": {
+            "Python": 404292,
+            "Objective-C": 20064,
+            "Makefile": 19923,
+            "Ruby": 8289,
+            "Shell": 3514,
+            "C": 1775
+        }
+    },
+    {
+        "name": "adb-sync",
+        "full_name": "google/adb-sync",
+        "url": "https://github.com/google/adb-sync",
+        "stars": 1093,
+        "updated_at": "2025-02-25T19:29:34Z",
+        "description": null,
+        "size_kb": 35,
+        "languages": {
+            "Python": 31186,
+            "Shell": 470
+        }
+    },
+    {
+        "name": "redgrep",
+        "full_name": "google/redgrep",
+        "url": "https://github.com/google/redgrep",
+        "stars": 162,
+        "updated_at": "2025-03-06T12:30:00Z",
+        "description": "\u2665 Janusz Brzozowski",
+        "size_kb": 184,
+        "languages": {
+            "C++": 119411,
+            "Yacc": 7307,
+            "Starlark": 5274
+        }
+    },
+    {
+        "name": "open-location-code",
+        "full_name": "google/open-location-code",
+        "url": "https://github.com/google/open-location-code",
+        "stars": 4164,
+        "updated_at": "2025-03-06T18:29:48Z",
+        "description": "Open Location Code is a library to generate short codes, called \"plus codes\", that can be used as digital addresses where street addresses don't exist.",
+        "size_kb": 4767,
+        "languages": {
+            "Java": 155352,
+            "JavaScript": 96417,
+            "Go": 65173,
+            "C++": 50477,
+            "C": 32104,
+            "Dart": 31734,
+            "HTML": 30744,
+            "Python": 30471,
+            "VBA": 28725,
+            "Rust": 24859,
+            "PLpgSQL": 22759,
+            "Ruby": 18445,
+            "Monkey C": 9658,
+            "Starlark": 8130,
+            "Shell": 6513,
+            "CSS": 1518,
+            "Makefile": 1179
+        }
+    },
+    {
+        "name": "recaptcha",
+        "full_name": "google/recaptcha",
+        "url": "https://github.com/google/recaptcha",
+        "stars": 3501,
+        "updated_at": "2025-03-03T09:42:59Z",
+        "description": "PHP client library for reCAPTCHA, a free service to protect your website from spam and abuse.",
+        "size_kb": 294,
+        "languages": {
+            "PHP": 73953
+        }
+    },
+    {
+        "name": "woff2",
+        "full_name": "google/woff2",
+        "url": "https://github.com/google/woff2",
+        "stars": 1572,
+        "updated_at": "2025-03-06T10:56:44Z",
+        "description": null,
+        "size_kb": 3559,
+        "languages": {
+            "C++": 149497,
+            "CMake": 10843,
+            "Makefile": 1657
+        }
+    },
+    {
+        "name": "todo-tracks",
+        "full_name": "google/todo-tracks",
+        "url": "https://github.com/google/todo-tracks",
+        "stars": 183,
+        "updated_at": "2025-01-27T02:18:46Z",
+        "description": "Web dashboard for tracking the TODOs in a Git repo",
+        "size_kb": 158,
+        "languages": {
+            "Go": 46163,
+            "HTML": 16769,
+            "JavaScript": 10543,
+            "CSS": 1166,
+            "Makefile": 405
+        }
+    },
+    {
+        "name": "spatial-media",
+        "full_name": "google/spatial-media",
+        "url": "https://github.com/google/spatial-media",
+        "stars": 1898,
+        "updated_at": "2025-03-06T10:30:48Z",
+        "description": "Specifications and tools for 360\u00ba video and spatial audio.",
+        "size_kb": 13554,
+        "languages": {
+            "Python": 71840,
+            "Dockerfile": 1924,
+            "Shell": 106
+        }
+    },
+    {
+        "name": "allocation-instrumenter",
+        "full_name": "google/allocation-instrumenter",
+        "url": "https://github.com/google/allocation-instrumenter",
+        "stars": 482,
+        "updated_at": "2025-02-12T17:09:21Z",
+        "description": "A Java agent that rewrites bytecode to instrument allocation sites",
+        "size_kb": 4683,
+        "languages": {
+            "Java": 91184,
+            "Starlark": 15838,
+            "Shell": 2871
+        }
+    },
+    {
+        "name": "zopfli",
+        "full_name": "google/zopfli",
+        "url": "https://github.com/google/zopfli",
+        "stars": 3485,
+        "updated_at": "2025-03-06T03:18:59Z",
+        "description": "Zopfli Compression Algorithm is a compression library programmed in C to perform very good, but slow, deflate or zlib compression.",
+        "size_kb": 603,
+        "languages": {
+            "C++": 486800,
+            "C": 159243,
+            "Go": 7661,
+            "CMake": 5957,
+            "Makefile": 2311
+        }
+    },
+    {
+        "name": "securemessage",
+        "full_name": "google/securemessage",
+        "url": "https://github.com/google/securemessage",
+        "stars": 105,
+        "updated_at": "2024-11-20T02:32:46Z",
+        "description": null,
+        "size_kb": 2448,
+        "languages": {
+            "C++": 194423,
+            "CMake": 8175,
+            "Makefile": 7167
+        }
+    },
+    {
+        "name": "password-alert",
+        "full_name": "google/password-alert",
+        "url": "https://github.com/google/password-alert",
+        "stars": 311,
+        "updated_at": "2025-03-03T18:48:25Z",
+        "description": "A Chrome Extension to help protect against phishing attacks.",
+        "size_kb": 1352,
+        "languages": {
+            "JavaScript": 112274,
+            "Shell": 7246,
+            "Python": 2941,
+            "CSS": 2829,
+            "HTML": 2423
+        }
+    },
+    {
+        "name": "mozc-devices",
+        "full_name": "google/mozc-devices",
+        "url": "https://github.com/google/mozc-devices",
+        "stars": 2225,
+        "updated_at": "2025-02-28T10:52:05Z",
+        "description": "Circuit diagrams and firmware source code for Gboard DIY keyboards",
+        "size_kb": 32006,
+        "languages": {
+            "Python": 59093,
+            "C++": 34639,
+            "C": 23827,
+            "CMake": 1616,
+            "HTML": 746
+        }
+    },
+    {
+        "name": "osdetector-gradle-plugin",
+        "full_name": "google/osdetector-gradle-plugin",
+        "url": "https://github.com/google/osdetector-gradle-plugin",
+        "stars": 109,
+        "updated_at": "2025-03-01T22:54:25Z",
+        "description": "A Gradle plugin that detects the OS name and architecture, providing a uniform classifier to be used in the names of native artifacts.",
+        "size_kb": 106,
+        "languages": {
+            "Java": 7144,
+            "Groovy": 2470
+        }
+    },
+    {
+        "name": "codesearch",
+        "full_name": "google/codesearch",
+        "url": "https://github.com/google/codesearch",
+        "stars": 3726,
+        "updated_at": "2025-03-03T14:49:04Z",
+        "description": "Fast, indexed regexp search over large file trees",
+        "size_kb": 125,
+        "languages": {
+            "Go": 148061,
+            "Shell": 1397,
+            "JavaScript": 173,
+            "CSS": 72
+        }
+    },
+    {
+        "name": "built_collection.dart",
+        "full_name": "google/built_collection.dart",
+        "url": "https://github.com/google/built_collection.dart",
+        "stars": 277,
+        "updated_at": "2025-03-01T09:24:03Z",
+        "description": "Immutable Dart collections via the builder pattern.",
+        "size_kb": 566,
+        "languages": {
+            "Dart": 248465,
+            "HTML": 217
+        }
+    },
+    {
+        "name": "UIforETW",
+        "full_name": "google/UIforETW",
+        "url": "https://github.com/google/UIforETW",
+        "stars": 1614,
+        "updated_at": "2025-03-02T14:48:22Z",
+        "description": "User interface for recording and managing ETW traces",
+        "size_kb": 4507,
+        "languages": {
+            "C++": 406013,
+            "Python": 102420,
+            "Batchfile": 83260,
+            "C#": 68530,
+            "Roff": 41998,
+            "C": 17183,
+            "Assembly": 3709
+        }
+    },
+    {
+        "name": "protobuf-gradle-plugin",
+        "full_name": "google/protobuf-gradle-plugin",
+        "url": "https://github.com/google/protobuf-gradle-plugin",
+        "stars": 1787,
+        "updated_at": "2025-03-05T16:35:41Z",
+        "description": "Protobuf Plugin for Gradle",
+        "size_kb": 1349,
+        "languages": {
+            "Groovy": 145912,
+            "Java": 28445,
+            "Kotlin": 11588
+        }
+    },
+    {
+        "name": "nsjail",
+        "full_name": "google/nsjail",
+        "url": "https://github.com/google/nsjail",
+        "stars": 3143,
+        "updated_at": "2025-03-06T11:46:35Z",
+        "description": "A lightweight process isolation tool that utilizes Linux namespaces, cgroups, rlimits and seccomp-bpf syscall filters, leveraging the Kafel BPF language for enhanced security.",
+        "size_kb": 1449,
+        "languages": {
+            "C++": 204982,
+            "Roff": 10659,
+            "Makefile": 4347,
+            "C": 1547,
+            "Dockerfile": 656
+        }
+    },
+    {
+        "name": "incremental-dom",
+        "full_name": "google/incremental-dom",
+        "url": "https://github.com/google/incremental-dom",
+        "stars": 3540,
+        "updated_at": "2025-03-03T07:15:05Z",
+        "description": "An in-place DOM diffing library",
+        "size_kb": 1971,
+        "languages": {
+            "TypeScript": 163183,
+            "JavaScript": 21126,
+            "Starlark": 7618,
+            "HTML": 2220,
+            "CSS": 783
+        }
+    },
+    {
+        "name": "clojure-turtle",
+        "full_name": "google/clojure-turtle",
+        "url": "https://github.com/google/clojure-turtle",
+        "stars": 427,
+        "updated_at": "2025-02-08T20:21:17Z",
+        "description": "A Clojure library that implements the Logo programming language in a Clojure context",
+        "size_kb": 1719,
+        "languages": {
+            "Clojure": 19426
+        }
+    },
+    {
+        "name": "textfsm",
+        "full_name": "google/textfsm",
+        "url": "https://github.com/google/textfsm",
+        "stars": 1143,
+        "updated_at": "2025-02-21T11:17:00Z",
+        "description": "Python module for parsing semi-structured text into python tables.",
+        "size_kb": 193,
+        "languages": {
+            "Python": 170999
+        }
+    },
+    {
+        "name": "kati",
+        "full_name": "google/kati",
+        "url": "https://github.com/google/kati",
+        "stars": 958,
+        "updated_at": "2025-03-06T13:08:33Z",
+        "description": "An experimental GNU make clone",
+        "size_kb": 2147,
+        "languages": {
+            "C++": 385584,
+            "Shell": 56858,
+            "Makefile": 54042,
+            "Go": 18569,
+            "Python": 3306,
+            "C": 1432,
+            "Dockerfile": 1060
+        }
+    },
+    {
+        "name": "jsonapi",
+        "full_name": "google/jsonapi",
+        "url": "https://github.com/google/jsonapi",
+        "stars": 1427,
+        "updated_at": "2025-03-04T10:40:30Z",
+        "description": "jsonapi.org style payload serializer and deserializer",
+        "size_kb": 332,
+        "languages": {
+            "Go": 111229
+        }
+    },
+    {
+        "name": "cluster-data",
+        "full_name": "google/cluster-data",
+        "url": "https://github.com/google/cluster-data",
+        "stars": 920,
+        "updated_at": "2025-03-04T11:59:41Z",
+        "description": "Borg cluster traces from Google",
+        "size_kb": 7346,
+        "languages": {
+            "TeX": 112031,
+            "Jupyter Notebook": 38928
+        }
+    },
+    {
+        "name": "cityhash",
+        "full_name": "google/cityhash",
+        "url": "https://github.com/google/cityhash",
+        "stars": 1140,
+        "updated_at": "2025-03-04T09:50:14Z",
+        "description": "Automatically exported from code.google.com/p/cityhash",
+        "size_kb": 559,
+        "languages": {
+            "Shell": 326442,
+            "C++": 127660,
+            "Makefile": 48019,
+            "M4": 2144,
+            "C": 1862
+        }
+    },
+    {
+        "name": "git-appraise",
+        "full_name": "google/git-appraise",
+        "url": "https://github.com/google/git-appraise",
+        "stars": 5145,
+        "updated_at": "2025-02-27T22:29:25Z",
+        "description": "Distributed code review system for Git repos",
+        "size_kb": 1707,
+        "languages": {
+            "Go": 214091
+        }
+    },
+    {
+        "name": "cctz",
+        "full_name": "google/cctz",
+        "url": "https://github.com/google/cctz",
+        "stars": 600,
+        "updated_at": "2025-03-01T22:19:55Z",
+        "description": "CCTZ is a C++ library for translating between absolute and civil times using the rules of a time zone.",
+        "size_kb": 1595,
+        "languages": {
+            "C++": 381143,
+            "CMake": 6679,
+            "Starlark": 6548,
+            "C": 4148,
+            "Makefile": 3105
+        }
+    },
+    {
+        "name": "macops-planb",
+        "full_name": "google/macops-planb",
+        "url": "https://github.com/google/macops-planb",
+        "stars": 153,
+        "updated_at": "2025-03-01T17:21:09Z",
+        "description": "Plan B is a remediation program for managed Macs",
+        "size_kb": 84,
+        "languages": {
+            "Objective-C": 30430,
+            "Shell": 6075,
+            "C": 844,
+            "Ruby": 109
+        }
+    },
+    {
+        "name": "ngx_brotli",
+        "full_name": "google/ngx_brotli",
+        "url": "https://github.com/google/ngx_brotli",
+        "stars": 2125,
+        "updated_at": "2025-03-04T22:46:20Z",
+        "description": "NGINX module for Brotli compression",
+        "size_kb": 84,
+        "languages": {
+            "C": 34652,
+            "Shell": 5431
+        }
+    },
+    {
+        "name": "mail-importer",
+        "full_name": "google/mail-importer",
+        "url": "https://github.com/google/mail-importer",
+        "stars": 258,
+        "updated_at": "2025-02-18T17:04:38Z",
+        "description": "Mail Importer for Gmail will upload the contents of a Thunderbird mail archive to Gmail and do its best to preserve the read state, flagged state, and folders of the messages.",
+        "size_kb": 81,
+        "languages": {
+            "Java": 135841
+        }
+    },
+    {
+        "name": "import-mailbox-to-gmail",
+        "full_name": "google/import-mailbox-to-gmail",
+        "url": "https://github.com/google/import-mailbox-to-gmail",
+        "stars": 342,
+        "updated_at": "2025-01-16T03:35:40Z",
+        "description": "Import .mbox files into Google Workspace",
+        "size_kb": 73,
+        "languages": {
+            "Python": 16027,
+            "Shell": 1148,
+            "Dockerfile": 215
+        }
+    },
+    {
+        "name": "eslint-config-google",
+        "full_name": "google/eslint-config-google",
+        "url": "https://github.com/google/eslint-config-google",
+        "stars": 1764,
+        "updated_at": "2025-02-18T15:36:36Z",
+        "description": "ESLint shareable config for the Google JavaScript style guide",
+        "size_kb": 95,
+        "languages": {
+            "JavaScript": 13774
+        }
+    },
+    {
+        "name": "closure-compiler-npm",
+        "full_name": "google/closure-compiler-npm",
+        "url": "https://github.com/google/closure-compiler-npm",
+        "stars": 333,
+        "updated_at": "2025-02-19T14:25:42Z",
+        "description": "Package for managing and documenting closure-compiler for use via npm",
+        "size_kb": 21588,
+        "languages": {
+            "JavaScript": 103999,
+            "Shell": 856
+        }
+    },
+    {
+        "name": "multichase",
+        "full_name": "google/multichase",
+        "url": "https://github.com/google/multichase",
+        "stars": 124,
+        "updated_at": "2025-02-28T16:37:22Z",
+        "description": null,
+        "size_kb": 156,
+        "languages": {
+            "C": 131286,
+            "Shell": 24350,
+            "Makefile": 1842,
+            "Perl": 1394
+        }
+    },
+    {
+        "name": "der-ascii",
+        "full_name": "google/der-ascii",
+        "url": "https://github.com/google/der-ascii",
+        "stars": 241,
+        "updated_at": "2025-03-06T10:29:57Z",
+        "description": "A reversible DER and BER pretty-printer.",
+        "size_kb": 118,
+        "languages": {
+            "Go": 109060
+        }
+    },
+    {
+        "name": "tarpc",
+        "full_name": "google/tarpc",
+        "url": "https://github.com/google/tarpc",
+        "stars": 3374,
+        "updated_at": "2025-03-06T10:48:32Z",
+        "description": "An RPC framework for Rust with a focus on ease of use.",
+        "size_kb": 1445,
+        "languages": {
+            "Rust": 317378,
+            "Shell": 3843
+        }
+    },
+    {
+        "name": "uuid",
+        "full_name": "google/uuid",
+        "url": "https://github.com/google/uuid",
+        "stars": 5515,
+        "updated_at": "2025-03-06T16:32:01Z",
+        "description": "Go package for UUIDs based on RFC 4122 and DCE 1.1: Authentication and Security Services.",
+        "size_kb": 199,
+        "languages": {
+            "Go": 77368
+        }
+    },
+    {
+        "name": "highwayhash",
+        "full_name": "google/highwayhash",
+        "url": "https://github.com/google/highwayhash",
+        "stars": 1574,
+        "updated_at": "2025-03-03T08:19:53Z",
+        "description": "Fast strong hash functions: SipHash/HighwayHash",
+        "size_kb": 590,
+        "languages": {
+            "C++": 404183,
+            "C": 20116,
+            "Java": 13998,
+            "CMake": 7786,
+            "Makefile": 4403,
+            "Roff": 3456
+        }
+    },
+    {
+        "name": "logger",
+        "full_name": "google/logger",
+        "url": "https://github.com/google/logger",
+        "stars": 887,
+        "updated_at": "2025-01-04T06:34:17Z",
+        "description": "Cross platform Go logging library.",
+        "size_kb": 40,
+        "languages": {
+            "Go": 18806
+        }
+    },
+    {
+        "name": "subcommands",
+        "full_name": "google/subcommands",
+        "url": "https://github.com/google/subcommands",
+        "stars": 763,
+        "updated_at": "2025-03-03T06:19:20Z",
+        "description": "Go subcommand library.",
+        "size_kb": 20,
+        "languages": {
+            "Go": 15433
+        }
+    },
+    {
+        "name": "walt",
+        "full_name": "google/walt",
+        "url": "https://github.com/google/walt",
+        "stars": 454,
+        "updated_at": "2025-03-04T15:29:47Z",
+        "description": "A device for measuring latency of physical sensors and outputs on phones and computers",
+        "size_kb": 8416,
+        "languages": {
+            "Java": 267559,
+            "Objective-C": 86988,
+            "Python": 47387,
+            "C": 33979,
+            "Objective-C++": 13203,
+            "C++": 12144,
+            "Makefile": 2207,
+            "Smarty": 119
+        }
+    },
+    {
+        "name": "winops",
+        "full_name": "google/winops",
+        "url": "https://github.com/google/winops",
+        "stars": 111,
+        "updated_at": "2025-02-28T18:16:24Z",
+        "description": "Small scripts and libraries for managing Windows in a corporate environment.",
+        "size_kb": 256,
+        "languages": {
+            "Go": 223524,
+            "Python": 80238,
+            "PowerShell": 14209,
+            "Puppet": 2140
+        }
+    },
+    {
+        "name": "neper",
+        "full_name": "google/neper",
+        "url": "https://github.com/google/neper",
+        "stars": 296,
+        "updated_at": "2025-03-01T20:34:25Z",
+        "description": "neper is a Linux networking performance tool.",
+        "size_kb": 250,
+        "languages": {
+            "C": 282014,
+            "Makefile": 2393,
+            "Dockerfile": 681
+        }
+    },
+    {
+        "name": "oauth2l",
+        "full_name": "google/oauth2l",
+        "url": "https://github.com/google/oauth2l",
+        "stars": 678,
+        "updated_at": "2025-03-06T09:16:19Z",
+        "description": "oauth2l (\"oauth tool\") is a simple CLI for interacting with Google API authentication.",
+        "size_kb": 3880,
+        "languages": {
+            "Go": 90396,
+            "Python": 47031,
+            "Makefile": 1845,
+            "Dockerfile": 1110,
+            "Shell": 144
+        }
+    },
+    {
+        "name": "safebrowsing",
+        "full_name": "google/safebrowsing",
+        "url": "https://github.com/google/safebrowsing",
+        "stars": 476,
+        "updated_at": "2025-03-05T08:38:11Z",
+        "description": "Safe Browsing API Go Client",
+        "size_kb": 8525,
+        "languages": {
+            "Go": 165151,
+            "CSS": 8773,
+            "Shell": 2883,
+            "JavaScript": 2557,
+            "HTML": 972
+        }
+    },
+    {
+        "name": "cordova-plugin-browsertab",
+        "full_name": "google/cordova-plugin-browsertab",
+        "url": "https://github.com/google/cordova-plugin-browsertab",
+        "stars": 118,
+        "updated_at": "2025-02-09T11:11:45Z",
+        "description": "A Cordova plugin that provides an interface to in-app browser tabs that exist on some mobile platforms, such as SFSafariViewController on iOS and CustomTabs on Android.",
+        "size_kb": 23,
+        "languages": {
+            "Java": 6239,
+            "Objective-C": 3594,
+            "JavaScript": 1125
+        }
+    },
+    {
+        "name": "addlicense",
+        "full_name": "google/addlicense",
+        "url": "https://github.com/google/addlicense",
+        "stars": 746,
+        "updated_at": "2025-03-01T19:27:26Z",
+        "description": "A program which ensures source code files have copyright license headers by scanning directory patterns recursively",
+        "size_kb": 101,
+        "languages": {
+            "Go": 35214,
+            "Dockerfile": 345
+        }
+    },
+    {
+        "name": "play-licensing",
+        "full_name": "google/play-licensing",
+        "url": "https://github.com/google/play-licensing",
+        "stars": 116,
+        "updated_at": "2024-12-15T12:05:40Z",
+        "description": "Google Play licensing service client library",
+        "size_kb": 197,
+        "languages": {
+            "Java": 134502,
+            "AIDL": 1633
+        }
+    },
+    {
+        "name": "GTMAppAuth",
+        "full_name": "google/GTMAppAuth",
+        "url": "https://github.com/google/GTMAppAuth",
+        "stars": 394,
+        "updated_at": "2025-03-06T16:40:33Z",
+        "description": "Apple platforms SDK for using AppAuth with Google libraries.",
+        "size_kb": 342,
+        "languages": {
+            "Swift": 146157,
+            "Objective-C": 27278,
+            "Ruby": 2306
+        }
+    },
+    {
+        "name": "gps-measurement-tools",
+        "full_name": "google/gps-measurement-tools",
+        "url": "https://github.com/google/gps-measurement-tools",
+        "stars": 764,
+        "updated_at": "2025-03-06T09:05:01Z",
+        "description": null,
+        "size_kb": 9767,
+        "languages": {
+            "Java": 376280,
+            "MATLAB": 206023
+        }
+    },
+    {
+        "name": "budou",
+        "full_name": "google/budou",
+        "url": "https://github.com/google/budou",
+        "stars": 1170,
+        "updated_at": "2025-03-01T16:57:22Z",
+        "description": "Budou is an automatic organizer tool for beautiful line breaking in CJK (Chinese, Japanese, and Korean).",
+        "size_kb": 270,
+        "languages": {
+            "Python": 74023,
+            "Makefile": 583
+        }
+    },
+    {
+        "name": "kafel",
+        "full_name": "google/kafel",
+        "url": "https://github.com/google/kafel",
+        "stars": 310,
+        "updated_at": "2025-03-05T05:53:59Z",
+        "description": "A language and library for specifying syscall filtering policies.",
+        "size_kb": 264,
+        "languages": {
+            "C": 460342,
+            "Yacc": 14435,
+            "Makefile": 9580,
+            "Lex": 7532,
+            "Shell": 2482,
+            "Python": 2252
+        }
+    },
+    {
+        "name": "csp-evaluator",
+        "full_name": "google/csp-evaluator",
+        "url": "https://github.com/google/csp-evaluator",
+        "stars": 346,
+        "updated_at": "2025-02-26T09:30:53Z",
+        "description": null,
+        "size_kb": 200,
+        "languages": {
+            "TypeScript": 151595
+        }
+    },
+    {
+        "name": "guetzli",
+        "full_name": "google/guetzli",
+        "url": "https://github.com/google/guetzli",
+        "stars": 12927,
+        "updated_at": "2025-03-06T16:45:37Z",
+        "description": "Perceptual JPEG encoder",
+        "size_kb": 490,
+        "languages": {
+            "C++": 252203,
+            "Makefile": 15213,
+            "PHP": 4360,
+            "Shell": 3604,
+            "Python": 2678,
+            "Lua": 1475
+        }
+    },
+    {
+        "name": "bloaty",
+        "full_name": "google/bloaty",
+        "url": "https://github.com/google/bloaty",
+        "stars": 4938,
+        "updated_at": "2025-03-06T11:29:53Z",
+        "description": "Bloaty: a size profiler for binaries",
+        "size_kb": 4653,
+        "languages": {
+            "C++": 381896,
+            "CMake": 14140,
+            "Python": 2682,
+            "Shell": 1174
+        }
+    },
+    {
+        "name": "google-authenticator-libpam",
+        "full_name": "google/google-authenticator-libpam",
+        "url": "https://github.com/google/google-authenticator-libpam",
+        "stars": 1837,
+        "updated_at": "2025-03-06T07:26:53Z",
+        "description": null,
+        "size_kb": 701,
+        "languages": {
+            "C": 149115,
+            "HTML": 9423,
+            "Makefile": 2485,
+            "M4": 2311,
+            "Shell": 1689,
+            "Python": 1188
+        }
+    },
+    {
+        "name": "gops",
+        "full_name": "google/gops",
+        "url": "https://github.com/google/gops",
+        "stars": 6823,
+        "updated_at": "2025-03-06T16:33:24Z",
+        "description": "A tool to list and diagnose Go processes currently running on your system",
+        "size_kb": 6793,
+        "languages": {
+            "Go": 41381
+        }
+    },
+    {
+        "name": "gonids",
+        "full_name": "google/gonids",
+        "url": "https://github.com/google/gonids",
+        "stars": 183,
+        "updated_at": "2025-02-05T22:52:23Z",
+        "description": "gonids is a library to parse IDS rules, with a focus primarily on Suricata rule compatibility. There is a discussion forum available that you can join on Google Groups: https://groups.google.com/forum/#!topic/gonids/",
+        "size_kb": 401,
+        "languages": {
+            "Go": 192806
+        }
+    },
+    {
+        "name": "FluidNet",
+        "full_name": "google/FluidNet",
+        "url": "https://github.com/google/FluidNet",
+        "stars": 747,
+        "updated_at": "2025-02-14T14:15:50Z",
+        "description": "Accelerating Eulerian Fluid Simulation With Convolutional Networks",
+        "size_kb": 13612,
+        "languages": {
+            "Lua": 489698,
+            "Cuda": 100702,
+            "C++": 77923,
+            "MATLAB": 27199,
+            "JavaScript": 19910,
+            "HTML": 8652,
+            "C": 3608,
+            "Python": 2900,
+            "CMake": 2521
+        }
+    },
+    {
+        "name": "youtube-8m",
+        "full_name": "google/youtube-8m",
+        "url": "https://github.com/google/youtube-8m",
+        "stars": 2339,
+        "updated_at": "2025-03-06T02:26:52Z",
+        "description": "Starter code for working with the YouTube-8M dataset.",
+        "size_kb": 477,
+        "languages": {
+            "Python": 159405
+        }
+    },
+    {
+        "name": "libprotobuf-mutator",
+        "full_name": "google/libprotobuf-mutator",
+        "url": "https://github.com/google/libprotobuf-mutator",
+        "stars": 608,
+        "updated_at": "2025-03-04T03:11:20Z",
+        "description": "Library for structured fuzzing with protobuffers",
+        "size_kb": 448,
+        "languages": {
+            "C++": 111963,
+            "CMake": 11028,
+            "C": 731
+        }
+    },
+    {
+        "name": "shaderc-rs",
+        "full_name": "google/shaderc-rs",
+        "url": "https://github.com/google/shaderc-rs",
+        "stars": 264,
+        "updated_at": "2025-01-24T17:39:58Z",
+        "description": "Rust bindings for the shaderc library.",
+        "size_kb": 229,
+        "languages": {
+            "Rust": 97939,
+            "CMake": 424
+        }
+    },
+    {
+        "name": "python-fire",
+        "full_name": "google/python-fire",
+        "url": "https://github.com/google/python-fire",
+        "stars": 27448,
+        "updated_at": "2025-03-06T15:53:05Z",
+        "description": "Python Fire is a library for automatically generating command line interfaces (CLIs) from absolutely any Python object.",
+        "size_kb": 6208,
+        "languages": {
+            "Python": 371435
+        }
+    },
+    {
+        "name": "licenseclassifier",
+        "full_name": "google/licenseclassifier",
+        "url": "https://github.com/google/licenseclassifier",
+        "stars": 323,
+        "updated_at": "2025-03-05T05:15:38Z",
+        "description": "A License Classifier",
+        "size_kb": 89462,
+        "languages": {
+            "Go": 357649
+        }
+    },
+    {
+        "name": "tamperchrome",
+        "full_name": "google/tamperchrome",
+        "url": "https://github.com/google/tamperchrome",
+        "stars": 4192,
+        "updated_at": "2025-03-06T16:22:35Z",
+        "description": "Tamper Dev is an extension that allows you to intercept and edit HTTP/HTTPS requests and responses as they happen without the need of a proxy. Works across all operating systems (including Chrome OS).",
+        "size_kb": 5494,
+        "languages": {
+            "TypeScript": 72087,
+            "JavaScript": 69835,
+            "HTML": 18742,
+            "CSS": 7122,
+            "SCSS": 1566,
+            "Makefile": 1382,
+            "Shell": 112
+        }
+    },
+    {
+        "name": "service-worker-detector",
+        "full_name": "google/service-worker-detector",
+        "url": "https://github.com/google/service-worker-detector",
+        "stars": 175,
+        "updated_at": "2025-02-10T01:38:30Z",
+        "description": "This extension detects if a website registers a Service Worker.",
+        "size_kb": 3238,
+        "languages": {
+            "JavaScript": 35643,
+            "CSS": 1501,
+            "HTML": 525
+        }
+    },
+    {
+        "name": "elemental2",
+        "full_name": "google/elemental2",
+        "url": "https://github.com/google/elemental2",
+        "stars": 159,
+        "updated_at": "2025-03-04T07:27:30Z",
+        "description": "Type checked access to browser APIs for Java code.",
+        "size_kb": 398,
+        "languages": {
+            "Java": 27524,
+            "Starlark": 21446,
+            "Shell": 4609
+        }
+    },
+    {
+        "name": "AEUX",
+        "full_name": "google/AEUX",
+        "url": "https://github.com/google/AEUX",
+        "stars": 534,
+        "updated_at": "2025-02-24T11:18:04Z",
+        "description": "Editable After Effects layers from Sketch artboards",
+        "size_kb": 47145,
+        "languages": {
+            "JavaScript": 399271,
+            "TypeScript": 187568,
+            "Vue": 79953,
+            "HTML": 9643,
+            "CSS": 7628
+        }
+    },
+    {
+        "name": "haskell-indexer",
+        "full_name": "google/haskell-indexer",
+        "url": "https://github.com/google/haskell-indexer",
+        "stars": 100,
+        "updated_at": "2025-03-01T10:53:29Z",
+        "description": "Emits code crossreference data for Haskell sources.",
+        "size_kb": 468,
+        "languages": {
+            "Haskell": 201988,
+            "Shell": 13134,
+            "Nix": 8541,
+            "Dockerfile": 1058
+        }
+    },
+    {
+        "name": "tuple.dart",
+        "full_name": "google/tuple.dart",
+        "url": "https://github.com/google/tuple.dart",
+        "stars": 194,
+        "updated_at": "2025-03-01T03:54:16Z",
+        "description": "A library providing a tuple data structure",
+        "size_kb": 67,
+        "languages": {
+            "Dart": 43190
+        }
+    },
+    {
+        "name": "fscryptctl",
+        "full_name": "google/fscryptctl",
+        "url": "https://github.com/google/fscryptctl",
+        "stars": 124,
+        "updated_at": "2025-02-17T19:50:57Z",
+        "description": "Small C tool for Linux filesystem encryption",
+        "size_kb": 106,
+        "languages": {
+            "C": 32179,
+            "Python": 30498,
+            "Makefile": 4471
+        }
+    },
+    {
+        "name": "fscrypt",
+        "full_name": "google/fscrypt",
+        "url": "https://github.com/google/fscrypt",
+        "stars": 915,
+        "updated_at": "2025-02-27T05:08:43Z",
+        "description": "Go tool for managing Linux filesystem encryption",
+        "size_kb": 3276,
+        "languages": {
+            "Go": 445085,
+            "Shell": 52850,
+            "Makefile": 7988,
+            "C": 5054
+        }
+    },
+    {
+        "name": "mono_repo.dart",
+        "full_name": "google/mono_repo.dart",
+        "url": "https://github.com/google/mono_repo.dart",
+        "stars": 163,
+        "updated_at": "2025-02-04T13:25:05Z",
+        "description": "Allows easy management of repositories with multiple Dart packages",
+        "size_kb": 1134,
+        "languages": {
+            "Dart": 257067,
+            "Shell": 2869
+        }
+    },
+    {
+        "name": "gts",
+        "full_name": "google/gts",
+        "url": "https://github.com/google/gts",
+        "stars": 5143,
+        "updated_at": "2025-03-05T05:02:40Z",
+        "description": "\u2602\ufe0f TypeScript style guide, formatter, and linter.  ",
+        "size_kb": 4143,
+        "languages": {
+            "TypeScript": 42820,
+            "JavaScript": 4759
+        }
+    },
+    {
+        "name": "inverting-proxy",
+        "full_name": "google/inverting-proxy",
+        "url": "https://github.com/google/inverting-proxy",
+        "stars": 251,
+        "updated_at": "2025-01-12T17:27:06Z",
+        "description": "Reverse proxy that inverts the direction of traffic",
+        "size_kb": 9754,
+        "languages": {
+            "Go": 222234,
+            "Dockerfile": 2740,
+            "Makefile": 1282
+        }
+    },
+    {
+        "name": "crc32c",
+        "full_name": "google/crc32c",
+        "url": "https://github.com/google/crc32c",
+        "stars": 462,
+        "updated_at": "2025-02-26T17:11:13Z",
+        "description": "CRC32C implementation with support for CPU-specific acceleration instructions",
+        "size_kb": 144,
+        "languages": {
+            "C++": 65462,
+            "CMake": 15180,
+            "Python": 4374,
+            "C": 1990
+        }
+    },
+    {
+        "name": "pawn",
+        "full_name": "google/pawn",
+        "url": "https://github.com/google/pawn",
+        "stars": 322,
+        "updated_at": "2025-02-12T21:30:28Z",
+        "description": "Extract BIOS firmware from Intel-based workstations and laptops",
+        "size_kb": 102,
+        "languages": {
+            "C++": 68437,
+            "CMake": 9796,
+            "Makefile": 2489
+        }
+    },
+    {
+        "name": "cel-spec",
+        "full_name": "google/cel-spec",
+        "url": "https://github.com/google/cel-spec",
+        "stars": 3067,
+        "updated_at": "2025-03-06T16:33:01Z",
+        "description": "Common Expression Language -- specification and binary representation",
+        "size_kb": 1251,
+        "languages": {
+            "Starlark": 26764,
+            "Shell": 647
+        }
+    },
+    {
+        "name": "go-tika",
+        "full_name": "google/go-tika",
+        "url": "https://github.com/google/go-tika",
+        "stars": 236,
+        "updated_at": "2025-03-06T17:13:22Z",
+        "description": "Go package for using Apache Tika",
+        "size_kb": 82,
+        "languages": {
+            "Go": 57251
+        }
+    },
+    {
+        "name": "active-learning",
+        "full_name": "google/active-learning",
+        "url": "https://github.com/google/active-learning",
+        "stars": 1139,
+        "updated_at": "2025-03-03T08:11:38Z",
+        "description": null,
+        "size_kb": 55,
+        "languages": {
+            "Python": 126870
+        }
+    },
+    {
+        "name": "go-intervals",
+        "full_name": "google/go-intervals",
+        "url": "https://github.com/google/go-intervals",
+        "stars": 136,
+        "updated_at": "2025-02-23T07:26:03Z",
+        "description": "A golang library for set operations on intervals, such as time ranges.",
+        "size_kb": 43,
+        "languages": {
+            "Go": 77192
+        }
+    },
+    {
+        "name": "myanmar-tools",
+        "full_name": "google/myanmar-tools",
+        "url": "https://github.com/google/myanmar-tools",
+        "stars": 246,
+        "updated_at": "2025-02-03T09:47:02Z",
+        "description": "Detect and convert the Zawgyi-One font encoding in C++, Java, JavaScript, PHP, and Ruby",
+        "size_kb": 2060,
+        "languages": {
+            "Java": 168085,
+            "Go": 103586,
+            "C#": 88335,
+            "Dart": 71358,
+            "JavaScript": 67295,
+            "C++": 18448,
+            "PHP": 17603,
+            "Ruby": 17388,
+            "TypeScript": 13515,
+            "Makefile": 10095,
+            "Python": 7945,
+            "Swift": 4150,
+            "CMake": 3479,
+            "C": 2143,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "dnsmasq_exporter",
+        "full_name": "google/dnsmasq_exporter",
+        "url": "https://github.com/google/dnsmasq_exporter",
+        "stars": 176,
+        "updated_at": "2025-02-18T21:43:00Z",
+        "description": "dnsmasq exporter for Prometheus",
+        "size_kb": 62,
+        "languages": {
+            "Go": 16867,
+            "Dockerfile": 986,
+            "Makefile": 548,
+            "Jsonnet": 95
+        }
+    },
+    {
+        "name": "pasta",
+        "full_name": "google/pasta",
+        "url": "https://github.com/google/pasta",
+        "stars": 350,
+        "updated_at": "2025-02-07T10:24:50Z",
+        "description": "Library to refactor python code through AST manipulation.",
+        "size_kb": 533,
+        "languages": {
+            "Python": 191244
+        }
+    },
+    {
+        "name": "clasp",
+        "full_name": "google/clasp",
+        "url": "https://github.com/google/clasp",
+        "stars": 4820,
+        "updated_at": "2025-03-03T14:29:22Z",
+        "description": "\ud83d\udd17 Command Line Apps Script Projects",
+        "size_kb": 4157,
+        "languages": {
+            "TypeScript": 188796,
+            "Nix": 470,
+            "JavaScript": 273,
+            "Shell": 108
+        }
+    },
+    {
+        "name": "code-review-bot",
+        "full_name": "google/code-review-bot",
+        "url": "https://github.com/google/code-review-bot",
+        "stars": 100,
+        "updated_at": "2025-02-27T14:47:48Z",
+        "description": "Code review bot and CLA verifier",
+        "size_kb": 121,
+        "languages": {
+            "Go": 65537,
+            "Shell": 3247,
+            "Makefile": 1567
+        }
+    },
+    {
+        "name": "js-green-licenses",
+        "full_name": "google/js-green-licenses",
+        "url": "https://github.com/google/js-green-licenses",
+        "stars": 178,
+        "updated_at": "2024-10-30T14:58:59Z",
+        "description": "JavaScript package.json License Checker",
+        "size_kb": 1890,
+        "languages": {
+            "TypeScript": 57209,
+            "JavaScript": 3101
+        }
+    },
+    {
+        "name": "chrome-ssh-agent",
+        "full_name": "google/chrome-ssh-agent",
+        "url": "https://github.com/google/chrome-ssh-agent",
+        "stars": 263,
+        "updated_at": "2025-03-03T18:49:15Z",
+        "description": "SSH Agent for use with Google Chrome's Secure Shell extension",
+        "size_kb": 3370,
+        "languages": {
+            "Go": 241896,
+            "Starlark": 24533,
+            "TypeScript": 5727,
+            "Shell": 3057,
+            "HTML": 2995,
+            "CSS": 1670
+        }
+    },
+    {
+        "name": "node-h2-auto-push",
+        "full_name": "google/node-h2-auto-push",
+        "url": "https://github.com/google/node-h2-auto-push",
+        "stars": 329,
+        "updated_at": "2024-10-25T11:34:41Z",
+        "description": "HTTP/2 automatic server push",
+        "size_kb": 1578,
+        "languages": {
+            "TypeScript": 23901,
+            "JavaScript": 677,
+            "HTML": 304
+        }
+    },
+    {
+        "name": "node-fastify-auto-push",
+        "full_name": "google/node-fastify-auto-push",
+        "url": "https://github.com/google/node-fastify-auto-push",
+        "stars": 101,
+        "updated_at": "2024-10-25T11:31:07Z",
+        "description": "Fastify plugin for HTTP/2 automatic server push",
+        "size_kb": 1294,
+        "languages": {
+            "TypeScript": 7178,
+            "HTML": 154
+        }
+    },
+    {
+        "name": "functional-objc",
+        "full_name": "google/functional-objc",
+        "url": "https://github.com/google/functional-objc",
+        "stars": 348,
+        "updated_at": "2025-02-08T13:20:52Z",
+        "description": "Functional operators for Objective-C",
+        "size_kb": 40,
+        "languages": {
+            "Objective-C": 42104,
+            "Starlark": 1435,
+            "Swift": 1142,
+            "Ruby": 1068
+        }
+    },
+    {
+        "name": "promises",
+        "full_name": "google/promises",
+        "url": "https://github.com/google/promises",
+        "stars": 3816,
+        "updated_at": "2025-02-25T10:58:10Z",
+        "description": "Promises is a modern framework that provides a synchronization construct for Swift and Objective-C.",
+        "size_kb": 504,
+        "languages": {
+            "Objective-C": 241609,
+            "Swift": 165288,
+            "Starlark": 4579,
+            "Ruby": 3523
+        }
+    },
+    {
+        "name": "detangle",
+        "full_name": "google/detangle",
+        "url": "https://github.com/google/detangle",
+        "stars": 171,
+        "updated_at": "2024-10-25T12:30:02Z",
+        "description": null,
+        "size_kb": 168,
+        "languages": {
+            "JavaScript": 375254,
+            "Python": 57045,
+            "HTML": 50283,
+            "Go": 15931,
+            "CSS": 194
+        }
+    },
+    {
+        "name": "cpu_features",
+        "full_name": "google/cpu_features",
+        "url": "https://github.com/google/cpu_features",
+        "stars": 2497,
+        "updated_at": "2025-03-05T08:39:09Z",
+        "description": "A cross platform C99 library to get cpu features at runtime.",
+        "size_kb": 621,
+        "languages": {
+            "C++": 265992,
+            "C": 180203,
+            "CMake": 19733,
+            "Shell": 18995,
+            "Makefile": 12565,
+            "Starlark": 12041,
+            "D": 4581,
+            "Dockerfile": 3046
+        }
+    },
+    {
+        "name": "cargo-raze",
+        "full_name": "google/cargo-raze",
+        "url": "https://github.com/google/cargo-raze",
+        "stars": 481,
+        "updated_at": "2025-01-18T09:41:43Z",
+        "description": "Generate Bazel BUILD from Cargo dependencies!",
+        "size_kb": 11935,
+        "languages": {
+            "Rust": 234717,
+            "Starlark": 12529,
+            "Shell": 5794,
+            "Batchfile": 1028
+        }
+    },
+    {
+        "name": "flutter-desktop-embedding",
+        "full_name": "google/flutter-desktop-embedding",
+        "url": "https://github.com/google/flutter-desktop-embedding",
+        "stars": 7106,
+        "updated_at": "2025-03-05T08:37:43Z",
+        "description": "Experimental plugins for Flutter for Desktop",
+        "size_kb": 2794,
+        "languages": {
+            "C++": 90682,
+            "Dart": 42171,
+            "CMake": 40348,
+            "Objective-C": 9873,
+            "Objective-C++": 8283,
+            "C": 7239,
+            "Ruby": 4440,
+            "Swift": 3936
+        }
+    },
+    {
+        "name": "flutter.widgets",
+        "full_name": "google/flutter.widgets",
+        "url": "https://github.com/google/flutter.widgets",
+        "stars": 1399,
+        "updated_at": "2025-03-06T11:15:18Z",
+        "description": null,
+        "size_kb": 717,
+        "languages": {
+            "Dart": 480253,
+            "HTML": 435
+        }
+    },
+    {
+        "name": "flutter.plugins",
+        "full_name": "google/flutter.plugins",
+        "url": "https://github.com/google/flutter.plugins",
+        "stars": 117,
+        "updated_at": "2024-09-10T06:49:49Z",
+        "description": null,
+        "size_kb": 1306,
+        "languages": {
+            "Dart": 85172,
+            "Java": 69455,
+            "Objective-C": 37114,
+            "Shell": 2916,
+            "Ruby": 672
+        }
+    },
+    {
+        "name": "importlab",
+        "full_name": "google/importlab",
+        "url": "https://github.com/google/importlab",
+        "stars": 172,
+        "updated_at": "2025-02-13T10:23:03Z",
+        "description": "A library that automatically infers dependencies for Python files",
+        "size_kb": 203,
+        "languages": {
+            "Python": 85267,
+            "Shell": 265
+        }
+    },
+    {
+        "name": "voice-builder",
+        "full_name": "google/voice-builder",
+        "url": "https://github.com/google/voice-builder",
+        "stars": 672,
+        "updated_at": "2025-02-25T22:28:00Z",
+        "description": "An opensource text-to-speech (TTS) voice building tool",
+        "size_kb": 502,
+        "languages": {
+            "JavaScript": 127100,
+            "Dockerfile": 7944,
+            "Shell": 7491,
+            "CSS": 3188,
+            "HTML": 2638
+        }
+    },
+    {
+        "name": "knusperli",
+        "full_name": "google/knusperli",
+        "url": "https://github.com/google/knusperli",
+        "stars": 471,
+        "updated_at": "2025-02-03T09:29:52Z",
+        "description": "A deblocking JPEG decoder",
+        "size_kb": 1624,
+        "languages": {
+            "C++": 132541,
+            "Python": 6357,
+            "Starlark": 2090
+        }
+    },
+    {
+        "name": "GTXiLib",
+        "full_name": "google/GTXiLib",
+        "url": "https://github.com/google/GTXiLib",
+        "stars": 228,
+        "updated_at": "2025-03-06T02:08:44Z",
+        "description": "Google Toolbox for Accessibility for iOS",
+        "size_kb": 481,
+        "languages": {
+            "Objective-C": 490878,
+            "C++": 196418,
+            "Objective-C++": 174960,
+            "C": 2477,
+            "Ruby": 1799,
+            "Swift": 871
+        }
+    },
+    {
+        "name": "emoji-scavenger-hunt",
+        "full_name": "google/emoji-scavenger-hunt",
+        "url": "https://github.com/google/emoji-scavenger-hunt",
+        "stars": 811,
+        "updated_at": "2025-02-28T17:07:15Z",
+        "description": "Emoji Scavenger Hunt is an experiment that leverages the power of neural networks and your phone\u2019s camera to identify the real world versions of the emojis we use every day.",
+        "size_kb": 6308,
+        "languages": {
+            "TypeScript": 111308,
+            "SCSS": 21601,
+            "Dockerfile": 1526
+        }
+    },
+    {
+        "name": "docker-explorer",
+        "full_name": "google/docker-explorer",
+        "url": "https://github.com/google/docker-explorer",
+        "stars": 536,
+        "updated_at": "2025-03-04T07:25:06Z",
+        "description": "A tool to help forensicate offline docker acquisitions",
+        "size_kb": 12027,
+        "languages": {
+            "Python": 124389,
+            "Shell": 2890
+        }
+    },
+    {
+        "name": "oatts",
+        "full_name": "google/oatts",
+        "url": "https://github.com/google/oatts",
+        "stars": 142,
+        "updated_at": "2025-02-12T16:15:12Z",
+        "description": null,
+        "size_kb": 722,
+        "languages": {
+            "JavaScript": 52704,
+            "Handlebars": 1801
+        }
+    },
+    {
+        "name": "capillary",
+        "full_name": "google/capillary",
+        "url": "https://github.com/google/capillary",
+        "stars": 495,
+        "updated_at": "2025-01-18T14:29:17Z",
+        "description": "Capillary is a library to simplify the sending of end-to-end encrypted push messages from Java-based application servers to Android clients.",
+        "size_kb": 942,
+        "languages": {
+            "Java": 170936
+        }
+    },
+    {
+        "name": "quic-trace",
+        "full_name": "google/quic-trace",
+        "url": "https://github.com/google/quic-trace",
+        "stars": 118,
+        "updated_at": "2025-02-25T18:07:57Z",
+        "description": "Library and tools for transcribing QUIC connections.",
+        "size_kb": 694,
+        "languages": {
+            "C++": 107629,
+            "Starlark": 9639,
+            "Shell": 1710
+        }
+    },
+    {
+        "name": "play-services-plugins",
+        "full_name": "google/play-services-plugins",
+        "url": "https://github.com/google/play-services-plugins",
+        "stars": 477,
+        "updated_at": "2025-02-21T13:36:19Z",
+        "description": "Plugins to help with using Google Play services SDK.",
+        "size_kb": 580,
+        "languages": {
+            "Java": 67072,
+            "Kotlin": 43528,
+            "Groovy": 32278
+        }
+    },
+    {
+        "name": "pybadges",
+        "full_name": "google/pybadges",
+        "url": "https://github.com/google/pybadges",
+        "stars": 490,
+        "updated_at": "2025-03-04T09:09:50Z",
+        "description": "A Python library for creating Github-style badges",
+        "size_kb": 181,
+        "languages": {
+            "Python": 53178,
+            "HTML": 983,
+            "Shell": 895
+        }
+    },
+    {
+        "name": "gin-config",
+        "full_name": "google/gin-config",
+        "url": "https://github.com/google/gin-config",
+        "stars": 2083,
+        "updated_at": "2025-03-02T18:41:18Z",
+        "description": "Gin provides a lightweight configuration framework for Python",
+        "size_kb": 472,
+        "languages": {
+            "Python": 318968,
+            "Jupyter Notebook": 13889,
+            "Shell": 4394
+        }
+    },
+    {
+        "name": "sg2im",
+        "full_name": "google/sg2im",
+        "url": "https://github.com/google/sg2im",
+        "stars": 1304,
+        "updated_at": "2025-02-18T11:27:09Z",
+        "description": "Code for \"Image Generation from Scene Graphs\", Johnson et al, CVPR 2018",
+        "size_kb": 1243,
+        "languages": {
+            "Python": 154101,
+            "Shell": 8492
+        }
+    },
+    {
+        "name": "swift-jupyter",
+        "full_name": "google/swift-jupyter",
+        "url": "https://github.com/google/swift-jupyter",
+        "stars": 619,
+        "updated_at": "2025-02-28T03:21:16Z",
+        "description": null,
+        "size_kb": 477,
+        "languages": {
+            "Python": 85432,
+            "Swift": 16544,
+            "Jupyter Notebook": 6361,
+            "Shell": 1978,
+            "Dockerfile": 1756,
+            "C": 148
+        }
+    },
+    {
+        "name": "wwwbasic",
+        "full_name": "google/wwwbasic",
+        "url": "https://github.com/google/wwwbasic",
+        "stars": 1136,
+        "updated_at": "2025-02-11T15:50:39Z",
+        "description": "wwwBASIC is an implementation of BASIC that runs on Node.js and the Web.",
+        "size_kb": 273,
+        "languages": {
+            "JavaScript": 162765,
+            "Shell": 2013,
+            "HTML": 1477
+        }
+    },
+    {
+        "name": "uis-rnn",
+        "full_name": "google/uis-rnn",
+        "url": "https://github.com/google/uis-rnn",
+        "stars": 1570,
+        "updated_at": "2025-02-15T08:40:30Z",
+        "description": "This is the library for the Unbounded Interleaved-State Recurrent Neural Network (UIS-RNN) algorithm, corresponding to the paper Fully Supervised Speaker Diarization.",
+        "size_kb": 112151,
+        "languages": {
+            "Python": 83825,
+            "Shell": 1160
+        }
+    },
+    {
+        "name": "GiftStick",
+        "full_name": "google/GiftStick",
+        "url": "https://github.com/google/GiftStick",
+        "stars": 141,
+        "updated_at": "2025-02-04T11:37:10Z",
+        "description": "1-Click push forensics evidence to the cloud",
+        "size_kb": 8039,
+        "languages": {
+            "Python": 153978,
+            "Shell": 50761
+        }
+    },
+    {
+        "name": "renameio",
+        "full_name": "google/renameio",
+        "url": "https://github.com/google/renameio",
+        "stars": 614,
+        "updated_at": "2025-02-28T03:02:10Z",
+        "description": "Package renameio provides a way to atomically create or replace a file or symbolic link.",
+        "size_kb": 38,
+        "languages": {
+            "Go": 36173
+        }
+    },
+    {
+        "name": "node-gles",
+        "full_name": "google/node-gles",
+        "url": "https://github.com/google/node-gles",
+        "stars": 328,
+        "updated_at": "2025-02-06T15:58:25Z",
+        "description": null,
+        "size_kb": 542,
+        "languages": {
+            "C++": 285802,
+            "TypeScript": 11624,
+            "JavaScript": 9054,
+            "Shell": 2341,
+            "Python": 1872
+        }
+    },
+    {
+        "name": "wire",
+        "full_name": "google/wire",
+        "url": "https://github.com/google/wire",
+        "stars": 13446,
+        "updated_at": "2025-03-06T18:32:07Z",
+        "description": "Compile-time Dependency Injection for Go",
+        "size_kb": 492,
+        "languages": {
+            "Go": 142821,
+            "Shell": 6639
+        }
+    },
+    {
+        "name": "schema-dts",
+        "full_name": "google/schema-dts",
+        "url": "https://github.com/google/schema-dts",
+        "stars": 963,
+        "updated_at": "2025-03-05T14:24:00Z",
+        "description": "JSON-LD TypeScript types for Schema.org vocabulary",
+        "size_kb": 2342,
+        "languages": {
+            "TypeScript": 297310,
+            "JavaScript": 5155
+        }
+    },
+    {
+        "name": "aistreamer",
+        "full_name": "google/aistreamer",
+        "url": "https://github.com/google/aistreamer",
+        "stars": 152,
+        "updated_at": "2025-03-05T05:13:31Z",
+        "description": "Google AIStreamer",
+        "size_kb": 91,
+        "languages": {
+            "C++": 93197,
+            "Python": 38421,
+            "Starlark": 12896
+        }
+    },
+    {
+        "name": "fswalker",
+        "full_name": "google/fswalker",
+        "url": "https://github.com/google/fswalker",
+        "stars": 107,
+        "updated_at": "2025-02-24T12:39:08Z",
+        "description": "Simple file system integrity checking tooling.",
+        "size_kb": 130,
+        "languages": {
+            "Go": 74832
+        }
+    },
+    {
+        "name": "tachometer",
+        "full_name": "google/tachometer",
+        "url": "https://github.com/google/tachometer",
+        "stars": 697,
+        "updated_at": "2025-03-04T04:44:06Z",
+        "description": "Statistically rigorous benchmark runner for the web",
+        "size_kb": 2363,
+        "languages": {
+            "TypeScript": 241711,
+            "HTML": 4222,
+            "JavaScript": 224
+        }
+    },
+    {
+        "name": "intermock",
+        "full_name": "google/intermock",
+        "url": "https://github.com/google/intermock",
+        "stars": 1146,
+        "updated_at": "2025-02-18T12:57:58Z",
+        "description": "Mocking library to create mock objects with fake data for TypeScript interfaces",
+        "size_kb": 4124,
+        "languages": {
+            "TypeScript": 90858,
+            "JavaScript": 7462
+        }
+    },
+    {
+        "name": "haskell-trainings",
+        "full_name": "google/haskell-trainings",
+        "url": "https://github.com/google/haskell-trainings",
+        "stars": 1403,
+        "updated_at": "2025-02-27T23:08:19Z",
+        "description": "Haskell 101 and 102: slides and codelabs",
+        "size_kb": 688,
+        "languages": {
+            "Haskell": 121989,
+            "TeX": 119442,
+            "Makefile": 14283,
+            "Dockerfile": 1414
+        }
+    },
+    {
+        "name": "react-schemaorg",
+        "full_name": "google/react-schemaorg",
+        "url": "https://github.com/google/react-schemaorg",
+        "stars": 493,
+        "updated_at": "2025-02-18T12:40:46Z",
+        "description": "Type-checked Schema.org JSON-LD for React",
+        "size_kb": 593,
+        "languages": {
+            "TypeScript": 12532,
+            "JavaScript": 1218
+        }
+    },
+    {
+        "name": "rpmpack",
+        "full_name": "google/rpmpack",
+        "url": "https://github.com/google/rpmpack",
+        "stars": 117,
+        "updated_at": "2024-12-23T07:53:00Z",
+        "description": "rpmpack (tar2rpm) - package rpms in pure golang or cli",
+        "size_kb": 268,
+        "languages": {
+            "Go": 59488,
+            "Starlark": 16459,
+            "Shell": 1840
+        }
+    },
+    {
+        "name": "peoplemath",
+        "full_name": "google/peoplemath",
+        "url": "https://github.com/google/peoplemath",
+        "stars": 123,
+        "updated_at": "2025-02-15T22:28:19Z",
+        "description": "Web application for team planning",
+        "size_kb": 5465,
+        "languages": {
+            "TypeScript": 299638,
+            "Go": 152833,
+            "HTML": 40659,
+            "CSS": 6546,
+            "JavaScript": 2613,
+            "Dockerfile": 1585,
+            "Shell": 1058
+        }
+    },
+    {
+        "name": "pprof-nodejs",
+        "full_name": "google/pprof-nodejs",
+        "url": "https://github.com/google/pprof-nodejs",
+        "stars": 262,
+        "updated_at": "2025-02-18T09:29:40Z",
+        "description": "pprof support for Node.js",
+        "size_kb": 3587,
+        "languages": {
+            "JavaScript": 173107,
+            "TypeScript": 73204,
+            "C++": 15218,
+            "Shell": 8447,
+            "Python": 718
+        }
+    },
+    {
+        "name": "dart-neats",
+        "full_name": "google/dart-neats",
+        "url": "https://github.com/google/dart-neats",
+        "stars": 474,
+        "updated_at": "2025-02-28T12:22:03Z",
+        "description": "neat dart packages.",
+        "size_kb": 546,
+        "languages": {
+            "Dart": 344933,
+            "Shell": 6760
+        }
+    },
+    {
+        "name": "crfs",
+        "full_name": "google/crfs",
+        "url": "https://github.com/google/crfs",
+        "stars": 1377,
+        "updated_at": "2025-02-08T21:39:59Z",
+        "description": "CRFS: Container Registry Filesystem",
+        "size_kb": 109,
+        "languages": {
+            "Go": 96080
+        }
+    },
+    {
+        "name": "php-crc32",
+        "full_name": "google/php-crc32",
+        "url": "https://github.com/google/php-crc32",
+        "stars": 187,
+        "updated_at": "2024-11-28T07:13:45Z",
+        "description": "PHP CRC32 implementations (support all crc32 polynomials, and hardware acceleration)",
+        "size_kb": 116,
+        "languages": {
+            "PHP": 43805,
+            "C": 7266,
+            "M4": 1940,
+            "Makefile": 1915,
+            "Shell": 1041
+        }
+    },
+    {
+        "name": "android-lint-performance-probe",
+        "full_name": "google/android-lint-performance-probe",
+        "url": "https://github.com/google/android-lint-performance-probe",
+        "stars": 145,
+        "updated_at": "2025-03-05T17:02:05Z",
+        "description": "A tool to help pinpoint performance bottlenecks in individual Android Lint checks.",
+        "size_kb": 79,
+        "languages": {
+            "Java": 9193
+        }
+    },
+    {
+        "name": "e3d_lstm",
+        "full_name": "google/e3d_lstm",
+        "url": "https://github.com/google/e3d_lstm",
+        "stars": 199,
+        "updated_at": "2025-01-08T13:20:20Z",
+        "description": "e3d-lstm; Eidetic 3D LSTM A Model for Video Prediction and Beyond",
+        "size_kb": 100,
+        "languages": {
+            "Python": 51993,
+            "Shell": 3118
+        }
+    },
+    {
+        "name": "tirg",
+        "full_name": "google/tirg",
+        "url": "https://github.com/google/tirg",
+        "stars": 301,
+        "updated_at": "2025-02-19T07:23:45Z",
+        "description": "deep learning, image retrieval, vision and language",
+        "size_kb": 1022,
+        "languages": {
+            "Python": 48541,
+            "Shell": 1318
+        }
+    },
+    {
+        "name": "licensecheck",
+        "full_name": "google/licensecheck",
+        "url": "https://github.com/google/licensecheck",
+        "stars": 456,
+        "updated_at": "2025-02-06T01:42:57Z",
+        "description": "The licensecheck package classifies license files and heuristically determines how well they correspond to known open source licenses.",
+        "size_kb": 7665,
+        "languages": {
+            "Go": 166521
+        }
+    },
+    {
+        "name": "note-maps",
+        "full_name": "google/note-maps",
+        "url": "https://github.com/google/note-maps",
+        "stars": 121,
+        "updated_at": "2025-01-31T11:00:34Z",
+        "description": "A personal knowledge base, an experimental project under development.",
+        "size_kb": 13339,
+        "languages": {
+            "Go": 309837,
+            "Rust": 300356,
+            "Dart": 66871,
+            "Makefile": 21800,
+            "Nix": 21249,
+            "Swift": 16295,
+            "CMake": 15596,
+            "Ruby": 14362,
+            "Shell": 9234,
+            "C++": 8924,
+            "Objective-C": 6943,
+            "C": 3922,
+            "Java": 2181,
+            "HTML": 1563,
+            "Kotlin": 725
+        }
+    },
+    {
+        "name": "playground-elements",
+        "full_name": "google/playground-elements",
+        "url": "https://github.com/google/playground-elements",
+        "stars": 556,
+        "updated_at": "2025-03-04T14:16:26Z",
+        "description": "Serverless coding environments for the web.",
+        "size_kb": 15076,
+        "languages": {
+            "TypeScript": 451017,
+            "JavaScript": 20017,
+            "CSS": 9905,
+            "HTML": 6565
+        }
+    },
+    {
+        "name": "vxsig",
+        "full_name": "google/vxsig",
+        "url": "https://github.com/google/vxsig",
+        "stars": 264,
+        "updated_at": "2025-03-03T05:49:40Z",
+        "description": "Automatically generate AV byte signatures from sets of similar binaries.",
+        "size_kb": 19674,
+        "languages": {
+            "C++": 252737,
+            "Starlark": 15496,
+            "C": 841
+        }
+    },
+    {
+        "name": "zetasketch",
+        "full_name": "google/zetasketch",
+        "url": "https://github.com/google/zetasketch",
+        "stars": 155,
+        "updated_at": "2025-01-18T00:06:40Z",
+        "description": "A collection of libraries for single-pass, distributed, sublinear-space approximate aggregation and sketching algorithms. Currently: HyperLogLog++; more to come.",
+        "size_kb": 247,
+        "languages": {
+            "Java": 436434
+        }
+    },
+    {
+        "name": "go-replayers",
+        "full_name": "google/go-replayers",
+        "url": "https://github.com/google/go-replayers",
+        "stars": 423,
+        "updated_at": "2025-02-04T13:30:48Z",
+        "description": null,
+        "size_kb": 243,
+        "languages": {
+            "Go": 124246,
+            "Shell": 2024,
+            "Makefile": 1948,
+            "Python": 1294
+        }
+    },
+    {
+        "name": "robotstxt",
+        "full_name": "google/robotstxt",
+        "url": "https://github.com/google/robotstxt",
+        "stars": 3408,
+        "updated_at": "2025-03-02T17:02:00Z",
+        "description": "The repository contains Google's robots.txt parser and matcher as a C++ library (compliant to C++11).",
+        "size_kb": 125,
+        "languages": {
+            "C++": 102107,
+            "CMake": 5311,
+            "Starlark": 1564
+        }
+    },
+    {
+        "name": "ihmehimmeli",
+        "full_name": "google/ihmehimmeli",
+        "url": "https://github.com/google/ihmehimmeli",
+        "stars": 142,
+        "updated_at": "2024-10-25T12:12:35Z",
+        "description": null,
+        "size_kb": 2162,
+        "languages": {
+            "C++": 197613,
+            "CMake": 1608,
+            "Shell": 911,
+            "C": 804
+        }
+    },
+    {
+        "name": "bi-tempered-loss",
+        "full_name": "google/bi-tempered-loss",
+        "url": "https://github.com/google/bi-tempered-loss",
+        "stars": 148,
+        "updated_at": "2024-12-23T08:01:15Z",
+        "description": "Robust Bi-Tempered Logistic Loss Based on Bregman Divergences. https://arxiv.org/pdf/1906.03361.pdf",
+        "size_kb": 74,
+        "languages": {
+            "Python": 45282,
+            "JavaScript": 22265,
+            "HTML": 5713,
+            "CSS": 4966,
+            "Shell": 1575
+        }
+    },
+    {
+        "name": "gnostic-grpc",
+        "full_name": "google/gnostic-grpc",
+        "url": "https://github.com/google/gnostic-grpc",
+        "stars": 306,
+        "updated_at": "2025-03-05T20:59:25Z",
+        "description": "A gnostic plugin that converts an OpenAPI  API description into a description of a gRPC service that can be used to implement that API using gRPC-JSON Transcoding.",
+        "size_kb": 376,
+        "languages": {
+            "Go": 140825,
+            "Shell": 420
+        }
+    },
+    {
+        "name": "live-transcribe-speech-engine",
+        "full_name": "google/live-transcribe-speech-engine",
+        "url": "https://github.com/google/live-transcribe-speech-engine",
+        "stars": 1451,
+        "updated_at": "2025-03-06T06:41:29Z",
+        "description": "Live Transcribe is an Android application that provides real-time captioning for people who are deaf or hard of hearing. This repository contains the Android client libraries for communicating with Google's Cloud Speech API that are used in Live Transcribe.",
+        "size_kb": 6978,
+        "languages": {
+            "Java": 160483,
+            "C++": 17378,
+            "C": 2358,
+            "CMake": 1848,
+            "Shell": 1103
+        }
+    },
+    {
+        "name": "marl",
+        "full_name": "google/marl",
+        "url": "https://github.com/google/marl",
+        "stars": 1917,
+        "updated_at": "2025-03-05T07:20:38Z",
+        "description": "A hybrid thread / fiber task scheduler written in C++ 11",
+        "size_kb": 1553,
+        "languages": {
+            "C++": 280429,
+            "C": 56591,
+            "Assembly": 23468,
+            "CMake": 17769,
+            "Shell": 16179,
+            "Go": 7365,
+            "Batchfile": 4606,
+            "Starlark": 2884
+        }
+    },
+    {
+        "name": "prefab",
+        "full_name": "google/prefab",
+        "url": "https://github.com/google/prefab",
+        "stars": 216,
+        "updated_at": "2025-02-26T15:49:28Z",
+        "description": "Prefab is a tool for generating build system integrations for prebuilt C/C++ libraries.",
+        "size_kb": 360,
+        "languages": {
+            "Kotlin": 190139,
+            "Shell": 140
+        }
+    },
+    {
+        "name": "cppdap",
+        "full_name": "google/cppdap",
+        "url": "https://github.com/google/cppdap",
+        "stars": 161,
+        "updated_at": "2025-02-25T22:01:07Z",
+        "description": "C++ library for the Debug Adapter Protocol",
+        "size_kb": 299,
+        "languages": {
+            "C++": 419426,
+            "Go": 27816,
+            "CMake": 16340,
+            "Shell": 6215,
+            "C": 4772,
+            "Batchfile": 1410
+        }
+    },
+    {
+        "name": "go-licenses",
+        "full_name": "google/go-licenses",
+        "url": "https://github.com/google/go-licenses",
+        "stars": 868,
+        "updated_at": "2025-03-04T15:10:22Z",
+        "description": "A lightweight tool to report on the licenses used by a Go package and its dependencies. Highlight! Versioned external URL to licenses can be found at the same time.",
+        "size_kb": 557,
+        "languages": {
+            "Go": 78230,
+            "Makefile": 1063,
+            "Dockerfile": 682
+        }
+    },
+    {
+        "name": "postcss-rename",
+        "full_name": "google/postcss-rename",
+        "url": "https://github.com/google/postcss-rename",
+        "stars": 144,
+        "updated_at": "2025-02-23T05:24:11Z",
+        "description": "Replace class names based on a customizable renaming scheme.",
+        "size_kb": 12829,
+        "languages": {
+            "TypeScript": 20951,
+            "JavaScript": 218
+        }
+    },
+    {
+        "name": "go-dap",
+        "full_name": "google/go-dap",
+        "url": "https://github.com/google/go-dap",
+        "stars": 128,
+        "updated_at": "2025-02-16T06:01:23Z",
+        "description": "Go implementation of the Debug Adapter Protocol",
+        "size_kb": 244,
+        "languages": {
+            "Go": 121102,
+            "Shell": 742
+        }
+    },
+    {
+        "name": "visqol",
+        "full_name": "google/visqol",
+        "url": "https://github.com/google/visqol",
+        "stars": 739,
+        "updated_at": "2025-03-06T19:39:24Z",
+        "description": "Perceptual Quality Estimator for speech and audio",
+        "size_kb": 69819,
+        "languages": {
+            "C++": 438879,
+            "Python": 54708,
+            "Starlark": 29529,
+            "Shell": 5239,
+            "C": 3088
+        }
+    },
+    {
+        "name": "it-cert-automation-practice",
+        "full_name": "google/it-cert-automation-practice",
+        "url": "https://github.com/google/it-cert-automation-practice",
+        "stars": 913,
+        "updated_at": "2025-03-05T06:53:13Z",
+        "description": "Google IT Automation with Python Professional Certificate - Practice files",
+        "size_kb": 16,
+        "languages": {
+            "Python": 2407
+        }
+    },
+    {
+        "name": "webbundle",
+        "full_name": "google/webbundle",
+        "url": "https://github.com/google/webbundle",
+        "stars": 102,
+        "updated_at": "2024-09-29T15:01:45Z",
+        "description": "WebBundle library for packaging web sites",
+        "size_kb": 245,
+        "languages": {
+            "Rust": 78617,
+            "TypeScript": 6743,
+            "HTML": 2294,
+            "Shell": 1713,
+            "C": 879,
+            "Makefile": 638,
+            "JavaScript": 38
+        }
+    },
+    {
+        "name": "argh",
+        "full_name": "google/argh",
+        "url": "https://github.com/google/argh",
+        "stars": 1748,
+        "updated_at": "2025-03-06T14:13:55Z",
+        "description": "Rust derive-based argument parsing optimized for code size",
+        "size_kb": 139,
+        "languages": {
+            "Rust": 237829
+        }
+    },
+    {
+        "name": "sqlcommenter",
+        "full_name": "google/sqlcommenter",
+        "url": "https://github.com/google/sqlcommenter",
+        "stars": 606,
+        "updated_at": "2025-03-06T13:00:08Z",
+        "description": null,
+        "size_kb": 20612,
+        "languages": {
+            "PHP": 145396,
+            "Python": 72279,
+            "Ruby": 61519,
+            "JavaScript": 55473,
+            "Java": 54272,
+            "Go": 36007,
+            "Blade": 18386,
+            "Shell": 3198,
+            "Dockerfile": 325
+        }
+    },
+    {
+        "name": "dart-basics",
+        "full_name": "google/dart-basics",
+        "url": "https://github.com/google/dart-basics",
+        "stars": 163,
+        "updated_at": "2024-10-25T11:18:19Z",
+        "description": "A Dart library containing convenient extension methods on basic Dart objects.",
+        "size_kb": 78,
+        "languages": {
+            "Dart": 108668
+        }
+    },
+    {
+        "name": "ukip",
+        "full_name": "google/ukip",
+        "url": "https://github.com/google/ukip",
+        "stars": 531,
+        "updated_at": "2025-01-31T20:06:50Z",
+        "description": "USB Keystroke Injection Protection",
+        "size_kb": 20,
+        "languages": {
+            "Python": 71888,
+            "Shell": 3706
+        }
+    },
+    {
+        "name": "triage-party",
+        "full_name": "google/triage-party",
+        "url": "https://github.com/google/triage-party",
+        "stars": 507,
+        "updated_at": "2025-02-21T01:08:04Z",
+        "description": "\ud83c\udf89 Triage Party: massively multi-player GitHub triage \ud83c\udf89",
+        "size_kb": 15439,
+        "languages": {
+            "Go": 262454,
+            "CSS": 9873,
+            "Shell": 5460,
+            "Dockerfile": 4019
+        }
+    },
+    {
+        "name": "json5format",
+        "full_name": "google/json5format",
+        "url": "https://github.com/google/json5format",
+        "stars": 103,
+        "updated_at": "2025-02-15T23:50:38Z",
+        "description": "JSON5 (a.k.a., \"JSON for Humans\") formatter that preserves contextual comments",
+        "size_kb": 131,
+        "languages": {
+            "Rust": 208013
+        }
+    },
+    {
+        "name": "goblet",
+        "full_name": "google/goblet",
+        "url": "https://github.com/google/goblet",
+        "stars": 170,
+        "updated_at": "2025-03-05T17:14:44Z",
+        "description": "Git caching proxy",
+        "size_kb": 170,
+        "languages": {
+            "Go": 62681,
+            "Starlark": 30828,
+            "Shell": 117
+        }
+    },
+    {
+        "name": "go-flow-levee",
+        "full_name": "google/go-flow-levee",
+        "url": "https://github.com/google/go-flow-levee",
+        "stars": 193,
+        "updated_at": "2025-03-06T13:00:16Z",
+        "description": null,
+        "size_kb": 590,
+        "languages": {
+            "Go": 261567,
+            "Shell": 1444
+        }
+    },
+    {
+        "name": "accompanist",
+        "full_name": "google/accompanist",
+        "url": "https://github.com/google/accompanist",
+        "stars": 7557,
+        "updated_at": "2025-03-06T18:01:17Z",
+        "description": "A collection of extension libraries for Jetpack Compose",
+        "size_kb": 56438,
+        "languages": {
+            "Kotlin": 289066,
+            "Shell": 6842
+        }
+    },
+    {
+        "name": "skywater-pdk",
+        "full_name": "google/skywater-pdk",
+        "url": "https://github.com/google/skywater-pdk",
+        "stars": 3070,
+        "updated_at": "2025-03-06T13:13:41Z",
+        "description": "Open source process design kit for usage with SkyWater Technology Foundry's 130nm node.",
+        "size_kb": 4273,
+        "languages": {
+            "Python": 101062,
+            "Makefile": 4844
+        }
+    },
+    {
+        "name": "swift-benchmark",
+        "full_name": "google/swift-benchmark",
+        "url": "https://github.com/google/swift-benchmark",
+        "stars": 928,
+        "updated_at": "2025-02-24T18:50:46Z",
+        "description": "A swift library to benchmark code snippets.",
+        "size_kb": 170,
+        "languages": {
+            "Swift": 113632,
+            "Python": 9722,
+            "CMake": 6740
+        }
+    },
+    {
+        "name": "safehtml",
+        "full_name": "google/safehtml",
+        "url": "https://github.com/google/safehtml",
+        "stars": 365,
+        "updated_at": "2025-03-04T10:13:11Z",
+        "description": "Safe HTML for Go",
+        "size_kb": 159,
+        "languages": {
+            "Go": 388011
+        }
+    },
+    {
+        "name": "tsec",
+        "full_name": "google/tsec",
+        "url": "https://github.com/google/tsec",
+        "stars": 132,
+        "updated_at": "2025-01-24T06:04:40Z",
+        "description": null,
+        "size_kb": 309,
+        "languages": {
+            "TypeScript": 118630,
+            "Starlark": 7967,
+            "JavaScript": 60
+        }
+    },
+    {
+        "name": "android-emulator-webrtc",
+        "full_name": "google/android-emulator-webrtc",
+        "url": "https://github.com/google/android-emulator-webrtc",
+        "stars": 136,
+        "updated_at": "2025-02-13T08:16:29Z",
+        "description": null,
+        "size_kb": 2140,
+        "languages": {
+            "JavaScript": 77609,
+            "C++": 63236,
+            "Makefile": 5162,
+            "Python": 1083,
+            "Dockerfile": 769
+        }
+    },
+    {
+        "name": "latexify_py",
+        "full_name": "google/latexify_py",
+        "url": "https://github.com/google/latexify_py",
+        "stars": 7420,
+        "updated_at": "2025-03-06T17:19:10Z",
+        "description": "A library to generate LaTeX expression from Python code.",
+        "size_kb": 325,
+        "languages": {
+            "Python": 236383,
+            "Shell": 154
+        }
+    },
+    {
+        "name": "vimscript-language-server",
+        "full_name": "google/vimscript-language-server",
+        "url": "https://github.com/google/vimscript-language-server",
+        "stars": 393,
+        "updated_at": "2025-02-11T03:22:41Z",
+        "description": null,
+        "size_kb": 135,
+        "languages": {
+            "Rust": 186991,
+            "Vim Script": 452,
+            "Lex": 118
+        }
+    },
+    {
+        "name": "osqp-cpp",
+        "full_name": "google/osqp-cpp",
+        "url": "https://github.com/google/osqp-cpp",
+        "stars": 255,
+        "updated_at": "2025-02-08T14:17:34Z",
+        "description": "A C++ interface for the OSQP quadratic programming solver.",
+        "size_kb": 33,
+        "languages": {
+            "C++": 86913,
+            "CMake": 3179
+        }
+    },
+    {
+        "name": "ml_collections",
+        "full_name": "google/ml_collections",
+        "url": "https://github.com/google/ml_collections",
+        "stars": 921,
+        "updated_at": "2025-02-27T05:17:00Z",
+        "description": "ML Collections is a library of Python Collections designed for ML use cases.",
+        "size_kb": 291,
+        "languages": {
+            "Python": 326598
+        }
+    },
+    {
+        "name": "objax",
+        "full_name": "google/objax",
+        "url": "https://github.com/google/objax",
+        "stars": 770,
+        "updated_at": "2025-01-18T13:27:39Z",
+        "description": null,
+        "size_kb": 3694,
+        "languages": {
+            "Python": 451115,
+            "Shell": 2528
+        }
+    },
+    {
+        "name": "eleventy-high-performance-blog",
+        "full_name": "google/eleventy-high-performance-blog",
+        "url": "https://github.com/google/eleventy-high-performance-blog",
+        "stars": 4044,
+        "updated_at": "2025-03-06T13:33:59Z",
+        "description": "A high performance blog template for the 11ty static site generator.",
+        "size_kb": 26077,
+        "languages": {
+            "JavaScript": 61649,
+            "CSS": 20872,
+            "Nunjucks": 12008,
+            "Shell": 120
+        }
+    },
+    {
+        "name": "slo-generator",
+        "full_name": "google/slo-generator",
+        "url": "https://github.com/google/slo-generator",
+        "stars": 508,
+        "updated_at": "2025-03-05T08:22:33Z",
+        "description": "SLO Generator computes SLIs, SLOs, Error Budgets and Burn Rates from supported backends, then exports an SLO report to supported targets.",
+        "size_kb": 1311,
+        "languages": {
+            "Python": 246833,
+            "Makefile": 4490,
+            "Dockerfile": 1358
+        }
+    },
+    {
+        "name": "uVkCompute",
+        "full_name": "google/uVkCompute",
+        "url": "https://github.com/google/uVkCompute",
+        "stars": 233,
+        "updated_at": "2025-03-03T03:31:55Z",
+        "description": "A micro Vulkan compute pipeline and a collection of benchmarking compute shaders",
+        "size_kb": 272,
+        "languages": {
+            "C++": 389701,
+            "GLSL": 60236,
+            "CMake": 48694,
+            "Python": 5419,
+            "C": 4741,
+            "Dockerfile": 2881,
+            "Shell": 2353,
+            "PowerShell": 1863
+        }
+    },
+    {
+        "name": "schemarama",
+        "full_name": "google/schemarama",
+        "url": "https://github.com/google/schemarama",
+        "stars": 139,
+        "updated_at": "2025-02-27T19:59:11Z",
+        "description": "Schemarama is a project exploring standards-based validation for structured data, especially Schema.org.",
+        "size_kb": 8103,
+        "languages": {
+            "JavaScript": 70403,
+            "HTML": 1234,
+            "CSS": 956
+        }
+    },
+    {
+        "name": "atheris",
+        "full_name": "google/atheris",
+        "url": "https://github.com/google/atheris",
+        "stars": 1438,
+        "updated_at": "2025-03-04T13:22:45Z",
+        "description": null,
+        "size_kb": 501,
+        "languages": {
+            "Python": 208587,
+            "C++": 111313,
+            "Shell": 16702,
+            "Starlark": 4123,
+            "Dockerfile": 2020,
+            "C": 1214
+        }
+    },
+    {
+        "name": "ga4-gtm-migration",
+        "full_name": "google/ga4-gtm-migration",
+        "url": "https://github.com/google/ga4-gtm-migration",
+        "stars": 117,
+        "updated_at": "2025-01-09T04:02:46Z",
+        "description": null,
+        "size_kb": 220,
+        "languages": {
+            "JavaScript": 59097
+        }
+    },
+    {
+        "name": "deluca",
+        "full_name": "google/deluca",
+        "url": "https://github.com/google/deluca",
+        "stars": 120,
+        "updated_at": "2025-01-26T09:58:25Z",
+        "description": "Performant, differentiable reinforcement learning",
+        "size_kb": 3052,
+        "languages": {
+            "Python": 297090
+        }
+    },
+    {
+        "name": "binja-hexagon",
+        "full_name": "google/binja-hexagon",
+        "url": "https://github.com/google/binja-hexagon",
+        "stars": 111,
+        "updated_at": "2025-02-21T14:55:50Z",
+        "description": null,
+        "size_kb": 1052,
+        "languages": {
+            "Python": 195402,
+            "C++": 98755,
+            "C": 13428,
+            "CMake": 13248,
+            "Assembly": 8600,
+            "Dockerfile": 470,
+            "Makefile": 420
+        }
+    },
+    {
+        "name": "safevalues",
+        "full_name": "google/safevalues",
+        "url": "https://github.com/google/safevalues",
+        "stars": 111,
+        "updated_at": "2025-02-26T03:55:17Z",
+        "description": null,
+        "size_kb": 857,
+        "languages": {
+            "TypeScript": 465882,
+            "JavaScript": 2213,
+            "Shell": 1241
+        }
+    },
+    {
+        "name": "nerfies",
+        "full_name": "google/nerfies",
+        "url": "https://github.com/google/nerfies",
+        "stars": 1769,
+        "updated_at": "2025-03-06T17:36:11Z",
+        "description": "This is the code for Deformable Neural Radiance Fields, a.k.a. Nerfies.",
+        "size_kb": 105,
+        "languages": {
+            "Python": 205972,
+            "Jupyter Notebook": 91097
+        }
+    },
+    {
+        "name": "secrets-gradle-plugin",
+        "full_name": "google/secrets-gradle-plugin",
+        "url": "https://github.com/google/secrets-gradle-plugin",
+        "stars": 1217,
+        "updated_at": "2025-03-06T14:59:19Z",
+        "description": "A Gradle plugin for providing your secrets to your Android project.",
+        "size_kb": 222,
+        "languages": {
+            "Kotlin": 14843
+        }
+    },
+    {
+        "name": "monster-mash",
+        "full_name": "google/monster-mash",
+        "url": "https://github.com/google/monster-mash",
+        "stars": 1304,
+        "updated_at": "2025-02-22T17:41:13Z",
+        "description": null,
+        "size_kb": 3875,
+        "languages": {
+            "C++": 253131,
+            "HTML": 47304,
+            "JavaScript": 18349,
+            "CSS": 7164,
+            "CMake": 5170,
+            "C": 5056
+        }
+    },
+    {
+        "name": "k8s-digester",
+        "full_name": "google/k8s-digester",
+        "url": "https://github.com/google/k8s-digester",
+        "stars": 131,
+        "updated_at": "2025-03-05T15:24:14Z",
+        "description": "Add digests to container and init container images in Kubernetes pod and pod template specs. Use either as a mutating admission webhook, or as a client-side KRM function with kpt or kustomize.",
+        "size_kb": 280,
+        "languages": {
+            "Go": 68676
+        }
+    },
+    {
+        "name": "lyra",
+        "full_name": "google/lyra",
+        "url": "https://github.com/google/lyra",
+        "stars": 3850,
+        "updated_at": "2025-03-05T15:55:09Z",
+        "description": "A Very Low-Bitrate Codec for Speech Compression",
+        "size_kb": 20340,
+        "languages": {
+            "C++": 354533,
+            "Starlark": 41511,
+            "Java": 10915
+        }
+    },
+    {
+        "name": "oss-fuzz-vulns",
+        "full_name": "google/oss-fuzz-vulns",
+        "url": "https://github.com/google/oss-fuzz-vulns",
+        "stars": 149,
+        "updated_at": "2025-03-06T14:32:41Z",
+        "description": "OSS-Fuzz vulnerabilities for OSV.",
+        "size_kb": 8948,
+        "languages": {
+            "Python": 18833
+        }
+    },
+    {
+        "name": "GoogleSignIn-iOS",
+        "full_name": "google/GoogleSignIn-iOS",
+        "url": "https://github.com/google/GoogleSignIn-iOS",
+        "stars": 550,
+        "updated_at": "2025-03-06T14:18:49Z",
+        "description": "Enables iOS and macOS apps to sign in with Google.",
+        "size_kb": 1205,
+        "languages": {
+            "Objective-C": 486911,
+            "Swift": 28249,
+            "Ruby": 3499
+        }
+    },
+    {
+        "name": "iconvg",
+        "full_name": "google/iconvg",
+        "url": "https://github.com/google/iconvg",
+        "stars": 677,
+        "updated_at": "2025-01-27T23:55:38Z",
+        "description": "IconVG is a compact, binary format for simple vector graphics: icons, logos, glyphs and emoji.",
+        "size_kb": 1179,
+        "languages": {
+            "C": 250326,
+            "Dart": 52809,
+            "Go": 46001,
+            "C++": 24781,
+            "Shell": 3326
+        }
+    },
+    {
+        "name": "shuwa",
+        "full_name": "google/shuwa",
+        "url": "https://github.com/google/shuwa",
+        "stars": 138,
+        "updated_at": "2025-02-27T01:04:07Z",
+        "description": null,
+        "size_kb": 142123,
+        "languages": {
+            "Python": 57560,
+            "Jupyter Notebook": 11330
+        }
+    },
+    {
+        "name": "devlibrary",
+        "full_name": "google/devlibrary",
+        "url": "https://github.com/google/devlibrary",
+        "stars": 187,
+        "updated_at": "2025-02-14T01:56:05Z",
+        "description": "Source code for Google Dev Library",
+        "size_kb": 11185,
+        "languages": {
+            "Vue": 192308,
+            "TypeScript": 154714,
+            "JavaScript": 7708,
+            "CSS": 6834,
+            "HTML": 4374
+        }
+    },
+    {
+        "name": "zx",
+        "full_name": "google/zx",
+        "url": "https://github.com/google/zx",
+        "stars": 43673,
+        "updated_at": "2025-03-06T19:02:39Z",
+        "description": "A tool for writing better scripts",
+        "size_kb": 2262,
+        "languages": {
+            "JavaScript": 164964,
+            "TypeScript": 72759
+        }
+    },
+    {
+        "name": "xarray-beam",
+        "full_name": "google/xarray-beam",
+        "url": "https://github.com/google/xarray-beam",
+        "stars": 145,
+        "updated_at": "2025-03-03T20:49:02Z",
+        "description": "Distributed Xarray with Apache Beam",
+        "size_kb": 284,
+        "languages": {
+            "Python": 152205
+        }
+    },
+    {
+        "name": "mlir-hs",
+        "full_name": "google/mlir-hs",
+        "url": "https://github.com/google/mlir-hs",
+        "stars": 106,
+        "updated_at": "2025-02-21T15:43:48Z",
+        "description": "Haskell bindings for MLIR",
+        "size_kb": 19670,
+        "languages": {
+            "Haskell": 128473,
+            "C++": 37426
+        }
+    },
+    {
+        "name": "google-analytics-utilities",
+        "full_name": "google/google-analytics-utilities",
+        "url": "https://github.com/google/google-analytics-utilities",
+        "stars": 207,
+        "updated_at": "2025-01-30T10:16:37Z",
+        "description": null,
+        "size_kb": 241,
+        "languages": {
+            "JavaScript": 178457,
+            "Python": 29776
+        }
+    },
+    {
+        "name": "fuse-archive",
+        "full_name": "google/fuse-archive",
+        "url": "https://github.com/google/fuse-archive",
+        "stars": 186,
+        "updated_at": "2025-03-06T18:57:20Z",
+        "description": "FUSE file system for archives and compressed files (ZIP, RAR, 7Z, ISO, TGZ, XZ...)",
+        "size_kb": 1268,
+        "languages": {
+            "C++": 88222,
+            "Python": 66355,
+            "Roff": 7079,
+            "Makefile": 1528
+        }
+    },
+    {
+        "name": "hiba",
+        "full_name": "google/hiba",
+        "url": "https://github.com/google/hiba",
+        "stars": 374,
+        "updated_at": "2025-03-05T16:40:59Z",
+        "description": "HIBA is a system built on top of regular OpenSSH certificate-based authentication that allows to manage flexible authorization of principals on pools of target hosts without the need to push customized authorized_users files periodically.",
+        "size_kb": 150,
+        "languages": {
+            "C": 89785,
+            "Roff": 21179,
+            "Shell": 17367,
+            "M4": 8952,
+            "Makefile": 1292
+        }
+    },
+    {
+        "name": "esh",
+        "full_name": "google/esh",
+        "url": "https://github.com/google/esh",
+        "stars": 265,
+        "updated_at": "2025-02-25T08:16:18Z",
+        "description": "UART based embedded shell for embedded systems. Intended to be used for learning, experimenting and diagnostics.",
+        "size_kb": 11922,
+        "languages": {
+            "C": 37818,
+            "Makefile": 13393,
+            "Shell": 5238,
+            "Assembly": 3468
+        }
+    },
+    {
+        "name": "assertor",
+        "full_name": "google/assertor",
+        "url": "https://github.com/google/assertor",
+        "stars": 133,
+        "updated_at": "2025-03-01T02:50:20Z",
+        "description": "Fluent assertion library for Rust with readable messages.",
+        "size_kb": 185,
+        "languages": {
+            "Rust": 180305
+        }
+    },
+    {
+        "name": "hypernerf",
+        "full_name": "google/hypernerf",
+        "url": "https://github.com/google/hypernerf",
+        "stars": 906,
+        "updated_at": "2025-02-20T12:55:04Z",
+        "description": "Code for \"HyperNeRF: A Higher-Dimensional Representation for Topologically Varying Neural Radiance Fields\".",
+        "size_kb": 92,
+        "languages": {
+            "Python": 232108,
+            "Jupyter Notebook": 212164
+        }
+    },
+    {
+        "name": "balloon-learning-environment",
+        "full_name": "google/balloon-learning-environment",
+        "url": "https://github.com/google/balloon-learning-environment",
+        "stars": 123,
+        "updated_at": "2025-01-17T07:22:18Z",
+        "description": "The Balloon Learning Environment - flying stratospheric balloons with deep reinforcement learning.",
+        "size_kb": 59067,
+        "languages": {
+            "Python": 395948,
+            "Jupyter Notebook": 164596
+        }
+    },
+    {
+        "name": "integers",
+        "full_name": "google/integers",
+        "url": "https://github.com/google/integers",
+        "stars": 187,
+        "updated_at": "2024-11-04T23:41:52Z",
+        "description": "Safer integers in C++.",
+        "size_kb": 93,
+        "languages": {
+            "C++": 81115,
+            "Makefile": 2492
+        }
+    },
+    {
+        "name": "localtoast",
+        "full_name": "google/localtoast",
+        "url": "https://github.com/google/localtoast",
+        "stars": 111,
+        "updated_at": "2025-01-28T12:39:38Z",
+        "description": null,
+        "size_kb": 1267,
+        "languages": {
+            "Go": 370874,
+            "Shell": 1041,
+            "Makefile": 1038
+        }
+    },
+    {
+        "name": "budoux",
+        "full_name": "google/budoux",
+        "url": "https://github.com/google/budoux",
+        "stars": 1475,
+        "updated_at": "2025-03-05T00:53:03Z",
+        "description": null,
+        "size_kb": 2970,
+        "languages": {
+            "Python": 111408,
+            "TypeScript": 70355,
+            "Java": 21388,
+            "JavaScript": 6948
+        }
+    },
+    {
+        "name": "mount-zip",
+        "full_name": "google/mount-zip",
+        "url": "https://github.com/google/mount-zip",
+        "stars": 169,
+        "updated_at": "2025-02-19T05:41:50Z",
+        "description": "FUSE file system for ZIP archives",
+        "size_kb": 2970,
+        "languages": {
+            "C++": 184179,
+            "Python": 89595,
+            "Roff": 25318,
+            "Makefile": 8958,
+            "C": 5436
+        }
+    },
+    {
+        "name": "network-opt",
+        "full_name": "google/network-opt",
+        "url": "https://github.com/google/network-opt",
+        "stars": 151,
+        "updated_at": "2025-02-25T00:28:29Z",
+        "description": "A library for topological network optimization",
+        "size_kb": 633,
+        "languages": {
+            "C++": 50048,
+            "CMake": 678
+        }
+    },
+    {
+        "name": "tree-math",
+        "full_name": "google/tree-math",
+        "url": "https://github.com/google/tree-math",
+        "stars": 198,
+        "updated_at": "2025-01-25T20:08:30Z",
+        "description": "Mathematical operations for JAX pytrees",
+        "size_kb": 35,
+        "languages": {
+            "Python": 40570
+        }
+    },
+    {
+        "name": "rax",
+        "full_name": "google/rax",
+        "url": "https://github.com/google/rax",
+        "stars": 327,
+        "updated_at": "2025-03-05T04:17:04Z",
+        "description": "Rax is a Learning-to-Rank library written in JAX.",
+        "size_kb": 284,
+        "languages": {
+            "Python": 245136
+        }
+    },
+    {
+        "name": "cwisstable",
+        "full_name": "google/cwisstable",
+        "url": "https://github.com/google/cwisstable",
+        "stars": 129,
+        "updated_at": "2025-03-04T05:38:32Z",
+        "description": "Single-header C11 port of https://abseil.io SwissTable",
+        "size_kb": 203,
+        "languages": {
+            "C++": 137484,
+            "C": 100395,
+            "Starlark": 11368,
+            "Python": 7018,
+            "Shell": 262
+        }
+    },
+    {
+        "name": "gcp_scanner",
+        "full_name": "google/gcp_scanner",
+        "url": "https://github.com/google/gcp_scanner",
+        "stars": 320,
+        "updated_at": "2025-03-02T19:46:18Z",
+        "description": "A comprehensive scanner for Google Cloud",
+        "size_kb": 11415,
+        "languages": {
+            "Python": 196500,
+            "TypeScript": 36806,
+            "Shell": 7090,
+            "CSS": 5720,
+            "Dockerfile": 802,
+            "JavaScript": 717,
+            "HTML": 361
+        }
+    },
+    {
+        "name": "lightweight_mmm",
+        "full_name": "google/lightweight_mmm",
+        "url": "https://github.com/google/lightweight_mmm",
+        "stars": 944,
+        "updated_at": "2025-03-05T23:48:52Z",
+        "description": "LightweightMMM \ud83e\udd87 is a lightweight Bayesian Marketing Mix Modeling (MMM) library that allows users to easily train MMMs and obtain channel attribution information.",
+        "size_kb": 13333,
+        "languages": {
+            "Python": 362838,
+            "Shell": 1257
+        }
+    },
+    {
+        "name": "psp",
+        "full_name": "google/psp",
+        "url": "https://github.com/google/psp",
+        "stars": 254,
+        "updated_at": "2025-02-28T22:32:32Z",
+        "description": null,
+        "size_kb": 1666202,
+        "languages": {
+            "C": 70277,
+            "Shell": 41380,
+            "Lua": 7282,
+            "Makefile": 984
+        }
+    },
+    {
+        "name": "cronet-transport-for-okhttp",
+        "full_name": "google/cronet-transport-for-okhttp",
+        "url": "https://github.com/google/cronet-transport-for-okhttp",
+        "stars": 484,
+        "updated_at": "2025-02-27T02:43:34Z",
+        "description": "This package allows OkHttp and Retrofit users to use Cronet as their transport layer, benefiting from features like QUIC/HTTP3 support or connection migration.",
+        "size_kb": 136,
+        "languages": {
+            "Java": 126596,
+            "Starlark": 11977
+        }
+    },
+    {
+        "name": "gke-policy-automation",
+        "full_name": "google/gke-policy-automation",
+        "url": "https://github.com/google/gke-policy-automation",
+        "stars": 518,
+        "updated_at": "2025-03-05T10:57:02Z",
+        "description": "Tool and policy library for reviewing Google Kubernetes Engine clusters against best practices",
+        "size_kb": 2911,
+        "languages": {
+            "Go": 362544,
+            "Open Policy Agent": 314364,
+            "HCL": 19288,
+            "Python": 4768,
+            "Makefile": 1753,
+            "Shell": 943,
+            "Dockerfile": 705
+        }
+    },
+    {
+        "name": "attention-center",
+        "full_name": "google/attention-center",
+        "url": "https://github.com/google/attention-center",
+        "stars": 119,
+        "updated_at": "2025-03-06T11:44:47Z",
+        "description": null,
+        "size_kb": 26872,
+        "languages": {
+            "Python": 11473
+        }
+    },
+    {
+        "name": "googlesre",
+        "full_name": "google/googlesre",
+        "url": "https://github.com/google/googlesre",
+        "stars": 164,
+        "updated_at": "2025-03-06T19:12:43Z",
+        "description": null,
+        "size_kb": 14247,
+        "languages": {
+            "TypeScript": 34241,
+            "Go": 32718,
+            "HTML": 7032,
+            "SCSS": 5359,
+            "Shell": 5040,
+            "JavaScript": 3025
+        }
+    },
+    {
+        "name": "ceviche-challenges",
+        "full_name": "google/ceviche-challenges",
+        "url": "https://github.com/google/ceviche-challenges",
+        "stars": 101,
+        "updated_at": "2025-02-17T23:52:38Z",
+        "description": "A suite of photonic inverse design challenge problems for topology optimization benchmarking",
+        "size_kb": 761,
+        "languages": {
+            "Python": 154738
+        }
+    },
+    {
+        "name": "hashr",
+        "full_name": "google/hashr",
+        "url": "https://github.com/google/hashr",
+        "stars": 114,
+        "updated_at": "2025-02-07T19:19:05Z",
+        "description": null,
+        "size_kb": 12031,
+        "languages": {
+            "Go": 360253,
+            "Shell": 15619,
+            "Dockerfile": 1201
+        }
+    },
+    {
+        "name": "gf180mcu-pdk",
+        "full_name": "google/gf180mcu-pdk",
+        "url": "https://github.com/google/gf180mcu-pdk",
+        "stars": 384,
+        "updated_at": "2025-03-05T22:07:19Z",
+        "description": "PDK for GlobalFoundries' 180nm MCU bulk process technology (GF180MCU).",
+        "size_kb": 53773,
+        "languages": {
+            "Makefile": 2051
+        }
+    },
+    {
+        "name": "glance-experimental-tools",
+        "full_name": "google/glance-experimental-tools",
+        "url": "https://github.com/google/glance-experimental-tools",
+        "stars": 180,
+        "updated_at": "2025-03-06T14:32:10Z",
+        "description": "Glance Experimental Tools aims to supplement Jetpack Glance with features that are commonly required by developers but not yet available.",
+        "size_kb": 17065,
+        "languages": {
+            "Kotlin": 78015,
+            "Shell": 6799
+        }
+    },
+    {
+        "name": "yamlfmt",
+        "full_name": "google/yamlfmt",
+        "url": "https://github.com/google/yamlfmt",
+        "stars": 1267,
+        "updated_at": "2025-03-05T21:07:47Z",
+        "description": "An extensible command line tool or library to format yaml files.",
+        "size_kb": 249,
+        "languages": {
+            "Go": 143149,
+            "Shell": 2335,
+            "Makefile": 1461,
+            "Dockerfile": 808
+        }
+    },
+    {
+        "name": "safetext",
+        "full_name": "google/safetext",
+        "url": "https://github.com/google/safetext",
+        "stars": 150,
+        "updated_at": "2025-01-14T06:39:34Z",
+        "description": null,
+        "size_kb": 90,
+        "languages": {
+            "Go": 123026,
+            "Starlark": 6434
+        }
+    },
+    {
+        "name": "uvq",
+        "full_name": "google/uvq",
+        "url": "https://github.com/google/uvq",
+        "stars": 102,
+        "updated_at": "2025-03-05T13:41:07Z",
+        "description": null,
+        "size_kb": 325662,
+        "languages": {
+            "Python": 72817
+        }
+    },
+    {
+        "name": "executor.nvim",
+        "full_name": "google/executor.nvim",
+        "url": "https://github.com/google/executor.nvim",
+        "stars": 150,
+        "updated_at": "2025-01-23T16:29:40Z",
+        "description": null,
+        "size_kb": 95,
+        "languages": {
+            "Lua": 24379,
+            "Makefile": 24
+        }
+    },
+    {
+        "name": "ripunzip",
+        "full_name": "google/ripunzip",
+        "url": "https://github.com/google/ripunzip",
+        "stars": 193,
+        "updated_at": "2025-03-04T06:30:27Z",
+        "description": null,
+        "size_kb": 507,
+        "languages": {
+            "Rust": 110840,
+            "Shell": 780
+        }
+    },
+    {
+        "name": "autobound",
+        "full_name": "google/autobound",
+        "url": "https://github.com/google/autobound",
+        "stars": 359,
+        "updated_at": "2025-02-07T11:41:12Z",
+        "description": "AutoBound automatically computes upper and lower bounds on functions.",
+        "size_kb": 521,
+        "languages": {
+            "Python": 217801,
+            "Jupyter Notebook": 161768
+        }
+    },
+    {
+        "name": "minimalloc",
+        "full_name": "google/minimalloc",
+        "url": "https://github.com/google/minimalloc",
+        "stars": 142,
+        "updated_at": "2025-03-05T15:30:02Z",
+        "description": "A lightweight memory allocator for hardware-accelerated machine learning",
+        "size_kb": 12897,
+        "languages": {
+            "C++": 134401,
+            "CMake": 1652,
+            "Shell": 211
+        }
+    },
+    {
+        "name": "best",
+        "full_name": "google/best",
+        "url": "https://github.com/google/best",
+        "stars": 128,
+        "updated_at": "2025-02-14T16:09:20Z",
+        "description": "Bam Error Stats Tool (best): analysis of error types in aligned reads.",
+        "size_kb": 135,
+        "languages": {
+            "Rust": 57647,
+            "Shell": 5224
+        }
+    },
+    {
+        "name": "comprehensive-rust",
+        "full_name": "google/comprehensive-rust",
+        "url": "https://github.com/google/comprehensive-rust",
+        "stars": 29487,
+        "updated_at": "2025-03-06T14:51:20Z",
+        "description": "This is the Rust course used by the Android team at Google. It provides you the material to quickly teach Rust.",
+        "size_kb": 24065,
+        "languages": {
+            "Rust": 196218,
+            "JavaScript": 43974,
+            "Assembly": 21338,
+            "Handlebars": 21125,
+            "TypeScript": 19816,
+            "Shell": 5811,
+            "C": 3648,
+            "AIDL": 2448,
+            "Makefile": 2283,
+            "CSS": 1522,
+            "Java": 892
+        }
+    },
+    {
+        "name": "swissgl",
+        "full_name": "google/swissgl",
+        "url": "https://github.com/google/swissgl",
+        "stars": 1177,
+        "updated_at": "2025-03-04T09:29:02Z",
+        "description": "SwissGL is a minimalistic wrapper on top of WebGL2 JS API. It's designed to reduce the amount of boilerplate code required to manage GLSL shaders, textures and framebuffers when making procedural visualizations or simulations.",
+        "size_kb": 1411,
+        "languages": {
+            "JavaScript": 33137,
+            "HTML": 24145
+        }
+    },
+    {
+        "name": "keep-sorted",
+        "full_name": "google/keep-sorted",
+        "url": "https://github.com/google/keep-sorted",
+        "stars": 160,
+        "updated_at": "2025-02-27T03:46:19Z",
+        "description": "keep-sorted is a language-agnostic formatter that sorts lines between two markers in a larger file.",
+        "size_kb": 143,
+        "languages": {
+            "Go": 107065,
+            "Shell": 1037
+        }
+    },
+    {
+        "name": "buzzer",
+        "full_name": "google/buzzer",
+        "url": "https://github.com/google/buzzer",
+        "stars": 437,
+        "updated_at": "2025-02-27T19:55:20Z",
+        "description": null,
+        "size_kb": 784,
+        "languages": {
+            "Go": 260156,
+            "C++": 27251,
+            "Starlark": 14606,
+            "Shell": 751
+        }
+    },
+    {
+        "name": "mdbook-i18n-helpers",
+        "full_name": "google/mdbook-i18n-helpers",
+        "url": "https://github.com/google/mdbook-i18n-helpers",
+        "stars": 156,
+        "updated_at": "2025-03-05T08:16:35Z",
+        "description": "Translation support for mdbook. The plugins here give you a structured way to maintain a translated book.",
+        "size_kb": 455,
+        "languages": {
+            "Rust": 165773,
+            "HTML": 1771
+        }
+    },
+    {
+        "name": "visualblocks",
+        "full_name": "google/visualblocks",
+        "url": "https://github.com/google/visualblocks",
+        "stars": 1223,
+        "updated_at": "2025-02-26T10:50:54Z",
+        "description": "Visual Blocks for ML is a Google visual programming framework that lets you create ML pipelines in a no-code graph editor. You \u2013 and your users \u2013 can quickly prototype workflows by connecting drag-and-drop ML components, including models, user inputs, processors, and visualizations.",
+        "size_kb": 13430,
+        "languages": {
+            "TypeScript": 24307,
+            "Python": 14682,
+            "JavaScript": 14239,
+            "Shell": 368,
+            "Handlebars": 153
+        }
+    },
+    {
+        "name": "tour-of-wgsl",
+        "full_name": "google/tour-of-wgsl",
+        "url": "https://github.com/google/tour-of-wgsl",
+        "stars": 123,
+        "updated_at": "2025-02-18T11:20:53Z",
+        "description": null,
+        "size_kb": 25335,
+        "languages": {
+            "TypeScript": 75341,
+            "WGSL": 14980,
+            "SCSS": 12831,
+            "HTML": 12502
+        }
+    },
+    {
+        "name": "flutter-mediapipe",
+        "full_name": "google/flutter-mediapipe",
+        "url": "https://github.com/google/flutter-mediapipe",
+        "stars": 229,
+        "updated_at": "2025-03-06T06:10:41Z",
+        "description": null,
+        "size_kb": 9200,
+        "languages": {
+            "Dart": 448419,
+            "Ruby": 5606,
+            "Swift": 3110,
+            "Shell": 2652,
+            "Makefile": 2444,
+            "Kotlin": 240,
+            "Objective-C": 76
+        }
+    },
+    {
+        "name": "project-gameface",
+        "full_name": "google/project-gameface",
+        "url": "https://github.com/google/project-gameface",
+        "stars": 596,
+        "updated_at": "2025-03-04T11:13:28Z",
+        "description": null,
+        "size_kb": 7810,
+        "languages": {
+            "Java": 215482,
+            "Python": 201799
+        }
+    },
+    {
+        "name": "purr",
+        "full_name": "google/purr",
+        "url": "https://github.com/google/purr",
+        "stars": 149,
+        "updated_at": "2025-02-06T11:11:30Z",
+        "description": "purr is a zsh CLI tool for viewing and searching through Android logcat output. It leverages fzf to provide a simple yet powerful user interface, fuzzy-finding capabilities, and much more.",
+        "size_kb": 3560,
+        "languages": {
+            "Shell": 85739,
+            "Makefile": 4626
+        }
+    },
+    {
+        "name": "dfiq",
+        "full_name": "google/dfiq",
+        "url": "https://github.com/google/dfiq",
+        "stars": 273,
+        "updated_at": "2025-03-03T05:12:58Z",
+        "description": "DFIQ is a collection of investigative questions and the approaches for answering them",
+        "size_kb": 994,
+        "languages": {
+            "Python": 28065,
+            "Jinja": 13212,
+            "Dockerfile": 603,
+            "CSS": 520,
+            "Shell": 182,
+            "JavaScript": 172
+        }
+    },
+    {
+        "name": "capslock",
+        "full_name": "google/capslock",
+        "url": "https://github.com/google/capslock",
+        "stars": 871,
+        "updated_at": "2025-02-25T21:57:15Z",
+        "description": null,
+        "size_kb": 254,
+        "languages": {
+            "Go": 187936,
+            "Assembly": 308
+        }
+    },
+    {
+        "name": "unisim",
+        "full_name": "google/unisim",
+        "url": "https://github.com/google/unisim",
+        "stars": 132,
+        "updated_at": "2025-02-26T03:23:35Z",
+        "description": "UniSim is a package for efficient similarity computation, fuzzy matching, and clustering of data.  ",
+        "size_kb": 8452,
+        "languages": {
+            "Python": 71326,
+            "Jupyter Notebook": 60993,
+            "PureBasic": 33515
+        }
+    },
+    {
+        "name": "android-security-lints",
+        "full_name": "google/android-security-lints",
+        "url": "https://github.com/google/android-security-lints",
+        "stars": 139,
+        "updated_at": "2025-02-19T15:44:36Z",
+        "description": "Custom security-focused lint checks for Android development",
+        "size_kb": 229,
+        "languages": {
+            "Kotlin": 184881
+        }
+    },
+    {
+        "name": "magika",
+        "full_name": "google/magika",
+        "url": "https://github.com/google/magika",
+        "stars": 8446,
+        "updated_at": "2025-03-06T17:04:20Z",
+        "description": "Detect file content types with deep learning",
+        "size_kb": 69649,
+        "languages": {
+            "Rust": 147047,
+            "Python": 129363,
+            "TypeScript": 32473,
+            "Rich Text Format": 32354,
+            "HTML": 22856,
+            "Go": 17642,
+            "Shell": 13882,
+            "Vue": 11026,
+            "JavaScript": 5016,
+            "Dockerfile": 3087,
+            "C": 2241,
+            "CSS": 706,
+            "Jinja": 689,
+            "SCSS": 507,
+            "Twig": 416,
+            "Smali": 336,
+            "YARA": 320,
+            "TeX": 183,
+            "Assembly": 179,
+            "Handlebars": 140,
+            "Zig": 97,
+            "Makefile": 75,
+            "PHP": 52,
+            "Batchfile": 33
+        }
+    },
+    {
+        "name": "Xee",
+        "full_name": "google/Xee",
+        "url": "https://github.com/google/Xee",
+        "stars": 274,
+        "updated_at": "2025-03-04T23:39:29Z",
+        "description": "An Xarray extension for Google Earth Engine",
+        "size_kb": 553,
+        "languages": {
+            "Python": 76654
+        }
+    },
+    {
+        "name": "kube-startup-cpu-boost",
+        "full_name": "google/kube-startup-cpu-boost",
+        "url": "https://github.com/google/kube-startup-cpu-boost",
+        "stars": 378,
+        "updated_at": "2025-03-01T19:19:23Z",
+        "description": "Kube Startup CPU Boost is a controller that increases CPU resource requests and limits during Kubernetes workload startup time",
+        "size_kb": 320,
+        "languages": {
+            "Go": 193935,
+            "Java": 8443,
+            "Makefile": 8023,
+            "Dockerfile": 2907,
+            "Python": 2743
+        }
+    },
+    {
+        "name": "break-a-scene",
+        "full_name": "google/break-a-scene",
+        "url": "https://github.com/google/break-a-scene",
+        "stars": 516,
+        "updated_at": "2025-02-26T09:17:42Z",
+        "description": "Official implementation for \"Break-A-Scene: Extracting Multiple Concepts from a Single Image\" [SIGGRAPH Asia 2023]",
+        "size_kb": 13749,
+        "languages": {
+            "Python": 81488
+        }
+    },
+    {
+        "name": "coroutine-stacks",
+        "full_name": "google/coroutine-stacks",
+        "url": "https://github.com/google/coroutine-stacks",
+        "stars": 140,
+        "updated_at": "2025-03-03T06:11:32Z",
+        "description": null,
+        "size_kb": 225,
+        "languages": {
+            "Kotlin": 55594,
+            "Python": 2878
+        }
+    },
+    {
+        "name": "sf-evolve-forms",
+        "full_name": "google/sf-evolve-forms",
+        "url": "https://github.com/google/sf-evolve-forms",
+        "stars": 169,
+        "updated_at": "2025-03-03T14:19:16Z",
+        "description": "A forms engine for Salesforce which allows record pages to be much more dynamic than is possible with out of the box features",
+        "size_kb": 52803,
+        "languages": {
+            "Apex": 74691,
+            "JavaScript": 65057,
+            "HTML": 38309,
+            "CSS": 3981
+        }
+    },
+    {
+        "name": "generative-ai-go",
+        "full_name": "google/generative-ai-go",
+        "url": "https://github.com/google/generative-ai-go",
+        "stars": 708,
+        "updated_at": "2025-03-06T18:53:42Z",
+        "description": "Go SDK for Google Generative AI",
+        "size_kb": 6465,
+        "languages": {
+            "Go": 339572,
+            "Shell": 4359
+        }
+    },
+    {
+        "name": "bayesnf",
+        "full_name": "google/bayesnf",
+        "url": "https://github.com/google/bayesnf",
+        "stars": 107,
+        "updated_at": "2025-02-22T20:50:16Z",
+        "description": "Bayesian Neural Field models for prediction in large-scale spatiotemporal datasets",
+        "size_kb": 14989,
+        "languages": {
+            "Python": 124417
+        }
+    },
+    {
+        "name": "gemma_pytorch",
+        "full_name": "google/gemma_pytorch",
+        "url": "https://github.com/google/gemma_pytorch",
+        "stars": 5368,
+        "updated_at": "2025-03-05T17:23:59Z",
+        "description": "The official PyTorch implementation of Google's Gemma models",
+        "size_kb": 2224,
+        "languages": {
+            "Python": 102705,
+            "Dockerfile": 3898
+        }
+    },
+    {
+        "name": "imageinwords",
+        "full_name": "google/imageinwords",
+        "url": "https://github.com/google/imageinwords",
+        "stars": 208,
+        "updated_at": "2025-02-10T16:49:56Z",
+        "description": "Data release for the ImageInWords (IIW) paper.",
+        "size_kb": 22415,
+        "languages": {
+            "JavaScript": 99640,
+            "HTML": 15762,
+            "CSS": 5636
+        }
+    },
+    {
+        "name": "slang-gaussian-rasterization",
+        "full_name": "google/slang-gaussian-rasterization",
+        "url": "https://github.com/google/slang-gaussian-rasterization",
+        "stars": 317,
+        "updated_at": "2025-03-05T15:50:43Z",
+        "description": null,
+        "size_kb": 60,
+        "languages": {
+            "Python": 31817,
+            "Cuda": 1962
+        }
+    },
+    {
+        "name": "minja",
+        "full_name": "google/minja",
+        "url": "https://github.com/google/minja",
+        "stars": 123,
+        "updated_at": "2025-02-27T21:56:14Z",
+        "description": "A minimalistic C++ Jinja templating engine for LLM chat templates",
+        "size_kb": 372,
+        "languages": {
+            "C++": 211184,
+            "Python": 22626,
+            "CMake": 18565,
+            "Shell": 1431
+        }
+    }
+]

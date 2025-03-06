@@ -46,6 +46,7 @@ def main():
     # Write the output to a text file
     with open(args.output_file, "w") as f:
         f.write("\n".join(output_lines))
+        f.write("\n")
 
     print(f"Output written to {args.output_file}")
 

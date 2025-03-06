@@ -1,0 +1,88 @@
+[
+    {
+        "name": "dgeni",
+        "full_name": "angular/dgeni",
+        "url": "https://github.com/angular/dgeni",
+        "stars": 771,
+        "updated_at": "2024-10-31T03:39:40Z",
+        "description": "Flexible JavaScript documentation generator used by AngularJS, Protractor and other JS projects",
+        "size_kb": 4977,
+        "languages": {
+            "TypeScript": 61249,
+            "JavaScript": 1653
+        }
+    },
+    {
+        "name": "dgeni-packages",
+        "full_name": "angular/dgeni-packages",
+        "url": "https://github.com/angular/dgeni-packages",
+        "stars": 142,
+        "updated_at": "2024-08-08T15:17:37Z",
+        "description": "A collection of dgeni packages for generating documentation from source code.",
+        "size_kb": 2124,
+        "languages": {
+            "JavaScript": 332590,
+            "TypeScript": 153356,
+            "HTML": 14943
+        }
+    },
+    {
+        "name": "clang-format",
+        "full_name": "angular/clang-format",
+        "url": "https://github.com/angular/clang-format",
+        "stars": 100,
+        "updated_at": "2025-01-25T15:38:13Z",
+        "description": "Node repackaging of the clang-format native binary",
+        "size_kb": 97160,
+        "languages": {
+            "Python": 23081,
+            "JavaScript": 9986,
+            "Shell": 2987
+        }
+    },
+    {
+        "name": "angularfire",
+        "full_name": "angular/angularfire",
+        "url": "https://github.com/angular/angularfire",
+        "stars": 7743,
+        "updated_at": "2025-03-06T13:37:25Z",
+        "description": "Angular + Firebase = \u2764\ufe0f",
+        "size_kb": 11477,
+        "languages": {
+            "TypeScript": 406964,
+            "JavaScript": 33119,
+            "CSS": 10668,
+            "Nunjucks": 5175,
+            "Shell": 642
+        }
+    },
+    {
+        "name": "angular-ja",
+        "full_name": "angular/angular-ja",
+        "url": "https://github.com/angular/angular-ja",
+        "stars": 213,
+        "updated_at": "2025-02-24T06:46:14Z",
+        "description": "repository for Japanese localization of angular.io",
+        "size_kb": 46564,
+        "languages": {
+            "TypeScript": 342945,
+            "HTML": 116936
+        }
+    },
+    {
+        "name": "vscode-ng-language-service",
+        "full_name": "angular/vscode-ng-language-service",
+        "url": "https://github.com/angular/vscode-ng-language-service",
+        "stars": 784,
+        "updated_at": "2025-02-27T21:05:24Z",
+        "description": "Angular extension for Visual Studio Code",
+        "size_kb": 118591,
+        "languages": {
+            "TypeScript": 260990,
+            "Starlark": 24814,
+            "HTML": 7127,
+            "JavaScript": 2171,
+            "Shell": 2016
+        }
+    }
+]

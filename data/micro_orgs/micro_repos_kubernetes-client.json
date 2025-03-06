@@ -1,0 +1,30 @@
+[
+    {
+        "name": "gen",
+        "full_name": "kubernetes-client/gen",
+        "url": "https://github.com/kubernetes-client/gen",
+        "stars": 149,
+        "updated_at": "2025-02-16T10:42:29Z",
+        "description": "Common generator scripts for all client libraries",
+        "size_kb": 271,
+        "languages": {
+            "Shell": 50762,
+            "Python": 22767,
+            "Dockerfile": 1840
+        }
+    },
+    {
+        "name": "javascript",
+        "full_name": "kubernetes-client/javascript",
+        "url": "https://github.com/kubernetes-client/javascript",
+        "stars": 2106,
+        "updated_at": "2025-03-06T06:36:12Z",
+        "description": "JavaScript client",
+        "size_kb": 23975,
+        "languages": {
+            "TypeScript": 487954,
+            "Shell": 3001,
+            "JavaScript": 1718
+        }
+    }
+]

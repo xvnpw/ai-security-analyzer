@@ -1,0 +1,524 @@
+[
+    {
+        "name": "carbon-relay-ng",
+        "full_name": "grafana/carbon-relay-ng",
+        "url": "https://github.com/grafana/carbon-relay-ng",
+        "stars": 469,
+        "updated_at": "2025-03-06T14:16:38Z",
+        "description": "Fast carbon relay+aggregator with admin interfaces for making changes online - production ready",
+        "size_kb": 12278,
+        "languages": {
+            "Go": 405613,
+            "JavaScript": 144187,
+            "HTML": 17345,
+            "Makefile": 7304,
+            "Jsonnet": 3107,
+            "Shell": 1041,
+            "Dockerfile": 461,
+            "CSS": 122
+        }
+    },
+    {
+        "name": "grafana-zabbix",
+        "full_name": "grafana/grafana-zabbix",
+        "url": "https://github.com/grafana/grafana-zabbix",
+        "stars": 2109,
+        "updated_at": "2025-03-06T16:00:38Z",
+        "description": "Zabbix plugin for Grafana dashboard",
+        "size_kb": 38131,
+        "languages": {
+            "TypeScript": 495017,
+            "Go": 120862,
+            "SCSS": 44226,
+            "Python": 10793,
+            "JavaScript": 9652,
+            "Dockerfile": 5043,
+            "Shell": 3435,
+            "Makefile": 2153
+        }
+    },
+    {
+        "name": "piechart-panel",
+        "full_name": "grafana/piechart-panel",
+        "url": "https://github.com/grafana/piechart-panel",
+        "stars": 151,
+        "updated_at": "2024-06-13T12:01:14Z",
+        "description": "Pie Chart Panel Plugin",
+        "size_kb": 5131,
+        "languages": {
+            "JavaScript": 158999,
+            "TypeScript": 21374,
+            "SCSS": 9989,
+            "HTML": 5801
+        }
+    },
+    {
+        "name": "grafana-image-renderer",
+        "full_name": "grafana/grafana-image-renderer",
+        "url": "https://github.com/grafana/grafana-image-renderer",
+        "stars": 404,
+        "updated_at": "2025-03-06T19:06:35Z",
+        "description": "A Grafana backend plugin that handles rendering of panels & dashboards to PNGs using headless browser (Chromium/Chrome)",
+        "size_kb": 30715,
+        "languages": {
+            "TypeScript": 104975,
+            "Starlark": 12032,
+            "JavaScript": 11818,
+            "Shell": 6101,
+            "Dockerfile": 3305,
+            "Makefile": 1319,
+            "Jsonnet": 487
+        }
+    },
+    {
+        "name": "grafana-operator",
+        "full_name": "grafana/grafana-operator",
+        "url": "https://github.com/grafana/grafana-operator",
+        "stars": 987,
+        "updated_at": "2025-03-06T18:51:31Z",
+        "description": "An operator for Grafana that installs and manages Grafana instances, Dashboards and Datasources through Kubernetes/OpenShift CRs",
+        "size_kb": 257544,
+        "languages": {
+            "Go": 416425,
+            "Jsonnet": 126085,
+            "Makefile": 16680,
+            "Shell": 3334,
+            "Smarty": 2152,
+            "Lua": 1856,
+            "Dockerfile": 824,
+            "SCSS": 42
+        }
+    },
+    {
+        "name": "har-to-k6",
+        "full_name": "grafana/har-to-k6",
+        "url": "https://github.com/grafana/har-to-k6",
+        "stars": 134,
+        "updated_at": "2025-03-06T13:28:21Z",
+        "description": "JSON config representation of K6 script ",
+        "size_kb": 4398,
+        "languages": {
+            "JavaScript": 380450,
+            "Dockerfile": 365
+        }
+    },
+    {
+        "name": "cortex-tools",
+        "full_name": "grafana/cortex-tools",
+        "url": "https://github.com/grafana/cortex-tools",
+        "stars": 158,
+        "updated_at": "2025-03-06T13:04:32Z",
+        "description": "If you're using this tool with Grafana Mimir, please switch to \"mimirtool\" instead: https://github.com/grafana/mimir",
+        "size_kb": 58012,
+        "languages": {
+            "Go": 260313,
+            "Makefile": 3960,
+            "Dockerfile": 1750,
+            "Shell": 408
+        }
+    },
+    {
+        "name": "grafana-kiosk",
+        "full_name": "grafana/grafana-kiosk",
+        "url": "https://github.com/grafana/grafana-kiosk",
+        "stars": 397,
+        "updated_at": "2025-03-06T13:28:23Z",
+        "description": "Kiosk Utility for Grafana",
+        "size_kb": 159436,
+        "languages": {
+            "Go": 50219,
+            "Dockerfile": 695
+        }
+    },
+    {
+        "name": "tanka",
+        "full_name": "grafana/tanka",
+        "url": "https://github.com/grafana/tanka",
+        "stars": 2497,
+        "updated_at": "2025-03-06T18:09:53Z",
+        "description": "Flexible, reusable and concise configuration for Kubernetes",
+        "size_kb": 57204,
+        "languages": {
+            "Go": 404774,
+            "Dockerfile": 2037,
+            "Makefile": 1394
+        }
+    },
+    {
+        "name": "kubernetes-diff-logger",
+        "full_name": "grafana/kubernetes-diff-logger",
+        "url": "https://github.com/grafana/kubernetes-diff-logger",
+        "stars": 128,
+        "updated_at": "2025-02-07T21:48:36Z",
+        "description": "Logs updates to Kubernetes Objects for storing and querying with Loki",
+        "size_kb": 75,
+        "languages": {
+            "Go": 14161,
+            "Shell": 868,
+            "Dockerfile": 286,
+            "Makefile": 118
+        }
+    },
+    {
+        "name": "django-saml2-auth",
+        "full_name": "grafana/django-saml2-auth",
+        "url": "https://github.com/grafana/django-saml2-auth",
+        "stars": 197,
+        "updated_at": "2025-03-06T13:27:36Z",
+        "description": "Django SAML2 Authentication Made Easy. Easily integrate with SAML2 SSO identity providers like Okta, Azure AD and others.",
+        "size_kb": 482,
+        "languages": {
+            "Python": 121223,
+            "HTML": 1128
+        }
+    },
+    {
+        "name": "strava-datasource",
+        "full_name": "grafana/strava-datasource",
+        "url": "https://github.com/grafana/strava-datasource",
+        "stars": 196,
+        "updated_at": "2025-03-06T17:00:36Z",
+        "description": "Strava datasource for Grafana dashboard",
+        "size_kb": 72449,
+        "languages": {
+            "TypeScript": 106364,
+            "Go": 36671,
+            "JavaScript": 4081,
+            "Makefile": 1822,
+            "Shell": 872,
+            "Dockerfile": 725
+        }
+    },
+    {
+        "name": "google-sheets-datasource",
+        "full_name": "grafana/google-sheets-datasource",
+        "url": "https://github.com/grafana/google-sheets-datasource",
+        "stars": 169,
+        "updated_at": "2025-03-06T13:04:38Z",
+        "description": "The Google Sheets data source plugin allows you to visualize Google Spread Sheets data in a Grafana dashboards.",
+        "size_kb": 47449,
+        "languages": {
+            "Go": 53842,
+            "TypeScript": 41756,
+            "JavaScript": 4180,
+            "Dockerfile": 2467,
+            "Shell": 388
+        }
+    },
+    {
+        "name": "github-datasource",
+        "full_name": "grafana/github-datasource",
+        "url": "https://github.com/grafana/github-datasource",
+        "stars": 261,
+        "updated_at": "2025-03-06T15:04:24Z",
+        "description": "The GitHub data source lets you visualize GitHub data in Grafana dashboards.",
+        "size_kb": 99313,
+        "languages": {
+            "Go": 201192,
+            "TypeScript": 92736,
+            "JavaScript": 5071,
+            "Shell": 3554,
+            "Dockerfile": 2467
+        }
+    },
+    {
+        "name": "grizzly",
+        "full_name": "grafana/grizzly",
+        "url": "https://github.com/grafana/grizzly",
+        "stars": 652,
+        "updated_at": "2025-03-06T17:50:59Z",
+        "description": "A utility for managing Jsonnet dashboards against the Grafana API",
+        "size_kb": 6020,
+        "languages": {
+            "Go": 289248,
+            "Jsonnet": 3467,
+            "CSS": 2021,
+            "Makefile": 1838,
+            "Dockerfile": 582
+        }
+    },
+    {
+        "name": "k6-template-typescript",
+        "full_name": "grafana/k6-template-typescript",
+        "url": "https://github.com/grafana/k6-template-typescript",
+        "stars": 293,
+        "updated_at": "2025-02-28T11:00:30Z",
+        "description": "Template to use TypeScript with k6",
+        "size_kb": 704,
+        "languages": {
+            "TypeScript": 1275,
+            "JavaScript": 1196
+        }
+    },
+    {
+        "name": "helm-charts",
+        "full_name": "grafana/helm-charts",
+        "url": "https://github.com/grafana/helm-charts",
+        "stars": 1738,
+        "updated_at": "2025-03-06T17:27:42Z",
+        "description": null,
+        "size_kb": 33856,
+        "languages": {
+            "Smarty": 127027,
+            "Mustache": 28219,
+            "Shell": 2364,
+            "Jsonnet": 836,
+            "Makefile": 765
+        }
+    },
+    {
+        "name": "database-migrator",
+        "full_name": "grafana/database-migrator",
+        "url": "https://github.com/grafana/database-migrator",
+        "stars": 105,
+        "updated_at": "2025-03-02T15:31:38Z",
+        "description": "Code to export grafana.db (sqlite) to MySQL-compatible SQL file, to assist in migration of Grafana data to MySQL-compatible DB.",
+        "size_kb": 44,
+        "languages": {
+            "Shell": 735,
+            "Awk": 598
+        }
+    },
+    {
+        "name": "grafana-infinity-datasource",
+        "full_name": "grafana/grafana-infinity-datasource",
+        "url": "https://github.com/grafana/grafana-infinity-datasource",
+        "stars": 835,
+        "updated_at": "2025-03-06T14:15:48Z",
+        "description": "CSV, JSON, GraphQL, XML and HTML datasource for grafana.",
+        "size_kb": 31333,
+        "languages": {
+            "TypeScript": 393688,
+            "Go": 240233,
+            "JavaScript": 39504,
+            "Dockerfile": 2398,
+            "Shell": 388
+        }
+    },
+    {
+        "name": "grafana-json-datasource",
+        "full_name": "grafana/grafana-json-datasource",
+        "url": "https://github.com/grafana/grafana-json-datasource",
+        "stars": 274,
+        "updated_at": "2025-03-06T13:28:18Z",
+        "description": "A data source plugin for loading JSON APIs into Grafana.",
+        "size_kb": 11211,
+        "languages": {
+            "TypeScript": 74137,
+            "JavaScript": 4323,
+            "Dockerfile": 725
+        }
+    },
+    {
+        "name": "k6-learn",
+        "full_name": "grafana/k6-learn",
+        "url": "https://github.com/grafana/k6-learn",
+        "stars": 371,
+        "updated_at": "2025-03-04T02:36:23Z",
+        "description": null,
+        "size_kb": 6016,
+        "languages": {
+            "JavaScript": 927,
+            "HTML": 335
+        }
+    },
+    {
+        "name": "xk6",
+        "full_name": "grafana/xk6",
+        "url": "https://github.com/grafana/xk6",
+        "stars": 235,
+        "updated_at": "2025-03-06T13:56:31Z",
+        "description": "Build k6 with extensions",
+        "size_kb": 231,
+        "languages": {
+            "Go": 22715,
+            "Dockerfile": 1008,
+            "Makefile": 941,
+            "Shell": 65
+        }
+    },
+    {
+        "name": "cuetsy",
+        "full_name": "grafana/cuetsy",
+        "url": "https://github.com/grafana/cuetsy",
+        "stars": 107,
+        "updated_at": "2025-01-16T13:14:23Z",
+        "description": "Experimental CUE->TypeScript exporter",
+        "size_kb": 359,
+        "languages": {
+            "Go": 117539,
+            "CUE": 1197,
+            "Makefile": 980
+        }
+    },
+    {
+        "name": "mqtt-datasource",
+        "full_name": "grafana/mqtt-datasource",
+        "url": "https://github.com/grafana/mqtt-datasource",
+        "stars": 179,
+        "updated_at": "2025-03-06T13:28:14Z",
+        "description": "MQTT Datasource for Grafana allows streaming data from any MQTT broker running either locally or remotely.",
+        "size_kb": 4119,
+        "languages": {
+            "Go": 22892,
+            "TypeScript": 21296,
+            "JavaScript": 6219,
+            "Dockerfile": 2398,
+            "Shell": 1237
+        }
+    },
+    {
+        "name": "rollout-operator",
+        "full_name": "grafana/rollout-operator",
+        "url": "https://github.com/grafana/rollout-operator",
+        "stars": 146,
+        "updated_at": "2025-03-06T13:28:31Z",
+        "description": "Kubernetes Rollout Operator",
+        "size_kb": 20390,
+        "languages": {
+            "Go": 310184,
+            "Makefile": 4021,
+            "Dockerfile": 984,
+            "Shell": 591
+        }
+    },
+    {
+        "name": "pyroscope-go",
+        "full_name": "grafana/pyroscope-go",
+        "url": "https://github.com/grafana/pyroscope-go",
+        "stars": 121,
+        "updated_at": "2025-03-06T17:27:09Z",
+        "description": "This is the golang client integration for Pyroscope",
+        "size_kb": 323,
+        "languages": {
+            "Go": 200553,
+            "Makefile": 918,
+            "Dockerfile": 128
+        }
+    },
+    {
+        "name": "dashboard-linter",
+        "full_name": "grafana/dashboard-linter",
+        "url": "https://github.com/grafana/dashboard-linter",
+        "stars": 281,
+        "updated_at": "2025-03-06T15:31:26Z",
+        "description": "A tool to lint Grafana dashboards",
+        "size_kb": 837,
+        "languages": {
+            "Go": 136131,
+            "Makefile": 996,
+            "Shell": 311
+        }
+    },
+    {
+        "name": "jsonnet-language-server",
+        "full_name": "grafana/jsonnet-language-server",
+        "url": "https://github.com/grafana/jsonnet-language-server",
+        "stars": 186,
+        "updated_at": "2025-03-06T13:28:38Z",
+        "description": "A Language Server Protocol (LSP) server for Jsonnet (https://jsonnet.org)",
+        "size_kb": 1483,
+        "languages": {
+            "Go": 185090,
+            "Jsonnet": 66316,
+            "Nix": 2219,
+            "Shell": 1450,
+            "Vim Script": 1209,
+            "Emacs Lisp": 1142
+        }
+    },
+    {
+        "name": "pyroscope-rs",
+        "full_name": "grafana/pyroscope-rs",
+        "url": "https://github.com/grafana/pyroscope-rs",
+        "stars": 157,
+        "updated_at": "2025-03-06T13:54:15Z",
+        "description": "Pyroscope Profiler for Rust. Profile your Rust applications.",
+        "size_kb": 1411,
+        "languages": {
+            "Rust": 217647,
+            "Ruby": 19984,
+            "Python": 9100,
+            "Makefile": 8565,
+            "C": 3032,
+            "Dockerfile": 2047,
+            "Shell": 816
+        }
+    },
+    {
+        "name": "intro-to-mltp",
+        "full_name": "grafana/intro-to-mltp",
+        "url": "https://github.com/grafana/intro-to-mltp",
+        "stars": 451,
+        "updated_at": "2025-03-06T14:16:49Z",
+        "description": "Introduction to Metrics, Logs, Traces and Profiles session companion code.",
+        "size_kb": 3678,
+        "languages": {
+            "JavaScript": 38518,
+            "Shell": 2499,
+            "Dockerfile": 916
+        }
+    },
+    {
+        "name": "grafana-ansible-collection",
+        "full_name": "grafana/grafana-ansible-collection",
+        "url": "https://github.com/grafana/grafana-ansible-collection",
+        "stars": 160,
+        "updated_at": "2025-03-06T13:27:15Z",
+        "description": "grafana.grafana Ansible collection provides modules and roles for managing various resources on Grafana Cloud and roles to manage and deploy Grafana Agent and Grafana",
+        "size_kb": 8429,
+        "languages": {
+            "Python": 59330,
+            "Jinja": 15912,
+            "Shell": 14259,
+            "Makefile": 2386
+        }
+    },
+    {
+        "name": "grafonnet",
+        "full_name": "grafana/grafonnet",
+        "url": "https://github.com/grafana/grafonnet",
+        "stars": 407,
+        "updated_at": "2025-03-06T17:07:35Z",
+        "description": "Jsonnet library for generating Grafana dashboards.",
+        "size_kb": 33599,
+        "languages": {
+            "Jsonnet": 110410,
+            "Shell": 2366,
+            "CSS": 1363,
+            "Makefile": 1309
+        }
+    },
+    {
+        "name": "k8s-monitoring-helm",
+        "full_name": "grafana/k8s-monitoring-helm",
+        "url": "https://github.com/grafana/k8s-monitoring-helm",
+        "stars": 346,
+        "updated_at": "2025-03-06T18:50:51Z",
+        "description": null,
+        "size_kb": 278935,
+        "languages": {
+            "Smarty": 360823,
+            "Shell": 89082,
+            "Makefile": 44323,
+            "HCL": 2154,
+            "jq": 2055,
+            "Dockerfile": 1240
+        }
+    },
+    {
+        "name": "docker-otel-lgtm",
+        "full_name": "grafana/docker-otel-lgtm",
+        "url": "https://github.com/grafana/docker-otel-lgtm",
+        "stars": 806,
+        "updated_at": "2025-03-06T15:19:52Z",
+        "description": "OpenTelemetry backend in a Docker image",
+        "size_kb": 1026,
+        "languages": {
+            "Shell": 5998,
+            "Dockerfile": 3230,
+            "PowerShell": 1052,
+            "Batchfile": 824
+        }
+    }
+]

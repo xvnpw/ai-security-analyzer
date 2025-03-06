@@ -1,0 +1,232 @@
+[
+    {
+        "name": "enhancements",
+        "full_name": "kubernetes/enhancements",
+        "url": "https://github.com/kubernetes/enhancements",
+        "stars": 3548,
+        "updated_at": "2025-03-06T08:24:46Z",
+        "description": "Enhancements tracking repo for Kubernetes",
+        "size_kb": 40108,
+        "languages": {
+            "Go": 96072,
+            "Shell": 24717,
+            "Makefile": 6288,
+            "Python": 3448,
+            "Mermaid": 1989
+        }
+    },
+    {
+        "name": "kompose",
+        "full_name": "kubernetes/kompose",
+        "url": "https://github.com/kubernetes/kompose",
+        "stars": 9849,
+        "updated_at": "2025-03-06T02:35:42Z",
+        "description": "Convert Compose to Kubernetes",
+        "size_kb": 45013,
+        "languages": {
+            "Go": 470868,
+            "Shell": 59224,
+            "Makefile": 4439,
+            "Dockerfile": 2018
+        }
+    },
+    {
+        "name": "git-sync",
+        "full_name": "kubernetes/git-sync",
+        "url": "https://github.com/kubernetes/git-sync",
+        "stars": 2370,
+        "updated_at": "2025-03-05T06:04:55Z",
+        "description": "A sidecar app which clones a git repo and keeps it in sync with the upstream.",
+        "size_kb": 11993,
+        "languages": {
+            "Shell": 173950,
+            "Go": 162085,
+            "Makefile": 10861,
+            "Dockerfile": 4626
+        }
+    },
+    {
+        "name": "gengo",
+        "full_name": "kubernetes/gengo",
+        "url": "https://github.com/kubernetes/gengo",
+        "stars": 560,
+        "updated_at": "2025-02-25T12:49:22Z",
+        "description": "gengo library for code generation.",
+        "size_kb": 1453,
+        "languages": {
+            "Go": 355350,
+            "Shell": 5738,
+            "Makefile": 842
+        }
+    },
+    {
+        "name": "kubeadm",
+        "full_name": "kubernetes/kubeadm",
+        "url": "https://github.com/kubernetes/kubeadm",
+        "stars": 3807,
+        "updated_at": "2025-03-05T17:24:05Z",
+        "description": "Aggregator for issues filed against kubeadm",
+        "size_kb": 6404,
+        "languages": {
+            "Go": 476328,
+            "Shell": 34329,
+            "Dockerfile": 4793
+        }
+    },
+    {
+        "name": "dns",
+        "full_name": "kubernetes/dns",
+        "url": "https://github.com/kubernetes/dns",
+        "stars": 952,
+        "updated_at": "2025-03-04T19:18:57Z",
+        "description": "Kubernetes DNS service",
+        "size_kb": 32472,
+        "languages": {
+            "Go": 277108,
+            "Makefile": 19221,
+            "Python": 9540,
+            "Shell": 5619
+        }
+    },
+    {
+        "name": "kube-aggregator",
+        "full_name": "kubernetes/kube-aggregator",
+        "url": "https://github.com/kubernetes/kube-aggregator",
+        "stars": 261,
+        "updated_at": "2025-03-03T23:17:52Z",
+        "description": "Aggregator for Kubernetes-style API servers: dynamic registration, discovery summarization, secure proxy",
+        "size_kb": 23812,
+        "languages": {
+            "Go": 428782,
+            "Shell": 19065,
+            "Dockerfile": 654
+        }
+    },
+    {
+        "name": "metrics",
+        "full_name": "kubernetes/metrics",
+        "url": "https://github.com/kubernetes/metrics",
+        "stars": 497,
+        "updated_at": "2025-03-03T23:18:21Z",
+        "description": "Kubernetes metrics-related API types and clients",
+        "size_kb": 6762,
+        "languages": {
+            "Go": 96738,
+            "Shell": 2701
+        }
+    },
+    {
+        "name": "utils",
+        "full_name": "kubernetes/utils",
+        "url": "https://github.com/kubernetes/utils",
+        "stars": 351,
+        "updated_at": "2025-02-14T07:52:24Z",
+        "description": "Non-Kubernetes-specific utility libraries which are consumed by multiple projects.",
+        "size_kb": 1172,
+        "languages": {
+            "Go": 471166,
+            "Shell": 11967,
+            "Makefile": 1306
+        }
+    },
+    {
+        "name": "sig-release",
+        "full_name": "kubernetes/sig-release",
+        "url": "https://github.com/kubernetes/sig-release",
+        "stars": 549,
+        "updated_at": "2025-03-03T22:27:47Z",
+        "description": "Repo for SIG release",
+        "size_kb": 36870,
+        "languages": {
+            "Shell": 18757
+        }
+    },
+    {
+        "name": "org",
+        "full_name": "kubernetes/org",
+        "url": "https://github.com/kubernetes/org",
+        "stars": 269,
+        "updated_at": "2025-03-06T16:19:51Z",
+        "description": "Meta configuration for Kubernetes Github Org",
+        "size_kb": 13777,
+        "languages": {
+            "Go": 43475,
+            "Shell": 14831,
+            "Python": 7847,
+            "Makefile": 2247
+        }
+    },
+    {
+        "name": "kube-scheduler",
+        "full_name": "kubernetes/kube-scheduler",
+        "url": "https://github.com/kubernetes/kube-scheduler",
+        "stars": 177,
+        "updated_at": "2025-03-06T08:05:13Z",
+        "description": "kube-scheduler component configs",
+        "size_kb": 2458,
+        "languages": {
+            "Go": 42260
+        }
+    },
+    {
+        "name": "kubelet",
+        "full_name": "kubernetes/kubelet",
+        "url": "https://github.com/kubernetes/kubelet",
+        "stars": 346,
+        "updated_at": "2025-03-05T08:55:05Z",
+        "description": "kubelet component configs",
+        "size_kb": 3290,
+        "languages": {
+            "Go": 233945
+        }
+    },
+    {
+        "name": "kube-proxy",
+        "full_name": "kubernetes/kube-proxy",
+        "url": "https://github.com/kubernetes/kube-proxy",
+        "stars": 186,
+        "updated_at": "2025-03-03T23:20:57Z",
+        "description": "kube-proxy component configs",
+        "size_kb": 2265,
+        "languages": {
+            "Go": 17353
+        }
+    },
+    {
+        "name": "cli-runtime",
+        "full_name": "kubernetes/cli-runtime",
+        "url": "https://github.com/kubernetes/cli-runtime",
+        "stars": 296,
+        "updated_at": "2025-03-02T01:03:41Z",
+        "description": "Set of helpers for creating kubectl commands and plugins.",
+        "size_kb": 5338,
+        "languages": {
+            "Go": 434455
+        }
+    },
+    {
+        "name": "klog",
+        "full_name": "kubernetes/klog",
+        "url": "https://github.com/kubernetes/klog",
+        "stars": 533,
+        "updated_at": "2025-03-04T23:55:47Z",
+        "description": "Leveled execution logs for Go (fork of https://github.com/golang/glog)",
+        "size_kb": 859,
+        "languages": {
+            "Go": 369819,
+            "Shell": 3207
+        }
+    },
+    {
+        "name": "cri-api",
+        "full_name": "kubernetes/cri-api",
+        "url": "https://github.com/kubernetes/cri-api",
+        "stars": 411,
+        "updated_at": "2025-03-05T14:40:01Z",
+        "description": "Container Runtime Interface (CRI) \u2013 a plugin interface which enables kubelet to use a wide variety of container runtimes.",
+        "size_kb": 2512,
+        "languages": {
+            "Go": 46184
+        }
+    }
+]

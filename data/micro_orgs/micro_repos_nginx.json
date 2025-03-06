@@ -1,0 +1,33 @@
+[
+    {
+        "name": "ngx-rust",
+        "full_name": "nginx/ngx-rust",
+        "url": "https://github.com/nginx/ngx-rust",
+        "stars": 781,
+        "updated_at": "2025-03-06T19:18:04Z",
+        "description": "Rust binding for NGINX",
+        "size_kb": 321,
+        "languages": {
+            "Rust": 133685,
+            "Makefile": 7378,
+            "C": 2302,
+            "Shell": 1636,
+            "Dockerfile": 1251
+        }
+    },
+    {
+        "name": "nginx-prometheus-exporter",
+        "full_name": "nginx/nginx-prometheus-exporter",
+        "url": "https://github.com/nginx/nginx-prometheus-exporter",
+        "stars": 1734,
+        "updated_at": "2025-03-06T19:26:08Z",
+        "description": "NGINX Prometheus Exporter for NGINX and NGINX Plus",
+        "size_kb": 5003,
+        "languages": {
+            "Go": 134847,
+            "Makefile": 1756,
+            "Dockerfile": 1104,
+            "Shell": 293
+        }
+    }
+]

@@ -1,0 +1,1020 @@
+[
+    {
+        "name": "grails-bugsnag-plugin",
+        "full_name": "transferwise/grails-bugsnag-plugin",
+        "url": "https://github.com/transferwise/grails-bugsnag-plugin",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:13:13Z",
+        "description": "Bugsnag for grails",
+        "size_kb": 36,
+        "languages": {
+            "Groovy": 10174,
+            "Java": 1806
+        }
+    },
+    {
+        "name": "tw-versioning-plugin",
+        "full_name": "transferwise/tw-versioning-plugin",
+        "url": "https://github.com/transferwise/tw-versioning-plugin",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:13:15Z",
+        "description": "Grails plugin to simplify plugin version management",
+        "size_kb": 97,
+        "languages": {
+            "Groovy": 11719
+        }
+    },
+    {
+        "name": "grails-spring-security-oauth",
+        "full_name": "transferwise/grails-spring-security-oauth",
+        "url": "https://github.com/transferwise/grails-spring-security-oauth",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:13:17Z",
+        "description": "Adds OAuth-based authentication to the Spring Security plugin",
+        "size_kb": 1831,
+        "languages": {
+            "Groovy": 79344,
+            "Shell": 16273
+        }
+    },
+    {
+        "name": "grails-cucumber",
+        "full_name": "transferwise/grails-cucumber",
+        "url": "https://github.com/transferwise/grails-cucumber",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:13:23Z",
+        "description": "a Cucumber plugin for Grails",
+        "size_kb": 5619,
+        "languages": {
+            "Groovy": 190602,
+            "CSS": 71300,
+            "Batchfile": 5968,
+            "Gherkin": 4504,
+            "JavaScript": 915
+        }
+    },
+    {
+        "name": "vero-java",
+        "full_name": "transferwise/vero-java",
+        "url": "https://github.com/transferwise/vero-java",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:13:35Z",
+        "description": "Java API for Vero http://www.getvero.com",
+        "size_kb": 80,
+        "languages": {
+            "Java": 48727
+        }
+    },
+    {
+        "name": "release-to-github-with-changelog",
+        "full_name": "transferwise/release-to-github-with-changelog",
+        "url": "https://github.com/transferwise/release-to-github-with-changelog",
+        "stars": 4,
+        "updated_at": "2022-05-27T07:17:28Z",
+        "description": null,
+        "size_kb": 1986,
+        "languages": {
+            "JavaScript": 28710
+        }
+    },
+    {
+        "name": "terra",
+        "full_name": "transferwise/terra",
+        "url": "https://github.com/transferwise/terra",
+        "stars": 1,
+        "updated_at": "2020-09-14T10:13:47Z",
+        "description": "A minimalistic library for object hydration. Useful for data to object reconstruction mechanics.",
+        "size_kb": 61,
+        "languages": {
+            "Java": 5053
+        }
+    },
+    {
+        "name": "uap-java",
+        "full_name": "transferwise/uap-java",
+        "url": "https://github.com/transferwise/uap-java",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:13:52Z",
+        "description": "Java implementation of ua-parser",
+        "size_kb": 111,
+        "languages": {
+            "Java": 42410
+        }
+    },
+    {
+        "name": "apache_exporter",
+        "full_name": "transferwise/apache_exporter",
+        "url": "https://github.com/transferwise/apache_exporter",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:15:59Z",
+        "description": "Apache exporter",
+        "size_kb": 4032,
+        "languages": {
+            "Go": 11570,
+            "Makefile": 1735
+        }
+    },
+    {
+        "name": "webpack-translations-plugin",
+        "full_name": "transferwise/webpack-translations-plugin",
+        "url": "https://github.com/transferwise/webpack-translations-plugin",
+        "stars": 5,
+        "updated_at": "2023-04-26T15:50:41Z",
+        "description": null,
+        "size_kb": 1406,
+        "languages": {
+            "JavaScript": 18884
+        }
+    },
+    {
+        "name": "tw-leader-selector",
+        "full_name": "transferwise/tw-leader-selector",
+        "url": "https://github.com/transferwise/tw-leader-selector",
+        "stars": 2,
+        "updated_at": "2024-12-06T15:23:18Z",
+        "description": null,
+        "size_kb": 519,
+        "languages": {
+            "Java": 45134
+        }
+    },
+    {
+        "name": "sequence-layout",
+        "full_name": "transferwise/sequence-layout",
+        "url": "https://github.com/transferwise/sequence-layout",
+        "stars": 481,
+        "updated_at": "2025-03-02T17:35:43Z",
+        "description": "A vertical sequence UI component for Android",
+        "size_kb": 271,
+        "languages": {
+            "Kotlin": 25467
+        }
+    },
+    {
+        "name": "s3deploy",
+        "full_name": "transferwise/s3deploy",
+        "url": "https://github.com/transferwise/s3deploy",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:14:03Z",
+        "description": "A simple tool to deploy static websites to Amazon S3 with Gzip and custom headers support (e.g. \"Cache-Control\")",
+        "size_kb": 2835,
+        "languages": {
+            "Go": 45399,
+            "Makefile": 120,
+            "HTML": 22,
+            "CSS": 3
+        }
+    },
+    {
+        "name": "tw-entrypoints",
+        "full_name": "transferwise/tw-entrypoints",
+        "url": "https://github.com/transferwise/tw-entrypoints",
+        "stars": 0,
+        "updated_at": "2024-12-06T15:24:26Z",
+        "description": null,
+        "size_kb": 685,
+        "languages": {
+            "Java": 111909
+        }
+    },
+    {
+        "name": "mariadb-docker",
+        "full_name": "transferwise/mariadb-docker",
+        "url": "https://github.com/transferwise/mariadb-docker",
+        "stars": 0,
+        "updated_at": "2021-02-24T23:42:12Z",
+        "description": "Docker Official Image packaging for MariaDB",
+        "size_kb": 160,
+        "languages": {
+            "Shell": 36986
+        }
+    },
+    {
+        "name": "ansible-ebs-automatic-nvme-mapping",
+        "full_name": "transferwise/ansible-ebs-automatic-nvme-mapping",
+        "url": "https://github.com/transferwise/ansible-ebs-automatic-nvme-mapping",
+        "stars": 31,
+        "updated_at": "2024-03-18T10:26:00Z",
+        "description": "Automatic mapping of EBS volumes via NVMe block devices to standard block device paths",
+        "size_kb": 12,
+        "languages": {
+            "Shell": 403
+        }
+    },
+    {
+        "name": "ansible-cloudwatch-monitoring",
+        "full_name": "transferwise/ansible-cloudwatch-monitoring",
+        "url": "https://github.com/transferwise/ansible-cloudwatch-monitoring",
+        "stars": 1,
+        "updated_at": "2020-09-14T10:14:13Z",
+        "description": "Ansible role to manage installation and configuration of AWS cloudwatch monitoring scripts",
+        "size_kb": 22,
+        "languages": {
+            "Python": 947,
+            "Shell": 427
+        }
+    },
+    {
+        "name": "cicada",
+        "full_name": "transferwise/cicada",
+        "url": "https://github.com/transferwise/cicada",
+        "stars": 5,
+        "updated_at": "2024-07-19T13:20:20Z",
+        "description": "Cicada scheduler",
+        "size_kb": 760,
+        "languages": {
+            "Python": 108459,
+            "PLpgSQL": 7443,
+            "Shell": 4131,
+            "Makefile": 801,
+            "Dockerfile": 513
+        }
+    },
+    {
+        "name": "tw_bootcamp_2019",
+        "full_name": "transferwise/tw_bootcamp_2019",
+        "url": "https://github.com/transferwise/tw_bootcamp_2019",
+        "stars": 1,
+        "updated_at": "2023-10-08T18:57:20Z",
+        "description": "Take home exercise",
+        "size_kb": 738,
+        "languages": {
+            "Java": 601
+        }
+    },
+    {
+        "name": "tw-gaffer-jta",
+        "full_name": "transferwise/tw-gaffer-jta",
+        "url": "https://github.com/transferwise/tw-gaffer-jta",
+        "stars": 0,
+        "updated_at": "2025-02-17T09:06:12Z",
+        "description": "Gaffer - efficient 1PC JTA for enterprise services.",
+        "size_kb": 1038,
+        "languages": {
+            "Java": 132034
+        }
+    },
+    {
+        "name": "tw-base-utils",
+        "full_name": "transferwise/tw-base-utils",
+        "url": "https://github.com/transferwise/tw-base-utils",
+        "stars": 1,
+        "updated_at": "2024-12-05T16:28:35Z",
+        "description": "Generic, Transferwise domain independent base utils.",
+        "size_kb": 475,
+        "languages": {
+            "Java": 132289
+        }
+    },
+    {
+        "name": "tw-graceful-shutdown",
+        "full_name": "transferwise/tw-graceful-shutdown",
+        "url": "https://github.com/transferwise/tw-graceful-shutdown",
+        "stars": 3,
+        "updated_at": "2025-02-27T08:50:24Z",
+        "description": "Graceful Shutdown System.",
+        "size_kb": 322,
+        "languages": {
+            "Java": 104301
+        }
+    },
+    {
+        "name": "tw-incidents",
+        "full_name": "transferwise/tw-incidents",
+        "url": "https://github.com/transferwise/tw-incidents",
+        "stars": 1,
+        "updated_at": "2024-12-10T11:29:16Z",
+        "description": null,
+        "size_kb": 184,
+        "languages": {
+            "Java": 25092,
+            "Groovy": 8315
+        }
+    },
+    {
+        "name": "spring-icu",
+        "full_name": "transferwise/spring-icu",
+        "url": "https://github.com/transferwise/spring-icu",
+        "stars": 15,
+        "updated_at": "2025-02-18T10:29:50Z",
+        "description": "Provides the ICU4J's message formatting features, such as named arguments support, flexible plural formatting, rule based number format, date interval formats",
+        "size_kb": 219,
+        "languages": {
+            "Java": 72065,
+            "HTML": 114
+        }
+    },
+    {
+        "name": "tlint",
+        "full_name": "transferwise/tlint",
+        "url": "https://github.com/transferwise/tlint",
+        "stars": 2,
+        "updated_at": "2024-07-31T11:39:43Z",
+        "description": "Simple tool for linting of configurations files",
+        "size_kb": 1340,
+        "languages": {
+            "Go": 4243,
+            "Makefile": 2572
+        }
+    },
+    {
+        "name": "fluent-plugin-slack",
+        "full_name": "transferwise/fluent-plugin-slack",
+        "url": "https://github.com/transferwise/fluent-plugin-slack",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:14:35Z",
+        "description": null,
+        "size_kb": 119,
+        "languages": {
+            "Ruby": 50186,
+            "Shell": 70
+        }
+    },
+    {
+        "name": "digital-signatures",
+        "full_name": "transferwise/digital-signatures",
+        "url": "https://github.com/transferwise/digital-signatures",
+        "stars": 2,
+        "updated_at": "2024-11-27T14:22:24Z",
+        "description": null,
+        "size_kb": 70,
+        "languages": {
+            "Java": 13328
+        }
+    },
+    {
+        "name": "pipelinewise-singer-python",
+        "full_name": "transferwise/pipelinewise-singer-python",
+        "url": "https://github.com/transferwise/pipelinewise-singer-python",
+        "stars": 8,
+        "updated_at": "2023-12-08T22:03:47Z",
+        "description": "Writes the Singer format from Python https://singer.io - Pipelinewise compatible",
+        "size_kb": 82,
+        "languages": {
+            "Python": 120106,
+            "Makefile": 247
+        }
+    },
+    {
+        "name": "tw-context",
+        "full_name": "transferwise/tw-context",
+        "url": "https://github.com/transferwise/tw-context",
+        "stars": 3,
+        "updated_at": "2024-12-06T16:52:40Z",
+        "description": null,
+        "size_kb": 444,
+        "languages": {
+            "Java": 69007
+        }
+    },
+    {
+        "name": "vault-exporter",
+        "full_name": "transferwise/vault-exporter",
+        "url": "https://github.com/transferwise/vault-exporter",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:14:41Z",
+        "description": "A Prometheus metrics exporter for Hashicorp's Vault",
+        "size_kb": 4197,
+        "languages": {
+            "Jsonnet": 5370,
+            "Go": 5177,
+            "Makefile": 340,
+            "Dockerfile": 83
+        }
+    },
+    {
+        "name": "jaeger-dependencies",
+        "full_name": "transferwise/jaeger-dependencies",
+        "url": "https://github.com/transferwise/jaeger-dependencies",
+        "stars": 0,
+        "updated_at": "2020-09-14T10:14:43Z",
+        "description": "build dependencies between services for jaeger UI",
+        "size_kb": 822,
+        "languages": {
+            "Go": 4052,
+            "Dockerfile": 264
+        }
+    },
+    {
+        "name": "tw-tkms",
+        "full_name": "transferwise/tw-tkms",
+        "url": "https://github.com/transferwise/tw-tkms",
+        "stars": 11,
+        "updated_at": "2024-12-06T11:27:26Z",
+        "description": null,
+        "size_kb": 839,
+        "languages": {
+            "Java": 349093
+        }
+    },
+    {
+        "name": "jmx_exporter",
+        "full_name": "transferwise/jmx_exporter",
+        "url": "https://github.com/transferwise/jmx_exporter",
+        "stars": 0,
+        "updated_at": "2020-05-14T08:14:17Z",
+        "description": "A process for exposing JMX Beans via HTTP for Prometheus consumption",
+        "size_kb": 1084,
+        "languages": {
+            "Java": 85150,
+            "Shell": 617
+        }
+    },
+    {
+        "name": "idempotence4j",
+        "full_name": "transferwise/idempotence4j",
+        "url": "https://github.com/transferwise/idempotence4j",
+        "stars": 60,
+        "updated_at": "2025-01-15T09:36:46Z",
+        "description": "Lightweight library for handling idempotent actions",
+        "size_kb": 292,
+        "languages": {
+            "Java": 71362,
+            "Groovy": 54616,
+            "Dockerfile": 121
+        }
+    },
+    {
+        "name": "tw-curator",
+        "full_name": "transferwise/tw-curator",
+        "url": "https://github.com/transferwise/tw-curator",
+        "stars": 0,
+        "updated_at": "2024-12-09T10:57:37Z",
+        "description": "Auto-configurator for Apache Curator",
+        "size_kb": 183,
+        "languages": {
+            "Java": 7729
+        }
+    },
+    {
+        "name": "crypto",
+        "full_name": "transferwise/crypto",
+        "url": "https://github.com/transferwise/crypto",
+        "stars": 2,
+        "updated_at": "2022-01-27T14:27:26Z",
+        "description": "Crypto helper modules",
+        "size_kb": 106,
+        "languages": {
+            "Go": 30702,
+            "Makefile": 1385
+        }
+    },
+    {
+        "name": "elasticsearch_exporter",
+        "full_name": "transferwise/elasticsearch_exporter",
+        "url": "https://github.com/transferwise/elasticsearch_exporter",
+        "stars": 0,
+        "updated_at": "2022-01-10T17:32:16Z",
+        "description": "Elasticsearch stats exporter for Prometheus",
+        "size_kb": 957,
+        "languages": {
+            "Go": 310212,
+            "Jsonnet": 240475,
+            "Dockerfile": 360,
+            "Makefile": 343
+        }
+    },
+    {
+        "name": "tw-check-label",
+        "full_name": "transferwise/tw-check-label",
+        "url": "https://github.com/transferwise/tw-check-label",
+        "stars": 0,
+        "updated_at": "2021-01-26T09:45:24Z",
+        "description": null,
+        "size_kb": 7,
+        "languages": {
+            "Python": 627,
+            "Dockerfile": 112
+        }
+    },
+    {
+        "name": "checkout-1",
+        "full_name": "transferwise/checkout-1",
+        "url": "https://github.com/transferwise/checkout-1",
+        "stars": 0,
+        "updated_at": "2020-09-28T07:35:21Z",
+        "description": "Action for checking out a repo",
+        "size_kb": 885,
+        "languages": {
+            "TypeScript": 121382,
+            "Shell": 4026,
+            "JavaScript": 235,
+            "Batchfile": 128
+        }
+    },
+    {
+        "name": "actions-pr-checker",
+        "full_name": "transferwise/actions-pr-checker",
+        "url": "https://github.com/transferwise/actions-pr-checker",
+        "stars": 5,
+        "updated_at": "2024-06-19T09:48:39Z",
+        "description": "Github Action to check PR title/description/labels.",
+        "size_kb": 115,
+        "languages": {
+            "Shell": 23923
+        }
+    },
+    {
+        "name": "tshuttle",
+        "full_name": "transferwise/tshuttle",
+        "url": "https://github.com/transferwise/tshuttle",
+        "stars": 1,
+        "updated_at": "2023-07-05T03:13:23Z",
+        "description": "Transparent proxy server that works as a poor man's VPN.  Forwards over ssh.  Doesn't require admin.  Works with Linux and MacOS.  Supports DNS tunneling.",
+        "size_kb": 1732,
+        "languages": {
+            "Python": 244174,
+            "Shell": 351
+        }
+    },
+    {
+        "name": "tw-auto-label",
+        "full_name": "transferwise/tw-auto-label",
+        "url": "https://github.com/transferwise/tw-auto-label",
+        "stars": 0,
+        "updated_at": "2021-03-02T17:06:47Z",
+        "description": null,
+        "size_kb": 4,
+        "languages": {
+            "Python": 690,
+            "Dockerfile": 112
+        }
+    },
+    {
+        "name": "JaroWinklerSimilarity",
+        "full_name": "transferwise/JaroWinklerSimilarity",
+        "url": "https://github.com/transferwise/JaroWinklerSimilarity",
+        "stars": 0,
+        "updated_at": "2022-10-06T13:43:40Z",
+        "description": "A Java implementation of the Jaro Winkler Similarity, which is optimized for the search of similar strings in a large set of strings.",
+        "size_kb": 7152,
+        "languages": {
+            "Java": 85188,
+            "Shell": 1301
+        }
+    },
+    {
+        "name": "mockserver-client-go",
+        "full_name": "transferwise/mockserver-client-go",
+        "url": "https://github.com/transferwise/mockserver-client-go",
+        "stars": 0,
+        "updated_at": "2021-06-17T05:19:15Z",
+        "description": "Go client library for mock-server",
+        "size_kb": 96,
+        "languages": {
+            "Go": 19280,
+            "Dockerfile": 616,
+            "Makefile": 571
+        }
+    },
+    {
+        "name": "admin_power_pack",
+        "full_name": "transferwise/admin_power_pack",
+        "url": "https://github.com/transferwise/admin_power_pack",
+        "stars": 0,
+        "updated_at": "2021-06-21T13:57:22Z",
+        "description": null,
+        "size_kb": 6657,
+        "languages": {
+            "LookML": 33
+        }
+    },
+    {
+        "name": "download-repo-artifact",
+        "full_name": "transferwise/download-repo-artifact",
+        "url": "https://github.com/transferwise/download-repo-artifact",
+        "stars": 0,
+        "updated_at": "2021-06-23T14:03:33Z",
+        "description": null,
+        "size_kb": 5,
+        "languages": {
+            "Shell": 1203
+        }
+    },
+    {
+        "name": "actions-next-bundle-analyzer",
+        "full_name": "transferwise/actions-next-bundle-analyzer",
+        "url": "https://github.com/transferwise/actions-next-bundle-analyzer",
+        "stars": 58,
+        "updated_at": "2024-12-05T16:51:58Z",
+        "description": "Github Action that analyses page bundle sizes from a Next.js build",
+        "size_kb": 226,
+        "languages": {
+            "TypeScript": 17362,
+            "JavaScript": 86
+        }
+    },
+    {
+        "name": "actions-crowdin",
+        "full_name": "transferwise/actions-crowdin",
+        "url": "https://github.com/transferwise/actions-crowdin",
+        "stars": 0,
+        "updated_at": "2021-08-04T22:00:14Z",
+        "description": "A GitHub action to manage and synchronize localization resources with your Crowdin project",
+        "size_kb": 119,
+        "languages": {
+            "Shell": 7261,
+            "Dockerfile": 141
+        }
+    },
+    {
+        "name": "vault-bootstrap",
+        "full_name": "transferwise/vault-bootstrap",
+        "url": "https://github.com/transferwise/vault-bootstrap",
+        "stars": 0,
+        "updated_at": "2021-07-28T07:39:33Z",
+        "description": null,
+        "size_kb": 0,
+        "languages": {
+            "Shell": 664
+        }
+    },
+    {
+        "name": "cloudflare-prometheus-exporter",
+        "full_name": "transferwise/cloudflare-prometheus-exporter",
+        "url": "https://github.com/transferwise/cloudflare-prometheus-exporter",
+        "stars": 11,
+        "updated_at": "2025-02-27T14:52:45Z",
+        "description": "Prometheus exporter powered by Cloudflare GraphQL API.",
+        "size_kb": 2007,
+        "languages": {
+            "Python": 16702,
+            "Jsonnet": 11927,
+            "Makefile": 2690,
+            "Dockerfile": 142
+        }
+    },
+    {
+        "name": "amazon-eks-pod-identity-webhook",
+        "full_name": "transferwise/amazon-eks-pod-identity-webhook",
+        "url": "https://github.com/transferwise/amazon-eks-pod-identity-webhook",
+        "stars": 0,
+        "updated_at": "2021-09-23T14:34:52Z",
+        "description": "Amazon EKS Pod Identity Webhook",
+        "size_kb": 5425,
+        "languages": {
+            "Go": 58894,
+            "Makefile": 3241,
+            "Shell": 2337,
+            "Perl": 636,
+            "Dockerfile": 464
+        }
+    },
+    {
+        "name": "terraform-provider-awslambda",
+        "full_name": "transferwise/terraform-provider-awslambda",
+        "url": "https://github.com/transferwise/terraform-provider-awslambda",
+        "stars": 0,
+        "updated_at": "2021-10-08T15:40:04Z",
+        "description": null,
+        "size_kb": 60,
+        "languages": {
+            "Go": 5723,
+            "HTML": 726
+        }
+    },
+    {
+        "name": "terraform-aws-github-runner",
+        "full_name": "transferwise/terraform-aws-github-runner",
+        "url": "https://github.com/transferwise/terraform-aws-github-runner",
+        "stars": 0,
+        "updated_at": "2025-01-10T09:08:46Z",
+        "description": "Terraform module for scalable GitHub action runners on AWS",
+        "size_kb": 6128,
+        "languages": {
+            "TypeScript": 150918,
+            "HCL": 121434,
+            "PowerShell": 10679,
+            "Shell": 7900,
+            "Dockerfile": 1009,
+            "JavaScript": 896
+        }
+    },
+    {
+        "name": "neural-lifetimes",
+        "full_name": "transferwise/neural-lifetimes",
+        "url": "https://github.com/transferwise/neural-lifetimes",
+        "stars": 15,
+        "updated_at": "2024-08-09T11:41:30Z",
+        "description": "User behavior prediction from event data.",
+        "size_kb": 4721,
+        "languages": {
+            "Python": 362456,
+            "Makefile": 1541
+        }
+    },
+    {
+        "name": "envoy-api-java",
+        "full_name": "transferwise/envoy-api-java",
+        "url": "https://github.com/transferwise/envoy-api-java",
+        "stars": 0,
+        "updated_at": "2024-08-13T14:15:24Z",
+        "description": "Java build for the envoy API",
+        "size_kb": 1135,
+        "languages": {
+            "Shell": 4889
+        }
+    },
+    {
+        "name": "network_exporter",
+        "full_name": "transferwise/network_exporter",
+        "url": "https://github.com/transferwise/network_exporter",
+        "stars": 0,
+        "updated_at": "2022-04-24T13:56:08Z",
+        "description": "ICMP & MTR & TCP Port & HTTP Get - Network Prometheus exporter",
+        "size_kb": 32508,
+        "languages": {
+            "Go": 98621,
+            "Makefile": 698,
+            "Dockerfile": 412
+        }
+    },
+    {
+        "name": "sval",
+        "full_name": "transferwise/sval",
+        "url": "https://github.com/transferwise/sval",
+        "stars": 0,
+        "updated_at": "2022-08-19T02:30:18Z",
+        "description": "A javascript interpreter written in javascript",
+        "size_kb": 1882,
+        "languages": {
+            "TypeScript": 113339,
+            "JavaScript": 3145
+        }
+    },
+    {
+        "name": "wait-for-it",
+        "full_name": "transferwise/wait-for-it",
+        "url": "https://github.com/transferwise/wait-for-it",
+        "stars": 0,
+        "updated_at": "2022-08-31T10:03:31Z",
+        "description": "A Golang package to wait on the availability of a TCP host and port. This package generates a binary executable for https://github.com/vishnubob/wait-for-it.",
+        "size_kb": 231,
+        "languages": {
+            "Go": 2640
+        }
+    },
+    {
+        "name": "label-operator",
+        "full_name": "transferwise/label-operator",
+        "url": "https://github.com/transferwise/label-operator",
+        "stars": 0,
+        "updated_at": "2023-01-16T14:48:28Z",
+        "description": null,
+        "size_kb": 54,
+        "languages": {
+            "Go": 13543,
+            "Makefile": 5282,
+            "Dockerfile": 793
+        }
+    },
+    {
+        "name": "wise-envoy-xds",
+        "full_name": "transferwise/wise-envoy-xds",
+        "url": "https://github.com/transferwise/wise-envoy-xds",
+        "stars": 3,
+        "updated_at": "2025-01-21T17:09:34Z",
+        "description": "Wise Envoy xDS",
+        "size_kb": 214,
+        "languages": {
+            "Java": 276520
+        }
+    },
+    {
+        "name": "simple-dynamic-form",
+        "full_name": "transferwise/simple-dynamic-form",
+        "url": "https://github.com/transferwise/simple-dynamic-form",
+        "stars": 0,
+        "updated_at": "2023-02-21T02:53:14Z",
+        "description": null,
+        "size_kb": 894,
+        "languages": {
+            "JavaScript": 4482,
+            "HTML": 4352
+        }
+    },
+    {
+        "name": "souffle-ip-address",
+        "full_name": "transferwise/souffle-ip-address",
+        "url": "https://github.com/transferwise/souffle-ip-address",
+        "stars": 0,
+        "updated_at": "2023-04-28T11:36:25Z",
+        "description": "IP address functors for souffle datalog.",
+        "size_kb": 15,
+        "languages": {
+            "C++": 4603,
+            "Makefile": 1539,
+            "Shell": 1266,
+            "Dockerfile": 450
+        }
+    },
+    {
+        "name": "tw-gaffer-jta-javax",
+        "full_name": "transferwise/tw-gaffer-jta-javax",
+        "url": "https://github.com/transferwise/tw-gaffer-jta-javax",
+        "stars": 0,
+        "updated_at": "2023-05-06T12:29:26Z",
+        "description": "Gaffer - efficient 1PC JTA for enterprise services using Spring Boot < 3.0",
+        "size_kb": 270,
+        "languages": {
+            "Java": 118742
+        }
+    },
+    {
+        "name": "minerva",
+        "full_name": "transferwise/minerva",
+        "url": "https://github.com/transferwise/minerva",
+        "stars": 0,
+        "updated_at": "2023-10-05T16:30:30Z",
+        "description": "MINE-based feature selection",
+        "size_kb": 51769,
+        "languages": {
+            "Python": 188479,
+            "Jupyter Notebook": 74031,
+            "TeX": 41989
+        }
+    },
+    {
+        "name": "prometheus-aws-exporter",
+        "full_name": "transferwise/prometheus-aws-exporter",
+        "url": "https://github.com/transferwise/prometheus-aws-exporter",
+        "stars": 0,
+        "updated_at": "2023-05-31T08:28:46Z",
+        "description": "Exports AWS data like quotas and available IPs as Prometheus metrics",
+        "size_kb": 114,
+        "languages": {
+            "Go": 60139,
+            "Dockerfile": 870
+        }
+    },
+    {
+        "name": "wise-lightweight-mmm",
+        "full_name": "transferwise/wise-lightweight-mmm",
+        "url": "https://github.com/transferwise/wise-lightweight-mmm",
+        "stars": 1,
+        "updated_at": "2024-05-20T17:40:31Z",
+        "description": "LightweightMMM \ud83e\udd87 is a lightweight Bayesian Marketing Mix Modeling (MMM) library that allows users to easily train MMMs and obtain channel attribution information.",
+        "size_kb": 13462,
+        "languages": {
+            "Python": 433881
+        }
+    },
+    {
+        "name": "cloudzero-provision-account",
+        "full_name": "transferwise/cloudzero-provision-account",
+        "url": "https://github.com/transferwise/cloudzero-provision-account",
+        "stars": 0,
+        "updated_at": "2023-07-10T13:37:55Z",
+        "description": "CloudZero Account provisioning automation for AWS",
+        "size_kb": 413,
+        "languages": {
+            "Python": 54787,
+            "Shell": 17368,
+            "Makefile": 16688,
+            "HCL": 9345,
+            "PLpgSQL": 8141,
+            "Mustache": 1885,
+            "Dockerfile": 87
+        }
+    },
+    {
+        "name": "openchat-ui",
+        "full_name": "transferwise/openchat-ui",
+        "url": "https://github.com/transferwise/openchat-ui",
+        "stars": 0,
+        "updated_at": "2023-09-14T10:50:19Z",
+        "description": "An open source ChatGPT UI. (for OpenChat models)",
+        "size_kb": 2126,
+        "languages": {
+            "TypeScript": 187964,
+            "JavaScript": 1967,
+            "Dockerfile": 689,
+            "CSS": 601,
+            "Makefile": 420
+        }
+    },
+    {
+        "name": "wise-environment",
+        "full_name": "transferwise/wise-environment",
+        "url": "https://github.com/transferwise/wise-environment",
+        "stars": 0,
+        "updated_at": "2025-03-03T15:51:47Z",
+        "description": null,
+        "size_kb": 167,
+        "languages": {
+            "Java": 16769
+        }
+    },
+    {
+        "name": "yet-another-cloudwatch-exporter",
+        "full_name": "transferwise/yet-another-cloudwatch-exporter",
+        "url": "https://github.com/transferwise/yet-another-cloudwatch-exporter",
+        "stars": 0,
+        "updated_at": "2024-11-14T15:53:09Z",
+        "description": "Prometheus exporter for AWS CloudWatch - Discovers services through AWS tags, gets CloudWatch metrics data and provides them as Prometheus metrics with AWS tags as labels",
+        "size_kb": 2150,
+        "languages": {
+            "Go": 438025,
+            "Jsonnet": 33991,
+            "Dockerfile": 523,
+            "Makefile": 384
+        }
+    },
+    {
+        "name": "charts-build-scripts",
+        "full_name": "transferwise/charts-build-scripts",
+        "url": "https://github.com/transferwise/charts-build-scripts",
+        "stars": 0,
+        "updated_at": "2024-05-21T10:40:45Z",
+        "description": null,
+        "size_kb": 31499,
+        "languages": {
+            "Go": 194838,
+            "Shell": 10650,
+            "Makefile": 579,
+            "HTML": 228,
+            "Dockerfile": 195
+        }
+    },
+    {
+        "name": "wise-topic",
+        "full_name": "transferwise/wise-topic",
+        "url": "https://github.com/transferwise/wise-topic",
+        "stars": 10,
+        "updated_at": "2025-01-27T00:28:02Z",
+        "description": "LLM-only topic extraction and classification",
+        "size_kb": 37,
+        "languages": {
+            "Python": 33815
+        }
+    },
+    {
+        "name": "starter-workflows",
+        "full_name": "transferwise/starter-workflows",
+        "url": "https://github.com/transferwise/starter-workflows",
+        "stars": 0,
+        "updated_at": "2024-06-20T09:38:41Z",
+        "description": "Accelerating new GitHub Actions workflows ",
+        "size_kb": 3433,
+        "languages": {
+            "TypeScript": 12055
+        }
+    },
+    {
+        "name": "rke2",
+        "full_name": "transferwise/rke2",
+        "url": "https://github.com/transferwise/rke2",
+        "stars": 0,
+        "updated_at": "2024-07-24T05:20:21Z",
+        "description": null,
+        "size_kb": 32082,
+        "languages": {
+            "Go": 388938,
+            "Shell": 108887,
+            "PowerShell": 70020,
+            "Python": 7369,
+            "Dockerfile": 6104,
+            "Ruby": 5780,
+            "Makefile": 5562,
+            "HTML": 4398
+        }
+    },
+    {
+        "name": "helm-changelog",
+        "full_name": "transferwise/helm-changelog",
+        "url": "https://github.com/transferwise/helm-changelog",
+        "stars": 0,
+        "updated_at": "2024-08-06T09:05:50Z",
+        "description": "Create changelogs for Helm Charts, based on git history",
+        "size_kb": 2053,
+        "languages": {
+            "Go": 16893,
+            "Makefile": 1132,
+            "Shell": 709
+        }
+    },
+    {
+        "name": "shap-select",
+        "full_name": "transferwise/shap-select",
+        "url": "https://github.com/transferwise/shap-select",
+        "stars": 25,
+        "updated_at": "2025-01-30T01:42:44Z",
+        "description": "A library for feature selection for gradient boosting models using regression on feature Shapley values",
+        "size_kb": 163,
+        "languages": {
+            "Python": 27087
+        }
+    },
+    {
+        "name": "storyline-wise",
+        "full_name": "transferwise/storyline-wise",
+        "url": "https://github.com/transferwise/storyline-wise",
+        "stars": 1,
+        "updated_at": "2025-02-27T16:40:17Z",
+        "description": "A bot to ingest data from Confluence, Slack etc and tell stories about it",
+        "size_kb": 554,
+        "languages": {
+            "Python": 24660
+        }
+    }
+]

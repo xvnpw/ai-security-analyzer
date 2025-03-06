@@ -1,0 +1,638 @@
+[
+    {
+        "name": "Dynatrace-AppMon-Docker",
+        "full_name": "Dynatrace/Dynatrace-AppMon-Docker",
+        "url": "https://github.com/Dynatrace/Dynatrace-AppMon-Docker",
+        "stars": 65,
+        "updated_at": "2024-11-05T16:03:21Z",
+        "description": "The home of Dockerized components of the Dynatrace Application Monitoring enterprise solution.",
+        "size_kb": 8261,
+        "languages": {
+            "Shell": 12835,
+            "Dockerfile": 7537,
+            "PowerShell": 3671,
+            "Java": 299,
+            "Batchfile": 135
+        }
+    },
+    {
+        "name": "dynatrace-service-broker",
+        "full_name": "Dynatrace/dynatrace-service-broker",
+        "url": "https://github.com/Dynatrace/dynatrace-service-broker",
+        "stars": 2,
+        "updated_at": "2021-04-30T06:23:52Z",
+        "description": "The Dynatrace SaaS/Managed service broker for the Cloud Foundry platform",
+        "size_kb": 56,
+        "languages": {
+            "Java": 73552
+        }
+    },
+    {
+        "name": "Dynatrace-OneAgent-Ansible",
+        "full_name": "Dynatrace/Dynatrace-OneAgent-Ansible",
+        "url": "https://github.com/Dynatrace/Dynatrace-OneAgent-Ansible",
+        "stars": 40,
+        "updated_at": "2025-02-03T07:07:32Z",
+        "description": "This Ansible role installs Dynatrace OneAgent.",
+        "size_kb": 2723,
+        "languages": {
+            "Python": 59756,
+            "Shell": 3733
+        }
+    },
+    {
+        "name": "agent-nodejs",
+        "full_name": "Dynatrace/agent-nodejs",
+        "url": "https://github.com/Dynatrace/agent-nodejs",
+        "stars": 14,
+        "updated_at": "2025-02-26T07:40:54Z",
+        "description": "Dynatrace agent for PaaS environments",
+        "size_kb": 179,
+        "languages": {
+            "JavaScript": 20210
+        }
+    },
+    {
+        "name": "db-connection-check",
+        "full_name": "Dynatrace/db-connection-check",
+        "url": "https://github.com/Dynatrace/db-connection-check",
+        "stars": 6,
+        "updated_at": "2024-07-16T12:38:07Z",
+        "description": "Quick & dirty tool to verify database connectivity",
+        "size_kb": 3772,
+        "languages": {
+            "Java": 59074,
+            "Shell": 549,
+            "Batchfile": 464
+        }
+    },
+    {
+        "name": "Dynatrace-AppMon-TFS-Integration-Plugin",
+        "full_name": "Dynatrace/Dynatrace-AppMon-TFS-Integration-Plugin",
+        "url": "https://github.com/Dynatrace/Dynatrace-AppMon-TFS-Integration-Plugin",
+        "stars": 6,
+        "updated_at": "2021-03-18T17:31:40Z",
+        "description": "Integrates Dynatrace AppMon with Team Foundation Server.",
+        "size_kb": 2188,
+        "languages": {
+            "PowerShell": 13727,
+            "TypeScript": 8614,
+            "HTML": 6087
+        }
+    },
+    {
+        "name": "Dynatrace-LoadRunner-Request-Tagging",
+        "full_name": "Dynatrace/Dynatrace-LoadRunner-Request-Tagging",
+        "url": "https://github.com/Dynatrace/Dynatrace-LoadRunner-Request-Tagging",
+        "stars": 4,
+        "updated_at": "2022-04-13T15:15:01Z",
+        "description": "Command line tool which tags HTTP requests with relevant HTTP headers for Dynatrace",
+        "size_kb": 108,
+        "languages": {
+            "C": 213228,
+            "JavaScript": 80807,
+            "Java": 62742
+        }
+    },
+    {
+        "name": "bosh-oneagent-release",
+        "full_name": "Dynatrace/bosh-oneagent-release",
+        "url": "https://github.com/Dynatrace/bosh-oneagent-release",
+        "stars": 8,
+        "updated_at": "2025-03-02T19:52:52Z",
+        "description": "BOSH release for Dynatrace OneAgent",
+        "size_kb": 214,
+        "languages": {
+            "Ruby": 17222,
+            "Shell": 16074,
+            "HTML": 14501,
+            "Batchfile": 2427,
+            "Makefile": 774
+        }
+    },
+    {
+        "name": "ufo-esp32",
+        "full_name": "Dynatrace/ufo-esp32",
+        "url": "https://github.com/Dynatrace/ufo-esp32",
+        "stars": 18,
+        "updated_at": "2024-10-16T17:39:16Z",
+        "description": "2nd generation of Dynatrace UFO with ESP32 microcontroller",
+        "size_kb": 9717,
+        "languages": {
+            "C++": 222233,
+            "HTML": 88841,
+            "C": 64982,
+            "Python": 2306,
+            "Go": 1882,
+            "Makefile": 1228,
+            "Batchfile": 171
+        }
+    },
+    {
+        "name": "Dynatrace-OneAgent-Chef",
+        "full_name": "Dynatrace/Dynatrace-OneAgent-Chef",
+        "url": "https://github.com/Dynatrace/Dynatrace-OneAgent-Chef",
+        "stars": 6,
+        "updated_at": "2021-05-18T23:16:48Z",
+        "description": "This chef recipe downloads and installs the Dynatrace OneAgent on Linux or Windows systems.",
+        "size_kb": 95,
+        "languages": {
+            "Ruby": 13207
+        }
+    },
+    {
+        "name": "OneAgent-SDK-for-Java",
+        "full_name": "Dynatrace/OneAgent-SDK-for-Java",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-for-Java",
+        "stars": 35,
+        "updated_at": "2025-01-23T23:27:38Z",
+        "description": "Enables custom tracing of Java applications in Dynatrace",
+        "size_kb": 491,
+        "languages": {
+            "Java": 127011
+        }
+    },
+    {
+        "name": "heroku-buildpack-dynatrace",
+        "full_name": "Dynatrace/heroku-buildpack-dynatrace",
+        "url": "https://github.com/Dynatrace/heroku-buildpack-dynatrace",
+        "stars": 9,
+        "updated_at": "2025-02-25T07:28:54Z",
+        "description": "Heroku buildpack to enable application monitoring for Heroku apps ",
+        "size_kb": 47,
+        "languages": {
+            "Shell": 9773
+        }
+    },
+    {
+        "name": "OneAgent-SDK-for-C",
+        "full_name": "Dynatrace/OneAgent-SDK-for-C",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-for-C",
+        "stars": 20,
+        "updated_at": "2023-12-12T15:59:51Z",
+        "description": "Enables custom tracing of native applications in Dynatrace",
+        "size_kb": 27408,
+        "languages": {
+            "C": 157883,
+            "CMake": 9793
+        }
+    },
+    {
+        "name": "OneAgent-SDK-for-NodeJs",
+        "full_name": "Dynatrace/OneAgent-SDK-for-NodeJs",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-for-NodeJs",
+        "stars": 18,
+        "updated_at": "2025-02-28T08:29:24Z",
+        "description": "Enables custom tracing of Node.js applications in Dynatrace",
+        "size_kb": 235,
+        "languages": {
+            "TypeScript": 79733
+        }
+    },
+    {
+        "name": "OneAgent-SDK",
+        "full_name": "Dynatrace/OneAgent-SDK",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK",
+        "stars": 20,
+        "updated_at": "2025-01-05T11:43:05Z",
+        "description": "Describes technical concepts of Dynatrace OneAgent SDK",
+        "size_kb": 109,
+        "languages": {
+            "Java": 61444
+        }
+    },
+    {
+        "name": "OneAgent-SDK-for-Python",
+        "full_name": "Dynatrace/OneAgent-SDK-for-Python",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-for-Python",
+        "stars": 26,
+        "updated_at": "2024-01-04T14:50:39Z",
+        "description": "Enables custom tracing of Python applications in Dynatrace",
+        "size_kb": 5091,
+        "languages": {
+            "Python": 228541
+        }
+    },
+    {
+        "name": "OneAgent-SDK-for-dotnet",
+        "full_name": "Dynatrace/OneAgent-SDK-for-dotnet",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-for-dotnet",
+        "stars": 19,
+        "updated_at": "2024-11-14T21:50:23Z",
+        "description": "Enables custom tracing of .NET applications in Dynatrace",
+        "size_kb": 184,
+        "languages": {
+            "C#": 108606
+        }
+    },
+    {
+        "name": "OneAgent-SDK-AspectJ",
+        "full_name": "Dynatrace/OneAgent-SDK-AspectJ",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-AspectJ",
+        "stars": 1,
+        "updated_at": "2021-10-27T22:31:05Z",
+        "description": "AspectJ SDK based on OneAgent SDK for Java",
+        "size_kb": 5528,
+        "languages": {
+            "Java": 21918,
+            "Batchfile": 266,
+            "Shell": 266
+        }
+    },
+    {
+        "name": "Custom-Webhook-Python",
+        "full_name": "Dynatrace/Custom-Webhook-Python",
+        "url": "https://github.com/Dynatrace/Custom-Webhook-Python",
+        "stars": 12,
+        "updated_at": "2024-03-22T12:48:35Z",
+        "description": null,
+        "size_kb": 319,
+        "languages": {
+            "Python": 22392,
+            "HTML": 1820,
+            "Shell": 94,
+            "Batchfile": 86
+        }
+    },
+    {
+        "name": "libbuildpack-dynatrace",
+        "full_name": "Dynatrace/libbuildpack-dynatrace",
+        "url": "https://github.com/Dynatrace/libbuildpack-dynatrace",
+        "stars": 2,
+        "updated_at": "2024-11-06T07:37:08Z",
+        "description": "Common resources used for Dynatrace integration in Cloudfoundry Buildpacks.",
+        "size_kb": 3349,
+        "languages": {
+            "Go": 57631
+        }
+    },
+    {
+        "name": "serverless-hotday-2019",
+        "full_name": "Dynatrace/serverless-hotday-2019",
+        "url": "https://github.com/Dynatrace/serverless-hotday-2019",
+        "stars": 2,
+        "updated_at": "2022-11-11T17:13:03Z",
+        "description": "This repository contains labs for the Serverless Hands-On Training at Perform 2019",
+        "size_kb": 5881,
+        "languages": {
+            "JavaScript": 8930,
+            "HTML": 1090
+        }
+    },
+    {
+        "name": "helm-charts",
+        "full_name": "Dynatrace/helm-charts",
+        "url": "https://github.com/Dynatrace/helm-charts",
+        "stars": 28,
+        "updated_at": "2025-02-13T13:31:21Z",
+        "description": "Help Charts provided by Dynatrace",
+        "size_kb": 1416,
+        "languages": {
+            "Smarty": 7990,
+            "Shell": 5006,
+            "Dockerfile": 1327
+        }
+    },
+    {
+        "name": "BizOpsConfigurator",
+        "full_name": "Dynatrace/BizOpsConfigurator",
+        "url": "https://github.com/Dynatrace/BizOpsConfigurator",
+        "stars": 21,
+        "updated_at": "2024-09-06T10:25:03Z",
+        "description": "SPA to get inputs from the user and from the Dynatrace API, to transform a stock collection of currated dashboards, and to upload via the Dynatrace API",
+        "size_kb": 17879,
+        "languages": {
+            "JavaScript": 467212,
+            "HTML": 123568,
+            "CSS": 27313
+        }
+    },
+    {
+        "name": "extension-automated-config",
+        "full_name": "Dynatrace/extension-automated-config",
+        "url": "https://github.com/Dynatrace/extension-automated-config",
+        "stars": 10,
+        "updated_at": "2022-10-23T17:49:00Z",
+        "description": "Dynatrace ActiveGate extension for posting Dynatrace Audit Log information into Event Feeds",
+        "size_kb": 250,
+        "languages": {
+            "Python": 18393
+        }
+    },
+    {
+        "name": "swift-mobile-sdk",
+        "full_name": "Dynatrace/swift-mobile-sdk",
+        "url": "https://github.com/Dynatrace/swift-mobile-sdk",
+        "stars": 10,
+        "updated_at": "2025-02-26T10:28:27Z",
+        "description": "Swift Package Manger repository of the Dynatrace OneAgent for mobile (iOS, tvOS)",
+        "size_kb": 73,
+        "languages": {
+            "Swift": 2483
+        }
+    },
+    {
+        "name": "perform-2022-hotday",
+        "full_name": "Dynatrace/perform-2022-hotday",
+        "url": "https://github.com/Dynatrace/perform-2022-hotday",
+        "stars": 2,
+        "updated_at": "2023-03-13T21:09:41Z",
+        "description": null,
+        "size_kb": 94742,
+        "languages": {
+            "JavaScript": 29725,
+            "Shell": 21127,
+            "HTML": 2955
+        }
+    },
+    {
+        "name": "OneAgent-SDK-for-Go",
+        "full_name": "Dynatrace/OneAgent-SDK-for-Go",
+        "url": "https://github.com/Dynatrace/OneAgent-SDK-for-Go",
+        "stars": 4,
+        "updated_at": "2024-07-25T06:56:32Z",
+        "description": null,
+        "size_kb": 16,
+        "languages": {
+            "Go": 6425
+        }
+    },
+    {
+        "name": "xk6-output-dynatrace",
+        "full_name": "Dynatrace/xk6-output-dynatrace",
+        "url": "https://github.com/Dynatrace/xk6-output-dynatrace",
+        "stars": 8,
+        "updated_at": "2025-02-14T20:22:10Z",
+        "description": "repo for the k6 extension",
+        "size_kb": 40,
+        "languages": {
+            "Go": 23333,
+            "JavaScript": 4890,
+            "Dockerfile": 312
+        }
+    },
+    {
+        "name": "homebrew-tools",
+        "full_name": "Dynatrace/homebrew-tools",
+        "url": "https://github.com/Dynatrace/homebrew-tools",
+        "stars": 3,
+        "updated_at": "2025-02-26T10:30:49Z",
+        "description": null,
+        "size_kb": 51,
+        "languages": {
+            "Ruby": 75892
+        }
+    },
+    {
+        "name": "insightify",
+        "full_name": "Dynatrace/insightify",
+        "url": "https://github.com/Dynatrace/insightify",
+        "stars": 3,
+        "updated_at": "2024-12-12T09:50:40Z",
+        "description": null,
+        "size_kb": 145160,
+        "languages": {
+            "Python": 137486
+        }
+    },
+    {
+        "name": ".github",
+        "full_name": "Dynatrace/.github",
+        "url": "https://github.com/Dynatrace/.github",
+        "stars": 0,
+        "updated_at": "2022-06-20T09:09:46Z",
+        "description": null,
+        "size_kb": 42,
+        "languages": {
+            "Makefile": 293
+        }
+    },
+    {
+        "name": "Dynatrace-EventDrivenAnsible",
+        "full_name": "Dynatrace/Dynatrace-EventDrivenAnsible",
+        "url": "https://github.com/Dynatrace/Dynatrace-EventDrivenAnsible",
+        "stars": 7,
+        "updated_at": "2024-12-12T09:17:31Z",
+        "description": null,
+        "size_kb": 88,
+        "languages": {
+            "Python": 15229
+        }
+    },
+    {
+        "name": "dynatrace-automation-tools",
+        "full_name": "Dynatrace/dynatrace-automation-tools",
+        "url": "https://github.com/Dynatrace/dynatrace-automation-tools",
+        "stars": 13,
+        "updated_at": "2025-01-30T03:08:04Z",
+        "description": null,
+        "size_kb": 3132,
+        "languages": {
+            "TypeScript": 70981,
+            "JavaScript": 706,
+            "Dockerfile": 65
+        }
+    },
+    {
+        "name": "dt-app-templates",
+        "full_name": "Dynatrace/dt-app-templates",
+        "url": "https://github.com/Dynatrace/dt-app-templates",
+        "stars": 7,
+        "updated_at": "2025-02-17T15:33:16Z",
+        "description": "Dynatrace App Bundle Templates",
+        "size_kb": 123,
+        "languages": {
+            "TypeScript": 9404
+        }
+    },
+    {
+        "name": "dynatrace-otel-collector",
+        "full_name": "Dynatrace/dynatrace-otel-collector",
+        "url": "https://github.com/Dynatrace/dynatrace-otel-collector",
+        "stars": 28,
+        "updated_at": "2025-03-06T15:05:35Z",
+        "description": "Dynatrace distribution of the OpenTelemetry Collector",
+        "size_kb": 18114,
+        "languages": {
+            "Go": 262679,
+            "Shell": 7800,
+            "Makefile": 6013,
+            "Dockerfile": 332
+        }
+    },
+    {
+        "name": "dynatrace-configuration-as-code-core",
+        "full_name": "Dynatrace/dynatrace-configuration-as-code-core",
+        "url": "https://github.com/Dynatrace/dynatrace-configuration-as-code-core",
+        "stars": 4,
+        "updated_at": "2025-03-06T09:33:46Z",
+        "description": null,
+        "size_kb": 665,
+        "languages": {
+            "Go": 386022,
+            "Mustache": 28616,
+            "Shell": 1967,
+            "Makefile": 1503,
+            "Batchfile": 447
+        }
+    },
+    {
+        "name": "backstage-plugin",
+        "full_name": "Dynatrace/backstage-plugin",
+        "url": "https://github.com/Dynatrace/backstage-plugin",
+        "stars": 28,
+        "updated_at": "2025-03-04T12:12:24Z",
+        "description": "Dynatrace Backstage Plugin",
+        "size_kb": 4176,
+        "languages": {
+            "TypeScript": 208493,
+            "JavaScript": 2793,
+            "Dockerfile": 2614,
+            "HTML": 1892
+        }
+    },
+    {
+        "name": "dynatrace-log-enrichment",
+        "full_name": "Dynatrace/dynatrace-log-enrichment",
+        "url": "https://github.com/Dynatrace/dynatrace-log-enrichment",
+        "stars": 0,
+        "updated_at": "2024-02-26T07:40:18Z",
+        "description": null,
+        "size_kb": 17,
+        "languages": {
+            "Java": 6933
+        }
+    },
+    {
+        "name": "k8s-problem-patterns",
+        "full_name": "Dynatrace/k8s-problem-patterns",
+        "url": "https://github.com/Dynatrace/k8s-problem-patterns",
+        "stars": 9,
+        "updated_at": "2025-02-26T07:27:55Z",
+        "description": null,
+        "size_kb": 87,
+        "languages": {
+            "Shell": 3658,
+            "Smarty": 1967
+        }
+    },
+    {
+        "name": "anomaly-simulation-service",
+        "full_name": "Dynatrace/anomaly-simulation-service",
+        "url": "https://github.com/Dynatrace/anomaly-simulation-service",
+        "stars": 0,
+        "updated_at": "2024-08-21T08:42:13Z",
+        "description": "Simulates various application anomalies like slowdowns, failures, increased resource consumption or crashes",
+        "size_kb": 67,
+        "languages": {
+            "Go": 4927,
+            "Dockerfile": 199
+        }
+    },
+    {
+        "name": "obslab-predictive-kubernetes-scaling",
+        "full_name": "Dynatrace/obslab-predictive-kubernetes-scaling",
+        "url": "https://github.com/Dynatrace/obslab-predictive-kubernetes-scaling",
+        "stars": 5,
+        "updated_at": "2025-02-13T00:39:43Z",
+        "description": "Observability Lab: Predictive Auto-Scaling for Kubernetes Workloads",
+        "size_kb": 980,
+        "languages": {
+            "HCL": 84273,
+            "Shell": 24531,
+            "Dockerfile": 1392
+        }
+    },
+    {
+        "name": "obslab-release-validation",
+        "full_name": "Dynatrace/obslab-release-validation",
+        "url": "https://github.com/Dynatrace/obslab-release-validation",
+        "stars": 2,
+        "updated_at": "2025-02-13T00:39:11Z",
+        "description": "Use Grafana k6, Dynatrace business events, workflows and site reliability guardian to validate software releases",
+        "size_kb": 3488,
+        "languages": {
+            "Python": 18880,
+            "Shell": 17969,
+            "Dockerfile": 1745
+        }
+    },
+    {
+        "name": "obslab-syslog",
+        "full_name": "Dynatrace/obslab-syslog",
+        "url": "https://github.com/Dynatrace/obslab-syslog",
+        "stars": 0,
+        "updated_at": "2025-02-17T07:16:54Z",
+        "description": "Ingest syslog data into Dynatrace using the OpenTelemetry collector",
+        "size_kb": 901,
+        "languages": {
+            "Python": 37932
+        }
+    },
+    {
+        "name": "obslab-jmeter",
+        "full_name": "Dynatrace/obslab-jmeter",
+        "url": "https://github.com/Dynatrace/obslab-jmeter",
+        "stars": 0,
+        "updated_at": "2025-02-24T08:50:57Z",
+        "description": "Integration: Apache JMeter and Dynatrace",
+        "size_kb": 810,
+        "languages": {
+            "Python": 30495
+        }
+    },
+    {
+        "name": "obslab-log-problem-detection",
+        "full_name": "Dynatrace/obslab-log-problem-detection",
+        "url": "https://github.com/Dynatrace/obslab-log-problem-detection",
+        "stars": 1,
+        "updated_at": "2025-02-13T00:41:43Z",
+        "description": "Detect Problems in Logs with Dynatrace",
+        "size_kb": 4491,
+        "languages": {
+            "Shell": 20974,
+            "Dockerfile": 1635
+        }
+    },
+    {
+        "name": "obslab-unguard",
+        "full_name": "Dynatrace/obslab-unguard",
+        "url": "https://github.com/Dynatrace/obslab-unguard",
+        "stars": 0,
+        "updated_at": "2025-02-13T00:42:30Z",
+        "description": "Detecting and blocking security vulnerabilities with Dynatrace",
+        "size_kb": 4895,
+        "languages": {
+            "Shell": 18788,
+            "Dockerfile": 1344
+        }
+    },
+    {
+        "name": "dynatrace-bootstrapper",
+        "full_name": "Dynatrace/dynatrace-bootstrapper",
+        "url": "https://github.com/Dynatrace/dynatrace-bootstrapper",
+        "stars": 1,
+        "updated_at": "2025-03-06T11:18:22Z",
+        "description": "Setup Dynatrace OneAgent in a container",
+        "size_kb": 99,
+        "languages": {
+            "Go": 95077,
+            "Makefile": 7700,
+            "Shell": 3457,
+            "Dockerfile": 1161,
+            "Smarty": 737
+        }
+    },
+    {
+        "name": "Dynatrace-Log-Security-Rules-Checker",
+        "full_name": "Dynatrace/Dynatrace-Log-Security-Rules-Checker",
+        "url": "https://github.com/Dynatrace/Dynatrace-Log-Security-Rules-Checker",
+        "stars": 0,
+        "updated_at": "2025-02-03T13:02:20Z",
+        "description": null,
+        "size_kb": 15,
+        "languages": {
+            "Python": 16402
+        }
+    }
+]

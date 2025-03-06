@@ -1,0 +1,284 @@
+[
+    {
+        "name": "pyre2",
+        "full_name": "facebook/pyre2",
+        "url": "https://github.com/facebook/pyre2",
+        "stars": 641,
+        "updated_at": "2025-03-04T07:24:33Z",
+        "description": "Python wrapper for RE2",
+        "size_kb": 49,
+        "languages": {
+            "C++": 31495,
+            "Python": 10979,
+            "Makefile": 212
+        }
+    },
+    {
+        "name": "chef-utils",
+        "full_name": "facebook/chef-utils",
+        "url": "https://github.com/facebook/chef-utils",
+        "stars": 293,
+        "updated_at": "2025-03-03T21:51:42Z",
+        "description": "Utilities related to Chef",
+        "size_kb": 228,
+        "languages": {
+            "Ruby": 72431,
+            "Erlang": 3422
+        }
+    },
+    {
+        "name": "fishhook",
+        "full_name": "facebook/fishhook",
+        "url": "https://github.com/facebook/fishhook",
+        "stars": 5261,
+        "updated_at": "2025-03-06T13:06:12Z",
+        "description": "A library that enables dynamically rebinding symbols in Mach-O binaries running on iOS.",
+        "size_kb": 40,
+        "languages": {
+            "C": 13511,
+            "Ruby": 660
+        }
+    },
+    {
+        "name": "chisel",
+        "full_name": "facebook/chisel",
+        "url": "https://github.com/facebook/chisel",
+        "stars": 9150,
+        "updated_at": "2025-03-06T13:03:13Z",
+        "description": "Chisel is a collection of LLDB commands to assist debugging iOS apps.",
+        "size_kb": 3549,
+        "languages": {
+            "Python": 208173,
+            "Objective-C++": 11455,
+            "Objective-C": 5139,
+            "C": 1962,
+            "C++": 1876,
+            "Makefile": 321
+        }
+    },
+    {
+        "name": "IT-CPE",
+        "full_name": "facebook/IT-CPE",
+        "url": "https://github.com/facebook/IT-CPE",
+        "stars": 563,
+        "updated_at": "2025-03-06T00:07:55Z",
+        "description": "Meta's Client Platform Engineering tools. Some of the tools we have written to help manage our fleet of client systems. ",
+        "size_kb": 5313,
+        "languages": {
+            "Ruby": 478866,
+            "Python": 140098,
+            "HTML": 1905
+        }
+    },
+    {
+        "name": "Haxl",
+        "full_name": "facebook/Haxl",
+        "url": "https://github.com/facebook/Haxl",
+        "stars": 4294,
+        "updated_at": "2025-03-06T13:06:24Z",
+        "description": "A Haskell library that simplifies access to remote data, such as databases or web-based services. ",
+        "size_kb": 783,
+        "languages": {
+            "Haskell": 296333
+        }
+    },
+    {
+        "name": "grocery-delivery",
+        "full_name": "facebook/grocery-delivery",
+        "url": "https://github.com/facebook/grocery-delivery",
+        "stars": 155,
+        "updated_at": "2025-01-21T00:15:04Z",
+        "description": "The Grocery Delivery utility for managing cookbook uploads to distributed Chef backends.",
+        "size_kb": 89,
+        "languages": {
+            "Ruby": 21214,
+            "Shell": 3857
+        }
+    },
+    {
+        "name": "PathPicker",
+        "full_name": "facebook/PathPicker",
+        "url": "https://github.com/facebook/PathPicker",
+        "stars": 5151,
+        "updated_at": "2025-03-06T13:06:14Z",
+        "description": "PathPicker accepts a wide range of input -- output from git commands, grep results, searches -- pretty much anything. After parsing the input, PathPicker presents you with a nice UI to select which files you're interested in. After that you can open them in your favorite editor or execute arbitrary commands.",
+        "size_kb": 1460,
+        "languages": {
+            "Python": 132510,
+            "HTML": 9289,
+            "CSS": 5628,
+            "Shell": 5368,
+            "Ruby": 859
+        }
+    },
+    {
+        "name": "fbjs",
+        "full_name": "facebook/fbjs",
+        "url": "https://github.com/facebook/fbjs",
+        "stars": 1962,
+        "updated_at": "2025-03-06T13:07:37Z",
+        "description": "A collection of utility libraries used by other Meta JS projects.",
+        "size_kb": 1556,
+        "languages": {
+            "JavaScript": 469683
+        }
+    },
+    {
+        "name": "homebrew-fb",
+        "full_name": "facebook/homebrew-fb",
+        "url": "https://github.com/facebook/homebrew-fb",
+        "stars": 126,
+        "updated_at": "2025-02-21T15:48:00Z",
+        "description": "OS X Homebrew formulas to install Meta open source software",
+        "size_kb": 5597,
+        "languages": {
+            "Ruby": 8791
+        }
+    },
+    {
+        "name": "SoLoader",
+        "full_name": "facebook/SoLoader",
+        "url": "https://github.com/facebook/SoLoader",
+        "stars": 1364,
+        "updated_at": "2025-03-06T17:51:50Z",
+        "description": "Native code loader for Android",
+        "size_kb": 818,
+        "languages": {
+            "Java": 270088,
+            "Starlark": 5519
+        }
+    },
+    {
+        "name": "transform360",
+        "full_name": "facebook/transform360",
+        "url": "https://github.com/facebook/transform360",
+        "stars": 1014,
+        "updated_at": "2025-03-06T13:08:23Z",
+        "description": "Transform360 is an equirectangular to cubemap transform for 360 video.",
+        "size_kb": 86,
+        "languages": {
+            "C++": 47260,
+            "C": 28656,
+            "CMake": 850
+        }
+    },
+    {
+        "name": "FBRetainCycleDetector",
+        "full_name": "facebook/FBRetainCycleDetector",
+        "url": "https://github.com/facebook/FBRetainCycleDetector",
+        "stars": 4218,
+        "updated_at": "2025-03-06T13:06:26Z",
+        "description": "iOS library to help detecting retain cycles in runtime.",
+        "size_kb": 3062,
+        "languages": {
+            "Objective-C++": 101408,
+            "Objective-C": 77959,
+            "Swift": 16859,
+            "C": 10669,
+            "Ruby": 2002,
+            "Shell": 1251
+        }
+    },
+    {
+        "name": "TextLayoutBuilder",
+        "full_name": "facebook/TextLayoutBuilder",
+        "url": "https://github.com/facebook/TextLayoutBuilder",
+        "stars": 1477,
+        "updated_at": "2025-03-06T13:07:45Z",
+        "description": "An Android library that allows you to build text layouts more easily.",
+        "size_kb": 511,
+        "languages": {
+            "Java": 97659,
+            "Kotlin": 8170
+        }
+    },
+    {
+        "name": "prophet",
+        "full_name": "facebook/prophet",
+        "url": "https://github.com/facebook/prophet",
+        "stars": 18942,
+        "updated_at": "2025-03-06T19:26:33Z",
+        "description": "Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth.",
+        "size_kb": 67539,
+        "languages": {
+            "Python": 240401,
+            "R": 152175,
+            "Stan": 7265,
+            "Dockerfile": 174,
+            "Makefile": 117,
+            "C++": 48
+        }
+    },
+    {
+        "name": "usort",
+        "full_name": "facebook/usort",
+        "url": "https://github.com/facebook/usort",
+        "stars": 194,
+        "updated_at": "2025-01-30T08:39:14Z",
+        "description": "Safe, minimal import sorting for Python projects.",
+        "size_kb": 553,
+        "languages": {
+            "Python": 148790,
+            "Makefile": 1125,
+            "Shell": 449
+        }
+    },
+    {
+        "name": "threat-research",
+        "full_name": "facebook/threat-research",
+        "url": "https://github.com/facebook/threat-research",
+        "stars": 155,
+        "updated_at": "2025-02-27T17:30:04Z",
+        "description": "Welcome to the Meta Threat Research Indicator Repository, a dedicated resource for the sharing of Indicators of Compromise (IOCs) and other threat indicators with the external research community",
+        "size_kb": 818,
+        "languages": {
+            "Python": 4953,
+            "YARA": 4685
+        }
+    },
+    {
+        "name": "ocamlrep",
+        "full_name": "facebook/ocamlrep",
+        "url": "https://github.com/facebook/ocamlrep",
+        "stars": 130,
+        "updated_at": "2025-03-06T05:16:56Z",
+        "description": "Sets of libraries and tools to write applications and libraries mixing OCaml and Rust. These libraries will help keeping your types and data structures synchronized, and enable seamless exchange between OCaml and Rust",
+        "size_kb": 5335,
+        "languages": {
+            "Rust": 336472,
+            "Starlark": 90303,
+            "OCaml": 28389,
+            "C": 14915,
+            "Shell": 2658
+        }
+    },
+    {
+        "name": "dotslash",
+        "full_name": "facebook/dotslash",
+        "url": "https://github.com/facebook/dotslash",
+        "stars": 676,
+        "updated_at": "2025-03-04T12:01:12Z",
+        "description": "Simplified executable deployment",
+        "size_kb": 2671,
+        "languages": {
+            "Rust": 163976,
+            "Python": 20418,
+            "JavaScript": 7567,
+            "CSS": 2079
+        }
+    },
+    {
+        "name": "react-strict-dom",
+        "full_name": "facebook/react-strict-dom",
+        "url": "https://github.com/facebook/react-strict-dom",
+        "stars": 3297,
+        "updated_at": "2025-03-06T13:06:35Z",
+        "description": "React Strict DOM (RSD) standardizes the development of styled React components for web and native.",
+        "size_kb": 2508,
+        "languages": {
+            "JavaScript": 178209,
+            "CSS": 6493,
+            "Shell": 69
+        }
+    }
+]

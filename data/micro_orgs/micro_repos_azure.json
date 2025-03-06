@@ -1,0 +1,1599 @@
+[
+    {
+        "name": "iisnode",
+        "full_name": "Azure/iisnode",
+        "url": "https://github.com/Azure/iisnode",
+        "stars": 680,
+        "updated_at": "2025-03-05T11:32:50Z",
+        "description": "Hosting node.js applications in IIS on Windows",
+        "size_kb": 8828,
+        "languages": {
+            "C++": 365411,
+            "JavaScript": 70482,
+            "HTML": 21166,
+            "Batchfile": 18121,
+            "Pug": 1380,
+            "C": 769,
+            "CSS": 543
+        }
+    },
+    {
+        "name": "Azure-DataFactory",
+        "full_name": "Azure/Azure-DataFactory",
+        "url": "https://github.com/Azure/Azure-DataFactory",
+        "stars": 492,
+        "updated_at": "2025-02-20T01:15:05Z",
+        "description": null,
+        "size_kb": 186957,
+        "languages": {
+            "C#": 253742,
+            "PowerShell": 110062,
+            "Jupyter Notebook": 31103,
+            "Batchfile": 18658,
+            "Python": 13002,
+            "Java": 12424,
+            "HiveQL": 9398,
+            "HTML": 9370,
+            "TSQL": 8264,
+            "Bicep": 8126,
+            "R": 2736,
+            "PigLatin": 1631
+        }
+    },
+    {
+        "name": "azure-stream-analytics",
+        "full_name": "Azure/azure-stream-analytics",
+        "url": "https://github.com/Azure/azure-stream-analytics",
+        "stars": 228,
+        "updated_at": "2025-02-25T21:01:23Z",
+        "description": "Azure Stream Analytics",
+        "size_kb": 81992,
+        "languages": {
+            "C#": 122196,
+            "PowerShell": 58121
+        }
+    },
+    {
+        "name": "azure-resource-manager-schemas",
+        "full_name": "Azure/azure-resource-manager-schemas",
+        "url": "https://github.com/Azure/azure-resource-manager-schemas",
+        "stars": 619,
+        "updated_at": "2025-03-02T22:25:21Z",
+        "description": "Schemas used to author and validate Resource Manager Templates. These schemas power the intellisense and syntax completion in our ARM Tools VSCode extension, as well as the Export Template API",
+        "size_kb": 50335,
+        "languages": {
+            "TypeScript": 199334,
+            "C#": 8031,
+            "JavaScript": 1422,
+            "Shell": 731
+        }
+    },
+    {
+        "name": "aspnet-redis-providers",
+        "full_name": "Azure/aspnet-redis-providers",
+        "url": "https://github.com/Azure/aspnet-redis-providers",
+        "stars": 272,
+        "updated_at": "2025-01-17T06:45:28Z",
+        "description": "ASP.NET Redis Providers",
+        "size_kb": 1139,
+        "languages": {
+            "C#": 207270
+        }
+    },
+    {
+        "name": "azure-cosmosdb-js-server",
+        "full_name": "Azure/azure-cosmosdb-js-server",
+        "url": "https://github.com/Azure/azure-cosmosdb-js-server",
+        "stars": 178,
+        "updated_at": "2024-10-09T14:01:06Z",
+        "description": "The JavaScript SDK for server-side programming in Azure Cosmos DB",
+        "size_kb": 485,
+        "languages": {
+            "JavaScript": 128842
+        }
+    },
+    {
+        "name": "azure-event-hubs-spark",
+        "full_name": "Azure/azure-event-hubs-spark",
+        "url": "https://github.com/Azure/azure-event-hubs-spark",
+        "stars": 235,
+        "updated_at": "2025-01-03T21:44:47Z",
+        "description": "Enabling Continuous Data Processing with Apache Spark and Azure Event Hubs",
+        "size_kb": 20507,
+        "languages": {
+            "Scala": 373730,
+            "Shell": 28
+        }
+    },
+    {
+        "name": "go-ntlmssp",
+        "full_name": "Azure/go-ntlmssp",
+        "url": "https://github.com/Azure/go-ntlmssp",
+        "stars": 193,
+        "updated_at": "2025-02-16T09:27:48Z",
+        "description": "NTLM/Negotiate authentication over HTTP",
+        "size_kb": 38,
+        "languages": {
+            "Go": 27953
+        }
+    },
+    {
+        "name": "AzureStack-QuickStart-Templates",
+        "full_name": "Azure/AzureStack-QuickStart-Templates",
+        "url": "https://github.com/Azure/AzureStack-QuickStart-Templates",
+        "stars": 577,
+        "updated_at": "2025-03-03T16:28:44Z",
+        "description": "Quick start ARM templates that deploy on Microsoft Azure Stack",
+        "size_kb": 457148,
+        "languages": {
+            "PowerShell": 452452,
+            "CSS": 248225,
+            "JavaScript": 189278,
+            "Shell": 153824,
+            "HTML": 57350,
+            "C#": 39286,
+            "Bicep": 33259,
+            "TSQL": 3437,
+            "Handlebars": 2405,
+            "Solidity": 944
+        }
+    },
+    {
+        "name": "azure-functions-templates",
+        "full_name": "Azure/azure-functions-templates",
+        "url": "https://github.com/Azure/azure-functions-templates",
+        "stars": 356,
+        "updated_at": "2025-03-02T09:26:46Z",
+        "description": "Azure functions templates for the azure portal, CLI, and VS",
+        "size_kb": 10250,
+        "languages": {
+            "C#": 116092,
+            "Python": 85027,
+            "JavaScript": 34847,
+            "TypeScript": 19215,
+            "PowerShell": 17020,
+            "F#": 16481
+        }
+    },
+    {
+        "name": "NetworkMonitoring",
+        "full_name": "Azure/NetworkMonitoring",
+        "url": "https://github.com/Azure/NetworkMonitoring",
+        "stars": 107,
+        "updated_at": "2025-02-25T18:53:15Z",
+        "description": "Open source Azure network monitoring tools repository.",
+        "size_kb": 8786,
+        "languages": {
+            "PowerShell": 64270,
+            "JavaScript": 19225,
+            "Shell": 7569,
+            "ASP.NET": 3420,
+            "HTML": 2672,
+            "CSS": 2171
+        }
+    },
+    {
+        "name": "Azure-Functions",
+        "full_name": "Azure/Azure-Functions",
+        "url": "https://github.com/Azure/Azure-Functions",
+        "stars": 1123,
+        "updated_at": "2025-03-05T02:44:28Z",
+        "description": null,
+        "size_kb": 19561,
+        "languages": {
+            "PowerShell": 737
+        }
+    },
+    {
+        "name": "custom-script-extension-linux",
+        "full_name": "Azure/custom-script-extension-linux",
+        "url": "https://github.com/Azure/custom-script-extension-linux",
+        "stars": 110,
+        "updated_at": "2025-03-03T10:20:49Z",
+        "description": "Azure Custom Script Virtual Machine Extension :new:",
+        "size_kb": 499,
+        "languages": {
+            "Go": 147152,
+            "Shell": 19657,
+            "Makefile": 981,
+            "Dockerfile": 876
+        }
+    },
+    {
+        "name": "azure-cosmosdb-spark",
+        "full_name": "Azure/azure-cosmosdb-spark",
+        "url": "https://github.com/Azure/azure-cosmosdb-spark",
+        "stars": 203,
+        "updated_at": "2025-01-22T17:42:36Z",
+        "description": "Apache Spark Connector for Azure Cosmos DB",
+        "size_kb": 201010,
+        "languages": {
+            "Scala": 355439,
+            "Java": 51833,
+            "JavaScript": 29110
+        }
+    },
+    {
+        "name": "ServerlessLibrary",
+        "full_name": "Azure/ServerlessLibrary",
+        "url": "https://github.com/Azure/ServerlessLibrary",
+        "stars": 126,
+        "updated_at": "2024-10-22T18:35:32Z",
+        "description": "Source code for the Azure Serverless Community Library",
+        "size_kb": 7901,
+        "languages": {
+            "JavaScript": 66040,
+            "C#": 53484,
+            "PowerShell": 6934,
+            "HTML": 3833,
+            "SCSS": 3449,
+            "CSS": 2309
+        }
+    },
+    {
+        "name": "azure-cosmos-db-emulator-docker",
+        "full_name": "Azure/azure-cosmos-db-emulator-docker",
+        "url": "https://github.com/Azure/azure-cosmos-db-emulator-docker",
+        "stars": 179,
+        "updated_at": "2025-03-05T18:40:57Z",
+        "description": "This repo serves as hub for managing issues, gathering feedback, and having discussions regarding the Cosmos DB Emulator Docker.",
+        "size_kb": 42,
+        "languages": {
+            "Batchfile": 1452,
+            "Dockerfile": 1171,
+            "PowerShell": 979
+        }
+    },
+    {
+        "name": "openapi-diff",
+        "full_name": "Azure/openapi-diff",
+        "url": "https://github.com/Azure/openapi-diff",
+        "stars": 275,
+        "updated_at": "2025-03-04T00:23:33Z",
+        "description": "Command line tool to detect breaking changes between two openapi specifications",
+        "size_kb": 2524,
+        "languages": {
+            "C#": 215943,
+            "TypeScript": 93544,
+            "JavaScript": 2946,
+            "PowerShell": 475
+        }
+    },
+    {
+        "name": "container-service-for-azure-china",
+        "full_name": "Azure/container-service-for-azure-china",
+        "url": "https://github.com/Azure/container-service-for-azure-china",
+        "stars": 426,
+        "updated_at": "2025-02-20T01:10:19Z",
+        "description": "Container Service for Azure China",
+        "size_kb": 1018,
+        "languages": {
+            "Shell": 156084,
+            "PowerShell": 13960,
+            "Mustache": 3066,
+            "CSS": 2455,
+            "HTML": 1749,
+            "Groovy": 1648,
+            "JavaScript": 993
+        }
+    },
+    {
+        "name": "terraform-azurerm-compute",
+        "full_name": "Azure/terraform-azurerm-compute",
+        "url": "https://github.com/Azure/terraform-azurerm-compute",
+        "stars": 176,
+        "updated_at": "2025-02-24T14:14:44Z",
+        "description": "Terraform Azure RM Compute Module",
+        "size_kb": 469,
+        "languages": {
+            "HCL": 55113,
+            "Go": 8943,
+            "Makefile": 200
+        }
+    },
+    {
+        "name": "terraform-azurerm-network",
+        "full_name": "Azure/terraform-azurerm-network",
+        "url": "https://github.com/Azure/terraform-azurerm-network",
+        "stars": 135,
+        "updated_at": "2025-02-24T14:14:47Z",
+        "description": "Terraform Azure RM Module for Network",
+        "size_kb": 185,
+        "languages": {
+            "HCL": 7622,
+            "Go": 1706,
+            "Makefile": 200
+        }
+    },
+    {
+        "name": "blackbelt-aks-hackfest",
+        "full_name": "Azure/blackbelt-aks-hackfest",
+        "url": "https://github.com/Azure/blackbelt-aks-hackfest",
+        "stars": 226,
+        "updated_at": "2025-01-29T16:24:52Z",
+        "description": "Microsoft Intelligent Cloud Blackbelt Team :: Hackfest Repo",
+        "size_kb": 222191,
+        "languages": {
+            "JavaScript": 30369,
+            "Vue": 14034,
+            "Shell": 2887,
+            "Handlebars": 588,
+            "Dockerfile": 449,
+            "HTML": 362
+        }
+    },
+    {
+        "name": "iotedgedev",
+        "full_name": "Azure/iotedgedev",
+        "url": "https://github.com/Azure/iotedgedev",
+        "stars": 163,
+        "updated_at": "2024-12-27T21:43:32Z",
+        "description": "The Azure IoT Edge Dev Tool greatly simplifies your Azure IoT Edge development process. It has everything you need to get started and helps with your day-to-day Edge development.",
+        "size_kb": 4414,
+        "languages": {
+            "Python": 249741,
+            "Shell": 19177,
+            "PowerShell": 8078,
+            "C#": 7106,
+            "Dockerfile": 3797,
+            "Batchfile": 2709,
+            "Makefile": 2290
+        }
+    },
+    {
+        "name": "Moodle",
+        "full_name": "Azure/Moodle",
+        "url": "https://github.com/Azure/Moodle",
+        "stars": 167,
+        "updated_at": "2025-03-05T13:47:39Z",
+        "description": "Tooling and guidance on deploying Scalable Moodle Clusters on Azure.",
+        "size_kb": 2491,
+        "languages": {
+            "Shell": 186326,
+            "Python": 10448,
+            "JavaScript": 321
+        }
+    },
+    {
+        "name": "azure-functions-docker",
+        "full_name": "Azure/azure-functions-docker",
+        "url": "https://github.com/Azure/azure-functions-docker",
+        "stars": 272,
+        "updated_at": "2025-02-20T18:18:55Z",
+        "description": "This repo contains the base Docker images for working with azure functions",
+        "size_kb": 50226,
+        "languages": {
+            "Dockerfile": 493246,
+            "Shell": 67643,
+            "TypeScript": 47952,
+            "PowerShell": 1865
+        }
+    },
+    {
+        "name": "azure-relay-bridge",
+        "full_name": "Azure/azure-relay-bridge",
+        "url": "https://github.com/Azure/azure-relay-bridge",
+        "stars": 127,
+        "updated_at": "2025-02-25T01:49:48Z",
+        "description": "Azure Relay Bridge - A cross-platform command line tool to create VPN-less TCP tunnels from and to anywhere",
+        "size_kb": 14780,
+        "languages": {
+            "C#": 311222,
+            "PowerShell": 20965,
+            "Shell": 11493,
+            "HTML": 11376,
+            "Batchfile": 11365,
+            "Dockerfile": 5292,
+            "XSLT": 5006,
+            "JavaScript": 251
+        }
+    },
+    {
+        "name": "kubernetes-kms",
+        "full_name": "Azure/kubernetes-kms",
+        "url": "https://github.com/Azure/kubernetes-kms",
+        "stars": 175,
+        "updated_at": "2025-01-24T15:05:38Z",
+        "description": "\ud83d\udd10 Azure Key Vault KMS plugin for Kubernetes",
+        "size_kb": 604,
+        "languages": {
+            "Go": 86429,
+            "Shell": 10215,
+            "Makefile": 5389,
+            "Dockerfile": 1160
+        }
+    },
+    {
+        "name": "kubernetes-volume-drivers",
+        "full_name": "Azure/kubernetes-volume-drivers",
+        "url": "https://github.com/Azure/kubernetes-volume-drivers",
+        "stars": 127,
+        "updated_at": "2024-12-11T20:34:59Z",
+        "description": "Kubernetes volume drivers for Azure",
+        "size_kb": 1843,
+        "languages": {
+            "Shell": 50946,
+            "Mustache": 1759,
+            "Dockerfile": 1527
+        }
+    },
+    {
+        "name": "azure-iotedge",
+        "full_name": "Azure/azure-iotedge",
+        "url": "https://github.com/Azure/azure-iotedge",
+        "stars": 169,
+        "updated_at": "2025-02-16T09:17:01Z",
+        "description": "The Azure IoT Edge product",
+        "size_kb": 217,
+        "languages": {
+            "PowerShell": 21871
+        }
+    },
+    {
+        "name": "Service-Fabric-Troubleshooting-Guides",
+        "full_name": "Azure/Service-Fabric-Troubleshooting-Guides",
+        "url": "https://github.com/Azure/Service-Fabric-Troubleshooting-Guides",
+        "stars": 130,
+        "updated_at": "2024-12-02T15:14:09Z",
+        "description": "Service Fabric Trouble Shooting Guides used by Azure Customer Support Services and Product Group Site Reliability Engineers.",
+        "size_kb": 17244,
+        "languages": {
+            "PowerShell": 340620
+        }
+    },
+    {
+        "name": "azure-event-hubs-for-kafka",
+        "full_name": "Azure/azure-event-hubs-for-kafka",
+        "url": "https://github.com/Azure/azure-event-hubs-for-kafka",
+        "stars": 232,
+        "updated_at": "2025-01-30T15:51:49Z",
+        "description": "Azure Event Hubs for Apache Kafka Ecosystems",
+        "size_kb": 2268,
+        "languages": {
+            "Java": 125596,
+            "Go": 23795,
+            "C#": 20255,
+            "Python": 13235,
+            "Scala": 10346,
+            "JavaScript": 8972,
+            "Shell": 417
+        }
+    },
+    {
+        "name": "azure-cosmos-tla",
+        "full_name": "Azure/azure-cosmos-tla",
+        "url": "https://github.com/Azure/azure-cosmos-tla",
+        "stars": 277,
+        "updated_at": "2025-02-17T03:53:56Z",
+        "description": "Azure Cosmos TLA+ specifications",
+        "size_kb": 1204,
+        "languages": {
+            "TLA": 36377
+        }
+    },
+    {
+        "name": "terraform-azurerm-aks",
+        "full_name": "Azure/terraform-azurerm-aks",
+        "url": "https://github.com/Azure/terraform-azurerm-aks",
+        "stars": 371,
+        "updated_at": "2025-03-06T11:59:34Z",
+        "description": "Terraform Module for deploying an AKS cluster",
+        "size_kb": 1200,
+        "languages": {
+            "HCL": 208286,
+            "Go": 22871,
+            "Makefile": 200
+        }
+    },
+    {
+        "name": "CCOInsights",
+        "full_name": "Azure/CCOInsights",
+        "url": "https://github.com/Azure/CCOInsights",
+        "stars": 724,
+        "updated_at": "2025-02-22T17:11:21Z",
+        "description": "Welcome to the Continuous Cloud Optimization Power BI Dashboard GitHub Project. In this repository you will find all the guidance and files needed to deploy the Dashboard in your environment to take benefit of a single pane of glass to get insights about your Azure resources and services. ",
+        "size_kb": 228321,
+        "languages": {
+            "Mathematica": 279234,
+            "PowerShell": 45154,
+            "Bicep": 8662,
+            "Batchfile": 125
+        }
+    },
+    {
+        "name": "azure-functions-durable-python",
+        "full_name": "Azure/azure-functions-durable-python",
+        "url": "https://github.com/Azure/azure-functions-durable-python",
+        "stars": 137,
+        "updated_at": "2025-01-11T17:56:51Z",
+        "description": "Python library for using the Durable Functions bindings.",
+        "size_kb": 5833,
+        "languages": {
+            "Python": 395841,
+            "Shell": 935
+        }
+    },
+    {
+        "name": "Microsoft-Defender-for-Cloud",
+        "full_name": "Azure/Microsoft-Defender-for-Cloud",
+        "url": "https://github.com/Azure/Microsoft-Defender-for-Cloud",
+        "stars": 1765,
+        "updated_at": "2025-03-06T17:26:31Z",
+        "description": "Welcome to the Microsoft Defender for Cloud community repository",
+        "size_kb": 174523,
+        "languages": {
+            "PowerShell": 421896,
+            "Python": 22081,
+            "TypeScript": 19209,
+            "C#": 6966,
+            "HCL": 6535,
+            "Batchfile": 5552
+        }
+    },
+    {
+        "name": "securedworkstation",
+        "full_name": "Azure/securedworkstation",
+        "url": "https://github.com/Azure/securedworkstation",
+        "stars": 240,
+        "updated_at": "2025-01-30T17:19:05Z",
+        "description": "Intune managed Secured workstation",
+        "size_kb": 224,
+        "languages": {
+            "PowerShell": 427282
+        }
+    },
+    {
+        "name": "CloudShell",
+        "full_name": "Azure/CloudShell",
+        "url": "https://github.com/Azure/CloudShell",
+        "stars": 264,
+        "updated_at": "2025-03-01T06:29:07Z",
+        "description": "Container Image for Azure Cloud Shell (https://azure.microsoft.com/en-us/features/cloud-shell/)",
+        "size_kb": 12267,
+        "languages": {
+            "PowerShell": 117144,
+            "Dockerfile": 10102,
+            "Shell": 1656
+        }
+    },
+    {
+        "name": "azureml-sdk-for-r",
+        "full_name": "Azure/azureml-sdk-for-r",
+        "url": "https://github.com/Azure/azureml-sdk-for-r",
+        "stars": 105,
+        "updated_at": "2025-02-28T15:24:39Z",
+        "description": "Azure Machine Learning SDK for R",
+        "size_kb": 3335,
+        "languages": {
+            "R": 289367,
+            "Dockerfile": 949
+        }
+    },
+    {
+        "name": "aks-periscope",
+        "full_name": "Azure/aks-periscope",
+        "url": "https://github.com/Azure/aks-periscope",
+        "stars": 236,
+        "updated_at": "2025-02-10T22:55:28Z",
+        "description": "aks-periscope aims to detect various kubernetes cluster problems",
+        "size_kb": 1603,
+        "languages": {
+            "Go": 207826,
+            "Smarty": 1802,
+            "PowerShell": 1258,
+            "Dockerfile": 903,
+            "Shell": 391
+        }
+    },
+    {
+        "name": "functions-action",
+        "full_name": "Azure/functions-action",
+        "url": "https://github.com/Azure/functions-action",
+        "stars": 162,
+        "updated_at": "2025-02-27T22:09:44Z",
+        "description": "Enable GitHub developers to deploy to Azure Function Apps using GitHub Actions",
+        "size_kb": 48309,
+        "languages": {
+            "TypeScript": 202103,
+            "Java": 16798,
+            "C#": 2269,
+            "PowerShell": 2165,
+            "Python": 1621,
+            "JavaScript": 317
+        }
+    },
+    {
+        "name": "setup-kubectl",
+        "full_name": "Azure/setup-kubectl",
+        "url": "https://github.com/Azure/setup-kubectl",
+        "stars": 138,
+        "updated_at": "2025-02-20T04:50:58Z",
+        "description": "GitHub Action for installing Kubectl",
+        "size_kb": 21859,
+        "languages": {
+            "TypeScript": 12356,
+            "Python": 1957,
+            "JavaScript": 353
+        }
+    },
+    {
+        "name": "k8s-deploy",
+        "full_name": "Azure/k8s-deploy",
+        "url": "https://github.com/Azure/k8s-deploy",
+        "stars": 268,
+        "updated_at": "2025-03-06T14:32:11Z",
+        "description": "GitHub Action for deploying to Kubernetes clusters",
+        "size_kb": 31598,
+        "languages": {
+            "TypeScript": 213152,
+            "Python": 10153,
+            "Mustache": 1877,
+            "JavaScript": 573
+        }
+    },
+    {
+        "name": "docker-login",
+        "full_name": "Azure/docker-login",
+        "url": "https://github.com/Azure/docker-login",
+        "stars": 113,
+        "updated_at": "2025-03-06T12:04:57Z",
+        "description": "GitHub action to log in to Azure Container Registry (ACR) or any private container registry",
+        "size_kb": 18188,
+        "languages": {
+            "TypeScript": 9175,
+            "JavaScript": 3011
+        }
+    },
+    {
+        "name": "webapps-deploy",
+        "full_name": "Azure/webapps-deploy",
+        "url": "https://github.com/Azure/webapps-deploy",
+        "stars": 281,
+        "updated_at": "2025-02-19T06:13:13Z",
+        "description": "Enable GitHub developers to deploy to Azure WebApps using GitHub Actions",
+        "size_kb": 46367,
+        "languages": {
+            "JavaScript": 51894,
+            "TypeScript": 46769,
+            "C#": 1684
+        }
+    },
+    {
+        "name": "secrets-store-csi-driver-provider-azure",
+        "full_name": "Azure/secrets-store-csi-driver-provider-azure",
+        "url": "https://github.com/Azure/secrets-store-csi-driver-provider-azure",
+        "stars": 447,
+        "updated_at": "2025-02-16T23:49:13Z",
+        "description": "Azure Key Vault provider for Secret Store CSI driver allows you to get secret contents stored in Azure Key Vault instance and use the Secret Store CSI driver interface to mount them into Kubernetes pods.",
+        "size_kb": 27350,
+        "languages": {
+            "Go": 333769,
+            "Shell": 21788,
+            "Makefile": 11024,
+            "Dockerfile": 8844,
+            "Mustache": 3388,
+            "Python": 604,
+            "HTML": 371,
+            "SCSS": 63
+        }
+    },
+    {
+        "name": "setup-helm",
+        "full_name": "Azure/setup-helm",
+        "url": "https://github.com/Azure/setup-helm",
+        "stars": 150,
+        "updated_at": "2025-03-02T06:00:40Z",
+        "description": "Github Action for installing Helm",
+        "size_kb": 31527,
+        "languages": {
+            "TypeScript": 17351,
+            "JavaScript": 353
+        }
+    },
+    {
+        "name": "sql-action",
+        "full_name": "Azure/sql-action",
+        "url": "https://github.com/Azure/sql-action",
+        "stars": 110,
+        "updated_at": "2025-02-25T22:38:54Z",
+        "description": "\ud83d\ude80 Deploy changes to your SQL database easily with SQL projects or SQL scripts and sql-action for GitHub workflows",
+        "size_kb": 34878,
+        "languages": {
+            "TypeScript": 120488,
+            "JavaScript": 683,
+            "TSQL": 444
+        }
+    },
+    {
+        "name": "login",
+        "full_name": "Azure/login",
+        "url": "https://github.com/Azure/login",
+        "stars": 353,
+        "updated_at": "2025-03-05T16:05:50Z",
+        "description": "Connect to Azure",
+        "size_kb": 41054,
+        "languages": {
+            "TypeScript": 49319,
+            "JavaScript": 362
+        }
+    },
+    {
+        "name": "sg-aks-workshop",
+        "full_name": "Azure/sg-aks-workshop",
+        "url": "https://github.com/Azure/sg-aks-workshop",
+        "stars": 193,
+        "updated_at": "2025-02-11T08:05:58Z",
+        "description": "Security + Governance Workshop",
+        "size_kb": 106833,
+        "languages": {
+            "C#": 21201,
+            "HCL": 16953,
+            "HTML": 9960,
+            "Smarty": 3246,
+            "Dockerfile": 1998,
+            "CSS": 1134,
+            "JavaScript": 35
+        }
+    },
+    {
+        "name": "azhpc-images",
+        "full_name": "Azure/azhpc-images",
+        "url": "https://github.com/Azure/azhpc-images",
+        "stars": 101,
+        "updated_at": "2025-02-28T20:07:00Z",
+        "description": "Azure HPC/AI VM Images",
+        "size_kb": 785,
+        "languages": {
+            "Shell": 145542,
+            "Cuda": 6709,
+            "Python": 5585
+        }
+    },
+    {
+        "name": "Azure-Network-Security",
+        "full_name": "Azure/Azure-Network-Security",
+        "url": "https://github.com/Azure/Azure-Network-Security",
+        "stars": 819,
+        "updated_at": "2025-03-05T06:53:44Z",
+        "description": "Resources for improving Customer Experience with Azure Network Security",
+        "size_kb": 17777,
+        "languages": {
+            "Python": 183651,
+            "PowerShell": 114285,
+            "HCL": 93898,
+            "Bicep": 28828,
+            "C#": 25321,
+            "Shell": 11136,
+            "TypeScript": 10747,
+            "PHP": 9781
+        }
+    },
+    {
+        "name": "cli",
+        "full_name": "Azure/cli",
+        "url": "https://github.com/Azure/cli",
+        "stars": 137,
+        "updated_at": "2025-02-26T01:24:27Z",
+        "description": "Automate your GitHub workflows using Azure CLI scripts",
+        "size_kb": 3933,
+        "languages": {
+            "TypeScript": 10679
+        }
+    },
+    {
+        "name": "arm-ttk",
+        "full_name": "Azure/arm-ttk",
+        "url": "https://github.com/Azure/arm-ttk",
+        "stars": 455,
+        "updated_at": "2025-03-03T07:37:03Z",
+        "description": "Azure Resource Manager Template Toolkit",
+        "size_kb": 5472,
+        "languages": {
+            "PowerShell": 340839,
+            "Shell": 1192,
+            "Batchfile": 128
+        }
+    },
+    {
+        "name": "Community-Policy",
+        "full_name": "Azure/Community-Policy",
+        "url": "https://github.com/Azure/Community-Policy",
+        "stars": 650,
+        "updated_at": "2025-03-05T16:02:52Z",
+        "description": "This repo is for Microsoft Azure customers and Microsoft teams to collaborate in making custom policies. ",
+        "size_kb": 5373,
+        "languages": {
+            "Open Policy Agent": 133644,
+            "PowerShell": 36749
+        }
+    },
+    {
+        "name": "kubelogin",
+        "full_name": "Azure/kubelogin",
+        "url": "https://github.com/Azure/kubelogin",
+        "stars": 513,
+        "updated_at": "2025-02-23T18:07:54Z",
+        "description": "A Kubernetes credential (exec) plugin implementing azure authentication",
+        "size_kb": 2117,
+        "languages": {
+            "Go": 242978,
+            "Makefile": 1990,
+            "Shell": 1131
+        }
+    },
+    {
+        "name": "azure-functions-dapr-extension",
+        "full_name": "Azure/azure-functions-dapr-extension",
+        "url": "https://github.com/Azure/azure-functions-dapr-extension",
+        "stars": 100,
+        "updated_at": "2024-09-25T08:50:32Z",
+        "description": "Extension for interacting with Dapr APIs from an Azure Function",
+        "size_kb": 766,
+        "languages": {
+            "C#": 308545,
+            "Java": 9033,
+            "Bicep": 6770,
+            "Dockerfile": 1326,
+            "JavaScript": 1184,
+            "Makefile": 309
+        }
+    },
+    {
+        "name": "static-web-apps-deploy",
+        "full_name": "Azure/static-web-apps-deploy",
+        "url": "https://github.com/Azure/static-web-apps-deploy",
+        "stars": 140,
+        "updated_at": "2025-02-23T05:24:16Z",
+        "description": "Enable GitHub developers to deploy to Azure Static Web Apps using GitHub Actions",
+        "size_kb": 38,
+        "languages": {
+            "Dockerfile": 123,
+            "Shell": 67
+        }
+    },
+    {
+        "name": "Stormspotter",
+        "full_name": "Azure/Stormspotter",
+        "url": "https://github.com/Azure/Stormspotter",
+        "stars": 1582,
+        "updated_at": "2025-03-04T09:43:16Z",
+        "description": "Azure Red Team tool for graphing Azure and Azure Active Directory objects",
+        "size_kb": 29295,
+        "languages": {
+            "Python": 77211,
+            "Vue": 33401,
+            "JavaScript": 20789,
+            "Sass": 2420,
+            "HTML": 1023
+        }
+    },
+    {
+        "name": "Enterprise-Scale",
+        "full_name": "Azure/Enterprise-Scale",
+        "url": "https://github.com/Azure/Enterprise-Scale",
+        "stars": 1778,
+        "updated_at": "2025-03-05T17:53:34Z",
+        "description": "The Azure Landing Zones (Enterprise-Scale) architecture provides prescriptive guidance coupled with Azure best practices, and it follows design principles across the critical design areas for organizations to define their Azure architecture",
+        "size_kb": 112127,
+        "languages": {
+            "PowerShell": 345018,
+            "Bicep": 45011
+        }
+    },
+    {
+        "name": "terraform-azurerm-naming",
+        "full_name": "Azure/terraform-azurerm-naming",
+        "url": "https://github.com/Azure/terraform-azurerm-naming",
+        "stars": 237,
+        "updated_at": "2025-03-03T10:20:48Z",
+        "description": null,
+        "size_kb": 556,
+        "languages": {
+            "HCL": 227229,
+            "Go": 2352,
+            "PowerShell": 1002,
+            "Makefile": 679
+        }
+    },
+    {
+        "name": "data-landing-zone",
+        "full_name": "Azure/data-landing-zone",
+        "url": "https://github.com/Azure/data-landing-zone",
+        "stars": 166,
+        "updated_at": "2024-12-16T16:28:18Z",
+        "description": "Template to deploy a single Data Landing Zone of the Data Management & Analytics Scenario (former Enterprise-Scale Analytics). The Data Landing Zone is a logical construct and a unit of scale in the architecture that enables data retention and execution of data workloads for generating insights and value with data.",
+        "size_kb": 321887,
+        "languages": {
+            "Bicep": 127647,
+            "PowerShell": 71624,
+            "Shell": 29936,
+            "Scala": 6116,
+            "Dockerfile": 666
+        }
+    },
+    {
+        "name": "data-management-zone",
+        "full_name": "Azure/data-management-zone",
+        "url": "https://github.com/Azure/data-management-zone",
+        "stars": 171,
+        "updated_at": "2025-02-10T17:49:08Z",
+        "description": "Template to deploy the Data Management Zone of Cloud Scale Analytics (former Enterprise-Scale Analytics). The Data Management Zone provides data governance and management capabilities for the data platform of an organization.",
+        "size_kb": 14924,
+        "languages": {
+            "Bicep": 78905,
+            "Shell": 25471,
+            "PowerShell": 11766,
+            "Dockerfile": 666
+        }
+    },
+    {
+        "name": "fetch-event-source",
+        "full_name": "Azure/fetch-event-source",
+        "url": "https://github.com/Azure/fetch-event-source",
+        "stars": 2044,
+        "updated_at": "2025-03-06T09:10:22Z",
+        "description": "A better API for making Event Source requests, with all the features of fetch()",
+        "size_kb": 36,
+        "languages": {
+            "TypeScript": 24783
+        }
+    },
+    {
+        "name": "aksArc",
+        "full_name": "Azure/aksArc",
+        "url": "https://github.com/Azure/aksArc",
+        "stars": 114,
+        "updated_at": "2025-02-13T21:09:51Z",
+        "description": "# Welcome to the Azure Kubernetes Service enabled by Azure Arc (AKS Arc) repo This is where the AKS Arc team will track features and issues with AKS Arc. We will monitor this repo in order to engage with our community and discuss questions, customer scenarios, or feature requests.  Checkout our projects tab to see the roadmap for AKS Arc!",
+        "size_kb": 33212,
+        "languages": {
+            "Bicep": 8665
+        }
+    },
+    {
+        "name": "terraform-azurerm-caf-enterprise-scale",
+        "full_name": "Azure/terraform-azurerm-caf-enterprise-scale",
+        "url": "https://github.com/Azure/terraform-azurerm-caf-enterprise-scale",
+        "stars": 899,
+        "updated_at": "2025-03-02T18:57:28Z",
+        "description": "Azure landing zones Terraform module",
+        "size_kb": 10688,
+        "languages": {
+            "HCL": 470963,
+            "Open Policy Agent": 39714,
+            "PowerShell": 19431,
+            "Shell": 17903,
+            "Go": 5631,
+            "Makefile": 1572
+        }
+    },
+    {
+        "name": "orkestra",
+        "full_name": "Azure/orkestra",
+        "url": "https://github.com/Azure/orkestra",
+        "stars": 105,
+        "updated_at": "2024-12-09T23:18:46Z",
+        "description": "Orkestra is a cloud-native release orchestration and lifecycle management (LCM) platform for the fine-grained orchestration of inter-dependent helm charts and their dependencies",
+        "size_kb": 31646,
+        "languages": {
+            "Go": 219155,
+            "Smarty": 6588,
+            "Shell": 6050,
+            "Makefile": 4063,
+            "Dockerfile": 789,
+            "Starlark": 541
+        }
+    },
+    {
+        "name": "Microsoft365R",
+        "full_name": "Azure/Microsoft365R",
+        "url": "https://github.com/Azure/Microsoft365R",
+        "stars": 326,
+        "updated_at": "2025-03-03T16:36:11Z",
+        "description": "R SDK for interacting with Microsoft 365 APIs",
+        "size_kb": 472,
+        "languages": {
+            "R": 279062
+        }
+    },
+    {
+        "name": "AzOps-Accelerator",
+        "full_name": "Azure/AzOps-Accelerator",
+        "url": "https://github.com/Azure/AzOps-Accelerator",
+        "stars": 162,
+        "updated_at": "2024-11-28T10:05:06Z",
+        "description": "Integrated CI/CD Solution for Microsoft Azure",
+        "size_kb": 246,
+        "languages": {
+            "PowerShell": 1598
+        }
+    },
+    {
+        "name": "WellArchitected-Tools",
+        "full_name": "Azure/WellArchitected-Tools",
+        "url": "https://github.com/Azure/WellArchitected-Tools",
+        "stars": 144,
+        "updated_at": "2025-02-22T16:00:22Z",
+        "description": "Tools for the Well-Architected Framework",
+        "size_kb": 35545,
+        "languages": {
+            "PowerShell": 239406,
+            "JavaScript": 4576
+        }
+    },
+    {
+        "name": "azure-saas",
+        "full_name": "Azure/azure-saas",
+        "url": "https://github.com/Azure/azure-saas",
+        "stars": 348,
+        "updated_at": "2025-03-05T02:20:07Z",
+        "description": "The Azure SaaS Development Kit (ASDK) provides a reference architecture, deployable reference implementation and tools to help developers, startups, ISVs and Enterprises deliver their applications as a SaaS service. A platform for platform creators.",
+        "size_kb": 22508,
+        "languages": {
+            "C#": 451499,
+            "Shell": 220715,
+            "HTML": 65586,
+            "Bicep": 56805,
+            "Python": 30071,
+            "CSS": 22810,
+            "Dockerfile": 7344,
+            "JavaScript": 2232
+        }
+    },
+    {
+        "name": "SimuLand",
+        "full_name": "Azure/SimuLand",
+        "url": "https://github.com/Azure/SimuLand",
+        "stars": 708,
+        "updated_at": "2025-03-02T15:06:53Z",
+        "description": "Understand adversary tradecraft and improve detection strategies",
+        "size_kb": 45833,
+        "languages": {
+            "PowerShell": 6254
+        }
+    },
+    {
+        "name": "azure-workload-identity",
+        "full_name": "Azure/azure-workload-identity",
+        "url": "https://github.com/Azure/azure-workload-identity",
+        "stars": 303,
+        "updated_at": "2025-02-28T17:19:41Z",
+        "description": "Azure AD Workload Identity uses Kubernetes primitives to associate managed identities for Azure resources and identities in Azure Active Directory (AAD) with pods.",
+        "size_kb": 7981,
+        "languages": {
+            "Go": 343374,
+            "Shell": 16638,
+            "Makefile": 14894,
+            "Smarty": 3606,
+            "Dockerfile": 2102
+        }
+    },
+    {
+        "name": "counterfit",
+        "full_name": "Azure/counterfit",
+        "url": "https://github.com/Azure/counterfit",
+        "stars": 836,
+        "updated_at": "2025-03-04T10:46:32Z",
+        "description": "a CLI that provides a generic automation layer for assessing the security of ML models",
+        "size_kb": 265460,
+        "languages": {
+            "Python": 158306,
+            "Dockerfile": 1641
+        }
+    },
+    {
+        "name": "gitops-connector",
+        "full_name": "Azure/gitops-connector",
+        "url": "https://github.com/Azure/gitops-connector",
+        "stars": 130,
+        "updated_at": "2025-02-14T18:18:53Z",
+        "description": "A GitOps Connector integrates a GitOps operator with CI/CD orchestrator",
+        "size_kb": 692,
+        "languages": {
+            "Python": 45604,
+            "Dockerfile": 343
+        }
+    },
+    {
+        "name": "alz-terraform-accelerator",
+        "full_name": "Azure/alz-terraform-accelerator",
+        "url": "https://github.com/Azure/alz-terraform-accelerator",
+        "stars": 120,
+        "updated_at": "2025-03-06T12:28:22Z",
+        "description": "Azure Landing Zones Terraform Accelerator",
+        "size_kb": 2054,
+        "languages": {
+            "HCL": 357000,
+            "Smarty": 108911,
+            "Makefile": 1189
+        }
+    },
+    {
+        "name": "Unreal-Pixel-Streaming",
+        "full_name": "Azure/Unreal-Pixel-Streaming",
+        "url": "https://github.com/Azure/Unreal-Pixel-Streaming",
+        "stars": 128,
+        "updated_at": "2025-02-09T17:53:50Z",
+        "description": null,
+        "size_kb": 42183,
+        "languages": {
+            "JavaScript": 160203,
+            "PowerShell": 42539,
+            "HCL": 28870,
+            "PLSQL": 10280,
+            "HTML": 7368,
+            "CSS": 7074,
+            "Batchfile": 1692
+        }
+    },
+    {
+        "name": "Cloud-Katana",
+        "full_name": "Azure/Cloud-Katana",
+        "url": "https://github.com/Azure/Cloud-Katana",
+        "stars": 250,
+        "updated_at": "2025-01-13T19:04:20Z",
+        "description": "Unlocking Serverless Computing to Assess Security Controls",
+        "size_kb": 10998,
+        "languages": {
+            "PowerShell": 255424,
+            "Python": 25473,
+            "Jinja": 1533,
+            "Shell": 867
+        }
+    },
+    {
+        "name": "aztfexport",
+        "full_name": "Azure/aztfexport",
+        "url": "https://github.com/Azure/aztfexport",
+        "stars": 1695,
+        "updated_at": "2025-03-06T18:51:49Z",
+        "description": "A tool to bring existing Azure resources under Terraform's management",
+        "size_kb": 8239,
+        "languages": {
+            "Go": 260366,
+            "Shell": 5019,
+            "Dockerfile": 398,
+            "Makefile": 390
+        }
+    },
+    {
+        "name": "Enterprise-Scale-for-AVS",
+        "full_name": "Azure/Enterprise-Scale-for-AVS",
+        "url": "https://github.com/Azure/Enterprise-Scale-for-AVS",
+        "stars": 133,
+        "updated_at": "2025-03-04T12:32:01Z",
+        "description": "Enterprise-scale for AVS represents the strategic design path and target technical state for an Azure VMware Solution (AVS) deployment. This solution provides an architectural approach and reference implementation to prepare landing zone subscriptions for a scalable Azure VMware Solution (AVS) cluster.",
+        "size_kb": 80570,
+        "languages": {
+            "HCL": 390177,
+            "Bicep": 348250,
+            "PowerShell": 332762,
+            "Shell": 4664
+        }
+    },
+    {
+        "name": "azure-synapse-analytics-end2end",
+        "full_name": "Azure/azure-synapse-analytics-end2end",
+        "url": "https://github.com/Azure/azure-synapse-analytics-end2end",
+        "stars": 184,
+        "updated_at": "2025-02-28T18:19:57Z",
+        "description": "Azure Analytics End to End with Azure Synapse - Deployment Accelerator",
+        "size_kb": 8131,
+        "languages": {
+            "Bicep": 112442,
+            "PowerShell": 39737
+        }
+    },
+    {
+        "name": "AKS-Landing-Zone-Accelerator",
+        "full_name": "Azure/AKS-Landing-Zone-Accelerator",
+        "url": "https://github.com/Azure/AKS-Landing-Zone-Accelerator",
+        "stars": 232,
+        "updated_at": "2025-02-19T13:06:17Z",
+        "description": "Official repository for the AKS Landing Zone Accelerator program",
+        "size_kb": 63967,
+        "languages": {
+            "HCL": 69829,
+            "Bicep": 54319,
+            "PowerShell": 8739,
+            "C#": 2763,
+            "Shell": 2518,
+            "Smarty": 1832
+        }
+    },
+    {
+        "name": "appservice-landing-zone-accelerator",
+        "full_name": "Azure/appservice-landing-zone-accelerator",
+        "url": "https://github.com/Azure/appservice-landing-zone-accelerator",
+        "stars": 217,
+        "updated_at": "2025-02-11T02:07:11Z",
+        "description": "The Azure App Service landing zone accelerator is an open-source collection of architectural guidance and reference implementation to accelerate deployment of Azure App Service at scale.",
+        "size_kb": 35442,
+        "languages": {
+            "Bicep": 364451,
+            "HCL": 201707,
+            "Shell": 32913,
+            "PowerShell": 13023,
+            "C#": 4745,
+            "HTML": 3856,
+            "CSS": 1053,
+            "Dockerfile": 704,
+            "JavaScript": 226
+        }
+    },
+    {
+        "name": "mlops-v2",
+        "full_name": "Azure/mlops-v2",
+        "url": "https://github.com/Azure/mlops-v2",
+        "stars": 537,
+        "updated_at": "2025-03-02T07:00:56Z",
+        "description": "Azure MLOps (v2) solution accelerators. Enterprise ready templates to deploy your machine learning models on the Azure Platform. ",
+        "size_kb": 18969,
+        "languages": {
+            "Shell": 5025
+        }
+    },
+    {
+        "name": "apim-landing-zone-accelerator",
+        "full_name": "Azure/apim-landing-zone-accelerator",
+        "url": "https://github.com/Azure/apim-landing-zone-accelerator",
+        "stars": 164,
+        "updated_at": "2025-03-06T04:18:25Z",
+        "description": "The Azure API Management landing zone accelerator provides an architectural approach and reference implementation to prepare landing zone subscriptions for a secure API Management infrastructure. ",
+        "size_kb": 24010,
+        "languages": {
+            "HCL": 103188,
+            "Bicep": 86158,
+            "Shell": 29283
+        }
+    },
+    {
+        "name": "mlops-templates",
+        "full_name": "Azure/mlops-templates",
+        "url": "https://github.com/Azure/mlops-templates",
+        "stars": 122,
+        "updated_at": "2025-02-20T14:54:26Z",
+        "description": "Azure MLOps (v2) solution accelerators. Enterprise ready templates to deploy your machine learning models on the Azure Platform. ",
+        "size_kb": 1726,
+        "languages": {
+            "Python": 42952,
+            "JavaScript": 3792,
+            "Shell": 944
+        }
+    },
+    {
+        "name": "terraform-azurerm-lz-vending",
+        "full_name": "Azure/terraform-azurerm-lz-vending",
+        "url": "https://github.com/Azure/terraform-azurerm-lz-vending",
+        "stars": 176,
+        "updated_at": "2025-02-25T08:45:06Z",
+        "description": "Terraform module to deploy landing zone subscriptions (and much more) in Azure",
+        "size_kb": 7091,
+        "languages": {
+            "Go": 140999,
+            "HCL": 112250,
+            "Makefile": 2092,
+            "Shell": 443
+        }
+    },
+    {
+        "name": "Cloud-Native",
+        "full_name": "Azure/Cloud-Native",
+        "url": "https://github.com/Azure/Cloud-Native",
+        "stars": 264,
+        "updated_at": "2025-03-06T18:34:32Z",
+        "description": "This is a showcase on Azure Cloud Native, the products, events and how to get started or go deep with cloud native technologies, including Serverless on Azure.",
+        "size_kb": 766226,
+        "languages": {
+            "JavaScript": 178909,
+            "TypeScript": 34395,
+            "CSS": 31019
+        }
+    },
+    {
+        "name": "bicep-lz-vending",
+        "full_name": "Azure/bicep-lz-vending",
+        "url": "https://github.com/Azure/bicep-lz-vending",
+        "stars": 118,
+        "updated_at": "2024-12-30T22:27:08Z",
+        "description": "Bicep module & pipelines to deploy landing zone subscriptions",
+        "size_kb": 474,
+        "languages": {
+            "Bicep": 283275,
+            "PowerShell": 18399
+        }
+    },
+    {
+        "name": "reliable-web-app-pattern-dotnet",
+        "full_name": "Azure/reliable-web-app-pattern-dotnet",
+        "url": "https://github.com/Azure/reliable-web-app-pattern-dotnet",
+        "stars": 405,
+        "updated_at": "2025-03-06T08:41:28Z",
+        "description": "The Reliable Web App Pattern is a set of objectives to help your web application converge on the cloud. This repo contains a reference implementation of a reliable web application for .NET.",
+        "size_kb": 11097,
+        "languages": {
+            "Bicep": 223682,
+            "C#": 197577,
+            "PowerShell": 80683,
+            "HTML": 43603,
+            "Shell": 13277,
+            "CSS": 8771,
+            "JavaScript": 713
+        }
+    },
+    {
+        "name": "aca-landing-zone-accelerator",
+        "full_name": "Azure/aca-landing-zone-accelerator",
+        "url": "https://github.com/Azure/aca-landing-zone-accelerator",
+        "stars": 189,
+        "updated_at": "2025-02-06T10:39:25Z",
+        "description": "The Azure Container Apps landing zone accelerator is an open-source collection of architectural guidance and reference implementation to accelerate deployment of Azure Container Apps at scale.",
+        "size_kb": 15190,
+        "languages": {
+            "Bicep": 423420,
+            "HCL": 136841,
+            "Java": 67893,
+            "HTML": 12368,
+            "C#": 10180,
+            "JavaScript": 9562,
+            "Less": 8815,
+            "Shell": 6655,
+            "PowerShell": 1704,
+            "Dockerfile": 1523
+        }
+    },
+    {
+        "name": "wordpress-linux-appservice",
+        "full_name": "Azure/wordpress-linux-appservice",
+        "url": "https://github.com/Azure/wordpress-linux-appservice",
+        "stars": 116,
+        "updated_at": "2025-02-14T06:16:43Z",
+        "description": null,
+        "size_kb": 81342,
+        "languages": {
+            "HCL": 38618,
+            "Bicep": 22634,
+            "Shell": 1572,
+            "PowerShell": 1226
+        }
+    },
+    {
+        "name": "modern-web-app-pattern-dotnet",
+        "full_name": "Azure/modern-web-app-pattern-dotnet",
+        "url": "https://github.com/Azure/modern-web-app-pattern-dotnet",
+        "stars": 107,
+        "updated_at": "2025-03-05T03:16:50Z",
+        "description": "The Modern Web App Pattern is a set of objectives to help you apply an iterative change to modernize a cloud deployed monolith. This content builds on the Reliable Web App. This repo contains a reference implementation of a Modern Web App for .NET.",
+        "size_kb": 12311,
+        "languages": {
+            "C#": 303341,
+            "Bicep": 270078,
+            "PowerShell": 86252,
+            "HTML": 36554,
+            "Shell": 14023,
+            "CSS": 3491,
+            "Dockerfile": 1153,
+            "JavaScript": 713
+        }
+    },
+    {
+        "name": "aca-dotnet-workshop",
+        "full_name": "Azure/aca-dotnet-workshop",
+        "url": "https://github.com/Azure/aca-dotnet-workshop",
+        "stars": 112,
+        "updated_at": "2025-03-02T15:43:52Z",
+        "description": "A Dotnet Azure Container Apps workshop showcasing how to accelerate developers' ability to develop and ship distributed applications.",
+        "size_kb": 45437,
+        "languages": {
+            "Bicep": 52010,
+            "C#": 43912,
+            "HTML": 9664,
+            "Dockerfile": 2700,
+            "CSS": 1053,
+            "Makefile": 419,
+            "JavaScript": 226
+        }
+    },
+    {
+        "name": "MS-AMP",
+        "full_name": "Azure/MS-AMP",
+        "url": "https://github.com/Azure/MS-AMP",
+        "stars": 576,
+        "updated_at": "2025-03-03T08:22:56Z",
+        "description": "Microsoft Automatic Mixed Precision Library",
+        "size_kb": 1935,
+        "languages": {
+            "Python": 466813,
+            "Cuda": 42705,
+            "C++": 30363,
+            "JavaScript": 5578,
+            "Dockerfile": 2967,
+            "CMake": 1385,
+            "CSS": 1356,
+            "Makefile": 936,
+            "Shell": 313
+        }
+    },
+    {
+        "name": "openai-at-scale",
+        "full_name": "Azure/openai-at-scale",
+        "url": "https://github.com/Azure/openai-at-scale",
+        "stars": 127,
+        "updated_at": "2025-01-07T08:48:45Z",
+        "description": "Simple ChatGPT UI application",
+        "size_kb": 42711,
+        "languages": {
+            "TypeScript": 40235,
+            "Python": 11863,
+            "CSS": 7138,
+            "HTML": 894,
+            "Dockerfile": 685
+        }
+    },
+    {
+        "name": "intelligent-app-workshop",
+        "full_name": "Azure/intelligent-app-workshop",
+        "url": "https://github.com/Azure/intelligent-app-workshop",
+        "stars": 180,
+        "updated_at": "2025-03-03T21:50:40Z",
+        "description": "Immersive workshop showcasing the remarkable potential of integrating SoTA foundation models to enhance product experiences and streamline backend workflows. Leverages Microsoft's Copilot stack, Semantic Kernel and Azure primitives to offer an engaging and comprehensive introduction to AI-infused app development and deployment",
+        "size_kb": 41410,
+        "languages": {
+            "Bicep": 93982,
+            "C#": 62352,
+            "TypeScript": 4969,
+            "Dockerfile": 1213,
+            "Python": 1148,
+            "JavaScript": 1094,
+            "HTML": 533
+        }
+    },
+    {
+        "name": "Azure-Governance-Visualizer-Accelerator",
+        "full_name": "Azure/Azure-Governance-Visualizer-Accelerator",
+        "url": "https://github.com/Azure/Azure-Governance-Visualizer-Accelerator",
+        "stars": 102,
+        "updated_at": "2025-02-26T10:54:02Z",
+        "description": "An accelerator to help you deploy AzGovViz in your own environments quickly.",
+        "size_kb": 4901,
+        "languages": {
+            "Bicep": 3197
+        }
+    },
+    {
+        "name": "GPT-RAG",
+        "full_name": "Azure/GPT-RAG",
+        "url": "https://github.com/Azure/GPT-RAG",
+        "stars": 959,
+        "updated_at": "2025-03-06T12:41:42Z",
+        "description": "Sharing the learning along the way we been gathering to enable Azure OpenAI at enterprise scale in a secure manner. GPT-RAG core is a Retrieval-Augmented Generation pattern running in Azure, using Azure Cognitive Search for retrieval and Azure OpenAI large language models to power ChatGPT-style and Q&A experiences.",
+        "size_kb": 39456,
+        "languages": {
+            "Bicep": 126311,
+            "Shell": 8781,
+            "PowerShell": 7413
+        }
+    },
+    {
+        "name": "Azure-Verified-Modules",
+        "full_name": "Azure/Azure-Verified-Modules",
+        "url": "https://github.com/Azure/Azure-Verified-Modules",
+        "stars": 412,
+        "updated_at": "2025-03-06T19:18:14Z",
+        "description": "Azure Verified Modules (AVM) is an initiative to consolidate and set the standards for what a good Infrastructure-as-Code module looks like. Modules will then align to these standards, across languages (Bicep, Terraform etc.) and will then be classified as AVMs and available from their respective language specific registries.",
+        "size_kb": 44552,
+        "languages": {
+            "PowerShell": 77445,
+            "Python": 5796,
+            "Dockerfile": 769,
+            "Makefile": 94
+        }
+    },
+    {
+        "name": "aoai-apim",
+        "full_name": "Azure/aoai-apim",
+        "url": "https://github.com/Azure/aoai-apim",
+        "stars": 108,
+        "updated_at": "2025-03-04T19:24:41Z",
+        "description": "Scaling AOAI using APIM, PTUs and TPMs",
+        "size_kb": 179,
+        "languages": {
+            "Python": 5584,
+            "Bicep": 2255
+        }
+    },
+    {
+        "name": "azure-openai-benchmark",
+        "full_name": "Azure/azure-openai-benchmark",
+        "url": "https://github.com/Azure/azure-openai-benchmark",
+        "stars": 138,
+        "updated_at": "2025-03-02T11:12:38Z",
+        "description": "Azure OpenAI benchmarking tool",
+        "size_kb": 63,
+        "languages": {
+            "Python": 39554,
+            "Dockerfile": 192
+        }
+    },
+    {
+        "name": "Vector-Search-AI-Assistant-MongoDBvCore",
+        "full_name": "Azure/Vector-Search-AI-Assistant-MongoDBvCore",
+        "url": "https://github.com/Azure/Vector-Search-AI-Assistant-MongoDBvCore",
+        "stars": 102,
+        "updated_at": "2025-01-15T08:46:26Z",
+        "description": "Microsoft Official Build & Modernize AI Apps reference solution and content for implementing RAG Pattern solutions using vector search with Azure Cosmos DB MongoDB vCore with an AI assistant user experience.",
+        "size_kb": 589,
+        "languages": {
+            "C#": 69578,
+            "HTML": 37978,
+            "Bicep": 17813,
+            "JavaScript": 247
+        }
+    },
+    {
+        "name": "azure-openai-landing-zone",
+        "full_name": "Azure/azure-openai-landing-zone",
+        "url": "https://github.com/Azure/azure-openai-landing-zone",
+        "stars": 100,
+        "updated_at": "2025-03-04T11:15:18Z",
+        "description": "Azure Open AI Landing Zones Reference Architectures Repository",
+        "size_kb": 2444,
+        "languages": {
+            "Bicep": 199610,
+            "HCL": 180603,
+            "Jupyter Notebook": 82902,
+            "Python": 65413,
+            "TypeScript": 52085,
+            "Shell": 12952,
+            "CSS": 11258,
+            "PowerShell": 2761,
+            "HTML": 390,
+            "Jinja": 360
+        }
+    },
+    {
+        "name": "Security-Copilot",
+        "full_name": "Azure/Security-Copilot",
+        "url": "https://github.com/Azure/Security-Copilot",
+        "stars": 502,
+        "updated_at": "2025-03-06T03:49:39Z",
+        "description": "Microsoft Security Copilot is a generative AI-powered security solution that helps increase the efficiency and capabilities of defenders to improve security outcomes at machine speed and scale, while remaining compliant to responsible AI principles",
+        "size_kb": 112518,
+        "languages": {
+            "PowerShell": 6432,
+            "Python": 5802,
+            "HTML": 5162
+        }
+    },
+    {
+        "name": "co-op-translator",
+        "full_name": "Azure/co-op-translator",
+        "url": "https://github.com/Azure/co-op-translator",
+        "stars": 360,
+        "updated_at": "2025-03-06T14:55:27Z",
+        "description": "Easily generate translations into multiple languages for your project with a single command, powered by Azure AI Services",
+        "size_kb": 63670,
+        "languages": {
+            "Python": 213651,
+            "Shell": 137
+        }
+    },
+    {
+        "name": "azure-service-bus-emulator-installer",
+        "full_name": "Azure/azure-service-bus-emulator-installer",
+        "url": "https://github.com/Azure/azure-service-bus-emulator-installer",
+        "stars": 180,
+        "updated_at": "2025-03-05T16:44:01Z",
+        "description": "This repository acts as a central hub for handling issues, collecting feedback, and facilitating discussions related to the Azure Service Bus Emulator.",
+        "size_kb": 304,
+        "languages": {
+            "Shell": 8790,
+            "C#": 8721,
+            "PowerShell": 3372,
+            "Go": 1703,
+            "Java": 1542,
+            "Python": 1264,
+            "JavaScript": 1211
+        }
+    }
+]

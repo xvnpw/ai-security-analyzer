@@ -1,0 +1,824 @@
+[
+    {
+        "name": "sqs-client",
+        "full_name": "worldcoin/sqs-client",
+        "url": "https://github.com/worldcoin/sqs-client",
+        "stars": 13,
+        "updated_at": "2025-01-08T06:40:41Z",
+        "description": "sqs-client repository",
+        "size_kb": 106,
+        "languages": {
+            "Go": 24540
+        }
+    },
+    {
+        "name": "semaphore-rs",
+        "full_name": "worldcoin/semaphore-rs",
+        "url": "https://github.com/worldcoin/semaphore-rs",
+        "stars": 141,
+        "updated_at": "2025-03-03T15:39:16Z",
+        "description": "\ud83e\udd80 Rust support library for semaphore",
+        "size_kb": 11486,
+        "languages": {
+            "Rust": 328613,
+            "JavaScript": 7265,
+            "Shell": 3257,
+            "TypeScript": 971,
+            "C": 433
+        }
+    },
+    {
+        "name": "crypto-native-lib",
+        "full_name": "worldcoin/crypto-native-lib",
+        "url": "https://github.com/worldcoin/crypto-native-lib",
+        "stars": 5,
+        "updated_at": "2024-08-17T20:02:54Z",
+        "description": "Native library containing zkp and bls crypto",
+        "size_kb": 102,
+        "languages": {
+            "Rust": 8496,
+            "C": 2235,
+            "Shell": 1843
+        }
+    },
+    {
+        "name": "proto-neural-zkp",
+        "full_name": "worldcoin/proto-neural-zkp",
+        "url": "https://github.com/worldcoin/proto-neural-zkp",
+        "stars": 181,
+        "updated_at": "2025-03-01T20:11:51Z",
+        "description": "Artificial intelligence and zero knowledge.",
+        "size_kb": 25340,
+        "languages": {
+            "Rust": 60410,
+            "Jupyter Notebook": 17966,
+            "Python": 16069
+        }
+    },
+    {
+        "name": "semaphore-airdrop-relayer",
+        "full_name": "worldcoin/semaphore-airdrop-relayer",
+        "url": "https://github.com/worldcoin/semaphore-airdrop-relayer",
+        "stars": 2,
+        "updated_at": "2025-02-24T19:09:10Z",
+        "description": "A server to relay zk-proofs to the Semaphore Airdrop contracts.",
+        "size_kb": 305,
+        "languages": {
+            "JavaScript": 6774,
+            "Smarty": 1962,
+            "Dockerfile": 158
+        }
+    },
+    {
+        "name": "hyperdrop-contracts",
+        "full_name": "worldcoin/hyperdrop-contracts",
+        "url": "https://github.com/worldcoin/hyperdrop-contracts",
+        "stars": 26,
+        "updated_at": "2024-08-17T20:02:11Z",
+        "description": "A contract that splits any token it receives between all humans",
+        "size_kb": 884,
+        "languages": {
+            "Solidity": 13610,
+            "JavaScript": 7096,
+            "Makefile": 465
+        }
+    },
+    {
+        "name": "world-id-starter-hardhat",
+        "full_name": "worldcoin/world-id-starter-hardhat",
+        "url": "https://github.com/worldcoin/world-id-starter-hardhat",
+        "stars": 21,
+        "updated_at": "2024-12-19T14:40:54Z",
+        "description": "Quick start. Starter kit with Hardhat to deploy your own smart contract that verifies unique-humanness with World ID.",
+        "size_kb": 3695,
+        "languages": {
+            "Solidity": 4239,
+            "TypeScript": 1701,
+            "JavaScript": 539
+        }
+    },
+    {
+        "name": "world-id-discord",
+        "full_name": "worldcoin/world-id-discord",
+        "url": "https://github.com/worldcoin/world-id-discord",
+        "stars": 39,
+        "updated_at": "2024-12-12T21:16:14Z",
+        "description": "Improve your Discord server by verifying unique people with World ID.",
+        "size_kb": 5566,
+        "languages": {
+            "TypeScript": 74393,
+            "JavaScript": 4742,
+            "HTML": 431,
+            "CSS": 311
+        }
+    },
+    {
+        "name": "gpt",
+        "full_name": "worldcoin/gpt",
+        "url": "https://github.com/worldcoin/gpt",
+        "stars": 0,
+        "updated_at": "2024-10-14T18:10:10Z",
+        "description": "To maintain a fork of github.com/Quyzi/gpt. A pure rust GPT header/partition table library.",
+        "size_kb": 288,
+        "languages": {
+            "Rust": 121567
+        }
+    },
+    {
+        "name": "world-id-debug-tools",
+        "full_name": "worldcoin/world-id-debug-tools",
+        "url": "https://github.com/worldcoin/world-id-debug-tools",
+        "stars": 4,
+        "updated_at": "2025-01-24T18:29:08Z",
+        "description": "world-id-debug-tools repository",
+        "size_kb": 6072,
+        "languages": {
+            "TypeScript": 14326,
+            "JavaScript": 5407
+        }
+    },
+    {
+        "name": "kzg-ceremony-participant",
+        "full_name": "worldcoin/kzg-ceremony-participant",
+        "url": "https://github.com/worldcoin/kzg-ceremony-participant",
+        "stars": 8,
+        "updated_at": "2024-08-17T20:02:45Z",
+        "description": "kzg-ceremony-participant repository",
+        "size_kb": 7593,
+        "languages": {
+            "Rust": 2852,
+            "Python": 798,
+            "JavaScript": 736,
+            "HTML": 318
+        }
+    },
+    {
+        "name": "kzg-ceremony-client",
+        "full_name": "worldcoin/kzg-ceremony-client",
+        "url": "https://github.com/worldcoin/kzg-ceremony-client",
+        "stars": 5,
+        "updated_at": "2024-08-17T20:02:53Z",
+        "description": "Frontend for Ethereum's KZG ceremony. Work in progress.",
+        "size_kb": 1592,
+        "languages": {
+            "TypeScript": 7853,
+            "JavaScript": 558
+        }
+    },
+    {
+        "name": "semaphore-mtb",
+        "full_name": "worldcoin/semaphore-mtb",
+        "url": "https://github.com/worldcoin/semaphore-mtb",
+        "stars": 31,
+        "updated_at": "2025-02-24T22:17:07Z",
+        "description": "semaphore-mtb repository",
+        "size_kb": 1883,
+        "languages": {
+            "Lean": 305626,
+            "Go": 117978,
+            "Dockerfile": 386
+        }
+    },
+    {
+        "name": "idkit-js",
+        "full_name": "worldcoin/idkit-js",
+        "url": "https://github.com/worldcoin/idkit-js",
+        "stars": 362,
+        "updated_at": "2025-03-06T17:03:31Z",
+        "description": "Javascript toolkit to interact with the World ID protocol. Building the Identity SDK.",
+        "size_kb": 2161,
+        "languages": {
+            "TypeScript": 72249,
+            "JavaScript": 11400,
+            "CSS": 434
+        }
+    },
+    {
+        "name": "tx-sitter",
+        "full_name": "worldcoin/tx-sitter",
+        "url": "https://github.com/worldcoin/tx-sitter",
+        "stars": 11,
+        "updated_at": "2025-02-09T16:52:34Z",
+        "description": "Transaction sitter. Signs transactions and sends them to the blockchain.",
+        "size_kb": 221,
+        "languages": {
+            "Rust": 7008
+        }
+    },
+    {
+        "name": "tech-blog",
+        "full_name": "worldcoin/tech-blog",
+        "url": "https://github.com/worldcoin/tech-blog",
+        "stars": 7,
+        "updated_at": "2024-11-19T11:56:28Z",
+        "description": "Technical blog with articles on AI, Cryptography, Blockchain, Hardware and various other relevant topics at Worldcoin.",
+        "size_kb": 37764,
+        "languages": {
+            "MDX": 92422
+        }
+    },
+    {
+        "name": "world-id-state-bridge",
+        "full_name": "worldcoin/world-id-state-bridge",
+        "url": "https://github.com/worldcoin/world-id-state-bridge",
+        "stars": 92,
+        "updated_at": "2025-02-07T01:39:37Z",
+        "description": "State bridge between the WorldID Ethereum mainnet deployment and WorldID supported networks",
+        "size_kb": 2660,
+        "languages": {
+            "Solidity": 231647,
+            "JavaScript": 37458,
+            "Makefile": 2137
+        }
+    },
+    {
+        "name": "orb-hardware",
+        "full_name": "worldcoin/orb-hardware",
+        "url": "https://github.com/worldcoin/orb-hardware",
+        "stars": 318,
+        "updated_at": "2025-03-06T17:04:03Z",
+        "description": "Hardware specifications and schematics for the Worldcoin Orb.",
+        "size_kb": 52340,
+        "languages": {
+            "Shell": 188
+        }
+    },
+    {
+        "name": "world-id-sign-in",
+        "full_name": "worldcoin/world-id-sign-in",
+        "url": "https://github.com/worldcoin/world-id-sign-in",
+        "stars": 35,
+        "updated_at": "2025-02-24T22:17:33Z",
+        "description": "Front-end application to support Sign in with World ID.",
+        "size_kb": 625,
+        "languages": {
+            "TypeScript": 94056,
+            "Dockerfile": 2399,
+            "JavaScript": 1923,
+            "CSS": 766
+        }
+    },
+    {
+        "name": "circom-compat",
+        "full_name": "worldcoin/circom-compat",
+        "url": "https://github.com/worldcoin/circom-compat",
+        "stars": 0,
+        "updated_at": "2025-01-24T15:36:23Z",
+        "description": "Fork of / Arkworks bindings to Circom's R1CS, for Groth16 Proof and Witness generation in Rust.",
+        "size_kb": 6432,
+        "languages": {
+            "Rust": 104244,
+            "Solidity": 10126,
+            "JavaScript": 9580,
+            "Shell": 2416,
+            "Circom": 1564
+        }
+    },
+    {
+        "name": "contract-deployer",
+        "full_name": "worldcoin/contract-deployer",
+        "url": "https://github.com/worldcoin/contract-deployer",
+        "stars": 6,
+        "updated_at": "2025-01-03T21:54:53Z",
+        "description": "contract-deployer repository",
+        "size_kb": 253,
+        "languages": {
+            "Rust": 80957
+        }
+    },
+    {
+        "name": "worldcoin-grants-contracts",
+        "full_name": "worldcoin/worldcoin-grants-contracts",
+        "url": "https://github.com/worldcoin/worldcoin-grants-contracts",
+        "stars": 10,
+        "updated_at": "2025-02-26T09:40:07Z",
+        "description": "worldcoin-grants-contracts repository",
+        "size_kb": 3314,
+        "languages": {
+            "Solidity": 199493,
+            "JavaScript": 16996,
+            "Makefile": 1652
+        }
+    },
+    {
+        "name": "world-id-cloud-template",
+        "full_name": "worldcoin/world-id-cloud-template",
+        "url": "https://github.com/worldcoin/world-id-cloud-template",
+        "stars": 18,
+        "updated_at": "2024-09-19T15:09:58Z",
+        "description": "Template repository for an app using World ID for hackathons and side projects.",
+        "size_kb": 383,
+        "languages": {
+            "TypeScript": 3233,
+            "JavaScript": 453,
+            "CSS": 59
+        }
+    },
+    {
+        "name": "world-id-onchain-template",
+        "full_name": "worldcoin/world-id-onchain-template",
+        "url": "https://github.com/worldcoin/world-id-onchain-template",
+        "stars": 31,
+        "updated_at": "2025-02-03T14:57:26Z",
+        "description": "Template repository for a World ID",
+        "size_kb": 594,
+        "languages": {
+            "Solidity": 4129,
+            "TypeScript": 3645,
+            "JavaScript": 910,
+            "CSS": 538
+        }
+    },
+    {
+        "name": "worldcoin-token",
+        "full_name": "worldcoin/worldcoin-token",
+        "url": "https://github.com/worldcoin/worldcoin-token",
+        "stars": 28,
+        "updated_at": "2025-02-28T11:41:47Z",
+        "description": "Smart contracts for the WLD token.",
+        "size_kb": 291,
+        "languages": {
+            "Solidity": 35332
+        }
+    },
+    {
+        "name": "wallet-bridge",
+        "full_name": "worldcoin/wallet-bridge",
+        "url": "https://github.com/worldcoin/wallet-bridge",
+        "stars": 46,
+        "updated_at": "2025-03-05T03:23:16Z",
+        "description": "Establishes a very simple zero-knowledge bridge to pass World ID ZKPs from wallets to verifying apps.",
+        "size_kb": 135,
+        "languages": {
+            "Rust": 14174,
+            "Dockerfile": 1027
+        }
+    },
+    {
+        "name": "ptau-deserializer",
+        "full_name": "worldcoin/ptau-deserializer",
+        "url": "https://github.com/worldcoin/ptau-deserializer",
+        "stars": 21,
+        "updated_at": "2025-02-02T19:17:27Z",
+        "description": "snarkjs powers of tau universal setup (.ptau) deserializer for gnark's groth16 bn254 phase1 trusted setup",
+        "size_kb": 10854,
+        "languages": {
+            "Go": 28509
+        }
+    },
+    {
+        "name": "semaphore-mtb-setup",
+        "full_name": "worldcoin/semaphore-mtb-setup",
+        "url": "https://github.com/worldcoin/semaphore-mtb-setup",
+        "stars": 15,
+        "updated_at": "2024-12-22T13:56:43Z",
+        "description": "Semaphore Merkle Tree Batcher MPC Trusted Setup Ceremony tool",
+        "size_kb": 3571,
+        "languages": {
+            "Go": 78511,
+            "Shell": 873
+        }
+    },
+    {
+        "name": "smtb-ceremony",
+        "full_name": "worldcoin/smtb-ceremony",
+        "url": "https://github.com/worldcoin/smtb-ceremony",
+        "stars": 13,
+        "updated_at": "2025-01-08T06:40:14Z",
+        "description": "Semaphore Merkle Tree Batcher (SMTB) trusted setup ceremony",
+        "size_kb": 72,
+        "languages": {
+            "Shell": 14413,
+            "Python": 1773
+        }
+    },
+    {
+        "name": "world-id-nextauth-template",
+        "full_name": "worldcoin/world-id-nextauth-template",
+        "url": "https://github.com/worldcoin/world-id-nextauth-template",
+        "stars": 44,
+        "updated_at": "2025-03-06T04:45:06Z",
+        "description": "Template repository for an app using NextAuth with Sign In with Worldcoin for user authentication.",
+        "size_kb": 38,
+        "languages": {
+            "TypeScript": 11273,
+            "CSS": 2255
+        }
+    },
+    {
+        "name": "private-inclusion-proofs",
+        "full_name": "worldcoin/private-inclusion-proofs",
+        "url": "https://github.com/worldcoin/private-inclusion-proofs",
+        "stars": 4,
+        "updated_at": "2025-01-17T10:26:14Z",
+        "description": "Private Merkle tree inclusion proofs.",
+        "size_kb": 103,
+        "languages": {
+            "Rust": 45
+        }
+    },
+    {
+        "name": "gnark-contract-generator",
+        "full_name": "worldcoin/gnark-contract-generator",
+        "url": "https://github.com/worldcoin/gnark-contract-generator",
+        "stars": 1,
+        "updated_at": "2024-08-17T20:03:18Z",
+        "description": "Gnark Contract Generator",
+        "size_kb": 25,
+        "languages": {
+            "Go": 5237
+        }
+    },
+    {
+        "name": "world-tree",
+        "full_name": "worldcoin/world-tree",
+        "url": "https://github.com/worldcoin/world-tree",
+        "stars": 15,
+        "updated_at": "2025-03-05T10:47:24Z",
+        "description": "world-tree repository",
+        "size_kb": 918,
+        "languages": {
+            "Rust": 143117,
+            "JavaScript": 12378,
+            "Dockerfile": 1467,
+            "Shell": 133
+        }
+    },
+    {
+        "name": "world-id-minecraft",
+        "full_name": "worldcoin/world-id-minecraft",
+        "url": "https://github.com/worldcoin/world-id-minecraft",
+        "stars": 9,
+        "updated_at": "2025-02-25T19:42:00Z",
+        "description": "Minecraft server plugin for managing permissions with World ID. Requires SpigotMC (or a fork) and LuckPerms.",
+        "size_kb": 24,
+        "languages": {
+            "Java": 12302
+        }
+    },
+    {
+        "name": "world-id-minecraft-web",
+        "full_name": "worldcoin/world-id-minecraft-web",
+        "url": "https://github.com/worldcoin/world-id-minecraft-web",
+        "stars": 3,
+        "updated_at": "2024-10-29T17:57:00Z",
+        "description": "Website for @worldcoin/world-id-minecraft.",
+        "size_kb": 133,
+        "languages": {
+            "TypeScript": 4840,
+            "JavaScript": 592,
+            "CSS": 59
+        }
+    },
+    {
+        "name": "world-id-telegram",
+        "full_name": "worldcoin/world-id-telegram",
+        "url": "https://github.com/worldcoin/world-id-telegram",
+        "stars": 21,
+        "updated_at": "2025-02-24T22:19:34Z",
+        "description": "Make your Telegram groups sybil-resistant with World ID.",
+        "size_kb": 128,
+        "languages": {
+            "Rust": 16022,
+            "Dockerfile": 1128
+        }
+    },
+    {
+        "name": "telemetry-batteries",
+        "full_name": "worldcoin/telemetry-batteries",
+        "url": "https://github.com/worldcoin/telemetry-batteries",
+        "stars": 7,
+        "updated_at": "2025-01-27T13:11:40Z",
+        "description": "Batteries included library to configure tracing, logs and metrics",
+        "size_kb": 127,
+        "languages": {
+            "Rust": 28580
+        }
+    },
+    {
+        "name": "tx-sitter-monolith",
+        "full_name": "worldcoin/tx-sitter-monolith",
+        "url": "https://github.com/worldcoin/tx-sitter-monolith",
+        "stars": 15,
+        "updated_at": "2025-03-04T06:48:27Z",
+        "description": "Transaction sitter. But a glorious monolith.",
+        "size_kb": 356,
+        "languages": {
+            "Rust": 319994,
+            "Mustache": 6635,
+            "Nushell": 3239,
+            "Shell": 2479,
+            "Dockerfile": 1937
+        }
+    },
+    {
+        "name": "mopro",
+        "full_name": "worldcoin/mopro",
+        "url": "https://github.com/worldcoin/mopro",
+        "stars": 0,
+        "updated_at": "2024-07-24T12:42:22Z",
+        "description": "Making client-side proving on mobile simple.",
+        "size_kb": 923,
+        "languages": {
+            "Swift": 177888,
+            "Circom": 62261,
+            "Rust": 60882,
+            "C": 32217,
+            "Shell": 17220,
+            "JavaScript": 9879,
+            "Ruby": 2505,
+            "Objective-C": 346,
+            "Makefile": 339
+        }
+    },
+    {
+        "name": "getrandom",
+        "full_name": "worldcoin/getrandom",
+        "url": "https://github.com/worldcoin/getrandom",
+        "stars": 0,
+        "updated_at": "2025-01-17T10:26:10Z",
+        "description": "A small cross-platform library for retrieving random data from (operating) system source",
+        "size_kb": 456,
+        "languages": {
+            "Rust": 77139
+        }
+    },
+    {
+        "name": "walletkit",
+        "full_name": "worldcoin/walletkit",
+        "url": "https://github.com/worldcoin/walletkit",
+        "stars": 4,
+        "updated_at": "2025-03-05T00:57:44Z",
+        "description": "WalletKit enables wallets to use World ID.",
+        "size_kb": 210410,
+        "languages": {
+            "Rust": 40224,
+            "Shell": 2249,
+            "Solidity": 1454,
+            "Swift": 676
+        }
+    },
+    {
+        "name": "orb-messages",
+        "full_name": "worldcoin/orb-messages",
+        "url": "https://github.com/worldcoin/orb-messages",
+        "stars": 3,
+        "updated_at": "2025-03-04T13:57:13Z",
+        "description": "Message definitions for the orb",
+        "size_kb": 104,
+        "languages": {
+            "Rust": 4611,
+            "Nix": 2167,
+            "CMake": 2103,
+            "RenderScript": 2
+        }
+    },
+    {
+        "name": "idkit-rs",
+        "full_name": "worldcoin/idkit-rs",
+        "url": "https://github.com/worldcoin/idkit-rs",
+        "stars": 8,
+        "updated_at": "2024-08-27T13:22:31Z",
+        "description": "Rust toolkit to interact with the World ID protocol.",
+        "size_kb": 132,
+        "languages": {
+            "Rust": 18939
+        }
+    },
+    {
+        "name": "orb-secure-element",
+        "full_name": "worldcoin/orb-secure-element",
+        "url": "https://github.com/worldcoin/orb-secure-element",
+        "stars": 5,
+        "updated_at": "2025-02-25T12:36:31Z",
+        "description": "Software that communicates with the orb's secure element",
+        "size_kb": 29,
+        "languages": {
+            "C": 37876,
+            "CMake": 1155
+        }
+    },
+    {
+        "name": "mpc-carrier",
+        "full_name": "worldcoin/mpc-carrier",
+        "url": "https://github.com/worldcoin/mpc-carrier",
+        "stars": 2,
+        "updated_at": "2024-08-17T20:03:09Z",
+        "description": "Worldcoin MPC communication channel",
+        "size_kb": 31,
+        "languages": {
+            "Rust": 17283,
+            "Nix": 1149,
+            "Shell": 10
+        }
+    },
+    {
+        "name": "dogstatsd-rs",
+        "full_name": "worldcoin/dogstatsd-rs",
+        "url": "https://github.com/worldcoin/dogstatsd-rs",
+        "stars": 0,
+        "updated_at": "2024-07-24T12:43:15Z",
+        "description": "Fork of https://github.com/mcasper/dogstatsd-rs",
+        "size_kb": 140,
+        "languages": {
+            "Rust": 68320
+        }
+    },
+    {
+        "name": "hyrax-pcs-commit",
+        "full_name": "worldcoin/hyrax-pcs-commit",
+        "url": "https://github.com/worldcoin/hyrax-pcs-commit",
+        "stars": 6,
+        "updated_at": "2025-02-06T01:21:33Z",
+        "description": "hyrax-pcs-commit repository",
+        "size_kb": 640,
+        "languages": {
+            "Rust": 37168
+        }
+    },
+    {
+        "name": "minikit-js",
+        "full_name": "worldcoin/minikit-js",
+        "url": "https://github.com/worldcoin/minikit-js",
+        "stars": 13,
+        "updated_at": "2025-03-03T18:57:31Z",
+        "description": "MiniKit - SDK for Mini Apps in World App.",
+        "size_kb": 1129,
+        "languages": {
+            "TypeScript": 66352,
+            "JavaScript": 2429
+        }
+    },
+    {
+        "name": "chains",
+        "full_name": "worldcoin/chains",
+        "url": "https://github.com/worldcoin/chains",
+        "stars": 0,
+        "updated_at": "2025-02-14T12:33:20Z",
+        "description": "chains repository - forked from https://github.com/ethereum-lists/chains",
+        "size_kb": 193014,
+        "languages": {
+            "Kotlin": 32661,
+            "JavaScript": 2000
+        }
+    },
+    {
+        "name": "orb-relay-messages",
+        "full_name": "worldcoin/orb-relay-messages",
+        "url": "https://github.com/worldcoin/orb-relay-messages",
+        "stars": 3,
+        "updated_at": "2025-03-05T00:43:54Z",
+        "description": "Message schemas for the relay service",
+        "size_kb": 143,
+        "languages": {
+            "Rust": 62988
+        }
+    },
+    {
+        "name": "idkit-swift",
+        "full_name": "worldcoin/idkit-swift",
+        "url": "https://github.com/worldcoin/idkit-swift",
+        "stars": 5,
+        "updated_at": "2024-11-01T10:27:20Z",
+        "description": "Swift toolkit to interact with the World ID protocol.",
+        "size_kb": 36,
+        "languages": {
+            "Swift": 16861
+        }
+    },
+    {
+        "name": "world-id-relay",
+        "full_name": "worldcoin/world-id-relay",
+        "url": "https://github.com/worldcoin/world-id-relay",
+        "stars": 3,
+        "updated_at": "2025-02-28T14:49:09Z",
+        "description": "Service to bridge World ID roots from Ethereum to various Layer 2s",
+        "size_kb": 451,
+        "languages": {
+            "Rust": 30916,
+            "Dockerfile": 1086
+        }
+    },
+    {
+        "name": "idkit-kotlin",
+        "full_name": "worldcoin/idkit-kotlin",
+        "url": "https://github.com/worldcoin/idkit-kotlin",
+        "stars": 1,
+        "updated_at": "2025-01-18T19:58:14Z",
+        "description": "Kotlin toolkit to interact with the World ID protocol.",
+        "size_kb": 109,
+        "languages": {
+            "Kotlin": 23919
+        }
+    },
+    {
+        "name": "world-chain",
+        "full_name": "worldcoin/world-chain",
+        "url": "https://github.com/worldcoin/world-chain",
+        "stars": 46,
+        "updated_at": "2025-03-05T17:17:31Z",
+        "description": "World Chain monorepo",
+        "size_kb": 4886,
+        "languages": {
+            "Rust": 267692,
+            "Starlark": 221368,
+            "Solidity": 131441,
+            "Shell": 27317,
+            "jq": 6796,
+            "Just": 1843,
+            "JavaScript": 1058,
+            "Dockerfile": 389
+        }
+    },
+    {
+        "name": "wld-usernames",
+        "full_name": "worldcoin/wld-usernames",
+        "url": "https://github.com/worldcoin/wld-usernames",
+        "stars": 0,
+        "updated_at": "2025-02-27T15:37:17Z",
+        "description": "Backend powering World App username registration and querying.",
+        "size_kb": 246,
+        "languages": {
+            "Rust": 76001,
+            "Solidity": 17571,
+            "Shell": 7662,
+            "Dockerfile": 1292
+        }
+    },
+    {
+        "name": "minikit-react-template",
+        "full_name": "worldcoin/minikit-react-template",
+        "url": "https://github.com/worldcoin/minikit-react-template",
+        "stars": 0,
+        "updated_at": "2024-12-06T10:45:15Z",
+        "description": "Template repository for building a mini app in React",
+        "size_kb": 107,
+        "languages": {
+            "TypeScript": 10174,
+            "JavaScript": 984,
+            "HTML": 370,
+            "CSS": 59
+        }
+    },
+    {
+        "name": "minikit-next-template",
+        "full_name": "worldcoin/minikit-next-template",
+        "url": "https://github.com/worldcoin/minikit-next-template",
+        "stars": 7,
+        "updated_at": "2025-02-20T03:23:51Z",
+        "description": "Template repository for building a mini app in NextJS",
+        "size_kb": 26,
+        "languages": {
+            "TypeScript": 11718,
+            "CSS": 606,
+            "JavaScript": 227
+        }
+    },
+    {
+        "name": "minikit-js-template",
+        "full_name": "worldcoin/minikit-js-template",
+        "url": "https://github.com/worldcoin/minikit-js-template",
+        "stars": 5,
+        "updated_at": "2025-01-23T17:56:56Z",
+        "description": "Template repository for building a mini app in vanilla JS",
+        "size_kb": 48,
+        "languages": {
+            "JavaScript": 4098,
+            "TypeScript": 3693,
+            "HTML": 634,
+            "CSS": 59
+        }
+    },
+    {
+        "name": "safe-modules",
+        "full_name": "worldcoin/safe-modules",
+        "url": "https://github.com/worldcoin/safe-modules",
+        "stars": 0,
+        "updated_at": "2025-01-17T10:26:23Z",
+        "description": "Fork of safe-global/safe-modules",
+        "size_kb": 8017,
+        "languages": {
+            "TypeScript": 432193,
+            "Solidity": 197955,
+            "Python": 56670,
+            "Ruby": 15681,
+            "JavaScript": 3022,
+            "Dockerfile": 895,
+            "Shell": 484
+        }
+    },
+    {
+        "name": "rollup-boost",
+        "full_name": "worldcoin/rollup-boost",
+        "url": "https://github.com/worldcoin/rollup-boost",
+        "stars": 0,
+        "updated_at": "2025-03-06T09:25:27Z",
+        "description": "FORK: Sidecar to Enable Rollup Extensions",
+        "size_kb": 1133,
+        "languages": {
+            "Rust": 113603,
+            "Dockerfile": 1636,
+            "Shell": 376
+        }
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        "name": ".github",
+        "full_name": "dynatrace-innovationlab/.github",
+        "url": "https://github.com/dynatrace-innovationlab/.github",
+        "stars": 0,
+        "updated_at": "2022-06-20T09:09:46Z",
+        "description": null,
+        "size_kb": 42,
+        "languages": {
+            "Makefile": 293
+        }
+    },
+    {
+        "name": "peribolos",
+        "full_name": "dynatrace-innovationlab/peribolos",
+        "url": "https://github.com/dynatrace-innovationlab/peribolos",
+        "stars": 1,
+        "updated_at": "2024-01-11T07:00:34Z",
+        "description": null,
+        "size_kb": 74,
+        "languages": {
+            "Go": 123901,
+            "Dockerfile": 197
+        }
+    }
+]

@@ -1,0 +1,16 @@
+[
+    {
+        "name": "Jessie",
+        "full_name": "endojs/Jessie",
+        "url": "https://github.com/endojs/Jessie",
+        "stars": 290,
+        "updated_at": "2025-02-28T13:30:18Z",
+        "description": "Tiny subset of JavaScript for ocap-safe universal mobile code",
+        "size_kb": 12096,
+        "languages": {
+            "JavaScript": 89186,
+            "TypeScript": 21990,
+            "Shell": 3958
+        }
+    }
+]

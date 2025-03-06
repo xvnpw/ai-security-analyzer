@@ -1,0 +1,1026 @@
+[
+    {
+        "name": "response_bank",
+        "full_name": "Shopify/response_bank",
+        "url": "https://github.com/Shopify/response_bank",
+        "stars": 135,
+        "updated_at": "2024-05-20T16:53:40Z",
+        "description": "Simple response caching for Ruby applications",
+        "size_kb": 222,
+        "languages": {
+            "Ruby": 45232
+        }
+    },
+    {
+        "name": "shopify_app",
+        "full_name": "Shopify/shopify_app",
+        "url": "https://github.com/Shopify/shopify_app",
+        "stars": 1795,
+        "updated_at": "2025-03-01T18:22:40Z",
+        "description": "A Rails Engine for building Shopify Apps",
+        "size_kb": 5528,
+        "languages": {
+            "Ruby": 346129,
+            "HTML": 19758,
+            "JavaScript": 4422,
+            "Shell": 184
+        }
+    },
+    {
+        "name": "money",
+        "full_name": "Shopify/money",
+        "url": "https://github.com/Shopify/money",
+        "stars": 337,
+        "updated_at": "2025-02-27T19:07:01Z",
+        "description": "Manage money in Shopify with a class that won't lose pennies during division",
+        "size_kb": 720,
+        "languages": {
+            "Ruby": 180904
+        }
+    },
+    {
+        "name": "statsd-instrument",
+        "full_name": "Shopify/statsd-instrument",
+        "url": "https://github.com/Shopify/statsd-instrument",
+        "stars": 580,
+        "updated_at": "2025-02-22T13:17:21Z",
+        "description": "A StatsD client for Ruby apps. Provides metaprogramming methods to inject StatsD instrumentation into your code.",
+        "size_kb": 1201,
+        "languages": {
+            "Ruby": 277035,
+            "Makefile": 136
+        }
+    },
+    {
+        "name": "shopify_python_api",
+        "full_name": "Shopify/shopify_python_api",
+        "url": "https://github.com/Shopify/shopify_python_api",
+        "stars": 1326,
+        "updated_at": "2025-03-06T14:41:44Z",
+        "description": "ShopifyAPI library allows Python developers to programmatically access the admin section of stores",
+        "size_kb": 940,
+        "languages": {
+            "Python": 207284
+        }
+    },
+    {
+        "name": "shopify_django_app",
+        "full_name": "Shopify/shopify_django_app",
+        "url": "https://github.com/Shopify/shopify_django_app",
+        "stars": 494,
+        "updated_at": "2025-03-04T10:21:52Z",
+        "description": "Get a Shopify app up and running with Django and Python Shopify API",
+        "size_kb": 94,
+        "languages": {
+            "Python": 12669,
+            "HTML": 5524,
+            "CSS": 5128
+        }
+    },
+    {
+        "name": "identity_cache",
+        "full_name": "Shopify/identity_cache",
+        "url": "https://github.com/Shopify/identity_cache",
+        "stars": 1923,
+        "updated_at": "2025-03-03T22:01:41Z",
+        "description": "IdentityCache is a blob level caching solution to plug into Active Record. Don't #find, #fetch!",
+        "size_kb": 1402,
+        "languages": {
+            "Ruby": 320073,
+            "Shell": 155
+        }
+    },
+    {
+        "name": "browser_sniffer",
+        "full_name": "Shopify/browser_sniffer",
+        "url": "https://github.com/Shopify/browser_sniffer",
+        "stars": 118,
+        "updated_at": "2024-07-13T20:40:22Z",
+        "description": "Properly detect what browser you are dealing with",
+        "size_kb": 114,
+        "languages": {
+            "Ruby": 77475
+        }
+    },
+    {
+        "name": "pyactiveresource",
+        "full_name": "Shopify/pyactiveresource",
+        "url": "https://github.com/Shopify/pyactiveresource",
+        "stars": 102,
+        "updated_at": "2025-03-06T14:41:32Z",
+        "description": null,
+        "size_kb": 166,
+        "languages": {
+            "Python": 136288
+        }
+    },
+    {
+        "name": "go-lua",
+        "full_name": "Shopify/go-lua",
+        "url": "https://github.com/Shopify/go-lua",
+        "stars": 3201,
+        "updated_at": "2025-03-04T23:29:18Z",
+        "description": "A Lua VM in Go",
+        "size_kb": 947,
+        "languages": {
+            "Go": 292282,
+            "Lua": 548
+        }
+    },
+    {
+        "name": "lhm",
+        "full_name": "Shopify/lhm",
+        "url": "https://github.com/Shopify/lhm",
+        "stars": 192,
+        "updated_at": "2025-03-06T17:37:54Z",
+        "description": "Online MySQL schema migrations",
+        "size_kb": 954,
+        "languages": {
+            "Ruby": 208399,
+            "Shell": 619
+        }
+    },
+    {
+        "name": "liquid-c",
+        "full_name": "Shopify/liquid-c",
+        "url": "https://github.com/Shopify/liquid-c",
+        "stars": 117,
+        "updated_at": "2025-01-17T08:34:30Z",
+        "description": "Liquid performance extension in C.",
+        "size_kb": 8839,
+        "languages": {
+            "C": 151500,
+            "Ruby": 50040
+        }
+    },
+    {
+        "name": "ejson",
+        "full_name": "Shopify/ejson",
+        "url": "https://github.com/Shopify/ejson",
+        "stars": 1400,
+        "updated_at": "2025-03-05T18:42:44Z",
+        "description": "EJSON is a small library to manage encrypted secrets using asymmetric encryption.",
+        "size_kb": 2982,
+        "languages": {
+            "Go": 38416,
+            "Makefile": 2595,
+            "Ruby": 1213
+        }
+    },
+    {
+        "name": "turbograft",
+        "full_name": "Shopify/turbograft",
+        "url": "https://github.com/Shopify/turbograft",
+        "stars": 214,
+        "updated_at": "2024-07-13T20:40:23Z",
+        "description": "Hard fork of turbolinks, adding partial page replacement strategies, and utilities.",
+        "size_kb": 689,
+        "languages": {
+            "JavaScript": 141701,
+            "Ruby": 48489,
+            "HTML": 40804,
+            "CSS": 3915
+        }
+    },
+    {
+        "name": "twine",
+        "full_name": "Shopify/twine",
+        "url": "https://github.com/Shopify/twine",
+        "stars": 116,
+        "updated_at": "2024-11-09T10:11:06Z",
+        "description": "Twine is a minimalistic two-way binding system",
+        "size_kb": 645,
+        "languages": {
+            "CoffeeScript": 77723,
+            "Ruby": 1317,
+            "Makefile": 452
+        }
+    },
+    {
+        "name": "semian",
+        "full_name": "Shopify/semian",
+        "url": "https://github.com/Shopify/semian",
+        "stars": 1363,
+        "updated_at": "2025-03-05T15:15:13Z",
+        "description": ":monkey: Resiliency toolkit for Ruby for failing fast",
+        "size_kb": 1432,
+        "languages": {
+            "Ruby": 234827,
+            "C": 32462,
+            "Shell": 998,
+            "Dockerfile": 808
+        }
+    },
+    {
+        "name": "themekit",
+        "full_name": "Shopify/themekit",
+        "url": "https://github.com/Shopify/themekit",
+        "stars": 1213,
+        "updated_at": "2025-02-23T20:38:25Z",
+        "description": "Shopify theme development command line tool.",
+        "size_kb": 23990,
+        "languages": {
+            "Go": 240423,
+            "Liquid": 17328,
+            "Python": 2601,
+            "Makefile": 2391,
+            "PowerShell": 789,
+            "Shell": 265,
+            "JavaScript": 118
+        }
+    },
+    {
+        "name": "measured",
+        "full_name": "Shopify/measured",
+        "url": "https://github.com/Shopify/measured",
+        "stars": 369,
+        "updated_at": "2025-02-27T18:33:04Z",
+        "description": "Encapsulate measurements and their units in Ruby and Ruby on Rails.",
+        "size_kb": 342,
+        "languages": {
+            "Ruby": 148267
+        }
+    },
+    {
+        "name": "graphql-batch",
+        "full_name": "Shopify/graphql-batch",
+        "url": "https://github.com/Shopify/graphql-batch",
+        "stars": 1426,
+        "updated_at": "2025-02-18T17:29:31Z",
+        "description": "A query batching executor for the graphql gem",
+        "size_kb": 223,
+        "languages": {
+            "Ruby": 38289,
+            "Shell": 58
+        }
+    },
+    {
+        "name": "ruby-style-guide",
+        "full_name": "Shopify/ruby-style-guide",
+        "url": "https://github.com/Shopify/ruby-style-guide",
+        "stars": 535,
+        "updated_at": "2025-03-04T19:06:00Z",
+        "description": "Shopify\u2019s Ruby Style Guide",
+        "size_kb": 7759,
+        "languages": {
+            "Ruby": 11068,
+            "SCSS": 4236,
+            "JavaScript": 1238,
+            "Nunjucks": 548,
+            "HTML": 136
+        }
+    },
+    {
+        "name": "js-buy-sdk",
+        "full_name": "Shopify/js-buy-sdk",
+        "url": "https://github.com/Shopify/js-buy-sdk",
+        "stars": 999,
+        "updated_at": "2025-03-04T21:04:39Z",
+        "description": "The JS Buy SDK is a lightweight library that allows you to build ecommerce into any website. It is based on Shopify's API and provides the ability to retrieve products and collections from your shop, add products to a cart, and checkout.",
+        "size_kb": 4438,
+        "languages": {
+            "JavaScript": 261314,
+            "HTML": 672
+        }
+    },
+    {
+        "name": "sprockets-commoner",
+        "full_name": "Shopify/sprockets-commoner",
+        "url": "https://github.com/Shopify/sprockets-commoner",
+        "stars": 182,
+        "updated_at": "2024-07-03T15:40:39Z",
+        "description": "Use Babel in Sprockets to compile JavaScript modules for the browser",
+        "size_kb": 237,
+        "languages": {
+            "Ruby": 39348,
+            "JavaScript": 14745,
+            "CSS": 686,
+            "Shell": 589,
+            "HTML": 404,
+            "CoffeeScript": 45
+        }
+    },
+    {
+        "name": "erb_lint",
+        "full_name": "Shopify/erb_lint",
+        "url": "https://github.com/Shopify/erb_lint",
+        "stars": 703,
+        "updated_at": "2025-03-04T07:33:05Z",
+        "description": "Lint your ERB or HTML files",
+        "size_kb": 792,
+        "languages": {
+            "Ruby": 285809,
+            "Dockerfile": 1158,
+            "HTML": 204
+        }
+    },
+    {
+        "name": "better-html",
+        "full_name": "Shopify/better-html",
+        "url": "https://github.com/Shopify/better-html",
+        "stars": 444,
+        "updated_at": "2025-03-06T13:13:18Z",
+        "description": "Better HTML for Rails",
+        "size_kb": 496,
+        "languages": {
+            "Ruby": 217255,
+            "C": 46714,
+            "HTML": 4883,
+            "CSS": 686,
+            "JavaScript": 596
+        }
+    },
+    {
+        "name": "buy-button-js",
+        "full_name": "Shopify/buy-button-js",
+        "url": "https://github.com/Shopify/buy-button-js",
+        "stars": 246,
+        "updated_at": "2025-02-18T14:02:20Z",
+        "description": "BuyButton.js is a highly customizable UI library for adding ecommerce functionality to any website.",
+        "size_kb": 3167,
+        "languages": {
+            "JavaScript": 470070,
+            "CSS": 48827,
+            "HTML": 604
+        }
+    },
+    {
+        "name": "node-themekit",
+        "full_name": "Shopify/node-themekit",
+        "url": "https://github.com/Shopify/node-themekit",
+        "stars": 112,
+        "updated_at": "2025-02-27T20:58:03Z",
+        "description": "Theme asset interaction library and management tools written in Node.js",
+        "size_kb": 476,
+        "languages": {
+            "JavaScript": 23786
+        }
+    },
+    {
+        "name": "graphql-js-client",
+        "full_name": "Shopify/graphql-js-client",
+        "url": "https://github.com/Shopify/graphql-js-client",
+        "stars": 196,
+        "updated_at": "2025-01-08T05:17:45Z",
+        "description": "A Relay compliant GraphQL client.",
+        "size_kb": 1211,
+        "languages": {
+            "JavaScript": 190570,
+            "HTML": 672
+        }
+    },
+    {
+        "name": "rotoscope",
+        "full_name": "Shopify/rotoscope",
+        "url": "https://github.com/Shopify/rotoscope",
+        "stars": 201,
+        "updated_at": "2025-01-31T13:40:28Z",
+        "description": "High-performance logger of Ruby method invocations",
+        "size_kb": 446,
+        "languages": {
+            "Ruby": 35702,
+            "C": 15130,
+            "Shell": 215
+        }
+    },
+    {
+        "name": "bootsnap",
+        "full_name": "Shopify/bootsnap",
+        "url": "https://github.com/Shopify/bootsnap",
+        "stars": 2689,
+        "updated_at": "2025-02-20T17:32:36Z",
+        "description": "Boot large Ruby/Rails apps faster",
+        "size_kb": 3079,
+        "languages": {
+            "Ruby": 142022,
+            "C": 35489,
+            "Shell": 478
+        }
+    },
+    {
+        "name": "cli-ui",
+        "full_name": "Shopify/cli-ui",
+        "url": "https://github.com/Shopify/cli-ui",
+        "stars": 1055,
+        "updated_at": "2025-03-04T15:24:53Z",
+        "description": "CLI tooling framework with simple interactive widgets",
+        "size_kb": 1309,
+        "languages": {
+            "Ruby": 212391
+        }
+    },
+    {
+        "name": "cli-kit",
+        "full_name": "Shopify/cli-kit",
+        "url": "https://github.com/Shopify/cli-kit",
+        "stars": 152,
+        "updated_at": "2025-02-14T15:52:32Z",
+        "description": "Framework/Engine for command line interfaces",
+        "size_kb": 1122,
+        "languages": {
+            "Ruby": 249804,
+            "Shell": 543
+        }
+    },
+    {
+        "name": "FunctionalTableData",
+        "full_name": "Shopify/FunctionalTableData",
+        "url": "https://github.com/Shopify/FunctionalTableData",
+        "stars": 366,
+        "updated_at": "2025-01-03T11:09:03Z",
+        "description": "Declarative UITableViewDataSource implementation",
+        "size_kb": 2064,
+        "languages": {
+            "Swift": 318707,
+            "Objective-C": 698
+        }
+    },
+    {
+        "name": "web-configs",
+        "full_name": "Shopify/web-configs",
+        "url": "https://github.com/Shopify/web-configs",
+        "stars": 470,
+        "updated_at": "2025-03-06T09:00:50Z",
+        "description": "Common configurations for building web apps at Shopify",
+        "size_kb": 5349,
+        "languages": {
+            "JavaScript": 263981,
+            "TypeScript": 3152,
+            "Handlebars": 94
+        }
+    },
+    {
+        "name": "draggable",
+        "full_name": "Shopify/draggable",
+        "url": "https://github.com/Shopify/draggable",
+        "stars": 18162,
+        "updated_at": "2025-03-06T07:37:07Z",
+        "description": "The JavaScript Drag & Drop library your grandparents warned you about.",
+        "size_kb": 6469,
+        "languages": {
+            "JavaScript": 225927,
+            "TypeScript": 80078
+        }
+    },
+    {
+        "name": "deprecation_toolkit",
+        "full_name": "Shopify/deprecation_toolkit",
+        "url": "https://github.com/Shopify/deprecation_toolkit",
+        "stars": 492,
+        "updated_at": "2025-03-06T18:10:16Z",
+        "description": "\u2692Eliminate deprecations from your codebase \u2692",
+        "size_kb": 276,
+        "languages": {
+            "Ruby": 51771
+        }
+    },
+    {
+        "name": "livedata-ktx",
+        "full_name": "Shopify/livedata-ktx",
+        "url": "https://github.com/Shopify/livedata-ktx",
+        "stars": 466,
+        "updated_at": "2025-02-03T05:56:59Z",
+        "description": "Kotlin extension for LiveData, chaining like RxJava",
+        "size_kb": 216,
+        "languages": {
+            "Kotlin": 27574
+        }
+    },
+    {
+        "name": "skeleton-theme",
+        "full_name": "Shopify/skeleton-theme",
+        "url": "https://github.com/Shopify/skeleton-theme",
+        "stars": 209,
+        "updated_at": "2025-03-06T12:59:01Z",
+        "description": "A barebones \u2620\ufe0fstarter theme with the required files needed to compile with Slate and upload to Shopify.",
+        "size_kb": 307,
+        "languages": {
+            "Liquid": 734,
+            "JavaScript": 230,
+            "SCSS": 17
+        }
+    },
+    {
+        "name": "job-iteration",
+        "full_name": "Shopify/job-iteration",
+        "url": "https://github.com/Shopify/job-iteration",
+        "stars": 1197,
+        "updated_at": "2025-03-06T14:29:31Z",
+        "description": "Makes your background jobs interruptible and resumable by design.",
+        "size_kb": 946,
+        "languages": {
+            "Ruby": 152740,
+            "Shell": 522
+        }
+    },
+    {
+        "name": "graphql-metrics",
+        "full_name": "Shopify/graphql-metrics",
+        "url": "https://github.com/Shopify/graphql-metrics",
+        "stars": 172,
+        "updated_at": "2025-02-11T21:34:08Z",
+        "description": "Extract as much much detail as you want from GraphQL queries, served up from your Ruby app and the graphql gem. ",
+        "size_kb": 281,
+        "languages": {
+            "Ruby": 91735,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "limiter",
+        "full_name": "Shopify/limiter",
+        "url": "https://github.com/Shopify/limiter",
+        "stars": 416,
+        "updated_at": "2025-02-11T18:22:08Z",
+        "description": "Simple Ruby rate limiting mechanism.",
+        "size_kb": 93,
+        "languages": {
+            "Ruby": 11334,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "shopify-app-template-node",
+        "full_name": "Shopify/shopify-app-template-node",
+        "url": "https://github.com/Shopify/shopify-app-template-node",
+        "stars": 923,
+        "updated_at": "2025-03-03T08:30:26Z",
+        "description": null,
+        "size_kb": 7175,
+        "languages": {
+            "JavaScript": 7930,
+            "Dockerfile": 206
+        }
+    },
+    {
+        "name": "bootboot",
+        "full_name": "Shopify/bootboot",
+        "url": "https://github.com/Shopify/bootboot",
+        "stars": 436,
+        "updated_at": "2025-02-26T14:06:55Z",
+        "description": "Dualboot your Ruby app made easy",
+        "size_kb": 99,
+        "languages": {
+            "Ruby": 20991
+        }
+    },
+    {
+        "name": "shadowenv",
+        "full_name": "Shopify/shadowenv",
+        "url": "https://github.com/Shopify/shadowenv",
+        "stars": 411,
+        "updated_at": "2025-02-14T15:49:32Z",
+        "description": "reversible directory-local environment variable manipulations",
+        "size_kb": 791,
+        "languages": {
+            "Rust": 86909,
+            "Shell": 5186
+        }
+    },
+    {
+        "name": "git-chain",
+        "full_name": "Shopify/git-chain",
+        "url": "https://github.com/Shopify/git-chain",
+        "stars": 229,
+        "updated_at": "2025-02-13T22:44:16Z",
+        "description": "Tool to rebase multiple Git branches based on the previous one.",
+        "size_kb": 2168,
+        "languages": {
+            "Ruby": 51663,
+            "Shell": 2685
+        }
+    },
+    {
+        "name": "rubocop-sorbet",
+        "full_name": "Shopify/rubocop-sorbet",
+        "url": "https://github.com/Shopify/rubocop-sorbet",
+        "stars": 186,
+        "updated_at": "2025-03-01T23:58:06Z",
+        "description": "A collection of RuboCop rules for Sorbet",
+        "size_kb": 748,
+        "languages": {
+            "Ruby": 270067,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "smart_todo",
+        "full_name": "Shopify/smart_todo",
+        "url": "https://github.com/Shopify/smart_todo",
+        "stars": 151,
+        "updated_at": "2025-02-25T15:26:34Z",
+        "description": "Enhance TODO comment in your Ruby code",
+        "size_kb": 233,
+        "languages": {
+            "Ruby": 69569,
+            "Shell": 407
+        }
+    },
+    {
+        "name": "screenshot-glb",
+        "full_name": "Shopify/screenshot-glb",
+        "url": "https://github.com/Shopify/screenshot-glb",
+        "stars": 130,
+        "updated_at": "2025-03-06T07:56:57Z",
+        "description": "A command line utility for taking screenshots of glTF 2.0 Binary 3D model files",
+        "size_kb": 116522,
+        "languages": {
+            "TypeScript": 55150,
+            "JavaScript": 3383,
+            "Dockerfile": 1115,
+            "Shell": 631
+        }
+    },
+    {
+        "name": "seafoam",
+        "full_name": "Shopify/seafoam",
+        "url": "https://github.com/Shopify/seafoam",
+        "stars": 133,
+        "updated_at": "2025-02-17T02:39:16Z",
+        "description": "A tool for working with compiler graphs dumped by the GraalVM compiler",
+        "size_kb": 31006,
+        "languages": {
+            "Ruby": 174903
+        }
+    },
+    {
+        "name": "restyle",
+        "full_name": "Shopify/restyle",
+        "url": "https://github.com/Shopify/restyle",
+        "stars": 3096,
+        "updated_at": "2025-03-03T18:42:04Z",
+        "description": "A type-enforced system for building UI components in React Native with TypeScript.",
+        "size_kb": 3894,
+        "languages": {
+            "TypeScript": 61197,
+            "JavaScript": 2531,
+            "Ruby": 379
+        }
+    },
+    {
+        "name": "shopify-theme-inspector",
+        "full_name": "Shopify/shopify-theme-inspector",
+        "url": "https://github.com/Shopify/shopify-theme-inspector",
+        "stars": 160,
+        "updated_at": "2025-01-23T23:29:02Z",
+        "description": "A Chrome DevTools plugin that visualizes Shopify Liquid render profiling data so you can triage long-running code and reduce server response times!",
+        "size_kb": 1480,
+        "languages": {
+            "TypeScript": 36630,
+            "CSS": 4028,
+            "JavaScript": 3567,
+            "HTML": 3436
+        }
+    },
+    {
+        "name": "app_profiler",
+        "full_name": "Shopify/app_profiler",
+        "url": "https://github.com/Shopify/app_profiler",
+        "stars": 239,
+        "updated_at": "2025-02-25T03:59:01Z",
+        "description": "Collect performance profiles for your Rails application.",
+        "size_kb": 437,
+        "languages": {
+            "Ruby": 173969,
+            "Shell": 74
+        }
+    },
+    {
+        "name": "remote-dom",
+        "full_name": "Shopify/remote-dom",
+        "url": "https://github.com/Shopify/remote-dom",
+        "stars": 921,
+        "updated_at": "2025-03-06T07:46:37Z",
+        "description": null,
+        "size_kb": 5237,
+        "languages": {
+            "TypeScript": 330806,
+            "JavaScript": 2124
+        }
+    },
+    {
+        "name": "maintenance_tasks",
+        "full_name": "Shopify/maintenance_tasks",
+        "url": "https://github.com/Shopify/maintenance_tasks",
+        "stars": 1100,
+        "updated_at": "2025-03-06T17:38:12Z",
+        "description": "A Rails engine for queueing and managing data migrations.",
+        "size_kb": 2877,
+        "languages": {
+            "Ruby": 246306,
+            "HTML": 18230,
+            "CSS": 1741,
+            "JavaScript": 788,
+            "Shell": 303
+        }
+    },
+    {
+        "name": "packwerk",
+        "full_name": "Shopify/packwerk",
+        "url": "https://github.com/Shopify/packwerk",
+        "stars": 1682,
+        "updated_at": "2025-02-26T07:59:34Z",
+        "description": "Good things come in small packages.",
+        "size_kb": 7869,
+        "languages": {
+            "Ruby": 289705,
+            "HTML": 644,
+            "Shell": 131,
+            "Dockerfile": 111
+        }
+    },
+    {
+        "name": "shopify-app-template-php",
+        "full_name": "Shopify/shopify-app-template-php",
+        "url": "https://github.com/Shopify/shopify-app-template-php",
+        "stars": 305,
+        "updated_at": "2025-03-04T15:05:32Z",
+        "description": null,
+        "size_kb": 1225,
+        "languages": {
+            "PHP": 115974,
+            "Dockerfile": 775,
+            "Shell": 450
+        }
+    },
+    {
+        "name": "lighthouse-ci-action",
+        "full_name": "Shopify/lighthouse-ci-action",
+        "url": "https://github.com/Shopify/lighthouse-ci-action",
+        "stars": 106,
+        "updated_at": "2025-01-21T17:05:27Z",
+        "description": null,
+        "size_kb": 69,
+        "languages": {
+            "Shell": 7895,
+            "Makefile": 547,
+            "Dockerfile": 154
+        }
+    },
+    {
+        "name": "storefront-api-learning-kit",
+        "full_name": "Shopify/storefront-api-learning-kit",
+        "url": "https://github.com/Shopify/storefront-api-learning-kit",
+        "stars": 373,
+        "updated_at": "2025-03-05T12:38:44Z",
+        "description": null,
+        "size_kb": 468,
+        "languages": {
+            "JavaScript": 10652
+        }
+    },
+    {
+        "name": "theme-extension-getting-started",
+        "full_name": "Shopify/theme-extension-getting-started",
+        "url": "https://github.com/Shopify/theme-extension-getting-started",
+        "stars": 111,
+        "updated_at": "2025-02-07T03:56:32Z",
+        "description": "A theme app extension boilerplate that highlights the basic structure and features that are available to developers who want to integrate their apps with Shopify Online Stores.",
+        "size_kb": 216,
+        "languages": {
+            "Liquid": 5786,
+            "JavaScript": 1655,
+            "CSS": 1518
+        }
+    },
+    {
+        "name": "paquito",
+        "full_name": "Shopify/paquito",
+        "url": "https://github.com/Shopify/paquito",
+        "stars": 120,
+        "updated_at": "2025-02-25T02:03:32Z",
+        "description": "Utility classes to define optimized and evolutive serializers.",
+        "size_kb": 168,
+        "languages": {
+            "Ruby": 87627,
+            "Dockerfile": 228,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "ruby_memcheck",
+        "full_name": "Shopify/ruby_memcheck",
+        "url": "https://github.com/Shopify/ruby_memcheck",
+        "stars": 242,
+        "updated_at": "2025-03-04T14:28:12Z",
+        "description": "Use Valgrind memcheck on your native gem without going crazy",
+        "size_kb": 177,
+        "languages": {
+            "Ruby": 36674,
+            "C": 3706
+        }
+    },
+    {
+        "name": "flash-list",
+        "full_name": "Shopify/flash-list",
+        "url": "https://github.com/Shopify/flash-list",
+        "stars": 5985,
+        "updated_at": "2025-03-06T19:57:16Z",
+        "description": "A better list for React Native",
+        "size_kb": 184968,
+        "languages": {
+            "TypeScript": 350940,
+            "Kotlin": 28563,
+            "Swift": 17580,
+            "HTML": 13676,
+            "SCSS": 9159,
+            "CSS": 9010,
+            "JavaScript": 8925,
+            "Objective-C++": 6188,
+            "Java": 5523,
+            "Ruby": 4605,
+            "Objective-C": 1266,
+            "Shell": 309
+        }
+    },
+    {
+        "name": "vscode-shopify-ruby",
+        "full_name": "Shopify/vscode-shopify-ruby",
+        "url": "https://github.com/Shopify/vscode-shopify-ruby",
+        "stars": 181,
+        "updated_at": "2025-03-03T15:25:22Z",
+        "description": "An opinionated and auto-configured set of extensions for Ruby development",
+        "size_kb": 2881,
+        "languages": {
+            "TypeScript": 2867,
+            "JavaScript": 907
+        }
+    },
+    {
+        "name": "shopify-frontend-template-react",
+        "full_name": "Shopify/shopify-frontend-template-react",
+        "url": "https://github.com/Shopify/shopify-frontend-template-react",
+        "stars": 142,
+        "updated_at": "2025-02-23T07:35:35Z",
+        "description": null,
+        "size_kb": 335,
+        "languages": {
+            "JavaScript": 23461,
+            "HTML": 1045
+        }
+    },
+    {
+        "name": "react-native-performance",
+        "full_name": "Shopify/react-native-performance",
+        "url": "https://github.com/Shopify/react-native-performance",
+        "stars": 932,
+        "updated_at": "2025-02-26T04:31:36Z",
+        "description": "Performance monitoring for React Native apps",
+        "size_kb": 23256,
+        "languages": {
+            "TypeScript": 268376,
+            "Kotlin": 18155,
+            "Swift": 11625,
+            "JavaScript": 9837,
+            "Java": 6731,
+            "Objective-C": 5578,
+            "Ruby": 3086,
+            "Shell": 816
+        }
+    },
+    {
+        "name": "shopify-app-template-ruby",
+        "full_name": "Shopify/shopify-app-template-ruby",
+        "url": "https://github.com/Shopify/shopify-app-template-ruby",
+        "stars": 127,
+        "updated_at": "2025-03-05T22:00:53Z",
+        "description": null,
+        "size_kb": 238,
+        "languages": {
+            "Ruby": 42874,
+            "HTML": 6666,
+            "JavaScript": 760,
+            "CSS": 721,
+            "Dockerfile": 436,
+            "Shell": 218
+        }
+    },
+    {
+        "name": "gvltools",
+        "full_name": "Shopify/gvltools",
+        "url": "https://github.com/Shopify/gvltools",
+        "stars": 119,
+        "updated_at": "2025-02-25T12:36:43Z",
+        "description": "Set of GVL instrumentation tools",
+        "size_kb": 59,
+        "languages": {
+            "Ruby": 10585,
+            "C": 9613,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "pitchfork",
+        "full_name": "Shopify/pitchfork",
+        "url": "https://github.com/Shopify/pitchfork",
+        "stars": 740,
+        "updated_at": "2025-03-06T19:22:55Z",
+        "description": null,
+        "size_kb": 6667,
+        "languages": {
+            "Ruby": 309040,
+            "C": 116578,
+            "Ragel": 33129,
+            "Shell": 13691,
+            "Dockerfile": 177,
+            "Makefile": 123
+        }
+    },
+    {
+        "name": "ruvy",
+        "full_name": "Shopify/ruvy",
+        "url": "https://github.com/Shopify/ruvy",
+        "stars": 300,
+        "updated_at": "2025-03-03T20:40:29Z",
+        "description": null,
+        "size_kb": 146006,
+        "languages": {
+            "Rust": 27894,
+            "Makefile": 1079,
+            "Ruby": 733,
+            "C": 335
+        }
+    },
+    {
+        "name": "tracky",
+        "full_name": "Shopify/tracky",
+        "url": "https://github.com/Shopify/tracky",
+        "stars": 367,
+        "updated_at": "2025-03-03T16:12:23Z",
+        "description": "The easiest way to do motion tracking! ",
+        "size_kb": 10984,
+        "languages": {
+            "Swift": 46470,
+            "Python": 19200
+        }
+    },
+    {
+        "name": "ruby-lsp-rails",
+        "full_name": "Shopify/ruby-lsp-rails",
+        "url": "https://github.com/Shopify/ruby-lsp-rails",
+        "stars": 608,
+        "updated_at": "2025-03-06T02:36:59Z",
+        "description": "A Ruby LSP add-on for Rails",
+        "size_kb": 20855,
+        "languages": {
+            "Ruby": 178931,
+            "HTML": 1124,
+            "CSS": 25
+        }
+    },
+    {
+        "name": "shopify-app-template-remix",
+        "full_name": "Shopify/shopify-app-template-remix",
+        "url": "https://github.com/Shopify/shopify-app-template-remix",
+        "stars": 424,
+        "updated_at": "2025-03-06T09:19:38Z",
+        "description": null,
+        "size_kb": 1551,
+        "languages": {
+            "TypeScript": 27482,
+            "CSS": 867,
+            "Dockerfile": 430,
+            "JavaScript": 291
+        }
+    },
+    {
+        "name": "autotuner",
+        "full_name": "Shopify/autotuner",
+        "url": "https://github.com/Shopify/autotuner",
+        "stars": 551,
+        "updated_at": "2025-02-27T16:24:15Z",
+        "description": "Get suggestions to tune Ruby's garbage collector",
+        "size_kb": 153,
+        "languages": {
+            "Ruby": 76291,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "reference-theme",
+        "full_name": "Shopify/reference-theme",
+        "url": "https://github.com/Shopify/reference-theme",
+        "stars": 128,
+        "updated_at": "2025-03-06T04:31:29Z",
+        "description": "A developer reference theme for Shopify online store themes",
+        "size_kb": 216,
+        "languages": {
+            "Liquid": 236407,
+            "CSS": 4827
+        }
+    },
+    {
+        "name": "product-taxonomy",
+        "full_name": "Shopify/product-taxonomy",
+        "url": "https://github.com/Shopify/product-taxonomy",
+        "stars": 137,
+        "updated_at": "2025-03-06T14:44:50Z",
+        "description": "Shopify's standardized product taxonomy.",
+        "size_kb": 1019698,
+        "languages": {
+            "Ruby": 278630,
+            "CUE": 745,
+            "Shell": 131
+        }
+    }
+]

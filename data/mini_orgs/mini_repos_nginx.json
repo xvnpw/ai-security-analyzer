@@ -1,0 +1,314 @@
+[
+    {
+        "name": "nginx-asg-sync",
+        "full_name": "nginx/nginx-asg-sync",
+        "url": "https://github.com/nginx/nginx-asg-sync",
+        "stars": 57,
+        "updated_at": "2025-03-06T17:25:53Z",
+        "description": "NGINX Plus Integration with Cloud Autoscaling ",
+        "size_kb": 4302,
+        "languages": {
+            "Go": 39263,
+            "Python": 8305,
+            "Makefile": 2204,
+            "Shell": 333,
+            "Dockerfile": 186
+        }
+    },
+    {
+        "name": "ngx-rust",
+        "full_name": "nginx/ngx-rust",
+        "url": "https://github.com/nginx/ngx-rust",
+        "stars": 780,
+        "updated_at": "2025-03-04T02:32:04Z",
+        "description": "Rust binding for NGINX",
+        "size_kb": 321,
+        "languages": {
+            "Rust": 133685,
+            "Makefile": 7378,
+            "C": 2302,
+            "Shell": 1636,
+            "Dockerfile": 1251
+        }
+    },
+    {
+        "name": "nginx-plus-go-client",
+        "full_name": "nginx/nginx-plus-go-client",
+        "url": "https://github.com/nginx/nginx-plus-go-client",
+        "stars": 49,
+        "updated_at": "2025-03-01T01:54:45Z",
+        "description": "A client for NGINX Plus API for Go",
+        "size_kb": 646,
+        "languages": {
+            "Go": 137647,
+            "Dockerfile": 1453,
+            "Makefile": 575
+        }
+    },
+    {
+        "name": "nginx-prometheus-exporter",
+        "full_name": "nginx/nginx-prometheus-exporter",
+        "url": "https://github.com/nginx/nginx-prometheus-exporter",
+        "stars": 1733,
+        "updated_at": "2025-03-06T13:05:26Z",
+        "description": "NGINX Prometheus Exporter for NGINX and NGINX Plus",
+        "size_kb": 5003,
+        "languages": {
+            "Go": 134847,
+            "Makefile": 1756,
+            "Dockerfile": 1104,
+            "Shell": 293
+        }
+    },
+    {
+        "name": "homebrew-unit",
+        "full_name": "nginx/homebrew-unit",
+        "url": "https://github.com/nginx/homebrew-unit",
+        "stars": 16,
+        "updated_at": "2025-03-03T20:34:18Z",
+        "description": "Unit Homebrew tap",
+        "size_kb": 124,
+        "languages": {
+            "Ruby": 28953
+        }
+    },
+    {
+        "name": "nginx-quic-qns",
+        "full_name": "nginx/nginx-quic-qns",
+        "url": "https://github.com/nginx/nginx-quic-qns",
+        "stars": 26,
+        "updated_at": "2024-08-02T02:22:24Z",
+        "description": null,
+        "size_kb": 12,
+        "languages": {
+            "Dockerfile": 2407,
+            "Shell": 1436,
+            "Makefile": 448
+        }
+    },
+    {
+        "name": "homebrew-tap",
+        "full_name": "nginx/homebrew-tap",
+        "url": "https://github.com/nginx/homebrew-tap",
+        "stars": 3,
+        "updated_at": "2025-01-14T18:12:37Z",
+        "description": null,
+        "size_kb": 31,
+        "languages": {
+            "Ruby": 4551
+        }
+    },
+    {
+        "name": "docker-extension",
+        "full_name": "nginx/docker-extension",
+        "url": "https://github.com/nginx/docker-extension",
+        "stars": 23,
+        "updated_at": "2025-03-05T15:50:59Z",
+        "description": null,
+        "size_kb": 456,
+        "languages": {
+            "TypeScript": 62250,
+            "CSS": 6125,
+            "JavaScript": 1712,
+            "Dockerfile": 1489,
+            "Makefile": 1437,
+            "HTML": 319
+        }
+    },
+    {
+        "name": "aws-marketplace-publish",
+        "full_name": "nginx/aws-marketplace-publish",
+        "url": "https://github.com/nginx/aws-marketplace-publish",
+        "stars": 4,
+        "updated_at": "2025-02-04T17:50:20Z",
+        "description": "Publish Docker images to AWS Marketplace",
+        "size_kb": 8934,
+        "languages": {
+            "TypeScript": 1870,
+            "JavaScript": 1420
+        }
+    },
+    {
+        "name": "njs-acme",
+        "full_name": "nginx/njs-acme",
+        "url": "https://github.com/nginx/njs-acme",
+        "stars": 79,
+        "updated_at": "2025-03-05T15:52:43Z",
+        "description": "Nginx NJS module runtime to work with ACME providers like Let's Encrypt for automated no-reload TLS certificate issue/renewal.",
+        "size_kb": 581,
+        "languages": {
+            "TypeScript": 110403,
+            "JavaScript": 11596,
+            "Makefile": 2229,
+            "Dockerfile": 1675,
+            "Shell": 414
+        }
+    },
+    {
+        "name": "alpine-fips",
+        "full_name": "nginx/alpine-fips",
+        "url": "https://github.com/nginx/alpine-fips",
+        "stars": 5,
+        "updated_at": "2025-03-05T15:58:14Z",
+        "description": "Alpine Linux with FIPS OpenSSL module",
+        "size_kb": 257,
+        "languages": {
+            "Dockerfile": 690
+        }
+    },
+    {
+        "name": "unit-wasm",
+        "full_name": "nginx/unit-wasm",
+        "url": "https://github.com/nginx/unit-wasm",
+        "stars": 39,
+        "updated_at": "2024-11-16T07:49:17Z",
+        "description": "Development libraries for writing WebAssembly modules for NGINX Unit",
+        "size_kb": 119,
+        "languages": {
+            "C": 18155,
+            "Rust": 9377,
+            "Makefile": 4391
+        }
+    },
+    {
+        "name": "k8s-common",
+        "full_name": "nginx/k8s-common",
+        "url": "https://github.com/nginx/k8s-common",
+        "stars": 2,
+        "updated_at": "2025-02-20T10:10:53Z",
+        "description": null,
+        "size_kb": 98,
+        "languages": {
+            "HCL": 1882,
+            "Shell": 762,
+            "Nix": 178
+        }
+    },
+    {
+        "name": "nur",
+        "full_name": "nginx/nur",
+        "url": "https://github.com/nginx/nur",
+        "stars": 2,
+        "updated_at": "2025-01-10T00:45:44Z",
+        "description": null,
+        "size_kb": 31,
+        "languages": {
+            "Nix": 6615
+        }
+    },
+    {
+        "name": "winget-pkgs",
+        "full_name": "nginx/winget-pkgs",
+        "url": "https://github.com/nginx/winget-pkgs",
+        "stars": 2,
+        "updated_at": "2025-03-03T00:35:30Z",
+        "description": "The Microsoft community Windows Package Manager manifest repository",
+        "size_kb": 390701,
+        "languages": {
+            "PowerShell": 310335
+        }
+    },
+    {
+        "name": "telemetry-exporter",
+        "full_name": "nginx/telemetry-exporter",
+        "url": "https://github.com/nginx/telemetry-exporter",
+        "stars": 1,
+        "updated_at": "2025-03-04T19:33:30Z",
+        "description": null,
+        "size_kb": 602,
+        "languages": {
+            "Go": 58513,
+            "Makefile": 2445
+        }
+    },
+    {
+        "name": "agent-changelog",
+        "full_name": "nginx/agent-changelog",
+        "url": "https://github.com/nginx/agent-changelog",
+        "stars": 1,
+        "updated_at": "2024-09-04T14:04:10Z",
+        "description": "Python script to generate NGINX Agent changelog markdown document based on the GitHub changelog.",
+        "size_kb": 59,
+        "languages": {
+            "Python": 12165,
+            "Jinja": 3331
+        }
+    },
+    {
+        "name": "clang-ast",
+        "full_name": "nginx/clang-ast",
+        "url": "https://github.com/nginx/clang-ast",
+        "stars": 1,
+        "updated_at": "2024-06-16T17:19:38Z",
+        "description": "clang abstract syntax tree as used in nginx/njs/unit CI systems",
+        "size_kb": 8,
+        "languages": {
+            "C++": 16224,
+            "Makefile": 321
+        }
+    },
+    {
+        "name": "ngx_http_delay_body_filter_module",
+        "full_name": "nginx/ngx_http_delay_body_filter_module",
+        "url": "https://github.com/nginx/ngx_http_delay_body_filter_module",
+        "stars": 1,
+        "updated_at": "2024-11-16T09:45:18Z",
+        "description": "a git clone of http://mdounin.ru/hg/ngx_http_delay_body_filter_module/ to be used in NGINX CI",
+        "size_kb": 5,
+        "languages": {
+            "C": 5602,
+            "Perl": 2628
+        }
+    },
+    {
+        "name": "pkg-oss",
+        "full_name": "nginx/pkg-oss",
+        "url": "https://github.com/nginx/pkg-oss",
+        "stars": 6,
+        "updated_at": "2025-03-04T12:21:11Z",
+        "description": "nginx packaging",
+        "size_kb": 18483,
+        "languages": {
+            "Makefile": 59079,
+            "Shell": 20721
+        }
+    },
+    {
+        "name": "xslscript",
+        "full_name": "nginx/xslscript",
+        "url": "https://github.com/nginx/xslscript",
+        "stars": 0,
+        "updated_at": "2024-08-29T19:31:47Z",
+        "description": null,
+        "size_kb": 16,
+        "languages": {
+            "Perl": 9758
+        }
+    },
+    {
+        "name": "draft-release",
+        "full_name": "nginx/draft-release",
+        "url": "https://github.com/nginx/draft-release",
+        "stars": 0,
+        "updated_at": "2025-02-11T20:00:49Z",
+        "description": "Draft the next GitHub release",
+        "size_kb": 10610,
+        "languages": {
+            "TypeScript": 32222,
+            "JavaScript": 2568
+        }
+    },
+    {
+        "name": "docker-image-update-checker",
+        "full_name": "nginx/docker-image-update-checker",
+        "url": "https://github.com/nginx/docker-image-update-checker",
+        "stars": 0,
+        "updated_at": "2025-02-11T20:01:17Z",
+        "description": "Docker Image Update Checker Action",
+        "size_kb": 8562,
+        "languages": {
+            "TypeScript": 29237,
+            "JavaScript": 194
+        }
+    }
+]

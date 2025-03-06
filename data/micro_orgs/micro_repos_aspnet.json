@@ -1,0 +1,44 @@
+[
+    {
+        "name": "jquery-validation-unobtrusive",
+        "full_name": "aspnet/jquery-validation-unobtrusive",
+        "url": "https://github.com/aspnet/jquery-validation-unobtrusive",
+        "stars": 260,
+        "updated_at": "2025-02-20T11:14:55Z",
+        "description": "Add-on to jQuery Validation to enable unobtrusive validation options in data-* attributes.",
+        "size_kb": 276,
+        "languages": {
+            "JavaScript": 726,
+            "Batchfile": 245,
+            "PowerShell": 32
+        }
+    },
+    {
+        "name": "jquery-ajax-unobtrusive",
+        "full_name": "aspnet/jquery-ajax-unobtrusive",
+        "url": "https://github.com/aspnet/jquery-ajax-unobtrusive",
+        "stars": 146,
+        "updated_at": "2025-02-20T11:21:23Z",
+        "description": "[Maintenance mode: only security and critical bug fixes are being worked on] Add-on to jQuery Ajax to enable unobtrusive options in data-* attributes.",
+        "size_kb": 132,
+        "languages": {
+            "JavaScript": 700,
+            "Batchfile": 245,
+            "PowerShell": 31
+        }
+    },
+    {
+        "name": "MicrosoftConfigurationBuilders",
+        "full_name": "aspnet/MicrosoftConfigurationBuilders",
+        "url": "https://github.com/aspnet/MicrosoftConfigurationBuilders",
+        "stars": 127,
+        "updated_at": "2025-01-30T10:28:49Z",
+        "description": "Microsoft.Configuration.Builders",
+        "size_kb": 11594,
+        "languages": {
+            "C#": 467948,
+            "PowerShell": 18043,
+            "Batchfile": 2110
+        }
+    }
+]

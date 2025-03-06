@@ -1,0 +1,266 @@
+[
+    {
+        "name": "core",
+        "full_name": "dotnet/core",
+        "url": "https://github.com/dotnet/core",
+        "stars": 21199,
+        "updated_at": "2025-03-06T19:26:10Z",
+        "description": ".NET news, announcements, release notes, and more!",
+        "size_kb": 49454,
+        "languages": {
+            "PowerShell": 20421,
+            "Shell": 5074
+        }
+    },
+    {
+        "name": "DataGridExtensions",
+        "full_name": "dotnet/DataGridExtensions",
+        "url": "https://github.com/dotnet/DataGridExtensions",
+        "stars": 846,
+        "updated_at": "2025-03-03T16:23:21Z",
+        "description": "Modular extensions for the WPF DataGrid control",
+        "size_kb": 1370,
+        "languages": {
+            "C#": 189545,
+            "Batchfile": 108
+        }
+    },
+    {
+        "name": "WatsonWebserver",
+        "full_name": "dotnet/WatsonWebserver",
+        "url": "https://github.com/dotnet/WatsonWebserver",
+        "stars": 436,
+        "updated_at": "2025-02-17T08:23:38Z",
+        "description": "Watson is the fastest, easiest way to build scalable RESTful web servers and services in C#.",
+        "size_kb": 26026,
+        "languages": {
+            "C#": 431892,
+            "Batchfile": 456,
+            "HTML": 210,
+            "Dockerfile": 208
+        }
+    },
+    {
+        "name": "WatsonTcp",
+        "full_name": "dotnet/WatsonTcp",
+        "url": "https://github.com/dotnet/WatsonTcp",
+        "stars": 613,
+        "updated_at": "2025-03-04T16:50:48Z",
+        "description": "WatsonTcp is the easiest way to build TCP-based clients and servers in C#.",
+        "size_kb": 3074,
+        "languages": {
+            "C#": 424147,
+            "Batchfile": 758
+        }
+    },
+    {
+        "name": "csharplang",
+        "full_name": "dotnet/csharplang",
+        "url": "https://github.com/dotnet/csharplang",
+        "stars": 11828,
+        "updated_at": "2025-03-06T16:47:35Z",
+        "description": "The official repo for the design of the C# programming language",
+        "size_kb": 13771,
+        "languages": {
+            "C#": 43213
+        }
+    },
+    {
+        "name": "designs",
+        "full_name": "dotnet/designs",
+        "url": "https://github.com/dotnet/designs",
+        "stars": 904,
+        "updated_at": "2025-03-03T13:32:59Z",
+        "description": "This repo is used for reviewing new .NET designs.",
+        "size_kb": 3973,
+        "languages": {
+            "C#": 9035,
+            "Shell": 143,
+            "Batchfile": 68
+        }
+    },
+    {
+        "name": "project-system-tools",
+        "full_name": "dotnet/project-system-tools",
+        "url": "https://github.com/dotnet/project-system-tools",
+        "stars": 279,
+        "updated_at": "2025-02-25T19:15:46Z",
+        "description": "Tools for working with the C#/VB/F# project system.",
+        "size_kb": 2418,
+        "languages": {
+            "C#": 315980,
+            "PowerShell": 171504,
+            "Shell": 134011,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 2891
+        }
+    },
+    {
+        "name": "try",
+        "full_name": "dotnet/try",
+        "url": "https://github.com/dotnet/try",
+        "stars": 2936,
+        "updated_at": "2025-03-06T02:26:06Z",
+        "description": "Try .NET provides developers and content authors with tools to create interactive experiences.",
+        "size_kb": 79508,
+        "languages": {
+            "TypeScript": 259576,
+            "C#": 214818,
+            "PowerShell": 173915,
+            "Shell": 123914,
+            "Jupyter Notebook": 56449,
+            "CMake": 13870,
+            "HTML": 7551,
+            "SCSS": 6949,
+            "JavaScript": 5862,
+            "CSS": 4347,
+            "Dockerfile": 1252,
+            "Batchfile": 1098
+        }
+    },
+    {
+        "name": "nuget-trends",
+        "full_name": "dotnet/nuget-trends",
+        "url": "https://github.com/dotnet/nuget-trends",
+        "stars": 158,
+        "updated_at": "2025-02-21T14:25:06Z",
+        "description": "Check out NuGet packages adoption and what's trending on NuGet.",
+        "size_kb": 2725,
+        "languages": {
+            "C#": 114202,
+            "TypeScript": 97024,
+            "SCSS": 15026,
+            "HTML": 10503,
+            "Shell": 2046,
+            "JavaScript": 1294,
+            "Dockerfile": 244
+        }
+    },
+    {
+        "name": "format",
+        "full_name": "dotnet/format",
+        "url": "https://github.com/dotnet/format",
+        "stars": 1944,
+        "updated_at": "2025-02-26T08:55:13Z",
+        "description": "Home for the dotnet-format command",
+        "size_kb": 4538,
+        "languages": {
+            "C#": 356387,
+            "PowerShell": 181082,
+            "Shell": 123722,
+            "CMake": 15129,
+            "Batchfile": 1199,
+            "Dockerfile": 729,
+            "Smalltalk": 183,
+            "F#": 161
+        }
+    },
+    {
+        "name": "machinelearning-modelbuilder",
+        "full_name": "dotnet/machinelearning-modelbuilder",
+        "url": "https://github.com/dotnet/machinelearning-modelbuilder",
+        "stars": 274,
+        "updated_at": "2025-02-14T11:35:52Z",
+        "description": "Simple UI tool to build custom machine learning models.",
+        "size_kb": 2601,
+        "languages": {
+            "Dockerfile": 221
+        }
+    },
+    {
+        "name": "windowsdesktop",
+        "full_name": "dotnet/windowsdesktop",
+        "url": "https://github.com/dotnet/windowsdesktop",
+        "stars": 182,
+        "updated_at": "2025-03-06T05:12:14Z",
+        "description": null,
+        "size_kb": 7401,
+        "languages": {
+            "PowerShell": 171901,
+            "Shell": 134934,
+            "CMake": 14853,
+            "Python": 13176,
+            "C#": 12428,
+            "Batchfile": 607
+        }
+    },
+    {
+        "name": "install-scripts",
+        "full_name": "dotnet/install-scripts",
+        "url": "https://github.com/dotnet/install-scripts",
+        "stars": 158,
+        "updated_at": "2025-03-03T13:32:32Z",
+        "description": null,
+        "size_kb": 968,
+        "languages": {
+            "PowerShell": 172710,
+            "Shell": 127670,
+            "C#": 95869,
+            "CMake": 13870,
+            "Batchfile": 622
+        }
+    },
+    {
+        "name": "deployment-tools",
+        "full_name": "dotnet/deployment-tools",
+        "url": "https://github.com/dotnet/deployment-tools",
+        "stars": 179,
+        "updated_at": "2025-03-03T07:36:23Z",
+        "description": "This repo contains the code to build the .NET deployment tools and installers for all supported platforms, as well as the sources to .NET deployment tools.",
+        "size_kb": 2282,
+        "languages": {
+            "C#": 362441,
+            "PowerShell": 178397,
+            "Shell": 174502,
+            "CMake": 82360,
+            "C++": 47554,
+            "C": 42425,
+            "Python": 13176,
+            "Batchfile": 9922,
+            "Awk": 888
+        }
+    },
+    {
+        "name": "csharpstandard",
+        "full_name": "dotnet/csharpstandard",
+        "url": "https://github.com/dotnet/csharpstandard",
+        "stars": 739,
+        "updated_at": "2025-03-05T14:49:26Z",
+        "description": "Working space for ECMA-TC49-TG2, the C# standard committee.",
+        "size_kb": 6424,
+        "languages": {
+            "C#": 237980,
+            "Shell": 3432,
+            "ANTLR": 2965,
+            "Smalltalk": 42
+        }
+    },
+    {
+        "name": "reproducible-builds",
+        "full_name": "dotnet/reproducible-builds",
+        "url": "https://github.com/dotnet/reproducible-builds",
+        "stars": 199,
+        "updated_at": "2025-03-05T05:06:12Z",
+        "description": "Contains the DotNet.ReproducibleBuilds package",
+        "size_kb": 140,
+        "languages": {
+            "C#": 17747
+        }
+    },
+    {
+        "name": "intro-to-dotnet-web-dev",
+        "full_name": "dotnet/intro-to-dotnet-web-dev",
+        "url": "https://github.com/dotnet/intro-to-dotnet-web-dev",
+        "stars": 693,
+        "updated_at": "2025-03-03T18:42:19Z",
+        "description": "Get Started as a Web Developer with .NET, C#, and ASP.NET Core",
+        "size_kb": 2327,
+        "languages": {
+            "C#": 145246,
+            "HTML": 25887,
+            "CSS": 24344,
+            "JavaScript": 452
+        }
+    }
+]

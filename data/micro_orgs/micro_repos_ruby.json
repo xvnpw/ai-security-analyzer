@@ -1,0 +1,391 @@
+[
+    {
+        "name": "json",
+        "full_name": "ruby/json",
+        "url": "https://github.com/ruby/json",
+        "stars": 713,
+        "updated_at": "2025-03-05T21:05:31Z",
+        "description": "JSON implementation for Ruby",
+        "size_kb": 4984,
+        "languages": {
+            "Ruby": 187784,
+            "Java": 172752,
+            "C": 107675,
+            "Ragel": 31456,
+            "C++": 4995
+        }
+    },
+    {
+        "name": "psych",
+        "full_name": "ruby/psych",
+        "url": "https://github.com/ruby/psych",
+        "stars": 569,
+        "updated_at": "2025-03-01T16:21:32Z",
+        "description": "A libyaml wrapper for Ruby",
+        "size_kb": 2185,
+        "languages": {
+            "Ruby": 287025,
+            "Java": 48391,
+            "C": 35743,
+            "Shell": 74
+        }
+    },
+    {
+        "name": "www.ruby-lang.org",
+        "full_name": "ruby/www.ruby-lang.org",
+        "url": "https://github.com/ruby/www.ruby-lang.org",
+        "stars": 889,
+        "updated_at": "2025-03-06T01:11:49Z",
+        "description": "Source of the https://www.ruby-lang.org website.",
+        "size_kb": 49631,
+        "languages": {
+            "Ruby": 47633,
+            "HTML": 32063,
+            "CSS": 17725,
+            "JavaScript": 5475,
+            "TypeScript": 1258
+        }
+    },
+    {
+        "name": "curses",
+        "full_name": "ruby/curses",
+        "url": "https://github.com/ruby/curses",
+        "stars": 298,
+        "updated_at": "2025-02-17T08:44:36Z",
+        "description": "Ruby binding for curses, ncurses, and PDCurses.  Formerly part of the ruby standard library.",
+        "size_kb": 357,
+        "languages": {
+            "C": 156966,
+            "Ruby": 11307
+        }
+    },
+    {
+        "name": "did_you_mean",
+        "full_name": "ruby/did_you_mean",
+        "url": "https://github.com/ruby/did_you_mean",
+        "stars": 1869,
+        "updated_at": "2025-02-24T19:30:48Z",
+        "description": "The gem that has been saving people from typos since 2014",
+        "size_kb": 2081,
+        "languages": {
+            "Ruby": 75916
+        }
+    },
+    {
+        "name": "power_assert",
+        "full_name": "ruby/power_assert",
+        "url": "https://github.com/ruby/power_assert",
+        "stars": 189,
+        "updated_at": "2024-12-23T12:24:28Z",
+        "description": "Power Assert for Ruby",
+        "size_kb": 289,
+        "languages": {
+            "Ruby": 53428,
+            "Shell": 74
+        }
+    },
+    {
+        "name": "rake",
+        "full_name": "ruby/rake",
+        "url": "https://github.com/ruby/rake",
+        "stars": 2363,
+        "updated_at": "2025-02-26T19:32:45Z",
+        "description": "A make-like build utility for Ruby.",
+        "size_kb": 3498,
+        "languages": {
+            "Ruby": 323337,
+            "Shell": 74
+        }
+    },
+    {
+        "name": "TryRuby",
+        "full_name": "ruby/TryRuby",
+        "url": "https://github.com/ruby/TryRuby",
+        "stars": 233,
+        "updated_at": "2025-02-23T19:14:25Z",
+        "description": "This 4th iteration of TryRuby is a website where you can learn the Ruby language. ",
+        "size_kb": 1681,
+        "languages": {
+            "Ruby": 44135,
+            "SCSS": 7165,
+            "HTML": 7092,
+            "Dockerfile": 300
+        }
+    },
+    {
+        "name": "bigdecimal",
+        "full_name": "ruby/bigdecimal",
+        "url": "https://github.com/ruby/bigdecimal",
+        "stars": 124,
+        "updated_at": "2025-02-14T17:08:02Z",
+        "description": "Arbitrary-precision decimal floating-point number library for Ruby",
+        "size_kb": 1754,
+        "languages": {
+            "C": 312525,
+            "Ruby": 113993,
+            "C++": 5145,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "webrick",
+        "full_name": "ruby/webrick",
+        "url": "https://github.com/ruby/webrick",
+        "stars": 290,
+        "updated_at": "2025-03-04T22:17:05Z",
+        "description": "HTTP server toolkit",
+        "size_kb": 835,
+        "languages": {
+            "Ruby": 340470,
+            "Shell": 131,
+            "HTML": 79
+        }
+    },
+    {
+        "name": "fiddle",
+        "full_name": "ruby/fiddle",
+        "url": "https://github.com/ruby/fiddle",
+        "stars": 171,
+        "updated_at": "2025-02-21T19:54:34Z",
+        "description": "A libffi wrapper for Ruby.",
+        "size_kb": 655,
+        "languages": {
+            "Ruby": 170406,
+            "C": 125764,
+            "Dockerfile": 410,
+            "Shell": 255,
+            "Emacs Lisp": 39
+        }
+    },
+    {
+        "name": "csv",
+        "full_name": "ruby/csv",
+        "url": "https://github.com/ruby/csv",
+        "stars": 187,
+        "updated_at": "2025-03-03T02:00:19Z",
+        "description": "CSV Reading and Writing",
+        "size_kb": 2327,
+        "languages": {
+            "Ruby": 369923,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "ostruct",
+        "full_name": "ruby/ostruct",
+        "url": "https://github.com/ruby/ostruct",
+        "stars": 122,
+        "updated_at": "2025-02-26T13:37:59Z",
+        "description": "OpenStruct implementation",
+        "size_kb": 195,
+        "languages": {
+            "Ruby": 28005,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "reline",
+        "full_name": "ruby/reline",
+        "url": "https://github.com/ruby/reline",
+        "stars": 278,
+        "updated_at": "2025-03-06T17:26:00Z",
+        "description": "The compatible library with the API of Ruby's stdlib 'readline'",
+        "size_kb": 1765,
+        "languages": {
+            "Ruby": 468550,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "logger",
+        "full_name": "ruby/logger",
+        "url": "https://github.com/ruby/logger",
+        "stars": 117,
+        "updated_at": "2025-02-17T07:56:21Z",
+        "description": "simple logging utility",
+        "size_kb": 771,
+        "languages": {
+            "Ruby": 82553,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "irb",
+        "full_name": "ruby/irb",
+        "url": "https://github.com/ruby/irb",
+        "stars": 404,
+        "updated_at": "2025-02-19T12:39:16Z",
+        "description": "interactive Ruby",
+        "size_kb": 3054,
+        "languages": {
+            "Ruby": 491150,
+            "Shell": 74
+        }
+    },
+    {
+        "name": "benchmark",
+        "full_name": "ruby/benchmark",
+        "url": "https://github.com/ruby/benchmark",
+        "stars": 172,
+        "updated_at": "2025-02-25T04:09:35Z",
+        "description": "The Benchmark module provides methods for benchmarking Ruby code, giving detailed reports on the time taken for each task.",
+        "size_kb": 143,
+        "languages": {
+            "Ruby": 26801,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "open3",
+        "full_name": "ruby/open3",
+        "url": "https://github.com/ruby/open3",
+        "stars": 105,
+        "updated_at": "2025-02-11T21:34:41Z",
+        "description": "Open3 gives you access to stdin, stdout, and stderr when running other programs.",
+        "size_kb": 167,
+        "languages": {
+            "Ruby": 64761,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "timeout",
+        "full_name": "ruby/timeout",
+        "url": "https://github.com/ruby/timeout",
+        "stars": 145,
+        "updated_at": "2025-02-17T04:02:45Z",
+        "description": "Timeout provides a way to auto-terminate a potentially long-running operation if it hasn't finished in a fixed amount of time.",
+        "size_kb": 176,
+        "languages": {
+            "Ruby": 14422,
+            "Shell": 74
+        }
+    },
+    {
+        "name": "setup-ruby",
+        "full_name": "ruby/setup-ruby",
+        "url": "https://github.com/ruby/setup-ruby",
+        "stars": 840,
+        "updated_at": "2025-03-06T07:18:16Z",
+        "description": "An action to download a prebuilt Ruby and add it to the PATH in 5 seconds",
+        "size_kb": 24366,
+        "languages": {
+            "JavaScript": 49028,
+            "Ruby": 4686,
+            "Shell": 198
+        }
+    },
+    {
+        "name": "net-http",
+        "full_name": "ruby/net-http",
+        "url": "https://github.com/ruby/net-http",
+        "stars": 108,
+        "updated_at": "2025-02-22T18:39:43Z",
+        "description": "Net::HTTP provides a rich library which can be used to build HTTP user-agents.",
+        "size_kb": 1129,
+        "languages": {
+            "Ruby": 309944,
+            "Makefile": 543,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "drb",
+        "full_name": "ruby/drb",
+        "url": "https://github.com/ruby/drb",
+        "stars": 190,
+        "updated_at": "2025-02-27T18:39:01Z",
+        "description": "Distributed object system for Ruby",
+        "size_kb": 507,
+        "languages": {
+            "Ruby": 127902,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "erb",
+        "full_name": "ruby/erb",
+        "url": "https://github.com/ruby/erb",
+        "stars": 132,
+        "updated_at": "2025-03-06T17:03:20Z",
+        "description": "An easy to use but powerful templating system for Ruby",
+        "size_kb": 315,
+        "languages": {
+            "Ruby": 57855,
+            "C": 2503,
+            "Shell": 131,
+            "HTML": 50
+        }
+    },
+    {
+        "name": "gem_rbs_collection",
+        "full_name": "ruby/gem_rbs_collection",
+        "url": "https://github.com/ruby/gem_rbs_collection",
+        "stars": 270,
+        "updated_at": "2025-03-06T05:20:42Z",
+        "description": "A collection of RBS for gems.",
+        "size_kb": 4067,
+        "languages": {
+            "Ruby": 218080,
+            "HTML": 1391,
+            "Shell": 361
+        }
+    },
+    {
+        "name": "syntax_suggest",
+        "full_name": "ruby/syntax_suggest",
+        "url": "https://github.com/ruby/syntax_suggest",
+        "stars": 344,
+        "updated_at": "2025-01-10T05:38:31Z",
+        "description": "Searching for unexpected `end` syntax errors takes a lot of time. Let this gem do it for you!",
+        "size_kb": 893,
+        "languages": {
+            "Ruby": 177604,
+            "Shell": 680
+        }
+    },
+    {
+        "name": "vscode-rdbg",
+        "full_name": "ruby/vscode-rdbg",
+        "url": "https://github.com/ruby/vscode-rdbg",
+        "stars": 182,
+        "updated_at": "2025-02-23T23:44:26Z",
+        "description": "VSCode Ruby rdbg Debugger",
+        "size_kb": 1370,
+        "languages": {
+            "TypeScript": 104253,
+            "JavaScript": 133
+        }
+    },
+    {
+        "name": "error_highlight",
+        "full_name": "ruby/error_highlight",
+        "url": "https://github.com/ruby/error_highlight",
+        "stars": 149,
+        "updated_at": "2025-01-29T08:51:40Z",
+        "description": "The gem enhances Exception#message by adding a short explanation where the exception is raised",
+        "size_kb": 69,
+        "languages": {
+            "Ruby": 60704
+        }
+    },
+    {
+        "name": "ruby.wasm",
+        "full_name": "ruby/ruby.wasm",
+        "url": "https://github.com/ruby/ruby.wasm",
+        "stars": 741,
+        "updated_at": "2025-03-02T16:15:20Z",
+        "description": "ruby.wasm is a collection of WebAssembly ports of the CRuby.",
+        "size_kb": 2689,
+        "languages": {
+            "Ruby": 153114,
+            "C": 104790,
+            "TypeScript": 60216,
+            "JavaScript": 55719,
+            "Rust": 13191,
+            "Shell": 10744,
+            "Dockerfile": 4524,
+            "HTML": 2756
+        }
+    }
+]

@@ -1,0 +1,130 @@
+[
+    {
+        "name": "amazon-pay-sdk-php",
+        "full_name": "amzn/amazon-pay-sdk-php",
+        "url": "https://github.com/amzn/amazon-pay-sdk-php",
+        "stars": 208,
+        "updated_at": "2024-09-17T15:30:38Z",
+        "description": "Amazon Pay PHP SDK",
+        "size_kb": 877,
+        "languages": {
+            "PHP": 224982
+        }
+    },
+    {
+        "name": "hawktracer",
+        "full_name": "amzn/hawktracer",
+        "url": "https://github.com/amzn/hawktracer",
+        "stars": 134,
+        "updated_at": "2025-02-16T09:24:32Z",
+        "description": "HawkTracer is a highly portable, low-overhead, configurable profiling tool built in Amazon Video for getting performance metrics from low-end devices.",
+        "size_kb": 1111,
+        "languages": {
+            "C++": 238070,
+            "C": 166543,
+            "Python": 35204,
+            "CMake": 33975,
+            "Shell": 1365,
+            "Lua": 147
+        }
+    },
+    {
+        "name": "sketch-constructor",
+        "full_name": "amzn/sketch-constructor",
+        "url": "https://github.com/amzn/sketch-constructor",
+        "stars": 546,
+        "updated_at": "2025-02-21T01:50:27Z",
+        "description": "Read/write/manipulate Sketch files in Node without Sketch plugins!",
+        "size_kb": 4212,
+        "languages": {
+            "JavaScript": 186283,
+            "Handlebars": 1182
+        }
+    },
+    {
+        "name": "convolutional-handwriting-gan",
+        "full_name": "amzn/convolutional-handwriting-gan",
+        "url": "https://github.com/amzn/convolutional-handwriting-gan",
+        "stars": 270,
+        "updated_at": "2025-02-21T11:07:47Z",
+        "description": "ScrabbleGAN: Semi-Supervised Varying Length Handwritten Text Generation (CVPR20)",
+        "size_kb": 875,
+        "languages": {
+            "Python": 245720,
+            "Perl": 767
+        }
+    },
+    {
+        "name": "awsssmchaosrunner",
+        "full_name": "amzn/awsssmchaosrunner",
+        "url": "https://github.com/amzn/awsssmchaosrunner",
+        "stars": 250,
+        "updated_at": "2025-01-17T04:02:25Z",
+        "description": "Amazon's light-weight library for chaos engineering on AWS. It can be used for EC2 and ECS (with EC2 launch type).",
+        "size_kb": 296,
+        "languages": {
+            "Kotlin": 71636
+        }
+    },
+    {
+        "name": "distance-assistant",
+        "full_name": "amzn/distance-assistant",
+        "url": "https://github.com/amzn/distance-assistant",
+        "stars": 133,
+        "updated_at": "2025-02-21T15:52:44Z",
+        "description": "Pedestrian monitor that provides visual feedback to help ensure proper social distancing guidelines are being observed",
+        "size_kb": 113,
+        "languages": {
+            "Python": 66529,
+            "Haskell": 8687,
+            "Shell": 6848,
+            "Makefile": 5423,
+            "Dockerfile": 3285,
+            "CMake": 2732,
+            "Jinja": 578
+        }
+    },
+    {
+        "name": "selling-partner-api-models",
+        "full_name": "amzn/selling-partner-api-models",
+        "url": "https://github.com/amzn/selling-partner-api-models",
+        "stars": 650,
+        "updated_at": "2025-03-05T11:13:59Z",
+        "description": "This repository contains OpenAPI models for developers to use when developing software to call Selling Partner APIs.",
+        "size_kb": 3664,
+        "languages": {
+            "Mustache": 327558,
+            "Java": 148376,
+            "C#": 29566,
+            "PHP": 29286,
+            "Python": 10785,
+            "JavaScript": 3114,
+            "Shell": 2740
+        }
+    },
+    {
+        "name": "trans-encoder",
+        "full_name": "amzn/trans-encoder",
+        "url": "https://github.com/amzn/trans-encoder",
+        "stars": 132,
+        "updated_at": "2025-01-11T09:08:02Z",
+        "description": "Trans-Encoder: Unsupervised sentence-pair modelling through self- and mutual-distillations",
+        "size_kb": 45,
+        "languages": {
+            "Python": 87996,
+            "Shell": 738
+        }
+    },
+    {
+        "name": "kotlin-inject-anvil",
+        "full_name": "amzn/kotlin-inject-anvil",
+        "url": "https://github.com/amzn/kotlin-inject-anvil",
+        "stars": 314,
+        "updated_at": "2025-03-02T19:57:12Z",
+        "description": "Extensions for the kotlin-inject dependency injection framework",
+        "size_kb": 369,
+        "languages": {
+            "Kotlin": 258358
+        }
+    }
+]

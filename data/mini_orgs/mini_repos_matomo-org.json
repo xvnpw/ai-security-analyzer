@@ -1,0 +1,651 @@
+[
+    {
+        "name": "piwik-ruby-api",
+        "full_name": "matomo-org/piwik-ruby-api",
+        "url": "https://github.com/matomo-org/piwik-ruby-api",
+        "stars": 46,
+        "updated_at": "2023-04-23T17:28:06Z",
+        "description": "A complete client for the Piwik API",
+        "size_kb": 482,
+        "languages": {
+            "Ruby": 56459
+        }
+    },
+    {
+        "name": "piwik-python-api",
+        "full_name": "matomo-org/piwik-python-api",
+        "url": "https://github.com/matomo-org/piwik-python-api",
+        "stars": 103,
+        "updated_at": "2025-02-01T15:22:07Z",
+        "description": "Piwik API for Python",
+        "size_kb": 268,
+        "languages": {
+            "Python": 78659,
+            "Makefile": 410
+        }
+    },
+    {
+        "name": "matomo-sdk-ios",
+        "full_name": "matomo-org/matomo-sdk-ios",
+        "url": "https://github.com/matomo-org/matomo-sdk-ios",
+        "stars": 389,
+        "updated_at": "2025-01-10T20:30:47Z",
+        "description": "Matomo iOS, tvOS and macOS SDK: a Matomo tracker written in Swift",
+        "size_kb": 4765,
+        "languages": {
+            "Swift": 115865,
+            "Ruby": 7369,
+            "Objective-C": 5838,
+            "C": 481
+        }
+    },
+    {
+        "name": "piwik-dotnet-api",
+        "full_name": "matomo-org/piwik-dotnet-api",
+        "url": "https://github.com/matomo-org/piwik-dotnet-api",
+        "stars": 36,
+        "updated_at": "2024-09-01T15:29:19Z",
+        "description": "Official C# implementation of the Matomo Analytics API",
+        "size_kb": 62,
+        "languages": {
+            "C#": 120590,
+            "JavaScript": 970,
+            "Shell": 639
+        }
+    },
+    {
+        "name": "piwik-dotnet-tracker",
+        "full_name": "matomo-org/piwik-dotnet-tracker",
+        "url": "https://github.com/matomo-org/piwik-dotnet-tracker",
+        "stars": 74,
+        "updated_at": "2024-09-01T15:29:01Z",
+        "description": "C# API client SDK for the Piwik Tracking API",
+        "size_kb": 801,
+        "languages": {
+            "C#": 151149,
+            "ASP.NET": 7737,
+            "Shell": 837,
+            "JavaScript": 217
+        }
+    },
+    {
+        "name": "plugin-SecurityInfo",
+        "full_name": "matomo-org/plugin-SecurityInfo",
+        "url": "https://github.com/matomo-org/plugin-SecurityInfo",
+        "stars": 24,
+        "updated_at": "2025-03-06T00:22:34Z",
+        "description": "Provides security information about your PHP environment and offers suggestions based on PhpSecInfo from the PHP Security Consortium.",
+        "size_kb": 5686,
+        "languages": {
+            "PHP": 85507,
+            "Vue": 2153,
+            "Less": 1018,
+            "JavaScript": 569,
+            "Twig": 256,
+            "TypeScript": 235
+        }
+    },
+    {
+        "name": "plugin-VisitorGenerator",
+        "full_name": "matomo-org/plugin-VisitorGenerator",
+        "url": "https://github.com/matomo-org/plugin-VisitorGenerator",
+        "stars": 19,
+        "updated_at": "2025-02-18T11:08:37Z",
+        "description": "Plugin to create fake visits, websites, users and goals to populate Matomo reports",
+        "size_kb": 11604,
+        "languages": {
+            "PHP": 161832,
+            "Vue": 4781,
+            "Twig": 995,
+            "TypeScript": 292
+        }
+    },
+    {
+        "name": "plugin-TreemapVisualization",
+        "full_name": "matomo-org/plugin-TreemapVisualization",
+        "url": "https://github.com/matomo-org/plugin-TreemapVisualization",
+        "stars": 14,
+        "updated_at": "2025-03-06T00:19:36Z",
+        "description": "Matomo plugin that lets you view reports as treemaps.",
+        "size_kb": 3074,
+        "languages": {
+            "PHP": 26420,
+            "JavaScript": 24230,
+            "Less": 1974,
+            "Twig": 305
+        }
+    },
+    {
+        "name": "plugin-CustomAlerts",
+        "full_name": "matomo-org/plugin-CustomAlerts",
+        "url": "https://github.com/matomo-org/plugin-CustomAlerts",
+        "stars": 16,
+        "updated_at": "2025-03-06T00:20:54Z",
+        "description": "Alerts are a great way to get notified of changes on your website in Matomo.",
+        "size_kb": 4931,
+        "languages": {
+            "PHP": 205949,
+            "Vue": 22768,
+            "Twig": 7735,
+            "JavaScript": 3786,
+            "TypeScript": 1071,
+            "Less": 787
+        }
+    },
+    {
+        "name": "matomo-package",
+        "full_name": "matomo-org/matomo-package",
+        "url": "https://github.com/matomo-org/matomo-package",
+        "stars": 28,
+        "updated_at": "2023-03-17T10:17:32Z",
+        "description": "Matomo release script (official package), and debian/ubuntu package (allows sysadmins to deploy Matomo within seconds using \"apt-get install piwik -V\")",
+        "size_kb": 1291,
+        "languages": {
+            "Makefile": 14857
+        }
+    },
+    {
+        "name": "plugin-LoginLdap",
+        "full_name": "matomo-org/plugin-LoginLdap",
+        "url": "https://github.com/matomo-org/plugin-LoginLdap",
+        "stars": 38,
+        "updated_at": "2025-03-03T10:18:10Z",
+        "description": "LDAP authentication and synchronization for Matomo.",
+        "size_kb": 13508,
+        "languages": {
+            "PHP": 303584,
+            "Vue": 25331,
+            "JavaScript": 2897,
+            "Less": 1706,
+            "TypeScript": 345,
+            "Twig": 321
+        }
+    },
+    {
+        "name": "matomo-nodejs-tracker",
+        "full_name": "matomo-org/matomo-nodejs-tracker",
+        "url": "https://github.com/matomo-org/matomo-nodejs-tracker",
+        "stars": 118,
+        "updated_at": "2025-01-17T11:46:47Z",
+        "description": "A Node.js wrapper for the Matomo (Piwik) tracking HTTP API",
+        "size_kb": 494,
+        "languages": {
+            "JavaScript": 9717
+        }
+    },
+    {
+        "name": "plugin-TasksTimetable",
+        "full_name": "matomo-org/plugin-TasksTimetable",
+        "url": "https://github.com/matomo-org/plugin-TasksTimetable",
+        "stars": 6,
+        "updated_at": "2025-03-06T00:22:51Z",
+        "description": "List all maintenance tasks that are scheduled to run. Displays the task names and next execution time in a table.",
+        "size_kb": 1040,
+        "languages": {
+            "PHP": 5910,
+            "Vue": 1582,
+            "JavaScript": 868,
+            "Twig": 299,
+            "TypeScript": 220
+        }
+    },
+    {
+        "name": "device-detector",
+        "full_name": "matomo-org/device-detector",
+        "url": "https://github.com/matomo-org/device-detector",
+        "stars": 3244,
+        "updated_at": "2025-03-03T14:01:48Z",
+        "description": "The Universal Device Detection library will parse any User Agent and detect the browser, operating system, device used (desktop, tablet, mobile, tv, cars, console, etc.), brand and model. ",
+        "size_kb": 46424,
+        "languages": {
+            "PHP": 316085
+        }
+    },
+    {
+        "name": "matomo-php-tracker",
+        "full_name": "matomo-org/matomo-php-tracker",
+        "url": "https://github.com/matomo-org/matomo-php-tracker",
+        "stars": 215,
+        "updated_at": "2025-01-22T23:54:59Z",
+        "description": "PHP Client for Matomo Analytics Tracking API",
+        "size_kb": 308,
+        "languages": {
+            "PHP": 89672,
+            "Shell": 44
+        }
+    },
+    {
+        "name": "github-changelog-generator",
+        "full_name": "matomo-org/github-changelog-generator",
+        "url": "https://github.com/matomo-org/github-changelog-generator",
+        "stars": 30,
+        "updated_at": "2025-01-21T16:16:43Z",
+        "description": "Queries the GitHub issues API to format a changelog",
+        "size_kb": 232,
+        "languages": {
+            "JavaScript": 13407,
+            "HTML": 2029
+        }
+    },
+    {
+        "name": "matomo-sdk-android",
+        "full_name": "matomo-org/matomo-sdk-android",
+        "url": "https://github.com/matomo-org/matomo-sdk-android",
+        "stars": 398,
+        "updated_at": "2025-02-20T22:02:27Z",
+        "description": "SDK for Android to measure your apps with Matomo. Works on Android phones, tablets, Fire TV sticks, and more!",
+        "size_kb": 6146,
+        "languages": {
+            "Java": 289304,
+            "Kotlin": 45826
+        }
+    },
+    {
+        "name": "component-decompress",
+        "full_name": "matomo-org/component-decompress",
+        "url": "https://github.com/matomo-org/component-decompress",
+        "stars": 12,
+        "updated_at": "2025-02-03T14:16:32Z",
+        "description": "Decompress files",
+        "size_kb": 209,
+        "languages": {
+            "PHP": 239686
+        }
+    },
+    {
+        "name": "component-network",
+        "full_name": "matomo-org/component-network",
+        "url": "https://github.com/matomo-org/component-network",
+        "stars": 20,
+        "updated_at": "2025-01-08T09:21:33Z",
+        "description": "Network component: manipulate IP addresses (ipv4, ipv6) in PHP used in the Matomo project",
+        "size_kb": 125,
+        "languages": {
+            "PHP": 51514
+        }
+    },
+    {
+        "name": "tracker-proxy",
+        "full_name": "matomo-org/tracker-proxy",
+        "url": "https://github.com/matomo-org/tracker-proxy",
+        "stars": 153,
+        "updated_at": "2025-02-27T22:23:00Z",
+        "description": "HTTP proxy for Matomo's tracker API. This script allows to track websites with Matomo without revealing to your visitors the secret Matomo server URL.",
+        "size_kb": 164,
+        "languages": {
+            "PHP": 30640,
+            "JavaScript": 34
+        }
+    },
+    {
+        "name": "plugin-QueuedTracking",
+        "full_name": "matomo-org/plugin-QueuedTracking",
+        "url": "https://github.com/matomo-org/plugin-QueuedTracking",
+        "stars": 82,
+        "updated_at": "2025-03-06T00:22:10Z",
+        "description": "Scale your large traffic Matomo service by queuing tracking requests (in Redis or MySQL) for better performance.",
+        "size_kb": 13626,
+        "languages": {
+            "PHP": 346940,
+            "JavaScript": 2389
+        }
+    },
+    {
+        "name": "component-cache",
+        "full_name": "matomo-org/component-cache",
+        "url": "https://github.com/matomo-org/component-cache",
+        "stars": 37,
+        "updated_at": "2025-01-08T15:08:16Z",
+        "description": "PHP caching library based on Doctrine cache",
+        "size_kb": 117,
+        "languages": {
+            "PHP": 65973
+        }
+    },
+    {
+        "name": "component-ini",
+        "full_name": "matomo-org/component-ini",
+        "url": "https://github.com/matomo-org/component-ini",
+        "stars": 51,
+        "updated_at": "2025-02-02T23:38:50Z",
+        "description": "Read and write INI configurations.",
+        "size_kb": 59,
+        "languages": {
+            "PHP": 36505
+        }
+    },
+    {
+        "name": "plugin-Bandwidth",
+        "full_name": "matomo-org/plugin-Bandwidth",
+        "url": "https://github.com/matomo-org/plugin-Bandwidth",
+        "stars": 14,
+        "updated_at": "2025-03-06T00:20:35Z",
+        "description": "Monitor Bandwidth for each page, download, and measure overall traffic in bytes",
+        "size_kb": 7789,
+        "languages": {
+            "PHP": 61141,
+            "JavaScript": 4522,
+            "Twig": 636
+        }
+    },
+    {
+        "name": "matomo-log-analytics",
+        "full_name": "matomo-org/matomo-log-analytics",
+        "url": "https://github.com/matomo-org/matomo-log-analytics",
+        "stars": 228,
+        "updated_at": "2025-02-05T10:19:58Z",
+        "description": "Import any kind of server logs in Matomo for powerful log analytics. Universal log file parsing and reporting.",
+        "size_kb": 893,
+        "languages": {
+            "Python": 165155,
+            "Shell": 223
+        }
+    },
+    {
+        "name": "cache",
+        "full_name": "matomo-org/cache",
+        "url": "https://github.com/matomo-org/cache",
+        "stars": 1,
+        "updated_at": "2023-01-09T20:17:02Z",
+        "description": "Doctrine Cache component",
+        "size_kb": 717,
+        "languages": {
+            "PHP": 156546
+        }
+    },
+    {
+        "name": "matomo-java-tracker",
+        "full_name": "matomo-org/matomo-java-tracker",
+        "url": "https://github.com/matomo-org/matomo-java-tracker",
+        "stars": 71,
+        "updated_at": "2025-02-03T21:04:42Z",
+        "description": "Official Java implementation of the Matomo Tracking HTTP API.",
+        "size_kb": 12297,
+        "languages": {
+            "Java": 449798,
+            "HTML": 334
+        }
+    },
+    {
+        "name": "plugin-LogViewer",
+        "full_name": "matomo-org/plugin-LogViewer",
+        "url": "https://github.com/matomo-org/plugin-LogViewer",
+        "stars": 6,
+        "updated_at": "2025-03-06T00:21:49Z",
+        "description": "View your Matomo logs within Matomo",
+        "size_kb": 16128,
+        "languages": {
+            "PHP": 45345,
+            "Vue": 12679,
+            "JavaScript": 5676,
+            "Less": 1293,
+            "TypeScript": 217,
+            "Twig": 157
+        }
+    },
+    {
+        "name": "docker",
+        "full_name": "matomo-org/docker",
+        "url": "https://github.com/matomo-org/docker",
+        "stars": 882,
+        "updated_at": "2025-03-04T09:06:17Z",
+        "description": "Official Docker project for Matomo Analytics",
+        "size_kb": 233,
+        "languages": {
+            "Shell": 9196,
+            "Dockerfile": 8132,
+            "Mustache": 1042
+        }
+    },
+    {
+        "name": "plugin-AnonymousPiwikUsageMeasurement",
+        "full_name": "matomo-org/plugin-AnonymousPiwikUsageMeasurement",
+        "url": "https://github.com/matomo-org/plugin-AnonymousPiwikUsageMeasurement",
+        "stars": 4,
+        "updated_at": "2025-03-06T00:21:13Z",
+        "description": "Help making Matomo better by sending anonymized usage data to the creators the project, and/or to your own Matomo instance and/or to any other Matomo instance",
+        "size_kb": 2291,
+        "languages": {
+            "PHP": 65073,
+            "JavaScript": 44675,
+            "TypeScript": 7626
+        }
+    },
+    {
+        "name": "plugin-CustomDimensions",
+        "full_name": "matomo-org/plugin-CustomDimensions",
+        "url": "https://github.com/matomo-org/plugin-CustomDimensions",
+        "stars": 13,
+        "updated_at": "2023-12-19T17:38:16Z",
+        "description": "Custom Dimensions lets you track any custom data in Matomo",
+        "size_kb": 16633,
+        "languages": {
+            "PHP": 244751,
+            "JavaScript": 19334,
+            "HTML": 12472,
+            "CSS": 984
+        }
+    },
+    {
+        "name": "plugin-ClassicFontTheme",
+        "full_name": "matomo-org/plugin-ClassicFontTheme",
+        "url": "https://github.com/matomo-org/plugin-ClassicFontTheme",
+        "stars": 2,
+        "updated_at": "2025-01-09T23:28:02Z",
+        "description": null,
+        "size_kb": 533,
+        "languages": {
+            "Less": 52
+        }
+    },
+    {
+        "name": "matomo-icons",
+        "full_name": "matomo-org/matomo-icons",
+        "url": "https://github.com/matomo-org/matomo-icons",
+        "stars": 23,
+        "updated_at": "2025-01-20T09:55:59Z",
+        "description": "Source files for the icons in Matomo",
+        "size_kb": 31498,
+        "languages": {
+            "Python": 16254,
+            "Shell": 6013,
+            "PHP": 371
+        }
+    },
+    {
+        "name": "plugin-MarketingCampaignsReporting",
+        "full_name": "matomo-org/plugin-MarketingCampaignsReporting",
+        "url": "https://github.com/matomo-org/plugin-MarketingCampaignsReporting",
+        "stars": 27,
+        "updated_at": "2025-03-06T00:10:18Z",
+        "description": null,
+        "size_kb": 15960,
+        "languages": {
+            "PHP": 110597,
+            "JavaScript": 5660,
+            "Twig": 240,
+            "Less": 165
+        }
+    },
+    {
+        "name": "cloudflare-app-manual",
+        "full_name": "matomo-org/cloudflare-app-manual",
+        "url": "https://github.com/matomo-org/cloudflare-app-manual",
+        "stars": 2,
+        "updated_at": "2023-11-19T23:30:01Z",
+        "description": "Matomo Analytics app for Cloudflare. Adds the tracking code when user already has a running Matomo",
+        "size_kb": 71,
+        "languages": {
+            "JavaScript": 1085
+        }
+    },
+    {
+        "name": "plugin-EnvironmentVariables",
+        "full_name": "matomo-org/plugin-EnvironmentVariables",
+        "url": "https://github.com/matomo-org/plugin-EnvironmentVariables",
+        "stars": 12,
+        "updated_at": "2025-01-20T07:43:44Z",
+        "description": "Allows you to specify Matomo config in environment variables instead of the config file.",
+        "size_kb": 25,
+        "languages": {
+            "PHP": 1358
+        }
+    },
+    {
+        "name": "plugin-Migration",
+        "full_name": "matomo-org/plugin-Migration",
+        "url": "https://github.com/matomo-org/plugin-Migration",
+        "stars": 6,
+        "updated_at": "2025-01-24T12:28:31Z",
+        "description": "Migrate a Matomo Measurable (website, app, roll-up, ...) from one Matomo instance to another Matomo",
+        "size_kb": 157,
+        "languages": {
+            "PHP": 65555
+        }
+    },
+    {
+        "name": "plugin-DeviceDetectorCache",
+        "full_name": "matomo-org/plugin-DeviceDetectorCache",
+        "url": "https://github.com/matomo-org/plugin-DeviceDetectorCache",
+        "stars": 4,
+        "updated_at": "2025-01-15T01:36:50Z",
+        "description": "Makes tracking in Matomo Analytics faster by detecting many devices, operating systems, bots, and browsers from a cache.",
+        "size_kb": 4993,
+        "languages": {
+            "PHP": 56559
+        }
+    },
+    {
+        "name": "Sparkline",
+        "full_name": "matomo-org/Sparkline",
+        "url": "https://github.com/matomo-org/Sparkline",
+        "stars": 1,
+        "updated_at": "2023-01-09T20:49:57Z",
+        "description": "PHP Class (using GD) to generate sparklines",
+        "size_kb": 65,
+        "languages": {
+            "PHP": 39494
+        }
+    },
+    {
+        "name": "matomo-marketplace-for-wordpress",
+        "full_name": "matomo-org/matomo-marketplace-for-wordpress",
+        "url": "https://github.com/matomo-org/matomo-marketplace-for-wordpress",
+        "stars": 3,
+        "updated_at": "2024-09-27T03:54:58Z",
+        "description": "Keep plugins from the Matomo Marketplace up to date in your WordPress with the convenience of a click. Get notified on new updates.",
+        "size_kb": 351,
+        "languages": {
+            "PHP": 22916,
+            "Shell": 1085
+        }
+    },
+    {
+        "name": "lessphp",
+        "full_name": "matomo-org/lessphp",
+        "url": "https://github.com/matomo-org/lessphp",
+        "stars": 2,
+        "updated_at": "2023-01-09T20:49:10Z",
+        "description": "LESS compiler written in PHP",
+        "size_kb": 875,
+        "languages": {
+            "PHP": 150731,
+            "CSS": 47462,
+            "Shell": 1757,
+            "Makefile": 56
+        }
+    },
+    {
+        "name": "plugin-Provider",
+        "full_name": "matomo-org/plugin-Provider",
+        "url": "https://github.com/matomo-org/plugin-Provider",
+        "stars": 4,
+        "updated_at": "2025-01-20T07:40:21Z",
+        "description": "Reports the Internet Service Provider of your visitors as part of your Matomo Analytics",
+        "size_kb": 179,
+        "languages": {
+            "PHP": 19795,
+            "Twig": 528
+        }
+    },
+    {
+        "name": "plugin-CustomVariables",
+        "full_name": "matomo-org/plugin-CustomVariables",
+        "url": "https://github.com/matomo-org/plugin-CustomVariables",
+        "stars": 5,
+        "updated_at": "2025-03-06T00:21:33Z",
+        "description": "This plugins allows you to configure and track Custom Variables in your Matomo Analytics.",
+        "size_kb": 1638,
+        "languages": {
+            "PHP": 139148,
+            "Vue": 5615,
+            "TypeScript": 2817,
+            "Twig": 1969,
+            "JavaScript": 878,
+            "Less": 240
+        }
+    },
+    {
+        "name": "plugin-TrackingSpamPrevention",
+        "full_name": "matomo-org/plugin-TrackingSpamPrevention",
+        "url": "https://github.com/matomo-org/plugin-TrackingSpamPrevention",
+        "stars": 13,
+        "updated_at": "2025-03-06T00:23:09Z",
+        "description": null,
+        "size_kb": 1445,
+        "languages": {
+            "PHP": 91799,
+            "JavaScript": 933
+        }
+    },
+    {
+        "name": "google-tag-manager-matomo-template",
+        "full_name": "matomo-org/google-tag-manager-matomo-template",
+        "url": "https://github.com/matomo-org/google-tag-manager-matomo-template",
+        "stars": 1,
+        "updated_at": "2024-08-23T08:29:22Z",
+        "description": "Official Matomo Tracking Tag for Matomo Cloud & Google Tag Manager",
+        "size_kb": 67,
+        "languages": {
+            "Smarty": 18404
+        }
+    },
+    {
+        "name": "looker-studio-connector",
+        "full_name": "matomo-org/looker-studio-connector",
+        "url": "https://github.com/matomo-org/looker-studio-connector",
+        "stars": 9,
+        "updated_at": "2025-02-06T08:37:30Z",
+        "description": "The officially supported Matomo Connector for Looker Studio enables you to explore your Matomo data in Looker Studio at no cost. You can connect to both Matomo Cloud instances or On-Premise instances using just a Matomo Auth Token.",
+        "size_kb": 694,
+        "languages": {
+            "TypeScript": 112801,
+            "JavaScript": 3620
+        }
+    },
+    {
+        "name": "matomo-scoper",
+        "full_name": "matomo-org/matomo-scoper",
+        "url": "https://github.com/matomo-org/matomo-scoper",
+        "stars": 0,
+        "updated_at": "2024-06-12T21:18:47Z",
+        "description": "Scopes composer dependencies for a Matomo install or an individual Matomo plugin to avoid conflicts with other PHP software.",
+        "size_kb": 127,
+        "languages": {
+            "PHP": 109348
+        }
+    },
+    {
+        "name": "localtunnel-server",
+        "full_name": "matomo-org/localtunnel-server",
+        "url": "https://github.com/matomo-org/localtunnel-server",
+        "stars": 0,
+        "updated_at": "2024-02-28T21:23:43Z",
+        "description": "server for localtunnel.me",
+        "size_kb": 436,
+        "languages": {
+            "JavaScript": 35167,
+            "Dockerfile": 222
+        }
+    }
+]

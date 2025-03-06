@@ -1,0 +1,100 @@
+[
+    {
+        "name": "external-attacher",
+        "full_name": "kubernetes-csi/external-attacher",
+        "url": "https://github.com/kubernetes-csi/external-attacher",
+        "stars": 174,
+        "updated_at": "2025-02-26T12:54:38Z",
+        "description": "Sidecar container that watches Kubernetes VolumeAttachment objects and triggers ControllerPublish/Unpublish against a CSI endpoint",
+        "size_kb": 55554,
+        "languages": {
+            "Go": 190182,
+            "Shell": 104880,
+            "Makefile": 15000,
+            "Python": 13570,
+            "Dockerfile": 206
+        }
+    },
+    {
+        "name": "csi-driver-iscsi",
+        "full_name": "kubernetes-csi/csi-driver-iscsi",
+        "url": "https://github.com/kubernetes-csi/csi-driver-iscsi",
+        "stars": 110,
+        "updated_at": "2025-03-06T12:31:50Z",
+        "description": null,
+        "size_kb": 24228,
+        "languages": {
+            "Shell": 128418,
+            "Go": 66914,
+            "Python": 19862,
+            "Makefile": 15683,
+            "Dockerfile": 899
+        }
+    },
+    {
+        "name": "csi-driver-nfs",
+        "full_name": "kubernetes-csi/csi-driver-nfs",
+        "url": "https://github.com/kubernetes-csi/csi-driver-nfs",
+        "stars": 954,
+        "updated_at": "2025-03-06T01:48:10Z",
+        "description": "This driver allows Kubernetes to access NFS server on Linux node.",
+        "size_kb": 38168,
+        "languages": {
+            "Go": 234811,
+            "Shell": 141652,
+            "Python": 19864,
+            "Makefile": 19590,
+            "Mustache": 9436,
+            "Dockerfile": 866
+        }
+    },
+    {
+        "name": "node-driver-registrar",
+        "full_name": "kubernetes-csi/node-driver-registrar",
+        "url": "https://github.com/kubernetes-csi/node-driver-registrar",
+        "stars": 151,
+        "updated_at": "2025-03-04T07:32:40Z",
+        "description": "Sidecar container that registers a CSI driver with the kubelet using the kubelet plugin registration mechanism.",
+        "size_kb": 56345,
+        "languages": {
+            "Shell": 104033,
+            "Go": 25764,
+            "Makefile": 15026,
+            "Python": 13570,
+            "Dockerfile": 249
+        }
+    },
+    {
+        "name": "external-resizer",
+        "full_name": "kubernetes-csi/external-resizer",
+        "url": "https://github.com/kubernetes-csi/external-resizer",
+        "stars": 130,
+        "updated_at": "2025-03-04T10:09:49Z",
+        "description": "Sidecar container that watches Kubernetes PersistentVolumeClaims objects and triggers controller side expansion operation against a CSI endpoint",
+        "size_kb": 25963,
+        "languages": {
+            "Go": 241012,
+            "Shell": 104206,
+            "Makefile": 14951,
+            "Python": 13570,
+            "Dockerfile": 202
+        }
+    },
+    {
+        "name": "csi-driver-smb",
+        "full_name": "kubernetes-csi/csi-driver-smb",
+        "url": "https://github.com/kubernetes-csi/csi-driver-smb",
+        "stars": 526,
+        "updated_at": "2025-03-02T07:54:07Z",
+        "description": "This driver allows Kubernetes to access SMB Server on both Linux and Windows nodes.",
+        "size_kb": 90308,
+        "languages": {
+            "Go": 373179,
+            "Shell": 149913,
+            "Makefile": 25044,
+            "Python": 19890,
+            "Mustache": 18626,
+            "Dockerfile": 1086
+        }
+    }
+]

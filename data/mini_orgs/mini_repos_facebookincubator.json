@@ -1,0 +1,584 @@
+[
+    {
+        "name": "SocketRocket",
+        "full_name": "facebookincubator/SocketRocket",
+        "url": "https://github.com/facebookincubator/SocketRocket",
+        "stars": 9583,
+        "updated_at": "2025-03-04T05:20:33Z",
+        "description": "A conforming Objective-C WebSocket client library.",
+        "size_kb": 2458,
+        "languages": {
+            "Objective-C": 167984,
+            "JavaScript": 2688,
+            "Python": 2211,
+            "Go": 1478,
+            "C": 1290,
+            "Shell": 1212,
+            "Ruby": 1084,
+            "HTML": 747,
+            "Makefile": 707
+        }
+    },
+    {
+        "name": "dhcplb",
+        "full_name": "facebookincubator/dhcplb",
+        "url": "https://github.com/facebookincubator/dhcplb",
+        "stars": 1049,
+        "updated_at": "2025-02-28T18:04:21Z",
+        "description": "dhcplb is Facebook's implementation of a load balancer for DHCP.",
+        "size_kb": 247,
+        "languages": {
+            "Go": 56831,
+            "Ruby": 5662,
+            "HTML": 1591
+        }
+    },
+    {
+        "name": "Battery-Metrics",
+        "full_name": "facebookincubator/Battery-Metrics",
+        "url": "https://github.com/facebookincubator/Battery-Metrics",
+        "stars": 750,
+        "updated_at": "2025-03-05T18:25:56Z",
+        "description": "Library that helps in instrumenting battery related system metrics.",
+        "size_kb": 945,
+        "languages": {
+            "Java": 435025,
+            "Kotlin": 18537
+        }
+    },
+    {
+        "name": "FBX2glTF",
+        "full_name": "facebookincubator/FBX2glTF",
+        "url": "https://github.com/facebookincubator/FBX2glTF",
+        "stars": 2135,
+        "updated_at": "2025-03-05T19:31:18Z",
+        "description": "A command-line tool for the conversion of 3D model assets on the FBX file format to the glTF file format.",
+        "size_kb": 8567,
+        "languages": {
+            "C++": 243653,
+            "CMake": 10664,
+            "JavaScript": 3127,
+            "Dockerfile": 1187,
+            "Python": 972
+        }
+    },
+    {
+        "name": "dcrpm",
+        "full_name": "facebookincubator/dcrpm",
+        "url": "https://github.com/facebookincubator/dcrpm",
+        "stars": 72,
+        "updated_at": "2024-02-25T15:15:20Z",
+        "description": "A tool to detect and correct common issues around RPM database corruption.",
+        "size_kb": 68245,
+        "languages": {
+            "Python": 106885,
+            "Makefile": 428
+        }
+    },
+    {
+        "name": "go-qfext",
+        "full_name": "facebookincubator/go-qfext",
+        "url": "https://github.com/facebookincubator/go-qfext",
+        "stars": 92,
+        "updated_at": "2025-02-17T06:05:41Z",
+        "description": "a fast counting quotient filter implementation in golang",
+        "size_kb": 84,
+        "languages": {
+            "Go": 53578
+        }
+    },
+    {
+        "name": "later",
+        "full_name": "facebookincubator/later",
+        "url": "https://github.com/facebookincubator/later",
+        "stars": 46,
+        "updated_at": "2025-03-05T13:40:02Z",
+        "description": "A framework for python asyncio with batteries included for people writing services in python asyncio",
+        "size_kb": 196,
+        "languages": {
+            "Python": 58968
+        }
+    },
+    {
+        "name": "Bowler",
+        "full_name": "facebookincubator/Bowler",
+        "url": "https://github.com/facebookincubator/Bowler",
+        "stars": 1588,
+        "updated_at": "2025-03-01T18:59:08Z",
+        "description": "Safe code refactoring for modern Python.",
+        "size_kb": 1092,
+        "languages": {
+            "Python": 118593,
+            "JavaScript": 13346,
+            "CSS": 847,
+            "Makefile": 782,
+            "Shell": 481
+        }
+    },
+    {
+        "name": "wordpress-messenger-customer-chat-plugin",
+        "full_name": "facebookincubator/wordpress-messenger-customer-chat-plugin",
+        "url": "https://github.com/facebookincubator/wordpress-messenger-customer-chat-plugin",
+        "stars": 27,
+        "updated_at": "2024-03-16T10:05:43Z",
+        "description": "Messenger Customer Chat Plugin for WordPress",
+        "size_kb": 3903,
+        "languages": {
+            "PHP": 49495,
+            "JavaScript": 10907,
+            "CSS": 4747
+        }
+    },
+    {
+        "name": "go2chef",
+        "full_name": "facebookincubator/go2chef",
+        "url": "https://github.com/facebookincubator/go2chef",
+        "stars": 42,
+        "updated_at": "2024-11-25T04:55:33Z",
+        "description": "A Golang tool to bootstrap a system from zero so that it's able to run Chef to be managed ",
+        "size_kb": 185,
+        "languages": {
+            "Go": 130630,
+            "Shell": 1599,
+            "Makefile": 665
+        }
+    },
+    {
+        "name": "sks",
+        "full_name": "facebookincubator/sks",
+        "url": "https://github.com/facebookincubator/sks",
+        "stars": 83,
+        "updated_at": "2025-02-11T23:35:33Z",
+        "description": "Secure Key Storage (SKS) is a library for Go that abstracts Security Hardware on laptops.",
+        "size_kb": 162,
+        "languages": {
+            "Go": 93909
+        }
+    },
+    {
+        "name": "obs-plugins",
+        "full_name": "facebookincubator/obs-plugins",
+        "url": "https://github.com/facebookincubator/obs-plugins",
+        "stars": 54,
+        "updated_at": "2023-01-05T06:59:38Z",
+        "description": "OBS Plugins",
+        "size_kb": 20,
+        "languages": {
+            "C++": 27813,
+            "C": 699,
+            "CMake": 495
+        }
+    },
+    {
+        "name": "senpai",
+        "full_name": "facebookincubator/senpai",
+        "url": "https://github.com/facebookincubator/senpai",
+        "stars": 316,
+        "updated_at": "2025-02-08T18:00:00Z",
+        "description": "Senpai is an automated memory sizing tool for container applications.",
+        "size_kb": 11,
+        "languages": {
+            "Python": 6335
+        }
+    },
+    {
+        "name": "fbjni",
+        "full_name": "facebookincubator/fbjni",
+        "url": "https://github.com/facebookincubator/fbjni",
+        "stars": 287,
+        "updated_at": "2025-02-26T03:06:31Z",
+        "description": "A library designed to simplify the usage of the Java Native Interface",
+        "size_kb": 747,
+        "languages": {
+            "C++": 427827,
+            "Java": 92515,
+            "CMake": 6500,
+            "C": 4432,
+            "Shell": 1272
+        }
+    },
+    {
+        "name": "InjKit",
+        "full_name": "facebookincubator/InjKit",
+        "url": "https://github.com/facebookincubator/InjKit",
+        "stars": 54,
+        "updated_at": "2024-09-06T00:14:44Z",
+        "description": "Injection Kit. It is a java bytecode processing library for bytecode injection and transformation.",
+        "size_kb": 295,
+        "languages": {
+            "Java": 454204,
+            "Shell": 1514
+        }
+    },
+    {
+        "name": "FioSynth",
+        "full_name": "facebookincubator/FioSynth",
+        "url": "https://github.com/facebookincubator/FioSynth",
+        "stars": 144,
+        "updated_at": "2025-02-26T16:53:26Z",
+        "description": "Tool which enables the creation of synthetic storage workloads, automates the execution and results collection of synthetic storage benchmarks.",
+        "size_kb": 277,
+        "languages": {
+            "Python": 80494,
+            "Roff": 7999,
+            "Shell": 146
+        }
+    },
+    {
+        "name": "submitit",
+        "full_name": "facebookincubator/submitit",
+        "url": "https://github.com/facebookincubator/submitit",
+        "stars": 1386,
+        "updated_at": "2025-03-06T06:11:52Z",
+        "description": "Python 3.8+ toolbox for submitting jobs to Slurm",
+        "size_kb": 312,
+        "languages": {
+            "Python": 205019,
+            "Makefile": 3314,
+            "Shell": 451
+        }
+    },
+    {
+        "name": "MY_ENUM",
+        "full_name": "facebookincubator/MY_ENUM",
+        "url": "https://github.com/facebookincubator/MY_ENUM",
+        "stars": 17,
+        "updated_at": "2025-02-11T15:51:10Z",
+        "description": "Small c++ macro library to add compile-time introspection to c++ enum classes.",
+        "size_kb": 51,
+        "languages": {
+            "C++": 53317,
+            "CMake": 1600,
+            "Cuda": 773
+        }
+    },
+    {
+        "name": "reindeer",
+        "full_name": "facebookincubator/reindeer",
+        "url": "https://github.com/facebookincubator/reindeer",
+        "stars": 195,
+        "updated_at": "2025-03-06T11:52:49Z",
+        "description": "Reindeer is a tool to transform Rust Cargo dependencies into generated Buck build rules",
+        "size_kb": 6147,
+        "languages": {
+            "Rust": 272784,
+            "Shell": 662,
+            "Starlark": 234
+        }
+    },
+    {
+        "name": "fbc_owrt_feed",
+        "full_name": "facebookincubator/fbc_owrt_feed",
+        "url": "https://github.com/facebookincubator/fbc_owrt_feed",
+        "stars": 3,
+        "updated_at": "2024-12-25T09:36:52Z",
+        "description": "Facebook Connectivity OpenWrt Feed. Package feed for OpenWrt router OS by Facebook Connectivity programme.",
+        "size_kb": 187,
+        "languages": {
+            "Lua": 16661,
+            "Shell": 11488,
+            "Makefile": 7096,
+            "HTML": 328
+        }
+    },
+    {
+        "name": "ConversionsAPI-Tag-for-GoogleTagManager",
+        "full_name": "facebookincubator/ConversionsAPI-Tag-for-GoogleTagManager",
+        "url": "https://github.com/facebookincubator/ConversionsAPI-Tag-for-GoogleTagManager",
+        "stars": 65,
+        "updated_at": "2025-02-04T19:24:14Z",
+        "description": "This repository will contain the artifacts needed for setting up Conversions API implementation on Google Tag Manager's serverside. Please follow the instructions https://www.facebook.com/business/help/702509907046774",
+        "size_kb": 136,
+        "languages": {
+            "Smarty": 46068
+        }
+    },
+    {
+        "name": "dnf-plugin-cow",
+        "full_name": "facebookincubator/dnf-plugin-cow",
+        "url": "https://github.com/facebookincubator/dnf-plugin-cow",
+        "stars": 7,
+        "updated_at": "2024-10-13T00:35:40Z",
+        "description": "Code to enable Copy on Write features being upstreamed in rpm and librepo",
+        "size_kb": 27,
+        "languages": {
+            "Shell": 7577,
+            "C": 1867,
+            "Python": 1041
+        }
+    },
+    {
+        "name": "meta-code-verify",
+        "full_name": "facebookincubator/meta-code-verify",
+        "url": "https://github.com/facebookincubator/meta-code-verify",
+        "stars": 156,
+        "updated_at": "2025-03-03T21:54:31Z",
+        "description": "Code Verify is an open source web browser extension that confirms that your Facebook, Messenger, Instagram, and WhatsApp Web code hasn\u2019t been tampered with or altered, and that the Web experience you\u2019re getting is the same as everyone else\u2019s.",
+        "size_kb": 802,
+        "languages": {
+            "TypeScript": 100155,
+            "JavaScript": 46033,
+            "HTML": 6723,
+            "CSS": 4707
+        }
+    },
+    {
+        "name": "GeoLift",
+        "full_name": "facebookincubator/GeoLift",
+        "url": "https://github.com/facebookincubator/GeoLift",
+        "stars": 195,
+        "updated_at": "2025-02-26T21:24:30Z",
+        "description": "GeoLift is an end-to-end geo-experimental methodology based on Synthetic Control Methods used to measure the true incremental effect (Lift) of ad campaign.",
+        "size_kb": 54257,
+        "languages": {
+            "R": 232825,
+            "JavaScript": 10337,
+            "CSS": 2218
+        }
+    },
+    {
+        "name": "superconsole",
+        "full_name": "facebookincubator/superconsole",
+        "url": "https://github.com/facebookincubator/superconsole",
+        "stars": 490,
+        "updated_at": "2025-03-05T17:19:24Z",
+        "description": "The superconsole crate provides a handler and building blocks for powerful, yet minimally intrusive TUIs.  It is cross platform, supporting Windows 7+, Linux, and MacOS.  Rustaceans who want to create non-interactive TUIs can use the component composition building block system to quickly deploy their code.",
+        "size_kb": 6691,
+        "languages": {
+            "Rust": 148491
+        }
+    },
+    {
+        "name": "tacquito",
+        "full_name": "facebookincubator/tacquito",
+        "url": "https://github.com/facebookincubator/tacquito",
+        "stars": 102,
+        "updated_at": "2025-03-05T01:15:51Z",
+        "description": "Tacquito is an open source TACACs+ server written in Go that implements RFC8907",
+        "size_kb": 289,
+        "languages": {
+            "Go": 367898
+        }
+    },
+    {
+        "name": "TTPForge",
+        "full_name": "facebookincubator/TTPForge",
+        "url": "https://github.com/facebookincubator/TTPForge",
+        "stars": 362,
+        "updated_at": "2025-03-04T23:03:08Z",
+        "description": "The TTPForge is a Cybersecurity Framework for developing, automating, and executing attacker Tactics, Techniques, and Procedures (TTPs).",
+        "size_kb": 606,
+        "languages": {
+            "Go": 379711,
+            "Shell": 14291
+        }
+    },
+    {
+        "name": "ForgeArmory",
+        "full_name": "facebookincubator/ForgeArmory",
+        "url": "https://github.com/facebookincubator/ForgeArmory",
+        "stars": 102,
+        "updated_at": "2025-03-04T23:03:28Z",
+        "description": "ForgeArmory provides TTPs that can be used with the TTPForge (https://github.com/facebookincubator/ttpforge).",
+        "size_kb": 434,
+        "languages": {
+            "Swift": 104187,
+            "PowerShell": 15513,
+            "C": 5601,
+            "JavaScript": 4558,
+            "Shell": 3040,
+            "Python": 2049,
+            "Makefile": 155
+        }
+    },
+    {
+        "name": "rush",
+        "full_name": "facebookincubator/rush",
+        "url": "https://github.com/facebookincubator/rush",
+        "stars": 29,
+        "updated_at": "2025-02-17T14:10:52Z",
+        "description": "RUSH (Reliable - unreliable - Streaming Protocol) ",
+        "size_kb": 75,
+        "languages": {
+            "C++": 92969,
+            "CMake": 3413,
+            "Dockerfile": 3345,
+            "C": 3228,
+            "Makefile": 748
+        }
+    },
+    {
+        "name": "dataclassgenerate",
+        "full_name": "facebookincubator/dataclassgenerate",
+        "url": "https://github.com/facebookincubator/dataclassgenerate",
+        "stars": 156,
+        "updated_at": "2025-02-21T15:56:06Z",
+        "description": "DataClassGenerate (or simply DCG) is a Kotlin compiler plugin that addresses an Android APK size overhead from Kotlin data classes. ",
+        "size_kb": 202,
+        "languages": {
+            "Kotlin": 49943
+        }
+    },
+    {
+        "name": "LTVision",
+        "full_name": "facebookincubator/LTVision",
+        "url": "https://github.com/facebookincubator/LTVision",
+        "stars": 72,
+        "updated_at": "2025-03-05T20:05:57Z",
+        "description": "LTVision is an open-source library from Meta, designed to empower businesses to unlock the full potential of predicted customer lifetime value (pLTV) modeling.",
+        "size_kb": 9782,
+        "languages": {
+            "Python": 96880,
+            "Jupyter Notebook": 39813,
+            "JavaScript": 10233,
+            "MDX": 3491,
+            "CSS": 1545
+        }
+    },
+    {
+        "name": "SafeC",
+        "full_name": "facebookincubator/SafeC",
+        "url": "https://github.com/facebookincubator/SafeC",
+        "stars": 18,
+        "updated_at": "2024-10-05T08:31:07Z",
+        "description": "Library containing safer alternatives/wrappers for insecure C APIs. ",
+        "size_kb": 12,
+        "languages": {
+            "C++": 14503
+        }
+    },
+    {
+        "name": "CommutingZones",
+        "full_name": "facebookincubator/CommutingZones",
+        "url": "https://github.com/facebookincubator/CommutingZones",
+        "stars": 40,
+        "updated_at": "2025-01-04T13:06:05Z",
+        "description": "Commuting zones are geographic areas where people live and work and are useful for understanding local economies, as well as how they differ from traditional boundaries. These zones are a set of boundary shapes built using aggregated estimates of home and work locations. Data used to build commuting zones is aggregated and de-identified.",
+        "size_kb": 14819,
+        "languages": {
+            "JavaScript": 15811,
+            "R": 12724,
+            "CSS": 1636
+        }
+    },
+    {
+        "name": "wireguard_py",
+        "full_name": "facebookincubator/wireguard_py",
+        "url": "https://github.com/facebookincubator/wireguard_py",
+        "stars": 10,
+        "updated_at": "2025-02-16T10:56:55Z",
+        "description": "Cython library for Wireguard",
+        "size_kb": 39,
+        "languages": {
+            "C": 46628,
+            "Cython": 12926,
+            "Python": 8807
+        }
+    },
+    {
+        "name": "sado",
+        "full_name": "facebookincubator/sado",
+        "url": "https://github.com/facebookincubator/sado",
+        "stars": 15,
+        "updated_at": "2025-02-12T04:49:56Z",
+        "description": "A macOS signed-app shim for running daemons with reliable capabilities.",
+        "size_kb": 24,
+        "languages": {
+            "Swift": 11840
+        }
+    },
+    {
+        "name": "kernel-patches-daemon",
+        "full_name": "facebookincubator/kernel-patches-daemon",
+        "url": "https://github.com/facebookincubator/kernel-patches-daemon",
+        "stars": 8,
+        "updated_at": "2025-01-23T07:53:58Z",
+        "description": "Sync Patchwork series's with Github pull requests",
+        "size_kb": 890,
+        "languages": {
+            "Python": 260178,
+            "Dockerfile": 1002
+        }
+    },
+    {
+        "name": "CP4M",
+        "full_name": "facebookincubator/CP4M",
+        "url": "https://github.com/facebookincubator/CP4M",
+        "stars": 27,
+        "updated_at": "2025-02-21T15:57:16Z",
+        "description": "CP4M is a conversational marketing platform which enables advertisers to integrate their customer-facing chatbots with FB Messenger/WhatsApp, in order to meet customers where they are and drive native conversations on the advertiser's owned infra.",
+        "size_kb": 8695,
+        "languages": {
+            "Java": 375768,
+            "Dockerfile": 285
+        }
+    },
+    {
+        "name": "buck2-change-detector",
+        "full_name": "facebookincubator/buck2-change-detector",
+        "url": "https://github.com/facebookincubator/buck2-change-detector",
+        "stars": 32,
+        "updated_at": "2025-03-06T11:55:01Z",
+        "description": "Given a Buck2 built project and a set of changes (e.g. from source control) compute the targets that may have changed. Sometimes known as a target determinator, useful for optimizing a CI system.",
+        "size_kb": 330,
+        "languages": {
+            "Rust": 305481,
+            "Python": 9470,
+            "Batchfile": 384,
+            "Shell": 376
+        }
+    },
+    {
+        "name": "strobelight",
+        "full_name": "facebookincubator/strobelight",
+        "url": "https://github.com/facebookincubator/strobelight",
+        "stars": 114,
+        "updated_at": "2025-03-06T17:29:55Z",
+        "description": "Meta's fleetwide profiler framework",
+        "size_kb": 58,
+        "languages": {
+            "C++": 19999,
+            "CMake": 10209,
+            "C": 3525,
+            "Shell": 3136
+        }
+    },
+    {
+        "name": "hwbits_lib",
+        "full_name": "facebookincubator/hwbits_lib",
+        "url": "https://github.com/facebookincubator/hwbits_lib",
+        "stars": 2,
+        "updated_at": "2024-11-07T21:51:44Z",
+        "description": "Abstraction of hardware register-level protocols in a python semantic names.",
+        "size_kb": 12,
+        "languages": {
+            "Python": 21361
+        }
+    },
+    {
+        "name": "overture2osmjs",
+        "full_name": "facebookincubator/overture2osmjs",
+        "url": "https://github.com/facebookincubator/overture2osmjs",
+        "stars": 0,
+        "updated_at": "2024-12-09T08:58:20Z",
+        "description": "A JavaScript library that helps convert Overture Maps places data to OSM data format.",
+        "size_kb": 58405,
+        "languages": {
+            "JavaScript": 51098,
+            "Python": 701
+        }
+    },
+    {
+        "name": "ft_utils",
+        "full_name": "facebookincubator/ft_utils",
+        "url": "https://github.com/facebookincubator/ft_utils",
+        "stars": 39,
+        "updated_at": "2025-02-28T20:27:19Z",
+        "description": "A library of utilities to support efficient, scalable Python development leveraging Free Threaded Python.",
+        "size_kb": 165,
+        "languages": {
+            "Python": 177816,
+            "C": 156820
+        }
+    }
+]

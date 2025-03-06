@@ -1,0 +1,120 @@
+[
+    {
+        "name": "piwik-python-api",
+        "full_name": "matomo-org/piwik-python-api",
+        "url": "https://github.com/matomo-org/piwik-python-api",
+        "stars": 103,
+        "updated_at": "2025-02-01T15:22:07Z",
+        "description": "Piwik API for Python",
+        "size_kb": 268,
+        "languages": {
+            "Python": 78659,
+            "Makefile": 410
+        }
+    },
+    {
+        "name": "matomo-sdk-ios",
+        "full_name": "matomo-org/matomo-sdk-ios",
+        "url": "https://github.com/matomo-org/matomo-sdk-ios",
+        "stars": 389,
+        "updated_at": "2025-01-10T20:30:47Z",
+        "description": "Matomo iOS, tvOS and macOS SDK: a Matomo tracker written in Swift",
+        "size_kb": 4765,
+        "languages": {
+            "Swift": 115865,
+            "Ruby": 7369,
+            "Objective-C": 5838,
+            "C": 481
+        }
+    },
+    {
+        "name": "matomo-nodejs-tracker",
+        "full_name": "matomo-org/matomo-nodejs-tracker",
+        "url": "https://github.com/matomo-org/matomo-nodejs-tracker",
+        "stars": 118,
+        "updated_at": "2025-01-17T11:46:47Z",
+        "description": "A Node.js wrapper for the Matomo (Piwik) tracking HTTP API",
+        "size_kb": 494,
+        "languages": {
+            "JavaScript": 9717
+        }
+    },
+    {
+        "name": "device-detector",
+        "full_name": "matomo-org/device-detector",
+        "url": "https://github.com/matomo-org/device-detector",
+        "stars": 3244,
+        "updated_at": "2025-03-03T14:01:48Z",
+        "description": "The Universal Device Detection library will parse any User Agent and detect the browser, operating system, device used (desktop, tablet, mobile, tv, cars, console, etc.), brand and model. ",
+        "size_kb": 46424,
+        "languages": {
+            "PHP": 316085
+        }
+    },
+    {
+        "name": "matomo-php-tracker",
+        "full_name": "matomo-org/matomo-php-tracker",
+        "url": "https://github.com/matomo-org/matomo-php-tracker",
+        "stars": 215,
+        "updated_at": "2025-01-22T23:54:59Z",
+        "description": "PHP Client for Matomo Analytics Tracking API",
+        "size_kb": 308,
+        "languages": {
+            "PHP": 89672,
+            "Shell": 44
+        }
+    },
+    {
+        "name": "matomo-sdk-android",
+        "full_name": "matomo-org/matomo-sdk-android",
+        "url": "https://github.com/matomo-org/matomo-sdk-android",
+        "stars": 398,
+        "updated_at": "2025-02-20T22:02:27Z",
+        "description": "SDK for Android to measure your apps with Matomo. Works on Android phones, tablets, Fire TV sticks, and more!",
+        "size_kb": 6146,
+        "languages": {
+            "Java": 289304,
+            "Kotlin": 45826
+        }
+    },
+    {
+        "name": "tracker-proxy",
+        "full_name": "matomo-org/tracker-proxy",
+        "url": "https://github.com/matomo-org/tracker-proxy",
+        "stars": 153,
+        "updated_at": "2025-02-27T22:23:00Z",
+        "description": "HTTP proxy for Matomo's tracker API. This script allows to track websites with Matomo without revealing to your visitors the secret Matomo server URL.",
+        "size_kb": 164,
+        "languages": {
+            "PHP": 30640,
+            "JavaScript": 34
+        }
+    },
+    {
+        "name": "matomo-log-analytics",
+        "full_name": "matomo-org/matomo-log-analytics",
+        "url": "https://github.com/matomo-org/matomo-log-analytics",
+        "stars": 228,
+        "updated_at": "2025-02-05T10:19:58Z",
+        "description": "Import any kind of server logs in Matomo for powerful log analytics. Universal log file parsing and reporting.",
+        "size_kb": 893,
+        "languages": {
+            "Python": 165155,
+            "Shell": 223
+        }
+    },
+    {
+        "name": "docker",
+        "full_name": "matomo-org/docker",
+        "url": "https://github.com/matomo-org/docker",
+        "stars": 882,
+        "updated_at": "2025-03-04T09:06:17Z",
+        "description": "Official Docker project for Matomo Analytics",
+        "size_kb": 233,
+        "languages": {
+            "Shell": 9196,
+            "Dockerfile": 8132,
+            "Mustache": 1042
+        }
+    }
+]

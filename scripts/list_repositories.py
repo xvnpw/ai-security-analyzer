@@ -4,6 +4,7 @@ import requests
 import time
 import argparse
 import re
+import datetime
 
 # GitHub API configuration
 GITHUB_API_URL = "https://api.github.com"
@@ -70,6 +71,23 @@ def fetch_specific_repository(org_name, repo_name):
 
 def process_repository(repo):
     """Process a single repository and format it according to requirements."""
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    one_year_ago = now - datetime.timedelta(days=365 * 1)
+    one_year_ago_str = one_year_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
+    updated_at = datetime.datetime.strptime(repo["updated_at"], "%Y-%m-%dT%H:%M:%SZ").replace(
+        tzinfo=datetime.timezone.utc
+    )
+
+    if updated_at < one_year_ago:
+        print(f"Skipping {repo['full_name']} because of updated at: {updated_at}")
+        return None
+
+    stars = repo.get("stargazers_count", 0)
+    if stars < 100:
+        print(f"Skipping {repo['full_name']} because of stars: {stars}")
+        return None
+
     # Fetch languages for the repository
     languages = {}
     if "languages_url" in repo:
@@ -91,7 +109,7 @@ def process_repository(repo):
         return None
 
     main_lang_size = languages[main_lang]
-    if main_lang_size > 5000000:
+    if main_lang_size > 500000:
         print(f"Skipping {repo['full_name']} because of main language size: {main_lang_size}")
         return None
 

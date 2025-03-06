@@ -1,0 +1,14 @@
+[
+    {
+        "name": "sequence-layout",
+        "full_name": "transferwise/sequence-layout",
+        "url": "https://github.com/transferwise/sequence-layout",
+        "stars": 481,
+        "updated_at": "2025-03-02T17:35:43Z",
+        "description": "A vertical sequence UI component for Android",
+        "size_kb": 271,
+        "languages": {
+            "Kotlin": 25467
+        }
+    }
+]

@@ -1,0 +1,99 @@
+[
+    {
+        "name": "jidesha",
+        "full_name": "jitsi/jidesha",
+        "url": "https://github.com/jitsi/jidesha",
+        "stars": 136,
+        "updated_at": "2025-01-22T11:28:17Z",
+        "description": "A Chrome extension for Calendar integrations for Jitsi Meet",
+        "size_kb": 191,
+        "languages": {
+            "JavaScript": 50493,
+            "HTML": 1897,
+            "CSS": 1249
+        }
+    },
+    {
+        "name": "jibri",
+        "full_name": "jitsi/jibri",
+        "url": "https://github.com/jitsi/jibri",
+        "stars": 614,
+        "updated_at": "2025-02-17T18:24:22Z",
+        "description": "Jitsi BRoadcasting Infrastructure",
+        "size_kb": 1387,
+        "languages": {
+            "Kotlin": 370782,
+            "Shell": 8636,
+            "Java": 1620
+        }
+    },
+    {
+        "name": "jitsi-meet-electron",
+        "full_name": "jitsi/jitsi-meet-electron",
+        "url": "https://github.com/jitsi/jitsi-meet-electron",
+        "stars": 1534,
+        "updated_at": "2025-03-04T08:23:53Z",
+        "description": "Jitsi Meet desktop application powered by :electron:",
+        "size_kb": 6353,
+        "languages": {
+            "JavaScript": 107184,
+            "HTML": 244
+        }
+    },
+    {
+        "name": "jiwer",
+        "full_name": "jitsi/jiwer",
+        "url": "https://github.com/jitsi/jiwer",
+        "stars": 694,
+        "updated_at": "2025-03-04T08:33:32Z",
+        "description": "Evaluate your speech-to-text system with similarity measures such as word error rate (WER)",
+        "size_kb": 1762,
+        "languages": {
+            "Python": 98173,
+            "Just": 754
+        }
+    },
+    {
+        "name": "docker-jitsi-meet",
+        "full_name": "jitsi/docker-jitsi-meet",
+        "url": "https://github.com/jitsi/docker-jitsi-meet",
+        "stars": 3165,
+        "updated_at": "2025-03-06T12:01:29Z",
+        "description": "Jitsi Meet on Docker",
+        "size_kb": 1767,
+        "languages": {
+            "Lua": 42662,
+            "JavaScript": 26679,
+            "Dockerfile": 11104,
+            "Shell": 5474,
+            "Makefile": 1610
+        }
+    },
+    {
+        "name": "rnnoise-wasm",
+        "full_name": "jitsi/rnnoise-wasm",
+        "url": "https://github.com/jitsi/rnnoise-wasm",
+        "stars": 136,
+        "updated_at": "2025-03-06T07:07:25Z",
+        "description": "rnnoise noise suppression library as a WASM module",
+        "size_kb": 1464,
+        "languages": {
+            "Shell": 2496,
+            "JavaScript": 174,
+            "Dockerfile": 117
+        }
+    },
+    {
+        "name": "handbook",
+        "full_name": "jitsi/handbook",
+        "url": "https://github.com/jitsi/handbook",
+        "stars": 195,
+        "updated_at": "2025-02-28T08:34:18Z",
+        "description": "The Jitsi Handbook",
+        "size_kb": 49070,
+        "languages": {
+            "JavaScript": 13466,
+            "CSS": 3953
+        }
+    }
+]

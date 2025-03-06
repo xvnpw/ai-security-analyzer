@@ -1,0 +1,4088 @@
+[
+    {
+        "name": "Simple-KML",
+        "full_name": "mapbox/Simple-KML",
+        "url": "https://github.com/mapbox/Simple-KML",
+        "stars": 208,
+        "updated_at": "2024-12-05T05:46:27Z",
+        "description": "Simple KML is a simple & lightweight parsing library for KML written in Objective-C for the iOS platform. ",
+        "size_kb": 6894,
+        "languages": {
+            "Objective-C": 174926
+        }
+    },
+    {
+        "name": "node-srs",
+        "full_name": "mapbox/node-srs",
+        "url": "https://github.com/mapbox/node-srs",
+        "stars": 42,
+        "updated_at": "2025-01-29T02:40:37Z",
+        "description": "I parse your exotic projection representations and try to figure out WTF they are + magic detection of spherical mercator and wgs84 variants",
+        "size_kb": 3422,
+        "languages": {
+            "JavaScript": 38408
+        }
+    },
+    {
+        "name": "node-zipfile",
+        "full_name": "mapbox/node-zipfile",
+        "url": "https://github.com/mapbox/node-zipfile",
+        "stars": 101,
+        "updated_at": "2024-06-09T14:46:45Z",
+        "description": "Inspect and uncompress zipfile archives in Node.js",
+        "size_kb": 9779,
+        "languages": {
+            "C++": 20105,
+            "JavaScript": 14013,
+            "Python": 1956,
+            "Makefile": 1420,
+            "Shell": 1395,
+            "Emacs Lisp": 291,
+            "Batchfile": 78
+        }
+    },
+    {
+        "name": "tilelive",
+        "full_name": "mapbox/tilelive",
+        "url": "https://github.com/mapbox/tilelive",
+        "stars": 531,
+        "updated_at": "2025-02-12T09:37:55Z",
+        "description": "fast interface to tiles with pluggable backends - NOT ACTIVELY MAINTAINED",
+        "size_kb": 4192,
+        "languages": {
+            "JavaScript": 161009
+        }
+    },
+    {
+        "name": "mbutil",
+        "full_name": "mapbox/mbutil",
+        "url": "https://github.com/mapbox/mbutil",
+        "stars": 780,
+        "updated_at": "2025-03-03T20:46:44Z",
+        "description": "Importer and Exporter of MBTiles",
+        "size_kb": 1390,
+        "languages": {
+            "Python": 21462,
+            "Shell": 683
+        }
+    },
+    {
+        "name": "Fingertips",
+        "full_name": "mapbox/Fingertips",
+        "url": "https://github.com/mapbox/Fingertips",
+        "stars": 823,
+        "updated_at": "2024-12-24T09:48:06Z",
+        "description": "Touch indicators on external displays for iOS applications.",
+        "size_kb": 3343,
+        "languages": {
+            "Swift": 8106,
+            "Ruby": 751
+        }
+    },
+    {
+        "name": "tilelive-mapnik",
+        "full_name": "mapbox/tilelive-mapnik",
+        "url": "https://github.com/mapbox/tilelive-mapnik",
+        "stars": 82,
+        "updated_at": "2024-05-17T16:39:40Z",
+        "description": "mapnik renderer backend for tilelive",
+        "size_kb": 2861,
+        "languages": {
+            "JavaScript": 73349,
+            "Batchfile": 3174,
+            "Makefile": 394
+        }
+    },
+    {
+        "name": "node-mbtiles",
+        "full_name": "mapbox/node-mbtiles",
+        "url": "https://github.com/mapbox/node-mbtiles",
+        "stars": 288,
+        "updated_at": "2025-02-03T04:42:14Z",
+        "description": "mbtiles utility, renderer, and storage backend for tilelive",
+        "size_kb": 4420,
+        "languages": {
+            "JavaScript": 68014,
+            "PLpgSQL": 2212
+        }
+    },
+    {
+        "name": "sphericalmercator",
+        "full_name": "mapbox/sphericalmercator",
+        "url": "https://github.com/mapbox/sphericalmercator",
+        "stars": 276,
+        "updated_at": "2025-02-02T15:07:36Z",
+        "description": "Spherical Mercator math in Javascript",
+        "size_kb": 100,
+        "languages": {
+            "TypeScript": 9922
+        }
+    },
+    {
+        "name": "node-tilejson",
+        "full_name": "mapbox/node-tilejson",
+        "url": "https://github.com/mapbox/node-tilejson",
+        "stars": 32,
+        "updated_at": "2024-05-17T16:39:45Z",
+        "description": "Tile source backend for online tile sources",
+        "size_kb": 144,
+        "languages": {
+            "JavaScript": 28669
+        }
+    },
+    {
+        "name": "node-get",
+        "full_name": "mapbox/node-get",
+        "url": "https://github.com/mapbox/node-get",
+        "stars": 14,
+        "updated_at": "2025-01-08T19:40:19Z",
+        "description": "DEPRECATED: use request instead",
+        "size_kb": 1405,
+        "languages": {
+            "JavaScript": 25851,
+            "Makefile": 182
+        }
+    },
+    {
+        "name": "maki",
+        "full_name": "mapbox/maki",
+        "url": "https://github.com/mapbox/maki",
+        "stars": 1520,
+        "updated_at": "2025-03-01T17:39:23Z",
+        "description": "A POI Icon Set",
+        "size_kb": 47469,
+        "languages": {
+            "JavaScript": 13141
+        }
+    },
+    {
+        "name": "tilelive-s3",
+        "full_name": "mapbox/tilelive-s3",
+        "url": "https://github.com/mapbox/tilelive-s3",
+        "stars": 16,
+        "updated_at": "2023-06-08T07:12:39Z",
+        "description": "Extends TileJSON for S3-specific tasks",
+        "size_kb": 715,
+        "languages": {
+            "JavaScript": 77857
+        }
+    },
+    {
+        "name": "mapping",
+        "full_name": "mapbox/mapping",
+        "url": "https://github.com/mapbox/mapping",
+        "stars": 245,
+        "updated_at": "2025-02-26T03:38:25Z",
+        "description": "OpenStreetMap contributions from the data team at Mapbox",
+        "size_kb": 373515,
+        "languages": {
+            "JavaScript": 25416,
+            "Shell": 3998
+        }
+    },
+    {
+        "name": "polyline",
+        "full_name": "mapbox/polyline",
+        "url": "https://github.com/mapbox/polyline",
+        "stars": 652,
+        "updated_at": "2025-03-05T15:29:08Z",
+        "description": "polyline encoding and decoding in javascript",
+        "size_kb": 496,
+        "languages": {
+            "JavaScript": 11337,
+            "Makefile": 35
+        }
+    },
+    {
+        "name": "csv2geojson",
+        "full_name": "mapbox/csv2geojson",
+        "url": "https://github.com/mapbox/csv2geojson",
+        "stars": 367,
+        "updated_at": "2025-01-22T01:08:48Z",
+        "description": "magically convert csv files to geojson files",
+        "size_kb": 212,
+        "languages": {
+            "JavaScript": 21035,
+            "CSS": 919,
+            "HTML": 662
+        }
+    },
+    {
+        "name": "togeojson",
+        "full_name": "mapbox/togeojson",
+        "url": "https://github.com/mapbox/togeojson",
+        "stars": 1285,
+        "updated_at": "2025-03-03T13:13:19Z",
+        "description": "convert KML and GPX to GeoJSON, without the fuss",
+        "size_kb": 5367,
+        "languages": {
+            "JavaScript": 23038,
+            "CSS": 9251,
+            "HTML": 4629
+        }
+    },
+    {
+        "name": "osm-boundaries",
+        "full_name": "mapbox/osm-boundaries",
+        "url": "https://github.com/mapbox/osm-boundaries",
+        "stars": 30,
+        "updated_at": "2024-11-24T11:49:26Z",
+        "description": "MapBox OSM boundary relation processing",
+        "size_kb": 258,
+        "languages": {
+            "Python": 3209,
+            "JavaScript": 2815
+        }
+    },
+    {
+        "name": "tilelive-vector",
+        "full_name": "mapbox/tilelive-vector",
+        "url": "https://github.com/mapbox/tilelive-vector",
+        "stars": 72,
+        "updated_at": "2024-11-15T07:40:43Z",
+        "description": "Implements the tilelive API for rendering mapnik vector tiles to raster images.",
+        "size_kb": 9579,
+        "languages": {
+            "JavaScript": 90343,
+            "Batchfile": 3200
+        }
+    },
+    {
+        "name": "tilelive-bridge",
+        "full_name": "mapbox/tilelive-bridge",
+        "url": "https://github.com/mapbox/tilelive-bridge",
+        "stars": 63,
+        "updated_at": "2024-10-25T21:47:47Z",
+        "description": "Implements the tilelive API for generating mapnik vector tiles from traditional mapnik datasources.",
+        "size_kb": 9372,
+        "languages": {
+            "JavaScript": 59002,
+            "Batchfile": 3200
+        }
+    },
+    {
+        "name": "leaflet-pip",
+        "full_name": "mapbox/leaflet-pip",
+        "url": "https://github.com/mapbox/leaflet-pip",
+        "stars": 200,
+        "updated_at": "2025-01-06T18:35:14Z",
+        "description": "point in polygon intersections for leaflet",
+        "size_kb": 164,
+        "languages": {
+            "JavaScript": 20666,
+            "HTML": 1269
+        }
+    },
+    {
+        "name": "corslite",
+        "full_name": "mapbox/corslite",
+        "url": "https://github.com/mapbox/corslite",
+        "stars": 89,
+        "updated_at": "2024-01-21T15:32:41Z",
+        "description": "an ajax library for everyone and domains",
+        "size_kb": 63,
+        "languages": {
+            "JavaScript": 3636
+        }
+    },
+    {
+        "name": "mapbox-studio-default-fonts",
+        "full_name": "mapbox/mapbox-studio-default-fonts",
+        "url": "https://github.com/mapbox/mapbox-studio-default-fonts",
+        "stars": 21,
+        "updated_at": "2024-12-30T03:26:17Z",
+        "description": "Fonts used by mapbox.com/studio",
+        "size_kb": 412713,
+        "languages": {
+            "JavaScript": 4300
+        }
+    },
+    {
+        "name": "leaflet-knn",
+        "full_name": "mapbox/leaflet-knn",
+        "url": "https://github.com/mapbox/leaflet-knn",
+        "stars": 95,
+        "updated_at": "2024-10-01T13:12:13Z",
+        "description": "k-next-nearest-neighbor searches for Leaflet",
+        "size_kb": 65,
+        "languages": {
+            "JavaScript": 13919,
+            "HTML": 761,
+            "Makefile": 200
+        }
+    },
+    {
+        "name": "geojson.io",
+        "full_name": "mapbox/geojson.io",
+        "url": "https://github.com/mapbox/geojson.io",
+        "stars": 1970,
+        "updated_at": "2025-03-06T14:08:57Z",
+        "description": "A quick, simple tool for creating, viewing, and sharing spatial data",
+        "size_kb": 24740,
+        "languages": {
+            "JavaScript": 130986,
+            "CSS": 18139,
+            "HTML": 13844,
+            "Shell": 467
+        }
+    },
+    {
+        "name": "basic-queue",
+        "full_name": "mapbox/basic-queue",
+        "url": "https://github.com/mapbox/basic-queue",
+        "stars": 9,
+        "updated_at": "2020-07-22T07:57:23Z",
+        "description": "a basic queue with concurrency",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 2279
+        }
+    },
+    {
+        "name": "superenv",
+        "full_name": "mapbox/superenv",
+        "url": "https://github.com/mapbox/superenv",
+        "stars": 6,
+        "updated_at": "2020-11-28T18:42:54Z",
+        "description": "pull configuration variables from JSON and ini configuration files and environment variables",
+        "size_kb": 6,
+        "languages": {
+            "JavaScript": 2787
+        }
+    },
+    {
+        "name": "geocode-many",
+        "full_name": "mapbox/geocode-many",
+        "url": "https://github.com/mapbox/geocode-many",
+        "stars": 14,
+        "updated_at": "2022-05-13T20:48:31Z",
+        "description": "given an array of objects and a transform into a geocodable string, geocode them if possible",
+        "size_kb": 211,
+        "languages": {
+            "JavaScript": 5245,
+            "HTML": 1192
+        }
+    },
+    {
+        "name": "leaflet-image",
+        "full_name": "mapbox/leaflet-image",
+        "url": "https://github.com/mapbox/leaflet-image",
+        "stars": 371,
+        "updated_at": "2025-02-28T17:26:47Z",
+        "description": "leaflet maps to images",
+        "size_kb": 774,
+        "languages": {
+            "JavaScript": 26460,
+            "HTML": 8953,
+            "CSS": 181
+        }
+    },
+    {
+        "name": "sexagesimal",
+        "full_name": "mapbox/sexagesimal",
+        "url": "https://github.com/mapbox/sexagesimal",
+        "stars": 34,
+        "updated_at": "2024-04-17T02:26:55Z",
+        "description": "parse sexagesimal coordinates",
+        "size_kb": 38,
+        "languages": {
+            "JavaScript": 13595
+        }
+    },
+    {
+        "name": "static-map-preview",
+        "full_name": "mapbox/static-map-preview",
+        "url": "https://github.com/mapbox/static-map-preview",
+        "stars": 4,
+        "updated_at": "2021-01-02T16:38:47Z",
+        "description": "a simple static + canvas map preview",
+        "size_kb": 103,
+        "languages": {
+            "JavaScript": 328278,
+            "CSS": 9040,
+            "HTML": 473,
+            "Makefile": 237
+        }
+    },
+    {
+        "name": "wellknown",
+        "full_name": "mapbox/wellknown",
+        "url": "https://github.com/mapbox/wellknown",
+        "stars": 268,
+        "updated_at": "2025-02-11T21:30:45Z",
+        "description": "GeoJSON-emitting WKT parser for browsers and node",
+        "size_kb": 69,
+        "languages": {
+            "JavaScript": 24045
+        }
+    },
+    {
+        "name": "sanitize-caja",
+        "full_name": "mapbox/sanitize-caja",
+        "url": "https://github.com/mapbox/sanitize-caja",
+        "stars": 38,
+        "updated_at": "2023-11-01T18:22:22Z",
+        "description": "sanitize html",
+        "size_kb": 36,
+        "languages": {
+            "JavaScript": 76466
+        }
+    },
+    {
+        "name": "dbf",
+        "full_name": "mapbox/dbf",
+        "url": "https://github.com/mapbox/dbf",
+        "stars": 38,
+        "updated_at": "2025-02-20T14:27:40Z",
+        "description": "dbf writer",
+        "size_kb": 36,
+        "languages": {
+            "JavaScript": 7811
+        }
+    },
+    {
+        "name": "shp-write",
+        "full_name": "mapbox/shp-write",
+        "url": "https://github.com/mapbox/shp-write",
+        "stars": 303,
+        "updated_at": "2025-02-26T12:36:20Z",
+        "description": "create and write to shapefiles in pure javascript",
+        "size_kb": 207,
+        "languages": {
+            "JavaScript": 20517,
+            "HTML": 36
+        }
+    },
+    {
+        "name": "node-fontnik",
+        "full_name": "mapbox/node-fontnik",
+        "url": "https://github.com/mapbox/node-fontnik",
+        "stars": 226,
+        "updated_at": "2025-02-27T08:04:13Z",
+        "description": "Fonts \u21e2 protobuf-encoded SDF glyphs",
+        "size_kb": 32474,
+        "languages": {
+            "JavaScript": 23070,
+            "C++": 22422,
+            "Shell": 11816,
+            "Python": 6695,
+            "Makefile": 2159
+        }
+    },
+    {
+        "name": "tokml",
+        "full_name": "mapbox/tokml",
+        "url": "https://github.com/mapbox/tokml",
+        "stars": 189,
+        "updated_at": "2024-12-16T11:17:21Z",
+        "description": "Convert GeoJSON to KML.",
+        "size_kb": 97,
+        "languages": {
+            "JavaScript": 42475,
+            "HTML": 768
+        }
+    },
+    {
+        "name": "node-pre-gyp",
+        "full_name": "mapbox/node-pre-gyp",
+        "url": "https://github.com/mapbox/node-pre-gyp",
+        "stars": 1130,
+        "updated_at": "2025-03-06T15:52:18Z",
+        "description": "Node.js tool for easy binary deployment of C++ addons",
+        "size_kb": 1380,
+        "languages": {
+            "JavaScript": 138924,
+            "Python": 4553,
+            "C++": 3953,
+            "Shell": 1750,
+            "HTML": 542,
+            "Batchfile": 40
+        }
+    },
+    {
+        "name": "mapbox-sdk-js",
+        "full_name": "mapbox/mapbox-sdk-js",
+        "url": "https://github.com/mapbox/mapbox-sdk-js",
+        "stars": 726,
+        "updated_at": "2025-03-04T13:41:31Z",
+        "description": "A JavaScript client to Mapbox services, supporting Node, browsers, and React Native",
+        "size_kb": 1557,
+        "languages": {
+            "JavaScript": 322990,
+            "HTML": 1325
+        }
+    },
+    {
+        "name": "geojson-area",
+        "full_name": "mapbox/geojson-area",
+        "url": "https://github.com/mapbox/geojson-area",
+        "stars": 120,
+        "updated_at": "2025-01-23T18:36:01Z",
+        "description": "compute the area of a geojson polygon or multipolygon",
+        "size_kb": 15,
+        "languages": {
+            "JavaScript": 3650
+        }
+    },
+    {
+        "name": "wgs84",
+        "full_name": "mapbox/wgs84",
+        "url": "https://github.com/mapbox/wgs84",
+        "stars": 15,
+        "updated_at": "2023-08-20T12:56:36Z",
+        "description": "constants of the reference ellipsoid",
+        "size_kb": 3,
+        "languages": {
+            "JavaScript": 841
+        }
+    },
+    {
+        "name": "spherical",
+        "full_name": "mapbox/spherical",
+        "url": "https://github.com/mapbox/spherical",
+        "stars": 21,
+        "updated_at": "2021-12-14T20:57:01Z",
+        "description": "Spherical world utilities",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 3415
+        }
+    },
+    {
+        "name": "tcx",
+        "full_name": "mapbox/tcx",
+        "url": "https://github.com/mapbox/tcx",
+        "stars": 23,
+        "updated_at": "2024-07-28T18:09:08Z",
+        "description": "Convert TCX files to GeoJSON in JavaScript.",
+        "size_kb": 40,
+        "languages": {
+            "JavaScript": 9276
+        }
+    },
+    {
+        "name": "geojson-rewind",
+        "full_name": "mapbox/geojson-rewind",
+        "url": "https://github.com/mapbox/geojson-rewind",
+        "stars": 129,
+        "updated_at": "2025-02-07T03:22:15Z",
+        "description": "enforce polygon ring winding order for geojson",
+        "size_kb": 65,
+        "languages": {
+            "JavaScript": 3121
+        }
+    },
+    {
+        "name": "mapbox-directions.js",
+        "full_name": "mapbox/mapbox-directions.js",
+        "url": "https://github.com/mapbox/mapbox-directions.js",
+        "stars": 60,
+        "updated_at": "2024-08-27T03:59:01Z",
+        "description": "Leaflet plugin for the Mapbox Directions API",
+        "size_kb": 978,
+        "languages": {
+            "JavaScript": 59393,
+            "HTML": 9601,
+            "Makefile": 510
+        }
+    },
+    {
+        "name": "password-rules",
+        "full_name": "mapbox/password-rules",
+        "url": "https://github.com/mapbox/password-rules",
+        "stars": 12,
+        "updated_at": "2024-07-26T00:25:28Z",
+        "description": "enforce rules on passwords",
+        "size_kb": 16,
+        "languages": {
+            "JavaScript": 8865
+        }
+    },
+    {
+        "name": "geojson-summary",
+        "full_name": "mapbox/geojson-summary",
+        "url": "https://github.com/mapbox/geojson-summary",
+        "stars": 34,
+        "updated_at": "2024-02-28T23:06:35Z",
+        "description": "Generate a plain-english summary of what is in a GeoJSON file.",
+        "size_kb": 13,
+        "languages": {
+            "JavaScript": 9170
+        }
+    },
+    {
+        "name": "pbf",
+        "full_name": "mapbox/pbf",
+        "url": "https://github.com/mapbox/pbf",
+        "stars": 817,
+        "updated_at": "2025-02-23T15:56:39Z",
+        "description": "A low-level, lightweight protocol buffers implementation in JavaScript.",
+        "size_kb": 584,
+        "languages": {
+            "JavaScript": 63744,
+            "HTML": 1194
+        }
+    },
+    {
+        "name": "commonsec",
+        "full_name": "mapbox/commonsec",
+        "url": "https://github.com/mapbox/commonsec",
+        "stars": 3,
+        "updated_at": "2022-09-07T11:40:15Z",
+        "description": "Batten down hatches on default Ubuntu SSH and firewall configuration",
+        "size_kb": 237,
+        "languages": {
+            "Shell": 2618,
+            "ApacheConf": 84
+        }
+    },
+    {
+        "name": "cfn-config",
+        "full_name": "mapbox/cfn-config",
+        "url": "https://github.com/mapbox/cfn-config",
+        "stars": 53,
+        "updated_at": "2024-08-11T04:45:44Z",
+        "description": "Quickly configure, start, and update AWS CloudFormation stacks.",
+        "size_kb": 833,
+        "languages": {
+            "JavaScript": 244390
+        }
+    },
+    {
+        "name": "leaflet-omnivore",
+        "full_name": "mapbox/leaflet-omnivore",
+        "url": "https://github.com/mapbox/leaflet-omnivore",
+        "stars": 654,
+        "updated_at": "2025-02-27T07:39:17Z",
+        "description": "universal format parser for Leaflet & Mapbox.js",
+        "size_kb": 644,
+        "languages": {
+            "JavaScript": 13175,
+            "HTML": 1047
+        }
+    },
+    {
+        "name": "mercantile",
+        "full_name": "mapbox/mercantile",
+        "url": "https://github.com/mapbox/mercantile",
+        "stars": 420,
+        "updated_at": "2025-02-16T10:13:14Z",
+        "description": "Spherical mercator tile and coordinate utilities",
+        "size_kb": 240,
+        "languages": {
+            "Python": 68645,
+            "Dockerfile": 475
+        }
+    },
+    {
+        "name": "css-color-parser-cpp",
+        "full_name": "mapbox/css-color-parser-cpp",
+        "url": "https://github.com/mapbox/css-color-parser-cpp",
+        "stars": 25,
+        "updated_at": "2024-06-25T11:10:05Z",
+        "description": "C++ STL parser for CSS color strings",
+        "size_kb": 13,
+        "languages": {
+            "C++": 17927,
+            "Makefile": 361,
+            "Shell": 67
+        }
+    },
+    {
+        "name": "geo-viewport",
+        "full_name": "mapbox/geo-viewport",
+        "url": "https://github.com/mapbox/geo-viewport",
+        "stars": 196,
+        "updated_at": "2025-02-12T15:28:26Z",
+        "description": "Turns bounding boxes / extents into centerpoint & zoom combos for static maps.",
+        "size_kb": 404,
+        "languages": {
+            "JavaScript": 6942,
+            "HTML": 1138
+        }
+    },
+    {
+        "name": "unitbezier",
+        "full_name": "mapbox/unitbezier",
+        "url": "https://github.com/mapbox/unitbezier",
+        "stars": 18,
+        "updated_at": "2024-03-06T02:15:34Z",
+        "description": "Unit bezier interpolation",
+        "size_kb": 42,
+        "languages": {
+            "JavaScript": 2637
+        }
+    },
+    {
+        "name": "vector-tile-js",
+        "full_name": "mapbox/vector-tile-js",
+        "url": "https://github.com/mapbox/vector-tile-js",
+        "stars": 362,
+        "updated_at": "2025-02-28T09:36:57Z",
+        "description": "Parses vector tiles with JavaScript",
+        "size_kb": 258,
+        "languages": {
+            "JavaScript": 17942
+        }
+    },
+    {
+        "name": "tilelive-overlay",
+        "full_name": "mapbox/tilelive-overlay",
+        "url": "https://github.com/mapbox/tilelive-overlay",
+        "stars": 4,
+        "updated_at": "2021-10-13T01:40:23Z",
+        "description": "Render GeoJSON features with simplestyle styles in a tilelive pipeline",
+        "size_kb": 354,
+        "languages": {
+            "JavaScript": 10014
+        }
+    },
+    {
+        "name": "geojson-normalize",
+        "full_name": "mapbox/geojson-normalize",
+        "url": "https://github.com/mapbox/geojson-normalize",
+        "stars": 33,
+        "updated_at": "2024-11-22T17:03:25Z",
+        "description": "Normalize any GeoJSON object into a GeoJSON FeatureCollection.",
+        "size_kb": 6,
+        "languages": {
+            "JavaScript": 1673
+        }
+    },
+    {
+        "name": "geojson-mapnikify",
+        "full_name": "mapbox/geojson-mapnikify",
+        "url": "https://github.com/mapbox/geojson-mapnikify",
+        "stars": 40,
+        "updated_at": "2025-02-09T18:59:09Z",
+        "description": "Transform GeoJSON objects into Mapnik XML stylesheets with embedded GeoJSON data and simplestyle-spec-derived styles.",
+        "size_kb": 450,
+        "languages": {
+            "JavaScript": 24712
+        }
+    },
+    {
+        "name": "makizushi",
+        "full_name": "mapbox/makizushi",
+        "url": "https://github.com/mapbox/makizushi",
+        "stars": 24,
+        "updated_at": "2024-03-07T15:10:51Z",
+        "description": "Professional Maki chef: creates custom markers with Maki icons.",
+        "size_kb": 764,
+        "languages": {
+            "JavaScript": 8606,
+            "Shell": 4061
+        }
+    },
+    {
+        "name": "geojson-extent",
+        "full_name": "mapbox/geojson-extent",
+        "url": "https://github.com/mapbox/geojson-extent",
+        "stars": 72,
+        "updated_at": "2024-11-25T18:53:13Z",
+        "description": "Compute an extent given a GeoJSON object.",
+        "size_kb": 192,
+        "languages": {
+            "JavaScript": 9557
+        }
+    },
+    {
+        "name": "geojson-coords",
+        "full_name": "mapbox/geojson-coords",
+        "url": "https://github.com/mapbox/geojson-coords",
+        "stars": 31,
+        "updated_at": "2024-06-12T06:39:00Z",
+        "description": "Extract coordinates from GeoJSON.",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 3522
+        }
+    },
+    {
+        "name": "mapnik-pool",
+        "full_name": "mapbox/mapnik-pool",
+        "url": "https://github.com/mapbox/mapnik-pool",
+        "stars": 20,
+        "updated_at": "2023-04-03T03:22:23Z",
+        "description": "manage a pool of mapnik map instances",
+        "size_kb": 20,
+        "languages": {
+            "JavaScript": 3058
+        }
+    },
+    {
+        "name": "cardboard",
+        "full_name": "mapbox/cardboard",
+        "url": "https://github.com/mapbox/cardboard",
+        "stars": 52,
+        "updated_at": "2024-03-25T18:44:37Z",
+        "description": "tile indexed geo database interface.",
+        "size_kb": 1086,
+        "languages": {
+            "JavaScript": 51216
+        }
+    },
+    {
+        "name": "tiletype",
+        "full_name": "mapbox/tiletype",
+        "url": "https://github.com/mapbox/tiletype",
+        "stars": 15,
+        "updated_at": "2024-04-30T06:37:49Z",
+        "description": "detect common map tile formats from a buffer",
+        "size_kb": 312,
+        "languages": {
+            "JavaScript": 10674,
+            "TypeScript": 302
+        }
+    },
+    {
+        "name": "mapnik-omnivore",
+        "full_name": "mapbox/mapnik-omnivore",
+        "url": "https://github.com/mapbox/mapnik-omnivore",
+        "stars": 44,
+        "updated_at": "2024-10-25T21:47:43Z",
+        "description": "Node module that returns metadata about spatial files.",
+        "size_kb": 2729,
+        "languages": {
+            "JavaScript": 97181,
+            "Batchfile": 3200
+        }
+    },
+    {
+        "name": "install-node",
+        "full_name": "mapbox/install-node",
+        "url": "https://github.com/mapbox/install-node",
+        "stars": 18,
+        "updated_at": "2022-09-27T09:28:51Z",
+        "description": "Bash script to install a version/platform of Node.js",
+        "size_kb": 97,
+        "languages": {
+            "Shell": 10322
+        }
+    },
+    {
+        "name": "abaculus",
+        "full_name": "mapbox/abaculus",
+        "url": "https://github.com/mapbox/abaculus",
+        "stars": 128,
+        "updated_at": "2025-02-16T03:13:36Z",
+        "description": "Library for creating static maps from tiles based on center or corner lng,lat coordinates. Uses node-blend.",
+        "size_kb": 1170,
+        "languages": {
+            "JavaScript": 19719
+        }
+    },
+    {
+        "name": "aws-log-replay",
+        "full_name": "mapbox/aws-log-replay",
+        "url": "https://github.com/mapbox/aws-log-replay",
+        "stars": 26,
+        "updated_at": "2024-05-06T14:43:35Z",
+        "description": "Transform and replay CloudFront, ELB Classic, and ALB logs",
+        "size_kb": 311,
+        "languages": {
+            "JavaScript": 26811
+        }
+    },
+    {
+        "name": "mapbox-gl-styles",
+        "full_name": "mapbox/mapbox-gl-styles",
+        "url": "https://github.com/mapbox/mapbox-gl-styles",
+        "stars": 288,
+        "updated_at": "2025-02-23T00:16:43Z",
+        "description": "Prebuilt Mapbox GL styles for use in Mapbox GL JS or the Mapbox Mobile SDKs and as a starting point for custom maps built with Mapbox Studio",
+        "size_kb": 42816,
+        "languages": {
+            "JavaScript": 14118,
+            "Shell": 283
+        }
+    },
+    {
+        "name": "point-geometry",
+        "full_name": "mapbox/point-geometry",
+        "url": "https://github.com/mapbox/point-geometry",
+        "stars": 35,
+        "updated_at": "2024-07-16T09:38:59Z",
+        "description": "A standalone point geometry primitive.",
+        "size_kb": 201,
+        "languages": {
+            "JavaScript": 13636
+        }
+    },
+    {
+        "name": "gazetteer",
+        "full_name": "mapbox/gazetteer",
+        "url": "https://github.com/mapbox/gazetteer",
+        "stars": 10,
+        "updated_at": "2025-01-22T19:15:28Z",
+        "description": "Place bookmarks for maps",
+        "size_kb": 135,
+        "languages": {
+            "JavaScript": 10111
+        }
+    },
+    {
+        "name": "mapbox-gl-leaflet",
+        "full_name": "mapbox/mapbox-gl-leaflet",
+        "url": "https://github.com/mapbox/mapbox-gl-leaflet",
+        "stars": 528,
+        "updated_at": "2025-03-06T05:27:57Z",
+        "description": "binding from Mapbox GL JS to the Leaflet API",
+        "size_kb": 170,
+        "languages": {
+            "JavaScript": 10558
+        }
+    },
+    {
+        "name": "dyno",
+        "full_name": "mapbox/dyno",
+        "url": "https://github.com/mapbox/dyno",
+        "stars": 78,
+        "updated_at": "2023-12-07T15:31:25Z",
+        "description": "simple dynamodb client",
+        "size_kb": 547,
+        "languages": {
+            "JavaScript": 161056
+        }
+    },
+    {
+        "name": "geobuf",
+        "full_name": "mapbox/geobuf",
+        "url": "https://github.com/mapbox/geobuf",
+        "stars": 986,
+        "updated_at": "2025-02-11T06:32:27Z",
+        "description": "A compact binary encoding for geographic data.",
+        "size_kb": 125,
+        "languages": {
+            "JavaScript": 17417
+        }
+    },
+    {
+        "name": "fontnik",
+        "full_name": "mapbox/fontnik",
+        "url": "https://github.com/mapbox/fontnik",
+        "stars": 51,
+        "updated_at": "2025-01-31T14:22:21Z",
+        "description": "Generates Signed Distance Field glyphsets from OpenType fonts",
+        "size_kb": 15,
+        "languages": {
+            "JavaScript": 25582
+        }
+    },
+    {
+        "name": "geojson-merge",
+        "full_name": "mapbox/geojson-merge",
+        "url": "https://github.com/mapbox/geojson-merge",
+        "stars": 234,
+        "updated_at": "2025-02-13T13:41:50Z",
+        "description": "Merge multiple GeoJSON files into one FeatureCollection.",
+        "size_kb": 20,
+        "languages": {
+            "JavaScript": 3534
+        }
+    },
+    {
+        "name": "make-surface",
+        "full_name": "mapbox/make-surface",
+        "url": "https://github.com/mapbox/make-surface",
+        "stars": 89,
+        "updated_at": "2023-07-24T09:16:53Z",
+        "description": "Vector surfaces creation routines",
+        "size_kb": 499,
+        "languages": {
+            "Python": 29014
+        }
+    },
+    {
+        "name": "tile-cover",
+        "full_name": "mapbox/tile-cover",
+        "url": "https://github.com/mapbox/tile-cover",
+        "stars": 191,
+        "updated_at": "2025-03-02T21:13:08Z",
+        "description": "Generate the minimum number of tiles to cover a geojson geometry",
+        "size_kb": 2326,
+        "languages": {
+            "JavaScript": 28748
+        }
+    },
+    {
+        "name": "tilebelt",
+        "full_name": "mapbox/tilebelt",
+        "url": "https://github.com/mapbox/tilebelt",
+        "stars": 270,
+        "updated_at": "2025-02-28T19:21:22Z",
+        "description": "simple tile utilities",
+        "size_kb": 164,
+        "languages": {
+            "TypeScript": 12516
+        }
+    },
+    {
+        "name": "MapboxGeocoder.swift",
+        "full_name": "mapbox/MapboxGeocoder.swift",
+        "url": "https://github.com/mapbox/MapboxGeocoder.swift",
+        "stars": 133,
+        "updated_at": "2025-02-26T13:07:07Z",
+        "description": "Address search and reverse geocoding in Swift or Objective-C on iOS, macOS, tvOS, and watchOS",
+        "size_kb": 542,
+        "languages": {
+            "Swift": 114063,
+            "Objective-C": 6163,
+            "Ruby": 2583,
+            "C": 1645,
+            "Shell": 1573
+        }
+    },
+    {
+        "name": "tilelive-cardboard",
+        "full_name": "mapbox/tilelive-cardboard",
+        "url": "https://github.com/mapbox/tilelive-cardboard",
+        "stars": 2,
+        "updated_at": "2020-12-01T18:33:17Z",
+        "description": "Renders vector tiles from a cardboard dataset",
+        "size_kb": 1098,
+        "languages": {
+            "JavaScript": 18933
+        }
+    },
+    {
+        "name": "postgis-vt-util",
+        "full_name": "mapbox/postgis-vt-util",
+        "url": "https://github.com/mapbox/postgis-vt-util",
+        "stars": 274,
+        "updated_at": "2024-12-10T12:58:11Z",
+        "description": "postgres helper functions for making vector tiles",
+        "size_kb": 61,
+        "languages": {
+            "PLpgSQL": 36466,
+            "Shell": 6540,
+            "SQLPL": 3886,
+            "Makefile": 498
+        }
+    },
+    {
+        "name": "locking",
+        "full_name": "mapbox/locking",
+        "url": "https://github.com/mapbox/locking",
+        "stars": 9,
+        "updated_at": "2024-10-08T03:26:06Z",
+        "description": "Read I/O locking using LRU cache",
+        "size_kb": 778,
+        "languages": {
+            "TypeScript": 20086
+        }
+    },
+    {
+        "name": "tilelive-redis",
+        "full_name": "mapbox/tilelive-redis",
+        "url": "https://github.com/mapbox/tilelive-redis",
+        "stars": 8,
+        "updated_at": "2024-04-03T01:38:22Z",
+        "description": "Redis wrapping source for tilelive",
+        "size_kb": 1665,
+        "languages": {
+            "JavaScript": 47025
+        }
+    },
+    {
+        "name": "mapbox-file-sniff",
+        "full_name": "mapbox/mapbox-file-sniff",
+        "url": "https://github.com/mapbox/mapbox-file-sniff",
+        "stars": 14,
+        "updated_at": "2023-07-14T17:49:03Z",
+        "description": "Detects the type of spatial files",
+        "size_kb": 396,
+        "languages": {
+            "JavaScript": 38502
+        }
+    },
+    {
+        "name": "MapboxStatic.swift",
+        "full_name": "mapbox/MapboxStatic.swift",
+        "url": "https://github.com/mapbox/MapboxStatic.swift",
+        "stars": 189,
+        "updated_at": "2025-02-14T05:48:51Z",
+        "description": "Static map snapshots with overlays in Swift or Objective-C on iOS, macOS, tvOS, and watchOS",
+        "size_kb": 1457,
+        "languages": {
+            "Swift": 74087,
+            "Objective-C": 3059,
+            "Ruby": 2700,
+            "Shell": 1569
+        }
+    },
+    {
+        "name": "tilelive-omnivore",
+        "full_name": "mapbox/tilelive-omnivore",
+        "url": "https://github.com/mapbox/tilelive-omnivore",
+        "stars": 8,
+        "updated_at": "2023-10-27T16:52:04Z",
+        "description": "Implements the tilelive api for a variety of data sources",
+        "size_kb": 263,
+        "languages": {
+            "JavaScript": 14613
+        }
+    },
+    {
+        "name": "mapbox-upload-validate",
+        "full_name": "mapbox/mapbox-upload-validate",
+        "url": "https://github.com/mapbox/mapbox-upload-validate",
+        "stars": 5,
+        "updated_at": "2024-12-03T20:43:10Z",
+        "description": "Validate that files can be uploaded to mapbox.com",
+        "size_kb": 4100,
+        "languages": {
+            "JavaScript": 66527
+        }
+    },
+    {
+        "name": "pyskel",
+        "full_name": "mapbox/pyskel",
+        "url": "https://github.com/mapbox/pyskel",
+        "stars": 241,
+        "updated_at": "2024-12-12T01:09:25Z",
+        "description": "Skeleton of a Python package",
+        "size_kb": 15,
+        "languages": {
+            "Python": 1465
+        }
+    },
+    {
+        "name": "shapefile-fairy",
+        "full_name": "mapbox/shapefile-fairy",
+        "url": "https://github.com/mapbox/shapefile-fairy",
+        "stars": 16,
+        "updated_at": "2024-10-31T21:32:02Z",
+        "description": "I put a zipfile under my pillow and the fairy brought me shapefiles",
+        "size_kb": 773,
+        "languages": {
+            "JavaScript": 8678
+        }
+    },
+    {
+        "name": "mapbox-tile-copy",
+        "full_name": "mapbox/mapbox-tile-copy",
+        "url": "https://github.com/mapbox/mapbox-tile-copy",
+        "stars": 154,
+        "updated_at": "2024-10-25T17:13:11Z",
+        "description": "Put tiles on s3 from a variety of geographic data files",
+        "size_kb": 5717,
+        "languages": {
+            "JavaScript": 59681
+        }
+    },
+    {
+        "name": "mapbox-error",
+        "full_name": "mapbox/mapbox-error",
+        "url": "https://github.com/mapbox/mapbox-error",
+        "stars": 1,
+        "updated_at": "2024-08-14T22:45:28Z",
+        "description": "generic error routes for mapbox express apps",
+        "size_kb": 57,
+        "languages": {
+            "TypeScript": 9698
+        }
+    },
+    {
+        "name": "geojson-vt",
+        "full_name": "mapbox/geojson-vt",
+        "url": "https://github.com/mapbox/geojson-vt",
+        "stars": 1944,
+        "updated_at": "2025-03-06T15:34:40Z",
+        "description": "Slice GeoJSON into vector tiles on the fly in the browser",
+        "size_kb": 1106,
+        "languages": {
+            "JavaScript": 48077,
+            "HTML": 782
+        }
+    },
+    {
+        "name": "mapbox-grid-copy",
+        "full_name": "mapbox/mapbox-grid-copy",
+        "url": "https://github.com/mapbox/mapbox-grid-copy",
+        "stars": 1,
+        "updated_at": "2020-12-01T02:21:28Z",
+        "description": "Copy UTFGrids from mbtiles files to S3",
+        "size_kb": 82,
+        "languages": {
+            "JavaScript": 11743
+        }
+    },
+    {
+        "name": "bundle-node-app",
+        "full_name": "mapbox/bundle-node-app",
+        "url": "https://github.com/mapbox/bundle-node-app",
+        "stars": 5,
+        "updated_at": "2025-02-03T09:49:08Z",
+        "description": "Bundle up a node app for npm-free install",
+        "size_kb": 19,
+        "languages": {
+            "Shell": 7002
+        }
+    },
+    {
+        "name": "cligj",
+        "full_name": "mapbox/cligj",
+        "url": "https://github.com/mapbox/cligj",
+        "stars": 36,
+        "updated_at": "2023-09-30T03:42:57Z",
+        "description": "Click-based argument and option decorators for Python GIS command line programs",
+        "size_kb": 61,
+        "languages": {
+            "Python": 22931
+        }
+    },
+    {
+        "name": "grib-doctor",
+        "full_name": "mapbox/grib-doctor",
+        "url": "https://github.com/mapbox/grib-doctor",
+        "stars": 26,
+        "updated_at": "2025-02-12T11:36:49Z",
+        "description": "Utilities for handling quirks of weather data grib files.",
+        "size_kb": 25,
+        "languages": {
+            "Python": 6993
+        }
+    },
+    {
+        "name": "node-happytiff",
+        "full_name": "mapbox/node-happytiff",
+        "url": "https://github.com/mapbox/node-happytiff",
+        "stars": 3,
+        "updated_at": "2020-12-01T02:30:10Z",
+        "description": "Util to detect/verify happytiffs",
+        "size_kb": 269,
+        "languages": {
+            "JavaScript": 6710
+        }
+    },
+    {
+        "name": "geo-pixel-stream",
+        "full_name": "mapbox/geo-pixel-stream",
+        "url": "https://github.com/mapbox/geo-pixel-stream",
+        "stars": 13,
+        "updated_at": "2025-01-29T02:40:25Z",
+        "description": "Streaming pixels with node-gdal",
+        "size_kb": 105,
+        "languages": {
+            "JavaScript": 16697
+        }
+    },
+    {
+        "name": "node-wmtiff",
+        "full_name": "mapbox/node-wmtiff",
+        "url": "https://github.com/mapbox/node-wmtiff",
+        "stars": 4,
+        "updated_at": "2020-12-01T02:33:01Z",
+        "description": "Utilililility to reproject tiff images to web mercator",
+        "size_kb": 32610,
+        "languages": {
+            "JavaScript": 4761
+        }
+    },
+    {
+        "name": "mapbox-gl-draw",
+        "full_name": "mapbox/mapbox-gl-draw",
+        "url": "https://github.com/mapbox/mapbox-gl-draw",
+        "stars": 984,
+        "updated_at": "2025-03-03T14:34:40Z",
+        "description": "Draw tools for mapbox-gl-js",
+        "size_kb": 5352,
+        "languages": {
+            "JavaScript": 442857,
+            "HTML": 5937
+        }
+    },
+    {
+        "name": "uv_zip",
+        "full_name": "mapbox/uv_zip",
+        "url": "https://github.com/mapbox/uv_zip",
+        "stars": 3,
+        "updated_at": "2023-10-22T12:34:53Z",
+        "description": "libzip bindings for libuv",
+        "size_kb": 527,
+        "languages": {
+            "C++": 10427,
+            "C": 7674,
+            "Python": 2993,
+            "Makefile": 517
+        }
+    },
+    {
+        "name": "mapbox-events",
+        "full_name": "mapbox/mapbox-events",
+        "url": "https://github.com/mapbox/mapbox-events",
+        "stars": 1,
+        "updated_at": "2020-07-22T07:50:37Z",
+        "description": "Send events from the browser to the Mapbox events API.",
+        "size_kb": 46,
+        "languages": {
+            "JavaScript": 10243
+        }
+    },
+    {
+        "name": "preprocessorcerer",
+        "full_name": "mapbox/preprocessorcerer",
+        "url": "https://github.com/mapbox/preprocessorcerer",
+        "stars": 12,
+        "updated_at": "2020-12-01T02:24:28Z",
+        "description": "Perform preprocessorcery and pick parts on particularly persnickity uploads",
+        "size_kb": 93613,
+        "languages": {
+            "JavaScript": 73406
+        }
+    },
+    {
+        "name": "glyph-pbf-composite",
+        "full_name": "mapbox/glyph-pbf-composite",
+        "url": "https://github.com/mapbox/glyph-pbf-composite",
+        "stars": 19,
+        "updated_at": "2025-02-11T22:17:19Z",
+        "description": "Composite glyph PBFs on the fly.",
+        "size_kb": 328,
+        "languages": {
+            "JavaScript": 5743
+        }
+    },
+    {
+        "name": "node-wmshp",
+        "full_name": "mapbox/node-wmshp",
+        "url": "https://github.com/mapbox/node-wmshp",
+        "stars": 9,
+        "updated_at": "2020-12-03T21:58:30Z",
+        "description": "Reproject shapefiles to EPSG:3857 using node-gdal",
+        "size_kb": 2008,
+        "languages": {
+            "JavaScript": 8926
+        }
+    },
+    {
+        "name": "hubdb",
+        "full_name": "mapbox/hubdb",
+        "url": "https://github.com/mapbox/hubdb",
+        "stars": 269,
+        "updated_at": "2025-03-04T10:45:53Z",
+        "description": "a github-powered database",
+        "size_kb": 25,
+        "languages": {
+            "JavaScript": 5907
+        }
+    },
+    {
+        "name": "snuggs",
+        "full_name": "mapbox/snuggs",
+        "url": "https://github.com/mapbox/snuggs",
+        "stars": 18,
+        "updated_at": "2023-12-12T15:13:51Z",
+        "description": "Snuggs are s-expressions for Numpy",
+        "size_kb": 40,
+        "languages": {
+            "Python": 12605
+        }
+    },
+    {
+        "name": "dynamodb-replicator",
+        "full_name": "mapbox/dynamodb-replicator",
+        "url": "https://github.com/mapbox/dynamodb-replicator",
+        "stars": 129,
+        "updated_at": "2024-05-08T07:48:58Z",
+        "description": "module for dynamodb multi-region replication ",
+        "size_kb": 311,
+        "languages": {
+            "JavaScript": 84826
+        }
+    },
+    {
+        "name": "earcut.hpp",
+        "full_name": "mapbox/earcut.hpp",
+        "url": "https://github.com/mapbox/earcut.hpp",
+        "stars": 886,
+        "updated_at": "2025-03-06T18:37:40Z",
+        "description": "Fast, header-only polygon triangulation",
+        "size_kb": 762,
+        "languages": {
+            "C": 166212,
+            "C++": 56208,
+            "CMake": 5960,
+            "JavaScript": 2638
+        }
+    },
+    {
+        "name": "github-org-browser",
+        "full_name": "mapbox/github-org-browser",
+        "url": "https://github.com/mapbox/github-org-browser",
+        "stars": 35,
+        "updated_at": "2024-12-05T10:09:18Z",
+        "description": "List public repos of a GitHub organization, with sorting and search",
+        "size_kb": 15,
+        "languages": {
+            "JavaScript": 5543,
+            "HTML": 1871,
+            "CSS": 1586
+        }
+    },
+    {
+        "name": "spritezero",
+        "full_name": "mapbox/spritezero",
+        "url": "https://github.com/mapbox/spritezero",
+        "stars": 176,
+        "updated_at": "2024-12-10T16:40:03Z",
+        "description": "small opinionated sprites",
+        "size_kb": 14653,
+        "languages": {
+            "JavaScript": 50348
+        }
+    },
+    {
+        "name": "tile-reduce",
+        "full_name": "mapbox/tile-reduce",
+        "url": "https://github.com/mapbox/tile-reduce",
+        "stars": 185,
+        "updated_at": "2025-02-26T08:55:19Z",
+        "description": "mapreduce vector tile processing",
+        "size_kb": 7132,
+        "languages": {
+            "JavaScript": 29143
+        }
+    },
+    {
+        "name": "kine",
+        "full_name": "mapbox/kine",
+        "url": "https://github.com/mapbox/kine",
+        "stars": 18,
+        "updated_at": "2023-05-02T16:01:54Z",
+        "description": "Kine makes reading from an aws kinesis stream easy.",
+        "size_kb": 743,
+        "languages": {
+            "JavaScript": 37852
+        }
+    },
+    {
+        "name": "react-colorpickr",
+        "full_name": "mapbox/react-colorpickr",
+        "url": "https://github.com/mapbox/react-colorpickr",
+        "stars": 208,
+        "updated_at": "2024-11-10T19:19:27Z",
+        "description": "A themeable colorpicker with HSL and RGB support for React",
+        "size_kb": 4316,
+        "languages": {
+            "TypeScript": 46681,
+            "JavaScript": 3209,
+            "HTML": 1949,
+            "CSS": 604,
+            "Shell": 58
+        }
+    },
+    {
+        "name": "rio-mbtiles",
+        "full_name": "mapbox/rio-mbtiles",
+        "url": "https://github.com/mapbox/rio-mbtiles",
+        "stars": 129,
+        "updated_at": "2025-02-12T17:50:12Z",
+        "description": "A plugin command for the Rasterio CLI that exports a raster dataset to an MBTiles 1.1 SQLite file",
+        "size_kb": 1828,
+        "languages": {
+            "Python": 47243
+        }
+    },
+    {
+        "name": "mapbox-data-cli",
+        "full_name": "mapbox/mapbox-data-cli",
+        "url": "https://github.com/mapbox/mapbox-data-cli",
+        "stars": 4,
+        "updated_at": "2022-10-16T18:16:39Z",
+        "description": "CLI utilties for Mapbox Data API",
+        "size_kb": 35,
+        "languages": {
+            "JavaScript": 10505
+        }
+    },
+    {
+        "name": "mapbox-upload-limits",
+        "full_name": "mapbox/mapbox-upload-limits",
+        "url": "https://github.com/mapbox/mapbox-upload-limits",
+        "stars": 2,
+        "updated_at": "2022-05-25T18:16:42Z",
+        "description": "Constant values of the limits of Mapbox upload services.",
+        "size_kb": 31,
+        "languages": {
+            "JavaScript": 3190
+        }
+    },
+    {
+        "name": "geojson-tidy",
+        "full_name": "mapbox/geojson-tidy",
+        "url": "https://github.com/mapbox/geojson-tidy",
+        "stars": 72,
+        "updated_at": "2024-12-17T09:25:54Z",
+        "description": "Filter out noisy points from an input geojson lineString",
+        "size_kb": 68,
+        "languages": {
+            "JavaScript": 7289
+        }
+    },
+    {
+        "name": "geojson-vt-cpp",
+        "full_name": "mapbox/geojson-vt-cpp",
+        "url": "https://github.com/mapbox/geojson-vt-cpp",
+        "stars": 97,
+        "updated_at": "2025-02-18T14:18:12Z",
+        "description": "Port to C++ of JS GeoJSON-VT for slicing GeoJSON into vector tiles on the fly",
+        "size_kb": 1389,
+        "languages": {
+            "C++": 87393,
+            "Makefile": 2136
+        }
+    },
+    {
+        "name": "MBDrawingView.swift",
+        "full_name": "mapbox/MBDrawingView.swift",
+        "url": "https://github.com/mapbox/MBDrawingView.swift",
+        "stars": 17,
+        "updated_at": "2021-06-04T08:30:10Z",
+        "description": "Gesture-based drawing overlay view",
+        "size_kb": 106,
+        "languages": {
+            "Swift": 2759
+        }
+    },
+    {
+        "name": "rio-mucho",
+        "full_name": "mapbox/rio-mucho",
+        "url": "https://github.com/mapbox/rio-mucho",
+        "stars": 61,
+        "updated_at": "2024-09-05T11:53:44Z",
+        "description": "Parallel processing wrapper for rasterio",
+        "size_kb": 64,
+        "languages": {
+            "Python": 15888
+        }
+    },
+    {
+        "name": "rio-pansharpen",
+        "full_name": "mapbox/rio-pansharpen",
+        "url": "https://github.com/mapbox/rio-pansharpen",
+        "stars": 52,
+        "updated_at": "2025-01-22T13:02:47Z",
+        "description": "pansharpening landsat scenes",
+        "size_kb": 85357,
+        "languages": {
+            "Python": 33192
+        }
+    },
+    {
+        "name": "vt-pbf",
+        "full_name": "mapbox/vt-pbf",
+        "url": "https://github.com/mapbox/vt-pbf",
+        "stars": 194,
+        "updated_at": "2024-12-27T21:30:45Z",
+        "description": "Serialize Mapbox Vector Tiles to binary protobufs in javascript.",
+        "size_kb": 890,
+        "languages": {
+            "JavaScript": 15774
+        }
+    },
+    {
+        "name": "mapbox-sdk-rb",
+        "full_name": "mapbox/mapbox-sdk-rb",
+        "url": "https://github.com/mapbox/mapbox-sdk-rb",
+        "stars": 59,
+        "updated_at": "2025-01-02T17:38:55Z",
+        "description": "A Ruby interface to Mapbox APIs.",
+        "size_kb": 74,
+        "languages": {
+            "Ruby": 26976
+        }
+    },
+    {
+        "name": "rio-interpolate",
+        "full_name": "mapbox/rio-interpolate",
+        "url": "https://github.com/mapbox/rio-interpolate",
+        "stars": 1,
+        "updated_at": "2020-05-15T14:03:27Z",
+        "description": "Interpolate raster values from GeoJSON geometry",
+        "size_kb": 5,
+        "languages": {
+            "Python": 4412
+        }
+    },
+    {
+        "name": "to-color",
+        "full_name": "mapbox/to-color",
+        "url": "https://github.com/mapbox/to-color",
+        "stars": 19,
+        "updated_at": "2025-02-05T10:24:41Z",
+        "description": "Procedurally generate a deterministic, perceptually distributed color palette.",
+        "size_kb": 922,
+        "languages": {
+            "JavaScript": 12857
+        }
+    },
+    {
+        "name": "rio-color",
+        "full_name": "mapbox/rio-color",
+        "url": "https://github.com/mapbox/rio-color",
+        "stars": 135,
+        "updated_at": "2025-02-28T14:41:18Z",
+        "description": "Color correction plugin for rasterio",
+        "size_kb": 3121,
+        "languages": {
+            "Python": 50692,
+            "Cython": 11756
+        }
+    },
+    {
+        "name": "cncc",
+        "full_name": "mapbox/cncc",
+        "url": "https://github.com/mapbox/cncc",
+        "stars": 127,
+        "updated_at": "2024-12-03T07:28:19Z",
+        "description": "Customizable Naming Convention Checker - uses Clang, developed with C++ in mind",
+        "size_kb": 8,
+        "languages": {
+            "Python": 2629,
+            "Shell": 81
+        }
+    },
+    {
+        "name": "react-submittable",
+        "full_name": "mapbox/react-submittable",
+        "url": "https://github.com/mapbox/react-submittable",
+        "stars": 18,
+        "updated_at": "2024-03-25T10:37:13Z",
+        "description": "Stop using preventDefault to get form behavior in React.",
+        "size_kb": 263,
+        "languages": {
+            "JavaScript": 2546
+        }
+    },
+    {
+        "name": "s3scan",
+        "full_name": "mapbox/s3scan",
+        "url": "https://github.com/mapbox/s3scan",
+        "stars": 9,
+        "updated_at": "2024-06-17T14:01:09Z",
+        "description": "S3 can! - Provides native Node.js streams for S3 operations.",
+        "size_kb": 271,
+        "languages": {
+            "JavaScript": 31947
+        }
+    },
+    {
+        "name": "mapbox-gl-directions",
+        "full_name": "mapbox/mapbox-gl-directions",
+        "url": "https://github.com/mapbox/mapbox-gl-directions",
+        "stars": 241,
+        "updated_at": "2025-01-02T23:33:43Z",
+        "description": "Directions plugin for mapbox-gl-js using Mapbox Directions API.",
+        "size_kb": 1863,
+        "languages": {
+            "JavaScript": 67456,
+            "CSS": 25885,
+            "HTML": 4181
+        }
+    },
+    {
+        "name": "spritezero-cli",
+        "full_name": "mapbox/spritezero-cli",
+        "url": "https://github.com/mapbox/spritezero-cli",
+        "stars": 170,
+        "updated_at": "2024-12-27T14:54:49Z",
+        "description": "A command-line interface to spritezero.",
+        "size_kb": 797,
+        "languages": {
+            "JavaScript": 4680
+        }
+    },
+    {
+        "name": "nodata",
+        "full_name": "mapbox/nodata",
+        "url": "https://github.com/mapbox/nodata",
+        "stars": 1,
+        "updated_at": "2021-03-10T21:29:35Z",
+        "description": "Because the pixels you can't see are harder than the ones you can.",
+        "size_kb": 16305,
+        "languages": {
+            "Python": 31347
+        }
+    },
+    {
+        "name": "linematch",
+        "full_name": "mapbox/linematch",
+        "url": "https://github.com/mapbox/linematch",
+        "stars": 84,
+        "updated_at": "2025-03-02T16:57:19Z",
+        "description": "A super-fast algorithm for comparing road networks.",
+        "size_kb": 66,
+        "languages": {
+            "JavaScript": 6878
+        }
+    },
+    {
+        "name": "lineclip",
+        "full_name": "mapbox/lineclip",
+        "url": "https://github.com/mapbox/lineclip",
+        "stars": 173,
+        "updated_at": "2025-02-11T15:48:15Z",
+        "description": "A very fast JavaScript polyline and polygon clipping library",
+        "size_kb": 20,
+        "languages": {
+            "JavaScript": 6614
+        }
+    },
+    {
+        "name": "model-un",
+        "full_name": "mapbox/model-un",
+        "url": "https://github.com/mapbox/model-un",
+        "stars": 4,
+        "updated_at": "2022-02-14T08:49:02Z",
+        "description": "A library that provides IETF language tags with English names, and official/common languages/language codes for countries and sovereign states.",
+        "size_kb": 235,
+        "languages": {
+            "JavaScript": 13729
+        }
+    },
+    {
+        "name": "vt2geojson",
+        "full_name": "mapbox/vt2geojson",
+        "url": "https://github.com/mapbox/vt2geojson",
+        "stars": 139,
+        "updated_at": "2025-02-25T20:08:10Z",
+        "description": "Dump vector tiles to GeoJSON",
+        "size_kb": 136,
+        "languages": {
+            "JavaScript": 9617
+        }
+    },
+    {
+        "name": "cz-mapbox-changelog",
+        "full_name": "mapbox/cz-mapbox-changelog",
+        "url": "https://github.com/mapbox/cz-mapbox-changelog",
+        "stars": 6,
+        "updated_at": "2021-03-07T11:51:58Z",
+        "description": "Commitizen plugin and commit log parsing tools to make generating changelogs",
+        "size_kb": 11,
+        "languages": {
+            "JavaScript": 4182
+        }
+    },
+    {
+        "name": "rio-merge-rgba",
+        "full_name": "mapbox/rio-merge-rgba",
+        "url": "https://github.com/mapbox/rio-merge-rgba",
+        "stars": 12,
+        "updated_at": "2024-10-14T22:11:17Z",
+        "description": "rio merge alternative optimized for large RGBA rasters",
+        "size_kb": 288,
+        "languages": {
+            "Python": 16885
+        }
+    },
+    {
+        "name": "which-polygon",
+        "full_name": "mapbox/which-polygon",
+        "url": "https://github.com/mapbox/which-polygon",
+        "stars": 133,
+        "updated_at": "2024-08-18T14:02:42Z",
+        "description": "Index for matching points against a set of GeoJSON polygons",
+        "size_kb": 30,
+        "languages": {
+            "JavaScript": 4981
+        }
+    },
+    {
+        "name": "osm-comments-parser",
+        "full_name": "mapbox/osm-comments-parser",
+        "url": "https://github.com/mapbox/osm-comments-parser",
+        "stars": 5,
+        "updated_at": "2021-12-15T07:14:40Z",
+        "description": "Parsers to read Notes and Changeset XML files and save them in a Postgres DB",
+        "size_kb": 278,
+        "languages": {
+            "JavaScript": 43692,
+            "Shell": 132
+        }
+    },
+    {
+        "name": "mbtiles-extracts",
+        "full_name": "mapbox/mbtiles-extracts",
+        "url": "https://github.com/mapbox/mbtiles-extracts",
+        "stars": 52,
+        "updated_at": "2025-01-19T18:48:36Z",
+        "description": "Extract parts of MBTiles into separate files using a GeoJSON with polygons.",
+        "size_kb": 14,
+        "languages": {
+            "JavaScript": 7851
+        }
+    },
+    {
+        "name": "execcommand-copy",
+        "full_name": "mapbox/execcommand-copy",
+        "url": "https://github.com/mapbox/execcommand-copy",
+        "stars": 10,
+        "updated_at": "2021-03-05T12:12:18Z",
+        "description": "Copy text to a user's clipboard using the modern execCommand interface",
+        "size_kb": 7,
+        "languages": {
+            "JavaScript": 1153
+        }
+    },
+    {
+        "name": "supermercado",
+        "full_name": "mapbox/supermercado",
+        "url": "https://github.com/mapbox/supermercado",
+        "stars": 127,
+        "updated_at": "2024-08-23T07:05:58Z",
+        "description": "Supercharger for mercantile",
+        "size_kb": 188,
+        "languages": {
+            "Python": 22678
+        }
+    },
+    {
+        "name": "road-diff",
+        "full_name": "mapbox/road-diff",
+        "url": "https://github.com/mapbox/road-diff",
+        "stars": 9,
+        "updated_at": "2021-07-07T20:37:51Z",
+        "description": "A Tile Reduce script for vector tiles road network comparison.",
+        "size_kb": 14,
+        "languages": {
+            "JavaScript": 3053
+        }
+    },
+    {
+        "name": "pixelmatch-cpp",
+        "full_name": "mapbox/pixelmatch-cpp",
+        "url": "https://github.com/mapbox/pixelmatch-cpp",
+        "stars": 42,
+        "updated_at": "2024-05-04T06:20:33Z",
+        "description": "C++ port of https://github.com/mapbox/pixelmatch",
+        "size_kb": 1689,
+        "languages": {
+            "C++": 8796,
+            "Python": 1519,
+            "JavaScript": 468,
+            "Makefile": 368
+        }
+    },
+    {
+        "name": "colonel-mercator",
+        "full_name": "mapbox/colonel-mercator",
+        "url": "https://github.com/mapbox/colonel-mercator",
+        "stars": 8,
+        "updated_at": "2020-05-13T15:47:12Z",
+        "description": "Generate raster pixel resolutions that are snapped to mercator tile resolutions.",
+        "size_kb": 661,
+        "languages": {
+            "JavaScript": 16000
+        }
+    },
+    {
+        "name": "tilelive-decorator",
+        "full_name": "mapbox/tilelive-decorator",
+        "url": "https://github.com/mapbox/tilelive-decorator",
+        "stars": 9,
+        "updated_at": "2023-07-24T10:12:01Z",
+        "description": "Load vector tiles from a tilelive source and decorate them with properties from redis.",
+        "size_kb": 194,
+        "languages": {
+            "JavaScript": 24892
+        }
+    },
+    {
+        "name": "supercluster",
+        "full_name": "mapbox/supercluster",
+        "url": "https://github.com/mapbox/supercluster",
+        "stars": 2156,
+        "updated_at": "2025-03-04T13:52:56Z",
+        "description": "A very fast geospatial point clustering library for browsers and Node.",
+        "size_kb": 337,
+        "languages": {
+            "JavaScript": 23134
+        }
+    },
+    {
+        "name": "mapbox-gl-geocoder",
+        "full_name": "mapbox/mapbox-gl-geocoder",
+        "url": "https://github.com/mapbox/mapbox-gl-geocoder",
+        "stars": 377,
+        "updated_at": "2025-02-26T12:52:38Z",
+        "description": "Geocoder control for mapbox-gl-js using Mapbox Geocoding API",
+        "size_kb": 3192,
+        "languages": {
+            "JavaScript": 163478,
+            "CSS": 5343
+        }
+    },
+    {
+        "name": "simplespec-to-gl-style",
+        "full_name": "mapbox/simplespec-to-gl-style",
+        "url": "https://github.com/mapbox/simplespec-to-gl-style",
+        "stars": 32,
+        "updated_at": "2024-10-15T18:34:39Z",
+        "description": "Converts GeoJSON styled with simplestyle-spec to a GL Style",
+        "size_kb": 29,
+        "languages": {
+            "JavaScript": 15512
+        }
+    },
+    {
+        "name": "tile-generator",
+        "full_name": "mapbox/tile-generator",
+        "url": "https://github.com/mapbox/tile-generator",
+        "stars": 17,
+        "updated_at": "2024-04-30T06:39:17Z",
+        "description": "Generate a stream of tiles in a bbox",
+        "size_kb": 7,
+        "languages": {
+            "JavaScript": 5045
+        }
+    },
+    {
+        "name": "thumbnail-stream",
+        "full_name": "mapbox/thumbnail-stream",
+        "url": "https://github.com/mapbox/thumbnail-stream",
+        "stars": 1,
+        "updated_at": "2022-09-08T06:59:59Z",
+        "description": "generate thumbnails from a stream of png buffers",
+        "size_kb": 2639,
+        "languages": {
+            "JavaScript": 7603
+        }
+    },
+    {
+        "name": "probematch",
+        "full_name": "mapbox/probematch",
+        "url": "https://github.com/mapbox/probematch",
+        "stars": 19,
+        "updated_at": "2023-05-31T09:14:31Z",
+        "description": "A small module for matching probes to road networks",
+        "size_kb": 110,
+        "languages": {
+            "JavaScript": 15496
+        }
+    },
+    {
+        "name": "navigation.js",
+        "full_name": "mapbox/navigation.js",
+        "url": "https://github.com/mapbox/navigation.js",
+        "stars": 33,
+        "updated_at": "2024-04-18T10:40:35Z",
+        "description": "Utility for monitoring a user location in relation to a route",
+        "size_kb": 2910,
+        "languages": {
+            "JavaScript": 21006,
+            "HTML": 1875
+        }
+    },
+    {
+        "name": "tile-decorator",
+        "full_name": "mapbox/tile-decorator",
+        "url": "https://github.com/mapbox/tile-decorator",
+        "stars": 35,
+        "updated_at": "2024-04-30T06:38:16Z",
+        "description": "Modify vector tiles in JavaScript and reencode back",
+        "size_kb": 443,
+        "languages": {
+            "JavaScript": 18571
+        }
+    },
+    {
+        "name": "shelf-pack",
+        "full_name": "mapbox/shelf-pack",
+        "url": "https://github.com/mapbox/shelf-pack",
+        "stars": 132,
+        "updated_at": "2025-02-21T21:20:20Z",
+        "description": "A 2D rectangular bin packing data structure that uses the Shelf Best Height Fit heuristic",
+        "size_kb": 1767,
+        "languages": {
+            "JavaScript": 37900
+        }
+    },
+    {
+        "name": "geojson-quirks",
+        "full_name": "mapbox/geojson-quirks",
+        "url": "https://github.com/mapbox/geojson-quirks",
+        "stars": 10,
+        "updated_at": "2020-10-29T21:19:13Z",
+        "description": "Tweak your data to interoperate with quirky GeoJSON readers",
+        "size_kb": 11,
+        "languages": {
+            "Python": 7187
+        }
+    },
+    {
+        "name": "concaveman",
+        "full_name": "mapbox/concaveman",
+        "url": "https://github.com/mapbox/concaveman",
+        "stars": 664,
+        "updated_at": "2025-03-04T05:56:49Z",
+        "description": "A very fast 2D concave hull algorithm in JavaScript",
+        "size_kb": 82,
+        "languages": {
+            "JavaScript": 15212,
+            "HTML": 195
+        }
+    },
+    {
+        "name": "mapbox-gl-compare",
+        "full_name": "mapbox/mapbox-gl-compare",
+        "url": "https://github.com/mapbox/mapbox-gl-compare",
+        "stars": 147,
+        "updated_at": "2024-12-26T10:31:29Z",
+        "description": "Swipe and sync between two maps",
+        "size_kb": 283,
+        "languages": {
+            "JavaScript": 10627,
+            "HTML": 1056
+        }
+    },
+    {
+        "name": "rio-l8qa",
+        "full_name": "mapbox/rio-l8qa",
+        "url": "https://github.com/mapbox/rio-l8qa",
+        "stars": 21,
+        "updated_at": "2024-03-11T17:29:16Z",
+        "description": "Landsat 8 QA band CLI tool and python lib",
+        "size_kb": 1042,
+        "languages": {
+            "Python": 12971
+        }
+    },
+    {
+        "name": "magic-tape",
+        "full_name": "mapbox/magic-tape",
+        "url": "https://github.com/mapbox/magic-tape",
+        "stars": 2,
+        "updated_at": "2025-02-10T17:21:37Z",
+        "description": "tape plus some goodies",
+        "size_kb": 2,
+        "languages": {
+            "JavaScript": 6686
+        }
+    },
+    {
+        "name": "jni.hpp",
+        "full_name": "mapbox/jni.hpp",
+        "url": "https://github.com/mapbox/jni.hpp",
+        "stars": 416,
+        "updated_at": "2025-03-06T16:39:45Z",
+        "description": "A modern, type-safe, header-only, C++14 wrapper for JNI",
+        "size_kb": 223,
+        "languages": {
+            "C++": 293714,
+            "Makefile": 2693,
+            "C": 1575,
+            "Shell": 422
+        }
+    },
+    {
+        "name": "bundle-fairy",
+        "full_name": "mapbox/bundle-fairy",
+        "url": "https://github.com/mapbox/bundle-fairy",
+        "stars": 0,
+        "updated_at": "2020-12-01T02:18:55Z",
+        "description": "check if zip file is a bundle, e.g. bunch of several GeoJSONs",
+        "size_kb": 5448,
+        "languages": {
+            "JavaScript": 12887
+        }
+    },
+    {
+        "name": "grid-index",
+        "full_name": "mapbox/grid-index",
+        "url": "https://github.com/mapbox/grid-index",
+        "stars": 29,
+        "updated_at": "2025-02-20T09:09:27Z",
+        "description": "A 2D spatial index for axis-aligned boxes",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 7587
+        }
+    },
+    {
+        "name": "osm-building-shapes",
+        "full_name": "mapbox/osm-building-shapes",
+        "url": "https://github.com/mapbox/osm-building-shapes",
+        "stars": 8,
+        "updated_at": "2021-11-11T22:51:22Z",
+        "description": "Tile Reduce processor to find area, perimeter and score to define shapes of buildings in OSM using OSM QA Tiles",
+        "size_kb": 12,
+        "languages": {
+            "JavaScript": 2713,
+            "Shell": 1560
+        }
+    },
+    {
+        "name": "shelf-pack-cpp",
+        "full_name": "mapbox/shelf-pack-cpp",
+        "url": "https://github.com/mapbox/shelf-pack-cpp",
+        "stars": 14,
+        "updated_at": "2024-08-01T07:52:52Z",
+        "description": "C++ port of https://github.com/mapbox/shelf-pack",
+        "size_kb": 1512,
+        "languages": {
+            "C++": 46436,
+            "Python": 1690,
+            "Makefile": 464,
+            "Shell": 444
+        }
+    },
+    {
+        "name": "geometry.hpp",
+        "full_name": "mapbox/geometry.hpp",
+        "url": "https://github.com/mapbox/geometry.hpp",
+        "stars": 99,
+        "updated_at": "2025-03-02T21:50:20Z",
+        "description": "C++ geometry types",
+        "size_kb": 128,
+        "languages": {
+            "C++": 50051,
+            "CMake": 12721,
+            "Shell": 7778,
+            "Makefile": 1081
+        }
+    },
+    {
+        "name": "cheap-ruler",
+        "full_name": "mapbox/cheap-ruler",
+        "url": "https://github.com/mapbox/cheap-ruler",
+        "stars": 418,
+        "updated_at": "2025-02-17T06:02:46Z",
+        "description": "Fast approximations for common geodesic measurements \ud83c\udf10",
+        "size_kb": 180,
+        "languages": {
+            "JavaScript": 33396
+        }
+    },
+    {
+        "name": "mapbox-gl-supported",
+        "full_name": "mapbox/mapbox-gl-supported",
+        "url": "https://github.com/mapbox/mapbox-gl-supported",
+        "stars": 42,
+        "updated_at": "2024-04-10T00:54:26Z",
+        "description": "A library to determine if a browser supports Mapbox GL JS",
+        "size_kb": 195,
+        "languages": {
+            "JavaScript": 3796,
+            "HTML": 1612
+        }
+    },
+    {
+        "name": "guidance-geojson",
+        "full_name": "mapbox/guidance-geojson",
+        "url": "https://github.com/mapbox/guidance-geojson",
+        "stars": 8,
+        "updated_at": "2022-12-21T11:11:59Z",
+        "description": "generate guidance-specific labelling/route geojson from Mapbox Directions",
+        "size_kb": 30,
+        "languages": {
+            "JavaScript": 27123
+        }
+    },
+    {
+        "name": "guidance-replay",
+        "full_name": "mapbox/guidance-replay",
+        "url": "https://github.com/mapbox/guidance-replay",
+        "stars": 9,
+        "updated_at": "2021-08-24T02:04:33Z",
+        "description": "Event source for visual guidance simulation that turns timestamped GeoJSON into mock location events",
+        "size_kb": 64,
+        "languages": {
+            "JavaScript": 79165,
+            "HTML": 1270
+        }
+    },
+    {
+        "name": "guidance-sim",
+        "full_name": "mapbox/guidance-sim",
+        "url": "https://github.com/mapbox/guidance-sim",
+        "stars": 48,
+        "updated_at": "2025-02-09T22:58:30Z",
+        "description": "Creates Mapbox Directions API guidance simulations using Mapbox GL JS",
+        "size_kb": 89,
+        "languages": {
+            "JavaScript": 60076,
+            "Shell": 4217,
+            "HTML": 1023,
+            "CSS": 623
+        }
+    },
+    {
+        "name": "vector-tile",
+        "full_name": "mapbox/vector-tile",
+        "url": "https://github.com/mapbox/vector-tile",
+        "stars": 51,
+        "updated_at": "2025-02-24T07:12:11Z",
+        "description": "C++14 library for decoding Mapbox Vector Tiles",
+        "size_kb": 304,
+        "languages": {
+            "C++": 407396,
+            "Makefile": 3470,
+            "JavaScript": 92
+        }
+    },
+    {
+        "name": "mbview",
+        "full_name": "mapbox/mbview",
+        "url": "https://github.com/mapbox/mbview",
+        "stars": 382,
+        "updated_at": "2025-02-26T13:27:25Z",
+        "description": "View mbtiles locally",
+        "size_kb": 36273,
+        "languages": {
+            "EJS": 10810,
+            "JavaScript": 9824
+        }
+    },
+    {
+        "name": "supercluster.hpp",
+        "full_name": "mapbox/supercluster.hpp",
+        "url": "https://github.com/mapbox/supercluster.hpp",
+        "stars": 35,
+        "updated_at": "2024-10-16T15:47:11Z",
+        "description": "A fast geospatial static point clustering library for C++14",
+        "size_kb": 53,
+        "languages": {
+            "C++": 26409,
+            "Makefile": 1070
+        }
+    },
+    {
+        "name": "geojson-cpp",
+        "full_name": "mapbox/geojson-cpp",
+        "url": "https://github.com/mapbox/geojson-cpp",
+        "stars": 69,
+        "updated_at": "2025-02-18T14:18:09Z",
+        "description": "A C++14 library for converting GeoJSON into geometry.hpp representation",
+        "size_kb": 89,
+        "languages": {
+            "C++": 42505,
+            "Makefile": 1277
+        }
+    },
+    {
+        "name": "rio-hist",
+        "full_name": "mapbox/rio-hist",
+        "url": "https://github.com/mapbox/rio-hist",
+        "stars": 88,
+        "updated_at": "2025-01-23T06:03:52Z",
+        "description": "Histogram matching plugin for rasterio",
+        "size_kb": 10313,
+        "languages": {
+            "Python": 23445
+        }
+    },
+    {
+        "name": "js-number-to-string",
+        "full_name": "mapbox/js-number-to-string",
+        "url": "https://github.com/mapbox/js-number-to-string",
+        "stars": 11,
+        "updated_at": "2024-09-27T06:34:21Z",
+        "description": "Convert doubles and integers to strings using V8's code",
+        "size_kb": 52,
+        "languages": {
+            "C++": 144472,
+            "CMake": 1178,
+            "C": 1054
+        }
+    },
+    {
+        "name": "whoots-js",
+        "full_name": "mapbox/whoots-js",
+        "url": "https://github.com/mapbox/whoots-js",
+        "stars": 23,
+        "updated_at": "2023-12-28T04:05:31Z",
+        "description": "Request tiles from WMS servers that support EPSG:3857 ",
+        "size_kb": 1725,
+        "languages": {
+            "JavaScript": 4892
+        }
+    },
+    {
+        "name": "fio-area",
+        "full_name": "mapbox/fio-area",
+        "url": "https://github.com/mapbox/fio-area",
+        "stars": 2,
+        "updated_at": "2023-03-15T13:50:57Z",
+        "description": null,
+        "size_kb": 29,
+        "languages": {
+            "Python": 6905
+        }
+    },
+    {
+        "name": "mbtiles-cutout",
+        "full_name": "mapbox/mbtiles-cutout",
+        "url": "https://github.com/mapbox/mbtiles-cutout",
+        "stars": 4,
+        "updated_at": "2023-11-14T10:09:17Z",
+        "description": "Delete, or, fill with blank tiles, a polygon within an mbtiles file",
+        "size_kb": 21,
+        "languages": {
+            "JavaScript": 6039
+        }
+    },
+    {
+        "name": "mapbox-gl-sync-move",
+        "full_name": "mapbox/mapbox-gl-sync-move",
+        "url": "https://github.com/mapbox/mapbox-gl-sync-move",
+        "stars": 48,
+        "updated_at": "2024-10-16T12:07:03Z",
+        "description": "Sync movement between two Mapbox GL maps",
+        "size_kb": 121,
+        "languages": {
+            "JavaScript": 9807
+        }
+    },
+    {
+        "name": "directions-icons",
+        "full_name": "mapbox/directions-icons",
+        "url": "https://github.com/mapbox/directions-icons",
+        "stars": 57,
+        "updated_at": "2024-12-22T13:46:42Z",
+        "description": "Navigation specific icons",
+        "size_kb": 2260,
+        "languages": {
+            "JavaScript": 7293,
+            "HTML": 643
+        }
+    },
+    {
+        "name": "node-cpp-skel",
+        "full_name": "mapbox/node-cpp-skel",
+        "url": "https://github.com/mapbox/node-cpp-skel",
+        "stars": 72,
+        "updated_at": "2024-12-27T22:12:19Z",
+        "description": "Skeleton for bindings to C++ libraries for Node.js using node-addon-api",
+        "size_kb": 1429,
+        "languages": {
+            "C++": 24171,
+            "JavaScript": 19157,
+            "Shell": 11201,
+            "Python": 7944,
+            "Makefile": 3254
+        }
+    },
+    {
+        "name": "rio-toa",
+        "full_name": "mapbox/rio-toa",
+        "url": "https://github.com/mapbox/rio-toa",
+        "stars": 39,
+        "updated_at": "2024-10-20T21:24:01Z",
+        "description": "Top Of Atmosphere (TOA) calculations for Landsat 8",
+        "size_kb": 135355,
+        "languages": {
+            "Python": 70980
+        }
+    },
+    {
+        "name": "hpp-skel",
+        "full_name": "mapbox/hpp-skel",
+        "url": "https://github.com/mapbox/hpp-skel",
+        "stars": 117,
+        "updated_at": "2024-10-09T02:30:18Z",
+        "description": "Skeleton for C++ header-only libraries",
+        "size_kb": 241,
+        "languages": {
+            "CMake": 12640,
+            "Shell": 8347,
+            "C++": 4273,
+            "Makefile": 1179
+        }
+    },
+    {
+        "name": "mapbox-geostats",
+        "full_name": "mapbox/mapbox-geostats",
+        "url": "https://github.com/mapbox/mapbox-geostats",
+        "stars": 41,
+        "updated_at": "2024-07-30T15:26:30Z",
+        "description": "Generate statistics about geodata",
+        "size_kb": 7008,
+        "languages": {
+            "JavaScript": 37377
+        }
+    },
+    {
+        "name": "polylabel",
+        "full_name": "mapbox/polylabel",
+        "url": "https://github.com/mapbox/polylabel",
+        "stars": 1456,
+        "updated_at": "2025-03-06T15:02:21Z",
+        "description": "A fast algorithm for finding the pole of inaccessibility of a polygon (in JavaScript and C++)",
+        "size_kb": 126,
+        "languages": {
+            "C++": 7449,
+            "JavaScript": 6322,
+            "Makefile": 669
+        }
+    },
+    {
+        "name": "cpp-cli-skel",
+        "full_name": "mapbox/cpp-cli-skel",
+        "url": "https://github.com/mapbox/cpp-cli-skel",
+        "stars": 1,
+        "updated_at": "2021-12-07T21:35:45Z",
+        "description": "A skeleton for C++ command line tools",
+        "size_kb": 5,
+        "languages": {
+            "Makefile": 622,
+            "C++": 186
+        }
+    },
+    {
+        "name": "rio-alpha",
+        "full_name": "mapbox/rio-alpha",
+        "url": "https://github.com/mapbox/rio-alpha",
+        "stars": 8,
+        "updated_at": "2023-06-30T20:52:07Z",
+        "description": "Add alpha band to imagery based on nodata values",
+        "size_kb": 43986,
+        "languages": {
+            "Python": 42246
+        }
+    },
+    {
+        "name": "glyph-inspect",
+        "full_name": "mapbox/glyph-inspect",
+        "url": "https://github.com/mapbox/glyph-inspect",
+        "stars": 5,
+        "updated_at": "2024-03-14T16:34:58Z",
+        "description": "CLI utility to inspect glyph SDF PBFs.",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 5406,
+            "Protocol Buffer": 728
+        }
+    },
+    {
+        "name": "logbt",
+        "full_name": "mapbox/logbt",
+        "url": "https://github.com/mapbox/logbt",
+        "stars": 25,
+        "updated_at": "2024-12-24T07:04:37Z",
+        "description": "Display a backtrace when a C/C++ program crashes",
+        "size_kb": 187,
+        "languages": {
+            "Shell": 39987,
+            "JavaScript": 1677,
+            "Dockerfile": 613
+        }
+    },
+    {
+        "name": "kml-split",
+        "full_name": "mapbox/kml-split",
+        "url": "https://github.com/mapbox/kml-split",
+        "stars": 11,
+        "updated_at": "2024-10-31T12:39:45Z",
+        "description": "Split KML files with many layers into separate files.",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 5500
+        }
+    },
+    {
+        "name": "cloudfriend",
+        "full_name": "mapbox/cloudfriend",
+        "url": "https://github.com/mapbox/cloudfriend",
+        "stars": 69,
+        "updated_at": "2024-08-10T16:34:20Z",
+        "description": "Helper functions for assembling CloudFormation templates in JavaScript",
+        "size_kb": 2193,
+        "languages": {
+            "JavaScript": 195039
+        }
+    },
+    {
+        "name": "rio-rgbify",
+        "full_name": "mapbox/rio-rgbify",
+        "url": "https://github.com/mapbox/rio-rgbify",
+        "stars": 107,
+        "updated_at": "2025-02-12T11:37:56Z",
+        "description": "Encoded arbitrary bit depth rasters in pseudo base-256",
+        "size_kb": 1580,
+        "languages": {
+            "Python": 29323
+        }
+    },
+    {
+        "name": "mvt-fixtures",
+        "full_name": "mapbox/mvt-fixtures",
+        "url": "https://github.com/mapbox/mvt-fixtures",
+        "stars": 27,
+        "updated_at": "2024-09-06T03:44:49Z",
+        "description": "Suite of valid and invalid Mapbox Vector Tiles",
+        "size_kb": 20784,
+        "languages": {
+            "JavaScript": 96096,
+            "Shell": 1125
+        }
+    },
+    {
+        "name": "decrypt-kms-env",
+        "full_name": "mapbox/decrypt-kms-env",
+        "url": "https://github.com/mapbox/decrypt-kms-env",
+        "stars": 8,
+        "updated_at": "2022-08-03T05:49:38Z",
+        "description": "Simple util for decrypting secure environment variables encrypted using KMS",
+        "size_kb": 26,
+        "languages": {
+            "JavaScript": 5892
+        }
+    },
+    {
+        "name": "rio-cloudmask",
+        "full_name": "mapbox/rio-cloudmask",
+        "url": "https://github.com/mapbox/rio-cloudmask",
+        "stars": 53,
+        "updated_at": "2025-02-20T15:31:02Z",
+        "description": "Rasterio plugin for identifying clouds in multi-spectral satellite imagery",
+        "size_kb": 7624,
+        "languages": {
+            "Python": 22777
+        }
+    },
+    {
+        "name": "graph-normalizer",
+        "full_name": "mapbox/graph-normalizer",
+        "url": "https://github.com/mapbox/graph-normalizer",
+        "stars": 12,
+        "updated_at": "2023-08-31T15:10:04Z",
+        "description": "Takes nodes and ways and turn them into a normalized graph of intersections and ways.",
+        "size_kb": 2435,
+        "languages": {
+            "JavaScript": 18356
+        }
+    },
+    {
+        "name": "timespace",
+        "full_name": "mapbox/timespace",
+        "url": "https://github.com/mapbox/timespace",
+        "stars": 69,
+        "updated_at": "2025-01-07T07:48:27Z",
+        "description": "compute fuzzy local time from a location",
+        "size_kb": 1991,
+        "languages": {
+            "JavaScript": 15018,
+            "Shell": 417
+        }
+    },
+    {
+        "name": "cardboard-geospatial-queries",
+        "full_name": "mapbox/cardboard-geospatial-queries",
+        "url": "https://github.com/mapbox/cardboard-geospatial-queries",
+        "stars": 2,
+        "updated_at": "2020-07-22T07:57:25Z",
+        "description": null,
+        "size_kb": 32,
+        "languages": {
+            "JavaScript": 14804
+        }
+    },
+    {
+        "name": "XcodeClangFormat",
+        "full_name": "mapbox/XcodeClangFormat",
+        "url": "https://github.com/mapbox/XcodeClangFormat",
+        "stars": 811,
+        "updated_at": "2025-02-13T01:42:16Z",
+        "description": "Format code in Xcode 8+ with clang-format",
+        "size_kb": 414,
+        "languages": {
+            "Objective-C++": 12188,
+            "Objective-C": 6740,
+            "C": 76
+        }
+    },
+    {
+        "name": "mapbox-gl-js-toys",
+        "full_name": "mapbox/mapbox-gl-js-toys",
+        "url": "https://github.com/mapbox/mapbox-gl-js-toys",
+        "stars": 2,
+        "updated_at": "2020-07-22T07:57:25Z",
+        "description": null,
+        "size_kb": 420,
+        "languages": {
+            "JavaScript": 3383,
+            "HTML": 837
+        }
+    },
+    {
+        "name": "vector-tile-cs",
+        "full_name": "mapbox/vector-tile-cs",
+        "url": "https://github.com/mapbox/vector-tile-cs",
+        "stars": 59,
+        "updated_at": "2025-03-06T01:50:22Z",
+        "description": "Parses vector tiles with C#.",
+        "size_kb": 761,
+        "languages": {
+            "C#": 243092
+        }
+    },
+    {
+        "name": "cloudformation-kms",
+        "full_name": "mapbox/cloudformation-kms",
+        "url": "https://github.com/mapbox/cloudformation-kms",
+        "stars": 8,
+        "updated_at": "2024-07-26T00:14:12Z",
+        "description": "Provide a KMS key for encrypting/decrypting CloudFormation Parameters",
+        "size_kb": 12,
+        "languages": {
+            "JavaScript": 1496
+        }
+    },
+    {
+        "name": "workerpoolify",
+        "full_name": "mapbox/workerpoolify",
+        "url": "https://github.com/mapbox/workerpoolify",
+        "stars": 47,
+        "updated_at": "2023-09-08T17:16:08Z",
+        "description": "A smart worker pool for Browserify.",
+        "size_kb": 31,
+        "languages": {
+            "JavaScript": 10620,
+            "HTML": 122
+        }
+    },
+    {
+        "name": "cardboard-hammer",
+        "full_name": "mapbox/cardboard-hammer",
+        "url": "https://github.com/mapbox/cardboard-hammer",
+        "stars": 2,
+        "updated_at": "2020-04-22T01:21:09Z",
+        "description": "Distributed :hammer: to hit cardboard with",
+        "size_kb": 21,
+        "languages": {
+            "JavaScript": 19960
+        }
+    },
+    {
+        "name": "watchbot-progress",
+        "full_name": "mapbox/watchbot-progress",
+        "url": "https://github.com/mapbox/watchbot-progress",
+        "stars": 1,
+        "updated_at": "2023-03-23T11:03:07Z",
+        "description": "A helper library for Watchbot to help keep track the progress of distributed map-reduce operations",
+        "size_kb": 306,
+        "languages": {
+            "JavaScript": 36559
+        }
+    },
+    {
+        "name": "rio-glui",
+        "full_name": "mapbox/rio-glui",
+        "url": "https://github.com/mapbox/rio-glui",
+        "stars": 55,
+        "updated_at": "2025-02-06T21:35:52Z",
+        "description": "Explore CloudOptimized geotiff on your browser using Mapbox GL JS",
+        "size_kb": 11570,
+        "languages": {
+            "Python": 40437,
+            "JavaScript": 26025,
+            "HTML": 6483
+        }
+    },
+    {
+        "name": "rio-polyencode",
+        "full_name": "mapbox/rio-polyencode",
+        "url": "https://github.com/mapbox/rio-polyencode",
+        "stars": 6,
+        "updated_at": "2024-07-15T12:56:57Z",
+        "description": "Encode time-series data into a single polynomial raster",
+        "size_kb": 7,
+        "languages": {
+            "Python": 4043
+        }
+    },
+    {
+        "name": "xt",
+        "full_name": "mapbox/xt",
+        "url": "https://github.com/mapbox/xt",
+        "stars": 12,
+        "updated_at": "2024-02-16T20:53:16Z",
+        "description": "Automatically convert a stream of tile coordinates to another format",
+        "size_kb": 12,
+        "languages": {
+            "Python": 5009
+        }
+    },
+    {
+        "name": "webgl-wind",
+        "full_name": "mapbox/webgl-wind",
+        "url": "https://github.com/mapbox/webgl-wind",
+        "stars": 998,
+        "updated_at": "2025-03-06T12:35:24Z",
+        "description": "Wind power visualization with WebGL particles",
+        "size_kb": 1433,
+        "languages": {
+            "JavaScript": 11875,
+            "GLSL": 3938,
+            "Shell": 740
+        }
+    },
+    {
+        "name": "wikimama",
+        "full_name": "mapbox/wikimama",
+        "url": "https://github.com/mapbox/wikimama",
+        "stars": 8,
+        "updated_at": "2023-03-07T13:59:54Z",
+        "description": "Scripts to help matching OSM features to Wikidata items",
+        "size_kb": 4872,
+        "languages": {
+            "JavaScript": 14283,
+            "Python": 3411
+        }
+    },
+    {
+        "name": "mapbox-gl-layer-groups",
+        "full_name": "mapbox/mapbox-gl-layer-groups",
+        "url": "https://github.com/mapbox/mapbox-gl-layer-groups",
+        "stars": 27,
+        "updated_at": "2025-02-25T06:20:58Z",
+        "description": "A plugin to manage layer groups in Mapbox GL JS",
+        "size_kb": 6,
+        "languages": {
+            "JavaScript": 15088
+        }
+    },
+    {
+        "name": "mr-mvt",
+        "full_name": "mapbox/mr-mvt",
+        "url": "https://github.com/mapbox/mr-mvt",
+        "stars": 4,
+        "updated_at": "2021-07-20T10:08:12Z",
+        "description": "Experiments in Map Reduce with Vector Tiles",
+        "size_kb": 135,
+        "languages": {
+            "C++": 66045,
+            "JavaScript": 2501,
+            "Makefile": 2383,
+            "Python": 1880
+        }
+    },
+    {
+        "name": "streetcar",
+        "full_name": "mapbox/streetcar",
+        "url": "https://github.com/mapbox/streetcar",
+        "stars": 2,
+        "updated_at": "2022-10-16T18:38:39Z",
+        "description": "\ud83d\ude8e  Tools for processing streetlevel imagery",
+        "size_kb": 4531,
+        "languages": {
+            "JavaScript": 24558
+        }
+    },
+    {
+        "name": "mapbox-gl-rtl-text",
+        "full_name": "mapbox/mapbox-gl-rtl-text",
+        "url": "https://github.com/mapbox/mapbox-gl-rtl-text",
+        "stars": 57,
+        "updated_at": "2025-01-03T14:41:01Z",
+        "description": "Add right-to-left text support to Mapbox GL JS",
+        "size_kb": 1498,
+        "languages": {
+            "JavaScript": 12737,
+            "C": 4974,
+            "Shell": 1545,
+            "HTML": 965
+        }
+    },
+    {
+        "name": "osrm-tag-rewriter",
+        "full_name": "mapbox/osrm-tag-rewriter",
+        "url": "https://github.com/mapbox/osrm-tag-rewriter",
+        "stars": 2,
+        "updated_at": "2024-11-22T17:30:38Z",
+        "description": "Re-writes multiple deprecated but still present OpenStreetMap tags for routing engines",
+        "size_kb": 28,
+        "languages": {
+            "C++": 10749,
+            "Gherkin": 4437,
+            "CMake": 2755,
+            "Shell": 1453
+        }
+    },
+    {
+        "name": "check-file-dependencies",
+        "full_name": "mapbox/check-file-dependencies",
+        "url": "https://github.com/mapbox/check-file-dependencies",
+        "stars": 0,
+        "updated_at": "2022-11-18T16:53:27Z",
+        "description": "Takes a file path and confirms the resolved node_modules match the package.json",
+        "size_kb": 4851,
+        "languages": {
+            "JavaScript": 17049
+        }
+    },
+    {
+        "name": "tile-count",
+        "full_name": "mapbox/tile-count",
+        "url": "https://github.com/mapbox/tile-count",
+        "stars": 32,
+        "updated_at": "2022-12-25T04:07:11Z",
+        "description": "A tool for accumulating point counts by tile",
+        "size_kb": 1227,
+        "languages": {
+            "C++": 226444,
+            "C": 18614,
+            "Makefile": 6976,
+            "JavaScript": 559
+        }
+    },
+    {
+        "name": "sdf-glyph-foundry",
+        "full_name": "mapbox/sdf-glyph-foundry",
+        "url": "https://github.com/mapbox/sdf-glyph-foundry",
+        "stars": 47,
+        "updated_at": "2024-05-02T12:32:50Z",
+        "description": "Use Freetype and font files to make signed distance field glyphs",
+        "size_kb": 381,
+        "languages": {
+            "C++": 118587,
+            "Makefile": 1818,
+            "Shell": 1364,
+            "C": 1263
+        }
+    },
+    {
+        "name": "makiwich",
+        "full_name": "mapbox/makiwich",
+        "url": "https://github.com/mapbox/makiwich",
+        "stars": 7,
+        "updated_at": "2024-04-06T00:25:29Z",
+        "description": null,
+        "size_kb": 9730,
+        "languages": {
+            "JavaScript": 13106
+        }
+    },
+    {
+        "name": "code-spell-check",
+        "full_name": "mapbox/code-spell-check",
+        "url": "https://github.com/mapbox/code-spell-check",
+        "stars": 4,
+        "updated_at": "2020-06-10T04:25:51Z",
+        "description": "spell check English in source code",
+        "size_kb": 4,
+        "languages": {
+            "JavaScript": 3783
+        }
+    },
+    {
+        "name": "Mapbox.IO.Compression-unity",
+        "full_name": "mapbox/Mapbox.IO.Compression-unity",
+        "url": "https://github.com/mapbox/Mapbox.IO.Compression-unity",
+        "stars": 2,
+        "updated_at": "2022-06-04T00:38:14Z",
+        "description": "Make GzipStream work with Unity3d - taken from https://github.com/Microsoft/referencesource/tree/master/System/sys/system/IO/compression",
+        "size_kb": 54,
+        "languages": {
+            "C#": 170671
+        }
+    },
+    {
+        "name": "github-stats-collector",
+        "full_name": "mapbox/github-stats-collector",
+        "url": "https://github.com/mapbox/github-stats-collector",
+        "stars": 2,
+        "updated_at": "2022-04-26T21:55:48Z",
+        "description": "Collect repository stats, issues and codebase properties from GitHub",
+        "size_kb": 19,
+        "languages": {
+            "JavaScript": 13600
+        }
+    },
+    {
+        "name": "cumulative-timer",
+        "full_name": "mapbox/cumulative-timer",
+        "url": "https://github.com/mapbox/cumulative-timer",
+        "stars": 33,
+        "updated_at": "2024-05-20T14:26:59Z",
+        "description": "A simple cumulative timer for benchmarking JavaScript applications.",
+        "size_kb": 4,
+        "languages": {
+            "JavaScript": 1067
+        }
+    },
+    {
+        "name": "spatial-algorithms",
+        "full_name": "mapbox/spatial-algorithms",
+        "url": "https://github.com/mapbox/spatial-algorithms",
+        "stars": 37,
+        "updated_at": "2024-11-19T19:57:52Z",
+        "description": "Spatial algorithms library for geometry.hpp",
+        "size_kb": 109,
+        "languages": {
+            "C++": 94107,
+            "CMake": 15549,
+            "Shell": 13662,
+            "Makefile": 753
+        }
+    },
+    {
+        "name": "pagerduty",
+        "full_name": "mapbox/pagerduty",
+        "url": "https://github.com/mapbox/pagerduty",
+        "stars": 7,
+        "updated_at": "2023-07-19T17:01:51Z",
+        "description": "A Node.js SDK for the PagerDuty v2 API",
+        "size_kb": 140,
+        "languages": {
+            "JavaScript": 20276
+        }
+    },
+    {
+        "name": "node-or-tools",
+        "full_name": "mapbox/node-or-tools",
+        "url": "https://github.com/mapbox/node-or-tools",
+        "stars": 148,
+        "updated_at": "2025-01-04T08:33:02Z",
+        "description": "Node.js bindings for or-tools vehicle routing problems",
+        "size_kb": 2000,
+        "languages": {
+            "C++": 42343,
+            "JavaScript": 13848,
+            "Shell": 3936,
+            "Python": 3448,
+            "Dockerfile": 480
+        }
+    },
+    {
+        "name": "malaria-mapping",
+        "full_name": "mapbox/malaria-mapping",
+        "url": "https://github.com/mapbox/malaria-mapping",
+        "stars": 19,
+        "updated_at": "2021-04-16T15:03:22Z",
+        "description": "Visualize the mapping efforts of HOT and DigitalGlobe support of Malaria elimination",
+        "size_kb": 2013,
+        "languages": {
+            "JavaScript": 12629,
+            "HTML": 5621,
+            "CSS": 3326,
+            "Shell": 2967
+        }
+    },
+    {
+        "name": "mapbox-gl-traffic",
+        "full_name": "mapbox/mapbox-gl-traffic",
+        "url": "https://github.com/mapbox/mapbox-gl-traffic",
+        "stars": 91,
+        "updated_at": "2025-02-22T18:10:36Z",
+        "description": "Show and hide traffic layers in your Mapbox GL traffic style",
+        "size_kb": 138,
+        "languages": {
+            "JavaScript": 20042,
+            "HTML": 1039
+        }
+    },
+    {
+        "name": "gaussian-mixture",
+        "full_name": "mapbox/gaussian-mixture",
+        "url": "https://github.com/mapbox/gaussian-mixture",
+        "stars": 2,
+        "updated_at": "2022-09-08T07:00:51Z",
+        "description": "Implements a Gaussian Mixture model in JavaScript",
+        "size_kb": 77,
+        "languages": {
+            "JavaScript": 36027
+        }
+    },
+    {
+        "name": "delaunator",
+        "full_name": "mapbox/delaunator",
+        "url": "https://github.com/mapbox/delaunator",
+        "stars": 2410,
+        "updated_at": "2025-03-06T18:33:23Z",
+        "description": "An incredibly fast JavaScript library for Delaunay triangulation of 2D points",
+        "size_kb": 1361,
+        "languages": {
+            "JavaScript": 24029
+        }
+    },
+    {
+        "name": "mapbox-gl-language",
+        "full_name": "mapbox/mapbox-gl-language",
+        "url": "https://github.com/mapbox/mapbox-gl-language",
+        "stars": 200,
+        "updated_at": "2025-03-05T03:05:00Z",
+        "description": "Switch language of your Mapbox GL JS style",
+        "size_kb": 243,
+        "languages": {
+            "JavaScript": 11629,
+            "HTML": 1325
+        }
+    },
+    {
+        "name": "mapbox-isochrone",
+        "full_name": "mapbox/mapbox-isochrone",
+        "url": "https://github.com/mapbox/mapbox-isochrone",
+        "stars": 119,
+        "updated_at": "2024-11-22T17:30:55Z",
+        "description": "Isochrone generator built atop the Mapbox Matrix API, with CONREC polygonization. ",
+        "size_kb": 890,
+        "languages": {
+            "JavaScript": 120117
+        }
+    },
+    {
+        "name": "cheap-ruler-cpp",
+        "full_name": "mapbox/cheap-ruler-cpp",
+        "url": "https://github.com/mapbox/cheap-ruler-cpp",
+        "stars": 36,
+        "updated_at": "2023-12-30T15:39:22Z",
+        "description": "Fast approximations for common geodesic measurements",
+        "size_kb": 67,
+        "languages": {
+            "C++": 20110,
+            "CMake": 11984
+        }
+    },
+    {
+        "name": "watchbot-progress-py",
+        "full_name": "mapbox/watchbot-progress-py",
+        "url": "https://github.com/mapbox/watchbot-progress-py",
+        "stars": 1,
+        "updated_at": "2020-05-14T14:38:42Z",
+        "description": "Python module for running map-reduce jobs on ECS-watchbot",
+        "size_kb": 82,
+        "languages": {
+            "Python": 49481
+        }
+    },
+    {
+        "name": "batfish",
+        "full_name": "mapbox/batfish",
+        "url": "https://github.com/mapbox/batfish",
+        "stars": 126,
+        "updated_at": "2024-11-05T01:36:39Z",
+        "description": "A static-site generator for React and Markdown",
+        "size_kb": 5488,
+        "languages": {
+            "JavaScript": 281881,
+            "EJS": 436,
+            "Shell": 265
+        }
+    },
+    {
+        "name": "turf-swift",
+        "full_name": "mapbox/turf-swift",
+        "url": "https://github.com/mapbox/turf-swift",
+        "stars": 245,
+        "updated_at": "2025-02-24T09:52:44Z",
+        "description": "A Swift language port of Turf.js.",
+        "size_kb": 5226,
+        "languages": {
+            "Swift": 308065,
+            "Shell": 7894,
+            "Ruby": 2876,
+            "Objective-C": 346
+        }
+    },
+    {
+        "name": "mapbox-gl-draw-static-mode",
+        "full_name": "mapbox/mapbox-gl-draw-static-mode",
+        "url": "https://github.com/mapbox/mapbox-gl-draw-static-mode",
+        "stars": 16,
+        "updated_at": "2025-01-29T02:16:59Z",
+        "description": "A custom mode to mapbox-gl-draw that lets you turn of user interactions",
+        "size_kb": 2,
+        "languages": {
+            "JavaScript": 262
+        }
+    },
+    {
+        "name": "mapboxgl-jupyter",
+        "full_name": "mapbox/mapboxgl-jupyter",
+        "url": "https://github.com/mapbox/mapboxgl-jupyter",
+        "stars": 673,
+        "updated_at": "2025-02-12T23:28:52Z",
+        "description": "Use Mapbox GL JS to visualize data in a Python Jupyter notebook",
+        "size_kb": 10382,
+        "languages": {
+            "Python": 120391,
+            "HTML": 81802
+        }
+    },
+    {
+        "name": "mapbox-arkit-ios",
+        "full_name": "mapbox/mapbox-arkit-ios",
+        "url": "https://github.com/mapbox/mapbox-arkit-ios",
+        "stars": 224,
+        "updated_at": "2024-03-03T23:11:40Z",
+        "description": "Utilities for combining Mapbox maps and location services with ARKit in your applications.",
+        "size_kb": 3025,
+        "languages": {
+            "Swift": 26260,
+            "Ruby": 2324,
+            "Objective-C": 371,
+            "Shell": 226
+        }
+    },
+    {
+        "name": "vector-tile-base",
+        "full_name": "mapbox/vector-tile-base",
+        "url": "https://github.com/mapbox/vector-tile-base",
+        "stars": 57,
+        "updated_at": "2024-11-04T07:55:19Z",
+        "description": "A very basic and low level library written in python for encoding and decoding Mapbox Vector Tiles",
+        "size_kb": 80,
+        "languages": {
+            "Python": 101741
+        }
+    },
+    {
+        "name": "magic-cfn-resources",
+        "full_name": "mapbox/magic-cfn-resources",
+        "url": "https://github.com/mapbox/magic-cfn-resources",
+        "stars": 5,
+        "updated_at": "2025-02-10T14:39:37Z",
+        "description": "Build Lambda-backed custom CloudFormation resources \u2728",
+        "size_kb": 855,
+        "languages": {
+            "JavaScript": 92141
+        }
+    },
+    {
+        "name": "osm-analysis-dashboard",
+        "full_name": "mapbox/osm-analysis-dashboard",
+        "url": "https://github.com/mapbox/osm-analysis-dashboard",
+        "stars": 6,
+        "updated_at": "2021-08-17T21:57:41Z",
+        "description": "OSM Analysis Dashboard",
+        "size_kb": 333,
+        "languages": {
+            "JavaScript": 49319,
+            "HTML": 14882,
+            "CSS": 283
+        }
+    },
+    {
+        "name": "gzip-hpp",
+        "full_name": "mapbox/gzip-hpp",
+        "url": "https://github.com/mapbox/gzip-hpp",
+        "stars": 335,
+        "updated_at": "2025-02-19T18:59:38Z",
+        "description": "Gzip header-only C++ library",
+        "size_kb": 221,
+        "languages": {
+            "C++": 17258,
+            "CMake": 12675,
+            "Shell": 7730,
+            "Makefile": 1310,
+            "Dockerfile": 819
+        }
+    },
+    {
+        "name": "store-locator-android",
+        "full_name": "mapbox/store-locator-android",
+        "url": "https://github.com/mapbox/store-locator-android",
+        "stars": 71,
+        "updated_at": "2025-02-26T01:01:36Z",
+        "description": "A plug-and-play Android app that cuts down on the set-up and development time needed to add a Store Locator into your app. Use our starter themes and features as a plug-and-play solution, or further customize your Store Locator with our flexible build.",
+        "size_kb": 13945,
+        "languages": {
+            "Java": 45399
+        }
+    },
+    {
+        "name": "mapbox-speech-swift",
+        "full_name": "mapbox/mapbox-speech-swift",
+        "url": "https://github.com/mapbox/mapbox-speech-swift",
+        "stars": 44,
+        "updated_at": "2025-01-16T10:24:24Z",
+        "description": "Natural-sounding text-to-speech in Swift or Objective-C on iOS, macOS, tvOS, and watchOS",
+        "size_kb": 470,
+        "languages": {
+            "Swift": 25909,
+            "Ruby": 2630,
+            "Shell": 1656,
+            "Objective-C": 245
+        }
+    },
+    {
+        "name": "mapbox-gl-redux",
+        "full_name": "mapbox/mapbox-gl-redux",
+        "url": "https://github.com/mapbox/mapbox-gl-redux",
+        "stars": 37,
+        "updated_at": "2024-04-15T18:15:17Z",
+        "description": "Tools for building Redux applications with Mapbox GL JS",
+        "size_kb": 101,
+        "languages": {
+            "JavaScript": 15317
+        }
+    },
+    {
+        "name": "mvt-cruncher",
+        "full_name": "mapbox/mvt-cruncher",
+        "url": "https://github.com/mapbox/mvt-cruncher",
+        "stars": 14,
+        "updated_at": "2024-12-27T08:19:14Z",
+        "description": "web browser based MVT to SVG converter",
+        "size_kb": 442,
+        "languages": {
+            "C++": 18266,
+            "HTML": 3799
+        }
+    },
+    {
+        "name": "vtquery",
+        "full_name": "mapbox/vtquery",
+        "url": "https://github.com/mapbox/vtquery",
+        "stars": 45,
+        "updated_at": "2025-02-06T19:07:52Z",
+        "description": "Query some gosh darn vector tiles",
+        "size_kb": 1101,
+        "languages": {
+            "JavaScript": 52744,
+            "C++": 47791,
+            "Shell": 10252,
+            "Python": 7127,
+            "HTML": 3561,
+            "Makefile": 3232,
+            "Dockerfile": 638
+        }
+    },
+    {
+        "name": "landsat-tiler",
+        "full_name": "mapbox/landsat-tiler",
+        "url": "https://github.com/mapbox/landsat-tiler",
+        "stars": 142,
+        "updated_at": "2025-02-20T15:31:31Z",
+        "description": "A serverless Landsat tiles server using AWS Lambda",
+        "size_kb": 39,
+        "languages": {
+            "JavaScript": 10065,
+            "CSS": 5317,
+            "HTML": 5179,
+            "Python": 4397,
+            "Makefile": 2998
+        }
+    },
+    {
+        "name": "expression-jamsession",
+        "full_name": "mapbox/expression-jamsession",
+        "url": "https://github.com/mapbox/expression-jamsession",
+        "stars": 76,
+        "updated_at": "2024-12-14T14:27:18Z",
+        "description": "Write Mapbox GL expressions in a more familiar, handwritable, spreadsheet-like, programming-like syntax.",
+        "size_kb": 171,
+        "languages": {
+            "JavaScript": 25792
+        }
+    },
+    {
+        "name": "to-fix-validate",
+        "full_name": "mapbox/to-fix-validate",
+        "url": "https://github.com/mapbox/to-fix-validate",
+        "stars": 1,
+        "updated_at": "2021-02-23T17:36:33Z",
+        "description": "Input validators for the to-fix-backend",
+        "size_kb": 8,
+        "languages": {
+            "JavaScript": 11782
+        }
+    },
+    {
+        "name": "vtvalidate",
+        "full_name": "mapbox/vtvalidate",
+        "url": "https://github.com/mapbox/vtvalidate",
+        "stars": 15,
+        "updated_at": "2024-07-06T22:19:56Z",
+        "description": "Check if a vector tile contains valid/invalid geometries",
+        "size_kb": 267,
+        "languages": {
+            "JavaScript": 14763,
+            "Shell": 9772,
+            "Python": 7335,
+            "C++": 5790,
+            "Makefile": 1858
+        }
+    },
+    {
+        "name": "tileset-thumb",
+        "full_name": "mapbox/tileset-thumb",
+        "url": "https://github.com/mapbox/tileset-thumb",
+        "stars": 3,
+        "updated_at": "2021-01-02T16:31:38Z",
+        "description": "Generate a thumbnail from a tileset via its tilelive stream",
+        "size_kb": 171,
+        "languages": {
+            "JavaScript": 11106
+        }
+    },
+    {
+        "name": "mapbox-gestures-android",
+        "full_name": "mapbox/mapbox-gestures-android",
+        "url": "https://github.com/mapbox/mapbox-gestures-android",
+        "stars": 28,
+        "updated_at": "2024-09-15T04:40:10Z",
+        "description": "The Mapbox Gestures for Android library makes it easy to detect and handle user gestures on an Android device.",
+        "size_kb": 535,
+        "languages": {
+            "Java": 159026,
+            "Kotlin": 51305,
+            "Makefile": 338
+        }
+    },
+    {
+        "name": "dobbyscan",
+        "full_name": "mapbox/dobbyscan",
+        "url": "https://github.com/mapbox/dobbyscan",
+        "stars": 86,
+        "updated_at": "2025-03-01T12:15:24Z",
+        "description": "A very fast density based clustering library for geographic points",
+        "size_kb": 20,
+        "languages": {
+            "JavaScript": 2083
+        }
+    },
+    {
+        "name": "eslint-config-mapbox",
+        "full_name": "mapbox/eslint-config-mapbox",
+        "url": "https://github.com/mapbox/eslint-config-mapbox",
+        "stars": 14,
+        "updated_at": "2024-08-20T23:22:16Z",
+        "description": "Generic eslint configuration for Mapbox",
+        "size_kb": 126,
+        "languages": {
+            "JavaScript": 11438
+        }
+    },
+    {
+        "name": "COGDumper",
+        "full_name": "mapbox/COGDumper",
+        "url": "https://github.com/mapbox/COGDumper",
+        "stars": 68,
+        "updated_at": "2025-03-04T16:46:39Z",
+        "description": "Dumps tiles out of a cloud optimized geotiff",
+        "size_kb": 39,
+        "languages": {
+            "Python": 27874
+        }
+    },
+    {
+        "name": "geosimplify-js",
+        "full_name": "mapbox/geosimplify-js",
+        "url": "https://github.com/mapbox/geosimplify-js",
+        "stars": 32,
+        "updated_at": "2024-06-25T07:36:05Z",
+        "description": "Simplify WGS84 LineStrings using latitude-sensitive thresholds",
+        "size_kb": 11,
+        "languages": {
+            "JavaScript": 5463
+        }
+    },
+    {
+        "name": "flutter-mapbox-gl",
+        "full_name": "mapbox/flutter-mapbox-gl",
+        "url": "https://github.com/mapbox/flutter-mapbox-gl",
+        "stars": 271,
+        "updated_at": "2024-10-04T17:17:39Z",
+        "description": "Moved to https://github.com/tobrun/flutter-mapbox-gl",
+        "size_kb": 36347,
+        "languages": {
+            "Java": 22266,
+            "Dart": 11321,
+            "Ruby": 2851,
+            "Objective-C": 1543
+        }
+    },
+    {
+        "name": "flamebearer",
+        "full_name": "mapbox/flamebearer",
+        "url": "https://github.com/mapbox/flamebearer",
+        "stars": 1650,
+        "updated_at": "2025-02-14T03:23:38Z",
+        "description": "Blazing fast flame graph tool for V8 and Node \ud83d\udd25",
+        "size_kb": 557,
+        "languages": {
+            "JavaScript": 14398,
+            "HTML": 2910
+        }
+    },
+    {
+        "name": "jsonlint",
+        "full_name": "mapbox/jsonlint",
+        "url": "https://github.com/mapbox/jsonlint",
+        "stars": 2,
+        "updated_at": "2021-05-13T15:08:17Z",
+        "description": "A JSON parser and validator with a CLI.",
+        "size_kb": 113,
+        "languages": {
+            "JavaScript": 22272,
+            "Yacc": 2202,
+            "HTML": 1806,
+            "Lex": 509,
+            "Makefile": 436
+        }
+    },
+    {
+        "name": "cmake-node-module",
+        "full_name": "mapbox/cmake-node-module",
+        "url": "https://github.com/mapbox/cmake-node-module",
+        "stars": 20,
+        "updated_at": "2023-03-28T16:42:11Z",
+        "description": "Build Node.js C++ modules with CMake",
+        "size_kb": 9,
+        "languages": {
+            "CMake": 7879,
+            "C++": 515,
+            "Shell": 456,
+            "JavaScript": 163,
+            "Makefile": 53
+        }
+    },
+    {
+        "name": "vtcomposite",
+        "full_name": "mapbox/vtcomposite",
+        "url": "https://github.com/mapbox/vtcomposite",
+        "stars": 38,
+        "updated_at": "2024-10-28T13:28:11Z",
+        "description": "vtzero-based vector tile compositor (supporting overzooming)",
+        "size_kb": 1228,
+        "languages": {
+            "JavaScript": 171386,
+            "C++": 69217,
+            "Shell": 10401,
+            "Python": 7127,
+            "Makefile": 4173,
+            "HTML": 2010
+        }
+    },
+    {
+        "name": "parse-mapbox-token",
+        "full_name": "mapbox/parse-mapbox-token",
+        "url": "https://github.com/mapbox/parse-mapbox-token",
+        "stars": 1,
+        "updated_at": "2024-07-26T00:25:35Z",
+        "description": "Parse a Mapbox API token, in Node, browsers, or React Native",
+        "size_kb": 35,
+        "languages": {
+            "JavaScript": 3253,
+            "HTML": 398
+        }
+    },
+    {
+        "name": "github-release-tools",
+        "full_name": "mapbox/github-release-tools",
+        "url": "https://github.com/mapbox/github-release-tools",
+        "stars": 16,
+        "updated_at": "2023-03-20T09:59:34Z",
+        "description": "A collection of scripts and tools for semi-automating git- and GitHub-based release processes.",
+        "size_kb": 113,
+        "languages": {
+            "JavaScript": 26035
+        }
+    },
+    {
+        "name": "mapbox-scenekit",
+        "full_name": "mapbox/mapbox-scenekit",
+        "url": "https://github.com/mapbox/mapbox-scenekit",
+        "stars": 233,
+        "updated_at": "2025-02-16T03:16:50Z",
+        "description": null,
+        "size_kb": 48623,
+        "languages": {
+            "Swift": 97539,
+            "Metal": 5117,
+            "Ruby": 2702,
+            "Objective-C": 148
+        }
+    },
+    {
+        "name": "HecateJS",
+        "full_name": "mapbox/HecateJS",
+        "url": "https://github.com/mapbox/HecateJS",
+        "stars": 16,
+        "updated_at": "2024-08-07T17:01:27Z",
+        "description": "Javascript Library for Hecate, the persistent, mutable data store focused on GeoJSON first interchange",
+        "size_kb": 769,
+        "languages": {
+            "JavaScript": 158744
+        }
+    },
+    {
+        "name": "fusspot",
+        "full_name": "mapbox/fusspot",
+        "url": "https://github.com/mapbox/fusspot",
+        "stars": 10,
+        "updated_at": "2024-10-14T10:51:27Z",
+        "description": "A tiny runtime library for type assertions",
+        "size_kb": 237,
+        "languages": {
+            "JavaScript": 40482
+        }
+    },
+    {
+        "name": "robosat",
+        "full_name": "mapbox/robosat",
+        "url": "https://github.com/mapbox/robosat",
+        "stars": 2034,
+        "updated_at": "2025-03-03T03:41:54Z",
+        "description": " Semantic segmentation on aerial and satellite imagery. Extracts features such as: buildings, parking lots, roads, water, clouds",
+        "size_kb": 1381,
+        "languages": {
+            "Python": 107149,
+            "HTML": 1940,
+            "Makefile": 710,
+            "Shell": 41
+        }
+    },
+    {
+        "name": "mvtview",
+        "full_name": "mapbox/mvtview",
+        "url": "https://github.com/mapbox/mvtview",
+        "stars": 42,
+        "updated_at": "2024-05-13T04:27:30Z",
+        "description": "View a single Mapbox Vector Tile with mapbox-gl-js locally",
+        "size_kb": 32,
+        "languages": {
+            "JavaScript": 5934,
+            "HTML": 3797
+        }
+    },
+    {
+        "name": "mr-ui",
+        "full_name": "mapbox/mr-ui",
+        "url": "https://github.com/mapbox/mr-ui",
+        "stars": 89,
+        "updated_at": "2025-03-03T22:06:23Z",
+        "description": "UI components for Mapbox projects",
+        "size_kb": 16517,
+        "languages": {
+            "TypeScript": 349320,
+            "JavaScript": 10363,
+            "CSS": 1963,
+            "HTML": 455
+        }
+    },
+    {
+        "name": "Optional",
+        "full_name": "mapbox/Optional",
+        "url": "https://github.com/mapbox/Optional",
+        "stars": 2,
+        "updated_at": "2020-11-17T08:12:30Z",
+        "description": "optional (nullable) objects for C++14",
+        "size_kb": 157,
+        "languages": {
+            "C++": 67348,
+            "CMake": 1366
+        }
+    },
+    {
+        "name": "vtshaver",
+        "full_name": "mapbox/vtshaver",
+        "url": "https://github.com/mapbox/vtshaver",
+        "stars": 39,
+        "updated_at": "2024-07-29T17:47:06Z",
+        "description": "Remove unneeded vector tile layers, features, and properties based on particular style",
+        "size_kb": 6726,
+        "languages": {
+            "JavaScript": 79413,
+            "C++": 30253,
+            "Shell": 10675,
+            "Python": 10112,
+            "Makefile": 3502
+        }
+    },
+    {
+        "name": "potpack",
+        "full_name": "mapbox/potpack",
+        "url": "https://github.com/mapbox/potpack",
+        "stars": 322,
+        "updated_at": "2025-01-23T07:28:27Z",
+        "description": "A tiny rectangle packing JavaScript library (for sprite layouts)",
+        "size_kb": 30,
+        "languages": {
+            "JavaScript": 5261,
+            "HTML": 2977
+        }
+    },
+    {
+        "name": "pod-specs",
+        "full_name": "mapbox/pod-specs",
+        "url": "https://github.com/mapbox/pod-specs",
+        "stars": 0,
+        "updated_at": "2021-09-28T19:21:57Z",
+        "description": "Mapbox CocoaPods Public Specs",
+        "size_kb": 118,
+        "languages": {
+            "Ruby": 106288
+        }
+    },
+    {
+        "name": "mapbox-vision-ios",
+        "full_name": "mapbox/mapbox-vision-ios",
+        "url": "https://github.com/mapbox/mapbox-vision-ios",
+        "stars": 63,
+        "updated_at": "2024-11-22T02:50:49Z",
+        "description": null,
+        "size_kb": 5815,
+        "languages": {
+            "Swift": 112261,
+            "Ruby": 6506,
+            "Objective-C": 1802,
+            "Shell": 1451
+        }
+    },
+    {
+        "name": "mapbox-vision-android",
+        "full_name": "mapbox/mapbox-vision-android",
+        "url": "https://github.com/mapbox/mapbox-vision-android",
+        "stars": 50,
+        "updated_at": "2024-09-30T22:48:07Z",
+        "description": null,
+        "size_kb": 1990,
+        "languages": {
+            "Shell": 366,
+            "Makefile": 144
+        }
+    },
+    {
+        "name": "mapbox-vision-android-teaser",
+        "full_name": "mapbox/mapbox-vision-android-teaser",
+        "url": "https://github.com/mapbox/mapbox-vision-android-teaser",
+        "stars": 30,
+        "updated_at": "2025-01-23T21:45:43Z",
+        "description": null,
+        "size_kb": 3940,
+        "languages": {
+            "Kotlin": 142210,
+            "Python": 12396
+        }
+    },
+    {
+        "name": "shape2path",
+        "full_name": "mapbox/shape2path",
+        "url": "https://github.com/mapbox/shape2path",
+        "stars": 1,
+        "updated_at": "2020-07-22T07:48:30Z",
+        "description": "Convert SVG shapes to SVG paths",
+        "size_kb": 47,
+        "languages": {
+            "JavaScript": 15401
+        }
+    },
+    {
+        "name": "mapbox-gl-framerate",
+        "full_name": "mapbox/mapbox-gl-framerate",
+        "url": "https://github.com/mapbox/mapbox-gl-framerate",
+        "stars": 21,
+        "updated_at": "2025-01-06T07:29:34Z",
+        "description": "A frame rate control to evaluate map rendering performance",
+        "size_kb": 213,
+        "languages": {
+            "JavaScript": 4142,
+            "HTML": 930
+        }
+    },
+    {
+        "name": "python-cpp-skel",
+        "full_name": "mapbox/python-cpp-skel",
+        "url": "https://github.com/mapbox/python-cpp-skel",
+        "stars": 1,
+        "updated_at": "2024-06-17T13:06:17Z",
+        "description": "Skeleton for bindings to C++ libraries for Python using pybind11",
+        "size_kb": 10,
+        "languages": {
+            "Python": 9639,
+            "C++": 1122
+        }
+    },
+    {
+        "name": "eternal",
+        "full_name": "mapbox/eternal",
+        "url": "https://github.com/mapbox/eternal",
+        "stars": 210,
+        "updated_at": "2025-03-06T05:18:26Z",
+        "description": "A C++14 compile-time/constexpr map and hash map with minimal binary footprint",
+        "size_kb": 15,
+        "languages": {
+            "C++": 30082,
+            "Makefile": 2345,
+            "CMake": 1629
+        }
+    },
+    {
+        "name": "jazzy-theme",
+        "full_name": "mapbox/jazzy-theme",
+        "url": "https://github.com/mapbox/jazzy-theme",
+        "stars": 2,
+        "updated_at": "2024-03-09T07:47:25Z",
+        "description": "Jazzy theme for use with various Mapbox iOS SDKs",
+        "size_kb": 225,
+        "languages": {
+            "JavaScript": 73753,
+            "CSS": 17864,
+            "HTML": 9227
+        }
+    },
+    {
+        "name": "remark-lint-link-text",
+        "full_name": "mapbox/remark-lint-link-text",
+        "url": "https://github.com/mapbox/remark-lint-link-text",
+        "stars": 11,
+        "updated_at": "2024-10-18T18:07:51Z",
+        "description": "A remark-lint plugin that warns against non-descriptive link text.",
+        "size_kb": 577,
+        "languages": {
+            "JavaScript": 5726
+        }
+    },
+    {
+        "name": "apidiff",
+        "full_name": "mapbox/apidiff",
+        "url": "https://github.com/mapbox/apidiff",
+        "stars": 1,
+        "updated_at": "2020-08-31T08:19:10Z",
+        "description": "Generate API diffs as markdown for Objective-C, Swift, and Android libraries.",
+        "size_kb": 93,
+        "languages": {
+            "Swift": 23545,
+            "Shell": 7605
+        }
+    },
+    {
+        "name": "mapbox-annotation-extension",
+        "full_name": "mapbox/mapbox-annotation-extension",
+        "url": "https://github.com/mapbox/mapbox-annotation-extension",
+        "stars": 11,
+        "updated_at": "2024-06-29T06:50:57Z",
+        "description": "Framework extensions that can be used with the Mapbox Maps SDK for iOS.",
+        "size_kb": 861,
+        "languages": {
+            "Objective-C": 213898,
+            "Swift": 47721,
+            "Ruby": 2591,
+            "Shell": 637
+        }
+    },
+    {
+        "name": "mapbox-base",
+        "full_name": "mapbox/mapbox-base",
+        "url": "https://github.com/mapbox/mapbox-base",
+        "stars": 23,
+        "updated_at": "2024-09-23T10:15:09Z",
+        "description": "Mapbox Base C++ Libraries",
+        "size_kb": 144,
+        "languages": {
+            "C++": 29647,
+            "JavaScript": 6142,
+            "CMake": 4282,
+            "Shell": 932
+        }
+    },
+    {
+        "name": "tilesets-cli",
+        "full_name": "mapbox/tilesets-cli",
+        "url": "https://github.com/mapbox/tilesets-cli",
+        "stars": 125,
+        "updated_at": "2025-03-06T05:27:50Z",
+        "description": "CLI for interacting with the Mapbox Tilesets API and Mapbox Tiling Service",
+        "size_kb": 2181,
+        "languages": {
+            "Python": 105988
+        }
+    },
+    {
+        "name": "martini",
+        "full_name": "mapbox/martini",
+        "url": "https://github.com/mapbox/martini",
+        "stars": 618,
+        "updated_at": "2025-02-12T00:38:42Z",
+        "description": "A JavaScript library for real-time RTIN terrain mesh generation",
+        "size_kb": 1372,
+        "languages": {
+            "JavaScript": 10238
+        }
+    },
+    {
+        "name": "svg-tools",
+        "full_name": "mapbox/svg-tools",
+        "url": "https://github.com/mapbox/svg-tools",
+        "stars": 2,
+        "updated_at": "2022-07-21T01:07:44Z",
+        "description": null,
+        "size_kb": 6,
+        "languages": {
+            "C++": 20374,
+            "Makefile": 483
+        }
+    },
+    {
+        "name": "asset-tracking",
+        "full_name": "mapbox/asset-tracking",
+        "url": "https://github.com/mapbox/asset-tracking",
+        "stars": 85,
+        "updated_at": "2025-02-25T06:25:24Z",
+        "description": "Mapbox Solution for ingesting, enriching, storing, and retrieving live location data",
+        "size_kb": 675,
+        "languages": {
+            "JavaScript": 16065,
+            "HTML": 5120
+        }
+    },
+    {
+        "name": "delatin",
+        "full_name": "mapbox/delatin",
+        "url": "https://github.com/mapbox/delatin",
+        "stars": 281,
+        "updated_at": "2025-01-14T03:18:40Z",
+        "description": "A fast JavaScript terrain mesh generation tool based on Delaunay triangulation",
+        "size_kb": 539,
+        "languages": {
+            "JavaScript": 16340,
+            "HTML": 6452
+        }
+    },
+    {
+        "name": "android-sdk-versions-plugin",
+        "full_name": "mapbox/android-sdk-versions-plugin",
+        "url": "https://github.com/mapbox/android-sdk-versions-plugin",
+        "stars": 0,
+        "updated_at": "2024-09-30T12:40:04Z",
+        "description": "This plugin validates and persists Mapbox SDK versions in a file(in assets folder) at compile time.",
+        "size_kb": 122,
+        "languages": {
+            "Groovy": 16274,
+            "JavaScript": 1976,
+            "Makefile": 513,
+            "Java": 301
+        }
+    },
+    {
+        "name": "mapbox-base-android",
+        "full_name": "mapbox/mapbox-base-android",
+        "url": "https://github.com/mapbox/mapbox-base-android",
+        "stars": 11,
+        "updated_at": "2024-04-09T12:16:10Z",
+        "description": "This repository hosts annotation processors and module providers for Mapbox modular SDKs.",
+        "size_kb": 162,
+        "languages": {
+            "Kotlin": 40045,
+            "Python": 4251,
+            "Makefile": 957,
+            "Shell": 260
+        }
+    },
+    {
+        "name": "mapbox-gl-native-curl",
+        "full_name": "mapbox/mapbox-gl-native-curl",
+        "url": "https://github.com/mapbox/mapbox-gl-native-curl",
+        "stars": 0,
+        "updated_at": "2020-03-26T06:50:53Z",
+        "description": "Libcurl for Android - used by Mapbox GL Native",
+        "size_kb": 3755,
+        "languages": {
+            "C": 187054,
+            "C++": 19033
+        }
+    },
+    {
+        "name": "path-gradients",
+        "full_name": "mapbox/path-gradients",
+        "url": "https://github.com/mapbox/path-gradients",
+        "stars": 7,
+        "updated_at": "2024-07-05T23:20:12Z",
+        "description": "Transforms a single-color path into one with a color gradient",
+        "size_kb": 12,
+        "languages": {
+            "JavaScript": 4667
+        }
+    },
+    {
+        "name": "quilt",
+        "full_name": "mapbox/quilt",
+        "url": "https://github.com/mapbox/quilt",
+        "stars": 6,
+        "updated_at": "2024-11-04T08:28:50Z",
+        "description": "Stitching Mapbox Static Tiles",
+        "size_kb": 180,
+        "languages": {
+            "JavaScript": 21261
+        }
+    },
+    {
+        "name": "kramer",
+        "full_name": "mapbox/kramer",
+        "url": "https://github.com/mapbox/kramer",
+        "stars": 2,
+        "updated_at": "2024-07-26T07:15:44Z",
+        "description": "Remark-powered Markdown linter and formatter",
+        "size_kb": 312,
+        "languages": {
+            "JavaScript": 3079
+        }
+    },
+    {
+        "name": "yolp-mapbox-static-maps",
+        "full_name": "mapbox/yolp-mapbox-static-maps",
+        "url": "https://github.com/mapbox/yolp-mapbox-static-maps",
+        "stars": 1,
+        "updated_at": "2024-11-04T09:06:35Z",
+        "description": "Migrating from YOLP Static Maps to Mapbox",
+        "size_kb": 192,
+        "languages": {
+            "TypeScript": 30808
+        }
+    },
+    {
+        "name": "finder",
+        "full_name": "mapbox/finder",
+        "url": "https://github.com/mapbox/finder",
+        "stars": 6,
+        "updated_at": "2021-01-21T20:11:11Z",
+        "description": null,
+        "size_kb": 23,
+        "languages": {
+            "JavaScript": 19308,
+            "HTML": 3963,
+            "CSS": 1391
+        }
+    },
+    {
+        "name": "mts-data-sync",
+        "full_name": "mapbox/mts-data-sync",
+        "url": "https://github.com/mapbox/mts-data-sync",
+        "stars": 71,
+        "updated_at": "2024-07-29T08:24:23Z",
+        "description": "Simple publishing pipeline for the Mapbox Tiling Service",
+        "size_kb": 239,
+        "languages": {
+            "JavaScript": 32502
+        }
+    },
+    {
+        "name": "mapbox-accounts-ios",
+        "full_name": "mapbox/mapbox-accounts-ios",
+        "url": "https://github.com/mapbox/mapbox-accounts-ios",
+        "stars": 0,
+        "updated_at": "2021-01-29T02:17:41Z",
+        "description": "Integration between your mapbox.com account and Mapbox mobile SDKs on iOS",
+        "size_kb": 4,
+        "languages": {
+            "Swift": 1134
+        }
+    },
+    {
+        "name": "StoreLocatorTemplate",
+        "full_name": "mapbox/StoreLocatorTemplate",
+        "url": "https://github.com/mapbox/StoreLocatorTemplate",
+        "stars": 9,
+        "updated_at": "2024-01-12T17:12:49Z",
+        "description": "Store Locator Template",
+        "size_kb": 588,
+        "languages": {
+            "JavaScript": 39014,
+            "HTML": 7442,
+            "CSS": 6640
+        }
+    },
+    {
+        "name": "mapbox-navigation-native-ios",
+        "full_name": "mapbox/mapbox-navigation-native-ios",
+        "url": "https://github.com/mapbox/mapbox-navigation-native-ios",
+        "stars": 15,
+        "updated_at": "2025-01-21T11:24:09Z",
+        "description": null,
+        "size_kb": 1107,
+        "languages": {
+            "Python": 4206,
+            "Shell": 3557,
+            "Swift": 1960,
+            "Ruby": 180
+        }
+    },
+    {
+        "name": "mapbox-core-maps-ios",
+        "full_name": "mapbox/mapbox-core-maps-ios",
+        "url": "https://github.com/mapbox/mapbox-core-maps-ios",
+        "stars": 16,
+        "updated_at": "2025-02-28T11:28:30Z",
+        "description": null,
+        "size_kb": 264,
+        "languages": {
+            "Swift": 1121,
+            "Ruby": 934
+        }
+    },
+    {
+        "name": "mapbox-common-ios",
+        "full_name": "mapbox/mapbox-common-ios",
+        "url": "https://github.com/mapbox/mapbox-common-ios",
+        "stars": 32,
+        "updated_at": "2025-03-06T05:34:46Z",
+        "description": null,
+        "size_kb": 13454,
+        "languages": {
+            "Swift": 7395,
+            "Shell": 2945,
+            "Ruby": 523
+        }
+    },
+    {
+        "name": "mapbox-w3w-solution",
+        "full_name": "mapbox/mapbox-w3w-solution",
+        "url": "https://github.com/mapbox/mapbox-w3w-solution",
+        "stars": 3,
+        "updated_at": "2022-07-22T08:08:07Z",
+        "description": null,
+        "size_kb": 4162,
+        "languages": {
+            "Kotlin": 59043
+        }
+    },
+    {
+        "name": "typehead",
+        "full_name": "mapbox/typehead",
+        "url": "https://github.com/mapbox/typehead",
+        "stars": 25,
+        "updated_at": "2025-01-02T10:33:04Z",
+        "description": "Refreshingly simple CLI for TypeScript packages.",
+        "size_kb": 186,
+        "languages": {
+            "JavaScript": 8090,
+            "TypeScript": 280,
+            "Shell": 177,
+            "HTML": 135,
+            "CSS": 24
+        }
+    },
+    {
+        "name": "auto-value-gson",
+        "full_name": "mapbox/auto-value-gson",
+        "url": "https://github.com/mapbox/auto-value-gson",
+        "stars": 1,
+        "updated_at": "2024-10-23T04:11:53Z",
+        "description": "AutoValue Extension to add Gson De/Serializer support",
+        "size_kb": 752,
+        "languages": {
+            "Java": 290904
+        }
+    },
+    {
+        "name": "sdk-cicd-public",
+        "full_name": "mapbox/sdk-cicd-public",
+        "url": "https://github.com/mapbox/sdk-cicd-public",
+        "stars": 0,
+        "updated_at": "2024-10-28T14:31:15Z",
+        "description": null,
+        "size_kb": 18,
+        "languages": {
+            "Python": 19719,
+            "Shell": 4011
+        }
+    },
+    {
+        "name": "mapbox-navigation-ios-build-artifacts",
+        "full_name": "mapbox/mapbox-navigation-ios-build-artifacts",
+        "url": "https://github.com/mapbox/mapbox-navigation-ios-build-artifacts",
+        "stars": 0,
+        "updated_at": "2025-03-04T16:39:11Z",
+        "description": "Mapbox Navigation SDK for iOS",
+        "size_kb": 21,
+        "languages": {
+            "Swift": 3837
+        }
+    }
+]

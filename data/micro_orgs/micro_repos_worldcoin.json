@@ -1,0 +1,58 @@
+[
+    {
+        "name": "semaphore-rs",
+        "full_name": "worldcoin/semaphore-rs",
+        "url": "https://github.com/worldcoin/semaphore-rs",
+        "stars": 141,
+        "updated_at": "2025-03-03T15:39:16Z",
+        "description": "\ud83e\udd80 Rust support library for semaphore",
+        "size_kb": 11486,
+        "languages": {
+            "Rust": 328613,
+            "JavaScript": 7265,
+            "Shell": 3257,
+            "TypeScript": 971,
+            "C": 433
+        }
+    },
+    {
+        "name": "proto-neural-zkp",
+        "full_name": "worldcoin/proto-neural-zkp",
+        "url": "https://github.com/worldcoin/proto-neural-zkp",
+        "stars": 181,
+        "updated_at": "2025-03-01T20:11:51Z",
+        "description": "Artificial intelligence and zero knowledge.",
+        "size_kb": 25340,
+        "languages": {
+            "Rust": 60410,
+            "Jupyter Notebook": 17966,
+            "Python": 16069
+        }
+    },
+    {
+        "name": "idkit-js",
+        "full_name": "worldcoin/idkit-js",
+        "url": "https://github.com/worldcoin/idkit-js",
+        "stars": 362,
+        "updated_at": "2025-03-06T17:03:31Z",
+        "description": "Javascript toolkit to interact with the World ID protocol. Building the Identity SDK.",
+        "size_kb": 2161,
+        "languages": {
+            "TypeScript": 72249,
+            "JavaScript": 11400,
+            "CSS": 434
+        }
+    },
+    {
+        "name": "orb-hardware",
+        "full_name": "worldcoin/orb-hardware",
+        "url": "https://github.com/worldcoin/orb-hardware",
+        "stars": 318,
+        "updated_at": "2025-03-06T17:04:03Z",
+        "description": "Hardware specifications and schematics for the Worldcoin Orb.",
+        "size_kb": 52340,
+        "languages": {
+            "Shell": 188
+        }
+    }
+]

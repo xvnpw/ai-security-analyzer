@@ -1,0 +1,452 @@
+[
+    {
+        "name": "fabric-samples",
+        "full_name": "hyperledger/fabric-samples",
+        "url": "https://github.com/hyperledger/fabric-samples",
+        "stars": 2869,
+        "updated_at": "2025-03-05T17:26:41Z",
+        "description": "Samples for Hyperledger Fabric",
+        "size_kb": 24037,
+        "languages": {
+            "Go": 471678,
+            "TypeScript": 362926,
+            "Shell": 348364,
+            "Java": 281059,
+            "JavaScript": 221510,
+            "Just": 17476,
+            "Dockerfile": 9414,
+            "Jinja": 7424,
+            "HTML": 7119,
+            "Python": 3972,
+            "SCSS": 289
+        }
+    },
+    {
+        "name": "nextjs-auth0",
+        "full_name": "auth0/nextjs-auth0",
+        "url": "https://github.com/auth0/nextjs-auth0",
+        "stars": 2134,
+        "updated_at": "2025-03-06T15:27:58Z",
+        "description": "Next.js SDK for signing in with Auth0",
+        "size_kb": 11065,
+        "languages": {
+            "TypeScript": 289440,
+            "JavaScript": 2456,
+            "CSS": 690
+        }
+    },
+    {
+        "name": "spiffe",
+        "full_name": "spiffe/spiffe",
+        "url": "https://github.com/spiffe/spiffe",
+        "stars": 1536,
+        "updated_at": "2025-03-06T06:50:58Z",
+        "description": "The SPIFFE Project",
+        "size_kb": 908,
+        "languages": {
+            "Shell": 2965
+        }
+    },
+    {
+        "name": "auth0-spa-js",
+        "full_name": "auth0/auth0-spa-js",
+        "url": "https://github.com/auth0/auth0-spa-js",
+        "stars": 947,
+        "updated_at": "2025-03-06T10:30:10Z",
+        "description": "Auth0 authentication for Single Page Applications (SPA) with PKCE",
+        "size_kb": 8511,
+        "languages": {
+            "TypeScript": 343270,
+            "JavaScript": 181760,
+            "HTML": 48141
+        }
+    },
+    {
+        "name": "docker",
+        "full_name": "matomo-org/docker",
+        "url": "https://github.com/matomo-org/docker",
+        "stars": 882,
+        "updated_at": "2025-03-04T09:06:17Z",
+        "description": "Official Docker project for Matomo Analytics",
+        "size_kb": 233,
+        "languages": {
+            "Shell": 9196,
+            "Dockerfile": 8132,
+            "Mustache": 1042
+        }
+    },
+    {
+        "name": "data.gov",
+        "full_name": "GSA/data.gov",
+        "url": "https://github.com/GSA/data.gov",
+        "stars": 741,
+        "updated_at": "2025-03-06T15:04:14Z",
+        "description": "Main repository for the data.gov service",
+        "size_kb": 78675,
+        "languages": {
+            "Shell": 13217,
+            "Python": 12761,
+            "Makefile": 400
+        }
+    },
+    {
+        "name": "data.gov",
+        "full_name": "GSA/data.gov",
+        "url": "https://github.com/GSA/data.gov",
+        "stars": 741,
+        "updated_at": "2025-03-06T15:04:14Z",
+        "description": "Main repository for the data.gov service",
+        "size_kb": 78675,
+        "languages": {
+            "Shell": 13217,
+            "Python": 12761,
+            "Makefile": 400
+        }
+    },
+    {
+        "name": "argoproj",
+        "full_name": "argoproj/argoproj",
+        "url": "https://github.com/argoproj/argoproj",
+        "stars": 653,
+        "updated_at": "2025-03-06T02:21:51Z",
+        "description": "Common project repo for all Argo Projects",
+        "size_kb": 6298,
+        "languages": {
+            "Python": 2913,
+            "Shell": 343
+        }
+    },
+    {
+        "name": "do-agent",
+        "full_name": "digitalocean/do-agent",
+        "url": "https://github.com/digitalocean/do-agent",
+        "stars": 602,
+        "updated_at": "2025-03-06T08:50:39Z",
+        "description": "Collects system metrics from DigitalOcean Droplets",
+        "size_kb": 7307,
+        "languages": {
+            "Go": 126895,
+            "Shell": 8167,
+            "Makefile": 2317,
+            "Dockerfile": 567
+        }
+    },
+    {
+        "name": "stablecoin-evm",
+        "full_name": "circlefin/stablecoin-evm",
+        "url": "https://github.com/circlefin/stablecoin-evm",
+        "stars": 587,
+        "updated_at": "2025-03-03T16:06:35Z",
+        "description": "Source repository for smart contracts used by Circle's stablecoins on EVM-compatible blockchains",
+        "size_kb": 2828,
+        "languages": {
+            "JavaScript": 331534,
+            "TypeScript": 315214,
+            "Solidity": 237843,
+            "Shell": 5480
+        }
+    },
+    {
+        "name": "react-native-auth0",
+        "full_name": "auth0/react-native-auth0",
+        "url": "https://github.com/auth0/react-native-auth0",
+        "stars": 507,
+        "updated_at": "2025-02-28T16:58:10Z",
+        "description": "React Native toolkit for Auth0 API",
+        "size_kb": 6283,
+        "languages": {
+            "JavaScript": 127940,
+            "TypeScript": 125729,
+            "Java": 26661,
+            "Swift": 14210,
+            "Objective-C": 7661,
+            "Ruby": 3349,
+            "Kotlin": 2146,
+            "C": 103
+        }
+    },
+    {
+        "name": "crates",
+        "full_name": "iqlusioninc/crates",
+        "url": "https://github.com/iqlusioninc/crates",
+        "stars": 482,
+        "updated_at": "2025-03-04T01:05:51Z",
+        "description": "A collection of open source Rust crates from iqlusion",
+        "size_kb": 2345,
+        "languages": {
+            "Rust": 241465
+        }
+    },
+    {
+        "name": "tmkms",
+        "full_name": "iqlusioninc/tmkms",
+        "url": "https://github.com/iqlusioninc/tmkms",
+        "stars": 343,
+        "updated_at": "2025-03-03T22:18:51Z",
+        "description": "Tendermint KMS: Key Management System for Tendermint Validators",
+        "size_kb": 2738,
+        "languages": {
+            "Rust": 238075,
+            "Dockerfile": 2800,
+            "Shell": 2639
+        }
+    },
+    {
+        "name": "charcoal",
+        "full_name": "pixiv/charcoal",
+        "url": "https://github.com/pixiv/charcoal",
+        "stars": 337,
+        "updated_at": "2025-03-05T09:25:43Z",
+        "description": "Design system library by pixiv",
+        "size_kb": 39163,
+        "languages": {
+            "TypeScript": 448796,
+            "CSS": 102063,
+            "JavaScript": 74617,
+            "MDX": 30757,
+            "HTML": 3386,
+            "Shell": 454
+        }
+    },
+    {
+        "name": "react-plaid-link",
+        "full_name": "plaid/react-plaid-link",
+        "url": "https://github.com/plaid/react-plaid-link",
+        "stars": 274,
+        "updated_at": "2025-02-25T11:38:56Z",
+        "description": "React bindings for Plaid Link",
+        "size_kb": 2467,
+        "languages": {
+            "TypeScript": 23683,
+            "JavaScript": 9815,
+            "Makefile": 1902,
+            "Shell": 567
+        }
+    },
+    {
+        "name": "fabric-contract-api-go",
+        "full_name": "hyperledger/fabric-contract-api-go",
+        "url": "https://github.com/hyperledger/fabric-contract-api-go",
+        "stars": 231,
+        "updated_at": "2025-02-25T19:20:36Z",
+        "description": "Packages for the implementation of the contract API for use in Go chaincode",
+        "size_kb": 662,
+        "languages": {
+            "Go": 292213,
+            "Gherkin": 9319,
+            "Shell": 4268,
+            "JavaScript": 2217,
+            "Makefile": 1780,
+            "Dockerfile": 582
+        }
+    },
+    {
+        "name": "fabric-gateway-java",
+        "full_name": "hyperledger/fabric-gateway-java",
+        "url": "https://github.com/hyperledger/fabric-gateway-java",
+        "stars": 211,
+        "updated_at": "2025-03-03T23:42:12Z",
+        "description": "Hyperledger Fabric Gateway SDK for Java https://wiki.hyperledger.org/display/fabric",
+        "size_kb": 3859,
+        "languages": {
+            "Java": 378565,
+            "Gherkin": 19611,
+            "Shell": 1761
+        }
+    },
+    {
+        "name": "react-native-plaid-link-sdk",
+        "full_name": "plaid/react-native-plaid-link-sdk",
+        "url": "https://github.com/plaid/react-native-plaid-link-sdk",
+        "stars": 178,
+        "updated_at": "2025-03-04T13:30:48Z",
+        "description": "Plaid Link for React Native",
+        "size_kb": 5165,
+        "languages": {
+            "TypeScript": 58715,
+            "Objective-C++": 31807,
+            "Kotlin": 30965,
+            "Objective-C": 15050,
+            "Java": 10005,
+            "JavaScript": 7367,
+            "Ruby": 6414,
+            "Swift": 4087,
+            "C": 194
+        }
+    },
+    {
+        "name": "fabric-gateway",
+        "full_name": "hyperledger/fabric-gateway",
+        "url": "https://github.com/hyperledger/fabric-gateway",
+        "stars": 164,
+        "updated_at": "2025-03-04T09:27:18Z",
+        "description": "Go, Node and Java client API for Hyperledger Fabric v2.4+",
+        "size_kb": 5933,
+        "languages": {
+            "Java": 419822,
+            "TypeScript": 335273,
+            "Go": 300396,
+            "Gherkin": 34876,
+            "Makefile": 7996,
+            "Shell": 4797,
+            "JavaScript": 2979
+        }
+    },
+    {
+        "name": "fabric-private-chaincode",
+        "full_name": "hyperledger/fabric-private-chaincode",
+        "url": "https://github.com/hyperledger/fabric-private-chaincode",
+        "stars": 164,
+        "updated_at": "2025-02-06T06:11:59Z",
+        "description": "FPC enables Confidential Chaincode Execution for Hyperledger Fabric using Intel SGX.",
+        "size_kb": 5462,
+        "languages": {
+            "Go": 303964,
+            "C": 116612,
+            "C++": 112910,
+            "Shell": 105320,
+            "Makefile": 33648,
+            "CMake": 26535,
+            "Dockerfile": 18166
+        }
+    },
+    {
+        "name": "mattermost-plugin-github",
+        "full_name": "mattermost/mattermost-plugin-github",
+        "url": "https://github.com/mattermost/mattermost-plugin-github",
+        "stars": 162,
+        "updated_at": "2025-03-06T12:09:33Z",
+        "description": "GitHub plugin for Mattermost",
+        "size_kb": 5395,
+        "languages": {
+            "Go": 443157,
+            "JavaScript": 100532,
+            "TypeScript": 91972,
+            "Makefile": 17202,
+            "CSS": 2728,
+            "Shell": 296
+        }
+    },
+    {
+        "name": "mattermost-plugin-ai",
+        "full_name": "mattermost/mattermost-plugin-ai",
+        "url": "https://github.com/mattermost/mattermost-plugin-ai",
+        "stars": 151,
+        "updated_at": "2025-03-06T06:28:40Z",
+        "description": "Mattermost Copilot plugin supporting multiple LLMs",
+        "size_kb": 5865,
+        "languages": {
+            "Go": 239737,
+            "TypeScript": 200819,
+            "Makefile": 17423,
+            "JavaScript": 4207
+        }
+    },
+    {
+        "name": "securedrop-workstation",
+        "full_name": "freedomofpress/securedrop-workstation",
+        "url": "https://github.com/freedomofpress/securedrop-workstation",
+        "stars": 149,
+        "updated_at": "2025-03-03T14:10:41Z",
+        "description": "Qubes-based SecureDrop Journalist Workstation environment for submission handling",
+        "size_kb": 23152,
+        "languages": {
+            "Python": 196579,
+            "Shell": 16902,
+            "Jinja": 11728,
+            "Makefile": 10389,
+            "SaltStack": 685,
+            "Dockerfile": 540
+        }
+    },
+    {
+        "name": "fabric-chaincode-go",
+        "full_name": "hyperledger/fabric-chaincode-go",
+        "url": "https://github.com/hyperledger/fabric-chaincode-go",
+        "stars": 141,
+        "updated_at": "2025-03-05T06:08:06Z",
+        "description": "Hyperledger Fabric Packages for Go Chaincode",
+        "size_kb": 205,
+        "languages": {
+            "Go": 212485,
+            "Makefile": 1085
+        }
+    },
+    {
+        "name": "plaid-link-ios",
+        "full_name": "plaid/plaid-link-ios",
+        "url": "https://github.com/plaid/plaid-link-ios",
+        "stars": 138,
+        "updated_at": "2025-02-05T18:24:23Z",
+        "description": "Plaid Link iOS SDK",
+        "size_kb": 1293310,
+        "languages": {
+            "Objective-C": 157147,
+            "Swift": 15878,
+            "Ruby": 1242
+        }
+    },
+    {
+        "name": "ics23",
+        "full_name": "cosmos/ics23",
+        "url": "https://github.com/cosmos/ics23",
+        "stars": 119,
+        "updated_at": "2025-02-22T14:45:50Z",
+        "description": "Building generic merkle proof format for IBC",
+        "size_kb": 3612,
+        "languages": {
+            "Rust": 170866,
+            "Go": 56707,
+            "Makefile": 3267,
+            "Shell": 508
+        }
+    },
+    {
+        "name": "richdocuments",
+        "full_name": "owncloud/richdocuments",
+        "url": "https://github.com/owncloud/richdocuments",
+        "stars": 119,
+        "updated_at": "2025-01-14T21:26:38Z",
+        "description": " :notebook_with_decorative_cover: Collabora Online for ownCloud",
+        "size_kb": 21083,
+        "languages": {
+            "JavaScript": 374925,
+            "PHP": 247172,
+            "Starlark": 76908,
+            "Gherkin": 24570,
+            "CSS": 14312,
+            "Makefile": 7063,
+            "Vue": 5968,
+            "TypeScript": 2014
+        }
+    },
+    {
+        "name": "plaid-link-android",
+        "full_name": "plaid/plaid-link-android",
+        "url": "https://github.com/plaid/plaid-link-android",
+        "stars": 118,
+        "updated_at": "2025-01-27T03:32:21Z",
+        "description": "Plaid Link Android SDK",
+        "size_kb": 6741,
+        "languages": {
+            "Kotlin": 10432,
+            "Java": 9987,
+            "Shell": 921
+        }
+    },
+    {
+        "name": "mattermost-plugin-zoom",
+        "full_name": "mattermost/mattermost-plugin-zoom",
+        "url": "https://github.com/mattermost/mattermost-plugin-zoom",
+        "stars": 108,
+        "updated_at": "2025-03-03T11:29:12Z",
+        "description": "Zoom plugin for Mattermost :electric_plug:",
+        "size_kb": 9823,
+        "languages": {
+            "Go": 135663,
+            "JavaScript": 22251,
+            "Makefile": 16893,
+            "TypeScript": 229
+        }
+    }
+]

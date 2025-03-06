@@ -1,0 +1,692 @@
+[
+    {
+        "name": "core",
+        "full_name": "dotnet/core",
+        "url": "https://github.com/dotnet/core",
+        "stars": 21197,
+        "updated_at": "2025-03-06T09:21:26Z",
+        "description": ".NET news, announcements, release notes, and more!",
+        "size_kb": 49448,
+        "languages": {
+            "PowerShell": 20421,
+            "Shell": 5074
+        }
+    },
+    {
+        "name": "symreader",
+        "full_name": "dotnet/symreader",
+        "url": "https://github.com/dotnet/symreader",
+        "stars": 52,
+        "updated_at": "2025-02-25T01:23:28Z",
+        "description": "Managed definitions for COM interfaces exposed by DiaSymReader APIs",
+        "size_kb": 4207,
+        "languages": {
+            "C#": 337286,
+            "PowerShell": 171504,
+            "Shell": 135537,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 892
+        }
+    },
+    {
+        "name": "NuGet.BuildTasks",
+        "full_name": "dotnet/NuGet.BuildTasks",
+        "url": "https://github.com/dotnet/NuGet.BuildTasks",
+        "stars": 48,
+        "updated_at": "2025-03-03T23:22:28Z",
+        "description": "The build tasks used to pick up package content from project.lock.json.",
+        "size_kb": 1098,
+        "languages": {
+            "PowerShell": 171504,
+            "C#": 145075,
+            "Shell": 134526,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 627
+        }
+    },
+    {
+        "name": "symreader-portable",
+        "full_name": "dotnet/symreader-portable",
+        "url": "https://github.com/dotnet/symreader-portable",
+        "stars": 84,
+        "updated_at": "2025-02-25T01:26:10Z",
+        "description": "Reader of Portable PDBs format that implements DiaSymReader interfaces (ISymUnmanagedReader, ISymUnmanagedBinder, etc.).",
+        "size_kb": 4384,
+        "languages": {
+            "C#": 471987,
+            "PowerShell": 171504,
+            "Shell": 132898,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 2895,
+            "C++": 1446
+        }
+    },
+    {
+        "name": "macios-devtools",
+        "full_name": "dotnet/macios-devtools",
+        "url": "https://github.com/dotnet/macios-devtools",
+        "stars": 26,
+        "updated_at": "2025-03-05T17:34:16Z",
+        "description": "Support libraries for xamarin-macios",
+        "size_kb": 357,
+        "languages": {
+            "C#": 336128
+        }
+    },
+    {
+        "name": "android-libzipsharp",
+        "full_name": "dotnet/android-libzipsharp",
+        "url": "https://github.com/dotnet/android-libzipsharp",
+        "stars": 30,
+        "updated_at": "2025-02-21T17:10:42Z",
+        "description": "A managed wrapper (and then some) around libzip (https://libzip.org/)",
+        "size_kb": 569,
+        "languages": {
+            "C#": 260845,
+            "CMake": 18224,
+            "Shell": 9998,
+            "Batchfile": 5237,
+            "C++": 2563
+        }
+    },
+    {
+        "name": "android-tools",
+        "full_name": "dotnet/android-tools",
+        "url": "https://github.com/dotnet/android-tools",
+        "stars": 34,
+        "updated_at": "2025-02-20T16:56:41Z",
+        "description": null,
+        "size_kb": 549,
+        "languages": {
+            "C#": 332724,
+            "Makefile": 2208
+        }
+    },
+    {
+        "name": "DataGridExtensions",
+        "full_name": "dotnet/DataGridExtensions",
+        "url": "https://github.com/dotnet/DataGridExtensions",
+        "stars": 846,
+        "updated_at": "2025-03-03T16:23:21Z",
+        "description": "Modular extensions for the WPF DataGrid control",
+        "size_kb": 1370,
+        "languages": {
+            "C#": 189545,
+            "Batchfile": 108
+        }
+    },
+    {
+        "name": "WatsonWebserver",
+        "full_name": "dotnet/WatsonWebserver",
+        "url": "https://github.com/dotnet/WatsonWebserver",
+        "stars": 436,
+        "updated_at": "2025-02-17T08:23:38Z",
+        "description": "Watson is the fastest, easiest way to build scalable RESTful web servers and services in C#.",
+        "size_kb": 26026,
+        "languages": {
+            "C#": 431892,
+            "Batchfile": 456,
+            "HTML": 210,
+            "Dockerfile": 208
+        }
+    },
+    {
+        "name": "xdt",
+        "full_name": "dotnet/xdt",
+        "url": "https://github.com/dotnet/xdt",
+        "stars": 60,
+        "updated_at": "2025-02-09T00:45:58Z",
+        "description": "XDT is Microsoft's Xml Document Transformation library.",
+        "size_kb": 1280,
+        "languages": {
+            "C#": 185403,
+            "PowerShell": 171554,
+            "Shell": 131982,
+            "CMake": 14853,
+            "Python": 13176,
+            "1C Enterprise": 9505,
+            "Batchfile": 639
+        }
+    },
+    {
+        "name": "WatsonTcp",
+        "full_name": "dotnet/WatsonTcp",
+        "url": "https://github.com/dotnet/WatsonTcp",
+        "stars": 613,
+        "updated_at": "2025-03-04T16:50:48Z",
+        "description": "WatsonTcp is the easiest way to build TCP-based clients and servers in C#.",
+        "size_kb": 3074,
+        "languages": {
+            "C#": 424147,
+            "Batchfile": 758
+        }
+    },
+    {
+        "name": "csharplang",
+        "full_name": "dotnet/csharplang",
+        "url": "https://github.com/dotnet/csharplang",
+        "stars": 11828,
+        "updated_at": "2025-03-06T16:47:35Z",
+        "description": "The official repo for the design of the C# programming language",
+        "size_kb": 13768,
+        "languages": {
+            "C#": 43213
+        }
+    },
+    {
+        "name": "ProjFileTools",
+        "full_name": "dotnet/ProjFileTools",
+        "url": "https://github.com/dotnet/ProjFileTools",
+        "stars": 95,
+        "updated_at": "2024-08-19T11:01:42Z",
+        "description": "Tools for enhanced editing of MSBuild proj files in Visual Studio 2017 and 2019",
+        "size_kb": 293,
+        "languages": {
+            "C#": 200179,
+            "Batchfile": 5059,
+            "Groovy": 1757
+        }
+    },
+    {
+        "name": "metadata-tools",
+        "full_name": "dotnet/metadata-tools",
+        "url": "https://github.com/dotnet/metadata-tools",
+        "stars": 49,
+        "updated_at": "2025-02-17T05:07:00Z",
+        "description": "Contains tools for metadata, such as Roslyn's metadata visualizer.",
+        "size_kb": 1024,
+        "languages": {
+            "C#": 188837,
+            "PowerShell": 171504,
+            "Shell": 135537,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 1488
+        }
+    },
+    {
+        "name": "designs",
+        "full_name": "dotnet/designs",
+        "url": "https://github.com/dotnet/designs",
+        "stars": 904,
+        "updated_at": "2025-03-03T13:32:59Z",
+        "description": "This repo is used for reviewing new .NET designs.",
+        "size_kb": 3973,
+        "languages": {
+            "C#": 9035,
+            "Shell": 143,
+            "Batchfile": 68
+        }
+    },
+    {
+        "name": "project-system-tools",
+        "full_name": "dotnet/project-system-tools",
+        "url": "https://github.com/dotnet/project-system-tools",
+        "stars": 279,
+        "updated_at": "2025-02-25T19:15:46Z",
+        "description": "Tools for working with the C#/VB/F# project system.",
+        "size_kb": 2418,
+        "languages": {
+            "C#": 315980,
+            "PowerShell": 171504,
+            "Shell": 134011,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 2891
+        }
+    },
+    {
+        "name": "try",
+        "full_name": "dotnet/try",
+        "url": "https://github.com/dotnet/try",
+        "stars": 2936,
+        "updated_at": "2025-03-06T02:26:06Z",
+        "description": "Try .NET provides developers and content authors with tools to create interactive experiences.",
+        "size_kb": 79508,
+        "languages": {
+            "TypeScript": 259576,
+            "C#": 214818,
+            "PowerShell": 173915,
+            "Shell": 123914,
+            "Jupyter Notebook": 56449,
+            "CMake": 13870,
+            "HTML": 7551,
+            "SCSS": 6949,
+            "JavaScript": 5862,
+            "CSS": 4347,
+            "Dockerfile": 1252,
+            "Batchfile": 1098
+        }
+    },
+    {
+        "name": "dotnet-buildtools-prereqs-docker",
+        "full_name": "dotnet/dotnet-buildtools-prereqs-docker",
+        "url": "https://github.com/dotnet/dotnet-buildtools-prereqs-docker",
+        "stars": 68,
+        "updated_at": "2025-03-06T10:27:50Z",
+        "description": "Used to maintain the Docker images hosted at the mcr.microsoft.com/dotnet-buildtools/prereqs image repository",
+        "size_kb": 2739,
+        "languages": {
+            "Dockerfile": 222628,
+            "PowerShell": 12542,
+            "C#": 11417,
+            "Shell": 9548
+        }
+    },
+    {
+        "name": "nuget-trends",
+        "full_name": "dotnet/nuget-trends",
+        "url": "https://github.com/dotnet/nuget-trends",
+        "stars": 158,
+        "updated_at": "2025-02-21T14:25:06Z",
+        "description": "Check out NuGet packages adoption and what's trending on NuGet.",
+        "size_kb": 2725,
+        "languages": {
+            "C#": 114202,
+            "TypeScript": 97024,
+            "SCSS": 15026,
+            "HTML": 10503,
+            "Shell": 2046,
+            "JavaScript": 1294,
+            "Dockerfile": 244
+        }
+    },
+    {
+        "name": "format",
+        "full_name": "dotnet/format",
+        "url": "https://github.com/dotnet/format",
+        "stars": 1944,
+        "updated_at": "2025-02-26T08:55:13Z",
+        "description": "Home for the dotnet-format command",
+        "size_kb": 4538,
+        "languages": {
+            "C#": 356387,
+            "PowerShell": 181082,
+            "Shell": 123722,
+            "CMake": 15129,
+            "Batchfile": 1199,
+            "Dockerfile": 729,
+            "Smalltalk": 183,
+            "F#": 161
+        }
+    },
+    {
+        "name": "machinelearning-modelbuilder",
+        "full_name": "dotnet/machinelearning-modelbuilder",
+        "url": "https://github.com/dotnet/machinelearning-modelbuilder",
+        "stars": 274,
+        "updated_at": "2025-02-14T11:35:52Z",
+        "description": "Simple UI tool to build custom machine learning models.",
+        "size_kb": 2601,
+        "languages": {
+            "Dockerfile": 221
+        }
+    },
+    {
+        "name": "nbgv",
+        "full_name": "dotnet/nbgv",
+        "url": "https://github.com/dotnet/nbgv",
+        "stars": 53,
+        "updated_at": "2025-02-28T21:44:13Z",
+        "description": "The repo behind the dotnet/nbgv GitHub Action",
+        "size_kb": 19046,
+        "languages": {
+            "TypeScript": 3332
+        }
+    },
+    {
+        "name": "windowsdesktop",
+        "full_name": "dotnet/windowsdesktop",
+        "url": "https://github.com/dotnet/windowsdesktop",
+        "stars": 182,
+        "updated_at": "2025-03-06T05:12:14Z",
+        "description": null,
+        "size_kb": 7398,
+        "languages": {
+            "PowerShell": 171901,
+            "Shell": 134934,
+            "CMake": 14853,
+            "Python": 13176,
+            "C#": 12428,
+            "Batchfile": 607
+        }
+    },
+    {
+        "name": "org-policy",
+        "full_name": "dotnet/org-policy",
+        "url": "https://github.com/dotnet/org-policy",
+        "stars": 18,
+        "updated_at": "2024-12-30T11:28:32Z",
+        "description": "This repo contains tools and tracks policy violations for the dotnet org.",
+        "size_kb": 1248,
+        "languages": {
+            "C#": 306736,
+            "Batchfile": 277
+        }
+    },
+    {
+        "name": "install-scripts",
+        "full_name": "dotnet/install-scripts",
+        "url": "https://github.com/dotnet/install-scripts",
+        "stars": 158,
+        "updated_at": "2025-03-03T13:32:32Z",
+        "description": null,
+        "size_kb": 968,
+        "languages": {
+            "PowerShell": 172710,
+            "Shell": 127670,
+            "C#": 95869,
+            "CMake": 13870,
+            "Batchfile": 622
+        }
+    },
+    {
+        "name": "issue-labeler",
+        "full_name": "dotnet/issue-labeler",
+        "url": "https://github.com/dotnet/issue-labeler",
+        "stars": 24,
+        "updated_at": "2024-12-30T15:34:50Z",
+        "description": "An issue labeler bot for use in dotnet repositories.",
+        "size_kb": 417,
+        "languages": {
+            "C#": 244843
+        }
+    },
+    {
+        "name": "deployment-tools",
+        "full_name": "dotnet/deployment-tools",
+        "url": "https://github.com/dotnet/deployment-tools",
+        "stars": 179,
+        "updated_at": "2025-03-03T07:36:23Z",
+        "description": "This repo contains the code to build the .NET deployment tools and installers for all supported platforms, as well as the sources to .NET deployment tools.",
+        "size_kb": 2282,
+        "languages": {
+            "C#": 362441,
+            "PowerShell": 178397,
+            "Shell": 174502,
+            "CMake": 82360,
+            "C++": 47554,
+            "C": 42425,
+            "Python": 13176,
+            "Batchfile": 9922,
+            "Awk": 888
+        }
+    },
+    {
+        "name": "AzCopyNet",
+        "full_name": "dotnet/AzCopyNet",
+        "url": "https://github.com/dotnet/AzCopyNet",
+        "stars": 14,
+        "updated_at": "2025-02-22T16:21:25Z",
+        "description": ".NET Library to seamlessly leverage AzCopy",
+        "size_kb": 87524,
+        "languages": {
+            "PowerShell": 150727,
+            "C#": 112216,
+            "Shell": 95989,
+            "CMake": 9107,
+            "Batchfile": 373
+        }
+    },
+    {
+        "name": "csharpstandard",
+        "full_name": "dotnet/csharpstandard",
+        "url": "https://github.com/dotnet/csharpstandard",
+        "stars": 739,
+        "updated_at": "2025-03-05T14:49:26Z",
+        "description": "Working space for ECMA-TC49-TG2, the C# standard committee.",
+        "size_kb": 6424,
+        "languages": {
+            "C#": 237980,
+            "Shell": 3432,
+            "ANTLR": 2965,
+            "Smalltalk": 42
+        }
+    },
+    {
+        "name": "website-thanks-data",
+        "full_name": "dotnet/website-thanks-data",
+        "url": "https://github.com/dotnet/website-thanks-data",
+        "stars": 6,
+        "updated_at": "2025-02-26T01:32:38Z",
+        "description": "Console app for creating data file for https://thanks.dot.net",
+        "size_kb": 302,
+        "languages": {
+            "C#": 31497,
+            "Dockerfile": 741,
+            "Shell": 641
+        }
+    },
+    {
+        "name": "versionsweeper",
+        "full_name": "dotnet/versionsweeper",
+        "url": "https://github.com/dotnet/versionsweeper",
+        "stars": 59,
+        "updated_at": "2025-02-01T18:57:41Z",
+        "description": "\ud83c\udfaf LTS (or current) versions - GitHub Action that will run as a scheduled CRON job. Ideally, once every few months or as often as necessary to align with .NET version updates.",
+        "size_kb": 5450,
+        "languages": {
+            "C#": 124910,
+            "Dockerfile": 1694
+        }
+    },
+    {
+        "name": "hotreload-utils",
+        "full_name": "dotnet/hotreload-utils",
+        "url": "https://github.com/dotnet/hotreload-utils",
+        "stars": 41,
+        "updated_at": "2025-03-03T10:13:31Z",
+        "description": "Utilities for .NET hot reload",
+        "size_kb": 1243,
+        "languages": {
+            "PowerShell": 171901,
+            "Shell": 135682,
+            "C#": 80223,
+            "CMake": 14853,
+            "Python": 13176,
+            "Batchfile": 487
+        }
+    },
+    {
+        "name": "code-analysis",
+        "full_name": "dotnet/code-analysis",
+        "url": "https://github.com/dotnet/code-analysis",
+        "stars": 65,
+        "updated_at": "2025-01-23T23:22:11Z",
+        "description": null,
+        "size_kb": 704,
+        "languages": {
+            "JavaScript": 23672,
+            "TypeScript": 18960
+        }
+    },
+    {
+        "name": "emsdk",
+        "full_name": "dotnet/emsdk",
+        "url": "https://github.com/dotnet/emsdk",
+        "stars": 13,
+        "updated_at": "2025-03-06T00:19:35Z",
+        "description": "Emscripten SDK",
+        "size_kb": 4179,
+        "languages": {
+            "PowerShell": 189557,
+            "Python": 163259,
+            "Shell": 157710,
+            "Starlark": 94881,
+            "CMake": 14853,
+            "Batchfile": 4698,
+            "C++": 875,
+            "JavaScript": 306
+        }
+    },
+    {
+        "name": "spa-templates",
+        "full_name": "dotnet/spa-templates",
+        "url": "https://github.com/dotnet/spa-templates",
+        "stars": 94,
+        "updated_at": "2025-02-28T20:07:08Z",
+        "description": "This repo contains the SPA project templates which are part of the ASP.NET Core 6 & 7.",
+        "size_kb": 10127,
+        "languages": {
+            "C#": 136153,
+            "JavaScript": 47239,
+            "TypeScript": 39471,
+            "HTML": 11286,
+            "CSS": 978
+        }
+    },
+    {
+        "name": "reproducible-builds",
+        "full_name": "dotnet/reproducible-builds",
+        "url": "https://github.com/dotnet/reproducible-builds",
+        "stars": 199,
+        "updated_at": "2025-03-05T05:06:12Z",
+        "description": "Contains the DotNet.ReproducibleBuilds package",
+        "size_kb": 140,
+        "languages": {
+            "C#": 17747
+        }
+    },
+    {
+        "name": "android-native-tools",
+        "full_name": "dotnet/android-native-tools",
+        "url": "https://github.com/dotnet/android-native-tools",
+        "stars": 7,
+        "updated_at": "2025-02-28T17:00:21Z",
+        "description": "LLVM toolchain for .NET for Android",
+        "size_kb": 152,
+        "languages": {
+            "C++": 49981,
+            "Shell": 14145,
+            "CMake": 6090,
+            "Batchfile": 4999,
+            "C": 3195,
+            "PowerShell": 327
+        }
+    },
+    {
+        "name": "actions-create-pull-request",
+        "full_name": "dotnet/actions-create-pull-request",
+        "url": "https://github.com/dotnet/actions-create-pull-request",
+        "stars": 1,
+        "updated_at": "2024-07-01T18:41:46Z",
+        "description": "A GitHub action to create a pull request for changes to your repository in the actions workspace",
+        "size_kb": 27315,
+        "languages": {
+            "TypeScript": 110730,
+            "Shell": 1644,
+            "JavaScript": 236
+        }
+    },
+    {
+        "name": "source-build-externals",
+        "full_name": "dotnet/source-build-externals",
+        "url": "https://github.com/dotnet/source-build-externals",
+        "stars": 15,
+        "updated_at": "2025-03-03T14:23:00Z",
+        "description": "This repo contains the source that resides outside of the dotnet organization required to build .NET from source.",
+        "size_kb": 5642,
+        "languages": {
+            "PowerShell": 180167,
+            "Shell": 146526,
+            "CMake": 14853,
+            "Python": 13176,
+            "C#": 2334,
+            "Batchfile": 487
+        }
+    },
+    {
+        "name": "intro-to-dotnet-web-dev",
+        "full_name": "dotnet/intro-to-dotnet-web-dev",
+        "url": "https://github.com/dotnet/intro-to-dotnet-web-dev",
+        "stars": 693,
+        "updated_at": "2025-03-03T18:42:19Z",
+        "description": "Get Started as a Web Developer with .NET, C#, and ASP.NET Core",
+        "size_kb": 2327,
+        "languages": {
+            "C#": 145246,
+            "HTML": 25887,
+            "CSS": 24344,
+            "JavaScript": 452
+        }
+    },
+    {
+        "name": "wasi-sdk",
+        "full_name": "dotnet/wasi-sdk",
+        "url": "https://github.com/dotnet/wasi-sdk",
+        "stars": 1,
+        "updated_at": "2025-03-03T10:15:32Z",
+        "description": "WASI-enabled WebAssembly C/C++ toolchain",
+        "size_kb": 754,
+        "languages": {
+            "PowerShell": 178200,
+            "Shell": 149349,
+            "CMake": 18124,
+            "Python": 13176,
+            "C": 13164,
+            "Makefile": 7603,
+            "C++": 722,
+            "Batchfile": 654
+        }
+    },
+    {
+        "name": "workload-versions",
+        "full_name": "dotnet/workload-versions",
+        "url": "https://github.com/dotnet/workload-versions",
+        "stars": 9,
+        "updated_at": "2025-03-05T00:20:20Z",
+        "description": null,
+        "size_kb": 1210,
+        "languages": {
+            "PowerShell": 181198,
+            "Shell": 126321,
+            "C#": 16037,
+            "CMake": 15373,
+            "Batchfile": 654
+        }
+    },
+    {
+        "name": "xcsync",
+        "full_name": "dotnet/xcsync",
+        "url": "https://github.com/dotnet/xcsync",
+        "stars": 22,
+        "updated_at": "2025-02-13T12:08:45Z",
+        "description": "xcsync is designed to provide .NET developers with improved support for editing Apple specific files for MAUI and .NET for iOS/tvOS/macOS/macCatalyst projects.",
+        "size_kb": 1096,
+        "languages": {
+            "C#": 264899,
+            "PowerShell": 180357,
+            "Shell": 139074,
+            "CMake": 16361,
+            "Batchfile": 1391
+        }
+    },
+    {
+        "name": "signalr-client-swift",
+        "full_name": "dotnet/signalr-client-swift",
+        "url": "https://github.com/dotnet/signalr-client-swift",
+        "stars": 3,
+        "updated_at": "2025-03-06T05:37:19Z",
+        "description": "The swift client library for SignalR and Azure Signalr Service",
+        "size_kb": 356,
+        "languages": {
+            "Swift": 432228,
+            "C#": 1499
+        }
+    },
+    {
+        "name": "aspire-devcontainer-feature",
+        "full_name": "dotnet/aspire-devcontainer-feature",
+        "url": "https://github.com/dotnet/aspire-devcontainer-feature",
+        "stars": 2,
+        "updated_at": "2025-03-03T19:28:49Z",
+        "description": null,
+        "size_kb": 22,
+        "languages": {
+            "Shell": 2794
+        }
+    }
+]

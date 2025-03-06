@@ -1,0 +1,1278 @@
+[
+    {
+        "name": "fabric-samples",
+        "full_name": "hyperledger/fabric-samples",
+        "url": "https://github.com/hyperledger/fabric-samples",
+        "stars": 2869,
+        "updated_at": "2025-03-05T17:26:41Z",
+        "description": "Samples for Hyperledger Fabric",
+        "size_kb": 24037,
+        "languages": {
+            "Go": 471678,
+            "TypeScript": 362926,
+            "Shell": 348364,
+            "Java": 281059,
+            "JavaScript": 221510,
+            "Just": 17476,
+            "Dockerfile": 9414,
+            "Jinja": 7424,
+            "HTML": 7119,
+            "Python": 3972,
+            "SCSS": 289
+        }
+    },
+    {
+        "name": "nextjs-auth0",
+        "full_name": "auth0/nextjs-auth0",
+        "url": "https://github.com/auth0/nextjs-auth0",
+        "stars": 2134,
+        "updated_at": "2025-03-06T15:27:58Z",
+        "description": "Next.js SDK for signing in with Auth0",
+        "size_kb": 11065,
+        "languages": {
+            "TypeScript": 289440,
+            "JavaScript": 2456,
+            "CSS": 690
+        }
+    },
+    {
+        "name": "spiffe",
+        "full_name": "spiffe/spiffe",
+        "url": "https://github.com/spiffe/spiffe",
+        "stars": 1536,
+        "updated_at": "2025-03-06T06:50:58Z",
+        "description": "The SPIFFE Project",
+        "size_kb": 908,
+        "languages": {
+            "Shell": 2965
+        }
+    },
+    {
+        "name": "auth0-spa-js",
+        "full_name": "auth0/auth0-spa-js",
+        "url": "https://github.com/auth0/auth0-spa-js",
+        "stars": 947,
+        "updated_at": "2025-03-06T10:30:10Z",
+        "description": "Auth0 authentication for Single Page Applications (SPA) with PKCE",
+        "size_kb": 8511,
+        "languages": {
+            "TypeScript": 343270,
+            "JavaScript": 181760,
+            "HTML": 48141
+        }
+    },
+    {
+        "name": "docker",
+        "full_name": "matomo-org/docker",
+        "url": "https://github.com/matomo-org/docker",
+        "stars": 882,
+        "updated_at": "2025-03-04T09:06:17Z",
+        "description": "Official Docker project for Matomo Analytics",
+        "size_kb": 233,
+        "languages": {
+            "Shell": 9196,
+            "Dockerfile": 8132,
+            "Mustache": 1042
+        }
+    },
+    {
+        "name": "data.gov",
+        "full_name": "GSA/data.gov",
+        "url": "https://github.com/GSA/data.gov",
+        "stars": 741,
+        "updated_at": "2025-03-06T15:04:14Z",
+        "description": "Main repository for the data.gov service",
+        "size_kb": 78675,
+        "languages": {
+            "Shell": 13217,
+            "Python": 12761,
+            "Makefile": 400
+        }
+    },
+    {
+        "name": "data.gov",
+        "full_name": "GSA/data.gov",
+        "url": "https://github.com/GSA/data.gov",
+        "stars": 741,
+        "updated_at": "2025-03-06T15:04:14Z",
+        "description": "Main repository for the data.gov service",
+        "size_kb": 78675,
+        "languages": {
+            "Shell": 13217,
+            "Python": 12761,
+            "Makefile": 400
+        }
+    },
+    {
+        "name": "argoproj",
+        "full_name": "argoproj/argoproj",
+        "url": "https://github.com/argoproj/argoproj",
+        "stars": 653,
+        "updated_at": "2025-03-06T02:21:51Z",
+        "description": "Common project repo for all Argo Projects",
+        "size_kb": 6298,
+        "languages": {
+            "Python": 2913,
+            "Shell": 343
+        }
+    },
+    {
+        "name": "do-agent",
+        "full_name": "digitalocean/do-agent",
+        "url": "https://github.com/digitalocean/do-agent",
+        "stars": 602,
+        "updated_at": "2025-03-06T08:50:39Z",
+        "description": "Collects system metrics from DigitalOcean Droplets",
+        "size_kb": 7307,
+        "languages": {
+            "Go": 126895,
+            "Shell": 8167,
+            "Makefile": 2317,
+            "Dockerfile": 567
+        }
+    },
+    {
+        "name": "stablecoin-evm",
+        "full_name": "circlefin/stablecoin-evm",
+        "url": "https://github.com/circlefin/stablecoin-evm",
+        "stars": 587,
+        "updated_at": "2025-03-03T16:06:35Z",
+        "description": "Source repository for smart contracts used by Circle's stablecoins on EVM-compatible blockchains",
+        "size_kb": 2828,
+        "languages": {
+            "JavaScript": 331534,
+            "TypeScript": 315214,
+            "Solidity": 237843,
+            "Shell": 5480
+        }
+    },
+    {
+        "name": "react-native-auth0",
+        "full_name": "auth0/react-native-auth0",
+        "url": "https://github.com/auth0/react-native-auth0",
+        "stars": 507,
+        "updated_at": "2025-02-28T16:58:10Z",
+        "description": "React Native toolkit for Auth0 API",
+        "size_kb": 6283,
+        "languages": {
+            "JavaScript": 127940,
+            "TypeScript": 125729,
+            "Java": 26661,
+            "Swift": 14210,
+            "Objective-C": 7661,
+            "Ruby": 3349,
+            "Kotlin": 2146,
+            "C": 103
+        }
+    },
+    {
+        "name": "crates",
+        "full_name": "iqlusioninc/crates",
+        "url": "https://github.com/iqlusioninc/crates",
+        "stars": 482,
+        "updated_at": "2025-03-04T01:05:51Z",
+        "description": "A collection of open source Rust crates from iqlusion",
+        "size_kb": 2345,
+        "languages": {
+            "Rust": 241465
+        }
+    },
+    {
+        "name": "tmkms",
+        "full_name": "iqlusioninc/tmkms",
+        "url": "https://github.com/iqlusioninc/tmkms",
+        "stars": 343,
+        "updated_at": "2025-03-03T22:18:51Z",
+        "description": "Tendermint KMS: Key Management System for Tendermint Validators",
+        "size_kb": 2738,
+        "languages": {
+            "Rust": 238075,
+            "Dockerfile": 2800,
+            "Shell": 2639
+        }
+    },
+    {
+        "name": "charcoal",
+        "full_name": "pixiv/charcoal",
+        "url": "https://github.com/pixiv/charcoal",
+        "stars": 337,
+        "updated_at": "2025-03-05T09:25:43Z",
+        "description": "Design system library by pixiv",
+        "size_kb": 39163,
+        "languages": {
+            "TypeScript": 448796,
+            "CSS": 102063,
+            "JavaScript": 74617,
+            "MDX": 30757,
+            "HTML": 3386,
+            "Shell": 454
+        }
+    },
+    {
+        "name": "react-plaid-link",
+        "full_name": "plaid/react-plaid-link",
+        "url": "https://github.com/plaid/react-plaid-link",
+        "stars": 274,
+        "updated_at": "2025-02-25T11:38:56Z",
+        "description": "React bindings for Plaid Link",
+        "size_kb": 2467,
+        "languages": {
+            "TypeScript": 23683,
+            "JavaScript": 9815,
+            "Makefile": 1902,
+            "Shell": 567
+        }
+    },
+    {
+        "name": "fabric-contract-api-go",
+        "full_name": "hyperledger/fabric-contract-api-go",
+        "url": "https://github.com/hyperledger/fabric-contract-api-go",
+        "stars": 231,
+        "updated_at": "2025-02-25T19:20:36Z",
+        "description": "Packages for the implementation of the contract API for use in Go chaincode",
+        "size_kb": 662,
+        "languages": {
+            "Go": 292213,
+            "Gherkin": 9319,
+            "Shell": 4268,
+            "JavaScript": 2217,
+            "Makefile": 1780,
+            "Dockerfile": 582
+        }
+    },
+    {
+        "name": "fabric-gateway-java",
+        "full_name": "hyperledger/fabric-gateway-java",
+        "url": "https://github.com/hyperledger/fabric-gateway-java",
+        "stars": 211,
+        "updated_at": "2025-03-03T23:42:12Z",
+        "description": "Hyperledger Fabric Gateway SDK for Java https://wiki.hyperledger.org/display/fabric",
+        "size_kb": 3859,
+        "languages": {
+            "Java": 378565,
+            "Gherkin": 19611,
+            "Shell": 1761
+        }
+    },
+    {
+        "name": "react-native-plaid-link-sdk",
+        "full_name": "plaid/react-native-plaid-link-sdk",
+        "url": "https://github.com/plaid/react-native-plaid-link-sdk",
+        "stars": 178,
+        "updated_at": "2025-03-04T13:30:48Z",
+        "description": "Plaid Link for React Native",
+        "size_kb": 5165,
+        "languages": {
+            "TypeScript": 58715,
+            "Objective-C++": 31807,
+            "Kotlin": 30965,
+            "Objective-C": 15050,
+            "Java": 10005,
+            "JavaScript": 7367,
+            "Ruby": 6414,
+            "Swift": 4087,
+            "C": 194
+        }
+    },
+    {
+        "name": "fabric-gateway",
+        "full_name": "hyperledger/fabric-gateway",
+        "url": "https://github.com/hyperledger/fabric-gateway",
+        "stars": 164,
+        "updated_at": "2025-03-04T09:27:18Z",
+        "description": "Go, Node and Java client API for Hyperledger Fabric v2.4+",
+        "size_kb": 5933,
+        "languages": {
+            "Java": 419822,
+            "TypeScript": 335273,
+            "Go": 300396,
+            "Gherkin": 34876,
+            "Makefile": 7996,
+            "Shell": 4797,
+            "JavaScript": 2979
+        }
+    },
+    {
+        "name": "fabric-private-chaincode",
+        "full_name": "hyperledger/fabric-private-chaincode",
+        "url": "https://github.com/hyperledger/fabric-private-chaincode",
+        "stars": 164,
+        "updated_at": "2025-02-06T06:11:59Z",
+        "description": "FPC enables Confidential Chaincode Execution for Hyperledger Fabric using Intel SGX.",
+        "size_kb": 5462,
+        "languages": {
+            "Go": 303964,
+            "C": 116612,
+            "C++": 112910,
+            "Shell": 105320,
+            "Makefile": 33648,
+            "CMake": 26535,
+            "Dockerfile": 18166
+        }
+    },
+    {
+        "name": "mattermost-plugin-github",
+        "full_name": "mattermost/mattermost-plugin-github",
+        "url": "https://github.com/mattermost/mattermost-plugin-github",
+        "stars": 162,
+        "updated_at": "2025-03-06T12:09:33Z",
+        "description": "GitHub plugin for Mattermost",
+        "size_kb": 5395,
+        "languages": {
+            "Go": 443157,
+            "JavaScript": 100532,
+            "TypeScript": 91972,
+            "Makefile": 17202,
+            "CSS": 2728,
+            "Shell": 296
+        }
+    },
+    {
+        "name": "mattermost-plugin-ai",
+        "full_name": "mattermost/mattermost-plugin-ai",
+        "url": "https://github.com/mattermost/mattermost-plugin-ai",
+        "stars": 151,
+        "updated_at": "2025-03-06T06:28:40Z",
+        "description": "Mattermost Copilot plugin supporting multiple LLMs",
+        "size_kb": 5865,
+        "languages": {
+            "Go": 239737,
+            "TypeScript": 200819,
+            "Makefile": 17423,
+            "JavaScript": 4207
+        }
+    },
+    {
+        "name": "securedrop-workstation",
+        "full_name": "freedomofpress/securedrop-workstation",
+        "url": "https://github.com/freedomofpress/securedrop-workstation",
+        "stars": 149,
+        "updated_at": "2025-03-03T14:10:41Z",
+        "description": "Qubes-based SecureDrop Journalist Workstation environment for submission handling",
+        "size_kb": 23152,
+        "languages": {
+            "Python": 196579,
+            "Shell": 16902,
+            "Jinja": 11728,
+            "Makefile": 10389,
+            "SaltStack": 685,
+            "Dockerfile": 540
+        }
+    },
+    {
+        "name": "fabric-chaincode-go",
+        "full_name": "hyperledger/fabric-chaincode-go",
+        "url": "https://github.com/hyperledger/fabric-chaincode-go",
+        "stars": 141,
+        "updated_at": "2025-03-05T06:08:06Z",
+        "description": "Hyperledger Fabric Packages for Go Chaincode",
+        "size_kb": 205,
+        "languages": {
+            "Go": 212485,
+            "Makefile": 1085
+        }
+    },
+    {
+        "name": "plaid-link-ios",
+        "full_name": "plaid/plaid-link-ios",
+        "url": "https://github.com/plaid/plaid-link-ios",
+        "stars": 138,
+        "updated_at": "2025-02-05T18:24:23Z",
+        "description": "Plaid Link iOS SDK",
+        "size_kb": 1293310,
+        "languages": {
+            "Objective-C": 157147,
+            "Swift": 15878,
+            "Ruby": 1242
+        }
+    },
+    {
+        "name": "ics23",
+        "full_name": "cosmos/ics23",
+        "url": "https://github.com/cosmos/ics23",
+        "stars": 119,
+        "updated_at": "2025-02-22T14:45:50Z",
+        "description": "Building generic merkle proof format for IBC",
+        "size_kb": 3612,
+        "languages": {
+            "Rust": 170866,
+            "Go": 56707,
+            "Makefile": 3267,
+            "Shell": 508
+        }
+    },
+    {
+        "name": "richdocuments",
+        "full_name": "owncloud/richdocuments",
+        "url": "https://github.com/owncloud/richdocuments",
+        "stars": 119,
+        "updated_at": "2025-01-14T21:26:38Z",
+        "description": " :notebook_with_decorative_cover: Collabora Online for ownCloud",
+        "size_kb": 21083,
+        "languages": {
+            "JavaScript": 374925,
+            "PHP": 247172,
+            "Starlark": 76908,
+            "Gherkin": 24570,
+            "CSS": 14312,
+            "Makefile": 7063,
+            "Vue": 5968,
+            "TypeScript": 2014
+        }
+    },
+    {
+        "name": "plaid-link-android",
+        "full_name": "plaid/plaid-link-android",
+        "url": "https://github.com/plaid/plaid-link-android",
+        "stars": 118,
+        "updated_at": "2025-01-27T03:32:21Z",
+        "description": "Plaid Link Android SDK",
+        "size_kb": 6741,
+        "languages": {
+            "Kotlin": 10432,
+            "Java": 9987,
+            "Shell": 921
+        }
+    },
+    {
+        "name": "mattermost-plugin-zoom",
+        "full_name": "mattermost/mattermost-plugin-zoom",
+        "url": "https://github.com/mattermost/mattermost-plugin-zoom",
+        "stars": 108,
+        "updated_at": "2025-03-03T11:29:12Z",
+        "description": "Zoom plugin for Mattermost :electric_plug:",
+        "size_kb": 9823,
+        "languages": {
+            "Go": 135663,
+            "JavaScript": 22251,
+            "Makefile": 16893,
+            "TypeScript": 229
+        }
+    },
+    {
+        "name": "do-markdownit",
+        "full_name": "digitalocean/do-markdownit",
+        "url": "https://github.com/digitalocean/do-markdownit",
+        "stars": 91,
+        "updated_at": "2025-01-26T10:14:46Z",
+        "description": "Markdown-It plugin for the DigitalOcean Community.",
+        "size_kb": 1842,
+        "languages": {
+            "JavaScript": 388682,
+            "SCSS": 46394,
+            "HTML": 31505
+        }
+    },
+    {
+        "name": "gallery",
+        "full_name": "owncloud/gallery",
+        "url": "https://github.com/owncloud/gallery",
+        "stars": 88,
+        "updated_at": "2024-02-29T10:50:06Z",
+        "description": ":sunrise: Gallery app for ownCloud, which includes previews for all supported media files",
+        "size_kb": 9073,
+        "languages": {
+            "JavaScript": 487700,
+            "PHP": 378061,
+            "Starlark": 75039,
+            "CSS": 32974,
+            "Makefile": 4808,
+            "Hack": 941,
+            "Shell": 681
+        }
+    },
+    {
+        "name": "matic-cli",
+        "full_name": "maticnetwork/matic-cli",
+        "url": "https://github.com/maticnetwork/matic-cli",
+        "stars": 81,
+        "updated_at": "2025-03-05T09:04:51Z",
+        "description": "A CLI to setup Matic network",
+        "size_kb": 3248,
+        "languages": {
+            "JavaScript": 330942,
+            "Go": 77991,
+            "Shell": 33627,
+            "HCL": 17230,
+            "Nunjucks": 10969,
+            "Solidity": 949
+        }
+    },
+    {
+        "name": "c2pa-js",
+        "full_name": "contentauth/c2pa-js",
+        "url": "https://github.com/contentauth/c2pa-js",
+        "stars": 79,
+        "updated_at": "2025-03-04T21:49:39Z",
+        "description": "JavaScript SDK for displaying and validating C2PA data",
+        "size_kb": 21606,
+        "languages": {
+            "TypeScript": 206865,
+            "JavaScript": 27054,
+            "Rust": 8515,
+            "Shell": 1345,
+            "HTML": 1332,
+            "CSS": 526,
+            "SCSS": 379
+        }
+    },
+    {
+        "name": "bat-ledger",
+        "full_name": "brave-intl/bat-ledger",
+        "url": "https://github.com/brave-intl/bat-ledger",
+        "stars": 77,
+        "updated_at": "2025-03-05T20:40:45Z",
+        "description": "A BAT-based micropayments system for users and publishers",
+        "size_kb": 7011,
+        "languages": {
+            "JavaScript": 226079,
+            "Shell": 5676,
+            "PLpgSQL": 574,
+            "Makefile": 347,
+            "Dockerfile": 340
+        }
+    },
+    {
+        "name": "clvm_rs",
+        "full_name": "Chia-Network/clvm_rs",
+        "url": "https://github.com/Chia-Network/clvm_rs",
+        "stars": 67,
+        "updated_at": "2025-03-04T14:58:07Z",
+        "description": "Rust implementation of clvm",
+        "size_kb": 6881,
+        "languages": {
+            "Rust": 485556,
+            "Python": 101930,
+            "JavaScript": 3744
+        }
+    },
+    {
+        "name": "plaid-link-examples",
+        "full_name": "plaid/plaid-link-examples",
+        "url": "https://github.com/plaid/plaid-link-examples",
+        "stars": 64,
+        "updated_at": "2024-10-06T23:10:55Z",
+        "description": "Plaid Link Webview, ReactNative examples",
+        "size_kb": 47610,
+        "languages": {
+            "Objective-C": 43772,
+            "Swift": 16955,
+            "Kotlin": 9325,
+            "Shell": 749
+        }
+    },
+    {
+        "name": "ledger-cosmos",
+        "full_name": "cosmos/ledger-cosmos",
+        "url": "https://github.com/cosmos/ledger-cosmos",
+        "stars": 53,
+        "updated_at": "2025-02-25T13:05:27Z",
+        "description": null,
+        "size_kb": 21023,
+        "languages": {
+            "C": 180100,
+            "C++": 95931,
+            "TypeScript": 46909,
+            "CMake": 24430,
+            "Makefile": 4594,
+            "Python": 2314,
+            "JavaScript": 1169,
+            "GDB": 365
+        }
+    },
+    {
+        "name": "fabric-protos-go",
+        "full_name": "hyperledger/fabric-protos-go",
+        "url": "https://github.com/hyperledger/fabric-protos-go",
+        "stars": 44,
+        "updated_at": "2025-02-19T15:43:45Z",
+        "description": "Generated Go bindings for fabric-protos",
+        "size_kb": 362,
+        "languages": {
+            "Go": 219
+        }
+    },
+    {
+        "name": "droplet-agent",
+        "full_name": "digitalocean/droplet-agent",
+        "url": "https://github.com/digitalocean/droplet-agent",
+        "stars": 43,
+        "updated_at": "2025-02-18T21:56:55Z",
+        "description": "Droplet Agent is the daemon that runs on customer droplets to enable some features such as web console access.",
+        "size_kb": 3596,
+        "languages": {
+            "Go": 184532,
+            "Shell": 22264,
+            "Makefile": 8132
+        }
+    },
+    {
+        "name": "fabric-protos",
+        "full_name": "hyperledger/fabric-protos",
+        "url": "https://github.com/hyperledger/fabric-protos",
+        "stars": 43,
+        "updated_at": "2025-02-25T23:09:53Z",
+        "description": null,
+        "size_kb": 597,
+        "languages": {
+            "Makefile": 11413,
+            "Shell": 1060,
+            "Go": 438
+        }
+    },
+    {
+        "name": "fabric-admin-sdk",
+        "full_name": "hyperledger/fabric-admin-sdk",
+        "url": "https://github.com/hyperledger/fabric-admin-sdk",
+        "stars": 33,
+        "updated_at": "2025-02-25T14:08:44Z",
+        "description": "Hyperledger Fabric admin SDK",
+        "size_kb": 587,
+        "languages": {
+            "Go": 291647,
+            "JavaScript": 113317,
+            "TypeScript": 44747,
+            "Makefile": 1555
+        }
+    },
+    {
+        "name": "activity",
+        "full_name": "owncloud/activity",
+        "url": "https://github.com/owncloud/activity",
+        "stars": 32,
+        "updated_at": "2025-01-25T06:38:32Z",
+        "description": ":zap: Activity app for ownCloud",
+        "size_kb": 4440,
+        "languages": {
+            "PHP": 472044,
+            "Gherkin": 319915,
+            "JavaScript": 290814,
+            "Starlark": 79975,
+            "Makefile": 7559,
+            "CSS": 3648,
+            "Shell": 1757
+        }
+    },
+    {
+        "name": "oauth2",
+        "full_name": "owncloud/oauth2",
+        "url": "https://github.com/owncloud/oauth2",
+        "stars": 31,
+        "updated_at": "2025-01-09T00:27:40Z",
+        "description": "\ud83d\udd10  Application for using OAuth 2.0 in ownCloud",
+        "size_kb": 1155,
+        "languages": {
+            "PHP": 270711,
+            "JavaScript": 110100,
+            "Starlark": 76873,
+            "Gherkin": 10705,
+            "Makefile": 6586,
+            "CSS": 177
+        }
+    },
+    {
+        "name": "updater",
+        "full_name": "owncloud/updater",
+        "url": "https://github.com/owncloud/updater",
+        "stars": 27,
+        "updated_at": "2024-09-03T01:39:21Z",
+        "description": null,
+        "size_kb": 2761,
+        "languages": {
+            "PHP": 152797,
+            "Starlark": 76839,
+            "CSS": 15671,
+            "JavaScript": 7510,
+            "Makefile": 5284
+        }
+    },
+    {
+        "name": "fabric-cli",
+        "full_name": "hyperledger/fabric-cli",
+        "url": "https://github.com/hyperledger/fabric-cli",
+        "stars": 25,
+        "updated_at": "2025-03-03T16:28:47Z",
+        "description": null,
+        "size_kb": 317,
+        "languages": {
+            "Go": 291868,
+            "Makefile": 1005
+        }
+    },
+    {
+        "name": "deoxysii-rust",
+        "full_name": "oasisprotocol/deoxysii-rust",
+        "url": "https://github.com/oasisprotocol/deoxysii-rust",
+        "stars": 25,
+        "updated_at": "2024-05-28T07:00:37Z",
+        "description": "Deoxys-II-256-128 MRAE primitives for Rust",
+        "size_kb": 158,
+        "languages": {
+            "Rust": 38511,
+            "Makefile": 922
+        }
+    },
+    {
+        "name": "deoxysii",
+        "full_name": "oasisprotocol/deoxysii",
+        "url": "https://github.com/oasisprotocol/deoxysii",
+        "stars": 24,
+        "updated_at": "2024-04-02T01:37:14Z",
+        "description": "Go Deoxys-II-256-128",
+        "size_kb": 252,
+        "languages": {
+            "Go": 125400,
+            "Assembly": 20708,
+            "Shell": 55
+        }
+    },
+    {
+        "name": "vault-updater",
+        "full_name": "brave/vault-updater",
+        "url": "https://github.com/brave/vault-updater",
+        "stars": 20,
+        "updated_at": "2024-01-11T07:52:06Z",
+        "description": "Laptop browser update service",
+        "size_kb": 1314,
+        "languages": {
+            "JavaScript": 106636
+        }
+    },
+    {
+        "name": "mattermost-plugin-msteams-meetings",
+        "full_name": "mattermost/mattermost-plugin-msteams-meetings",
+        "url": "https://github.com/mattermost/mattermost-plugin-msteams-meetings",
+        "stars": 18,
+        "updated_at": "2025-01-28T13:56:36Z",
+        "description": "Mattermost Plugin for Microsoft Teams Meetings",
+        "size_kb": 1304,
+        "languages": {
+            "Go": 76383,
+            "TypeScript": 16372,
+            "Makefile": 15752,
+            "JavaScript": 4008
+        }
+    },
+    {
+        "name": "solana-cctp-contracts",
+        "full_name": "circlefin/solana-cctp-contracts",
+        "url": "https://github.com/circlefin/solana-cctp-contracts",
+        "stars": 15,
+        "updated_at": "2025-02-05T11:41:45Z",
+        "description": "Official repository for Solana smart contracts used by the Cross-Chain Transfer Protocol",
+        "size_kb": 25405,
+        "languages": {
+            "Rust": 159364,
+            "TypeScript": 66009,
+            "Shell": 200
+        }
+    },
+    {
+        "name": "pages-build-container",
+        "full_name": "cloud-gov/pages-build-container",
+        "url": "https://github.com/cloud-gov/pages-build-container",
+        "stars": 14,
+        "updated_at": "2025-01-08T14:54:51Z",
+        "description": "A container image that builds each site as part of the Pages platform",
+        "size_kb": 861,
+        "languages": {
+            "Python": 145757,
+            "Dockerfile": 4684,
+            "Shell": 1102
+        }
+    },
+    {
+        "name": "besu-native",
+        "full_name": "hyperledger/besu-native",
+        "url": "https://github.com/hyperledger/besu-native",
+        "stars": 13,
+        "updated_at": "2025-03-04T22:59:40Z",
+        "description": null,
+        "size_kb": 1586,
+        "languages": {
+            "Java": 222489,
+            "Rust": 84668,
+            "C": 72232,
+            "Go": 43084,
+            "Shell": 11778,
+            "Makefile": 951
+        }
+    },
+    {
+        "name": "impersonate",
+        "full_name": "owncloud/impersonate",
+        "url": "https://github.com/owncloud/impersonate",
+        "stars": 13,
+        "updated_at": "2024-10-17T01:01:59Z",
+        "description": "Allow administrators to become a different user",
+        "size_kb": 558,
+        "languages": {
+            "Starlark": 77522,
+            "PHP": 66156,
+            "JavaScript": 38643,
+            "Gherkin": 7003,
+            "Makefile": 6497,
+            "CSS": 351,
+            "Handlebars": 345
+        }
+    },
+    {
+        "name": "2wp-app",
+        "full_name": "rsksmart/2wp-app",
+        "url": "https://github.com/rsksmart/2wp-app",
+        "stars": 13,
+        "updated_at": "2025-02-26T17:17:50Z",
+        "description": null,
+        "size_kb": 12173,
+        "languages": {
+            "TypeScript": 465919,
+            "Vue": 303123,
+            "SCSS": 6857,
+            "JavaScript": 3785,
+            "HTML": 822,
+            "Dockerfile": 468,
+            "Shell": 407
+        }
+    },
+    {
+        "name": "notifications",
+        "full_name": "owncloud/notifications",
+        "url": "https://github.com/owncloud/notifications",
+        "stars": 12,
+        "updated_at": "2024-05-04T00:05:11Z",
+        "description": "\ud83d\udd14 Notifications app for ownCloud",
+        "size_kb": 971,
+        "languages": {
+            "PHP": 157202,
+            "JavaScript": 84017,
+            "Starlark": 77551,
+            "Gherkin": 16996,
+            "Makefile": 6959,
+            "CSS": 2596
+        }
+    },
+    {
+        "name": "rif-wallet-services",
+        "full_name": "rsksmart/rif-wallet-services",
+        "url": "https://github.com/rsksmart/rif-wallet-services",
+        "stars": 12,
+        "updated_at": "2025-01-20T14:18:24Z",
+        "description": "RIF Wallet services",
+        "size_kb": 1230,
+        "languages": {
+            "TypeScript": 132539,
+            "JavaScript": 46803,
+            "Dockerfile": 282
+        }
+    },
+    {
+        "name": "bat-publisher",
+        "full_name": "brave-intl/bat-publisher",
+        "url": "https://github.com/brave-intl/bat-publisher",
+        "stars": 11,
+        "updated_at": "2023-06-14T04:29:19Z",
+        "description": "Routines to identify publishers for the BAT. ( deprecated )",
+        "size_kb": 1223,
+        "languages": {
+            "JavaScript": 138738
+        }
+    },
+    {
+        "name": "timestamped-socket",
+        "full_name": "pendulum-project/timestamped-socket",
+        "url": "https://github.com/pendulum-project/timestamped-socket",
+        "stars": 10,
+        "updated_at": "2025-03-06T13:55:03Z",
+        "description": "An asynchronous UDP socket that supports timestamping",
+        "size_kb": 132,
+        "languages": {
+            "Rust": 93392
+        }
+    },
+    {
+        "name": "rif-wallet-libs",
+        "full_name": "rsksmart/rif-wallet-libs",
+        "url": "https://github.com/rsksmart/rif-wallet-libs",
+        "stars": 9,
+        "updated_at": "2024-01-15T16:04:40Z",
+        "description": "Libraries used by the RIF Wallet",
+        "size_kb": 2724,
+        "languages": {
+            "TypeScript": 205718,
+            "JavaScript": 1187
+        }
+    },
+    {
+        "name": "securedrop-builder",
+        "full_name": "freedomofpress/securedrop-builder",
+        "url": "https://github.com/freedomofpress/securedrop-builder",
+        "stars": 8,
+        "updated_at": "2025-02-01T03:34:56Z",
+        "description": "Packaging logic for building SecureDrop-related Debian packages",
+        "size_kb": 2764,
+        "languages": {
+            "Python": 35742,
+            "Shell": 3526,
+            "Makefile": 1284
+        }
+    },
+    {
+        "name": "customgroups",
+        "full_name": "owncloud/customgroups",
+        "url": "https://github.com/owncloud/customgroups",
+        "stars": 8,
+        "updated_at": "2025-02-11T02:33:08Z",
+        "description": "Let users create their own custom groups",
+        "size_kb": 1763,
+        "languages": {
+            "PHP": 266504,
+            "JavaScript": 262773,
+            "Gherkin": 89346,
+            "Starlark": 76679,
+            "Makefile": 10386,
+            "Handlebars": 3781,
+            "CSS": 2074
+        }
+    },
+    {
+        "name": "rpki-publication-server",
+        "full_name": "RIPE-NCC/rpki-publication-server",
+        "url": "https://github.com/RIPE-NCC/rpki-publication-server",
+        "stars": 8,
+        "updated_at": "2024-05-08T13:07:09Z",
+        "description": null,
+        "size_kb": 1312,
+        "languages": {
+            "Scala": 160378,
+            "PLpgSQL": 10647,
+            "Shell": 6500,
+            "Dockerfile": 1613
+        }
+    },
+    {
+        "name": "bat-client",
+        "full_name": "brave-intl/bat-client",
+        "url": "https://github.com/brave-intl/bat-client",
+        "stars": 7,
+        "updated_at": "2023-01-28T18:09:56Z",
+        "description": "An example of client code for the BAT.",
+        "size_kb": 3768,
+        "languages": {
+            "JavaScript": 72129
+        }
+    },
+    {
+        "name": "guests",
+        "full_name": "owncloud/guests",
+        "url": "https://github.com/owncloud/guests",
+        "stars": 7,
+        "updated_at": "2025-02-11T02:35:51Z",
+        "description": " :family: Share with externals easily via email address",
+        "size_kb": 1682,
+        "languages": {
+            "JavaScript": 139385,
+            "PHP": 106056,
+            "Starlark": 78001,
+            "Gherkin": 54053,
+            "Makefile": 6830,
+            "CSS": 42
+        }
+    },
+    {
+        "name": "openidconnect",
+        "full_name": "owncloud/openidconnect",
+        "url": "https://github.com/owncloud/openidconnect",
+        "stars": 7,
+        "updated_at": "2025-02-22T11:33:57Z",
+        "description": "OpenId Connect (OIDC) Integration for ownCloud",
+        "size_kb": 549,
+        "languages": {
+            "PHP": 144367,
+            "Starlark": 77266,
+            "JavaScript": 13777,
+            "Makefile": 5977,
+            "Shell": 519,
+            "Dockerfile": 259
+        }
+    },
+    {
+        "name": "clock-steering",
+        "full_name": "pendulum-project/clock-steering",
+        "url": "https://github.com/pendulum-project/clock-steering",
+        "stars": 7,
+        "updated_at": "2025-02-12T10:25:48Z",
+        "description": null,
+        "size_kb": 70,
+        "languages": {
+            "Rust": 27716
+        }
+    },
+    {
+        "name": "2wp-api",
+        "full_name": "rsksmart/2wp-api",
+        "url": "https://github.com/rsksmart/2wp-api",
+        "stars": 7,
+        "updated_at": "2025-02-13T19:57:23Z",
+        "description": null,
+        "size_kb": 2797,
+        "languages": {
+            "TypeScript": 402998,
+            "HTML": 2251,
+            "JavaScript": 1226,
+            "Shell": 346,
+            "Dockerfile": 250
+        }
+    },
+    {
+        "name": "besu-verkle-trie",
+        "full_name": "hyperledger/besu-verkle-trie",
+        "url": "https://github.com/hyperledger/besu-verkle-trie",
+        "stars": 6,
+        "updated_at": "2025-01-23T15:03:20Z",
+        "description": "Verkle trie java implementation",
+        "size_kb": 343,
+        "languages": {
+            "Java": 301892,
+            "Groovy": 2025
+        }
+    },
+    {
+        "name": "sui-cctp",
+        "full_name": "circlefin/sui-cctp",
+        "url": "https://github.com/circlefin/sui-cctp",
+        "stars": 5,
+        "updated_at": "2025-01-15T19:44:34Z",
+        "description": "Official repository for Sui smart contracts used by the Cross-Chain Transfer Protocol",
+        "size_kb": 979,
+        "languages": {
+            "Move": 395295,
+            "TypeScript": 56050,
+            "Shell": 15475,
+            "Solidity": 9440,
+            "JavaScript": 1725
+        }
+    },
+    {
+        "name": "files_confidential",
+        "full_name": "nextcloud/files_confidential",
+        "url": "https://github.com/nextcloud/files_confidential",
+        "stars": 5,
+        "updated_at": "2025-02-27T00:49:45Z",
+        "description": "Workflows for handling and classifying confidential files in Nextcloud",
+        "size_kb": 30915,
+        "languages": {
+            "JavaScript": 91219,
+            "PHP": 83031,
+            "Vue": 16196,
+            "Makefile": 4870,
+            "Shell": 660
+        }
+    },
+    {
+        "name": "staking-v0.1",
+        "full_name": "smartcontractkit/staking-v0.1",
+        "url": "https://github.com/smartcontractkit/staking-v0.1",
+        "stars": 5,
+        "updated_at": "2024-07-06T03:02:41Z",
+        "description": "Earn rewards for helping secure the Chainlink Network. Chainlink Staking is a security mechanism in which stakers commit LINK in smart contracts to back certain performance guarantees around oracle services.",
+        "size_kb": 1241,
+        "languages": {
+            "TypeScript": 251279,
+            "Solidity": 166911,
+            "JavaScript": 11644,
+            "Shell": 251
+        }
+    },
+    {
+        "name": "pages-builder",
+        "full_name": "cloud-gov/pages-builder",
+        "url": "https://github.com/cloud-gov/pages-builder",
+        "stars": 4,
+        "updated_at": "2024-08-12T19:19:48Z",
+        "description": "This application is used to launch build tasks for Federalist in an AWS ECS Docker container based on messages from an AWS SQS queue",
+        "size_kb": 1460,
+        "languages": {
+            "JavaScript": 66757,
+            "Shell": 5245,
+            "Dockerfile": 59
+        }
+    },
+    {
+        "name": "pages-proxy",
+        "full_name": "cloud-gov/pages-proxy",
+        "url": "https://github.com/cloud-gov/pages-proxy",
+        "stars": 4,
+        "updated_at": "2024-08-12T19:27:23Z",
+        "description": "Proxies traffic from the Federalist S3 bucket",
+        "size_kb": 1811,
+        "languages": {
+            "JavaScript": 32183,
+            "Shell": 4932
+        }
+    },
+    {
+        "name": "noble-fiattokenfactory",
+        "full_name": "circlefin/noble-fiattokenfactory",
+        "url": "https://github.com/circlefin/noble-fiattokenfactory",
+        "stars": 4,
+        "updated_at": "2025-01-23T23:50:17Z",
+        "description": "Repository for Noble fiat token factory code",
+        "size_kb": 844,
+        "languages": {
+            "Go": 446712,
+            "Makefile": 3825,
+            "Shell": 843
+        }
+    },
+    {
+        "name": "go-nbd",
+        "full_name": "digitalocean/go-nbd",
+        "url": "https://github.com/digitalocean/go-nbd",
+        "stars": 4,
+        "updated_at": "2025-02-24T18:43:25Z",
+        "description": "NBD client implementation in Go, free of any CGO or system-specific dependencies",
+        "size_kb": 32,
+        "languages": {
+            "Go": 53125
+        }
+    },
+    {
+        "name": "identity-saml-rails",
+        "full_name": "18F/identity-saml-rails",
+        "url": "https://github.com/18F/identity-saml-rails",
+        "stars": 3,
+        "updated_at": "2024-08-12T19:23:10Z",
+        "description": "Test Service Provider for the Identity project",
+        "size_kb": 7057,
+        "languages": {
+            "Ruby": 60756,
+            "HTML": 42847,
+            "CSS": 1435,
+            "Makefile": 518,
+            "JavaScript": 23
+        }
+    },
+    {
+        "name": "bat-balance",
+        "full_name": "brave-intl/bat-balance",
+        "url": "https://github.com/brave-intl/bat-balance",
+        "stars": 3,
+        "updated_at": "2024-01-11T07:52:16Z",
+        "description": "Find the balance associated with a BAT wallet.",
+        "size_kb": 23,
+        "languages": {
+            "JavaScript": 10842
+        }
+    },
+    {
+        "name": "fabric-protos-go-apiv2",
+        "full_name": "hyperledger/fabric-protos-go-apiv2",
+        "url": "https://github.com/hyperledger/fabric-protos-go-apiv2",
+        "stars": 3,
+        "updated_at": "2025-02-19T15:43:46Z",
+        "description": "Generated Go bindings for fabric-protos",
+        "size_kb": 428,
+        "languages": {
+            "Go": 219
+        }
+    },
+    {
+        "name": "web-extensions",
+        "full_name": "owncloud/web-extensions",
+        "url": "https://github.com/owncloud/web-extensions",
+        "stars": 3,
+        "updated_at": "2025-03-06T00:06:26Z",
+        "description": null,
+        "size_kb": 1358,
+        "languages": {
+            "TypeScript": 56713,
+            "Vue": 40514,
+            "Starlark": 12891,
+            "Makefile": 1669,
+            "Dockerfile": 928,
+            "JavaScript": 564
+        }
+    },
+    {
+        "name": "rsyncit",
+        "full_name": "RIPE-NCC/rsyncit",
+        "url": "https://github.com/RIPE-NCC/rsyncit",
+        "stars": 3,
+        "updated_at": "2024-05-08T13:04:50Z",
+        "description": "RRDP -> rsync sync tool",
+        "size_kb": 202,
+        "languages": {
+            "Java": 76718,
+            "Shell": 395,
+            "Dockerfile": 283
+        }
+    },
+    {
+        "name": "stablecoin-aptos",
+        "full_name": "circlefin/stablecoin-aptos",
+        "url": "https://github.com/circlefin/stablecoin-aptos",
+        "stars": 2,
+        "updated_at": "2024-12-05T17:24:03Z",
+        "description": "Source repository for smart contracts used by Circle's stablecoins on Aptos blockchain",
+        "size_kb": 215,
+        "languages": {
+            "Move": 296212,
+            "TypeScript": 190524,
+            "Makefile": 4996,
+            "Shell": 4777,
+            "JavaScript": 1714
+        }
+    },
+    {
+        "name": "rpki-monitoring",
+        "full_name": "RIPE-NCC/rpki-monitoring",
+        "url": "https://github.com/RIPE-NCC/rpki-monitoring",
+        "stars": 2,
+        "updated_at": "2025-03-03T12:26:24Z",
+        "description": "RPKI Monitoring",
+        "size_kb": 3309,
+        "languages": {
+            "Java": 290849,
+            "Dockerfile": 776,
+            "Shell": 55
+        }
+    },
+    {
+        "name": "rpki-ta-0",
+        "full_name": "RIPE-NCC/rpki-ta-0",
+        "url": "https://github.com/RIPE-NCC/rpki-ta-0",
+        "stars": 2,
+        "updated_at": "2025-01-21T16:21:50Z",
+        "description": null,
+        "size_kb": 825,
+        "languages": {
+            "Java": 122650,
+            "Shell": 3234
+        }
+    },
+    {
+        "name": "stablecoin-sui",
+        "full_name": "circlefin/stablecoin-sui",
+        "url": "https://github.com/circlefin/stablecoin-sui",
+        "stars": 1,
+        "updated_at": "2024-12-05T17:23:51Z",
+        "description": "Source repository for smart contracts used by Circle's stablecoins on Sui blockchain",
+        "size_kb": 51,
+        "languages": {
+            "Move": 188176,
+            "Shell": 6461
+        }
+    },
+    {
+        "name": "besu-errorprone-checks",
+        "full_name": "besu-eth/besu-errorprone-checks",
+        "url": "https://github.com/besu-eth/besu-errorprone-checks",
+        "stars": 1,
+        "updated_at": "2025-01-09T13:45:48Z",
+        "description": "Besu custom errorprone checks",
+        "size_kb": 87,
+        "languages": {
+            "Java": 59175
+        }
+    }
+]

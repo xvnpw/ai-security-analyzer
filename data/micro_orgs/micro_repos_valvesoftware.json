@@ -1,0 +1,71 @@
+[
+    {
+        "name": "steam-runtime",
+        "full_name": "ValveSoftware/steam-runtime",
+        "url": "https://github.com/ValveSoftware/steam-runtime",
+        "stars": 1244,
+        "updated_at": "2025-03-05T15:25:42Z",
+        "description": "A runtime environment for Steam applications",
+        "size_kb": 169875,
+        "languages": {
+            "Shell": 54248,
+            "Python": 51698,
+            "Makefile": 146
+        }
+    },
+    {
+        "name": "voglperf",
+        "full_name": "ValveSoftware/voglperf",
+        "url": "https://github.com/ValveSoftware/voglperf",
+        "stars": 207,
+        "updated_at": "2025-03-03T06:11:58Z",
+        "description": "Benchmarking tool for Linux OpenGL games. Spews frame information, logs frametimes.",
+        "size_kb": 746,
+        "languages": {
+            "C": 110969,
+            "C++": 64181,
+            "CMake": 11055,
+            "HTML": 3269,
+            "Lua": 886,
+            "Makefile": 716
+        }
+    },
+    {
+        "name": "driver_hydra",
+        "full_name": "ValveSoftware/driver_hydra",
+        "url": "https://github.com/ValveSoftware/driver_hydra",
+        "stars": 104,
+        "updated_at": "2025-03-03T06:19:02Z",
+        "description": "OpenVR Driver for Razer Hydra using Sixense SDK",
+        "size_kb": 407,
+        "languages": {
+            "C++": 43620,
+            "C": 435
+        }
+    },
+    {
+        "name": "the_lab_renderer",
+        "full_name": "ValveSoftware/the_lab_renderer",
+        "url": "https://github.com/ValveSoftware/the_lab_renderer",
+        "stars": 281,
+        "updated_at": "2025-03-03T06:17:11Z",
+        "description": "Valve\u2019s VR renderer used in The Lab (Valve\u2019s VR launch title for the HTC Vive).",
+        "size_kb": 4760,
+        "languages": {
+            "C#": 293554,
+            "GLSL": 40017
+        }
+    },
+    {
+        "name": "counter-strike_regional_standings",
+        "full_name": "ValveSoftware/counter-strike_regional_standings",
+        "url": "https://github.com/ValveSoftware/counter-strike_regional_standings",
+        "stars": 159,
+        "updated_at": "2025-03-06T08:26:58Z",
+        "description": null,
+        "size_kb": 16293,
+        "languages": {
+            "JavaScript": 72896
+        }
+    }
+]
