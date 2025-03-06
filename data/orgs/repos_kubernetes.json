@@ -1,0 +1,693 @@
+[
+    {
+        "name": "dashboard",
+        "full_name": "kubernetes/dashboard",
+        "url": "https://github.com/kubernetes/dashboard",
+        "stars": 14719,
+        "updated_at": "2025-03-06T02:17:33Z",
+        "description": "General-purpose web UI for Kubernetes clusters",
+        "size_kb": 184375,
+        "languages": {
+            "Go": 1183338,
+            "TypeScript": 823759,
+            "HTML": 456658,
+            "SCSS": 69500,
+            "Makefile": 34608,
+            "Dockerfile": 20660,
+            "Shell": 15130,
+            "Smarty": 4323,
+            "JavaScript": 2045
+        }
+    },
+    {
+        "name": "kube-state-metrics",
+        "full_name": "kubernetes/kube-state-metrics",
+        "url": "https://github.com/kubernetes/kube-state-metrics",
+        "stars": 5595,
+        "updated_at": "2025-03-06T11:13:59Z",
+        "description": "Add-on agent to generate and expose cluster-level metrics.",
+        "size_kb": 24838,
+        "languages": {
+            "Go": 1070624,
+            "Jsonnet": 17456,
+            "Shell": 11642,
+            "Makefile": 8178,
+            "Dockerfile": 466
+        }
+    },
+    {
+        "name": "node-problem-detector",
+        "full_name": "kubernetes/node-problem-detector",
+        "url": "https://github.com/kubernetes/node-problem-detector",
+        "stars": 3092,
+        "updated_at": "2025-03-06T08:21:42Z",
+        "description": "This is a place for various problem detectors running on the Kubernetes nodes.",
+        "size_kb": 27936,
+        "languages": {
+            "Go": 502032,
+            "Shell": 18768,
+            "Makefile": 10755,
+            "Dockerfile": 3549,
+            "Batchfile": 314,
+            "PowerShell": 293
+        }
+    },
+    {
+        "name": "kompose",
+        "full_name": "kubernetes/kompose",
+        "url": "https://github.com/kubernetes/kompose",
+        "stars": 9849,
+        "updated_at": "2025-03-06T02:35:42Z",
+        "description": "Convert Compose to Kubernetes",
+        "size_kb": 45013,
+        "languages": {
+            "Go": 470868,
+            "Shell": 59224,
+            "Makefile": 4439,
+            "Dockerfile": 2018
+        }
+    },
+    {
+        "name": "git-sync",
+        "full_name": "kubernetes/git-sync",
+        "url": "https://github.com/kubernetes/git-sync",
+        "stars": 2370,
+        "updated_at": "2025-03-05T06:04:55Z",
+        "description": "A sidecar app which clones a git repo and keeps it in sync with the upstream.",
+        "size_kb": 11993,
+        "languages": {
+            "Shell": 173950,
+            "Go": 162085,
+            "Makefile": 10861,
+            "Dockerfile": 4626
+        }
+    },
+    {
+        "name": "client-go",
+        "full_name": "kubernetes/client-go",
+        "url": "https://github.com/kubernetes/client-go",
+        "stars": 9296,
+        "updated_at": "2025-03-06T14:10:44Z",
+        "description": "Go client for Kubernetes.",
+        "size_kb": 29214,
+        "languages": {
+            "Go": 2877309
+        }
+    },
+    {
+        "name": "gengo",
+        "full_name": "kubernetes/gengo",
+        "url": "https://github.com/kubernetes/gengo",
+        "stars": 560,
+        "updated_at": "2025-02-25T12:49:22Z",
+        "description": "gengo library for code generation.",
+        "size_kb": 1453,
+        "languages": {
+            "Go": 355350,
+            "Shell": 5738,
+            "Makefile": 842
+        }
+    },
+    {
+        "name": "ingress-nginx",
+        "full_name": "kubernetes/ingress-nginx",
+        "url": "https://github.com/kubernetes/ingress-nginx",
+        "stars": 17942,
+        "updated_at": "2025-03-06T14:00:22Z",
+        "description": "Ingress NGINX Controller for Kubernetes",
+        "size_kb": 146154,
+        "languages": {
+            "Go": 2277711,
+            "Lua": 194820,
+            "Shell": 75510,
+            "Dockerfile": 17079,
+            "Makefile": 16780,
+            "Mustache": 9052,
+            "Python": 8304,
+            "Smarty": 3717,
+            "JavaScript": 3156,
+            "HTML": 84
+        }
+    },
+    {
+        "name": "kubeadm",
+        "full_name": "kubernetes/kubeadm",
+        "url": "https://github.com/kubernetes/kubeadm",
+        "stars": 3807,
+        "updated_at": "2025-03-05T17:24:05Z",
+        "description": "Aggregator for issues filed against kubeadm",
+        "size_kb": 6404,
+        "languages": {
+            "Go": 476328,
+            "Shell": 34329,
+            "Dockerfile": 4793
+        }
+    },
+    {
+        "name": "repo-infra",
+        "full_name": "kubernetes/repo-infra",
+        "url": "https://github.com/kubernetes/repo-infra",
+        "stars": 98,
+        "updated_at": "2025-02-11T04:21:56Z",
+        "description": "Kubernetes repository infrastucture tools",
+        "size_kb": 979,
+        "languages": {
+            "Starlark": 79549,
+            "Go": 46718,
+            "Shell": 18667,
+            "Python": 13924
+        }
+    },
+    {
+        "name": "dns",
+        "full_name": "kubernetes/dns",
+        "url": "https://github.com/kubernetes/dns",
+        "stars": 952,
+        "updated_at": "2025-03-04T19:18:57Z",
+        "description": "Kubernetes DNS service",
+        "size_kb": 32472,
+        "languages": {
+            "Go": 277108,
+            "Makefile": 19221,
+            "Python": 9540,
+            "Shell": 5619
+        }
+    },
+    {
+        "name": "apimachinery",
+        "full_name": "kubernetes/apimachinery",
+        "url": "https://github.com/kubernetes/apimachinery",
+        "stars": 852,
+        "updated_at": "2025-03-06T10:21:08Z",
+        "description": null,
+        "size_kb": 7527,
+        "languages": {
+            "Go": 3219734
+        }
+    },
+    {
+        "name": "kube-aggregator",
+        "full_name": "kubernetes/kube-aggregator",
+        "url": "https://github.com/kubernetes/kube-aggregator",
+        "stars": 261,
+        "updated_at": "2025-03-03T23:17:52Z",
+        "description": "Aggregator for Kubernetes-style API servers: dynamic registration, discovery summarization, secure proxy",
+        "size_kb": 23812,
+        "languages": {
+            "Go": 428782,
+            "Shell": 19065,
+            "Dockerfile": 654
+        }
+    },
+    {
+        "name": "metrics",
+        "full_name": "kubernetes/metrics",
+        "url": "https://github.com/kubernetes/metrics",
+        "stars": 497,
+        "updated_at": "2025-03-03T23:18:21Z",
+        "description": "Kubernetes metrics-related API types and clients",
+        "size_kb": 6762,
+        "languages": {
+            "Go": 96738,
+            "Shell": 2701
+        }
+    },
+    {
+        "name": "api",
+        "full_name": "kubernetes/api",
+        "url": "https://github.com/kubernetes/api",
+        "stars": 680,
+        "updated_at": "2025-03-05T18:57:54Z",
+        "description": "The canonical location of the Kubernetes API definition.",
+        "size_kb": 78420,
+        "languages": {
+            "Go": 2939595
+        }
+    },
+    {
+        "name": "apiextensions-apiserver",
+        "full_name": "kubernetes/apiextensions-apiserver",
+        "url": "https://github.com/kubernetes/apiextensions-apiserver",
+        "stars": 245,
+        "updated_at": "2025-03-06T10:21:53Z",
+        "description": "API server for API extensions like CustomResourceDefinitions",
+        "size_kb": 27894,
+        "languages": {
+            "Go": 2642746,
+            "Shell": 4504,
+            "Dockerfile": 702
+        }
+    },
+    {
+        "name": "utils",
+        "full_name": "kubernetes/utils",
+        "url": "https://github.com/kubernetes/utils",
+        "stars": 351,
+        "updated_at": "2025-02-14T07:52:24Z",
+        "description": "Non-Kubernetes-specific utility libraries which are consumed by multiple projects.",
+        "size_kb": 1172,
+        "languages": {
+            "Go": 471166,
+            "Shell": 11967,
+            "Makefile": 1306
+        }
+    },
+    {
+        "name": "code-generator",
+        "full_name": "kubernetes/code-generator",
+        "url": "https://github.com/kubernetes/code-generator",
+        "stars": 1756,
+        "updated_at": "2025-03-04T03:16:29Z",
+        "description": "Generators for kube-like API types",
+        "size_kb": 10871,
+        "languages": {
+            "Go": 996713,
+            "Shell": 27888
+        }
+    },
+    {
+        "name": "publishing-bot",
+        "full_name": "kubernetes/publishing-bot",
+        "url": "https://github.com/kubernetes/publishing-bot",
+        "stars": 87,
+        "updated_at": "2025-03-05T17:33:51Z",
+        "description": "Code behind the robot to publish from staging to real repositories.",
+        "size_kb": 12993,
+        "languages": {
+            "Go": 128854,
+            "Shell": 65689,
+            "Makefile": 3530,
+            "Dockerfile": 1542
+        }
+    },
+    {
+        "name": "cloud-provider-aws",
+        "full_name": "kubernetes/cloud-provider-aws",
+        "url": "https://github.com/kubernetes/cloud-provider-aws",
+        "stars": 415,
+        "updated_at": "2025-03-04T23:48:27Z",
+        "description": "Cloud provider for AWS",
+        "size_kb": 12699,
+        "languages": {
+            "Go": 603680,
+            "Shell": 35355,
+            "Makefile": 8496,
+            "Python": 2689,
+            "Dockerfile": 2644,
+            "Smarty": 89
+        }
+    },
+    {
+        "name": "cloud-provider-openstack",
+        "full_name": "kubernetes/cloud-provider-openstack",
+        "url": "https://github.com/kubernetes/cloud-provider-openstack",
+        "stars": 634,
+        "updated_at": "2025-02-26T11:58:35Z",
+        "description": null,
+        "size_kb": 6341,
+        "languages": {
+            "Go": 1038025,
+            "Shell": 59191,
+            "Mustache": 8693,
+            "Dockerfile": 7801,
+            "Makefile": 6760,
+            "Jinja": 6031,
+            "Python": 3823,
+            "Smarty": 2241
+        }
+    },
+    {
+        "name": "cloud-provider-gcp",
+        "full_name": "kubernetes/cloud-provider-gcp",
+        "url": "https://github.com/kubernetes/cloud-provider-gcp",
+        "stars": 133,
+        "updated_at": "2025-03-05T19:31:50Z",
+        "description": "cloud-provider-gcp contains several projects used to run Kubernetes in Google Cloud",
+        "size_kb": 168064,
+        "languages": {
+            "Go": 1277472,
+            "Shell": 723832,
+            "PowerShell": 145185,
+            "Starlark": 54156,
+            "Makefile": 5048,
+            "Dockerfile": 1476,
+            "sed": 1262
+        }
+    },
+    {
+        "name": "cloud-provider-vsphere",
+        "full_name": "kubernetes/cloud-provider-vsphere",
+        "url": "https://github.com/kubernetes/cloud-provider-vsphere",
+        "stars": 248,
+        "updated_at": "2025-02-25T17:23:01Z",
+        "description": "Kubernetes Cloud Provider for vSphere https://cloud-provider-vsphere.sigs.k8s.io",
+        "size_kb": 7931,
+        "languages": {
+            "Go": 996260,
+            "Shell": 49121,
+            "Makefile": 27102,
+            "Dockerfile": 12959,
+            "Mustache": 1770
+        }
+    },
+    {
+        "name": "org",
+        "full_name": "kubernetes/org",
+        "url": "https://github.com/kubernetes/org",
+        "stars": 269,
+        "updated_at": "2025-03-05T23:43:50Z",
+        "description": "Meta configuration for Kubernetes Github Org",
+        "size_kb": 13761,
+        "languages": {
+            "Go": 43475,
+            "Shell": 14831,
+            "Python": 7847,
+            "Makefile": 2247
+        }
+    },
+    {
+        "name": "kube-controller-manager",
+        "full_name": "kubernetes/kube-controller-manager",
+        "url": "https://github.com/kubernetes/kube-controller-manager",
+        "stars": 91,
+        "updated_at": "2025-03-02T01:04:14Z",
+        "description": "kube-controller-manager component configs",
+        "size_kb": 2706,
+        "languages": {
+            "Go": 27809
+        }
+    },
+    {
+        "name": "kube-scheduler",
+        "full_name": "kubernetes/kube-scheduler",
+        "url": "https://github.com/kubernetes/kube-scheduler",
+        "stars": 177,
+        "updated_at": "2025-03-06T08:05:13Z",
+        "description": "kube-scheduler component configs",
+        "size_kb": 2458,
+        "languages": {
+            "Go": 42260
+        }
+    },
+    {
+        "name": "kubelet",
+        "full_name": "kubernetes/kubelet",
+        "url": "https://github.com/kubernetes/kubelet",
+        "stars": 346,
+        "updated_at": "2025-03-05T08:55:05Z",
+        "description": "kubelet component configs",
+        "size_kb": 3290,
+        "languages": {
+            "Go": 233945
+        }
+    },
+    {
+        "name": "kube-proxy",
+        "full_name": "kubernetes/kube-proxy",
+        "url": "https://github.com/kubernetes/kube-proxy",
+        "stars": 186,
+        "updated_at": "2025-03-03T23:20:57Z",
+        "description": "kube-proxy component configs",
+        "size_kb": 2265,
+        "languages": {
+            "Go": 17353
+        }
+    },
+    {
+        "name": "cli-runtime",
+        "full_name": "kubernetes/cli-runtime",
+        "url": "https://github.com/kubernetes/cli-runtime",
+        "stars": 296,
+        "updated_at": "2025-03-02T01:03:41Z",
+        "description": "Set of helpers for creating kubectl commands and plugins.",
+        "size_kb": 5338,
+        "languages": {
+            "Go": 434455
+        }
+    },
+    {
+        "name": "cloud-provider-alibaba-cloud",
+        "full_name": "kubernetes/cloud-provider-alibaba-cloud",
+        "url": "https://github.com/kubernetes/cloud-provider-alibaba-cloud",
+        "stars": 368,
+        "updated_at": "2025-02-11T04:09:01Z",
+        "description": "CloudProvider for Alibaba Cloud ",
+        "size_kb": 96614,
+        "languages": {
+            "Go": 1573020,
+            "Makefile": 3566,
+            "Shell": 3564,
+            "Dockerfile": 386
+        }
+    },
+    {
+        "name": "cluster-bootstrap",
+        "full_name": "kubernetes/cluster-bootstrap",
+        "url": "https://github.com/kubernetes/cluster-bootstrap",
+        "stars": 34,
+        "updated_at": "2025-03-02T01:04:18Z",
+        "description": null,
+        "size_kb": 1801,
+        "languages": {
+            "Go": 32097
+        }
+    },
+    {
+        "name": "cloud-provider",
+        "full_name": "kubernetes/cloud-provider",
+        "url": "https://github.com/kubernetes/cloud-provider",
+        "stars": 261,
+        "updated_at": "2025-03-02T01:04:10Z",
+        "description": "cloud-provider defines the shared interfaces which Kubernetes cloud providers implement. These interfaces allow various controllers to integrate with any cloud provider in a pluggable fashion. Please file any issues against the main Kubernetes repo.",
+        "size_kb": 5542,
+        "languages": {
+            "Go": 664856
+        }
+    },
+    {
+        "name": "klog",
+        "full_name": "kubernetes/klog",
+        "url": "https://github.com/kubernetes/klog",
+        "stars": 533,
+        "updated_at": "2025-03-04T23:55:47Z",
+        "description": "Leveled execution logs for Go (fork of https://github.com/golang/glog)",
+        "size_kb": 859,
+        "languages": {
+            "Go": 369819,
+            "Shell": 3207
+        }
+    },
+    {
+        "name": "node-api",
+        "full_name": "kubernetes/node-api",
+        "url": "https://github.com/kubernetes/node-api",
+        "stars": 14,
+        "updated_at": "2025-02-11T04:23:55Z",
+        "description": null,
+        "size_kb": 2034,
+        "languages": {
+            "Go": 6382,
+            "Shell": 2714
+        }
+    },
+    {
+        "name": "component-base",
+        "full_name": "kubernetes/component-base",
+        "url": "https://github.com/kubernetes/component-base",
+        "stars": 117,
+        "updated_at": "2025-03-05T02:26:34Z",
+        "description": "Shared code for kubernetes core components",
+        "size_kb": 3709,
+        "languages": {
+            "Go": 837896
+        }
+    },
+    {
+        "name": "csi-translation-lib",
+        "full_name": "kubernetes/csi-translation-lib",
+        "url": "https://github.com/kubernetes/csi-translation-lib",
+        "stars": 14,
+        "updated_at": "2025-03-02T01:04:22Z",
+        "description": "Staging repo for CSI Migration/Translation libraries",
+        "size_kb": 2203,
+        "languages": {
+            "Go": 225848
+        }
+    },
+    {
+        "name": "cri-api",
+        "full_name": "kubernetes/cri-api",
+        "url": "https://github.com/kubernetes/cri-api",
+        "stars": 411,
+        "updated_at": "2025-03-05T14:40:01Z",
+        "description": "Container Runtime Interface (CRI) \u2013 a plugin interface which enables kubelet to use a wide variety of container runtimes.",
+        "size_kb": 2512,
+        "languages": {
+            "Go": 46184
+        }
+    },
+    {
+        "name": "legacy-cloud-providers",
+        "full_name": "kubernetes/legacy-cloud-providers",
+        "url": "https://github.com/kubernetes/legacy-cloud-providers",
+        "stars": 52,
+        "updated_at": "2025-02-11T04:16:09Z",
+        "description": "This repository hosts the legacy in-tree cloud providers. Out-of-tree cloud providers can consume packages in this repo to support legacy implementations of their Kubernetes cloud provider.",
+        "size_kb": 6419,
+        "languages": {
+            "Go": 642
+        }
+    },
+    {
+        "name": "system-validators",
+        "full_name": "kubernetes/system-validators",
+        "url": "https://github.com/kubernetes/system-validators",
+        "stars": 37,
+        "updated_at": "2025-02-11T04:18:04Z",
+        "description": "A set of system-oriented validators for kubeadm preflight checks.",
+        "size_kb": 121,
+        "languages": {
+            "Go": 87417,
+            "Shell": 18294
+        }
+    },
+    {
+        "name": "controller-manager",
+        "full_name": "kubernetes/controller-manager",
+        "url": "https://github.com/kubernetes/controller-manager",
+        "stars": 76,
+        "updated_at": "2025-03-02T01:04:06Z",
+        "description": "This repo is intended to contain common public library code for kube-controller-manager, cloud-controller-manager as well as any other controller managers which people build.",
+        "size_kb": 2634,
+        "languages": {
+            "Go": 116222
+        }
+    },
+    {
+        "name": "mount-utils",
+        "full_name": "kubernetes/mount-utils",
+        "url": "https://github.com/kubernetes/mount-utils",
+        "stars": 66,
+        "updated_at": "2025-03-02T01:04:25Z",
+        "description": "Package mount defines an interface to mounting filesystems.",
+        "size_kb": 507,
+        "languages": {
+            "Go": 204680
+        }
+    },
+    {
+        "name": "component-helpers",
+        "full_name": "kubernetes/component-helpers",
+        "url": "https://github.com/kubernetes/component-helpers",
+        "stars": 17,
+        "updated_at": "2025-03-02T01:03:09Z",
+        "description": "High-level helpers for Kubernetes components",
+        "size_kb": 1302,
+        "languages": {
+            "Go": 317032
+        }
+    },
+    {
+        "name": "pod-security-admission",
+        "full_name": "kubernetes/pod-security-admission",
+        "url": "https://github.com/kubernetes/pod-security-admission",
+        "stars": 99,
+        "updated_at": "2025-03-02T14:23:12Z",
+        "description": "Kubernetes Pod Security Standards implementation - https://github.com/kubernetes/enhancements/blob/master/keps/sig-auth/2579-psp-replacement/README.md",
+        "size_kb": 2581,
+        "languages": {
+            "Go": 433055,
+            "Makefile": 2395,
+            "Dockerfile": 713
+        }
+    },
+    {
+        "name": "registry.k8s.io",
+        "full_name": "kubernetes/registry.k8s.io",
+        "url": "https://github.com/kubernetes/registry.k8s.io",
+        "stars": 426,
+        "updated_at": "2025-03-06T09:44:19Z",
+        "description": "This project is the repo for registry.k8s.io, the production OCI registry service for Kubernetes' container image artifacts",
+        "size_kb": 1407,
+        "languages": {
+            "Go": 805221,
+            "Shell": 27622,
+            "Makefile": 4871
+        }
+    },
+    {
+        "name": "kms",
+        "full_name": "kubernetes/kms",
+        "url": "https://github.com/kubernetes/kms",
+        "stars": 24,
+        "updated_at": "2025-03-02T01:03:13Z",
+        "description": "Kubernetes KMS implementation",
+        "size_kb": 411,
+        "languages": {
+            "Go": 21223,
+            "Dockerfile": 1149
+        }
+    },
+    {
+        "name": "dynamic-resource-allocation",
+        "full_name": "kubernetes/dynamic-resource-allocation",
+        "url": "https://github.com/kubernetes/dynamic-resource-allocation",
+        "stars": 34,
+        "updated_at": "2025-03-02T01:04:39Z",
+        "description": null,
+        "size_kb": 1145,
+        "languages": {
+            "Go": 251164
+        }
+    },
+    {
+        "name": "cel-admission-webhook",
+        "full_name": "kubernetes/cel-admission-webhook",
+        "url": "https://github.com/kubernetes/cel-admission-webhook",
+        "stars": 13,
+        "updated_at": "2025-02-11T04:22:36Z",
+        "description": null,
+        "size_kb": 11327,
+        "languages": {
+            "Go": 92721,
+            "Shell": 5640,
+            "Dockerfile": 299
+        }
+    },
+    {
+        "name": "endpointslice",
+        "full_name": "kubernetes/endpointslice",
+        "url": "https://github.com/kubernetes/endpointslice",
+        "stars": 8,
+        "updated_at": "2025-03-03T18:24:23Z",
+        "description": null,
+        "size_kb": 740,
+        "languages": {
+            "Go": 354265
+        }
+    },
+    {
+        "name": "cri-client",
+        "full_name": "kubernetes/cri-client",
+        "url": "https://github.com/kubernetes/cri-client",
+        "stars": 7,
+        "updated_at": "2025-03-02T01:03:56Z",
+        "description": "Container Runtime Interface client implementation",
+        "size_kb": 535,
+        "languages": {
+            "Go": 127999
+        }
+    },
+    {
+        "name": "externaljwt",
+        "full_name": "kubernetes/externaljwt",
+        "url": "https://github.com/kubernetes/externaljwt",
+        "stars": 3,
+        "updated_at": "2025-03-02T01:04:44Z",
+        "description": "Synced from kubernetes/kubernetes/staging/externaljwt, this repository contains proto APIs and plugins which enable integrating with external services for JWT signing and key management.",
+        "size_kb": 55,
+        "languages": {
+            "Go": 672
+        }
+    }
+]

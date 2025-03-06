@@ -12,6 +12,30 @@
         }
     },
     {
+        "name": "amazon-pay-sdk-java",
+        "full_name": "amzn/amazon-pay-sdk-java",
+        "url": "https://github.com/amzn/amazon-pay-sdk-java",
+        "stars": 58,
+        "updated_at": "2024-09-09T14:17:34Z",
+        "description": " Amazon Pay Java SDK",
+        "size_kb": 13957,
+        "languages": {
+            "Java": 922620
+        }
+    },
+    {
+        "name": "amazon-pay-sdk-csharp",
+        "full_name": "amzn/amazon-pay-sdk-csharp",
+        "url": "https://github.com/amzn/amazon-pay-sdk-csharp",
+        "stars": 48,
+        "updated_at": "2024-07-13T00:52:34Z",
+        "description": "Amazon Pay C# SDK",
+        "size_kb": 28264,
+        "languages": {
+            "C#": 619730
+        }
+    },
+    {
         "name": "amazon-pay-sdk-python",
         "full_name": "amzn/amazon-pay-sdk-python",
         "url": "https://github.com/amzn/amazon-pay-sdk-python",
@@ -33,6 +57,32 @@
         "size_kb": 93,
         "languages": {
             "Ruby": 124027
+        }
+    },
+    {
+        "name": "amazon-instant-access-sdk-php",
+        "full_name": "amzn/amazon-instant-access-sdk-php",
+        "url": "https://github.com/amzn/amazon-instant-access-sdk-php",
+        "stars": 14,
+        "updated_at": "2023-07-16T20:26:19Z",
+        "description": "PHP SDK to aid in 3p integration with Instant Access ",
+        "size_kb": 52,
+        "languages": {
+            "PHP": 160100,
+            "Makefile": 107
+        }
+    },
+    {
+        "name": "amazon-instant-access-sdk-java",
+        "full_name": "amzn/amazon-instant-access-sdk-java",
+        "url": "https://github.com/amzn/amazon-instant-access-sdk-java",
+        "stars": 10,
+        "updated_at": "2023-07-12T19:45:00Z",
+        "description": "Java SDK to aid in 3p integration with Instant Access ",
+        "size_kb": 72,
+        "languages": {
+            "Java": 251312,
+            "Shell": 66
         }
     },
     {
@@ -73,6 +123,67 @@
         }
     },
     {
+        "name": "amzn-drivers",
+        "full_name": "amzn/amzn-drivers",
+        "url": "https://github.com/amzn/amzn-drivers",
+        "stars": 467,
+        "updated_at": "2025-03-03T15:56:52Z",
+        "description": "Official AWS drivers repository for Elastic Network Adapter (ENA) and Elastic Fabric Adapter (EFA)",
+        "size_kb": 3494,
+        "languages": {
+            "C": 1927109,
+            "Shell": 44685,
+            "CMake": 17019,
+            "Makefile": 15781,
+            "Meson": 373
+        }
+    },
+    {
+        "name": "amazon-payments-magento-2-plugin",
+        "full_name": "amzn/amazon-payments-magento-2-plugin",
+        "url": "https://github.com/amzn/amazon-payments-magento-2-plugin",
+        "stars": 109,
+        "updated_at": "2024-11-11T22:13:47Z",
+        "description": "Extension to enable Amazon Pay on Magento 2",
+        "size_kb": 11883,
+        "languages": {
+            "PHP": 640947,
+            "JavaScript": 105349,
+            "HTML": 45783,
+            "Less": 11261,
+            "CSS": 146
+        }
+    },
+    {
+        "name": "fire-app-builder",
+        "full_name": "amzn/fire-app-builder",
+        "url": "https://github.com/amzn/fire-app-builder",
+        "stars": 186,
+        "updated_at": "2025-02-24T21:16:49Z",
+        "description": "Fire App Builder is a framework for building java media apps for Fire TV, allowing you to add your feed of media content to a configuration file and build an app to browse and play it quickly.",
+        "size_kb": 14868,
+        "languages": {
+            "Java": 2592973,
+            "HTML": 27185,
+            "Python": 10384,
+            "Shell": 1519
+        }
+    },
+    {
+        "name": "style-dictionary",
+        "full_name": "amzn/style-dictionary",
+        "url": "https://github.com/amzn/style-dictionary",
+        "stars": 4078,
+        "updated_at": "2025-03-06T06:31:20Z",
+        "description": "A build system for creating cross-platform styles.",
+        "size_kb": 15203,
+        "languages": {
+            "JavaScript": 1305360,
+            "TypeScript": 18483,
+            "Shell": 127
+        }
+    },
+    {
         "name": "amazon-instant-access-sdk-ruby",
         "full_name": "amzn/amazon-instant-access-sdk-ruby",
         "url": "https://github.com/amzn/amazon-instant-access-sdk-ruby",
@@ -82,6 +193,31 @@
         "size_kb": 16,
         "languages": {
             "Ruby": 15316
+        }
+    },
+    {
+        "name": "amazon-mcf-plugin-for-magento-1",
+        "full_name": "amzn/amazon-mcf-plugin-for-magento-1",
+        "url": "https://github.com/amzn/amazon-mcf-plugin-for-magento-1",
+        "stars": 14,
+        "updated_at": "2024-05-17T16:46:52Z",
+        "description": "Plugin code to enable Amazon MCF in Magento 1.",
+        "size_kb": 2238,
+        "languages": {
+            "PHP": 1509512,
+            "HTML": 12309
+        }
+    },
+    {
+        "name": "autotrail",
+        "full_name": "amzn/autotrail",
+        "url": "https://github.com/amzn/autotrail",
+        "stars": 19,
+        "updated_at": "2023-07-15T20:07:50Z",
+        "description": "AutoTrail is a highly modular, partial automation workflow engine providing run time execution control",
+        "size_kb": 176,
+        "languages": {
+            "Python": 284953
         }
     },
     {
@@ -98,6 +234,88 @@
         }
     },
     {
+        "name": "hawktracer",
+        "full_name": "amzn/hawktracer",
+        "url": "https://github.com/amzn/hawktracer",
+        "stars": 134,
+        "updated_at": "2025-02-16T09:24:32Z",
+        "description": "HawkTracer is a highly portable, low-overhead, configurable profiling tool built in Amazon Video for getting performance metrics from low-end devices.",
+        "size_kb": 1111,
+        "languages": {
+            "C++": 238070,
+            "C": 166543,
+            "Python": 35204,
+            "CMake": 33975,
+            "Shell": 1365,
+            "Lua": 147
+        }
+    },
+    {
+        "name": "amazon-template-library",
+        "full_name": "amzn/amazon-template-library",
+        "url": "https://github.com/amzn/amazon-template-library",
+        "stars": 16,
+        "updated_at": "2024-01-14T18:09:02Z",
+        "description": "A collection of general purpose C++ utilities that play well with the Standard Library and Boost.",
+        "size_kb": 66,
+        "languages": {
+            "C++": 183401,
+            "CMake": 5168
+        }
+    },
+    {
+        "name": "xfer",
+        "full_name": "amzn/xfer",
+        "url": "https://github.com/amzn/xfer",
+        "stars": 254,
+        "updated_at": "2025-02-25T00:17:01Z",
+        "description": "Transfer Learning library for Deep Neural Networks.",
+        "size_kb": 135812,
+        "languages": {
+            "Python": 1718333,
+            "Makefile": 3935,
+            "Shell": 2693
+        }
+    },
+    {
+        "name": "emukit-playground",
+        "full_name": "amzn/emukit-playground",
+        "url": "https://github.com/amzn/emukit-playground",
+        "stars": 22,
+        "updated_at": "2023-07-16T20:22:36Z",
+        "description": "A web page explaining concepts of statistical emulation and making decisions under uncertainty in an interactive way. ",
+        "size_kb": 1414,
+        "languages": {
+            "JavaScript": 199702,
+            "CSS": 10452,
+            "HTML": 2711
+        }
+    },
+    {
+        "name": "smoke-framework",
+        "full_name": "amzn/smoke-framework",
+        "url": "https://github.com/amzn/smoke-framework",
+        "stars": 1453,
+        "updated_at": "2025-02-14T16:33:53Z",
+        "description": "A light-weight server-side service framework written in the Swift programming language.",
+        "size_kb": 1018,
+        "languages": {
+            "Swift": 665937
+        }
+    },
+    {
+        "name": "smoke-http",
+        "full_name": "amzn/smoke-http",
+        "url": "https://github.com/amzn/smoke-http",
+        "stars": 71,
+        "updated_at": "2025-01-23T08:20:59Z",
+        "description": "Specialised HTTP Client for service operations abstracted from the HTTP protocol.",
+        "size_kb": 780,
+        "languages": {
+            "Swift": 568145
+        }
+    },
+    {
         "name": "smoke-aws-credentials",
         "full_name": "amzn/smoke-aws-credentials",
         "url": "https://github.com/amzn/smoke-aws-credentials",
@@ -107,6 +325,18 @@
         "size_kb": 145,
         "languages": {
             "Swift": 124559
+        }
+    },
+    {
+        "name": "smoke-dynamodb",
+        "full_name": "amzn/smoke-dynamodb",
+        "url": "https://github.com/amzn/smoke-dynamodb",
+        "stars": 35,
+        "updated_at": "2025-02-12T18:22:27Z",
+        "description": "SmokeDynamoDB is a library to make it easy to use DynamoDB from Swift-based applications, with a particular focus on usage with polymorphic database tables (tables that do not have a single schema for all rows).",
+        "size_kb": 770,
+        "languages": {
+            "Swift": 939793
         }
     },
     {
@@ -196,6 +426,108 @@
         }
     },
     {
+        "name": "amazon-hub-counter-sdk-java",
+        "full_name": "amzn/amazon-hub-counter-sdk-java",
+        "url": "https://github.com/amzn/amazon-hub-counter-sdk-java",
+        "stars": 3,
+        "updated_at": "2023-11-14T03:54:55Z",
+        "description": "The Amazon Hub Counter SDK for Java enables Java developers to easily work with the Amazon Hub Counter API and manage Amazon pickup locations.",
+        "size_kb": 43,
+        "languages": {
+            "Java": 104098
+        }
+    },
+    {
+        "name": "zeek-plugin-bacnet",
+        "full_name": "amzn/zeek-plugin-bacnet",
+        "url": "https://github.com/amzn/zeek-plugin-bacnet",
+        "stars": 31,
+        "updated_at": "2025-01-16T19:59:32Z",
+        "description": "Zeek network security monitor plugin that enables parsing of the BACnet standard building controls protocol",
+        "size_kb": 56,
+        "languages": {
+            "Zeek": 97538,
+            "JavaScript": 4209,
+            "C++": 2425,
+            "Dockerfile": 1624,
+            "Makefile": 778,
+            "Shell": 380,
+            "CMake": 364
+        }
+    },
+    {
+        "name": "zeek-plugin-enip",
+        "full_name": "amzn/zeek-plugin-enip",
+        "url": "https://github.com/amzn/zeek-plugin-enip",
+        "stars": 46,
+        "updated_at": "2024-12-27T09:30:29Z",
+        "description": "Zeek network security monitor plugin that enables parsing of the Ethernet/IP and Common Industrial Protocol standards",
+        "size_kb": 59,
+        "languages": {
+            "Zeek": 94479,
+            "JavaScript": 33630,
+            "C++": 3193,
+            "Dockerfile": 1634,
+            "Makefile": 778,
+            "Shell": 380,
+            "CMake": 354
+        }
+    },
+    {
+        "name": "zeek-plugin-profinet",
+        "full_name": "amzn/zeek-plugin-profinet",
+        "url": "https://github.com/amzn/zeek-plugin-profinet",
+        "stars": 31,
+        "updated_at": "2025-01-25T19:15:56Z",
+        "description": "Zeek network security monitor plugin that enables parsing of the Profinet protocol",
+        "size_kb": 33,
+        "languages": {
+            "Zeek": 15572,
+            "JavaScript": 8964,
+            "C++": 2697,
+            "Dockerfile": 1642,
+            "Makefile": 778,
+            "Shell": 380,
+            "CMake": 375
+        }
+    },
+    {
+        "name": "zeek-plugin-s7comm",
+        "full_name": "amzn/zeek-plugin-s7comm",
+        "url": "https://github.com/amzn/zeek-plugin-s7comm",
+        "stars": 41,
+        "updated_at": "2024-10-12T09:44:31Z",
+        "description": "Zeek network security monitor plugin that enables parsing of the S7 protocol",
+        "size_kb": 36,
+        "languages": {
+            "Zeek": 42916,
+            "JavaScript": 19456,
+            "C++": 3429,
+            "Dockerfile": 1638,
+            "Makefile": 778,
+            "Shell": 380,
+            "CMake": 363
+        }
+    },
+    {
+        "name": "zeek-plugin-tds",
+        "full_name": "amzn/zeek-plugin-tds",
+        "url": "https://github.com/amzn/zeek-plugin-tds",
+        "stars": 25,
+        "updated_at": "2024-10-12T09:44:12Z",
+        "description": "Zeek network security monitor plugin that enables parsing of the Tabular Data Stream (TDS) protocol",
+        "size_kb": 29,
+        "languages": {
+            "Zeek": 10139,
+            "JavaScript": 6925,
+            "C++": 3323,
+            "Dockerfile": 1632,
+            "Makefile": 778,
+            "Shell": 380,
+            "CMake": 350
+        }
+    },
+    {
         "name": "basis-point-sets",
         "full_name": "amzn/basis-point-sets",
         "url": "https://github.com/amzn/basis-point-sets",
@@ -275,6 +607,54 @@
         }
     },
     {
+        "name": "selling-partner-api-models",
+        "full_name": "amzn/selling-partner-api-models",
+        "url": "https://github.com/amzn/selling-partner-api-models",
+        "stars": 650,
+        "updated_at": "2025-03-05T11:13:59Z",
+        "description": "This repository contains OpenAPI models for developers to use when developing software to call Selling Partner APIs.",
+        "size_kb": 3664,
+        "languages": {
+            "Mustache": 327558,
+            "Java": 148376,
+            "C#": 29566,
+            "PHP": 29286,
+            "Python": 10785,
+            "JavaScript": 3114,
+            "Shell": 2740
+        }
+    },
+    {
+        "name": "amazon-payment-files-tools",
+        "full_name": "amzn/amazon-payment-files-tools",
+        "url": "https://github.com/amzn/amazon-payment-files-tools",
+        "stars": 8,
+        "updated_at": "2023-07-15T20:07:10Z",
+        "description": "Development kit designed to assist with the process of generating and validating proper dispute and remittance files.",
+        "size_kb": 151,
+        "languages": {
+            "Kotlin": 133722
+        }
+    },
+    {
+        "name": "pecos",
+        "full_name": "amzn/pecos",
+        "url": "https://github.com/amzn/pecos",
+        "stars": 527,
+        "updated_at": "2025-02-26T15:08:10Z",
+        "description": "PECOS - Prediction for Enormous and Correlated Spaces",
+        "size_kb": 6043,
+        "languages": {
+            "Python": 992439,
+            "C++": 542894,
+            "Jupyter Notebook": 466412,
+            "Shell": 4980,
+            "TeX": 4134,
+            "Dockerfile": 2740,
+            "Makefile": 2506
+        }
+    },
+    {
         "name": "credence-to-causal-estimation",
         "full_name": "amzn/credence-to-causal-estimation",
         "url": "https://github.com/amzn/credence-to-causal-estimation",
@@ -285,6 +665,22 @@
         "languages": {
             "Python": 61597,
             "Jupyter Notebook": 25440
+        }
+    },
+    {
+        "name": "amzn-ec2-ena-utilities",
+        "full_name": "amzn/amzn-ec2-ena-utilities",
+        "url": "https://github.com/amzn/amzn-ec2-ena-utilities",
+        "stars": 15,
+        "updated_at": "2024-11-15T11:40:42Z",
+        "description": null,
+        "size_kb": 411,
+        "languages": {
+            "Python": 713085,
+            "C": 20791,
+            "Shell": 8225,
+            "Makefile": 1662,
+            "Jinja": 1503
         }
     },
     {
@@ -310,6 +706,19 @@
         "size_kb": 16,
         "languages": {
             "Go": 50184
+        }
+    },
+    {
+        "name": "image-to-recipe-transformers",
+        "full_name": "amzn/image-to-recipe-transformers",
+        "url": "https://github.com/amzn/image-to-recipe-transformers",
+        "stars": 82,
+        "updated_at": "2025-01-08T08:51:46Z",
+        "description": "Code for CVPR 2021 paper: Revamping Cross-Modal Recipe Retrieval with Hierarchical Transformers and Self-supervised Learning",
+        "size_kb": 1990,
+        "languages": {
+            "Python": 57908,
+            "Jupyter Notebook": 8883
         }
     },
     {
@@ -450,6 +859,31 @@
         }
     },
     {
+        "name": "cosearcher",
+        "full_name": "amzn/cosearcher",
+        "url": "https://github.com/amzn/cosearcher",
+        "stars": 4,
+        "updated_at": "2023-07-13T18:51:13Z",
+        "description": null,
+        "size_kb": 56,
+        "languages": {
+            "Python": 54927,
+            "Shell": 7421
+        }
+    },
+    {
+        "name": "rheoceros",
+        "full_name": "amzn/rheoceros",
+        "url": "https://github.com/amzn/rheoceros",
+        "stars": 16,
+        "updated_at": "2024-08-20T16:52:08Z",
+        "description": "Cloud-based AI / ML workflow and data application development framework",
+        "size_kb": 2616,
+        "languages": {
+            "Python": 3465012
+        }
+    },
+    {
         "name": "amazon-succinct-doc-representation",
         "full_name": "amzn/amazon-succinct-doc-representation",
         "url": "https://github.com/amzn/amazon-succinct-doc-representation",
@@ -488,6 +922,19 @@
         }
     },
     {
+        "name": "data-jack-knife",
+        "full_name": "amzn/data-jack-knife",
+        "url": "https://github.com/amzn/data-jack-knife",
+        "stars": 2,
+        "updated_at": "2023-07-13T19:44:06Z",
+        "description": null,
+        "size_kb": 306,
+        "languages": {
+            "Java": 988495,
+            "Emacs Lisp": 2485
+        }
+    },
+    {
         "name": "amazon-ads-advertiser-audience-normalization-sdk-py",
         "full_name": "amzn/amazon-ads-advertiser-audience-normalization-sdk-py",
         "url": "https://github.com/amzn/amazon-ads-advertiser-audience-normalization-sdk-py",
@@ -509,6 +956,44 @@
         "size_kb": 315,
         "languages": {
             "Python": 151738
+        }
+    },
+    {
+        "name": "auction-gym",
+        "full_name": "amzn/auction-gym",
+        "url": "https://github.com/amzn/auction-gym",
+        "stars": 163,
+        "updated_at": "2025-03-06T08:01:38Z",
+        "description": "AuctionGym is a simulation environment that enables reproducible evaluation of bandit and reinforcement learning methods for online advertising auctions.",
+        "size_kb": 126,
+        "languages": {
+            "Jupyter Notebook": 127527,
+            "Python": 66177
+        }
+    },
+    {
+        "name": "confident-sinkhorn-allocation",
+        "full_name": "amzn/confident-sinkhorn-allocation",
+        "url": "https://github.com/amzn/confident-sinkhorn-allocation",
+        "stars": 22,
+        "updated_at": "2024-11-12T04:37:36Z",
+        "description": "Pseudo-labeling for tabular data",
+        "size_kb": 54236,
+        "languages": {
+            "Jupyter Notebook": 562175,
+            "Python": 84310
+        }
+    },
+    {
+        "name": "debiased-balanced-interleaving",
+        "full_name": "amzn/debiased-balanced-interleaving",
+        "url": "https://github.com/amzn/debiased-balanced-interleaving",
+        "stars": 4,
+        "updated_at": "2023-07-12T19:48:04Z",
+        "description": null,
+        "size_kb": 263,
+        "languages": {
+            "Jupyter Notebook": 45549
         }
     },
     {
@@ -576,6 +1061,19 @@
         }
     },
     {
+        "name": "amazon-nearest-neighbor-through-ecc",
+        "full_name": "amzn/amazon-nearest-neighbor-through-ecc",
+        "url": "https://github.com/amzn/amazon-nearest-neighbor-through-ecc",
+        "stars": 2,
+        "updated_at": "2023-09-01T20:10:34Z",
+        "description": null,
+        "size_kb": 278,
+        "languages": {
+            "Jupyter Notebook": 491570,
+            "Python": 171367
+        }
+    },
+    {
         "name": "chalet-charging-location-for-electric-trucks",
         "full_name": "amzn/chalet-charging-location-for-electric-trucks",
         "url": "https://github.com/amzn/chalet-charging-location-for-electric-trucks",
@@ -585,6 +1083,18 @@
         "size_kb": 1078,
         "languages": {
             "Python": 246965
+        }
+    },
+    {
+        "name": "pretraining-or-self-training",
+        "full_name": "amzn/pretraining-or-self-training",
+        "url": "https://github.com/amzn/pretraining-or-self-training",
+        "stars": 23,
+        "updated_at": "2025-03-06T08:14:10Z",
+        "description": "Codebase for the paper \"Rethinking Semi-supervised Learning with Language Models\"",
+        "size_kb": 180,
+        "languages": {
+            "Python": 400096
         }
     },
     {
@@ -610,6 +1120,30 @@
         "size_kb": 17,
         "languages": {
             "Python": 27506
+        }
+    },
+    {
+        "name": "ads-pao-amznjs-gtm-template",
+        "full_name": "amzn/ads-pao-amznjs-gtm-template",
+        "url": "https://github.com/amzn/ads-pao-amznjs-gtm-template",
+        "stars": 3,
+        "updated_at": "2024-09-05T08:32:25Z",
+        "description": null,
+        "size_kb": 165,
+        "languages": {
+            "Smarty": 52856
+        }
+    },
+    {
+        "name": "python-jose_aws-kms-extension",
+        "full_name": "amzn/python-jose_aws-kms-extension",
+        "url": "https://github.com/amzn/python-jose_aws-kms-extension",
+        "stars": 0,
+        "updated_at": "2023-09-29T04:46:38Z",
+        "description": null,
+        "size_kb": 188,
+        "languages": {
+            "Python": 80105
         }
     },
     {
@@ -702,16 +1236,6 @@
         }
     },
     {
-        "name": "media3-external-port",
-        "full_name": "amzn/media3-external-port",
-        "url": "https://github.com/amzn/media3-external-port",
-        "stars": 3,
-        "updated_at": "2024-11-28T12:02:42Z",
-        "description": null,
-        "size_kb": 332122,
-        "languages": {}
-    },
-    {
         "name": "amazon-pay-api-sdk-ruby",
         "full_name": "amzn/amazon-pay-api-sdk-ruby",
         "url": "https://github.com/amzn/amazon-pay-api-sdk-ruby",
@@ -739,8 +1263,8 @@
         "name": "kotlin-inject-anvil",
         "full_name": "amzn/kotlin-inject-anvil",
         "url": "https://github.com/amzn/kotlin-inject-anvil",
-        "stars": 312,
-        "updated_at": "2025-02-24T15:56:55Z",
+        "stars": 314,
+        "updated_at": "2025-03-02T19:57:12Z",
         "description": "Extensions for the kotlin-inject dependency injection framework",
         "size_kb": 369,
         "languages": {
@@ -777,12 +1301,12 @@
         "full_name": "amzn/lib-3d-scene-viewer",
         "url": "https://github.com/amzn/lib-3d-scene-viewer",
         "stars": 21,
-        "updated_at": "2025-02-20T08:51:45Z",
+        "updated_at": "2025-03-04T23:13:17Z",
         "description": "lib-3d-scene-viewer provides preset configurations for quickly setting up a 3D scene viewer.",
-        "size_kb": 2988,
+        "size_kb": 2993,
         "languages": {
-            "TypeScript": 229631,
-            "JavaScript": 5837,
+            "TypeScript": 229513,
+            "JavaScript": 5904,
             "HTML": 292,
             "CSS": 175
         }

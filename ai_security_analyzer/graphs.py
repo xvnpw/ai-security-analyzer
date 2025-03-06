@@ -115,6 +115,35 @@ class VulnerabilitiesWorkflow1GraphExecutor(BaseGraphExecutor):
                     f.write(item)
 
 
+class VulnerabilitiesWorkflow2GraphExecutor(VulnerabilitiesWorkflow1GraphExecutor):
+    output_state_key = "sec_repo_docs"
+
+    def execute(self, graph: CompiledStateGraph, target: str) -> None:
+        try:
+            runnable_config = self.get_runnable_config(target)
+
+            state = graph.invoke(
+                {
+                    "target_dir": target,
+                    "project_type": self.config.project_type,
+                    "exclude": self.config.exclude,
+                    "exclude_mode": self.config.exclude_mode,
+                    "include": self.config.include,
+                    "include_mode": self.config.include_mode,
+                    "filter_keywords": self.config.filter_keywords,
+                    "vulnerabilities_iterations": self.config.vulnerabilities_iterations,
+                    "use_secondary_agent_for_vulnerabilities": False,
+                    "use_secondary_agent": False,
+                    "vulnerabilities_github_repo_url": self.config.vulnerabilities_github_repo_url,
+                },
+                runnable_config,
+            )
+            self._write_output(state)
+        except Exception as e:
+            logger.error(f"Graph execution failed: {e}")
+            raise
+
+
 class DryRunFullDirScanGraphExecutor(FullDirScanGraphExecutor):
     def _format_docs(self, documents: List[Document]) -> str:
         formatted_docs = []
@@ -268,6 +297,7 @@ class GraphExecutorFactory:
             AgentType.GITHUB_DEEP_SD: GithubDeepSdGraphExecutor,
             AgentType.GITHUB_DEEP_MS: GithubDeepMsGraphExecutor,
             AgentType.VULNERABILITIES_WORKFLOW_1: VulnerabilitiesWorkflow1GraphExecutor,
+            AgentType.VULNERABILITIES_WORKFLOW_2: VulnerabilitiesWorkflow2GraphExecutor,
         }
         agent_type = AgentType.create(config)
         executor_class = executors.get(agent_type)

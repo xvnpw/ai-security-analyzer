@@ -1,0 +1,108 @@
+[
+    {
+        "name": "upb",
+        "full_name": "protocolbuffers/upb",
+        "url": "https://github.com/protocolbuffers/upb",
+        "stars": 1509,
+        "updated_at": "2025-03-04T08:06:53Z",
+        "description": "a small protobuf implementation in C",
+        "size_kb": 11601,
+        "languages": {
+            "C": 2358076,
+            "C++": 736938,
+            "Starlark": 213413,
+            "Python": 83127,
+            "Lua": 29602,
+            "CMake": 4423,
+            "Shell": 3148,
+            "Pawn": 2715
+        }
+    },
+    {
+        "name": "protobuf-go",
+        "full_name": "protocolbuffers/protobuf-go",
+        "url": "https://github.com/protocolbuffers/protobuf-go",
+        "stars": 3035,
+        "updated_at": "2025-03-06T08:21:47Z",
+        "description": "Go support for Google's protocol buffers",
+        "size_kb": 13450,
+        "languages": {
+            "Go": 2856741,
+            "Shell": 5396
+        }
+    },
+    {
+        "name": "txtpbfmt",
+        "full_name": "protocolbuffers/txtpbfmt",
+        "url": "https://github.com/protocolbuffers/txtpbfmt",
+        "stars": 106,
+        "updated_at": "2025-02-27T13:17:53Z",
+        "description": "txtpbfmt parses, edits and formats text proto files in a way that preserves comments.",
+        "size_kb": 489,
+        "languages": {
+            "Go": 145533
+        }
+    },
+    {
+        "name": "protobuf-javascript",
+        "full_name": "protocolbuffers/protobuf-javascript",
+        "url": "https://github.com/protocolbuffers/protobuf-javascript",
+        "stars": 400,
+        "updated_at": "2025-03-05T08:25:24Z",
+        "description": null,
+        "size_kb": 1296,
+        "languages": {
+            "JavaScript": 1814530,
+            "C++": 172302,
+            "Starlark": 5670,
+            "Shell": 4242,
+            "C": 1955
+        }
+    },
+    {
+        "name": "protoscope",
+        "full_name": "protocolbuffers/protoscope",
+        "url": "https://github.com/protocolbuffers/protoscope",
+        "stars": 331,
+        "updated_at": "2025-03-05T22:58:25Z",
+        "description": "Protoscope is a simple, human-editable language for representing and emitting the Protobuf wire format. ",
+        "size_kb": 127,
+        "languages": {
+            "Go": 64922
+        }
+    },
+    {
+        "name": "rules_ruby",
+        "full_name": "protocolbuffers/rules_ruby",
+        "url": "https://github.com/protocolbuffers/rules_ruby",
+        "stars": 4,
+        "updated_at": "2024-11-15T04:55:48Z",
+        "description": "Ruby Rules for Bazel. This is a fork of https://github.com/bazelruby/rules_ruby exclusively for protobuf internal usage",
+        "size_kb": 4443,
+        "languages": {
+            "Starlark": 70112,
+            "Shell": 35669,
+            "Ruby": 16620,
+            "Smarty": 4677,
+            "Dockerfile": 4254,
+            "Makefile": 1868,
+            "C": 199
+        }
+    },
+    {
+        "name": "bazel-central-registry",
+        "full_name": "protocolbuffers/bazel-central-registry",
+        "url": "https://github.com/protocolbuffers/bazel-central-registry",
+        "stars": 1,
+        "updated_at": "2024-11-15T04:56:06Z",
+        "description": "The central registry of Bazel modules for the Bzlmod external dependency system.",
+        "size_kb": 7053,
+        "languages": {
+            "Starlark": 2996977,
+            "C": 182285,
+            "Python": 80369,
+            "Shell": 6829,
+            "Perl": 255
+        }
+    }
+]

@@ -1,0 +1,302 @@
+[
+    {
+        "name": "external-attacher",
+        "full_name": "kubernetes-csi/external-attacher",
+        "url": "https://github.com/kubernetes-csi/external-attacher",
+        "stars": 174,
+        "updated_at": "2025-02-26T12:54:38Z",
+        "description": "Sidecar container that watches Kubernetes VolumeAttachment objects and triggers ControllerPublish/Unpublish against a CSI endpoint",
+        "size_kb": 55554,
+        "languages": {
+            "Go": 190182,
+            "Shell": 104880,
+            "Makefile": 15000,
+            "Python": 13570,
+            "Dockerfile": 206
+        }
+    },
+    {
+        "name": "external-provisioner",
+        "full_name": "kubernetes-csi/external-provisioner",
+        "url": "https://github.com/kubernetes-csi/external-provisioner",
+        "stars": 371,
+        "updated_at": "2025-03-04T10:09:48Z",
+        "description": "Sidecar container that watches Kubernetes PersistentVolumeClaim objects and triggers CreateVolume/DeleteVolume against a CSI endpoint",
+        "size_kb": 115300,
+        "languages": {
+            "Go": 634956,
+            "Shell": 107146,
+            "Makefile": 14975,
+            "Python": 13570,
+            "Dockerfile": 397,
+            "Ruby": 200
+        }
+    },
+    {
+        "name": "driver-registrar",
+        "full_name": "kubernetes-csi/driver-registrar",
+        "url": "https://github.com/kubernetes-csi/driver-registrar",
+        "stars": 24,
+        "updated_at": "2023-08-14T23:17:17Z",
+        "description": "[Deprecated] Sidecar container that 1) registers the CSI driver with kubelet, and 2) adds the drivers custom NodeId to a label on the Kubernetes Node API Object",
+        "size_kb": 42340,
+        "languages": {
+            "Go": 31539,
+            "Makefile": 1328,
+            "Dockerfile": 171
+        }
+    },
+    {
+        "name": "livenessprobe",
+        "full_name": "kubernetes-csi/livenessprobe",
+        "url": "https://github.com/kubernetes-csi/livenessprobe",
+        "stars": 77,
+        "updated_at": "2025-01-21T12:24:29Z",
+        "description": "A sidecar container that can be included in a CSI plugin pod to enable integration with Kubernetes Liveness Probe.",
+        "size_kb": 25840,
+        "languages": {
+            "Shell": 105623,
+            "Go": 15471,
+            "Makefile": 14973,
+            "Python": 13570,
+            "Dockerfile": 802
+        }
+    },
+    {
+        "name": "external-snapshotter",
+        "full_name": "kubernetes-csi/external-snapshotter",
+        "url": "https://github.com/kubernetes-csi/external-snapshotter",
+        "stars": 534,
+        "updated_at": "2025-03-02T05:53:53Z",
+        "description": "Sidecar container that watches Kubernetes Snapshot CRD objects and triggers CreateSnapshot/DeleteSnapshot against a CSI endpoint.",
+        "size_kb": 80958,
+        "languages": {
+            "Go": 836617,
+            "Shell": 110408,
+            "Makefile": 15619,
+            "Python": 13570,
+            "Dockerfile": 451
+        }
+    },
+    {
+        "name": "csi-driver-iscsi",
+        "full_name": "kubernetes-csi/csi-driver-iscsi",
+        "url": "https://github.com/kubernetes-csi/csi-driver-iscsi",
+        "stars": 110,
+        "updated_at": "2025-03-06T12:31:50Z",
+        "description": null,
+        "size_kb": 24228,
+        "languages": {
+            "Shell": 128418,
+            "Go": 66914,
+            "Python": 19862,
+            "Makefile": 15683,
+            "Dockerfile": 899
+        }
+    },
+    {
+        "name": "csi-driver-nfs",
+        "full_name": "kubernetes-csi/csi-driver-nfs",
+        "url": "https://github.com/kubernetes-csi/csi-driver-nfs",
+        "stars": 954,
+        "updated_at": "2025-03-06T01:48:10Z",
+        "description": "This driver allows Kubernetes to access NFS server on Linux node.",
+        "size_kb": 38168,
+        "languages": {
+            "Go": 234811,
+            "Shell": 141652,
+            "Python": 19864,
+            "Makefile": 19590,
+            "Mustache": 9436,
+            "Dockerfile": 866
+        }
+    },
+    {
+        "name": "csi-lib-iscsi",
+        "full_name": "kubernetes-csi/csi-lib-iscsi",
+        "url": "https://github.com/kubernetes-csi/csi-lib-iscsi",
+        "stars": 17,
+        "updated_at": "2025-02-07T09:29:52Z",
+        "description": null,
+        "size_kb": 305,
+        "languages": {
+            "Go": 65843,
+            "Makefile": 332
+        }
+    },
+    {
+        "name": "cluster-driver-registrar",
+        "full_name": "kubernetes-csi/cluster-driver-registrar",
+        "url": "https://github.com/kubernetes-csi/cluster-driver-registrar",
+        "stars": 13,
+        "updated_at": "2023-07-26T14:05:28Z",
+        "description": "DEPRECATED: Sidecar container that registers the CSI driver with the Kubernetes cluster",
+        "size_kb": 43712,
+        "languages": {
+            "Go": 7534,
+            "Makefile": 5261,
+            "Shell": 1398,
+            "Dockerfile": 240
+        }
+    },
+    {
+        "name": "node-driver-registrar",
+        "full_name": "kubernetes-csi/node-driver-registrar",
+        "url": "https://github.com/kubernetes-csi/node-driver-registrar",
+        "stars": 151,
+        "updated_at": "2025-03-04T07:32:40Z",
+        "description": "Sidecar container that registers a CSI driver with the kubelet using the kubelet plugin registration mechanism.",
+        "size_kb": 56345,
+        "languages": {
+            "Shell": 104033,
+            "Go": 25764,
+            "Makefile": 15026,
+            "Python": 13570,
+            "Dockerfile": 249
+        }
+    },
+    {
+        "name": "csi-lib-utils",
+        "full_name": "kubernetes-csi/csi-lib-utils",
+        "url": "https://github.com/kubernetes-csi/csi-lib-utils",
+        "stars": 45,
+        "updated_at": "2025-03-03T11:01:21Z",
+        "description": "Common code for Kubernetes CSI sidecar containers (e.g. `external-attacher`, `external-provisioner`, etc.)",
+        "size_kb": 19338,
+        "languages": {
+            "Go": 151575,
+            "Shell": 104184,
+            "Makefile": 17813,
+            "Python": 13570
+        }
+    },
+    {
+        "name": "external-resizer",
+        "full_name": "kubernetes-csi/external-resizer",
+        "url": "https://github.com/kubernetes-csi/external-resizer",
+        "stars": 130,
+        "updated_at": "2025-03-04T10:09:49Z",
+        "description": "Sidecar container that watches Kubernetes PersistentVolumeClaims objects and triggers controller side expansion operation against a CSI endpoint",
+        "size_kb": 25963,
+        "languages": {
+            "Go": 241012,
+            "Shell": 104206,
+            "Makefile": 14951,
+            "Python": 13570,
+            "Dockerfile": 202
+        }
+    },
+    {
+        "name": "csi-proxy",
+        "full_name": "kubernetes-csi/csi-proxy",
+        "url": "https://github.com/kubernetes-csi/csi-proxy",
+        "stars": 59,
+        "updated_at": "2025-02-23T11:54:32Z",
+        "description": "CSI Proxy utility to enable CSI Plugins on Windows",
+        "size_kb": 7851,
+        "languages": {
+            "Go": 360275,
+            "Shell": 112357,
+            "Makefile": 18916,
+            "Python": 13570,
+            "PowerShell": 1245
+        }
+    },
+    {
+        "name": "external-health-monitor",
+        "full_name": "kubernetes-csi/external-health-monitor",
+        "url": "https://github.com/kubernetes-csi/external-health-monitor",
+        "stars": 67,
+        "updated_at": "2025-02-13T06:53:03Z",
+        "description": "This repo contains sidecar controller and agent for volume health monitoring.",
+        "size_kb": 22205,
+        "languages": {
+            "Shell": 105324,
+            "Go": 94585,
+            "Makefile": 15089,
+            "Python": 13570,
+            "Dockerfile": 301
+        }
+    },
+    {
+        "name": "csi-driver-smb",
+        "full_name": "kubernetes-csi/csi-driver-smb",
+        "url": "https://github.com/kubernetes-csi/csi-driver-smb",
+        "stars": 526,
+        "updated_at": "2025-03-02T07:54:07Z",
+        "description": "This driver allows Kubernetes to access SMB Server on both Linux and Windows nodes.",
+        "size_kb": 90308,
+        "languages": {
+            "Go": 373179,
+            "Shell": 149913,
+            "Makefile": 25044,
+            "Python": 19890,
+            "Mustache": 18626,
+            "Dockerfile": 1086
+        }
+    },
+    {
+        "name": "lib-volume-populator",
+        "full_name": "kubernetes-csi/lib-volume-populator",
+        "url": "https://github.com/kubernetes-csi/lib-volume-populator",
+        "stars": 26,
+        "updated_at": "2025-02-27T18:22:35Z",
+        "description": "Shared library for use by volume populators.",
+        "size_kb": 12338,
+        "languages": {
+            "Go": 133293,
+            "Shell": 104653,
+            "Makefile": 14971,
+            "Python": 13570,
+            "Dockerfile": 209
+        }
+    },
+    {
+        "name": "volume-data-source-validator",
+        "full_name": "kubernetes-csi/volume-data-source-validator",
+        "url": "https://github.com/kubernetes-csi/volume-data-source-validator",
+        "stars": 5,
+        "updated_at": "2025-01-21T18:52:52Z",
+        "description": "Controller responsible for validating PVC data sources",
+        "size_kb": 11586,
+        "languages": {
+            "Shell": 106258,
+            "Go": 38744,
+            "Makefile": 15020,
+            "Python": 13570,
+            "Dockerfile": 270
+        }
+    },
+    {
+        "name": "csi-driver-nvmf",
+        "full_name": "kubernetes-csi/csi-driver-nvmf",
+        "url": "https://github.com/kubernetes-csi/csi-driver-nvmf",
+        "stars": 67,
+        "updated_at": "2025-02-14T08:41:25Z",
+        "description": "CSI driver NVMf mainly supports RDMA and TCP for Software Defined Storage by NVMf",
+        "size_kb": 2656,
+        "languages": {
+            "Shell": 104740,
+            "Go": 46273,
+            "Makefile": 15023,
+            "Python": 13570,
+            "Dockerfile": 70
+        }
+    },
+    {
+        "name": "external-snapshot-metadata",
+        "full_name": "kubernetes-csi/external-snapshot-metadata",
+        "url": "https://github.com/kubernetes-csi/external-snapshot-metadata",
+        "stars": 7,
+        "updated_at": "2025-03-04T08:59:47Z",
+        "description": "This repo contains sidecar controller for the snapshot metadata service.",
+        "size_kb": 488,
+        "languages": {
+            "Go": 304001,
+            "Shell": 111863,
+            "Makefile": 15715,
+            "Python": 13570,
+            "Dockerfile": 570
+        }
+    }
+]

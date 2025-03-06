@@ -1,0 +1,1178 @@
+[
+    {
+        "name": "thor",
+        "full_name": "rails/thor",
+        "url": "https://github.com/rails/thor",
+        "stars": 5156,
+        "updated_at": "2025-03-05T21:06:38Z",
+        "description": "Thor is a toolkit for building powerful command-line interfaces.",
+        "size_kb": 2939,
+        "languages": {
+            "Ruby": 423758,
+            "Dockerfile": 3162
+        }
+    },
+    {
+        "name": "account_location",
+        "full_name": "rails/account_location",
+        "url": "https://github.com/rails/account_location",
+        "stars": 73,
+        "updated_at": "2023-10-14T20:24:43Z",
+        "description": "NOTICE: official repository moved to https://github.com/bbommarito/account_location",
+        "size_kb": 148,
+        "languages": {
+            "Ruby": 2149
+        }
+    },
+    {
+        "name": "acts_as_nested_set",
+        "full_name": "rails/acts_as_nested_set",
+        "url": "https://github.com/rails/acts_as_nested_set",
+        "stars": 71,
+        "updated_at": "2023-04-15T14:37:22Z",
+        "description": "NOTICE: official repository moved to https://github.com/bbommarito/acts_as_nested_set",
+        "size_kb": 77,
+        "languages": {
+            "Ruby": 17305
+        }
+    },
+    {
+        "name": "acts_as_tree",
+        "full_name": "rails/acts_as_tree",
+        "url": "https://github.com/rails/acts_as_tree",
+        "stars": 285,
+        "updated_at": "2025-03-05T08:48:28Z",
+        "description": "NOTICE: official repository moved to https://github.com/amerine/acts_as_tree",
+        "size_kb": 272,
+        "languages": {
+            "Ruby": 10737
+        }
+    },
+    {
+        "name": "atom_feed_helper",
+        "full_name": "rails/atom_feed_helper",
+        "url": "https://github.com/rails/atom_feed_helper",
+        "stars": 38,
+        "updated_at": "2022-12-27T21:58:52Z",
+        "description": "NOTICE: official repository moved to https://github.com/TrevorBramble/atom_feed_helper",
+        "size_kb": 90,
+        "languages": {
+            "Ruby": 4610
+        }
+    },
+    {
+        "name": "auto_complete",
+        "full_name": "rails/auto_complete",
+        "url": "https://github.com/rails/auto_complete",
+        "stars": 210,
+        "updated_at": "2024-11-27T03:56:58Z",
+        "description": "NOTICE: official repository moved to https://github.com/david-kerins/auto_complete",
+        "size_kb": 344,
+        "languages": {
+            "Ruby": 14062
+        }
+    },
+    {
+        "name": "continuous_builder",
+        "full_name": "rails/continuous_builder",
+        "url": "https://github.com/rails/continuous_builder",
+        "stars": 7,
+        "updated_at": "2022-12-27T21:57:18Z",
+        "description": "WARNING: this repo is not maintained anymore, if you want to maintain it, please send an mail to rails-core",
+        "size_kb": 88,
+        "languages": {
+            "Ruby": 8681
+        }
+    },
+    {
+        "name": "deadlock_retry",
+        "full_name": "rails/deadlock_retry",
+        "url": "https://github.com/rails/deadlock_retry",
+        "stars": 27,
+        "updated_at": "2024-06-12T20:10:22Z",
+        "description": "NOTICE: official repository moved to https://github.com/heaps/deadlock_retry",
+        "size_kb": 219,
+        "languages": {
+            "Ruby": 4642
+        }
+    },
+    {
+        "name": "http_authentication",
+        "full_name": "rails/http_authentication",
+        "url": "https://github.com/rails/http_authentication",
+        "stars": 22,
+        "updated_at": "2022-12-27T21:56:36Z",
+        "description": "NOTICE: official repository moved to https://github.com/dshimy/http_authentication",
+        "size_kb": 87,
+        "languages": {
+            "Ruby": 4881
+        }
+    },
+    {
+        "name": "in_place_editing",
+        "full_name": "rails/in_place_editing",
+        "url": "https://github.com/rails/in_place_editing",
+        "stars": 229,
+        "updated_at": "2024-10-21T15:20:29Z",
+        "description": "NOTICE: official repository moved to https://github.com/amerine/in_place_editing",
+        "size_kb": 275,
+        "languages": {
+            "Ruby": 10082
+        }
+    },
+    {
+        "name": "localization",
+        "full_name": "rails/localization",
+        "url": "https://github.com/rails/localization",
+        "stars": 12,
+        "updated_at": "2023-01-31T16:27:47Z",
+        "description": "NOTICE: official repository moved to https://github.com/malev/localization",
+        "size_kb": 179,
+        "languages": {
+            "Ruby": 1415
+        }
+    },
+    {
+        "name": "open_id_authentication",
+        "full_name": "rails/open_id_authentication",
+        "url": "https://github.com/rails/open_id_authentication",
+        "stars": 284,
+        "updated_at": "2024-08-23T16:35:58Z",
+        "description": "NOTICE: official repository moved to https://github.com/Velir/open_id_authentication",
+        "size_kb": 221,
+        "languages": {
+            "Ruby": 3593
+        }
+    },
+    {
+        "name": "scaffolding",
+        "full_name": "rails/scaffolding",
+        "url": "https://github.com/rails/scaffolding",
+        "stars": 17,
+        "updated_at": "2022-12-27T21:55:09Z",
+        "description": "NOTICE: official repository moved to https://github.com/KeysetTS/scaffolding",
+        "size_kb": 89,
+        "languages": {
+            "Ruby": 8483
+        }
+    },
+    {
+        "name": "scriptaculous_slider",
+        "full_name": "rails/scriptaculous_slider",
+        "url": "https://github.com/rails/scriptaculous_slider",
+        "stars": 18,
+        "updated_at": "2022-12-27T22:01:48Z",
+        "description": "WARNING: this repo is not maintained anymore, if you want to maintain it, please send an mail to rails-core",
+        "size_kb": 90,
+        "languages": {
+            "JavaScript": 10752,
+            "Ruby": 4126
+        }
+    },
+    {
+        "name": "token_generator",
+        "full_name": "rails/token_generator",
+        "url": "https://github.com/rails/token_generator",
+        "stars": 25,
+        "updated_at": "2022-12-27T21:54:21Z",
+        "description": "NOTICE: official repository moved to https://github.com/bbommarito/token_generator",
+        "size_kb": 86,
+        "languages": {
+            "Ruby": 362
+        }
+    },
+    {
+        "name": "tzinfo_timezone",
+        "full_name": "rails/tzinfo_timezone",
+        "url": "https://github.com/rails/tzinfo_timezone",
+        "stars": 13,
+        "updated_at": "2022-12-26T22:54:39Z",
+        "description": "WARNING: this repo is not maintained anymore, if you want to maintain it, please send an mail to rails-core",
+        "size_kb": 91,
+        "languages": {
+            "Ruby": 16376
+        }
+    },
+    {
+        "name": "tztime",
+        "full_name": "rails/tztime",
+        "url": "https://github.com/rails/tztime",
+        "stars": 8,
+        "updated_at": "2022-12-27T21:53:41Z",
+        "description": "WARNING: this repo is not maintained anymore, if you want to maintain it, please send an mail to rails-core",
+        "size_kb": 92,
+        "languages": {
+            "Ruby": 8631
+        }
+    },
+    {
+        "name": "upload_progress",
+        "full_name": "rails/upload_progress",
+        "url": "https://github.com/rails/upload_progress",
+        "stars": 39,
+        "updated_at": "2022-12-26T22:55:18Z",
+        "description": "NOTICE: official repository moved to https://github.com/rishav/upload_progress",
+        "size_kb": 97,
+        "languages": {
+            "Ruby": 59704
+        }
+    },
+    {
+        "name": "render_component",
+        "full_name": "rails/render_component",
+        "url": "https://github.com/rails/render_component",
+        "stars": 39,
+        "updated_at": "2025-02-25T13:31:11Z",
+        "description": "NOTICE: official repository moved to https://github.com/malev/render_component. Components allow you to call other actions for their rendered response while executing another action",
+        "size_kb": 82,
+        "languages": {
+            "Ruby": 8793
+        }
+    },
+    {
+        "name": "iso-3166-country-select",
+        "full_name": "rails/iso-3166-country-select",
+        "url": "https://github.com/rails/iso-3166-country-select",
+        "stars": 70,
+        "updated_at": "2023-11-03T10:06:38Z",
+        "description": "WARNING: this repo is not maintained anymore, if you want to maintain it, please send an mail to rails-core",
+        "size_kb": 193,
+        "languages": {
+            "Ruby": 6281
+        }
+    },
+    {
+        "name": "rails-contributors",
+        "full_name": "rails/rails-contributors",
+        "url": "https://github.com/rails/rails-contributors",
+        "stars": 138,
+        "updated_at": "2025-02-02T14:59:44Z",
+        "description": "The web application that runs https://contributors.rubyonrails.org",
+        "size_kb": 2607,
+        "languages": {
+            "Ruby": 303822,
+            "HTML": 19917,
+            "SCSS": 5403,
+            "Dockerfile": 2035,
+            "JavaScript": 892,
+            "Shell": 809,
+            "CSS": 710
+        }
+    },
+    {
+        "name": "sdoc",
+        "full_name": "rails/sdoc",
+        "url": "https://github.com/rails/sdoc",
+        "stars": 820,
+        "updated_at": "2025-02-02T14:57:56Z",
+        "description": "Standalone sdoc generator",
+        "size_kb": 1566,
+        "languages": {
+            "JavaScript": 147214,
+            "Ruby": 105359,
+            "CSS": 22691,
+            "HTML": 11906
+        }
+    },
+    {
+        "name": "sqlite2_adapter",
+        "full_name": "rails/sqlite2_adapter",
+        "url": "https://github.com/rails/sqlite2_adapter",
+        "stars": 3,
+        "updated_at": "2022-12-26T22:49:25Z",
+        "description": "WARNING: this repo is not maintained anymore, if you want to maintain it, please send an mail to rails-core",
+        "size_kb": 76,
+        "languages": {
+            "Ruby": 1456
+        }
+    },
+    {
+        "name": "arel",
+        "full_name": "rails/arel",
+        "url": "https://github.com/rails/arel",
+        "stars": 2055,
+        "updated_at": "2025-02-12T19:50:56Z",
+        "description": "A Relational Algebra",
+        "size_kb": 2549,
+        "languages": {
+            "Ruby": 971
+        }
+    },
+    {
+        "name": "asset_server",
+        "full_name": "rails/asset_server",
+        "url": "https://github.com/rails/asset_server",
+        "stars": 27,
+        "updated_at": "2023-10-06T12:12:20Z",
+        "description": "NOTICE: official repository moved to https://github.com/andhapp/asset_server",
+        "size_kb": 647,
+        "languages": {
+            "Ruby": 7126,
+            "JavaScript": 47
+        }
+    },
+    {
+        "name": "verification",
+        "full_name": "rails/verification",
+        "url": "https://github.com/rails/verification",
+        "stars": 58,
+        "updated_at": "2023-07-27T09:19:51Z",
+        "description": "NOTICE: official repository moved to https://github.com/sikachu/verification",
+        "size_kb": 167,
+        "languages": {
+            "Ruby": 13474
+        }
+    },
+    {
+        "name": "hide_action",
+        "full_name": "rails/hide_action",
+        "url": "https://github.com/rails/hide_action",
+        "stars": 4,
+        "updated_at": "2022-12-26T22:47:01Z",
+        "description": "NOTICE: official repository moved to https://github.com/sikachu/hide_action",
+        "size_kb": 180,
+        "languages": {
+            "Ruby": 14632
+        }
+    },
+    {
+        "name": "prototype-ujs",
+        "full_name": "rails/prototype-ujs",
+        "url": "https://github.com/rails/prototype-ujs",
+        "stars": 62,
+        "updated_at": "2025-02-04T23:15:13Z",
+        "description": null,
+        "size_kb": 209,
+        "languages": {
+            "JavaScript": 6818
+        }
+    },
+    {
+        "name": "jquery-ujs",
+        "full_name": "rails/jquery-ujs",
+        "url": "https://github.com/rails/jquery-ujs",
+        "stars": 2611,
+        "updated_at": "2025-02-25T00:11:08Z",
+        "description": "Ruby on Rails unobtrusive scripting adapter for jQuery",
+        "size_kb": 669,
+        "languages": {
+            "JavaScript": 96008,
+            "Ruby": 3605,
+            "HTML": 1730,
+            "Shell": 619
+        }
+    },
+    {
+        "name": "rails_upgrade",
+        "full_name": "rails/rails_upgrade",
+        "url": "https://github.com/rails/rails_upgrade",
+        "stars": 445,
+        "updated_at": "2024-12-19T02:03:51Z",
+        "description": "Plugin to run checks on your Rails 2.x/3.x to check for obvious upgrade points on the path to 3.0",
+        "size_kb": 220,
+        "languages": {
+            "Ruby": 57525
+        }
+    },
+    {
+        "name": "rails_xss",
+        "full_name": "rails/rails_xss",
+        "url": "https://github.com/rails/rails_xss",
+        "stars": 105,
+        "updated_at": "2023-08-29T09:41:19Z",
+        "description": "A plugin for rails 2.3 apps which switches the default to escape by default",
+        "size_kb": 203,
+        "languages": {
+            "Ruby": 104242
+        }
+    },
+    {
+        "name": "rails-master-hook",
+        "full_name": "rails/rails-master-hook",
+        "url": "https://github.com/rails/rails-master-hook",
+        "stars": 6,
+        "updated_at": "2024-11-08T05:49:46Z",
+        "description": null,
+        "size_kb": 20,
+        "languages": {
+            "Ruby": 843,
+            "Shell": 208
+        }
+    },
+    {
+        "name": "prototype-rails",
+        "full_name": "rails/prototype-rails",
+        "url": "https://github.com/rails/prototype-rails",
+        "stars": 55,
+        "updated_at": "2022-12-25T22:26:59Z",
+        "description": "Add RJS, Prototype, and Scriptaculous helpers to Rails 3.1+ apps",
+        "size_kb": 257,
+        "languages": {
+            "Ruby": 123923
+        }
+    },
+    {
+        "name": "pjax_rails",
+        "full_name": "rails/pjax_rails",
+        "url": "https://github.com/rails/pjax_rails",
+        "stars": 663,
+        "updated_at": "2024-11-07T20:34:46Z",
+        "description": "PJAX integration for Rails",
+        "size_kb": 119,
+        "languages": {
+            "Ruby": 11681,
+            "HTML": 859,
+            "Logos": 280,
+            "JavaScript": 203
+        }
+    },
+    {
+        "name": "sprockets-rails",
+        "full_name": "rails/sprockets-rails",
+        "url": "https://github.com/rails/sprockets-rails",
+        "stars": 582,
+        "updated_at": "2025-02-12T22:26:04Z",
+        "description": "Sprockets Rails integration",
+        "size_kb": 947,
+        "languages": {
+            "Ruby": 97650
+        }
+    },
+    {
+        "name": "sass-rails",
+        "full_name": "rails/sass-rails",
+        "url": "https://github.com/rails/sass-rails",
+        "stars": 862,
+        "updated_at": "2025-03-02T21:01:32Z",
+        "description": "Ruby on Rails stylesheet engine for Sass",
+        "size_kb": 538,
+        "languages": {
+            "Ruby": 1715
+        }
+    },
+    {
+        "name": "jquery-rails",
+        "full_name": "rails/jquery-rails",
+        "url": "https://github.com/rails/jquery-rails",
+        "stars": 952,
+        "updated_at": "2025-02-23T12:19:23Z",
+        "description": "A gem to automate using jQuery with Rails",
+        "size_kb": 4140,
+        "languages": {
+            "Ruby": 11836
+        }
+    },
+    {
+        "name": "coffee-rails",
+        "full_name": "rails/coffee-rails",
+        "url": "https://github.com/rails/coffee-rails",
+        "stars": 232,
+        "updated_at": "2025-02-23T12:15:36Z",
+        "description": "CoffeeScript adapter for the Rails asset pipeline. Also adds support for .coffee views.",
+        "size_kb": 110,
+        "languages": {
+            "Ruby": 8264,
+            "HTML": 1166,
+            "CoffeeScript": 231,
+            "JavaScript": 37
+        }
+    },
+    {
+        "name": "jbuilder",
+        "full_name": "rails/jbuilder",
+        "url": "https://github.com/rails/jbuilder",
+        "stars": 4360,
+        "updated_at": "2025-03-04T22:34:07Z",
+        "description": "Jbuilder: generate JSON objects with a Builder-style DSL",
+        "size_kb": 620,
+        "languages": {
+            "Ruby": 87515,
+            "Shell": 434
+        }
+    },
+    {
+        "name": "activeresource",
+        "full_name": "rails/activeresource",
+        "url": "https://github.com/rails/activeresource",
+        "stars": 1347,
+        "updated_at": "2025-03-03T08:38:35Z",
+        "description": "Connects business objects and REST web services",
+        "size_kb": 1057,
+        "languages": {
+            "Ruby": 314637,
+            "Dockerfile": 3162
+        }
+    },
+    {
+        "name": "activerecord-deprecated_finders",
+        "full_name": "rails/activerecord-deprecated_finders",
+        "url": "https://github.com/rails/activerecord-deprecated_finders",
+        "stars": 71,
+        "updated_at": "2025-02-23T12:15:38Z",
+        "description": null,
+        "size_kb": 346,
+        "languages": {
+            "Ruby": 38546
+        }
+    },
+    {
+        "name": "routing_concerns",
+        "full_name": "rails/routing_concerns",
+        "url": "https://github.com/rails/routing_concerns",
+        "stars": 153,
+        "updated_at": "2024-09-21T17:57:22Z",
+        "description": "Abstract common routing resource concerns to cut down on duplication.",
+        "size_kb": 107,
+        "languages": {
+            "Ruby": 4114
+        }
+    },
+    {
+        "name": "rails-dev-box",
+        "full_name": "rails/rails-dev-box",
+        "url": "https://github.com/rails/rails-dev-box",
+        "stars": 2050,
+        "updated_at": "2025-03-01T21:01:10Z",
+        "description": "A virtual machine for Ruby on Rails core development",
+        "size_kb": 881,
+        "languages": {
+            "Shell": 2895
+        }
+    },
+    {
+        "name": "etagger",
+        "full_name": "rails/etagger",
+        "url": "https://github.com/rails/etagger",
+        "stars": 41,
+        "updated_at": "2023-07-19T19:44:56Z",
+        "description": "Declare what goes in to your ETags: asset versions, account ID, etc.",
+        "size_kb": 111,
+        "languages": {
+            "Ruby": 2574
+        }
+    },
+    {
+        "name": "activerecord-session_store",
+        "full_name": "rails/activerecord-session_store",
+        "url": "https://github.com/rails/activerecord-session_store",
+        "stars": 553,
+        "updated_at": "2025-02-26T09:48:46Z",
+        "description": "Active Record's Session Store extracted from Rails",
+        "size_kb": 176,
+        "languages": {
+            "Ruby": 48610
+        }
+    },
+    {
+        "name": "protected_attributes",
+        "full_name": "rails/protected_attributes",
+        "url": "https://github.com/rails/protected_attributes",
+        "stars": 233,
+        "updated_at": "2025-02-23T12:15:29Z",
+        "description": "Protect attributes from mass-assignment in ActiveRecord models.",
+        "size_kb": 165,
+        "languages": {
+            "Ruby": 113870,
+            "Roff": 371
+        }
+    },
+    {
+        "name": "actionpack-page_caching",
+        "full_name": "rails/actionpack-page_caching",
+        "url": "https://github.com/rails/actionpack-page_caching",
+        "stars": 354,
+        "updated_at": "2025-02-11T21:31:33Z",
+        "description": "Static page caching for Action Pack (removed from core in Rails 4.0)",
+        "size_kb": 94,
+        "languages": {
+            "Ruby": 28948
+        }
+    },
+    {
+        "name": "actionpack-action_caching",
+        "full_name": "rails/actionpack-action_caching",
+        "url": "https://github.com/rails/actionpack-action_caching",
+        "stars": 264,
+        "updated_at": "2025-02-28T06:21:08Z",
+        "description": "Action caching for Action Pack (removed from core in Rails 4.0)",
+        "size_kb": 101,
+        "languages": {
+            "Ruby": 38306
+        }
+    },
+    {
+        "name": "rails-observers",
+        "full_name": "rails/rails-observers",
+        "url": "https://github.com/rails/rails-observers",
+        "stars": 523,
+        "updated_at": "2025-02-15T15:29:50Z",
+        "description": "Rails observer (removed from core in Rails 4.0)",
+        "size_kb": 124,
+        "languages": {
+            "Ruby": 77873
+        }
+    },
+    {
+        "name": "commands",
+        "full_name": "rails/commands",
+        "url": "https://github.com/rails/commands",
+        "stars": 338,
+        "updated_at": "2025-02-17T16:34:24Z",
+        "description": "Run Rake/Rails commands through the console",
+        "size_kb": 27,
+        "languages": {
+            "Ruby": 8140
+        }
+    },
+    {
+        "name": "spring",
+        "full_name": "rails/spring",
+        "url": "https://github.com/rails/spring",
+        "stars": 2809,
+        "updated_at": "2025-03-04T06:07:26Z",
+        "description": "Rails application preloader",
+        "size_kb": 1158,
+        "languages": {
+            "Ruby": 123596,
+            "Dockerfile": 3162
+        }
+    },
+    {
+        "name": "actionpack-xml_parser",
+        "full_name": "rails/actionpack-xml_parser",
+        "url": "https://github.com/rails/actionpack-xml_parser",
+        "stars": 49,
+        "updated_at": "2023-11-30T22:05:32Z",
+        "description": "XML parameters parser for Action Pack (removed from core in Rails 4.0)",
+        "size_kb": 36,
+        "languages": {
+            "Ruby": 17445
+        }
+    },
+    {
+        "name": "web-console",
+        "full_name": "rails/web-console",
+        "url": "https://github.com/rails/web-console",
+        "stars": 1406,
+        "updated_at": "2025-02-16T16:42:05Z",
+        "description": "Rails Console on the Browser.",
+        "size_kb": 1104,
+        "languages": {
+            "Ruby": 70614,
+            "JavaScript": 52456,
+            "HTML": 13713,
+            "CSS": 546,
+            "Shell": 435
+        }
+    },
+    {
+        "name": "rails-html-sanitizer",
+        "full_name": "rails/rails-html-sanitizer",
+        "url": "https://github.com/rails/rails-html-sanitizer",
+        "stars": 312,
+        "updated_at": "2025-03-05T15:05:08Z",
+        "description": null,
+        "size_kb": 376,
+        "languages": {
+            "Ruby": 84358
+        }
+    },
+    {
+        "name": "conductor",
+        "full_name": "rails/conductor",
+        "url": "https://github.com/rails/conductor",
+        "stars": 53,
+        "updated_at": "2024-11-24T12:03:45Z",
+        "description": "Conductor is a Rails engine that lets you do through a web UI what you'd normally do with the rails shell command.",
+        "size_kb": 1373,
+        "languages": {
+            "Ruby": 50421,
+            "HTML": 29708,
+            "CSS": 7835,
+            "JavaScript": 6088
+        }
+    },
+    {
+        "name": "activesupport-json_encoder",
+        "full_name": "rails/activesupport-json_encoder",
+        "url": "https://github.com/rails/activesupport-json_encoder",
+        "stars": 48,
+        "updated_at": "2023-05-15T10:42:26Z",
+        "description": null,
+        "size_kb": 237,
+        "languages": {
+            "Ruby": 23981
+        }
+    },
+    {
+        "name": "globalid",
+        "full_name": "rails/globalid",
+        "url": "https://github.com/rails/globalid",
+        "stars": 1234,
+        "updated_at": "2025-02-25T09:44:50Z",
+        "description": "Identify app models with a URI",
+        "size_kb": 298,
+        "languages": {
+            "Ruby": 78480,
+            "Dockerfile": 3162
+        }
+    },
+    {
+        "name": "rails-deprecated_sanitizer",
+        "full_name": "rails/rails-deprecated_sanitizer",
+        "url": "https://github.com/rails/rails-deprecated_sanitizer",
+        "stars": 8,
+        "updated_at": "2022-12-20T05:55:01Z",
+        "description": "Deprecated sanitizer API extracted from Action View.",
+        "size_kb": 53,
+        "languages": {
+            "Ruby": 87905
+        }
+    },
+    {
+        "name": "spring-watcher-listen",
+        "full_name": "rails/spring-watcher-listen",
+        "url": "https://github.com/rails/spring-watcher-listen",
+        "stars": 64,
+        "updated_at": "2025-01-02T05:03:31Z",
+        "description": null,
+        "size_kb": 37,
+        "languages": {
+            "Ruby": 6813
+        }
+    },
+    {
+        "name": "record_tag_helper",
+        "full_name": "rails/record_tag_helper",
+        "url": "https://github.com/rails/record_tag_helper",
+        "stars": 51,
+        "updated_at": "2024-03-21T16:50:12Z",
+        "description": "ActionView Record Tag Helpers",
+        "size_kb": 67,
+        "languages": {
+            "Ruby": 11503
+        }
+    },
+    {
+        "name": "ruby-coffee-script",
+        "full_name": "rails/ruby-coffee-script",
+        "url": "https://github.com/rails/ruby-coffee-script",
+        "stars": 27,
+        "updated_at": "2024-12-17T07:51:38Z",
+        "description": "Ruby CoffeeScript Compiler",
+        "size_kb": 55,
+        "languages": {
+            "Ruby": 4826,
+            "Shell": 2120,
+            "Roff": 837
+        }
+    },
+    {
+        "name": "execjs",
+        "full_name": "rails/execjs",
+        "url": "https://github.com/rails/execjs",
+        "stars": 541,
+        "updated_at": "2025-03-04T19:54:43Z",
+        "description": "Run JavaScript code from Ruby",
+        "size_kb": 880,
+        "languages": {
+            "Ruby": 40426,
+            "JavaScript": 22121
+        }
+    },
+    {
+        "name": "sprockets",
+        "full_name": "rails/sprockets",
+        "url": "https://github.com/rails/sprockets",
+        "stars": 959,
+        "updated_at": "2025-03-05T22:49:12Z",
+        "description": "Rack-based asset packaging system",
+        "size_kb": 4685,
+        "languages": {
+            "Ruby": 606849,
+            "Dockerfile": 1158
+        }
+    },
+    {
+        "name": "activemodel-serializers-xml",
+        "full_name": "rails/activemodel-serializers-xml",
+        "url": "https://github.com/rails/activemodel-serializers-xml",
+        "stars": 55,
+        "updated_at": "2025-01-02T05:02:17Z",
+        "description": null,
+        "size_kb": 62,
+        "languages": {
+            "Ruby": 87140
+        }
+    },
+    {
+        "name": "webpacker",
+        "full_name": "rails/webpacker",
+        "url": "https://github.com/rails/webpacker",
+        "stars": 5299,
+        "updated_at": "2025-03-02T19:00:43Z",
+        "description": "Use Webpack to manage app-like JavaScript modules in Rails",
+        "size_kb": 5462,
+        "languages": {
+            "Ruby": 81870,
+            "JavaScript": 29405,
+            "Logos": 608,
+            "CSS": 134
+        }
+    },
+    {
+        "name": "builder",
+        "full_name": "rails/builder",
+        "url": "https://github.com/rails/builder",
+        "stars": 37,
+        "updated_at": "2025-02-26T07:16:20Z",
+        "description": "Provide a simple way to create XML markup and data structures.",
+        "size_kb": 240,
+        "languages": {
+            "Ruby": 59067
+        }
+    },
+    {
+        "name": "marcel",
+        "full_name": "rails/marcel",
+        "url": "https://github.com/rails/marcel",
+        "stars": 392,
+        "updated_at": "2025-03-05T03:31:34Z",
+        "description": "Find the mime type of files, examining file, filename and declared type",
+        "size_kb": 5290,
+        "languages": {
+            "Ruby": 186006
+        }
+    },
+    {
+        "name": "rails_fast_attributes",
+        "full_name": "rails/rails_fast_attributes",
+        "url": "https://github.com/rails/rails_fast_attributes",
+        "stars": 17,
+        "updated_at": "2024-08-02T02:21:07Z",
+        "description": "Experimental project",
+        "size_kb": 369,
+        "languages": {
+            "Rust": 56990,
+            "Ruby": 28768,
+            "Shell": 131
+        }
+    },
+    {
+        "name": "rails-probot",
+        "full_name": "rails/rails-probot",
+        "url": "https://github.com/rails/rails-probot",
+        "stars": 9,
+        "updated_at": "2023-10-06T10:16:30Z",
+        "description": null,
+        "size_kb": 1638,
+        "languages": {
+            "JavaScript": 842
+        }
+    },
+    {
+        "name": "buildkite-config",
+        "full_name": "rails/buildkite-config",
+        "url": "https://github.com/rails/buildkite-config",
+        "stars": 21,
+        "updated_at": "2025-02-06T13:42:02Z",
+        "description": "Fallback configuration for branches that lack a .buildkite/ directory",
+        "size_kb": 494,
+        "languages": {
+            "Ruby": 77413,
+            "Dockerfile": 6382,
+            "Shell": 318
+        }
+    },
+    {
+        "name": "discourse-rubyonrails-theme",
+        "full_name": "rails/discourse-rubyonrails-theme",
+        "url": "https://github.com/rails/discourse-rubyonrails-theme",
+        "stars": 7,
+        "updated_at": "2024-07-19T01:31:50Z",
+        "description": null,
+        "size_kb": 22,
+        "languages": {
+            "SCSS": 3357,
+            "HTML": 3278
+        }
+    },
+    {
+        "name": "tailwindcss-rails",
+        "full_name": "rails/tailwindcss-rails",
+        "url": "https://github.com/rails/tailwindcss-rails",
+        "stars": 1482,
+        "updated_at": "2025-03-05T15:10:35Z",
+        "description": null,
+        "size_kb": 4509,
+        "languages": {
+            "Ruby": 25961,
+            "Shell": 5542,
+            "HTML": 3728,
+            "Dockerfile": 3162,
+            "CSS": 23
+        }
+    },
+    {
+        "name": "kredis",
+        "full_name": "rails/kredis",
+        "url": "https://github.com/rails/kredis",
+        "stars": 1379,
+        "updated_at": "2025-02-27T16:47:16Z",
+        "description": "Higher-level data structures built on Redis",
+        "size_kb": 342,
+        "languages": {
+            "Ruby": 91490,
+            "Shell": 359
+        }
+    },
+    {
+        "name": "gem-buildkite-config",
+        "full_name": "rails/gem-buildkite-config",
+        "url": "https://github.com/rails/gem-buildkite-config",
+        "stars": 3,
+        "updated_at": "2023-09-13T05:39:46Z",
+        "description": null,
+        "size_kb": 7,
+        "languages": {
+            "Ruby": 2555,
+            "Dockerfile": 1439,
+            "Shell": 136
+        }
+    },
+    {
+        "name": "request.js",
+        "full_name": "rails/request.js",
+        "url": "https://github.com/rails/request.js",
+        "stars": 410,
+        "updated_at": "2025-03-05T21:08:09Z",
+        "description": null,
+        "size_kb": 268,
+        "languages": {
+            "JavaScript": 36835
+        }
+    },
+    {
+        "name": "importmap-rails",
+        "full_name": "rails/importmap-rails",
+        "url": "https://github.com/rails/importmap-rails",
+        "stars": 1100,
+        "updated_at": "2025-03-01T23:16:22Z",
+        "description": "Use ESM with importmap to manage modern JavaScript in Rails without transpiling or bundling.",
+        "size_kb": 867,
+        "languages": {
+            "Ruby": 75935,
+            "HTML": 5598,
+            "CSS": 736,
+            "Shell": 561,
+            "JavaScript": 464
+        }
+    },
+    {
+        "name": "requestjs-rails",
+        "full_name": "rails/requestjs-rails",
+        "url": "https://github.com/rails/requestjs-rails",
+        "stars": 135,
+        "updated_at": "2025-03-06T12:43:40Z",
+        "description": null,
+        "size_kb": 47,
+        "languages": {
+            "JavaScript": 8792,
+            "Ruby": 2937,
+            "Shell": 332
+        }
+    },
+    {
+        "name": "jsbundling-rails",
+        "full_name": "rails/jsbundling-rails",
+        "url": "https://github.com/rails/jsbundling-rails",
+        "stars": 873,
+        "updated_at": "2025-03-03T15:13:01Z",
+        "description": "Bundle and transpile JavaScript in Rails with esbuild, rollup.js, bun, or Webpack.",
+        "size_kb": 153,
+        "languages": {
+            "Ruby": 20041,
+            "JavaScript": 1579,
+            "Shell": 868
+        }
+    },
+    {
+        "name": "cssbundling-rails",
+        "full_name": "rails/cssbundling-rails",
+        "url": "https://github.com/rails/cssbundling-rails",
+        "stars": 596,
+        "updated_at": "2025-03-03T23:53:41Z",
+        "description": "Bundle and process CSS in Rails with Tailwind, PostCSS, and Sass via Node.js.",
+        "size_kb": 137,
+        "languages": {
+            "Ruby": 12347,
+            "SCSS": 1257,
+            "Shell": 666,
+            "JavaScript": 131,
+            "CSS": 64
+        }
+    },
+    {
+        "name": "propshaft",
+        "full_name": "rails/propshaft",
+        "url": "https://github.com/rails/propshaft",
+        "stars": 955,
+        "updated_at": "2025-03-06T07:42:16Z",
+        "description": "Deliver assets for Rails",
+        "size_kb": 526,
+        "languages": {
+            "Ruby": 74118,
+            "Dockerfile": 3162,
+            "HTML": 721,
+            "Shell": 446,
+            "CSS": 158,
+            "JavaScript": 58
+        }
+    },
+    {
+        "name": "website",
+        "full_name": "rails/website",
+        "url": "https://github.com/rails/website",
+        "stars": 77,
+        "updated_at": "2025-03-05T18:00:16Z",
+        "description": null,
+        "size_kb": 249455,
+        "languages": {
+            "HTML": 557837,
+            "SCSS": 165820,
+            "Ruby": 6666,
+            "JavaScript": 5082,
+            "CSS": 284,
+            "Shell": 61
+        }
+    },
+    {
+        "name": "dartsass-rails",
+        "full_name": "rails/dartsass-rails",
+        "url": "https://github.com/rails/dartsass-rails",
+        "stars": 230,
+        "updated_at": "2025-02-26T09:30:27Z",
+        "description": "Integrate Dart Sass with the asset pipeline in Rails",
+        "size_kb": 15797,
+        "languages": {
+            "Ruby": 10477,
+            "Dockerfile": 3162,
+            "Shell": 581,
+            "SCSS": 9
+        }
+    },
+    {
+        "name": "mission_control-jobs",
+        "full_name": "rails/mission_control-jobs",
+        "url": "https://github.com/rails/mission_control-jobs",
+        "stars": 761,
+        "updated_at": "2025-03-05T12:14:20Z",
+        "description": "Dashboard and Active Job extensions to operate and troubleshoot background jobs",
+        "size_kb": 2094,
+        "languages": {
+            "Ruby": 180284,
+            "HTML": 29094,
+            "CSS": 2259,
+            "JavaScript": 1999,
+            "Shell": 315
+        }
+    },
+    {
+        "name": "solid_cache",
+        "full_name": "rails/solid_cache",
+        "url": "https://github.com/rails/solid_cache",
+        "stars": 919,
+        "updated_at": "2025-02-25T15:48:49Z",
+        "description": "A database-backed ActiveSupport::Cache::Store",
+        "size_kb": 564,
+        "languages": {
+            "Ruby": 252329,
+            "HTML": 5062,
+            "Shell": 793,
+            "JavaScript": 96
+        }
+    },
+    {
+        "name": "docked",
+        "full_name": "rails/docked",
+        "url": "https://github.com/rails/docked",
+        "stars": 1316,
+        "updated_at": "2025-03-04T01:31:38Z",
+        "description": "Running Rails from Docker for easy start to development",
+        "size_kb": 45,
+        "languages": {
+            "Dockerfile": 1278,
+            "Shell": 125
+        }
+    },
+    {
+        "name": "solid_queue",
+        "full_name": "rails/solid_queue",
+        "url": "https://github.com/rails/solid_queue",
+        "stars": 2048,
+        "updated_at": "2025-03-04T19:49:07Z",
+        "description": "Database-backed Active Job backend",
+        "size_kb": 696,
+        "languages": {
+            "Ruby": 243732,
+            "HTML": 5342,
+            "Shell": 397,
+            "CSS": 25
+        }
+    },
+    {
+        "name": "rubocop-rails-omakase",
+        "full_name": "rails/rubocop-rails-omakase",
+        "url": "https://github.com/rails/rubocop-rails-omakase",
+        "stars": 483,
+        "updated_at": "2025-03-06T08:23:36Z",
+        "description": "Omakase Ruby styling for Rails",
+        "size_kb": 24,
+        "languages": {
+            "Ruby": 544
+        }
+    },
+    {
+        "name": "solid_cable",
+        "full_name": "rails/solid_cable",
+        "url": "https://github.com/rails/solid_cable",
+        "stars": 264,
+        "updated_at": "2025-02-27T21:16:23Z",
+        "description": "A database backed ActionCable adapter",
+        "size_kb": 12163,
+        "languages": {
+            "Ruby": 71312,
+            "HTML": 16248,
+            "JavaScript": 4047,
+            "Dockerfile": 2378,
+            "Shell": 712,
+            "CSS": 170
+        }
+    },
+    {
+        "name": "rails-new",
+        "full_name": "rails/rails-new",
+        "url": "https://github.com/rails/rails-new",
+        "stars": 256,
+        "updated_at": "2025-02-27T03:41:06Z",
+        "description": "Create Rails projects with Ruby installed",
+        "size_kb": 102,
+        "languages": {
+            "Rust": 15878,
+            "Dockerfile": 1240
+        }
+    },
+    {
+        "name": "devcontainer",
+        "full_name": "rails/devcontainer",
+        "url": "https://github.com/rails/devcontainer",
+        "stars": 71,
+        "updated_at": "2025-02-14T23:32:58Z",
+        "description": null,
+        "size_kb": 104,
+        "languages": {
+            "Shell": 2619,
+            "Dockerfile": 316
+        }
+    }
+]

@@ -12,13 +12,14 @@ excludes_description_lower = [
     "test",
     "tests",
     "testing",
-    "tests",
     "sample",
     "samples",
     "examples",
     "docs",
     "documentation",
+    "mirror",
 ]
+
 whitelisted_repos = [
     "aws/aws-sdk-js",
     "aws/sagemaker-xgboost-container",
@@ -27,6 +28,8 @@ whitelisted_repos = [
     "dotnet/MQTTnet",
     "dotnet/WatsonWebserver",
 ]
+
+excluded_languages = ["HTML", "Jupyter Notebook", "Markdown", "YAML", "JSON", "XML", "CSS", "CartoCSS"]
 
 
 def get_org_repos(
@@ -87,7 +90,15 @@ def get_org_repos(
                         any(word in description for word in excludes_description_lower)
                         and repo_full_name not in whitelisted_repos
                     ):
-                        print(f"Skipping {repo['full_name']} because of description: {description}")
+                        print(f"Skipping {repo_full_name} because of description")
+                        continue
+
+                    name = repo.get("name").lower()
+                    if (
+                        any(word in name for word in excludes_description_lower)
+                        and repo_full_name not in whitelisted_repos
+                    ):
+                        print(f"Skipping {repo_full_name} because of name")
                         continue
 
                     # Check if updated in the last year
@@ -114,9 +125,12 @@ def get_org_repos(
 
                         if main_lang:
                             main_lang_size = languages[main_lang]
-                            if main_lang_size > 2500_000:
+                            if main_lang_size > 5000_000:
                                 print(f"Skipping {repo['full_name']} because of main language size: {main_lang_size}")
                                 continue
+                        if main_lang in excluded_languages:
+                            print(f"Skipping {repo['full_name']} because of main language: {main_lang}")
+                            continue
 
                         repo_info = {
                             "name": repo["name"],

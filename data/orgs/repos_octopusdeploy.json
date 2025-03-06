@@ -1,0 +1,1188 @@
+[
+    {
+        "name": "OctopusClients",
+        "full_name": "OctopusDeploy/OctopusClients",
+        "url": "https://github.com/OctopusDeploy/OctopusClients",
+        "stars": 10,
+        "updated_at": "2025-03-03T23:25:07Z",
+        "description": "| Public |  Octopus.Client for commanding Octopus servers",
+        "size_kb": 22142,
+        "languages": {
+            "C#": 1941148,
+            "PowerShell": 3224,
+            "Shell": 2627,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "Octopus-TeamCity",
+        "full_name": "OctopusDeploy/Octopus-TeamCity",
+        "url": "https://github.com/OctopusDeploy/Octopus-TeamCity",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:17:52Z",
+        "description": "| Public |  JetBrains TeamCity plugin to trigger releases on build completion",
+        "size_kb": 204098,
+        "languages": {
+            "Java": 152338
+        }
+    },
+    {
+        "name": "Halibut",
+        "full_name": "OctopusDeploy/Halibut",
+        "url": "https://github.com/OctopusDeploy/Halibut",
+        "stars": 14,
+        "updated_at": "2025-03-03T09:51:36Z",
+        "description": "| Public |  A secure communication stack for .NET using JSON-RPC over SSL. ",
+        "size_kb": 4281,
+        "languages": {
+            "C#": 1579185,
+            "PowerShell": 3704,
+            "Shell": 2306,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "OctoTFS",
+        "full_name": "OctopusDeploy/OctoTFS",
+        "url": "https://github.com/OctopusDeploy/OctoTFS",
+        "stars": 0,
+        "updated_at": "2025-02-14T01:50:03Z",
+        "description": "| Public |  Octopus extensions for Azure DevOps, TFS, VSTS, and VSO",
+        "size_kb": 20998,
+        "languages": {
+            "TypeScript": 231290,
+            "JavaScript": 28745,
+            "PowerShell": 11570,
+            "HTML": 4362,
+            "Batchfile": 385,
+            "Shell": 179
+        }
+    },
+    {
+        "name": "Library",
+        "full_name": "OctopusDeploy/Library",
+        "url": "https://github.com/OctopusDeploy/Library",
+        "stars": 173,
+        "updated_at": "2025-02-26T15:24:40Z",
+        "description": "| Public |  A repository of step templates and other community-contributed extensions to Octopus Deploy",
+        "size_kb": 17120,
+        "languages": {
+            "PowerShell": 63494,
+            "JavaScript": 45965,
+            "SCSS": 9888,
+            "Shell": 3923,
+            "C#": 2593,
+            "Pug": 2082,
+            "Batchfile": 979
+        }
+    },
+    {
+        "name": "Octodiff",
+        "full_name": "OctopusDeploy/Octodiff",
+        "url": "https://github.com/OctopusDeploy/Octodiff",
+        "stars": 33,
+        "updated_at": "2025-02-19T13:31:48Z",
+        "description": "| Public |  100% C# implementation of remote delta compression based on the rsync algorithm",
+        "size_kb": 887,
+        "languages": {
+            "C#": 201415,
+            "PowerShell": 8250,
+            "Shell": 2627,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "OctopusDSC",
+        "full_name": "OctopusDeploy/OctopusDSC",
+        "url": "https://github.com/OctopusDeploy/OctopusDSC",
+        "stars": 1,
+        "updated_at": "2025-01-05T22:55:05Z",
+        "description": "| Public |  A PowerShell DSC resource for installing Octopus Deploy & Tentacles",
+        "size_kb": 1076,
+        "languages": {
+            "PowerShell": 741457,
+            "Ruby": 16620
+        }
+    },
+    {
+        "name": "TentaclePing",
+        "full_name": "OctopusDeploy/TentaclePing",
+        "url": "https://github.com/OctopusDeploy/TentaclePing",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:08Z",
+        "description": "| Public |  Diagnostics utility for Tentacle",
+        "size_kb": 21,
+        "languages": {
+            "C#": 14527
+        }
+    },
+    {
+        "name": "Calamari",
+        "full_name": "OctopusDeploy/Calamari",
+        "url": "https://github.com/OctopusDeploy/Calamari",
+        "stars": 19,
+        "updated_at": "2025-03-03T09:51:54Z",
+        "description": "| Public |  The core deployment scripts and tools used by Octopus Deploy",
+        "size_kb": 100581,
+        "languages": {
+            "C#": 3977464,
+            "PowerShell": 141498,
+            "HCL": 34009,
+            "Shell": 25952,
+            "F#": 10116,
+            "Python": 4991,
+            "ASP.NET": 1283,
+            "Batchfile": 603,
+            "Smarty": 531,
+            "HTML": 293,
+            "CSS": 80,
+            "JavaScript": 11
+        }
+    },
+    {
+        "name": "Octostache",
+        "full_name": "OctopusDeploy/Octostache",
+        "url": "https://github.com/OctopusDeploy/Octostache",
+        "stars": 7,
+        "updated_at": "2025-02-11T16:15:08Z",
+        "description": "| Public |  The variable substitution syntax for Octopus Deploy",
+        "size_kb": 423,
+        "languages": {
+            "C#": 262307,
+            "PowerShell": 6302,
+            "Shell": 2935,
+            "Batchfile": 607
+        }
+    },
+    {
+        "name": "Nevermore",
+        "full_name": "OctopusDeploy/Nevermore",
+        "url": "https://github.com/OctopusDeploy/Nevermore",
+        "stars": 8,
+        "updated_at": "2025-02-25T22:56:35Z",
+        "description": "| Public |  A JSON Document Store library for SQL Server",
+        "size_kb": 2616,
+        "languages": {
+            "C#": 1419665,
+            "PowerShell": 6538,
+            "TSQL": 3110,
+            "Shell": 2639,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "octopus-jenkins-plugin",
+        "full_name": "OctopusDeploy/octopus-jenkins-plugin",
+        "url": "https://github.com/OctopusDeploy/octopus-jenkins-plugin",
+        "stars": 0,
+        "updated_at": "2025-01-17T06:58:52Z",
+        "description": "| Public |  Jenkins plugin which integrates with Octopus Deploy",
+        "size_kb": 4102,
+        "languages": {
+            "Java": 272530,
+            "HTML": 8961
+        }
+    },
+    {
+        "name": "TeamCityCloudAgentUpdater",
+        "full_name": "OctopusDeploy/TeamCityCloudAgentUpdater",
+        "url": "https://github.com/OctopusDeploy/TeamCityCloudAgentUpdater",
+        "stars": 0,
+        "updated_at": "2025-01-21T14:08:02Z",
+        "description": "| Public |  Simple NodeJS app to update AMI's for TeamCity Cloud Agents ",
+        "size_kb": 94,
+        "languages": {
+            "JavaScript": 17539,
+            "PowerShell": 1873
+        }
+    },
+    {
+        "name": "Data",
+        "full_name": "OctopusDeploy/Data",
+        "url": "https://github.com/OctopusDeploy/Data",
+        "stars": 0,
+        "updated_at": "2024-11-13T02:07:39Z",
+        "description": "| Public |  ",
+        "size_kb": 229,
+        "languages": {
+            "C#": 27778,
+            "PowerShell": 3224,
+            "Shell": 2627,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "AlphaFS",
+        "full_name": "OctopusDeploy/AlphaFS",
+        "url": "https://github.com/OctopusDeploy/AlphaFS",
+        "stars": 1,
+        "updated_at": "2024-07-29T17:18:34Z",
+        "description": "| Public |  AlphaFS is a .NET library providing more complete Win32 file system functionality to the .NET platform than the standard System.IO classes.",
+        "size_kb": 9912,
+        "languages": {
+            "C#": 3505110,
+            "PowerShell": 5134
+        }
+    },
+    {
+        "name": "Octopus-Bamboo",
+        "full_name": "OctopusDeploy/Octopus-Bamboo",
+        "url": "https://github.com/OctopusDeploy/Octopus-Bamboo",
+        "stars": 8,
+        "updated_at": "2024-12-17T07:11:39Z",
+        "description": "| Public |  Octopus plugin for Bamboo",
+        "size_kb": 3293,
+        "languages": {
+            "Java": 173406,
+            "FreeMarker": 16631
+        }
+    },
+    {
+        "name": "OctopusTentacle",
+        "full_name": "OctopusDeploy/OctopusTentacle",
+        "url": "https://github.com/OctopusDeploy/OctopusTentacle",
+        "stars": 13,
+        "updated_at": "2025-02-28T20:04:24Z",
+        "description": "| Public |  The secure, lightweight, cross-platform agent for Octopus Server which turns any computer into a worker or deployment target for automated deployments and operations runbooks.",
+        "size_kb": 56994,
+        "languages": {
+            "C#": 2658103,
+            "Shell": 82098,
+            "PowerShell": 71714,
+            "Dockerfile": 10942,
+            "Bicep": 6377,
+            "Go": 4774,
+            "Mustache": 2468,
+            "JavaScript": 1389,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "JBossDeployment",
+        "full_name": "OctopusDeploy/JBossDeployment",
+        "url": "https://github.com/OctopusDeploy/JBossDeployment",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:35Z",
+        "description": "| Public |  ",
+        "size_kb": 118,
+        "languages": {
+            "Groovy": 56976
+        }
+    },
+    {
+        "name": "SpringBootStopper",
+        "full_name": "OctopusDeploy/SpringBootStopper",
+        "url": "https://github.com/OctopusDeploy/SpringBootStopper",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:35Z",
+        "description": "| Public |  ",
+        "size_kb": 49,
+        "languages": {
+            "Shell": 6468,
+            "Java": 5604,
+            "Batchfile": 4994
+        }
+    },
+    {
+        "name": "SpringBootWindowsService",
+        "full_name": "OctopusDeploy/SpringBootWindowsService",
+        "url": "https://github.com/OctopusDeploy/SpringBootWindowsService",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:35Z",
+        "description": "| Public |  ",
+        "size_kb": 28358,
+        "languages": {
+            "Shell": 6468,
+            "Batchfile": 4994,
+            "Java": 1097
+        }
+    },
+    {
+        "name": "Octopus.Dependencies.Java",
+        "full_name": "OctopusDeploy/Octopus.Dependencies.Java",
+        "url": "https://github.com/OctopusDeploy/Octopus.Dependencies.Java",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:36Z",
+        "description": "| Public |  ",
+        "size_kb": 45042,
+        "languages": {
+            "Kotlin": 453831,
+            "Java": 130197,
+            "XSLT": 18426
+        }
+    },
+    {
+        "name": "Versioning",
+        "full_name": "OctopusDeploy/Versioning",
+        "url": "https://github.com/OctopusDeploy/Versioning",
+        "stars": 0,
+        "updated_at": "2025-01-19T23:05:04Z",
+        "description": "| Public |  ",
+        "size_kb": 627,
+        "languages": {
+            "C#": 288336,
+            "PowerShell": 2935,
+            "Shell": 2279,
+            "Batchfile": 201
+        }
+    },
+    {
+        "name": "Octopus.Dependencies.AWSCLI",
+        "full_name": "OctopusDeploy/Octopus.Dependencies.AWSCLI",
+        "url": "https://github.com/OctopusDeploy/Octopus.Dependencies.AWSCLI",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:40Z",
+        "description": "| Public |  AWS CLI repack",
+        "size_kb": 14,
+        "languages": {
+            "PowerShell": 7470,
+            "C#": 5994,
+            "Batchfile": 607
+        }
+    },
+    {
+        "name": "Octopus.Dependencies.TerraformCLI",
+        "full_name": "OctopusDeploy/Octopus.Dependencies.TerraformCLI",
+        "url": "https://github.com/OctopusDeploy/Octopus.Dependencies.TerraformCLI",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:41Z",
+        "description": "| Public |  ",
+        "size_kb": 168521,
+        "languages": {
+            "PowerShell": 7839,
+            "C#": 5784,
+            "Batchfile": 663
+        }
+    },
+    {
+        "name": "Octopus.Dependencies.AWSPS",
+        "full_name": "OctopusDeploy/Octopus.Dependencies.AWSPS",
+        "url": "https://github.com/OctopusDeploy/Octopus.Dependencies.AWSPS",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:42Z",
+        "description": "| Public |  ",
+        "size_kb": 12,
+        "languages": {
+            "PowerShell": 7470,
+            "C#": 5219,
+            "Batchfile": 607
+        }
+    },
+    {
+        "name": "Octopus.Dependencies.AzurePS",
+        "full_name": "OctopusDeploy/Octopus.Dependencies.AzurePS",
+        "url": "https://github.com/OctopusDeploy/Octopus.Dependencies.AzurePS",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:42Z",
+        "description": "| Public |  ",
+        "size_kb": 17,
+        "languages": {
+            "PowerShell": 7470,
+            "C#": 5348,
+            "Batchfile": 640
+        }
+    },
+    {
+        "name": "HCLParser",
+        "full_name": "OctopusDeploy/HCLParser",
+        "url": "https://github.com/OctopusDeploy/HCLParser",
+        "stars": 3,
+        "updated_at": "2024-10-03T17:31:46Z",
+        "description": "| Public |  ",
+        "size_kb": 257,
+        "languages": {
+            "HCL": 645133,
+            "C#": 158839,
+            "PowerShell": 2936,
+            "Shell": 2280,
+            "Batchfile": 201
+        }
+    },
+    {
+        "name": "Octopus.Dependencies.AzureCLI",
+        "full_name": "OctopusDeploy/Octopus.Dependencies.AzureCLI",
+        "url": "https://github.com/OctopusDeploy/Octopus.Dependencies.AzureCLI",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:18:48Z",
+        "description": "| Public |  ",
+        "size_kb": 15,
+        "languages": {
+            "PowerShell": 7450,
+            "C#": 5215,
+            "Batchfile": 640
+        }
+    },
+    {
+        "name": "WebDriverTraining",
+        "full_name": "OctopusDeploy/WebDriverTraining",
+        "url": "https://github.com/OctopusDeploy/WebDriverTraining",
+        "stars": 1,
+        "updated_at": "2024-11-08T12:19:19Z",
+        "description": "| Public |  Blog series",
+        "size_kb": 956,
+        "languages": {
+            "Java": 413152,
+            "HTML": 105734,
+            "Gherkin": 3341,
+            "Dockerfile": 1605,
+            "Shell": 1240
+        }
+    },
+    {
+        "name": "go-octopusdeploy",
+        "full_name": "OctopusDeploy/go-octopusdeploy",
+        "url": "https://github.com/OctopusDeploy/go-octopusdeploy",
+        "stars": 13,
+        "updated_at": "2025-03-05T06:46:40Z",
+        "description": "| Public |  Go API Client for Octopus Deploy :octopus:",
+        "size_kb": 6162,
+        "languages": {
+            "Go": 1627643,
+            "PowerShell": 6798
+        }
+    },
+    {
+        "name": "OctopusCLI",
+        "full_name": "OctopusDeploy/OctopusCLI",
+        "url": "https://github.com/OctopusDeploy/OctopusCLI",
+        "stars": 7,
+        "updated_at": "2025-02-20T01:00:50Z",
+        "description": "| Public |  Command line tool for Octopus Deploy",
+        "size_kb": 20275,
+        "languages": {
+            "C#": 645141,
+            "Shell": 12055,
+            "PowerShell": 3459,
+            "Dockerfile": 903,
+            "Batchfile": 233
+        }
+    },
+    {
+        "name": "vagrant-winrm-file-download",
+        "full_name": "OctopusDeploy/vagrant-winrm-file-download",
+        "url": "https://github.com/OctopusDeploy/vagrant-winrm-file-download",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:02Z",
+        "description": "| Public |  A vagrant provisioner plugin that downloads files from guest to host via winrm",
+        "size_kb": 7,
+        "languages": {
+            "Ruby": 6481
+        }
+    },
+    {
+        "name": "NCrontab-Advanced",
+        "full_name": "OctopusDeploy/NCrontab-Advanced",
+        "url": "https://github.com/OctopusDeploy/NCrontab-Advanced",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:05Z",
+        "description": "| Public |  Cron string parser for .NET",
+        "size_kb": 149,
+        "languages": {
+            "C#": 165939,
+            "PowerShell": 2953,
+            "Shell": 2275,
+            "Batchfile": 214
+        }
+    },
+    {
+        "name": "mssql-docker",
+        "full_name": "OctopusDeploy/mssql-docker",
+        "url": "https://github.com/OctopusDeploy/mssql-docker",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:05Z",
+        "description": "| Public |  Official Microsoft repository for SQL Server in Docker resources",
+        "size_kb": 183,
+        "languages": {
+            "PowerShell": 2299
+        }
+    },
+    {
+        "name": "homebrew-taps",
+        "full_name": "OctopusDeploy/homebrew-taps",
+        "url": "https://github.com/OctopusDeploy/homebrew-taps",
+        "stars": 1,
+        "updated_at": "2024-12-04T03:57:31Z",
+        "description": "| Public |  The homebrew tap repo for OctopusCli",
+        "size_kb": 170,
+        "languages": {
+            "Ruby": 3476
+        }
+    },
+    {
+        "name": "WorkerTools",
+        "full_name": "OctopusDeploy/WorkerTools",
+        "url": "https://github.com/OctopusDeploy/WorkerTools",
+        "stars": 1,
+        "updated_at": "2025-03-05T02:31:01Z",
+        "description": "| Public |  Officially sanctioned worker images for Octopus Deploy",
+        "size_kb": 248,
+        "languages": {
+            "Dockerfile": 28804,
+            "PowerShell": 19525,
+            "Batchfile": 434
+        }
+    },
+    {
+        "name": "ConsolidateCalamariPackagesTask",
+        "full_name": "OctopusDeploy/ConsolidateCalamariPackagesTask",
+        "url": "https://github.com/OctopusDeploy/ConsolidateCalamariPackagesTask",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:09Z",
+        "description": "| Public |  A msbuild task for Octopus Server that consolidates all the Calamari packages into a single archive",
+        "size_kb": 215,
+        "languages": {
+            "C#": 25015,
+            "PowerShell": 6095,
+            "Batchfile": 607
+        }
+    },
+    {
+        "name": "Ocl",
+        "full_name": "OctopusDeploy/Ocl",
+        "url": "https://github.com/OctopusDeploy/Ocl",
+        "stars": 2,
+        "updated_at": "2024-10-22T05:27:20Z",
+        "description": "| Public |  A HCL serialization library for .NET",
+        "size_kb": 338,
+        "languages": {
+            "C#": 166096,
+            "PowerShell": 2936,
+            "Shell": 2280,
+            "Batchfile": 201
+        }
+    },
+    {
+        "name": "JavaPropertiesParser",
+        "full_name": "OctopusDeploy/JavaPropertiesParser",
+        "url": "https://github.com/OctopusDeploy/JavaPropertiesParser",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:16Z",
+        "description": "| Public |  ",
+        "size_kb": 88,
+        "languages": {
+            "C#": 47600,
+            "PowerShell": 3233,
+            "Shell": 2639,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "OctoVersion",
+        "full_name": "OctopusDeploy/OctoVersion",
+        "url": "https://github.com/OctopusDeploy/OctoVersion",
+        "stars": 3,
+        "updated_at": "2025-01-21T22:20:28Z",
+        "description": "| Public |  .NET tool for determining version number based on the Git revision graph",
+        "size_kb": 420,
+        "languages": {
+            "C#": 107061,
+            "PowerShell": 3224,
+            "Shell": 2627,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "jsondiffpatch.net",
+        "full_name": "OctopusDeploy/jsondiffpatch.net",
+        "url": "https://github.com/OctopusDeploy/jsondiffpatch.net",
+        "stars": 2,
+        "updated_at": "2024-07-29T17:19:17Z",
+        "description": "| Public |  JSON object diffs and reversible patching (jsondiffpatch compatible)",
+        "size_kb": 1900,
+        "languages": {
+            "C#": 208385
+        }
+    },
+    {
+        "name": "install-octopus-cli-action",
+        "full_name": "OctopusDeploy/install-octopus-cli-action",
+        "url": "https://github.com/OctopusDeploy/install-octopus-cli-action",
+        "stars": 82,
+        "updated_at": "2025-03-05T04:35:15Z",
+        "description": "| Public |  :octocat: GitHub Action to Install the Octopus CLI",
+        "size_kb": 11785,
+        "languages": {
+            "TypeScript": 12410,
+            "JavaScript": 881
+        }
+    },
+    {
+        "name": "Shellfish",
+        "full_name": "OctopusDeploy/Shellfish",
+        "url": "https://github.com/OctopusDeploy/Shellfish",
+        "stars": 5,
+        "updated_at": "2025-02-17T22:14:41Z",
+        "description": "| Public |  Octopus.Shellfish.*, ShellExecutor and other commandline invocation things",
+        "size_kb": 237,
+        "languages": {
+            "C#": 154045,
+            "PowerShell": 3224,
+            "Shell": 2627,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "RoslynAnalyzers",
+        "full_name": "OctopusDeploy/RoslynAnalyzers",
+        "url": "https://github.com/OctopusDeploy/RoslynAnalyzers",
+        "stars": 2,
+        "updated_at": "2024-07-29T17:19:21Z",
+        "description": "| Public |  Roslyn analysers used for Octopus Projects",
+        "size_kb": 141,
+        "languages": {
+            "C#": 55297,
+            "PowerShell": 6538,
+            "Shell": 2639,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "create-release-action",
+        "full_name": "OctopusDeploy/create-release-action",
+        "url": "https://github.com/OctopusDeploy/create-release-action",
+        "stars": 79,
+        "updated_at": "2025-03-05T00:04:12Z",
+        "description": "| Public |  :octocat: GitHub Action to Create a Release in Octopus Deploy",
+        "size_kb": 4144,
+        "languages": {
+            "TypeScript": 14574,
+            "JavaScript": 876
+        }
+    },
+    {
+        "name": "push-package-action",
+        "full_name": "OctopusDeploy/push-package-action",
+        "url": "https://github.com/OctopusDeploy/push-package-action",
+        "stars": 34,
+        "updated_at": "2025-03-05T02:06:23Z",
+        "description": "| Public |  :octocat: GitHub Action to Push a Package to Octopus Deploy",
+        "size_kb": 3439,
+        "languages": {
+            "TypeScript": 8051,
+            "JavaScript": 874
+        }
+    },
+    {
+        "name": "run-runbook-action",
+        "full_name": "OctopusDeploy/run-runbook-action",
+        "url": "https://github.com/OctopusDeploy/run-runbook-action",
+        "stars": 18,
+        "updated_at": "2025-03-05T02:49:58Z",
+        "description": "| Public |  :octocat: GitHub Action to Run a Runbook in Octopus Deploy",
+        "size_kb": 1871,
+        "languages": {
+            "TypeScript": 19352,
+            "JavaScript": 873
+        }
+    },
+    {
+        "name": "CommandLine",
+        "full_name": "OctopusDeploy/CommandLine",
+        "url": "https://github.com/OctopusDeploy/CommandLine",
+        "stars": 1,
+        "updated_at": "2024-10-22T05:27:32Z",
+        "description": "| Public |  The command line parsing library used by many of Octopus apps.",
+        "size_kb": 160,
+        "languages": {
+            "C#": 116119,
+            "PowerShell": 2953,
+            "Shell": 2275,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "libgit2sharp",
+        "full_name": "OctopusDeploy/libgit2sharp",
+        "url": "https://github.com/OctopusDeploy/libgit2sharp",
+        "stars": 4,
+        "updated_at": "2024-07-29T17:19:27Z",
+        "description": "| Public |  Git + .NET/Mono = \u2764",
+        "size_kb": 167384,
+        "languages": {
+            "C#": 2537393
+        }
+    },
+    {
+        "name": "TeamCityBuildStatsScraper",
+        "full_name": "OctopusDeploy/TeamCityBuildStatsScraper",
+        "url": "https://github.com/OctopusDeploy/TeamCityBuildStatsScraper",
+        "stars": 0,
+        "updated_at": "2025-03-04T08:04:36Z",
+        "description": "| Public |  ",
+        "size_kb": 165,
+        "languages": {
+            "C#": 36272,
+            "Dockerfile": 576
+        }
+    },
+    {
+        "name": "teamcity-opentelemetry-plugin",
+        "full_name": "OctopusDeploy/teamcity-opentelemetry-plugin",
+        "url": "https://github.com/OctopusDeploy/teamcity-opentelemetry-plugin",
+        "stars": 5,
+        "updated_at": "2025-02-20T09:31:56Z",
+        "description": "| Public |  A TeamCity plugin that contains a build listener to send OpenTelemetry trace data to an external endpoint",
+        "size_kb": 1018,
+        "languages": {
+            "Java": 126124,
+            "JavaScript": 4208,
+            "CSS": 92
+        }
+    },
+    {
+        "name": "message-contracts.ts",
+        "full_name": "OctopusDeploy/message-contracts.ts",
+        "url": "https://github.com/OctopusDeploy/message-contracts.ts",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:29Z",
+        "description": "| Public |  Shared TypeScript definitions for Octopus Deploy API messages :octopus:",
+        "size_kb": 458,
+        "languages": {
+            "TypeScript": 173140,
+            "JavaScript": 668
+        }
+    },
+    {
+        "name": "aks-prometheus-windows-exporter",
+        "full_name": "OctopusDeploy/aks-prometheus-windows-exporter",
+        "url": "https://github.com/OctopusDeploy/aks-prometheus-windows-exporter",
+        "stars": 1,
+        "updated_at": "2024-07-29T17:19:29Z",
+        "description": "| Public |  A set of scripts and deployments to scrape Windows metrics from Windows AKS Node Pools",
+        "size_kb": 9300,
+        "languages": {
+            "PowerShell": 1814,
+            "Dockerfile": 515
+        }
+    },
+    {
+        "name": "api-client.ts",
+        "full_name": "OctopusDeploy/api-client.ts",
+        "url": "https://github.com/OctopusDeploy/api-client.ts",
+        "stars": 0,
+        "updated_at": "2024-12-18T00:56:08Z",
+        "description": "| Public |  TypeScript API client for Octopus Deploy \u2728\ud83d\udc19\ud83d\ude80\u2728",
+        "size_kb": 2004,
+        "languages": {
+            "TypeScript": 197832,
+            "JavaScript": 3611
+        }
+    },
+    {
+        "name": "vscode-octopusdeploy",
+        "full_name": "OctopusDeploy/vscode-octopusdeploy",
+        "url": "https://github.com/OctopusDeploy/vscode-octopusdeploy",
+        "stars": 1,
+        "updated_at": "2024-12-11T00:17:25Z",
+        "description": "| Public |  Octopus Deploy for Visual Studio Code :octopus:",
+        "size_kb": 360,
+        "languages": {
+            "TypeScript": 10269,
+            "JavaScript": 1925
+        }
+    },
+    {
+        "name": "ocl.ts",
+        "full_name": "OctopusDeploy/ocl.ts",
+        "url": "https://github.com/OctopusDeploy/ocl.ts",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:31Z",
+        "description": "| Public |  TypeScript library for processing Octopus Configuration Language (OCL) :octopus:",
+        "size_kb": 315,
+        "languages": {
+            "TypeScript": 61904,
+            "JavaScript": 134
+        }
+    },
+    {
+        "name": "create-release-buildkite-plugin",
+        "full_name": "OctopusDeploy/create-release-buildkite-plugin",
+        "url": "https://github.com/OctopusDeploy/create-release-buildkite-plugin",
+        "stars": 1,
+        "updated_at": "2024-07-29T17:19:35Z",
+        "description": "| Public |  Buildkite plugin to create a release through Octopus Deploy",
+        "size_kb": 39,
+        "languages": {
+            "Shell": 10475
+        }
+    },
+    {
+        "name": "push-build-information-buildkite-plugin",
+        "full_name": "OctopusDeploy/push-build-information-buildkite-plugin",
+        "url": "https://github.com/OctopusDeploy/push-build-information-buildkite-plugin",
+        "stars": 2,
+        "updated_at": "2024-07-29T17:19:36Z",
+        "description": "| Public |  Buildkite plugin to push build information to Octopus Deploy",
+        "size_kb": 29,
+        "languages": {
+            "Shell": 8090
+        }
+    },
+    {
+        "name": "run-runbook-buildkite-plugin",
+        "full_name": "OctopusDeploy/run-runbook-buildkite-plugin",
+        "url": "https://github.com/OctopusDeploy/run-runbook-buildkite-plugin",
+        "stars": 1,
+        "updated_at": "2024-07-29T17:19:36Z",
+        "description": "| Public |  Buildkite plugin to run a runbook through Octopus Deploy",
+        "size_kb": 54,
+        "languages": {
+            "Shell": 10168
+        }
+    },
+    {
+        "name": "util-actions",
+        "full_name": "OctopusDeploy/util-actions",
+        "url": "https://github.com/OctopusDeploy/util-actions",
+        "stars": 3,
+        "updated_at": "2025-03-05T00:10:15Z",
+        "description": "| Public |  A set of utility actions for use in GitHub action workflows",
+        "size_kb": 7762,
+        "languages": {
+            "TypeScript": 26647,
+            "JavaScript": 6390
+        }
+    },
+    {
+        "name": "push-build-information-action",
+        "full_name": "OctopusDeploy/push-build-information-action",
+        "url": "https://github.com/OctopusDeploy/push-build-information-action",
+        "stars": 9,
+        "updated_at": "2025-03-05T00:49:02Z",
+        "description": "| Public |  :octocat: GitHub Action to Push Build Information to Octopus Deploy",
+        "size_kb": 2725,
+        "languages": {
+            "TypeScript": 8651,
+            "JavaScript": 884
+        }
+    },
+    {
+        "name": "cli",
+        "full_name": "OctopusDeploy/cli",
+        "url": "https://github.com/OctopusDeploy/cli",
+        "stars": 39,
+        "updated_at": "2025-03-06T04:28:14Z",
+        "description": "| Public |  Next Generation of the Octopus CLI :octopus:",
+        "size_kb": 2170,
+        "languages": {
+            "Go": 1762722,
+            "Shell": 4415,
+            "Makefile": 711,
+            "PowerShell": 555
+        }
+    },
+    {
+        "name": "deploy-release-action",
+        "full_name": "OctopusDeploy/deploy-release-action",
+        "url": "https://github.com/OctopusDeploy/deploy-release-action",
+        "stars": 4,
+        "updated_at": "2025-03-05T02:28:32Z",
+        "description": "| Public | :octocat: GitHub Action to Deploy a Release in Octopus Deploy",
+        "size_kb": 2346,
+        "languages": {
+            "TypeScript": 17874,
+            "JavaScript": 876
+        }
+    },
+    {
+        "name": "await-task-action",
+        "full_name": "OctopusDeploy/await-task-action",
+        "url": "https://github.com/OctopusDeploy/await-task-action",
+        "stars": 2,
+        "updated_at": "2025-03-05T03:13:12Z",
+        "description": "| Public | :octocat: GitHub Action to Wait/Watch an Execution in Octopus Deploy",
+        "size_kb": 2928,
+        "languages": {
+            "TypeScript": 16505,
+            "JavaScript": 872
+        }
+    },
+    {
+        "name": "deploy-release-tenanted-action",
+        "full_name": "OctopusDeploy/deploy-release-tenanted-action",
+        "url": "https://github.com/OctopusDeploy/deploy-release-tenanted-action",
+        "stars": 5,
+        "updated_at": "2025-03-05T01:32:41Z",
+        "description": "| Public | :octocat: GitHub Action to Deploy a Tenanted Release in Octopus Deploy",
+        "size_kb": 2392,
+        "languages": {
+            "TypeScript": 20471,
+            "JavaScript": 885
+        }
+    },
+    {
+        "name": "create-zip-package-action",
+        "full_name": "OctopusDeploy/create-zip-package-action",
+        "url": "https://github.com/OctopusDeploy/create-zip-package-action",
+        "stars": 3,
+        "updated_at": "2025-03-05T03:39:09Z",
+        "description": "| Public | :octocat: GitHub Action to Create a Zip Package to Upload to Octopus Deploy",
+        "size_kb": 1815,
+        "languages": {
+            "TypeScript": 4905,
+            "JavaScript": 880
+        }
+    },
+    {
+        "name": "create-nuget-package-action",
+        "full_name": "OctopusDeploy/create-nuget-package-action",
+        "url": "https://github.com/OctopusDeploy/create-nuget-package-action",
+        "stars": 2,
+        "updated_at": "2025-03-05T04:08:28Z",
+        "description": "| Public | :octocat: GitHub Action to Create a NuGet Package for Octopus Deploy",
+        "size_kb": 2001,
+        "languages": {
+            "TypeScript": 5875,
+            "JavaScript": 882
+        }
+    },
+    {
+        "name": "octokit.net.extensions",
+        "full_name": "OctopusDeploy/octokit.net.extensions",
+        "url": "https://github.com/OctopusDeploy/octokit.net.extensions",
+        "stars": 2,
+        "updated_at": "2025-02-02T02:58:49Z",
+        "description": "| Public | This library extends octokit.net, the well-known GitHub client, by enriching it with caching, resilient connections and logging capabilities. In fact, this library free you from dealing with rate limit and abuse issues.",
+        "size_kb": 131,
+        "languages": {
+            "C#": 33990,
+            "PowerShell": 2958,
+            "Shell": 2280,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "helm-charts",
+        "full_name": "OctopusDeploy/helm-charts",
+        "url": "https://github.com/OctopusDeploy/helm-charts",
+        "stars": 11,
+        "updated_at": "2025-03-04T04:36:33Z",
+        "description": "Helm chart for deploying Octopus Deploy into a Kubernetes cluster",
+        "size_kb": 1580,
+        "languages": {
+            "C#": 38908,
+            "Smarty": 8737,
+            "Mustache": 6456,
+            "Go": 1519
+        }
+    },
+    {
+        "name": "go-octodiff",
+        "full_name": "OctopusDeploy/go-octodiff",
+        "url": "https://github.com/OctopusDeploy/go-octodiff",
+        "stars": 1,
+        "updated_at": "2024-07-29T17:19:57Z",
+        "description": "| Public | 100% Go implementation of remote delta compression based on the rsync algorithm (based on C# OctoDiff)",
+        "size_kb": 32,
+        "languages": {
+            "Go": 132172
+        }
+    },
+    {
+        "name": "terraform-provider-stripe",
+        "full_name": "OctopusDeploy/terraform-provider-stripe",
+        "url": "https://github.com/OctopusDeploy/terraform-provider-stripe",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:19:58Z",
+        "description": "A Terraform Provider for Stripe",
+        "size_kb": 5781,
+        "languages": {
+            "Go": 54045,
+            "HCL": 4937,
+            "PowerShell": 4914,
+            "Makefile": 388,
+            "Shell": 142
+        }
+    },
+    {
+        "name": "TeamCity.ServiceMessages",
+        "full_name": "OctopusDeploy/TeamCity.ServiceMessages",
+        "url": "https://github.com/OctopusDeploy/TeamCity.ServiceMessages",
+        "stars": 0,
+        "updated_at": "2023-06-08T05:05:38Z",
+        "description": ".NET library to deal with TeamCity Service messages",
+        "size_kb": 509,
+        "languages": {
+            "C#": 255177,
+            "Batchfile": 101
+        }
+    },
+    {
+        "name": "login",
+        "full_name": "OctopusDeploy/login",
+        "url": "https://github.com/OctopusDeploy/login",
+        "stars": 1,
+        "updated_at": "2025-03-06T00:25:43Z",
+        "description": "GitHub action to login to your Octopus Server",
+        "size_kb": 2264,
+        "languages": {
+            "TypeScript": 19912,
+            "JavaScript": 5403
+        }
+    },
+    {
+        "name": "packer-plugin-windows-update",
+        "full_name": "OctopusDeploy/packer-plugin-windows-update",
+        "url": "https://github.com/OctopusDeploy/packer-plugin-windows-update",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:20:00Z",
+        "description": "Packer plugin for installing Windows updates",
+        "size_kb": 222,
+        "languages": {
+            "PowerShell": 14009,
+            "Go": 11753,
+            "Makefile": 2127,
+            "HCL": 1871,
+            "Shell": 480
+        }
+    },
+    {
+        "name": "Sailfish",
+        "full_name": "OctopusDeploy/Sailfish",
+        "url": "https://github.com/OctopusDeploy/Sailfish",
+        "stars": 0,
+        "updated_at": "2024-04-19T03:22:46Z",
+        "description": "Sailfish - a production friendly performance benchmark runner for .NET",
+        "size_kb": 10114,
+        "languages": {
+            "C#": 935267,
+            "JavaScript": 66753,
+            "CSS": 3705
+        }
+    },
+    {
+        "name": "nfs-server-alpine",
+        "full_name": "OctopusDeploy/nfs-server-alpine",
+        "url": "https://github.com/OctopusDeploy/nfs-server-alpine",
+        "stars": 0,
+        "updated_at": "2024-07-29T17:20:03Z",
+        "description": "A handy Alpine Linux based NFS Server image running NFS v4 only, over TCP on port 2049",
+        "size_kb": 15401,
+        "languages": {
+            "Shell": 6727,
+            "Dockerfile": 726
+        }
+    },
+    {
+        "name": "kubernetes-agent-tools-base",
+        "full_name": "OctopusDeploy/kubernetes-agent-tools-base",
+        "url": "https://github.com/OctopusDeploy/kubernetes-agent-tools-base",
+        "stars": 0,
+        "updated_at": "2025-02-17T03:18:27Z",
+        "description": "| Public | The container images used for Kubernetes agent deployments",
+        "size_kb": 34,
+        "languages": {
+            "Dockerfile": 1324,
+            "Shell": 278
+        }
+    },
+    {
+        "name": "kubernetes-agent-nfs-watchdog",
+        "full_name": "OctopusDeploy/kubernetes-agent-nfs-watchdog",
+        "url": "https://github.com/OctopusDeploy/kubernetes-agent-nfs-watchdog",
+        "stars": 0,
+        "updated_at": "2024-08-27T02:14:12Z",
+        "description": "| Public | An application to monitor the Kubernetes agent NFS pod",
+        "size_kb": 47,
+        "languages": {
+            "Go": 5725,
+            "Dockerfile": 1275
+        }
+    },
+    {
+        "name": "nfs-ganesha",
+        "full_name": "OctopusDeploy/nfs-ganesha",
+        "url": "https://github.com/OctopusDeploy/nfs-ganesha",
+        "stars": 0,
+        "updated_at": "2024-09-24T06:05:49Z",
+        "description": "Builds the NFS Ganesha docker container",
+        "size_kb": 24,
+        "languages": {
+            "Dockerfile": 3528
+        }
+    },
+    {
+        "name": "winget-pkgs",
+        "full_name": "OctopusDeploy/winget-pkgs",
+        "url": "https://github.com/OctopusDeploy/winget-pkgs",
+        "stars": 0,
+        "updated_at": "2024-09-18T01:29:45Z",
+        "description": "The Microsoft community Windows Package Manager manifest repository",
+        "size_kb": 283619,
+        "languages": {
+            "PowerShell": 271204
+        }
+    },
+    {
+        "name": "steps",
+        "full_name": "OctopusDeploy/steps",
+        "url": "https://github.com/OctopusDeploy/steps",
+        "stars": 0,
+        "updated_at": "2024-10-31T01:48:14Z",
+        "description": "Fork of the Codefresh steps repository",
+        "size_kb": 33105,
+        "languages": {
+            "Python": 179426,
+            "Shell": 99067,
+            "JavaScript": 62711,
+            "Dockerfile": 26952,
+            "Go": 15488,
+            "RobotFramework": 13545,
+            "Jinja": 815,
+            "Batchfile": 437,
+            "Makefile": 434,
+            "EJS": 384
+        }
+    },
+    {
+        "name": "VulnerableLightApp",
+        "full_name": "OctopusDeploy/VulnerableLightApp",
+        "url": "https://github.com/OctopusDeploy/VulnerableLightApp",
+        "stars": 0,
+        "updated_at": "2024-09-24T03:44:59Z",
+        "description": "Vulnerable API for educational purposes",
+        "size_kb": 18207,
+        "languages": {
+            "C#": 31260
+        }
+    },
+    {
+        "name": "starter-workflows",
+        "full_name": "OctopusDeploy/starter-workflows",
+        "url": "https://github.com/OctopusDeploy/starter-workflows",
+        "stars": 0,
+        "updated_at": "2024-12-03T06:57:21Z",
+        "description": "Accelerating new GitHub Actions workflows ",
+        "size_kb": 3468,
+        "languages": {
+            "TypeScript": 12055
+        }
+    },
+    {
+        "name": "TeamCitySharp",
+        "full_name": "OctopusDeploy/TeamCitySharp",
+        "url": "https://github.com/OctopusDeploy/TeamCitySharp",
+        "stars": 0,
+        "updated_at": "2025-02-26T20:29:01Z",
+        "description": null,
+        "size_kb": 14798,
+        "languages": {
+            "C#": 402313,
+            "PowerShell": 2958,
+            "Shell": 2280,
+            "Batchfile": 207
+        }
+    },
+    {
+        "name": "openfeature-dotnet-sdk-contrib",
+        "full_name": "OctopusDeploy/openfeature-dotnet-sdk-contrib",
+        "url": "https://github.com/OctopusDeploy/openfeature-dotnet-sdk-contrib",
+        "stars": 0,
+        "updated_at": "2025-02-19T23:18:25Z",
+        "description": "OpenFeature Providers and Hooks for .NET",
+        "size_kb": 795,
+        "languages": {
+            "C#": 407284
+        }
+    }
+]

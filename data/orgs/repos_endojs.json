@@ -1,0 +1,116 @@
+[
+    {
+        "name": "Jessie",
+        "full_name": "endojs/Jessie",
+        "url": "https://github.com/endojs/Jessie",
+        "stars": 290,
+        "updated_at": "2025-02-28T13:30:18Z",
+        "description": "Tiny subset of JavaScript for ocap-safe universal mobile code",
+        "size_kb": 12096,
+        "languages": {
+            "JavaScript": 89186,
+            "TypeScript": 21990,
+            "Shell": 3958
+        }
+    },
+    {
+        "name": "Exo",
+        "full_name": "endojs/Exo",
+        "url": "https://github.com/endojs/Exo",
+        "stars": 8,
+        "updated_at": "2024-10-13T10:10:15Z",
+        "description": "A Personal Ledger for managing ERights and Object Capabilities (ocaps)",
+        "size_kb": 31696,
+        "languages": {
+            "JavaScript": 58510,
+            "Svelte": 21286,
+            "Shell": 1514,
+            "CSS": 1146,
+            "HTML": 934
+        }
+    },
+    {
+        "name": "menger-casting",
+        "full_name": "endojs/menger-casting",
+        "url": "https://github.com/endojs/menger-casting",
+        "stars": 1,
+        "updated_at": "2024-05-17T16:51:46Z",
+        "description": "A 3d logo intended for endojs",
+        "size_kb": 706,
+        "languages": {
+            "JavaScript": 117909,
+            "TypeScript": 2689,
+            "HTML": 955,
+            "CSS": 197
+        }
+    },
+    {
+        "name": "discord-ses-bot",
+        "full_name": "endojs/discord-ses-bot",
+        "url": "https://github.com/endojs/discord-ses-bot",
+        "stars": 9,
+        "updated_at": "2024-09-02T16:24:04Z",
+        "description": "A discord bot that gives all channel members access to a personal SES console, and the ability to share objects and functions with each other.",
+        "size_kb": 6424,
+        "languages": {
+            "JavaScript": 20407,
+            "Dockerfile": 464
+        }
+    },
+    {
+        "name": "xs-wasm",
+        "full_name": "endojs/xs-wasm",
+        "url": "https://github.com/endojs/xs-wasm",
+        "stars": 1,
+        "updated_at": "2024-05-17T16:55:29Z",
+        "description": "Proof-of-concept port of Moddable's `xs` engine to WebAssembly using `emscripten`.",
+        "size_kb": 914,
+        "languages": {
+            "JavaScript": 274555,
+            "C": 75122,
+            "Makefile": 5565,
+            "Dockerfile": 767
+        }
+    },
+    {
+        "name": "playground",
+        "full_name": "endojs/playground",
+        "url": "https://github.com/endojs/playground",
+        "stars": 0,
+        "updated_at": "2024-01-17T22:26:24Z",
+        "description": "Experimental caplets and plugins for the Endo Pet D\u00e6mon",
+        "size_kb": 544,
+        "languages": {
+            "JavaScript": 28051,
+            "Go": 2885,
+            "Makefile": 2521
+        }
+    },
+    {
+        "name": "hardenedjs.org",
+        "full_name": "endojs/hardenedjs.org",
+        "url": "https://github.com/endojs/hardenedjs.org",
+        "stars": 1,
+        "updated_at": "2024-10-17T18:39:32Z",
+        "description": "Hardened JavaScript website",
+        "size_kb": 1541,
+        "languages": {
+            "JavaScript": 424717,
+            "CSS": 941,
+            "TypeScript": 281
+        }
+    },
+    {
+        "name": "endo-evaluator",
+        "full_name": "endojs/endo-evaluator",
+        "url": "https://github.com/endojs/endo-evaluator",
+        "stars": 1,
+        "updated_at": "2024-10-04T18:17:27Z",
+        "description": "An async read-eval-print-loop (REPL)",
+        "size_kb": 514,
+        "languages": {
+            "JavaScript": 55203,
+            "HTML": 4835
+        }
+    }
+]

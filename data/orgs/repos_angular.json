@@ -1,0 +1,594 @@
+[
+    {
+        "name": "dgeni",
+        "full_name": "angular/dgeni",
+        "url": "https://github.com/angular/dgeni",
+        "stars": 771,
+        "updated_at": "2024-10-31T03:39:40Z",
+        "description": "Flexible JavaScript documentation generator used by AngularJS, Protractor and other JS projects",
+        "size_kb": 4977,
+        "languages": {
+            "TypeScript": 61249,
+            "JavaScript": 1653
+        }
+    },
+    {
+        "name": "dgeni-packages",
+        "full_name": "angular/dgeni-packages",
+        "url": "https://github.com/angular/dgeni-packages",
+        "stars": 142,
+        "updated_at": "2024-08-08T15:17:37Z",
+        "description": "A collection of dgeni packages for generating documentation from source code.",
+        "size_kb": 2124,
+        "languages": {
+            "JavaScript": 332590,
+            "TypeScript": 153356,
+            "HTML": 14943
+        }
+    },
+    {
+        "name": "jasminewd",
+        "full_name": "angular/jasminewd",
+        "url": "https://github.com/angular/jasminewd",
+        "stars": 48,
+        "updated_at": "2024-09-27T05:11:10Z",
+        "description": "Adapter for Jasmine-to-WebDriverJS",
+        "size_kb": 111,
+        "languages": {
+            "JavaScript": 32474,
+            "TypeScript": 17374,
+            "Shell": 2109
+        }
+    },
+    {
+        "name": "clang-format",
+        "full_name": "angular/clang-format",
+        "url": "https://github.com/angular/clang-format",
+        "stars": 100,
+        "updated_at": "2025-01-25T15:38:13Z",
+        "description": "Node repackaging of the clang-format native binary",
+        "size_kb": 97160,
+        "languages": {
+            "Python": 23081,
+            "JavaScript": 9986,
+            "Shell": 2987
+        }
+    },
+    {
+        "name": "angular-cli",
+        "full_name": "angular/angular-cli",
+        "url": "https://github.com/angular/angular-cli",
+        "stars": 26852,
+        "updated_at": "2025-03-06T09:49:11Z",
+        "description": "CLI tool for Angular",
+        "size_kb": 184071,
+        "languages": {
+            "TypeScript": 4859272,
+            "Starlark": 124610,
+            "JavaScript": 71131,
+            "HTML": 51390,
+            "EJS": 12611,
+            "Shell": 3208,
+            "jq": 1657,
+            "CSS": 240
+        }
+    },
+    {
+        "name": "tsickle",
+        "full_name": "angular/tsickle",
+        "url": "https://github.com/angular/tsickle",
+        "stars": 900,
+        "updated_at": "2025-02-28T18:30:51Z",
+        "description": "Tsickle \u2014 TypeScript to Closure Translator",
+        "size_kb": 5041,
+        "languages": {
+            "TypeScript": 650058,
+            "JavaScript": 322977,
+            "Starlark": 955
+        }
+    },
+    {
+        "name": "angularfire",
+        "full_name": "angular/angularfire",
+        "url": "https://github.com/angular/angularfire",
+        "stars": 7743,
+        "updated_at": "2025-03-06T13:37:25Z",
+        "description": "Angular + Firebase = \u2764\ufe0f",
+        "size_kb": 11477,
+        "languages": {
+            "TypeScript": 406964,
+            "JavaScript": 33119,
+            "CSS": 10668,
+            "Nunjucks": 5175,
+            "Shell": 642
+        }
+    },
+    {
+        "name": "compiler-builds",
+        "full_name": "angular/compiler-builds",
+        "url": "https://github.com/angular/compiler-builds",
+        "stars": 13,
+        "updated_at": "2025-03-05T23:39:34Z",
+        "description": "@angular/compiler build artifacts",
+        "size_kb": 1954460,
+        "languages": {
+            "JavaScript": 1358815
+        }
+    },
+    {
+        "name": "platform-browser-builds",
+        "full_name": "angular/platform-browser-builds",
+        "url": "https://github.com/angular/platform-browser-builds",
+        "stars": 8,
+        "updated_at": "2025-03-05T23:40:18Z",
+        "description": "@angular/platform-browser build artifacts",
+        "size_kb": 670916,
+        "languages": {
+            "JavaScript": 121312
+        }
+    },
+    {
+        "name": "platform-browser-dynamic-builds",
+        "full_name": "angular/platform-browser-dynamic-builds",
+        "url": "https://github.com/angular/platform-browser-dynamic-builds",
+        "stars": 8,
+        "updated_at": "2025-03-05T23:40:15Z",
+        "description": "@angular/platform-browser-dynamic build artifacts",
+        "size_kb": 182133,
+        "languages": {
+            "JavaScript": 10084
+        }
+    },
+    {
+        "name": "router-builds",
+        "full_name": "angular/router-builds",
+        "url": "https://github.com/angular/router-builds",
+        "stars": 38,
+        "updated_at": "2025-03-05T23:40:24Z",
+        "description": "@angular/router build artifacts",
+        "size_kb": 261707,
+        "languages": {
+            "JavaScript": 334471
+        }
+    },
+    {
+        "name": "compiler-cli-builds",
+        "full_name": "angular/compiler-cli-builds",
+        "url": "https://github.com/angular/compiler-cli-builds",
+        "stars": 11,
+        "updated_at": "2025-03-05T23:39:31Z",
+        "description": "@angular/compiler-cli build artifacts",
+        "size_kb": 69142,
+        "languages": {
+            "JavaScript": 948637
+        }
+    },
+    {
+        "name": "platform-server-builds",
+        "full_name": "angular/platform-server-builds",
+        "url": "https://github.com/angular/platform-server-builds",
+        "stars": 10,
+        "updated_at": "2025-03-05T23:40:20Z",
+        "description": "@angular/platform-server build artifacts",
+        "size_kb": 275829,
+        "languages": {
+            "JavaScript": 1024198
+        }
+    },
+    {
+        "name": "upgrade-builds",
+        "full_name": "angular/upgrade-builds",
+        "url": "https://github.com/angular/upgrade-builds",
+        "stars": 15,
+        "updated_at": "2025-03-05T23:40:28Z",
+        "description": "@angular/upgrade build artifacts",
+        "size_kb": 691020,
+        "languages": {
+            "JavaScript": 189066
+        }
+    },
+    {
+        "name": "forms-builds",
+        "full_name": "angular/forms-builds",
+        "url": "https://github.com/angular/forms-builds",
+        "stars": 23,
+        "updated_at": "2025-03-05T23:39:48Z",
+        "description": "Build artifacts for @angular/forms",
+        "size_kb": 208378,
+        "languages": {
+            "JavaScript": 302300
+        }
+    },
+    {
+        "name": "angular-ja",
+        "full_name": "angular/angular-ja",
+        "url": "https://github.com/angular/angular-ja",
+        "stars": 213,
+        "updated_at": "2025-02-24T06:46:14Z",
+        "description": "repository for Japanese localization of angular.io",
+        "size_kb": 46564,
+        "languages": {
+            "TypeScript": 342945,
+            "HTML": 116936
+        }
+    },
+    {
+        "name": "vscode-ng-language-service",
+        "full_name": "angular/vscode-ng-language-service",
+        "url": "https://github.com/angular/vscode-ng-language-service",
+        "stars": 784,
+        "updated_at": "2025-02-27T21:05:24Z",
+        "description": "Angular extension for Visual Studio Code",
+        "size_kb": 118591,
+        "languages": {
+            "TypeScript": 260990,
+            "Starlark": 24814,
+            "HTML": 7127,
+            "JavaScript": 2171,
+            "Shell": 2016
+        }
+    },
+    {
+        "name": "material-builds",
+        "full_name": "angular/material-builds",
+        "url": "https://github.com/angular/material-builds",
+        "stars": 49,
+        "updated_at": "2025-03-06T07:34:42Z",
+        "description": "Build snapshots for @angular/material",
+        "size_kb": 352846,
+        "languages": {
+            "JavaScript": 3239358,
+            "SCSS": 1397070
+        }
+    },
+    {
+        "name": "animations-builds",
+        "full_name": "angular/animations-builds",
+        "url": "https://github.com/angular/animations-builds",
+        "stars": 27,
+        "updated_at": "2025-03-05T23:39:24Z",
+        "description": "Build artifacts for @angular/animations",
+        "size_kb": 594731,
+        "languages": {
+            "JavaScript": 248712
+        }
+    },
+    {
+        "name": "cli-builds",
+        "full_name": "angular/cli-builds",
+        "url": "https://github.com/angular/cli-builds",
+        "stars": 11,
+        "updated_at": "2025-03-06T09:14:46Z",
+        "description": "Build artifacts for @angular/cli",
+        "size_kb": 12528,
+        "languages": {
+            "JavaScript": 355834
+        }
+    },
+    {
+        "name": "ngtools-webpack-builds",
+        "full_name": "angular/ngtools-webpack-builds",
+        "url": "https://github.com/angular/ngtools-webpack-builds",
+        "stars": 28,
+        "updated_at": "2025-03-06T09:15:32Z",
+        "description": "Build artifacts for @ngtools/webpack",
+        "size_kb": 7165,
+        "languages": {
+            "JavaScript": 122732
+        }
+    },
+    {
+        "name": "cdk-builds",
+        "full_name": "angular/cdk-builds",
+        "url": "https://github.com/angular/cdk-builds",
+        "stars": 38,
+        "updated_at": "2025-03-06T07:34:37Z",
+        "description": "Angular CDK builds",
+        "size_kb": 78703,
+        "languages": {
+            "JavaScript": 1685609,
+            "SCSS": 13222
+        }
+    },
+    {
+        "name": "bazel-builds",
+        "full_name": "angular/bazel-builds",
+        "url": "https://github.com/angular/bazel-builds",
+        "stars": 10,
+        "updated_at": "2025-03-05T23:39:26Z",
+        "description": "Build artifacts for @angular/bazel",
+        "size_kb": 15326,
+        "languages": {
+            "JavaScript": 166408,
+            "Starlark": 63072
+        }
+    },
+    {
+        "name": "material-moment-adapter-builds",
+        "full_name": "angular/material-moment-adapter-builds",
+        "url": "https://github.com/angular/material-moment-adapter-builds",
+        "stars": 9,
+        "updated_at": "2025-03-06T07:34:45Z",
+        "description": "Build artifacts for @angular/material-moment-adapter",
+        "size_kb": 3379,
+        "languages": {
+            "JavaScript": 12971
+        }
+    },
+    {
+        "name": "service-worker-builds",
+        "full_name": "angular/service-worker-builds",
+        "url": "https://github.com/angular/service-worker-builds",
+        "stars": 28,
+        "updated_at": "2025-03-05T23:40:26Z",
+        "description": "Build artifacts for @angular/service-worker",
+        "size_kb": 158644,
+        "languages": {
+            "JavaScript": 104359
+        }
+    },
+    {
+        "name": "elements-builds",
+        "full_name": "angular/elements-builds",
+        "url": "https://github.com/angular/elements-builds",
+        "stars": 20,
+        "updated_at": "2025-03-05T23:39:44Z",
+        "description": "Build artifacts @angular/elements",
+        "size_kb": 63982,
+        "languages": {
+            "JavaScript": 18281
+        }
+    },
+    {
+        "name": "angular-devkit-core-builds",
+        "full_name": "angular/angular-devkit-core-builds",
+        "url": "https://github.com/angular/angular-devkit-core-builds",
+        "stars": 6,
+        "updated_at": "2025-03-06T09:15:17Z",
+        "description": "Snapshots for @angular-devkit/core",
+        "size_kb": 5969,
+        "languages": {
+            "JavaScript": 191187
+        }
+    },
+    {
+        "name": "angular-devkit-schematics-builds",
+        "full_name": "angular/angular-devkit-schematics-builds",
+        "url": "https://github.com/angular/angular-devkit-schematics-builds",
+        "stars": 15,
+        "updated_at": "2025-03-06T09:15:23Z",
+        "description": "Build artifacts for @angular-devkit/schematics",
+        "size_kb": 5772,
+        "languages": {
+            "JavaScript": 164382
+        }
+    },
+    {
+        "name": "angular-devkit-schematics-cli-builds",
+        "full_name": "angular/angular-devkit-schematics-cli-builds",
+        "url": "https://github.com/angular/angular-devkit-schematics-cli-builds",
+        "stars": 2,
+        "updated_at": "2025-03-06T09:15:27Z",
+        "description": "Build artifacts for @angular-devkit/schematics-cli",
+        "size_kb": 4402,
+        "languages": {
+            "JavaScript": 24688,
+            "TypeScript": 7182
+        }
+    },
+    {
+        "name": "schematics-angular-builds",
+        "full_name": "angular/schematics-angular-builds",
+        "url": "https://github.com/angular/schematics-angular-builds",
+        "stars": 12,
+        "updated_at": "2025-03-06T09:15:38Z",
+        "description": "Build artifacts for @schematics/angular",
+        "size_kb": 33011,
+        "languages": {
+            "JavaScript": 242161
+        }
+    },
+    {
+        "name": "angular-devkit-architect-builds",
+        "full_name": "angular/angular-devkit-architect-builds",
+        "url": "https://github.com/angular/angular-devkit-architect-builds",
+        "stars": 3,
+        "updated_at": "2025-03-06T09:14:57Z",
+        "description": "Build artifacts for @angular-devkit/architect",
+        "size_kb": 4668,
+        "languages": {
+            "JavaScript": 107037
+        }
+    },
+    {
+        "name": "angular-devkit-architect-cli-builds",
+        "full_name": "angular/angular-devkit-architect-cli-builds",
+        "url": "https://github.com/angular/angular-devkit-architect-cli-builds",
+        "stars": 2,
+        "updated_at": "2025-03-06T09:15:03Z",
+        "description": "Build artifacts for @angular-devkit/architect-cli",
+        "size_kb": 4195,
+        "languages": {
+            "JavaScript": 13245
+        }
+    },
+    {
+        "name": "angular-devkit-build-webpack-builds",
+        "full_name": "angular/angular-devkit-build-webpack-builds",
+        "url": "https://github.com/angular/angular-devkit-build-webpack-builds",
+        "stars": 5,
+        "updated_at": "2025-03-06T09:15:13Z",
+        "description": "Build artifacts for @angular-devkit/build-webpack",
+        "size_kb": 4529,
+        "languages": {
+            "JavaScript": 15108
+        }
+    },
+    {
+        "name": "angular-pwa-builds",
+        "full_name": "angular/angular-pwa-builds",
+        "url": "https://github.com/angular/angular-pwa-builds",
+        "stars": 12,
+        "updated_at": "2025-03-06T09:14:49Z",
+        "description": "Build artifacts for @angular/pwa",
+        "size_kb": 4235,
+        "languages": {
+            "JavaScript": 6840
+        }
+    },
+    {
+        "name": "angular-devkit-build-angular-builds",
+        "full_name": "angular/angular-devkit-build-angular-builds",
+        "url": "https://github.com/angular/angular-devkit-build-angular-builds",
+        "stars": 26,
+        "updated_at": "2025-03-06T09:15:09Z",
+        "description": "Build artifacts for @angular-devkit/build-angular",
+        "size_kb": 16818,
+        "languages": {
+            "JavaScript": 489210,
+            "HTML": 5441
+        }
+    },
+    {
+        "name": "localize-builds",
+        "full_name": "angular/localize-builds",
+        "url": "https://github.com/angular/localize-builds",
+        "stars": 2,
+        "updated_at": "2025-03-05T23:40:14Z",
+        "description": null,
+        "size_kb": 47945,
+        "languages": {
+            "JavaScript": 32022
+        }
+    },
+    {
+        "name": "youtube-player-builds",
+        "full_name": "angular/youtube-player-builds",
+        "url": "https://github.com/angular/youtube-player-builds",
+        "stars": 6,
+        "updated_at": "2025-03-06T07:34:49Z",
+        "description": "@angular/youtube-player build artifacts",
+        "size_kb": 2860,
+        "languages": {
+            "JavaScript": 36386
+        }
+    },
+    {
+        "name": "google-maps-builds",
+        "full_name": "angular/google-maps-builds",
+        "url": "https://github.com/angular/google-maps-builds",
+        "stars": 10,
+        "updated_at": "2025-03-06T07:34:47Z",
+        "description": null,
+        "size_kb": 6391,
+        "languages": {
+            "JavaScript": 166432
+        }
+    },
+    {
+        "name": "cdk-experimental-builds",
+        "full_name": "angular/cdk-experimental-builds",
+        "url": "https://github.com/angular/cdk-experimental-builds",
+        "stars": 2,
+        "updated_at": "2025-03-06T07:34:39Z",
+        "description": "@angular/cdk-experimental build artifacts",
+        "size_kb": 12283,
+        "languages": {
+            "JavaScript": 200801
+        }
+    },
+    {
+        "name": "material-experimental-builds",
+        "full_name": "angular/material-experimental-builds",
+        "url": "https://github.com/angular/material-experimental-builds",
+        "stars": 3,
+        "updated_at": "2025-03-06T07:34:43Z",
+        "description": "@angular/material-experimental build artifacts",
+        "size_kb": 29865,
+        "languages": {
+            "JavaScript": 52288,
+            "SCSS": 8817
+        }
+    },
+    {
+        "name": "introduction-to-angular",
+        "full_name": "angular/introduction-to-angular",
+        "url": "https://github.com/angular/introduction-to-angular",
+        "stars": 34,
+        "updated_at": "2024-09-11T14:52:57Z",
+        "description": null,
+        "size_kb": 7236,
+        "languages": {
+            "TypeScript": 8464,
+            "HTML": 1750,
+            "CSS": 1557,
+            "JavaScript": 1426
+        }
+    },
+    {
+        "name": "dev-infra-private-build-tooling-builds",
+        "full_name": "angular/dev-infra-private-build-tooling-builds",
+        "url": "https://github.com/angular/dev-infra-private-build-tooling-builds",
+        "stars": 4,
+        "updated_at": "2025-03-06T14:40:53Z",
+        "description": "Private. Do not use. Snapshot builds for `build-tooling` from https://github.com/angular/dev-infra",
+        "size_kb": 858,
+        "languages": {
+            "Starlark": 117363,
+            "JavaScript": 76853,
+            "TypeScript": 76122,
+            "Shell": 1849,
+            "HTML": 388,
+            "CSS": 246
+        }
+    },
+    {
+        "name": "dev-infra-private-ng-dev-builds",
+        "full_name": "angular/dev-infra-private-ng-dev-builds",
+        "url": "https://github.com/angular/dev-infra-private-ng-dev-builds",
+        "stars": 3,
+        "updated_at": "2025-03-06T14:40:57Z",
+        "description": "Private. Do not use. Snapshot builds for `ng-dev` from https://github.com/angular/dev-infra",
+        "size_kb": 74835,
+        "languages": {
+            "JavaScript": 4184847
+        }
+    },
+    {
+        "name": "domino",
+        "full_name": "angular/domino",
+        "url": "https://github.com/angular/domino",
+        "stars": 21,
+        "updated_at": "2025-03-02T08:43:57Z",
+        "description": "Angular's fork of Domino for server-side rendering.",
+        "size_kb": 2969,
+        "languages": {
+            "JavaScript": 3363466,
+            "HTML": 46309
+        }
+    },
+    {
+        "name": "angular-ssr-builds",
+        "full_name": "angular/angular-ssr-builds",
+        "url": "https://github.com/angular/angular-ssr-builds",
+        "stars": 0,
+        "updated_at": "2025-03-06T09:14:54Z",
+        "description": null,
+        "size_kb": 2969,
+        "languages": {
+            "JavaScript": 119833
+        }
+    },
+    {
+        "name": "angular-build-builds",
+        "full_name": "angular/angular-build-builds",
+        "url": "https://github.com/angular/angular-build-builds",
+        "stars": 0,
+        "updated_at": "2025-03-06T09:14:40Z",
+        "description": null,
+        "size_kb": 1954,
+        "languages": {
+            "JavaScript": 709208
+        }
+    }
+]

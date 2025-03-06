@@ -1,0 +1,268 @@
+[
+    {
+        "name": "jquery-validation-unobtrusive",
+        "full_name": "aspnet/jquery-validation-unobtrusive",
+        "url": "https://github.com/aspnet/jquery-validation-unobtrusive",
+        "stars": 260,
+        "updated_at": "2025-02-20T11:14:55Z",
+        "description": "Add-on to jQuery Validation to enable unobtrusive validation options in data-* attributes.",
+        "size_kb": 276,
+        "languages": {
+            "JavaScript": 726,
+            "Batchfile": 245,
+            "PowerShell": 32
+        }
+    },
+    {
+        "name": "jquery-ajax-unobtrusive",
+        "full_name": "aspnet/jquery-ajax-unobtrusive",
+        "url": "https://github.com/aspnet/jquery-ajax-unobtrusive",
+        "stars": 146,
+        "updated_at": "2025-02-20T11:21:23Z",
+        "description": "[Maintenance mode: only security and critical bug fixes are being worked on] Add-on to jQuery Ajax to enable unobtrusive options in data-* attributes.",
+        "size_kb": 132,
+        "languages": {
+            "JavaScript": 700,
+            "Batchfile": 245,
+            "PowerShell": 31
+        }
+    },
+    {
+        "name": "Benchmarks",
+        "full_name": "aspnet/Benchmarks",
+        "url": "https://github.com/aspnet/Benchmarks",
+        "stars": 1185,
+        "updated_at": "2025-02-28T16:19:04Z",
+        "description": "Benchmarks for ASP.NET Core",
+        "size_kb": 20647,
+        "languages": {
+            "C#": 560456,
+            "Go": 19511,
+            "HTML": 18270,
+            "CSS": 16180,
+            "JavaScript": 14189,
+            "Dockerfile": 12156,
+            "Shell": 6289,
+            "Lua": 3882,
+            "PLpgSQL": 3445,
+            "TSQL": 1853,
+            "Liquid": 1835
+        }
+    },
+    {
+        "name": "BuildTools",
+        "full_name": "aspnet/BuildTools",
+        "url": "https://github.com/aspnet/BuildTools",
+        "stars": 73,
+        "updated_at": "2025-01-08T01:34:52Z",
+        "description": "Infrastructure utilities used in the ASP.NET Core build system. (Obsolete: use https://github.com/dotnet/arcade for all new projects)",
+        "size_kb": 4108,
+        "languages": {
+            "C#": 770109,
+            "PowerShell": 41857,
+            "Shell": 28777,
+            "Batchfile": 1293,
+            "Dockerfile": 967
+        }
+    },
+    {
+        "name": "BrowserLink",
+        "full_name": "aspnet/BrowserLink",
+        "url": "https://github.com/aspnet/BrowserLink",
+        "stars": 17,
+        "updated_at": "2024-09-13T07:31:20Z",
+        "description": "Browser Link loader for Visual Studio integration",
+        "size_kb": 283,
+        "languages": {
+            "C#": 273505,
+            "Shell": 9203,
+            "PowerShell": 6617,
+            "Batchfile": 506
+        }
+    },
+    {
+        "name": "AspNetSessionState",
+        "full_name": "aspnet/AspNetSessionState",
+        "url": "https://github.com/aspnet/AspNetSessionState",
+        "stars": 58,
+        "updated_at": "2024-12-11T01:50:07Z",
+        "description": "ASP.NET Session State (not for ASP.NET Core)",
+        "size_kb": 2657,
+        "languages": {
+            "C#": 401105,
+            "Batchfile": 1295
+        }
+    },
+    {
+        "name": "AspNetOutputCache",
+        "full_name": "aspnet/AspNetOutputCache",
+        "url": "https://github.com/aspnet/AspNetOutputCache",
+        "stars": 5,
+        "updated_at": "2024-11-05T06:32:05Z",
+        "description": "ASP.NET Output Cache (not for ASP.NET Core)",
+        "size_kb": 12396,
+        "languages": {
+            "C#": 228200,
+            "Batchfile": 1402
+        }
+    },
+    {
+        "name": "AspLabs",
+        "full_name": "aspnet/AspLabs",
+        "url": "https://github.com/aspnet/AspLabs",
+        "stars": 1230,
+        "updated_at": "2025-03-06T08:16:22Z",
+        "description": "Repo for ASP.NET experiments that are not ready for a production release",
+        "size_kb": 15066,
+        "languages": {
+            "C#": 684206,
+            "PowerShell": 173926,
+            "Shell": 129932,
+            "CMake": 16361,
+            "XSLT": 5867,
+            "CSS": 5244,
+            "HTML": 3928,
+            "JavaScript": 1072,
+            "Batchfile": 639,
+            "TypeScript": 538,
+            "ASP.NET": 101
+        }
+    },
+    {
+        "name": "RoslynCodeDomProvider",
+        "full_name": "aspnet/RoslynCodeDomProvider",
+        "url": "https://github.com/aspnet/RoslynCodeDomProvider",
+        "stars": 87,
+        "updated_at": "2025-02-26T03:20:26Z",
+        "description": "Roslyn CodeDOM provider",
+        "size_kb": 4168,
+        "languages": {
+            "C#": 114885,
+            "PowerShell": 16857,
+            "Batchfile": 1684
+        }
+    },
+    {
+        "name": "AspNetKatana",
+        "full_name": "aspnet/AspNetKatana",
+        "url": "https://github.com/aspnet/AspNetKatana",
+        "stars": 970,
+        "updated_at": "2025-03-05T01:50:45Z",
+        "description": "Microsoft's OWIN implementation, the Katana project",
+        "size_kb": 9020,
+        "languages": {
+            "C#": 3060878,
+            "PowerShell": 179104,
+            "JavaScript": 165079,
+            "Shell": 98291,
+            "HTML": 60900,
+            "Smalltalk": 13932,
+            "Batchfile": 12300,
+            "CMake": 9596,
+            "CSS": 8301,
+            "ASP.NET": 907,
+            "C": 204,
+            "C++": 204
+        }
+    },
+    {
+        "name": "Microsoft.AspNet.TelemetryCorrelation",
+        "full_name": "aspnet/Microsoft.AspNet.TelemetryCorrelation",
+        "url": "https://github.com/aspnet/Microsoft.AspNet.TelemetryCorrelation",
+        "stars": 15,
+        "updated_at": "2024-12-25T20:40:30Z",
+        "description": "Microsoft.AspNet.CorrelationIdTracker module for tracking multi-tier activities",
+        "size_kb": 224,
+        "languages": {
+            "C#": 133045
+        }
+    },
+    {
+        "name": "LibraryManager",
+        "full_name": "aspnet/LibraryManager",
+        "url": "https://github.com/aspnet/LibraryManager",
+        "stars": 464,
+        "updated_at": "2025-02-26T18:25:29Z",
+        "description": null,
+        "size_kb": 4902,
+        "languages": {
+            "C#": 1204286,
+            "PowerShell": 1462,
+            "Batchfile": 114,
+            "JavaScript": 34
+        }
+    },
+    {
+        "name": "MicrosoftConfigurationBuilders",
+        "full_name": "aspnet/MicrosoftConfigurationBuilders",
+        "url": "https://github.com/aspnet/MicrosoftConfigurationBuilders",
+        "stars": 127,
+        "updated_at": "2025-01-30T10:28:49Z",
+        "description": "Microsoft.Configuration.Builders",
+        "size_kb": 11594,
+        "languages": {
+            "C#": 467948,
+            "PowerShell": 18043,
+            "Batchfile": 2110
+        }
+    },
+    {
+        "name": "AspNetIdentity",
+        "full_name": "aspnet/AspNetIdentity",
+        "url": "https://github.com/aspnet/AspNetIdentity",
+        "stars": 249,
+        "updated_at": "2025-03-04T07:50:02Z",
+        "description": "ASP.NET Identity for ASP.NET 4.x applications",
+        "size_kb": 1851,
+        "languages": {
+            "C#": 676500,
+            "Smalltalk": 46044
+        }
+    },
+    {
+        "name": "AspNetWebHooks",
+        "full_name": "aspnet/AspNetWebHooks",
+        "url": "https://github.com/aspnet/AspNetWebHooks",
+        "stars": 140,
+        "updated_at": "2024-12-23T10:44:21Z",
+        "description": "Libraries to create and consume web hooks on ASP.NET 4.x (Due to other priorities this project is currently in maintenance mode only. There are no planned releases at this time. No new features are planned and we are only addressing critical issues as required.)",
+        "size_kb": 2443,
+        "languages": {
+            "C#": 1484421,
+            "Batchfile": 2528,
+            "Smalltalk": 1428
+        }
+    },
+    {
+        "name": "MessagePack-CSharp",
+        "full_name": "aspnet/MessagePack-CSharp",
+        "url": "https://github.com/aspnet/MessagePack-CSharp",
+        "stars": 18,
+        "updated_at": "2024-11-02T15:38:49Z",
+        "description": "Extremely Fast MessagePack Serializer for C#(.NET, .NET Core, Unity, Xamarin). / msgpack.org[C#]",
+        "size_kb": 9031,
+        "languages": {
+            "C#": 3612948,
+            "PowerShell": 45228,
+            "Batchfile": 4197,
+            "Shell": 3489
+        }
+    },
+    {
+        "name": "SignalR-Client-Cpp",
+        "full_name": "aspnet/SignalR-Client-Cpp",
+        "url": "https://github.com/aspnet/SignalR-Client-Cpp",
+        "stars": 144,
+        "updated_at": "2025-02-07T16:05:38Z",
+        "description": "C++ Client for ASP.NET Core SignalR",
+        "size_kb": 1011,
+        "languages": {
+            "C++": 555693,
+            "PowerShell": 170007,
+            "Shell": 120549,
+            "CMake": 23650,
+            "C": 1228,
+            "Batchfile": 388
+        }
+    }
+]

@@ -22,6 +22,7 @@ class AgentType(Enum):
     GITHUB_DEEP_SD = "github-deep-sd"
     GITHUB_DEEP_MS = "github-deep-ms"
     VULNERABILITIES_WORKFLOW_1 = "vulnerabilities-workflow-1"
+    VULNERABILITIES_WORKFLOW_2 = "vulnerabilities-workflow-2"
 
     @staticmethod
     def create(config: AppConfig) -> "AgentType":
@@ -40,6 +41,8 @@ class AgentType(Enum):
             return AgentType.GITHUB_DEEP_MS
         elif config.mode == "dir" and config.agent_prompt_type == "vulnerabilities-workflow-1":
             return AgentType.VULNERABILITIES_WORKFLOW_1
+        elif config.mode == "dir" and config.agent_prompt_type == "vulnerabilities-workflow-2":
+            return AgentType.VULNERABILITIES_WORKFLOW_2
         else:
             return AgentType(config.mode)
 

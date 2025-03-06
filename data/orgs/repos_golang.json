@@ -1,0 +1,543 @@
+[
+    {
+        "name": "glog",
+        "full_name": "golang/glog",
+        "url": "https://github.com/golang/glog",
+        "stars": 3582,
+        "updated_at": "2025-03-02T07:19:51Z",
+        "description": "Leveled execution logs for Go",
+        "size_kb": 84,
+        "languages": {
+            "Go": 125498
+        }
+    },
+    {
+        "name": "groupcache",
+        "full_name": "golang/groupcache",
+        "url": "https://github.com/golang/groupcache",
+        "stars": 13083,
+        "updated_at": "2025-03-06T06:34:47Z",
+        "description": "groupcache is a caching and cache-filling library, intended as a replacement for memcached in many cases.",
+        "size_kb": 84,
+        "languages": {
+            "Go": 67206
+        }
+    },
+    {
+        "name": "appengine",
+        "full_name": "golang/appengine",
+        "url": "https://github.com/golang/appengine",
+        "stars": 673,
+        "updated_at": "2025-02-07T02:07:17Z",
+        "description": "Go App Engine packages",
+        "size_kb": 1549,
+        "languages": {
+            "Go": 1218808,
+            "Shell": 2358
+        }
+    },
+    {
+        "name": "oauth2",
+        "full_name": "golang/oauth2",
+        "url": "https://github.com/golang/oauth2",
+        "stars": 5509,
+        "updated_at": "2025-03-06T12:32:11Z",
+        "description": "Go OAuth2",
+        "size_kb": 659,
+        "languages": {
+            "Go": 435473
+        }
+    },
+    {
+        "name": "review",
+        "full_name": "golang/review",
+        "url": "https://github.com/golang/review",
+        "stars": 144,
+        "updated_at": "2025-02-14T21:42:02Z",
+        "description": "[mirror] Tool for working with Gerrit code reviews",
+        "size_kb": 494,
+        "languages": {
+            "Go": 258989
+        }
+    },
+    {
+        "name": "protobuf",
+        "full_name": "golang/protobuf",
+        "url": "https://github.com/golang/protobuf",
+        "stars": 9882,
+        "updated_at": "2025-03-05T18:14:03Z",
+        "description": "Go support for Google's protocol buffers",
+        "size_kb": 8435,
+        "languages": {
+            "Go": 500819,
+            "Shell": 2325
+        }
+    },
+    {
+        "name": "geo",
+        "full_name": "golang/geo",
+        "url": "https://github.com/golang/geo",
+        "stars": 1721,
+        "updated_at": "2025-02-24T13:03:58Z",
+        "description": "S2 geometry library in Go",
+        "size_kb": 1059,
+        "languages": {
+            "Go": 1642730
+        }
+    },
+    {
+        "name": "benchmarks",
+        "full_name": "golang/benchmarks",
+        "url": "https://github.com/golang/benchmarks",
+        "stars": 190,
+        "updated_at": "2025-03-05T20:08:29Z",
+        "description": "Benchmarks for the perf dashboard",
+        "size_kb": 828,
+        "languages": {
+            "Go": 510975,
+            "Shell": 19778
+        }
+    },
+    {
+        "name": "crypto",
+        "full_name": "golang/crypto",
+        "url": "https://github.com/golang/crypto",
+        "stars": 3081,
+        "updated_at": "2025-03-06T14:34:38Z",
+        "description": "[mirror] Go supplementary cryptography libraries",
+        "size_kb": 6338,
+        "languages": {
+            "Go": 3285319,
+            "Assembly": 557408,
+            "C": 10504
+        }
+    },
+    {
+        "name": "exp",
+        "full_name": "golang/exp",
+        "url": "https://github.com/golang/exp",
+        "stars": 853,
+        "updated_at": "2025-03-05T21:27:45Z",
+        "description": "[mirror] Experimental and deprecated packages",
+        "size_kb": 6755,
+        "languages": {
+            "Go": 2944970,
+            "C": 84107,
+            "Objective-C": 12395,
+            "Shell": 9144,
+            "Assembly": 1310,
+            "Makefile": 780
+        }
+    },
+    {
+        "name": "mobile",
+        "full_name": "golang/mobile",
+        "url": "https://github.com/golang/mobile",
+        "stars": 5917,
+        "updated_at": "2025-03-06T06:30:21Z",
+        "description": "[mirror] Go on Mobile",
+        "size_kb": 6570,
+        "languages": {
+            "Go": 1000902,
+            "Objective-C": 57409,
+            "Java": 57137,
+            "C": 42150,
+            "HTML": 3427,
+            "Assembly": 1619
+        }
+    },
+    {
+        "name": "net",
+        "full_name": "golang/net",
+        "url": "https://github.com/golang/net",
+        "stars": 2908,
+        "updated_at": "2025-03-05T21:52:48Z",
+        "description": "[mirror] Go supplementary network libraries",
+        "size_kb": 11014,
+        "languages": {
+            "Go": 4110330,
+            "Assembly": 1736,
+            "Dockerfile": 797,
+            "Shell": 679
+        }
+    },
+    {
+        "name": "sys",
+        "full_name": "golang/sys",
+        "url": "https://github.com/golang/sys",
+        "stars": 1295,
+        "updated_at": "2025-03-05T15:56:58Z",
+        "description": "[mirror] Go packages for low-level interaction with the operating system",
+        "size_kb": 13852,
+        "languages": {
+            "Go": 2132958,
+            "Assembly": 310563,
+            "Shell": 43934,
+            "C": 2621,
+            "Dockerfile": 2262
+        }
+    },
+    {
+        "name": "debug",
+        "full_name": "golang/debug",
+        "url": "https://github.com/golang/debug",
+        "stars": 237,
+        "updated_at": "2025-03-05T17:41:47Z",
+        "description": "[mirror] debugging tools",
+        "size_kb": 9301,
+        "languages": {
+            "Go": 227109
+        }
+    },
+    {
+        "name": "build",
+        "full_name": "golang/build",
+        "url": "https://github.com/golang/build",
+        "stars": 668,
+        "updated_at": "2025-03-05T21:26:13Z",
+        "description": "[mirror] Go's continuous build and release infrastructure (no stability promises)",
+        "size_kb": 27688,
+        "languages": {
+            "Go": 4060035,
+            "HTML": 94354,
+            "CSS": 26140,
+            "Makefile": 23088,
+            "Dockerfile": 19581,
+            "JavaScript": 6753,
+            "PLpgSQL": 2677,
+            "Shell": 2264
+        }
+    },
+    {
+        "name": "playground",
+        "full_name": "golang/playground",
+        "url": "https://github.com/golang/playground",
+        "stars": 764,
+        "updated_at": "2025-03-05T21:29:46Z",
+        "description": "[mirror] The Go Playground",
+        "size_kb": 618,
+        "languages": {
+            "Go": 150321,
+            "HTML": 6388,
+            "Dockerfile": 5341,
+            "Makefile": 4667,
+            "CSS": 3553,
+            "JavaScript": 1959
+        }
+    },
+    {
+        "name": "tour",
+        "full_name": "golang/tour",
+        "url": "https://github.com/golang/tour",
+        "stars": 1559,
+        "updated_at": "2025-03-05T01:55:44Z",
+        "description": "[mirror] A Tour of Go",
+        "size_kb": 972,
+        "languages": {
+            "Go": 5742
+        }
+    },
+    {
+        "name": "proposal",
+        "full_name": "golang/proposal",
+        "url": "https://github.com/golang/proposal",
+        "stars": 3385,
+        "updated_at": "2025-03-02T15:48:00Z",
+        "description": "Go Project Design Documents",
+        "size_kb": 6996,
+        "languages": {
+            "HTML": 328670,
+            "TLA": 24155,
+            "Go": 6053,
+            "Emacs Lisp": 2455,
+            "Shell": 535
+        }
+    },
+    {
+        "name": "freetype",
+        "full_name": "golang/freetype",
+        "url": "https://github.com/golang/freetype",
+        "stars": 806,
+        "updated_at": "2025-03-02T20:38:17Z",
+        "description": "The Freetype font rasterizer in the Go programming language.",
+        "size_kb": 849,
+        "languages": {
+            "Go": 212339,
+            "C": 2312,
+            "Shell": 1814
+        }
+    },
+    {
+        "name": "arch",
+        "full_name": "golang/arch",
+        "url": "https://github.com/golang/arch",
+        "stars": 149,
+        "updated_at": "2025-03-05T22:09:47Z",
+        "description": "[mirror] architecture code",
+        "size_kb": 2055,
+        "languages": {
+            "Go": 1642884,
+            "C": 4366,
+            "Makefile": 455
+        }
+    },
+    {
+        "name": "sublime-config",
+        "full_name": "golang/sublime-config",
+        "url": "https://github.com/golang/sublime-config",
+        "stars": 86,
+        "updated_at": "2024-10-18T15:22:35Z",
+        "description": "A library for Go environment configuration in Sublime Text",
+        "size_kb": 33,
+        "languages": {
+            "Python": 66996
+        }
+    },
+    {
+        "name": "sublime-build",
+        "full_name": "golang/sublime-build",
+        "url": "https://github.com/golang/sublime-build",
+        "stars": 346,
+        "updated_at": "2025-02-14T05:58:18Z",
+        "description": "The official Sublime Text package for Go build system integration.",
+        "size_kb": 48,
+        "languages": {
+            "Python": 60270,
+            "Go": 919
+        }
+    },
+    {
+        "name": "sync",
+        "full_name": "golang/sync",
+        "url": "https://github.com/golang/sync",
+        "stars": 884,
+        "updated_at": "2025-03-05T07:05:04Z",
+        "description": "[mirror] concurrency primitives",
+        "size_kb": 55,
+        "languages": {
+            "Go": 54916
+        }
+    },
+    {
+        "name": "time",
+        "full_name": "golang/time",
+        "url": "https://github.com/golang/time",
+        "stars": 403,
+        "updated_at": "2025-02-28T22:02:33Z",
+        "description": "[mirror] Go supplementary time packages",
+        "size_kb": 40,
+        "languages": {
+            "Go": 35340
+        }
+    },
+    {
+        "name": "term",
+        "full_name": "golang/term",
+        "url": "https://github.com/golang/term",
+        "stars": 284,
+        "updated_at": "2025-03-05T15:52:09Z",
+        "description": "Go terminal and console support",
+        "size_kb": 83,
+        "languages": {
+            "Go": 42599
+        }
+    },
+    {
+        "name": "perf",
+        "full_name": "golang/perf",
+        "url": "https://github.com/golang/perf",
+        "stars": 384,
+        "updated_at": "2025-03-06T00:33:28Z",
+        "description": "[mirror] Performance measurement, storage, and analysis.",
+        "size_kb": 12523,
+        "languages": {
+            "Go": 602385,
+            "HTML": 11997
+        }
+    },
+    {
+        "name": "vgo",
+        "full_name": "golang/vgo",
+        "url": "https://github.com/golang/vgo",
+        "stars": 1518,
+        "updated_at": "2025-02-16T06:35:08Z",
+        "description": "[mirror] Versioned Go Prototype",
+        "size_kb": 3693,
+        "languages": {
+            "Go": 1116,
+            "Shell": 500
+        }
+    },
+    {
+        "name": "website",
+        "full_name": "golang/website",
+        "url": "https://github.com/golang/website",
+        "stars": 397,
+        "updated_at": "2025-03-05T21:25:14Z",
+        "description": "[mirror] Home of the go.dev and golang.org websites",
+        "size_kb": 153446,
+        "languages": {
+            "HTML": 1451668,
+            "Go": 1131602,
+            "JavaScript": 212004,
+            "CSS": 149277,
+            "Shell": 4931,
+            "Java": 3929,
+            "Python": 1760,
+            "C": 194,
+            "Limbo": 111
+        }
+    },
+    {
+        "name": "xerrors",
+        "full_name": "golang/xerrors",
+        "url": "https://github.com/golang/xerrors",
+        "stars": 280,
+        "updated_at": "2024-12-22T19:02:33Z",
+        "description": "[mirror]",
+        "size_kb": 57,
+        "languages": {
+            "Go": 41921
+        }
+    },
+    {
+        "name": "mod",
+        "full_name": "golang/mod",
+        "url": "https://github.com/golang/mod",
+        "stars": 198,
+        "updated_at": "2025-03-04T08:13:21Z",
+        "description": "[mirror] Go module mechanics libraries",
+        "size_kb": 299,
+        "languages": {
+            "Go": 458597,
+            "Shell": 178
+        }
+    },
+    {
+        "name": "vscode-go",
+        "full_name": "golang/vscode-go",
+        "url": "https://github.com/golang/vscode-go",
+        "stars": 3987,
+        "updated_at": "2025-03-05T19:04:43Z",
+        "description": "Go extension for Visual Studio Code",
+        "size_kb": 134100,
+        "languages": {
+            "TypeScript": 990512,
+            "Go": 98154,
+            "CSS": 29687,
+            "Shell": 2525,
+            "Dockerfile": 1757,
+            "JavaScript": 764
+        }
+    },
+    {
+        "name": "pkgsite",
+        "full_name": "golang/pkgsite",
+        "url": "https://github.com/golang/pkgsite",
+        "stars": 1250,
+        "updated_at": "2025-03-05T21:29:51Z",
+        "description": "[mirror] Home of the pkg.go.dev website",
+        "size_kb": 405168,
+        "languages": {
+            "Go": 2241987,
+            "PLpgSQL": 171250,
+            "TypeScript": 117888,
+            "CSS": 103908,
+            "Shell": 40195,
+            "JavaScript": 419
+        }
+    },
+    {
+        "name": "vulndb",
+        "full_name": "golang/vulndb",
+        "url": "https://github.com/golang/vulndb",
+        "stars": 575,
+        "updated_at": "2025-03-05T21:28:29Z",
+        "description": "[mirror] The Go Vulnerability Database",
+        "size_kb": 49458,
+        "languages": {
+            "Go": 890078,
+            "Shell": 10236,
+            "HCL": 6798,
+            "HTML": 5543,
+            "Dockerfile": 1490,
+            "CSS": 750
+        }
+    },
+    {
+        "name": "vuln",
+        "full_name": "golang/vuln",
+        "url": "https://github.com/golang/vuln",
+        "stars": 399,
+        "updated_at": "2025-03-05T21:30:41Z",
+        "description": "[mirror] the database client and tools for the Go vulnerability database",
+        "size_kb": 8115,
+        "languages": {
+            "Go": 447353,
+            "Shell": 3029,
+            "Dockerfile": 639,
+            "CSS": 336
+        }
+    },
+    {
+        "name": "pkgsite-metrics",
+        "full_name": "golang/pkgsite-metrics",
+        "url": "https://github.com/golang/pkgsite-metrics",
+        "stars": 15,
+        "updated_at": "2025-03-05T21:29:05Z",
+        "description": "Code to serve pkg.go.dev/metrics [mirror]",
+        "size_kb": 1115,
+        "languages": {
+            "Go": 365260,
+            "HCL": 17552,
+            "Shell": 6440,
+            "Makefile": 5759,
+            "Dockerfile": 3500
+        }
+    },
+    {
+        "name": "telemetry",
+        "full_name": "golang/telemetry",
+        "url": "https://github.com/golang/telemetry",
+        "stars": 40,
+        "updated_at": "2025-03-05T15:53:24Z",
+        "description": "[mirror] Go Telemetry services and libraries",
+        "size_kb": 2083,
+        "languages": {
+            "Go": 429082,
+            "CSS": 18869,
+            "HTML": 14670,
+            "TypeScript": 13139,
+            "Dockerfile": 3064,
+            "Shell": 1971
+        }
+    },
+    {
+        "name": "oscar",
+        "full_name": "golang/oscar",
+        "url": "https://github.com/golang/oscar",
+        "stars": 189,
+        "updated_at": "2025-03-05T21:28:31Z",
+        "description": "[mirror] Open source contributor agent architecture repo.",
+        "size_kb": 8541,
+        "languages": {
+            "Go": 1343134,
+            "CSS": 2937,
+            "Dockerfile": 2813,
+            "Shell": 2793
+        }
+    },
+    {
+        "name": "open2opaque",
+        "full_name": "golang/open2opaque",
+        "url": "https://github.com/golang/open2opaque",
+        "stars": 17,
+        "updated_at": "2025-02-25T13:31:17Z",
+        "description": "The open2opaque tool migrates Go packages from the Go Protobuf Open Struct API to the Opaque API.",
+        "size_kb": 288,
+        "languages": {
+            "Go": 596606,
+            "Shell": 180
+        }
+    }
+]

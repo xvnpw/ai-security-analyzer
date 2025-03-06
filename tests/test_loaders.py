@@ -176,3 +176,10 @@ def test_loader_javascript_project():
     assert _in_path(test_javascript_dir, "README.md", source_paths)
     assert _in_path(test_javascript_dir, "src/index.js", source_paths)  # javascript specific
     assert _in_path(test_javascript_dir, "@types/index.d.ts", source_paths)  # javascript specific
+
+
+def test_readme_load():
+    loader = RepoDirectoryLoader(test_python_dir, "python")
+    readme = loader.load_readme()
+    assert "README.md" in readme.metadata["source"]
+    assert len(readme.page_content) > 0

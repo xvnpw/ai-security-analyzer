@@ -29,6 +29,7 @@ class AppConfig(BaseModel):
         "mitigations",
         "vulnerabilities",
         "vulnerabilities-workflow-1",
+        "vulnerabilities-workflow-2",
     ] = Field(default="sec-design")
 
     # fake: only for testing
@@ -71,6 +72,7 @@ class AppConfig(BaseModel):
     vulnerabilities_output_dir: str = Field(default="vulnerabilities-workflow")
     included_classes_of_vulnerabilities: Optional[str] = Field(default=None)
     excluded_classes_of_vulnerabilities: Optional[str] = Field(default=None)
+    vulnerabilities_github_repo_url: Optional[str] = Field(default=None)
 
     @field_validator("exclude", mode="before")
     def parse_exclude(cls, value: Union[str, List[str], None]) -> List[str]:

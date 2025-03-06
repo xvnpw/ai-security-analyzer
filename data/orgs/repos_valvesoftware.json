@@ -1,0 +1,281 @@
+[
+    {
+        "name": "steam-runtime",
+        "full_name": "ValveSoftware/steam-runtime",
+        "url": "https://github.com/ValveSoftware/steam-runtime",
+        "stars": 1244,
+        "updated_at": "2025-03-05T15:25:42Z",
+        "description": "A runtime environment for Steam applications",
+        "size_kb": 169875,
+        "languages": {
+            "Shell": 54248,
+            "Python": 51698,
+            "Makefile": 146
+        }
+    },
+    {
+        "name": "voglperf",
+        "full_name": "ValveSoftware/voglperf",
+        "url": "https://github.com/ValveSoftware/voglperf",
+        "stars": 207,
+        "updated_at": "2025-03-03T06:11:58Z",
+        "description": "Benchmarking tool for Linux OpenGL games. Spews frame information, logs frametimes.",
+        "size_kb": 746,
+        "languages": {
+            "C": 110969,
+            "C++": 64181,
+            "CMake": 11055,
+            "HTML": 3269,
+            "Lua": 886,
+            "Makefile": 716
+        }
+    },
+    {
+        "name": "ToGL",
+        "full_name": "ValveSoftware/ToGL",
+        "url": "https://github.com/ValveSoftware/ToGL",
+        "stars": 2055,
+        "updated_at": "2025-03-03T06:19:24Z",
+        "description": "Direct3D to OpenGL abstraction layer",
+        "size_kb": 541,
+        "languages": {
+            "C++": 1119906,
+            "C": 107146,
+            "Objective-C": 2395
+        }
+    },
+    {
+        "name": "openvr",
+        "full_name": "ValveSoftware/openvr",
+        "url": "https://github.com/ValveSoftware/openvr",
+        "stars": 6233,
+        "updated_at": "2025-03-06T13:41:38Z",
+        "description": "OpenVR SDK",
+        "size_kb": 509401,
+        "languages": {
+            "C++": 831427,
+            "C#": 351609,
+            "C": 171069,
+            "Python": 72347,
+            "CMake": 7572
+        }
+    },
+    {
+        "name": "driver_hydra",
+        "full_name": "ValveSoftware/driver_hydra",
+        "url": "https://github.com/ValveSoftware/driver_hydra",
+        "stars": 104,
+        "updated_at": "2025-03-03T06:19:02Z",
+        "description": "OpenVR Driver for Razer Hydra using Sixense SDK",
+        "size_kb": 407,
+        "languages": {
+            "C++": 43620,
+            "C": 435
+        }
+    },
+    {
+        "name": "the_lab_renderer",
+        "full_name": "ValveSoftware/the_lab_renderer",
+        "url": "https://github.com/ValveSoftware/the_lab_renderer",
+        "stars": 281,
+        "updated_at": "2025-03-03T06:17:11Z",
+        "description": "Valve\u2019s VR renderer used in The Lab (Valve\u2019s VR launch title for the HTC Vive).",
+        "size_kb": 4760,
+        "languages": {
+            "C#": 293554,
+            "GLSL": 40017
+        }
+    },
+    {
+        "name": "GameNetworkingSockets",
+        "full_name": "ValveSoftware/GameNetworkingSockets",
+        "url": "https://github.com/ValveSoftware/GameNetworkingSockets",
+        "stars": 8522,
+        "updated_at": "2025-03-06T12:54:47Z",
+        "description": "Reliable & unreliable messages over UDP.  Robust message fragmentation & reassembly.  P2P networking / NAT traversal.  Encryption.",
+        "size_kb": 15982,
+        "languages": {
+            "C++": 2289979,
+            "C": 64082,
+            "CMake": 60298,
+            "Python": 14633,
+            "Shell": 2011
+        }
+    },
+    {
+        "name": "dxvk",
+        "full_name": "ValveSoftware/dxvk",
+        "url": "https://github.com/ValveSoftware/dxvk",
+        "stars": 402,
+        "updated_at": "2025-03-03T05:58:38Z",
+        "description": "dxvk tree containing branches used by Proton",
+        "size_kb": 20571,
+        "languages": {
+            "C++": 4837409,
+            "C": 1630509,
+            "Meson": 21698,
+            "GLSL": 19133,
+            "Shell": 6809,
+            "Ruby": 30
+        }
+    },
+    {
+        "name": "Moondust",
+        "full_name": "ValveSoftware/Moondust",
+        "url": "https://github.com/ValveSoftware/Moondust",
+        "stars": 162,
+        "updated_at": "2025-03-03T06:15:55Z",
+        "description": null,
+        "size_kb": 784622,
+        "languages": {
+            "C#": 3650356,
+            "ShaderLab": 85336,
+            "GLSL": 10334,
+            "Mask": 4227,
+            "HLSL": 2866,
+            "Smalltalk": 1011
+        }
+    },
+    {
+        "name": "Fossilize",
+        "full_name": "ValveSoftware/Fossilize",
+        "url": "https://github.com/ValveSoftware/Fossilize",
+        "stars": 616,
+        "updated_at": "2025-03-06T12:24:49Z",
+        "description": "A serialization format for various persistent Vulkan object types.",
+        "size_kb": 3145,
+        "languages": {
+            "C++": 2710066,
+            "C": 512049,
+            "CMake": 16473,
+            "Python": 10869,
+            "Shell": 774
+        }
+    },
+    {
+        "name": "libmysofa",
+        "full_name": "ValveSoftware/libmysofa",
+        "url": "https://github.com/ValveSoftware/libmysofa",
+        "stars": 8,
+        "updated_at": "2025-03-03T06:13:29Z",
+        "description": "Reader for AES SOFA files to get better HRTFs",
+        "size_kb": 250496,
+        "languages": {
+            "C": 249531,
+            "JavaScript": 22870,
+            "CMake": 12411,
+            "C++": 2873,
+            "MATLAB": 1463,
+            "Shell": 1304,
+            "Emacs Lisp": 100
+        }
+    },
+    {
+        "name": "steamos-compositor",
+        "full_name": "ValveSoftware/steamos-compositor",
+        "url": "https://github.com/ValveSoftware/steamos-compositor",
+        "stars": 135,
+        "updated_at": "2025-03-05T03:15:26Z",
+        "description": "SteamOS session compositing window manager",
+        "size_kb": 732,
+        "languages": {
+            "C": 788266,
+            "Shell": 78361,
+            "Makefile": 62821,
+            "Meson": 458,
+            "M4": 301
+        }
+    },
+    {
+        "name": "gamescope",
+        "full_name": "ValveSoftware/gamescope",
+        "url": "https://github.com/ValveSoftware/gamescope",
+        "stars": 3490,
+        "updated_at": "2025-03-05T22:29:52Z",
+        "description": "SteamOS session compositing window manager",
+        "size_kb": 4923,
+        "languages": {
+            "C++": 1502574,
+            "C": 338618,
+            "Lua": 21503,
+            "Meson": 14793,
+            "HLSL": 3333,
+            "GLSL": 3168,
+            "Shell": 311
+        }
+    },
+    {
+        "name": "vkd3d",
+        "full_name": "ValveSoftware/vkd3d",
+        "url": "https://github.com/ValveSoftware/vkd3d",
+        "stars": 182,
+        "updated_at": "2025-03-04T19:58:06Z",
+        "description": null,
+        "size_kb": 21273,
+        "languages": {
+            "C": 3128612,
+            "C++": 53829,
+            "M4": 23074,
+            "Makefile": 8874,
+            "Shell": 55
+        }
+    },
+    {
+        "name": "unity-xr-plugin",
+        "full_name": "ValveSoftware/unity-xr-plugin",
+        "url": "https://github.com/ValveSoftware/unity-xr-plugin",
+        "stars": 314,
+        "updated_at": "2025-03-03T06:08:05Z",
+        "description": "OpenVR plugin for Unity's XR API",
+        "size_kb": 120744,
+        "languages": {
+            "C#": 747975,
+            "C++": 695798,
+            "C": 369261,
+            "CMake": 7632,
+            "Objective-C": 3607
+        }
+    },
+    {
+        "name": "openxr_engine_plugins",
+        "full_name": "ValveSoftware/openxr_engine_plugins",
+        "url": "https://github.com/ValveSoftware/openxr_engine_plugins",
+        "stars": 51,
+        "updated_at": "2025-03-03T06:13:14Z",
+        "description": "Contains Valve-provided plugins for using OpenXR extensions with various game engines",
+        "size_kb": 62481,
+        "languages": {
+            "Mathematica": 1760379,
+            "C": 377624,
+            "C++": 236912,
+            "C#": 2302
+        }
+    },
+    {
+        "name": "OpenXR-Canonical-Pose-Tool",
+        "full_name": "ValveSoftware/OpenXR-Canonical-Pose-Tool",
+        "url": "https://github.com/ValveSoftware/OpenXR-Canonical-Pose-Tool",
+        "stars": 15,
+        "updated_at": "2025-03-03T06:12:19Z",
+        "description": "A tool to help OpenXR runtime developers match their poses to other runtimes' poses.",
+        "size_kb": 7909,
+        "languages": {
+            "C": 117889,
+            "C++": 58249,
+            "CMake": 2598,
+            "Makefile": 776
+        }
+    },
+    {
+        "name": "counter-strike_regional_standings",
+        "full_name": "ValveSoftware/counter-strike_regional_standings",
+        "url": "https://github.com/ValveSoftware/counter-strike_regional_standings",
+        "stars": 159,
+        "updated_at": "2025-03-06T08:26:58Z",
+        "description": null,
+        "size_kb": 16293,
+        "languages": {
+            "JavaScript": 72896
+        }
+    }
+]

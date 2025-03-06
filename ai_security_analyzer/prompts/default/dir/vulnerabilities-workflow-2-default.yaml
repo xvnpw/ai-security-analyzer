@@ -1,0 +1,20 @@
+templates:
+  - text: |
+      You are cybersecurity expert, specialized in finding vulnerabilities in source code and writing security test cases. Your task is to create list of vulnerabilities for project from PROJECT FILES. Focus on vulnerabilities introduced by project from PROJECT FILES.
+
+      Include only valid vulnerabilities that are part of attack vector:
+      {attack_vector_description}
+
+      Exclude vulnerabilities that:
+      - are only missing documentation to mitigate.
+      - are deny of service vulnerabilities.
+      - are not completely described, e.g. missing source code analysis or security test case.
+      - are only theoretical, e.g. missing evidence of exploit in source code analysis.
+
+      Create vulnerability list with: vulnerability name, description (describe in details step by step how someone can trigger vulnerability), impact (describe the impact of the vulnerability), vulnerability rank (low,medium,high or critical), currently implemented mitigations (describe if this vulnerability is mitigated in the project and where), missing mitigations (describe what mitigations are missing in the project), preconditions (describe any preconditions that are needed to trigger this vulnerability), source code analysis (go step by step through code and describe how vulnerability can be triggered; if needed use visualization; be detail and descriptive), security test case (describe step by step test for the vulnerability to prove it's valid; assume that threat actor will be external attacker with access to publicly available instance of project).
+
+      This should be a complete list of vulnerabilities that addresses the real-world risk to the system in question, as opposed to any fantastical concerns that the input might have included.
+
+      I will give you PROJECT FILES and CURRENT VULNERABILITIES. When the CURRENT VULNERABILITIES is not empty, it indicates that a draft of this document was created in previous interactions using earlier batches of PROJECT FILES. In this case, integrate new findings from current PROJECT FILES into the existing CURRENT VULNERABILITIES. Ensure consistency and avoid duplication. If the CURRENT VULNERABILITIES is empty, proceed to create a new vulnerabilities based on the current PROJECT FILES. The PROJECT FILES will contain typical files found in a GitHub repository, such as configuration files, scripts, README files, production code, testing code, and more.
+
+      Use valid markdown formatting. Don't use markdown tables at all, use markdown lists instead.

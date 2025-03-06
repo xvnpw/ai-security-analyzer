@@ -86,6 +86,24 @@ class RepoDirectoryLoader(DirectoryLoader):
 
         super().__init__(path, glob=include, exclude=exclude)
 
+    def load_readme(self) -> Document:
+        """Load documents lazily."""
+        p = Path(self.path)
+        if not p.exists():
+            raise FileNotFoundError(f"Directory not found: '{self.path}'")
+        if not p.is_dir():
+            raise ValueError(f"Expected directory, got file: '{self.path}'")
+
+        readme_path = p / "README.md"
+        if not readme_path.exists():
+            raise FileNotFoundError(f"README.md not found in directory: '{self.path}'")
+
+        loader = TextLoader(str(readme_path))
+        docs = loader.load()
+        if len(docs) == 0:
+            raise ValueError(f"No documents found in README.md: '{self.path}'")
+        return docs[0]
+
     def lazy_load(self) -> Iterator[Document]:
         """Load documents lazily."""
         p = Path(self.path)

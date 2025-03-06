@@ -180,6 +180,7 @@ def parse_arguments() -> AppConfig:
             "mitigations",
             "vulnerabilities",
             "vulnerabilities-workflow-1",
+            "vulnerabilities-workflow-2",
         ],
         default="sec-design",
         help=(
@@ -190,7 +191,8 @@ def parse_arguments() -> AppConfig:
             " - attack-tree: Perform attack tree analysis for the project\n"
             " - mitigations: Perform mitigation strategies analysis for the project\n"
             " - vulnerabilities: Perform vulnerabilities analysis for the project (read more about this mode in README.md)\n"
-            " - vulnerabilities-workflow-1: Perform vulnerabilities analysis for the project using a workflow-based approach"
+            " - vulnerabilities-workflow-1: Perform vulnerabilities analysis for the project using a workflow-based approach\n"
+            " - vulnerabilities-workflow-2: Perform vulnerabilities analysis for the project using a workflow-based approach\n"
         ),
     )
     agent_group.add_argument(
@@ -216,7 +218,7 @@ def parse_arguments() -> AppConfig:
     agent_group.add_argument(
         "--deep-analysis",
         action="store_true",
-        help="Enable experimental deep analysis for 'github' mode (only supported by Gemini 2.0 Flash Thinking Experimental model)",
+        help="Enable experimental deep analysis for 'github' modIe (only supported by Gemini 2.0 Flash Thinking Experimental model)",
     )
     agent_group.add_argument(
         "--recursion-limit",
@@ -261,6 +263,10 @@ def parse_arguments() -> AppConfig:
     vulnerabilities_group.add_argument(
         "--excluded-classes-of-vulnerabilities",
         help="Comma-separated list of classes of vulnerabilities to exclude in the vulnerabilities workflow. Default is empty. Cannot be used with --included-classes-of-vulnerabilities",
+    )
+    vulnerabilities_group.add_argument(
+        "--vulnerabilities-github-repo-url",
+        help="GitHub repository URL to use for vulnerabilities workflow. Default is None",
     )
 
     # Checkpointing arguments

@@ -1,0 +1,187 @@
+[
+    {
+        "name": "djangosnippets.org",
+        "full_name": "django/djangosnippets.org",
+        "url": "https://github.com/django/djangosnippets.org",
+        "stars": 418,
+        "updated_at": "2025-02-05T03:39:57Z",
+        "description": "The code that powers djangosnippets.org, it allows users to post and share useful \"snippets\" of code.",
+        "size_kb": 1164,
+        "languages": {
+            "Python": 154853,
+            "HTML": 90582,
+            "JavaScript": 79468,
+            "SCSS": 13734,
+            "CSS": 7764,
+            "Ruby": 931,
+            "Dockerfile": 367,
+            "Procfile": 78
+        }
+    },
+    {
+        "name": "djangoproject.com",
+        "full_name": "django/djangoproject.com",
+        "url": "https://github.com/django/djangoproject.com",
+        "stars": 1929,
+        "updated_at": "2025-03-06T15:12:57Z",
+        "description": "Source code to djangoproject.com",
+        "size_kb": 19842,
+        "languages": {
+            "PostScript": 937444,
+            "Python": 781014,
+            "HTML": 213891,
+            "SCSS": 122751,
+            "JavaScript": 27099,
+            "Shell": 1286,
+            "Makefile": 1070,
+            "Dockerfile": 1064,
+            "Procfile": 36
+        }
+    },
+    {
+        "name": "djangobench",
+        "full_name": "django/djangobench",
+        "url": "https://github.com/django/djangobench",
+        "stars": 211,
+        "updated_at": "2024-12-31T12:15:00Z",
+        "description": "Harness and benchmarks for evaluating Django's performance over time",
+        "size_kb": 246,
+        "languages": {
+            "Python": 135071,
+            "HTML": 20264,
+            "JavaScript": 68
+        }
+    },
+    {
+        "name": "ticketbot",
+        "full_name": "django/ticketbot",
+        "url": "https://github.com/django/ticketbot",
+        "stars": 18,
+        "updated_at": "2024-03-03T16:26:27Z",
+        "description": "Django's IRC ticketbot. Linkifies tickets and changesets. Hangs out in #django and #django-dev.",
+        "size_kb": 25,
+        "languages": {
+            "Python": 6970,
+            "Procfile": 27
+        }
+    },
+    {
+        "name": "code.djangoproject.com",
+        "full_name": "django/code.djangoproject.com",
+        "url": "https://github.com/django/code.djangoproject.com",
+        "stars": 52,
+        "updated_at": "2025-02-01T14:42:03Z",
+        "description": "Configuration for Django's Trac instance (code.djangoproject.com)",
+        "size_kb": 2143,
+        "languages": {
+            "Python": 36785,
+            "HTML": 14235,
+            "JavaScript": 12805,
+            "SCSS": 12714,
+            "Dockerfile": 1861,
+            "Shell": 571,
+            "Makefile": 206
+        }
+    },
+    {
+        "name": "django-contrib-comments",
+        "full_name": "django/django-contrib-comments",
+        "url": "https://github.com/django/django-contrib-comments",
+        "stars": 618,
+        "updated_at": "2025-01-19T13:18:58Z",
+        "description": null,
+        "size_kb": 837,
+        "languages": {
+            "Python": 134353,
+            "HTML": 7670
+        }
+    },
+    {
+        "name": "django-localflavor",
+        "full_name": "django/django-localflavor",
+        "url": "https://github.com/django/django-localflavor",
+        "stars": 853,
+        "updated_at": "2025-02-26T00:28:15Z",
+        "description": "Country-specific Django helpers, formerly of contrib fame",
+        "size_kb": 12139,
+        "languages": {
+            "Python": 911831
+        }
+    },
+    {
+        "name": "channels",
+        "full_name": "django/channels",
+        "url": "https://github.com/django/channels",
+        "stars": 6184,
+        "updated_at": "2025-03-06T13:56:50Z",
+        "description": "Developer-friendly asynchrony for Django",
+        "size_kb": 2160,
+        "languages": {
+            "Python": 145986
+        }
+    },
+    {
+        "name": "daphne",
+        "full_name": "django/daphne",
+        "url": "https://github.com/django/daphne",
+        "stars": 2461,
+        "updated_at": "2025-03-04T18:43:47Z",
+        "description": "Django Channels HTTP/WebSocket server",
+        "size_kb": 529,
+        "languages": {
+            "Python": 139774,
+            "Makefile": 327
+        }
+    },
+    {
+        "name": "asgiref",
+        "full_name": "django/asgiref",
+        "url": "https://github.com/django/asgiref",
+        "stars": 1525,
+        "updated_at": "2025-03-06T04:46:32Z",
+        "description": "ASGI specification and utilities",
+        "size_kb": 556,
+        "languages": {
+            "Python": 120975,
+            "Makefile": 135
+        }
+    },
+    {
+        "name": "channels_redis",
+        "full_name": "django/channels_redis",
+        "url": "https://github.com/django/channels_redis",
+        "stars": 612,
+        "updated_at": "2025-02-18T16:24:38Z",
+        "description": "Redis channel layer backend for Django Channels",
+        "size_kb": 386,
+        "languages": {
+            "Python": 118305
+        }
+    },
+    {
+        "name": "django-asv",
+        "full_name": "django/django-asv",
+        "url": "https://github.com/django/django-asv",
+        "stars": 42,
+        "updated_at": "2025-03-06T00:30:05Z",
+        "description": "Benchmarks for Django using asv",
+        "size_kb": 107801,
+        "languages": {
+            "Python": 45987,
+            "HTML": 10077,
+            "JavaScript": 68
+        }
+    },
+    {
+        "name": "django-fuzzers",
+        "full_name": "django/django-fuzzers",
+        "url": "https://github.com/django/django-fuzzers",
+        "stars": 4,
+        "updated_at": "2023-08-05T23:56:59Z",
+        "description": null,
+        "size_kb": 1645,
+        "languages": {
+            "Python": 13651
+        }
+    }
+]

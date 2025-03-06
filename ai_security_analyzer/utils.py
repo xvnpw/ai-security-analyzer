@@ -30,7 +30,7 @@ def convert_to_ai_message(message: BaseMessage) -> AIMessage:
 
 
 def get_total_tokens(message: BaseMessage) -> int:
-    if message and hasattr(message, "usage_metadata"):
+    if message and hasattr(message, "usage_metadata") and message.usage_metadata:
         return message.usage_metadata.get("total_tokens", 0)  # type: ignore
     return 0
 

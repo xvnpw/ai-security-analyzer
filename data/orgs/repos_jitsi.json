@@ -1,0 +1,1520 @@
+[
+    {
+        "name": "otr4j",
+        "full_name": "jitsi/otr4j",
+        "url": "https://github.com/jitsi/otr4j",
+        "stars": 31,
+        "updated_at": "2024-11-27T22:57:41Z",
+        "description": "Off-The-Record messaging encryption written in pure Java",
+        "size_kb": 4309,
+        "languages": {
+            "Java": 328041
+        }
+    },
+    {
+        "name": "jitsi-videobridge",
+        "full_name": "jitsi/jitsi-videobridge",
+        "url": "https://github.com/jitsi/jitsi-videobridge",
+        "stars": 2952,
+        "updated_at": "2025-03-03T17:43:56Z",
+        "description": "Jitsi Videobridge is a WebRTC compatible video router or SFU that lets build highly scalable video conferencing infrastructure (i.e., up to hundreds of conferences per server).",
+        "size_kb": 233095,
+        "languages": {
+            "Kotlin": 2497258,
+            "Java": 599282,
+            "Perl": 20254,
+            "Shell": 9523,
+            "Python": 7802,
+            "JavaScript": 1488,
+            "HTML": 445,
+            "Batchfile": 377
+        }
+    },
+    {
+        "name": "jigasi",
+        "full_name": "jitsi/jigasi",
+        "url": "https://github.com/jitsi/jigasi",
+        "stars": 549,
+        "updated_at": "2025-03-04T14:51:09Z",
+        "description": "Jigasi: a server-side application acting as a gateway to Jitsi Meet conferences. Currently allows regular SIP clients to join meetings and provides transcription capabilities.",
+        "size_kb": 113470,
+        "languages": {
+            "Java": 1015042,
+            "Shell": 10281
+        }
+    },
+    {
+        "name": "jidesha",
+        "full_name": "jitsi/jidesha",
+        "url": "https://github.com/jitsi/jidesha",
+        "stars": 136,
+        "updated_at": "2025-01-22T11:28:17Z",
+        "description": "A Chrome extension for Calendar integrations for Jitsi Meet",
+        "size_kb": 191,
+        "languages": {
+            "JavaScript": 50493,
+            "HTML": 1897,
+            "CSS": 1249
+        }
+    },
+    {
+        "name": "jitsi-meet-torture",
+        "full_name": "jitsi/jitsi-meet-torture",
+        "url": "https://github.com/jitsi/jitsi-meet-torture",
+        "stars": 170,
+        "updated_at": "2025-02-28T12:19:40Z",
+        "description": null,
+        "size_kb": 281209,
+        "languages": {
+            "Java": 1062447,
+            "Shell": 23997,
+            "JavaScript": 9518,
+            "Python": 4866,
+            "HTML": 4076
+        }
+    },
+    {
+        "name": "jicofo",
+        "full_name": "jitsi/jicofo",
+        "url": "https://github.com/jitsi/jicofo",
+        "stars": 322,
+        "updated_at": "2025-02-21T16:44:40Z",
+        "description": "JItsi COnference FOcus is a server side focus component used in Jitsi Meet conferences.",
+        "size_kb": 40133,
+        "languages": {
+            "Kotlin": 895321,
+            "Java": 226702,
+            "Python": 5315,
+            "Shell": 5215,
+            "Batchfile": 455,
+            "D": 134
+        }
+    },
+    {
+        "name": "growl4j",
+        "full_name": "jitsi/growl4j",
+        "url": "https://github.com/jitsi/growl4j",
+        "stars": 4,
+        "updated_at": "2020-11-11T18:05:45Z",
+        "description": "the OpenSource Java Solution for using Growl",
+        "size_kb": 1075,
+        "languages": {
+            "Objective-C": 47736,
+            "C": 20216,
+            "Java": 11582,
+            "CMake": 1532
+        }
+    },
+    {
+        "name": "sdp-interop",
+        "full_name": "jitsi/sdp-interop",
+        "url": "https://github.com/jitsi/sdp-interop",
+        "stars": 66,
+        "updated_at": "2023-10-26T13:41:40Z",
+        "description": "An npm module that converts a Unified Plan SDP to Plan B and vice versa.",
+        "size_kb": 368,
+        "languages": {
+            "JavaScript": 78618
+        }
+    },
+    {
+        "name": "jitsi-lgpl-dependencies",
+        "full_name": "jitsi/jitsi-lgpl-dependencies",
+        "url": "https://github.com/jitsi/jitsi-lgpl-dependencies",
+        "stars": 6,
+        "updated_at": "2022-05-23T13:16:01Z",
+        "description": "Submodule of libjitsi that encapsulates references to external LGPL licensed libraries.",
+        "size_kb": 23044,
+        "languages": {
+            "C": 96201,
+            "Java": 29923,
+            "CMake": 28706,
+            "Shell": 5532
+        }
+    },
+    {
+        "name": "sdp-simulcast",
+        "full_name": "jitsi/sdp-simulcast",
+        "url": "https://github.com/jitsi/sdp-simulcast",
+        "stars": 30,
+        "updated_at": "2025-02-11T15:48:06Z",
+        "description": "An npm module that enables the native WebRTC simulcast support in Chrome",
+        "size_kb": 47,
+        "languages": {
+            "JavaScript": 28919
+        }
+    },
+    {
+        "name": "ice4j",
+        "full_name": "jitsi/ice4j",
+        "url": "https://github.com/jitsi/ice4j",
+        "stars": 443,
+        "updated_at": "2025-02-18T07:05:05Z",
+        "description": "A Java implementation of the ICE protocol",
+        "size_kb": 5439,
+        "languages": {
+            "Java": 1998702,
+            "Kotlin": 50656
+        }
+    },
+    {
+        "name": "zrtp4j",
+        "full_name": "jitsi/zrtp4j",
+        "url": "https://github.com/jitsi/zrtp4j",
+        "stars": 7,
+        "updated_at": "2024-12-12T06:02:30Z",
+        "description": "Java implementation of ZRTP protocol",
+        "size_kb": 5176,
+        "languages": {
+            "Java": 769238
+        }
+    },
+    {
+        "name": "jitsi-android-osgi",
+        "full_name": "jitsi/jitsi-android-osgi",
+        "url": "https://github.com/jitsi/jitsi-android-osgi",
+        "stars": 8,
+        "updated_at": "2024-11-11T03:30:44Z",
+        "description": null,
+        "size_kb": 641,
+        "languages": {
+            "Java": 81666
+        }
+    },
+    {
+        "name": "jicoco",
+        "full_name": "jitsi/jicoco",
+        "url": "https://github.com/jitsi/jicoco",
+        "stars": 17,
+        "updated_at": "2025-02-24T16:33:46Z",
+        "description": "Jitsi Common Components",
+        "size_kb": 621,
+        "languages": {
+            "Kotlin": 142962,
+            "Java": 90597
+        }
+    },
+    {
+        "name": "jitsi-meet-logger",
+        "full_name": "jitsi/jitsi-meet-logger",
+        "url": "https://github.com/jitsi/jitsi-meet-logger",
+        "stars": 12,
+        "updated_at": "2023-11-28T08:22:12Z",
+        "description": null,
+        "size_kb": 42,
+        "languages": {
+            "JavaScript": 22470
+        }
+    },
+    {
+        "name": "jitsi-videobridge-permo",
+        "full_name": "jitsi/jitsi-videobridge-permo",
+        "url": "https://github.com/jitsi/jitsi-videobridge-permo",
+        "stars": 10,
+        "updated_at": "2021-09-16T13:59:44Z",
+        "description": "Jitsi-Videobridge Performance Monitoring",
+        "size_kb": 31669,
+        "languages": {
+            "Shell": 6599
+        }
+    },
+    {
+        "name": "lib-jitsi-meet",
+        "full_name": "jitsi/lib-jitsi-meet",
+        "url": "https://github.com/jitsi/lib-jitsi-meet",
+        "stars": 1356,
+        "updated_at": "2025-03-04T08:31:33Z",
+        "description": "A low-level JS video API that allows adding a completely custom video experience to web apps.",
+        "size_kb": 16488,
+        "languages": {
+            "JavaScript": 1810705,
+            "TypeScript": 288237
+        }
+    },
+    {
+        "name": "agafua-syslog",
+        "full_name": "jitsi/agafua-syslog",
+        "url": "https://github.com/jitsi/agafua-syslog",
+        "stars": 1,
+        "updated_at": "2020-08-30T01:33:54Z",
+        "description": "Automatically exported from code.google.com/p/agafua-syslog",
+        "size_kb": 24,
+        "languages": {
+            "Java": 28361
+        }
+    },
+    {
+        "name": "jibri",
+        "full_name": "jitsi/jibri",
+        "url": "https://github.com/jitsi/jibri",
+        "stars": 614,
+        "updated_at": "2025-02-17T18:24:22Z",
+        "description": "Jitsi BRoadcasting Infrastructure",
+        "size_kb": 1387,
+        "languages": {
+            "Kotlin": 370782,
+            "Shell": 8636,
+            "Java": 1620
+        }
+    },
+    {
+        "name": "Sphinx4-HTTP-server",
+        "full_name": "jitsi/Sphinx4-HTTP-server",
+        "url": "https://github.com/jitsi/Sphinx4-HTTP-server",
+        "stars": 16,
+        "updated_at": "2024-01-04T09:46:59Z",
+        "description": "HTTP speech-to-text server using Sphinx4",
+        "size_kb": 7277,
+        "languages": {
+            "Java": 90384,
+            "Shell": 265
+        }
+    },
+    {
+        "name": "portaudio",
+        "full_name": "jitsi/portaudio",
+        "url": "https://github.com/jitsi/portaudio",
+        "stars": 8,
+        "updated_at": "2022-06-01T00:26:08Z",
+        "description": "PortAudio fork with hotplug capabilities as used in libjitsi; to contribute please do so at https://github.com/portaudio/portaudio.",
+        "size_kb": 6595,
+        "languages": {
+            "C": 2952393,
+            "C++": 717168,
+            "Shell": 373637,
+            "Makefile": 131542,
+            "Python": 19175,
+            "Objective-C": 16340,
+            "M4": 7535,
+            "HTML": 3941,
+            "Batchfile": 659
+        }
+    },
+    {
+        "name": "jitsi-meet-debian-meta",
+        "full_name": "jitsi/jitsi-meet-debian-meta",
+        "url": "https://github.com/jitsi/jitsi-meet-debian-meta",
+        "stars": 19,
+        "updated_at": "2025-03-06T12:47:26Z",
+        "description": "Jitsi Meet meta debian package",
+        "size_kb": 3093,
+        "languages": {
+            "Shell": 2485
+        }
+    },
+    {
+        "name": "jitsi-meet-electron",
+        "full_name": "jitsi/jitsi-meet-electron",
+        "url": "https://github.com/jitsi/jitsi-meet-electron",
+        "stars": 1534,
+        "updated_at": "2025-03-04T08:23:53Z",
+        "description": "Jitsi Meet desktop application powered by :electron:",
+        "size_kb": 6353,
+        "languages": {
+            "JavaScript": 107184,
+            "HTML": 244
+        }
+    },
+    {
+        "name": "jitsi-videobridge-openfire-plugin",
+        "full_name": "jitsi/jitsi-videobridge-openfire-plugin",
+        "url": "https://github.com/jitsi/jitsi-videobridge-openfire-plugin",
+        "stars": 15,
+        "updated_at": "2024-07-31T16:37:44Z",
+        "description": null,
+        "size_kb": 88,
+        "languages": {
+            "Java": 105356,
+            "HTML": 3112
+        }
+    },
+    {
+        "name": "robotjs",
+        "full_name": "jitsi/robotjs",
+        "url": "https://github.com/jitsi/robotjs",
+        "stars": 73,
+        "updated_at": "2025-02-27T13:09:07Z",
+        "description": "Node.js Desktop Automation. ",
+        "size_kb": 777,
+        "languages": {
+            "C": 245871,
+            "C++": 23844,
+            "JavaScript": 14916,
+            "Objective-C": 7078,
+            "Python": 1897
+        }
+    },
+    {
+        "name": "jitsi-meet-electron-sdk",
+        "full_name": "jitsi/jitsi-meet-electron-sdk",
+        "url": "https://github.com/jitsi/jitsi-meet-electron-sdk",
+        "stars": 80,
+        "updated_at": "2025-02-20T21:45:38Z",
+        "description": "Jitsi Meet SDK for Electron",
+        "size_kb": 1072,
+        "languages": {
+            "JavaScript": 81007,
+            "C++": 2005,
+            "HTML": 1544,
+            "CSS": 848,
+            "Python": 641,
+            "Shell": 197,
+            "C": 122
+        }
+    },
+    {
+        "name": "jitsi-meet-spot",
+        "full_name": "jitsi/jitsi-meet-spot",
+        "url": "https://github.com/jitsi/jitsi-meet-spot",
+        "stars": 73,
+        "updated_at": "2025-03-04T15:39:35Z",
+        "description": "Physical meetings rooms, reimagined.",
+        "size_kb": 17672,
+        "languages": {
+            "JavaScript": 1179073,
+            "SCSS": 55660,
+            "Lua": 35537,
+            "Objective-C": 6654,
+            "Java": 6086,
+            "Shell": 3289,
+            "Ruby": 2535,
+            "Starlark": 2068,
+            "HTML": 1925,
+            "CSS": 840,
+            "Dockerfile": 557
+        }
+    },
+    {
+        "name": "eslint-config-jitsi",
+        "full_name": "jitsi/eslint-config-jitsi",
+        "url": "https://github.com/jitsi/eslint-config-jitsi",
+        "stars": 6,
+        "updated_at": "2025-01-10T16:14:32Z",
+        "description": "jitsi eslint config",
+        "size_kb": 56,
+        "languages": {
+            "JavaScript": 20291
+        }
+    },
+    {
+        "name": "strophejs",
+        "full_name": "jitsi/strophejs",
+        "url": "https://github.com/jitsi/strophejs",
+        "stars": 1,
+        "updated_at": "2024-02-26T19:55:55Z",
+        "description": "Strophe.js is an XMPP library for JavaScript",
+        "size_kb": 1966,
+        "languages": {
+            "JavaScript": 473217,
+            "CSS": 20496,
+            "Makefile": 3073,
+            "HTML": 2207,
+            "Python": 548
+        }
+    },
+    {
+        "name": "js-utils",
+        "full_name": "jitsi/js-utils",
+        "url": "https://github.com/jitsi/js-utils",
+        "stars": 33,
+        "updated_at": "2024-10-22T20:40:17Z",
+        "description": "Utilities for Jitsi JS projects",
+        "size_kb": 278,
+        "languages": {
+            "JavaScript": 122399
+        }
+    },
+    {
+        "name": "react-native-calendar-events",
+        "full_name": "jitsi/react-native-calendar-events",
+        "url": "https://github.com/jitsi/react-native-calendar-events",
+        "stars": 6,
+        "updated_at": "2025-02-20T14:21:40Z",
+        "description": "React Native Module for iOS and Android Calendar Events",
+        "size_kb": 370,
+        "languages": {
+            "Java": 46924,
+            "Objective-C": 31705,
+            "JavaScript": 2195,
+            "Ruby": 582
+        }
+    },
+    {
+        "name": "jiwer",
+        "full_name": "jitsi/jiwer",
+        "url": "https://github.com/jitsi/jiwer",
+        "stars": 694,
+        "updated_at": "2025-03-04T08:33:32Z",
+        "description": "Evaluate your speech-to-text system with similarity measures such as word error rate (WER)",
+        "size_kb": 1762,
+        "languages": {
+            "Python": 98173,
+            "Just": 754
+        }
+    },
+    {
+        "name": "docker-jitsi-meet",
+        "full_name": "jitsi/docker-jitsi-meet",
+        "url": "https://github.com/jitsi/docker-jitsi-meet",
+        "stars": 3165,
+        "updated_at": "2025-03-06T12:01:29Z",
+        "description": "Jitsi Meet on Docker",
+        "size_kb": 1767,
+        "languages": {
+            "Lua": 42662,
+            "JavaScript": 26679,
+            "Dockerfile": 11104,
+            "Shell": 5474,
+            "Makefile": 1610
+        }
+    },
+    {
+        "name": "jitsi-upload-integrations",
+        "full_name": "jitsi/jitsi-upload-integrations",
+        "url": "https://github.com/jitsi/jitsi-upload-integrations",
+        "stars": 20,
+        "updated_at": "2025-01-22T18:02:49Z",
+        "description": "Tools for integration of JItsi Meet and associated backend tools to 3rd party APIs such as Dropbox",
+        "size_kb": 60,
+        "languages": {
+            "Shell": 61056
+        }
+    },
+    {
+        "name": "jitsi-slack",
+        "full_name": "jitsi/jitsi-slack",
+        "url": "https://github.com/jitsi/jitsi-slack",
+        "stars": 26,
+        "updated_at": "2023-10-27T15:48:34Z",
+        "description": null,
+        "size_kb": 73,
+        "languages": {
+            "Go": 40630,
+            "Shell": 447,
+            "Dockerfile": 141
+        }
+    },
+    {
+        "name": "react-native-fast-image",
+        "full_name": "jitsi/react-native-fast-image",
+        "url": "https://github.com/jitsi/react-native-fast-image",
+        "stars": 3,
+        "updated_at": "2025-02-20T14:22:58Z",
+        "description": "\ud83d\udea9 FastImage, performant React Native image component.",
+        "size_kb": 55678,
+        "languages": {
+            "Java": 27572,
+            "Objective-C": 20255,
+            "JavaScript": 5159,
+            "Python": 3546,
+            "Ruby": 1369
+        }
+    },
+    {
+        "name": "jitsi-webrtc-vad-wrapper",
+        "full_name": "jitsi/jitsi-webrtc-vad-wrapper",
+        "url": "https://github.com/jitsi/jitsi-webrtc-vad-wrapper",
+        "stars": 57,
+        "updated_at": "2025-01-22T18:01:59Z",
+        "description": "A java wrapper around the WebRTC Voice Activity Detection library",
+        "size_kb": 468,
+        "languages": {
+            "Java": 36580,
+            "C++": 3514,
+            "C": 1768,
+            "Shell": 919,
+            "CMake": 425
+        }
+    },
+    {
+        "name": "react-native-sound",
+        "full_name": "jitsi/react-native-sound",
+        "url": "https://github.com/jitsi/react-native-sound",
+        "stars": 5,
+        "updated_at": "2025-02-20T14:20:32Z",
+        "description": "React Native module for playing sound clips",
+        "size_kb": 289,
+        "languages": {
+            "Java": 14459,
+            "Objective-C": 10211,
+            "C#": 9848,
+            "JavaScript": 6394,
+            "Ruby": 726
+        }
+    },
+    {
+        "name": "jitsi-meet-ios-sdk-releases",
+        "full_name": "jitsi/jitsi-meet-ios-sdk-releases",
+        "url": "https://github.com/jitsi/jitsi-meet-ios-sdk-releases",
+        "stars": 82,
+        "updated_at": "2025-03-06T13:00:41Z",
+        "description": "Jitsi Meet iOS SDK binaries",
+        "size_kb": 1317402,
+        "languages": {
+            "Objective-C": 95908,
+            "Swift": 2185,
+            "Ruby": 1717,
+            "Smarty": 1714
+        }
+    },
+    {
+        "name": "jitsi-sctp",
+        "full_name": "jitsi/jitsi-sctp",
+        "url": "https://github.com/jitsi/jitsi-sctp",
+        "stars": 6,
+        "updated_at": "2024-08-06T09:26:32Z",
+        "description": null,
+        "size_kb": 10482,
+        "languages": {
+            "Java": 67622,
+            "C": 22478,
+            "Shell": 8734,
+            "Dockerfile": 227
+        }
+    },
+    {
+        "name": "quiet-js",
+        "full_name": "jitsi/quiet-js",
+        "url": "https://github.com/jitsi/quiet-js",
+        "stars": 3,
+        "updated_at": "2021-01-29T11:56:36Z",
+        "description": "Transmit data with sound using Web Audio -- Javascript binding for libquiet",
+        "size_kb": 4369,
+        "languages": {
+            "JavaScript": 36661
+        }
+    },
+    {
+        "name": "jitsi-psnr",
+        "full_name": "jitsi/jitsi-psnr",
+        "url": "https://github.com/jitsi/jitsi-psnr",
+        "stars": 4,
+        "updated_at": "2025-02-10T15:07:38Z",
+        "description": "Jitsi Video Quality Analyzer",
+        "size_kb": 540,
+        "languages": {
+            "Python": 7021,
+            "Shell": 5301
+        }
+    },
+    {
+        "name": "jitsi-utils",
+        "full_name": "jitsi/jitsi-utils",
+        "url": "https://github.com/jitsi/jitsi-utils",
+        "stars": 20,
+        "updated_at": "2024-11-27T23:04:09Z",
+        "description": "A set of basic Java/Kotlin utilities used in Jitsi projects.",
+        "size_kb": 1726,
+        "languages": {
+            "Java": 350673,
+            "Kotlin": 113910
+        }
+    },
+    {
+        "name": "jitsi-xmpp-extensions",
+        "full_name": "jitsi/jitsi-xmpp-extensions",
+        "url": "https://github.com/jitsi/jitsi-xmpp-extensions",
+        "stars": 16,
+        "updated_at": "2025-01-22T18:01:54Z",
+        "description": "Common library holding all jitsi specific smack xmpp extensions.",
+        "size_kb": 678,
+        "languages": {
+            "Java": 815934,
+            "Kotlin": 117061
+        }
+    },
+    {
+        "name": "jihog",
+        "full_name": "jitsi/jihog",
+        "url": "https://github.com/jitsi/jihog",
+        "stars": 1,
+        "updated_at": "2020-08-30T01:31:44Z",
+        "description": null,
+        "size_kb": 2,
+        "languages": {
+            "Shell": 5398
+        }
+    },
+    {
+        "name": "xpc-connect",
+        "full_name": "jitsi/xpc-connect",
+        "url": "https://github.com/jitsi/xpc-connect",
+        "stars": 1,
+        "updated_at": "2020-08-30T01:31:38Z",
+        "description": "Mac connection bindings for node.js",
+        "size_kb": 202,
+        "languages": {
+            "C++": 10016,
+            "JavaScript": 886,
+            "Python": 599
+        }
+    },
+    {
+        "name": "react-native-beacons-manager",
+        "full_name": "jitsi/react-native-beacons-manager",
+        "url": "https://github.com/jitsi/react-native-beacons-manager",
+        "stars": 2,
+        "updated_at": "2022-08-16T08:35:47Z",
+        "description": "React-Native library for detecting beacons (iOS and Android)",
+        "size_kb": 2299,
+        "languages": {
+            "Objective-C": 44533,
+            "JavaScript": 20764,
+            "Java": 17212,
+            "Ruby": 472
+        }
+    },
+    {
+        "name": "jitsi-srtp",
+        "full_name": "jitsi/jitsi-srtp",
+        "url": "https://github.com/jitsi/jitsi-srtp",
+        "stars": 25,
+        "updated_at": "2024-11-27T23:12:36Z",
+        "description": "SRTP implementation for Jitsi",
+        "size_kb": 478,
+        "languages": {
+            "Java": 264252,
+            "C": 22567,
+            "Shell": 5358,
+            "CMake": 2335,
+            "Dockerfile": 448
+        }
+    },
+    {
+        "name": "jvb-dashboard",
+        "full_name": "jitsi/jvb-dashboard",
+        "url": "https://github.com/jitsi/jvb-dashboard",
+        "stars": 2,
+        "updated_at": "2024-07-02T21:10:57Z",
+        "description": null,
+        "size_kb": 267,
+        "languages": {
+            "Kotlin": 72180,
+            "HTML": 194
+        }
+    },
+    {
+        "name": "rnnoise-wasm",
+        "full_name": "jitsi/rnnoise-wasm",
+        "url": "https://github.com/jitsi/rnnoise-wasm",
+        "stars": 136,
+        "updated_at": "2025-03-06T07:07:25Z",
+        "description": "rnnoise noise suppression library as a WASM module",
+        "size_kb": 1464,
+        "languages": {
+            "Shell": 2496,
+            "JavaScript": 174,
+            "Dockerfile": 117
+        }
+    },
+    {
+        "name": "react-native-dual-pedometer",
+        "full_name": "jitsi/react-native-dual-pedometer",
+        "url": "https://github.com/jitsi/react-native-dual-pedometer",
+        "stars": 1,
+        "updated_at": "2020-04-24T00:53:58Z",
+        "description": "A React Native bridge that implements a Pedometer for iOS and Android",
+        "size_kb": 333,
+        "languages": {
+            "Java": 20303,
+            "Objective-C": 13472,
+            "JavaScript": 6210,
+            "Python": 1754,
+            "Ruby": 693
+        }
+    },
+    {
+        "name": "spot-electron-sdk",
+        "full_name": "jitsi/spot-electron-sdk",
+        "url": "https://github.com/jitsi/spot-electron-sdk",
+        "stars": 2,
+        "updated_at": "2021-11-01T08:40:45Z",
+        "description": null,
+        "size_kb": 215,
+        "languages": {
+            "TypeScript": 17406,
+            "JavaScript": 1646
+        }
+    },
+    {
+        "name": "jbosh",
+        "full_name": "jitsi/jbosh",
+        "url": "https://github.com/jitsi/jbosh",
+        "stars": 3,
+        "updated_at": "2020-11-11T18:08:12Z",
+        "description": "XEP-0124: Bidirectional-streams Over Synchronous HTTP (BOSH)",
+        "size_kb": 229,
+        "languages": {
+            "Java": 446085,
+            "HTML": 217
+        }
+    },
+    {
+        "name": "winrt-libs",
+        "full_name": "jitsi/winrt-libs",
+        "url": "https://github.com/jitsi/winrt-libs",
+        "stars": 1,
+        "updated_at": "2021-10-27T12:53:40Z",
+        "description": "WinRT libraries generated by NodeRT for native functionalities.",
+        "size_kb": 71,
+        "languages": {
+            "C++": 806598,
+            "JavaScript": 53927,
+            "Python": 7782
+        }
+    },
+    {
+        "name": "handbook",
+        "full_name": "jitsi/handbook",
+        "url": "https://github.com/jitsi/handbook",
+        "stars": 195,
+        "updated_at": "2025-02-28T08:34:18Z",
+        "description": "The Jitsi Handbook",
+        "size_kb": 49070,
+        "languages": {
+            "JavaScript": 13466,
+            "CSS": 3953
+        }
+    },
+    {
+        "name": "jigasi-haproxy-agent",
+        "full_name": "jitsi/jigasi-haproxy-agent",
+        "url": "https://github.com/jitsi/jigasi-haproxy-agent",
+        "stars": 0,
+        "updated_at": "2023-01-23T21:44:43Z",
+        "description": null,
+        "size_kb": 296,
+        "languages": {
+            "JavaScript": 19554
+        }
+    },
+    {
+        "name": "strophejs-plugin-stream-management",
+        "full_name": "jitsi/strophejs-plugin-stream-management",
+        "url": "https://github.com/jitsi/strophejs-plugin-stream-management",
+        "stars": 2,
+        "updated_at": "2023-12-08T09:42:08Z",
+        "description": null,
+        "size_kb": 167,
+        "languages": {
+            "JavaScript": 45787,
+            "Makefile": 993
+        }
+    },
+    {
+        "name": "node-ibeacons",
+        "full_name": "jitsi/node-ibeacons",
+        "url": "https://github.com/jitsi/node-ibeacons",
+        "stars": 4,
+        "updated_at": "2024-08-07T04:07:54Z",
+        "description": "iBeacons emitter for Node",
+        "size_kb": 24,
+        "languages": {
+            "Objective-C++": 3430,
+            "C++": 2839,
+            "Objective-C": 1958,
+            "Python": 1437,
+            "JavaScript": 924
+        }
+    },
+    {
+        "name": "jxs",
+        "full_name": "jitsi/jxs",
+        "url": "https://github.com/jitsi/jxs",
+        "stars": 6,
+        "updated_at": "2024-04-24T15:31:21Z",
+        "description": null,
+        "size_kb": 269,
+        "languages": {
+            "JavaScript": 20765,
+            "Shell": 623
+        }
+    },
+    {
+        "name": "moderated-meetings",
+        "full_name": "jitsi/moderated-meetings",
+        "url": "https://github.com/jitsi/moderated-meetings",
+        "stars": 22,
+        "updated_at": "2024-05-08T05:22:59Z",
+        "description": "Jitsi Moderated Meetings microservice",
+        "size_kb": 640,
+        "languages": {
+            "Java": 37460,
+            "TypeScript": 21435,
+            "SCSS": 4764,
+            "JavaScript": 1564,
+            "Shell": 1193,
+            "CSS": 1092,
+            "Dockerfile": 620,
+            "HTML": 413
+        }
+    },
+    {
+        "name": "rtcstats",
+        "full_name": "jitsi/rtcstats",
+        "url": "https://github.com/jitsi/rtcstats",
+        "stars": 7,
+        "updated_at": "2024-12-14T12:56:35Z",
+        "description": null,
+        "size_kb": 451,
+        "languages": {
+            "JavaScript": 41095,
+            "HTML": 1270,
+            "Shell": 391
+        }
+    },
+    {
+        "name": "rtcstats-server",
+        "full_name": "jitsi/rtcstats-server",
+        "url": "https://github.com/jitsi/rtcstats-server",
+        "stars": 15,
+        "updated_at": "2025-02-27T09:59:52Z",
+        "description": "Server for https://github.com/fippo/rtcstats",
+        "size_kb": 9472,
+        "languages": {
+            "JavaScript": 478129,
+            "Shell": 1260,
+            "Dockerfile": 845,
+            "Makefile": 809
+        }
+    },
+    {
+        "name": "jitsi-metaconfig",
+        "full_name": "jitsi/jitsi-metaconfig",
+        "url": "https://github.com/jitsi/jitsi-metaconfig",
+        "stars": 3,
+        "updated_at": "2024-12-11T16:37:09Z",
+        "description": null,
+        "size_kb": 163,
+        "languages": {
+            "Kotlin": 75881
+        }
+    },
+    {
+        "name": "calendar-addon",
+        "full_name": "jitsi/calendar-addon",
+        "url": "https://github.com/jitsi/calendar-addon",
+        "stars": 18,
+        "updated_at": "2025-02-28T08:36:55Z",
+        "description": "Calendar G Suite add-on",
+        "size_kb": 14,
+        "languages": {
+            "JavaScript": 7109
+        }
+    },
+    {
+        "name": "jiconop",
+        "full_name": "jitsi/jiconop",
+        "url": "https://github.com/jitsi/jiconop",
+        "stars": 3,
+        "updated_at": "2024-07-27T14:15:00Z",
+        "description": "Jitsi Connection Optimization",
+        "size_kb": 21,
+        "languages": {
+            "JavaScript": 4470,
+            "HTML": 53
+        }
+    },
+    {
+        "name": "jitsi-autoscaler",
+        "full_name": "jitsi/jitsi-autoscaler",
+        "url": "https://github.com/jitsi/jitsi-autoscaler",
+        "stars": 31,
+        "updated_at": "2025-01-22T18:01:51Z",
+        "description": "Jitsi Autoscaler microservice",
+        "size_kb": 1073,
+        "languages": {
+            "TypeScript": 383488,
+            "Shell": 940,
+            "JavaScript": 589,
+            "Dockerfile": 404
+        }
+    },
+    {
+        "name": "megolm.js",
+        "full_name": "jitsi/megolm.js",
+        "url": "https://github.com/jitsi/megolm.js",
+        "stars": 4,
+        "updated_at": "2025-02-27T21:06:40Z",
+        "description": "Megolm cryptographic ratchet, in JavaScript",
+        "size_kb": 262,
+        "languages": {
+            "TypeScript": 24435,
+            "JavaScript": 1558
+        }
+    },
+    {
+        "name": "jitsi-autoscaler-sidecar",
+        "full_name": "jitsi/jitsi-autoscaler-sidecar",
+        "url": "https://github.com/jitsi/jitsi-autoscaler-sidecar",
+        "stars": 5,
+        "updated_at": "2025-02-18T13:41:37Z",
+        "description": "Sidecar service for jitsi-autoscaler",
+        "size_kb": 437,
+        "languages": {
+            "TypeScript": 25090,
+            "Shell": 1685,
+            "JavaScript": 523
+        }
+    },
+    {
+        "name": "jmyspell",
+        "full_name": "jitsi/jmyspell",
+        "url": "https://github.com/jitsi/jmyspell",
+        "stars": 1,
+        "updated_at": "2021-09-08T01:45:26Z",
+        "description": "Mavenized version of JMySpell",
+        "size_kb": 195,
+        "languages": {
+            "Java": 496251,
+            "HTML": 3535
+        }
+    },
+    {
+        "name": "jsocks",
+        "full_name": "jitsi/jsocks",
+        "url": "https://github.com/jitsi/jsocks",
+        "stars": 6,
+        "updated_at": "2024-12-23T12:28:08Z",
+        "description": "Java SOCKS Proxy",
+        "size_kb": 125,
+        "languages": {
+            "Java": 211862
+        }
+    },
+    {
+        "name": "irc-api",
+        "full_name": "jitsi/irc-api",
+        "url": "https://github.com/jitsi/irc-api",
+        "stars": 0,
+        "updated_at": "2020-11-21T13:27:29Z",
+        "description": "A Java IRC API",
+        "size_kb": 409,
+        "languages": {
+            "Java": 285510
+        }
+    },
+    {
+        "name": "luajwtjitsi",
+        "full_name": "jitsi/luajwtjitsi",
+        "url": "https://github.com/jitsi/luajwtjitsi",
+        "stars": 19,
+        "updated_at": "2025-01-27T07:25:51Z",
+        "description": "JWT tokens for Lua",
+        "size_kb": 31,
+        "languages": {
+            "Lua": 13466
+        }
+    },
+    {
+        "name": "jvb-rtcstats-push",
+        "full_name": "jitsi/jvb-rtcstats-push",
+        "url": "https://github.com/jitsi/jvb-rtcstats-push",
+        "stars": 0,
+        "updated_at": "2021-12-16T15:20:18Z",
+        "description": null,
+        "size_kb": 33,
+        "languages": {
+            "JavaScript": 10748
+        }
+    },
+    {
+        "name": "prometheus-stats",
+        "full_name": "jitsi/prometheus-stats",
+        "url": "https://github.com/jitsi/prometheus-stats",
+        "stars": 1,
+        "updated_at": "2021-10-25T20:57:55Z",
+        "description": "Go Library for Prometheus Stats Wrappers",
+        "size_kb": 28,
+        "languages": {
+            "Go": 4541
+        }
+    },
+    {
+        "name": "go-offline-maven-plugin",
+        "full_name": "jitsi/go-offline-maven-plugin",
+        "url": "https://github.com/jitsi/go-offline-maven-plugin",
+        "stars": 0,
+        "updated_at": "2021-06-13T12:35:59Z",
+        "description": "Maven Plugin used to download all Dependencies and Plugins required in a Maven build,  so the build can be run without an internet connection afterwards.",
+        "size_kb": 67,
+        "languages": {
+            "Java": 36981
+        }
+    },
+    {
+        "name": "signal-sidecar",
+        "full_name": "jitsi/signal-sidecar",
+        "url": "https://github.com/jitsi/signal-sidecar",
+        "stars": 3,
+        "updated_at": "2023-02-28T09:48:39Z",
+        "description": "report aggregated health information from a jitsi signal node",
+        "size_kb": 184,
+        "languages": {
+            "TypeScript": 39785,
+            "JavaScript": 542,
+            "Dockerfile": 526,
+            "Shell": 477
+        }
+    },
+    {
+        "name": "jitsi-meet-react-sdk",
+        "full_name": "jitsi/jitsi-meet-react-sdk",
+        "url": "https://github.com/jitsi/jitsi-meet-react-sdk",
+        "stars": 72,
+        "updated_at": "2025-02-26T10:35:24Z",
+        "description": "React SDK for Jitsi Meet",
+        "size_kb": 1256,
+        "languages": {
+            "TypeScript": 26604,
+            "JavaScript": 9591,
+            "HTML": 311
+        }
+    },
+    {
+        "name": "jitsi-component-selector",
+        "full_name": "jitsi/jitsi-component-selector",
+        "url": "https://github.com/jitsi/jitsi-component-selector",
+        "stars": 2,
+        "updated_at": "2024-05-09T11:50:37Z",
+        "description": "Selector Service for Jitsi components",
+        "size_kb": 227,
+        "languages": {
+            "TypeScript": 141902,
+            "Shell": 1427,
+            "Lua": 966,
+            "JavaScript": 667
+        }
+    },
+    {
+        "name": "react-native-video",
+        "full_name": "jitsi/react-native-video",
+        "url": "https://github.com/jitsi/react-native-video",
+        "stars": 2,
+        "updated_at": "2025-02-20T14:19:50Z",
+        "description": "A <Video /> component for react-native",
+        "size_kb": 13096,
+        "languages": {
+            "Java": 174374,
+            "Objective-C": 103221,
+            "JavaScript": 26961,
+            "C++": 20463,
+            "Ruby": 1130,
+            "C": 734
+        }
+    },
+    {
+        "name": "react-native-olm",
+        "full_name": "jitsi/react-native-olm",
+        "url": "https://github.com/jitsi/react-native-olm",
+        "stars": 4,
+        "updated_at": "2024-06-04T23:50:38Z",
+        "description": null,
+        "size_kb": 479,
+        "languages": {
+            "C++": 28279,
+            "Java": 6932,
+            "JavaScript": 3605,
+            "Objective-C": 3378,
+            "CMake": 2715,
+            "Ruby": 2194,
+            "TypeScript": 1760,
+            "Objective-C++": 604,
+            "Starlark": 602,
+            "C": 103,
+            "Swift": 55
+        }
+    },
+    {
+        "name": "face-api.js",
+        "full_name": "jitsi/face-api.js",
+        "url": "https://github.com/jitsi/face-api.js",
+        "stars": 1,
+        "updated_at": "2023-11-27T15:03:12Z",
+        "description": "JavaScript API for face detection and face recognition in the browser and nodejs with tensorflow.js",
+        "size_kb": 216077,
+        "languages": {
+            "TypeScript": 413661,
+            "JavaScript": 3947
+        }
+    },
+    {
+        "name": "jitsi-component-sidecar",
+        "full_name": "jitsi/jitsi-component-sidecar",
+        "url": "https://github.com/jitsi/jitsi-component-sidecar",
+        "stars": 1,
+        "updated_at": "2023-10-15T11:46:30Z",
+        "description": "Sidecar service for jitsi components",
+        "size_kb": 281,
+        "languages": {
+            "TypeScript": 50738,
+            "Shell": 1651,
+            "JavaScript": 792,
+            "Dockerfile": 286
+        }
+    },
+    {
+        "name": "tpl",
+        "full_name": "jitsi/tpl",
+        "url": "https://github.com/jitsi/tpl",
+        "stars": 4,
+        "updated_at": "2024-08-27T07:15:52Z",
+        "description": "Simple templating from environment variables",
+        "size_kb": 10223,
+        "languages": {
+            "Go": 3096,
+            "Makefile": 849
+        }
+    },
+    {
+        "name": "token-generator",
+        "full_name": "jitsi/token-generator",
+        "url": "https://github.com/jitsi/token-generator",
+        "stars": 3,
+        "updated_at": "2024-09-30T13:20:54Z",
+        "description": "Token Generator for all occasions",
+        "size_kb": 234,
+        "languages": {
+            "TypeScript": 35567,
+            "Shell": 1600,
+            "JavaScript": 582,
+            "Dockerfile": 458
+        }
+    },
+    {
+        "name": "jitsi-meet-vue-sdk",
+        "full_name": "jitsi/jitsi-meet-vue-sdk",
+        "url": "https://github.com/jitsi/jitsi-meet-vue-sdk",
+        "stars": 24,
+        "updated_at": "2024-10-09T17:27:18Z",
+        "description": "Vue SDK for Jitsi Meet  (built during GSoC 2022)",
+        "size_kb": 1759,
+        "languages": {
+            "TypeScript": 16863,
+            "Vue": 15108,
+            "JavaScript": 5897,
+            "CSS": 2514,
+            "HTML": 342
+        }
+    },
+    {
+        "name": "react-native-dialog",
+        "full_name": "jitsi/react-native-dialog",
+        "url": "https://github.com/jitsi/react-native-dialog",
+        "stars": 0,
+        "updated_at": "2022-06-17T06:54:52Z",
+        "description": "Pure JavaScript React-Native dialog",
+        "size_kb": 3597,
+        "languages": {
+            "TypeScript": 26795,
+            "Java": 9367,
+            "Objective-C": 4390,
+            "Starlark": 1910,
+            "JavaScript": 1713,
+            "Ruby": 625,
+            "Shell": 94
+        }
+    },
+    {
+        "name": "excalidraw-backend",
+        "full_name": "jitsi/excalidraw-backend",
+        "url": "https://github.com/jitsi/excalidraw-backend",
+        "stars": 26,
+        "updated_at": "2025-02-28T02:19:36Z",
+        "description": "Excalidraw collaboration backend for Jitsi",
+        "size_kb": 203,
+        "languages": {
+            "TypeScript": 3813,
+            "Dockerfile": 186,
+            "JavaScript": 157
+        }
+    },
+    {
+        "name": "excalidraw",
+        "full_name": "jitsi/excalidraw",
+        "url": "https://github.com/jitsi/excalidraw",
+        "stars": 6,
+        "updated_at": "2024-06-07T22:13:16Z",
+        "description": "Virtual whiteboard for sketching hand-drawn like diagrams",
+        "size_kb": 33618,
+        "languages": {
+            "TypeScript": 1554869,
+            "JavaScript": 81823,
+            "SCSS": 73384,
+            "HTML": 6596,
+            "CSS": 2123,
+            "Dockerfile": 322,
+            "Shell": 27
+        }
+    },
+    {
+        "name": "lua-cjson",
+        "full_name": "jitsi/lua-cjson",
+        "url": "https://github.com/jitsi/lua-cjson",
+        "stars": 0,
+        "updated_at": "2022-09-20T19:38:27Z",
+        "description": "Lua CJSON is a fast JSON encoding/parsing module for Lua",
+        "size_kb": 372,
+        "languages": {
+            "C": 157187,
+            "Lua": 34052,
+            "Perl": 6960,
+            "Makefile": 3959,
+            "CMake": 2505,
+            "Shell": 2464,
+            "Raku": 1646
+        }
+    },
+    {
+        "name": "basexx",
+        "full_name": "jitsi/basexx",
+        "url": "https://github.com/jitsi/basexx",
+        "stars": 0,
+        "updated_at": "2022-09-20T19:37:26Z",
+        "description": "A Lua library which provides base2(bitfield), base16(hex), base32(crockford/rfc), base64(rfc/url), base85(z85) decoding and encoding.",
+        "size_kb": 44,
+        "languages": {
+            "Lua": 21221
+        }
+    },
+    {
+        "name": "jigasi-rtcstats-push",
+        "full_name": "jitsi/jigasi-rtcstats-push",
+        "url": "https://github.com/jitsi/jigasi-rtcstats-push",
+        "stars": 0,
+        "updated_at": "2025-02-25T22:49:39Z",
+        "description": null,
+        "size_kb": 18,
+        "languages": {
+            "JavaScript": 11398
+        }
+    },
+    {
+        "name": "infra-provisioning",
+        "full_name": "jitsi/infra-provisioning",
+        "url": "https://github.com/jitsi/infra-provisioning",
+        "stars": 12,
+        "updated_at": "2025-03-05T15:11:54Z",
+        "description": "Scripts for provisioning cloud resources for jitsi services",
+        "size_kb": 2995,
+        "languages": {
+            "Shell": 1098188,
+            "Python": 694921,
+            "HCL": 538449,
+            "Smarty": 162558,
+            "JavaScript": 23245,
+            "Dockerfile": 19929,
+            "Groovy": 11201
+        }
+    },
+    {
+        "name": "infra-configuration",
+        "full_name": "jitsi/infra-configuration",
+        "url": "https://github.com/jitsi/infra-configuration",
+        "stars": 14,
+        "updated_at": "2025-03-05T14:58:19Z",
+        "description": "Scripts for configuration jitsi services",
+        "size_kb": 2439,
+        "languages": {
+            "Shell": 473675,
+            "Jinja": 294456,
+            "Python": 194497,
+            "Lua": 153983,
+            "JavaScript": 15651,
+            "Roff": 114
+        }
+    },
+    {
+        "name": "infra-customizations",
+        "full_name": "jitsi/infra-customizations",
+        "url": "https://github.com/jitsi/infra-customizations",
+        "stars": 0,
+        "updated_at": "2023-01-23T21:46:27Z",
+        "description": null,
+        "size_kb": 8,
+        "languages": {
+            "Shell": 1402
+        }
+    },
+    {
+        "name": "rtc-visualizer",
+        "full_name": "jitsi/rtc-visualizer",
+        "url": "https://github.com/jitsi/rtc-visualizer",
+        "stars": 3,
+        "updated_at": "2025-02-27T10:17:37Z",
+        "description": "A server & client used to visualize data from RTCStats server",
+        "size_kb": 2039,
+        "languages": {
+            "JavaScript": 82679,
+            "HTML": 1793,
+            "Shell": 1099,
+            "Dockerfile": 743
+        }
+    },
+    {
+        "name": "jicofo-rtcstats-push",
+        "full_name": "jitsi/jicofo-rtcstats-push",
+        "url": "https://github.com/jitsi/jicofo-rtcstats-push",
+        "stars": 0,
+        "updated_at": "2023-05-08T21:00:17Z",
+        "description": "Push stats from jicofo to rtcstats-server",
+        "size_kb": 12,
+        "languages": {
+            "JavaScript": 9670
+        }
+    },
+    {
+        "name": "skynet",
+        "full_name": "jitsi/skynet",
+        "url": "https://github.com/jitsi/skynet",
+        "stars": 49,
+        "updated_at": "2025-03-06T15:01:52Z",
+        "description": "AI core services for Jitsi",
+        "size_kb": 5436,
+        "languages": {
+            "Python": 154000,
+            "Dockerfile": 3177,
+            "Makefile": 1069,
+            "Shell": 685,
+            "HTML": 353
+        }
+    },
+    {
+        "name": "jitsi-meet-flutter-sdk",
+        "full_name": "jitsi/jitsi-meet-flutter-sdk",
+        "url": "https://github.com/jitsi/jitsi-meet-flutter-sdk",
+        "stars": 45,
+        "updated_at": "2025-03-06T09:13:28Z",
+        "description": "Jitsi Meet plugin for Flutter",
+        "size_kb": 236,
+        "languages": {
+            "Dart": 47911,
+            "Kotlin": 18208,
+            "Swift": 13656,
+            "Ruby": 2330,
+            "Shell": 1804,
+            "Objective-C": 38
+        }
+    },
+    {
+        "name": "react-native-orientation-locker",
+        "full_name": "jitsi/react-native-orientation-locker",
+        "url": "https://github.com/jitsi/react-native-orientation-locker",
+        "stars": 1,
+        "updated_at": "2023-11-08T15:26:13Z",
+        "description": "A react-native module that can listen on orientation changing of device, get current orientation, lock to preferred orientation. ",
+        "size_kb": 19677,
+        "languages": {
+            "JavaScript": 26080,
+            "Java": 25079,
+            "C++": 19510,
+            "Objective-C": 14820,
+            "Starlark": 1910,
+            "C": 1587,
+            "Ruby": 1509
+        }
+    },
+    {
+        "name": "usrsctp",
+        "full_name": "jitsi/usrsctp",
+        "url": "https://github.com/jitsi/usrsctp",
+        "stars": 1,
+        "updated_at": "2024-07-03T03:08:26Z",
+        "description": "A portable SCTP userland stack",
+        "size_kb": 6152,
+        "languages": {
+            "C": 3134472,
+            "TeX": 57378,
+            "CMake": 25955,
+            "Makefile": 10625,
+            "Meson": 9546,
+            "M4": 6888,
+            "Shell": 5432,
+            "Python": 1529
+        }
+    },
+    {
+        "name": "ljm-getting-started",
+        "full_name": "jitsi/ljm-getting-started",
+        "url": "https://github.com/jitsi/ljm-getting-started",
+        "stars": 4,
+        "updated_at": "2024-09-26T04:13:43Z",
+        "description": "Getting started with lib-jitsi-meet and JaaS",
+        "size_kb": 9,
+        "languages": {
+            "JavaScript": 5091,
+            "HTML": 1595
+        }
+    },
+    {
+        "name": "dcsctp4j",
+        "full_name": "jitsi/dcsctp4j",
+        "url": "https://github.com/jitsi/dcsctp4j",
+        "stars": 1,
+        "updated_at": "2025-02-19T19:05:33Z",
+        "description": null,
+        "size_kb": 125,
+        "languages": {
+            "C++": 82350,
+            "Java": 72965,
+            "Shell": 10113,
+            "Makefile": 4546,
+            "CMake": 3030
+        }
+    },
+    {
+        "name": "jitsi-pseudotcp",
+        "full_name": "jitsi/jitsi-pseudotcp",
+        "url": "https://github.com/jitsi/jitsi-pseudotcp",
+        "stars": 2,
+        "updated_at": "2025-01-01T00:32:37Z",
+        "description": "A Java implementation of the pseudo TCP protocol ",
+        "size_kb": 64,
+        "languages": {
+            "Java": 235885
+        }
+    },
+    {
+        "name": "jitsi-multitrack-recorder",
+        "full_name": "jitsi/jitsi-multitrack-recorder",
+        "url": "https://github.com/jitsi/jitsi-multitrack-recorder",
+        "stars": 0,
+        "updated_at": "2024-12-30T22:00:27Z",
+        "description": null,
+        "size_kb": 657,
+        "languages": {
+            "Kotlin": 64828,
+            "Shell": 2190,
+            "Dockerfile": 735
+        }
+    },
+    {
+        "name": "jebml",
+        "full_name": "jitsi/jebml",
+        "url": "https://github.com/jitsi/jebml",
+        "stars": 0,
+        "updated_at": "2024-10-10T20:40:21Z",
+        "description": "Matroska muxer/demuxer",
+        "size_kb": 361,
+        "languages": {
+            "Java": 235346,
+            "Python": 2198
+        }
+    },
+    {
+        "name": "prometheus-client-c",
+        "full_name": "jitsi/prometheus-client-c",
+        "url": "https://github.com/jitsi/prometheus-client-c",
+        "stars": 0,
+        "updated_at": "2025-02-25T16:41:25Z",
+        "description": "A Prometheus Client in C",
+        "size_kb": 1321,
+        "languages": {
+            "C": 270786,
+            "Shell": 26285,
+            "CMake": 12700,
+            "C++": 4947,
+            "Makefile": 2388
+        }
+    }
+]

@@ -1,0 +1,656 @@
+[
+    {
+        "name": "vim-ft-bzl",
+        "full_name": "bazelbuild/vim-ft-bzl",
+        "url": "https://github.com/bazelbuild/vim-ft-bzl",
+        "stars": 27,
+        "updated_at": "2023-08-28T19:16:17Z",
+        "description": null,
+        "size_kb": 23,
+        "languages": {
+            "Vim Script": 10467
+        }
+    },
+    {
+        "name": "continuous-integration",
+        "full_name": "bazelbuild/continuous-integration",
+        "url": "https://github.com/bazelbuild/continuous-integration",
+        "stars": 265,
+        "updated_at": "2025-03-05T18:28:05Z",
+        "description": "Bazel's Continuous Integration Setup",
+        "size_kb": 25069,
+        "languages": {
+            "Python": 385155,
+            "Java": 185198,
+            "HCL": 139228,
+            "Go": 119226,
+            "TypeScript": 73308,
+            "Rust": 39790,
+            "Dockerfile": 37114,
+            "Shell": 35646,
+            "PowerShell": 26221,
+            "JavaScript": 25854,
+            "PLpgSQL": 12872,
+            "Smarty": 4204,
+            "Starlark": 2865,
+            "CSS": 698,
+            "Ruby": 188
+        }
+    },
+    {
+        "name": "rules_scala",
+        "full_name": "bazelbuild/rules_scala",
+        "url": "https://github.com/bazelbuild/rules_scala",
+        "stars": 368,
+        "updated_at": "2025-03-05T14:48:19Z",
+        "description": "Scala rules for Bazel",
+        "size_kb": 4253,
+        "languages": {
+            "Starlark": 485191,
+            "Java": 154765,
+            "Shell": 154045,
+            "Scala": 145491,
+            "Python": 26192,
+            "Thrift": 3873
+        }
+    },
+    {
+        "name": "rules_closure",
+        "full_name": "bazelbuild/rules_closure",
+        "url": "https://github.com/bazelbuild/rules_closure",
+        "stars": 154,
+        "updated_at": "2025-02-26T21:19:41Z",
+        "description": "Closure rules for Bazel",
+        "size_kb": 2052,
+        "languages": {
+            "Java": 421407,
+            "JavaScript": 295927,
+            "Starlark": 175172,
+            "HTML": 5723,
+            "CSS": 943,
+            "Shell": 95
+        }
+    },
+    {
+        "name": "rules_d",
+        "full_name": "bazelbuild/rules_d",
+        "url": "https://github.com/bazelbuild/rules_d",
+        "stars": 24,
+        "updated_at": "2023-10-06T10:19:27Z",
+        "description": "D rules for Bazel",
+        "size_kb": 69,
+        "languages": {
+            "Starlark": 24573,
+            "D": 2892,
+            "C": 78
+        }
+    },
+    {
+        "name": "rules_rust",
+        "full_name": "bazelbuild/rules_rust",
+        "url": "https://github.com/bazelbuild/rules_rust",
+        "stars": 700,
+        "updated_at": "2025-03-05T21:44:32Z",
+        "description": "Rust rules for Bazel",
+        "size_kb": 41715,
+        "languages": {
+            "Starlark": 3342569,
+            "Rust": 1083762,
+            "Jinja": 24074,
+            "Shell": 16984,
+            "Python": 16269,
+            "C++": 13106,
+            "Batchfile": 1633,
+            "C": 1560,
+            "JavaScript": 786,
+            "Nix": 679,
+            "RenderScript": 35
+        }
+    },
+    {
+        "name": "rules_sass",
+        "full_name": "bazelbuild/rules_sass",
+        "url": "https://github.com/bazelbuild/rules_sass",
+        "stars": 51,
+        "updated_at": "2025-02-25T01:20:35Z",
+        "description": "Sass rules for Bazel",
+        "size_kb": 348,
+        "languages": {
+            "Starlark": 25576,
+            "JavaScript": 1501,
+            "Shell": 531,
+            "SCSS": 254,
+            "Sass": 27,
+            "CSS": 25
+        }
+    },
+    {
+        "name": "rules_groovy",
+        "full_name": "bazelbuild/rules_groovy",
+        "url": "https://github.com/bazelbuild/rules_groovy",
+        "stars": 11,
+        "updated_at": "2024-05-09T17:08:51Z",
+        "description": "Groovy rules for Bazel",
+        "size_kb": 101,
+        "languages": {
+            "Starlark": 16266,
+            "Groovy": 137,
+            "Java": 88
+        }
+    },
+    {
+        "name": "buildtools",
+        "full_name": "bazelbuild/buildtools",
+        "url": "https://github.com/bazelbuild/buildtools",
+        "stars": 1058,
+        "updated_at": "2025-03-06T10:47:27Z",
+        "description": "A bazel BUILD file formatter and editor",
+        "size_kb": 2756,
+        "languages": {
+            "Go": 852900,
+            "Shell": 84264,
+            "Starlark": 50904,
+            "Yacc": 28493,
+            "JavaScript": 5194,
+            "Python": 671
+        }
+    },
+    {
+        "name": "vim-bazel",
+        "full_name": "bazelbuild/vim-bazel",
+        "url": "https://github.com/bazelbuild/vim-bazel",
+        "stars": 152,
+        "updated_at": "2025-01-28T05:15:34Z",
+        "description": "Vim support for Bazel",
+        "size_kb": 39,
+        "languages": {
+            "Vim Script": 11326,
+            "C++": 1804,
+            "Starlark": 936,
+            "Java": 434,
+            "C": 87
+        }
+    },
+    {
+        "name": "rules_apple",
+        "full_name": "bazelbuild/rules_apple",
+        "url": "https://github.com/bazelbuild/rules_apple",
+        "stars": 530,
+        "updated_at": "2025-03-03T22:04:12Z",
+        "description": "Bazel rules to build apps for Apple platforms.",
+        "size_kb": 13854,
+        "languages": {
+            "Starlark": 3092005,
+            "Python": 473030,
+            "Shell": 402856,
+            "Swift": 34292,
+            "Objective-C": 7571,
+            "C++": 4378,
+            "DTrace": 90
+        }
+    },
+    {
+        "name": "rules_docker",
+        "full_name": "bazelbuild/rules_docker",
+        "url": "https://github.com/bazelbuild/rules_docker",
+        "stars": 1080,
+        "updated_at": "2025-03-06T02:21:36Z",
+        "description": "Rules for building and handling Docker images with Bazel",
+        "size_kb": 12042,
+        "languages": {
+            "Starlark": 551488,
+            "Go": 133160,
+            "Python": 129370,
+            "Shell": 80107,
+            "Smarty": 4686,
+            "Java": 3866,
+            "Dockerfile": 1764
+        }
+    },
+    {
+        "name": "bazel-blog",
+        "full_name": "bazelbuild/bazel-blog",
+        "url": "https://github.com/bazelbuild/bazel-blog",
+        "stars": 20,
+        "updated_at": "2024-12-11T15:14:41Z",
+        "description": "Content of the Bazel blog",
+        "size_kb": 27483,
+        "languages": {
+            "HTML": 29281,
+            "SCSS": 8199,
+            "Starlark": 5576,
+            "Shell": 5304,
+            "Dockerfile": 106,
+            "Ruby": 100
+        }
+    },
+    {
+        "name": "bazel-watcher",
+        "full_name": "bazelbuild/bazel-watcher",
+        "url": "https://github.com/bazelbuild/bazel-watcher",
+        "stars": 454,
+        "updated_at": "2025-03-03T20:54:56Z",
+        "description": "Tools for building Bazel targets when source files change.",
+        "size_kb": 834,
+        "languages": {
+            "Go": 219307,
+            "Starlark": 34443,
+            "JavaScript": 6949,
+            "Shell": 1483,
+            "Python": 497
+        }
+    },
+    {
+        "name": "bazel-toolchains",
+        "full_name": "bazelbuild/bazel-toolchains",
+        "url": "https://github.com/bazelbuild/bazel-toolchains",
+        "stars": 190,
+        "updated_at": "2025-03-03T02:14:07Z",
+        "description": "Repository that hosts Bazel toolchain configs for remote execution and related support tools.",
+        "size_kb": 1967,
+        "languages": {
+            "Go": 112551,
+            "Starlark": 20479
+        }
+    },
+    {
+        "name": "sandboxfs",
+        "full_name": "bazelbuild/sandboxfs",
+        "url": "https://github.com/bazelbuild/sandboxfs",
+        "stars": 376,
+        "updated_at": "2025-01-01T05:18:41Z",
+        "description": "A virtual file system for sandboxing",
+        "size_kb": 875,
+        "languages": {
+            "Rust": 221648,
+            "Go": 193026,
+            "Shell": 18483,
+            "Makefile": 3087
+        }
+    },
+    {
+        "name": "rules_python",
+        "full_name": "bazelbuild/rules_python",
+        "url": "https://github.com/bazelbuild/rules_python",
+        "stars": 561,
+        "updated_at": "2025-03-06T05:42:43Z",
+        "description": "Bazel Python Rules",
+        "size_kb": 14344,
+        "languages": {
+            "Starlark": 1555051,
+            "Python": 368676,
+            "Go": 127588,
+            "Shell": 30185,
+            "C++": 552,
+            "C": 92
+        }
+    },
+    {
+        "name": "bazel-skylib",
+        "full_name": "bazelbuild/bazel-skylib",
+        "url": "https://github.com/bazelbuild/bazel-skylib",
+        "stars": 400,
+        "updated_at": "2025-02-27T16:31:14Z",
+        "description": "Common useful functions and rules for Bazel",
+        "size_kb": 685,
+        "languages": {
+            "Starlark": 342476,
+            "Shell": 61320,
+            "Go": 14678,
+            "C++": 5369
+        }
+    },
+    {
+        "name": "rules_pkg",
+        "full_name": "bazelbuild/rules_pkg",
+        "url": "https://github.com/bazelbuild/rules_pkg",
+        "stars": 230,
+        "updated_at": "2025-03-06T00:31:06Z",
+        "description": "Bazel rules for creating packages of many types (zip, tar, deb, rpm, ...)",
+        "size_kb": 1394,
+        "languages": {
+            "Starlark": 400241,
+            "Python": 251756,
+            "Smarty": 7642,
+            "Shell": 1873,
+            "C++": 473,
+            "C": 27
+        }
+    },
+    {
+        "name": "rules_android",
+        "full_name": "bazelbuild/rules_android",
+        "url": "https://github.com/bazelbuild/rules_android",
+        "stars": 186,
+        "updated_at": "2025-02-28T18:51:03Z",
+        "description": "Android rules for Bazel",
+        "size_kb": 2340,
+        "languages": {
+            "Java": 2221496,
+            "Starlark": 1151641,
+            "Go": 398830,
+            "Shell": 97876,
+            "Python": 74619,
+            "C": 800,
+            "XSLT": 229
+        }
+    },
+    {
+        "name": "rules_kotlin",
+        "full_name": "bazelbuild/rules_kotlin",
+        "url": "https://github.com/bazelbuild/rules_kotlin",
+        "stars": 341,
+        "updated_at": "2025-02-28T02:35:20Z",
+        "description": "Bazel rules for Kotlin",
+        "size_kb": 4853,
+        "languages": {
+            "Kotlin": 335800,
+            "Starlark": 329065,
+            "Java": 68186,
+            "Shell": 7895,
+            "Makefile": 1309,
+            "Batchfile": 563
+        }
+    },
+    {
+        "name": "remote-apis",
+        "full_name": "bazelbuild/remote-apis",
+        "url": "https://github.com/bazelbuild/remote-apis",
+        "stars": 349,
+        "updated_at": "2025-03-03T08:24:31Z",
+        "description": "An API for caching and execution of actions on a remote system.",
+        "size_kb": 691,
+        "languages": {
+            "Go": 466957,
+            "Starlark": 11816,
+            "Shell": 989
+        }
+    },
+    {
+        "name": "rules_swift",
+        "full_name": "bazelbuild/rules_swift",
+        "url": "https://github.com/bazelbuild/rules_swift",
+        "stars": 318,
+        "updated_at": "2025-03-03T20:33:18Z",
+        "description": "Bazel rules to build Swift on Apple and Linux platforms",
+        "size_kb": 4831,
+        "languages": {
+            "Starlark": 915341,
+            "Swift": 109499,
+            "C++": 92446,
+            "Shell": 7701,
+            "Batchfile": 247
+        }
+    },
+    {
+        "name": "emacs-bazel-mode",
+        "full_name": "bazelbuild/emacs-bazel-mode",
+        "url": "https://github.com/bazelbuild/emacs-bazel-mode",
+        "stars": 86,
+        "updated_at": "2024-12-05T14:54:57Z",
+        "description": "Emacs mode for Bazel",
+        "size_kb": 709,
+        "languages": {
+            "Emacs Lisp": 207547,
+            "Starlark": 4878,
+            "Makefile": 1582
+        }
+    },
+    {
+        "name": "tools_android",
+        "full_name": "bazelbuild/tools_android",
+        "url": "https://github.com/bazelbuild/tools_android",
+        "stars": 25,
+        "updated_at": "2024-11-11T19:47:28Z",
+        "description": "Tools for use with building Android apps with Bazel",
+        "size_kb": 33,
+        "languages": {
+            "Starlark": 5840,
+            "Java": 883
+        }
+    },
+    {
+        "name": "starlark",
+        "full_name": "bazelbuild/starlark",
+        "url": "https://github.com/bazelbuild/starlark",
+        "stars": 2581,
+        "updated_at": "2025-03-05T18:41:45Z",
+        "description": "Starlark Language",
+        "size_kb": 369,
+        "languages": {
+            "Starlark": 6551,
+            "Python": 5428,
+            "Shell": 226
+        }
+    },
+    {
+        "name": "bazelisk",
+        "full_name": "bazelbuild/bazelisk",
+        "url": "https://github.com/bazelbuild/bazelisk",
+        "stars": 2198,
+        "updated_at": "2025-03-06T02:21:13Z",
+        "description": "A user-friendly launcher for Bazel.",
+        "size_kb": 660,
+        "languages": {
+            "Go": 118311,
+            "Shell": 22511,
+            "Python": 18821,
+            "Starlark": 9163,
+            "JavaScript": 2127
+        }
+    },
+    {
+        "name": "apple_support",
+        "full_name": "bazelbuild/apple_support",
+        "url": "https://github.com/bazelbuild/apple_support",
+        "stars": 86,
+        "updated_at": "2025-02-21T19:38:06Z",
+        "description": "Apple support for Bazel rules",
+        "size_kb": 531,
+        "languages": {
+            "Starlark": 360886,
+            "Shell": 55360,
+            "C++": 23463,
+            "Smarty": 3671,
+            "Objective-C": 2470,
+            "Python": 2056,
+            "Limbo": 218,
+            "C": 211
+        }
+    },
+    {
+        "name": "rules_cc",
+        "full_name": "bazelbuild/rules_cc",
+        "url": "https://github.com/bazelbuild/rules_cc",
+        "stars": 203,
+        "updated_at": "2025-03-06T08:14:14Z",
+        "description": "C++ Rules for Bazel",
+        "size_kb": 1177,
+        "languages": {
+            "Starlark": 719904,
+            "C++": 62514,
+            "Shell": 45168,
+            "Smarty": 33191,
+            "Batchfile": 878
+        }
+    },
+    {
+        "name": "java_tools",
+        "full_name": "bazelbuild/java_tools",
+        "url": "https://github.com/bazelbuild/java_tools",
+        "stars": 14,
+        "updated_at": "2024-12-25T10:07:50Z",
+        "description": null,
+        "size_kb": 13761,
+        "languages": {
+            "Python": 1795,
+            "Starlark": 104
+        }
+    },
+    {
+        "name": "bazel-bench",
+        "full_name": "bazelbuild/bazel-bench",
+        "url": "https://github.com/bazelbuild/bazel-bench",
+        "stars": 33,
+        "updated_at": "2025-03-04T15:45:33Z",
+        "description": "Benchmarking tool for bazel",
+        "size_kb": 261,
+        "languages": {
+            "Python": 128063,
+            "Starlark": 6645
+        }
+    },
+    {
+        "name": "remote-apis-sdks",
+        "full_name": "bazelbuild/remote-apis-sdks",
+        "url": "https://github.com/bazelbuild/remote-apis-sdks",
+        "stars": 51,
+        "updated_at": "2025-02-07T19:58:43Z",
+        "description": "This repository contains client libraries for the Remote Execution API https://github.com/bazelbuild/remote-apis",
+        "size_kb": 1357,
+        "languages": {
+            "Go": 807265,
+            "Starlark": 60766,
+            "Shell": 1847
+        }
+    },
+    {
+        "name": "platforms",
+        "full_name": "bazelbuild/platforms",
+        "url": "https://github.com/bazelbuild/platforms",
+        "stars": 111,
+        "updated_at": "2025-02-17T00:08:02Z",
+        "description": "Constraint values for specifying platforms and toolchains",
+        "size_kb": 84,
+        "languages": {
+            "Starlark": 16048,
+            "Shell": 1996
+        }
+    },
+    {
+        "name": "rules_java",
+        "full_name": "bazelbuild/rules_java",
+        "url": "https://github.com/bazelbuild/rules_java",
+        "stars": 78,
+        "updated_at": "2025-03-04T09:54:36Z",
+        "description": "Java rules for Bazel",
+        "size_kb": 641,
+        "languages": {
+            "Starlark": 480472,
+            "Java": 70226,
+            "Shell": 19838
+        }
+    },
+    {
+        "name": "rules_proto",
+        "full_name": "bazelbuild/rules_proto",
+        "url": "https://github.com/bazelbuild/rules_proto",
+        "stars": 172,
+        "updated_at": "2025-01-21T16:02:27Z",
+        "description": "Protocol buffer rules for Bazel",
+        "size_kb": 313,
+        "languages": {
+            "Starlark": 24217,
+            "C++": 6547
+        }
+    },
+    {
+        "name": "rules_license",
+        "full_name": "bazelbuild/rules_license",
+        "url": "https://github.com/bazelbuild/rules_license",
+        "stars": 83,
+        "updated_at": "2025-03-05T04:48:11Z",
+        "description": null,
+        "size_kb": 300,
+        "languages": {
+            "Starlark": 181917,
+            "Python": 23735,
+            "C++": 3419,
+            "Shell": 2415,
+            "Java": 1491
+        }
+    },
+    {
+        "name": "rules_android_ndk",
+        "full_name": "bazelbuild/rules_android_ndk",
+        "url": "https://github.com/bazelbuild/rules_android_ndk",
+        "stars": 35,
+        "updated_at": "2025-01-29T21:30:16Z",
+        "description": null,
+        "size_kb": 91,
+        "languages": {
+            "Starlark": 72286,
+            "Smarty": 8116,
+            "Shell": 2142
+        }
+    },
+    {
+        "name": "reclient",
+        "full_name": "bazelbuild/reclient",
+        "url": "https://github.com/bazelbuild/reclient",
+        "stars": 82,
+        "updated_at": "2025-03-04T02:38:21Z",
+        "description": null,
+        "size_kb": 2363,
+        "languages": {
+            "Go": 1407151,
+            "Starlark": 303549,
+            "C++": 79025,
+            "Shell": 20144,
+            "Batchfile": 5172
+        }
+    },
+    {
+        "name": "rules_utp",
+        "full_name": "bazelbuild/rules_utp",
+        "url": "https://github.com/bazelbuild/rules_utp",
+        "stars": 3,
+        "updated_at": "2024-12-03T08:15:53Z",
+        "description": null,
+        "size_kb": 196,
+        "languages": {
+            "Starlark": 150564,
+            "Shell": 4003,
+            "Java": 2760
+        }
+    },
+    {
+        "name": "rules_platform",
+        "full_name": "bazelbuild/rules_platform",
+        "url": "https://github.com/bazelbuild/rules_platform",
+        "stars": 9,
+        "updated_at": "2024-11-16T05:24:31Z",
+        "description": null,
+        "size_kb": 53,
+        "languages": {
+            "Starlark": 8918
+        }
+    },
+    {
+        "name": "bazel-worker-api",
+        "full_name": "bazelbuild/bazel-worker-api",
+        "url": "https://github.com/bazelbuild/bazel-worker-api",
+        "stars": 4,
+        "updated_at": "2025-02-20T13:15:17Z",
+        "description": "Bazel's Persistent Worker API",
+        "size_kb": 49,
+        "languages": {
+            "Java": 66350,
+            "Starlark": 2859,
+            "Shell": 428
+        }
+    },
+    {
+        "name": "rules_shell",
+        "full_name": "bazelbuild/rules_shell",
+        "url": "https://github.com/bazelbuild/rules_shell",
+        "stars": 14,
+        "updated_at": "2025-02-10T17:11:35Z",
+        "description": null,
+        "size_kb": 52,
+        "languages": {
+            "Shell": 45914,
+            "Starlark": 30199
+        }
+    }
+]

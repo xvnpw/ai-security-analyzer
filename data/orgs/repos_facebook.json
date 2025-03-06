@@ -1,0 +1,1385 @@
+[
+    {
+        "name": "pyre2",
+        "full_name": "facebook/pyre2",
+        "url": "https://github.com/facebook/pyre2",
+        "stars": 641,
+        "updated_at": "2025-03-04T07:24:33Z",
+        "description": "Python wrapper for RE2",
+        "size_kb": 49,
+        "languages": {
+            "C++": 31495,
+            "Python": 10979,
+            "Makefile": 212
+        }
+    },
+    {
+        "name": "facebook-android-sdk",
+        "full_name": "facebook/facebook-android-sdk",
+        "url": "https://github.com/facebook/facebook-android-sdk",
+        "stars": 6200,
+        "updated_at": "2025-03-06T13:03:29Z",
+        "description": "Used to integrate Android apps with Facebook Platform.",
+        "size_kb": 33465,
+        "languages": {
+            "Kotlin": 3428806,
+            "Java": 238442,
+            "Shell": 7277,
+            "AIDL": 323
+        }
+    },
+    {
+        "name": "facebook-ios-sdk",
+        "full_name": "facebook/facebook-ios-sdk",
+        "url": "https://github.com/facebook/facebook-ios-sdk",
+        "stars": 7841,
+        "updated_at": "2025-03-06T13:03:21Z",
+        "description": "Used to integrate the Facebook Platform with your iOS & tvOS apps.",
+        "size_kb": 92559,
+        "languages": {
+            "Swift": 3822644,
+            "Objective-C": 1377472,
+            "Objective-C++": 38095,
+            "Shell": 27602,
+            "Ruby": 17495,
+            "C++": 13199,
+            "C": 9535,
+            "Python": 4516
+        }
+    },
+    {
+        "name": "watchman",
+        "full_name": "facebook/watchman",
+        "url": "https://github.com/facebook/watchman",
+        "stars": 12960,
+        "updated_at": "2025-03-06T14:22:52Z",
+        "description": "Watches files and records, or triggers actions, when they change. ",
+        "size_kb": 32330,
+        "languages": {
+            "C++": 1392021,
+            "Python": 890690,
+            "Rust": 238678,
+            "Java": 152490,
+            "CMake": 121708,
+            "Thrift": 104268,
+            "C": 68010,
+            "JavaScript": 53008,
+            "Ruby": 16953,
+            "Shell": 8758,
+            "CSS": 5325,
+            "Dockerfile": 1604,
+            "Starlark": 1322,
+            "Batchfile": 366
+        }
+    },
+    {
+        "name": "chef-utils",
+        "full_name": "facebook/chef-utils",
+        "url": "https://github.com/facebook/chef-utils",
+        "stars": 293,
+        "updated_at": "2025-03-03T21:51:42Z",
+        "description": "Utilities related to Chef",
+        "size_kb": 228,
+        "languages": {
+            "Ruby": 72431,
+            "Erlang": 3422
+        }
+    },
+    {
+        "name": "react",
+        "full_name": "facebook/react",
+        "url": "https://github.com/facebook/react",
+        "stars": 232922,
+        "updated_at": "2025-03-06T14:34:00Z",
+        "description": "The library for web and native user interfaces.",
+        "size_kb": 747009,
+        "languages": {
+            "JavaScript": 4758202,
+            "TypeScript": 1809202,
+            "HTML": 109628,
+            "CSS": 69509,
+            "C++": 44290,
+            "CoffeeScript": 18760,
+            "C": 5227,
+            "Shell": 4236,
+            "Python": 259,
+            "Makefile": 189
+        }
+    },
+    {
+        "name": "fishhook",
+        "full_name": "facebook/fishhook",
+        "url": "https://github.com/facebook/fishhook",
+        "stars": 5261,
+        "updated_at": "2025-03-06T13:06:12Z",
+        "description": "A library that enables dynamically rebinding symbols in Mach-O binaries running on iOS.",
+        "size_kb": 40,
+        "languages": {
+            "C": 13511,
+            "Ruby": 660
+        }
+    },
+    {
+        "name": "chisel",
+        "full_name": "facebook/chisel",
+        "url": "https://github.com/facebook/chisel",
+        "stars": 9150,
+        "updated_at": "2025-03-06T13:03:13Z",
+        "description": "Chisel is a collection of LLDB commands to assist debugging iOS apps.",
+        "size_kb": 3549,
+        "languages": {
+            "Python": 208173,
+            "Objective-C++": 11455,
+            "Objective-C": 5139,
+            "C": 1962,
+            "C++": 1876,
+            "Makefile": 321
+        }
+    },
+    {
+        "name": "IT-CPE",
+        "full_name": "facebook/IT-CPE",
+        "url": "https://github.com/facebook/IT-CPE",
+        "stars": 563,
+        "updated_at": "2025-03-06T00:07:55Z",
+        "description": "Meta's Client Platform Engineering tools. Some of the tools we have written to help manage our fleet of client systems. ",
+        "size_kb": 5313,
+        "languages": {
+            "Ruby": 478866,
+            "Python": 140098,
+            "HTML": 1905
+        }
+    },
+    {
+        "name": "Haxl",
+        "full_name": "facebook/Haxl",
+        "url": "https://github.com/facebook/Haxl",
+        "stars": 4294,
+        "updated_at": "2025-03-06T13:06:24Z",
+        "description": "A Haskell library that simplifies access to remote data, such as databases or web-based services. ",
+        "size_kb": 783,
+        "languages": {
+            "Haskell": 296333
+        }
+    },
+    {
+        "name": "yoga",
+        "full_name": "facebook/yoga",
+        "url": "https://github.com/facebook/yoga",
+        "stars": 17506,
+        "updated_at": "2025-03-06T13:02:56Z",
+        "description": "Yoga is an embeddable layout engine targeting web standards.",
+        "size_kb": 26556,
+        "languages": {
+            "C++": 3460886,
+            "Java": 1907666,
+            "TypeScript": 1728424,
+            "HTML": 194219,
+            "JavaScript": 73596,
+            "MDX": 35940,
+            "C": 31454,
+            "Python": 11226,
+            "CMake": 9807,
+            "CSS": 8390,
+            "Objective-C": 4012,
+            "Shell": 1678,
+            "Ruby": 1428,
+            "Swift": 800,
+            "Batchfile": 600
+        }
+    },
+    {
+        "name": "facebook-php-business-sdk",
+        "full_name": "facebook/facebook-php-business-sdk",
+        "url": "https://github.com/facebook/facebook-php-business-sdk",
+        "stars": 856,
+        "updated_at": "2025-03-06T06:36:32Z",
+        "description": "PHP SDK for Meta Marketing API",
+        "size_kb": 4742,
+        "languages": {
+            "PHP": 4710002
+        }
+    },
+    {
+        "name": "wdt",
+        "full_name": "facebook/wdt",
+        "url": "https://github.com/facebook/wdt",
+        "stars": 2892,
+        "updated_at": "2025-03-06T13:07:24Z",
+        "description": "Warp speed Data Transfer (WDT)  is an embeddedable library (and command line tool) aiming to transfer data between 2 systems as fast as possible over multiple TCP paths.",
+        "size_kb": 2153,
+        "languages": {
+            "C++": 798240,
+            "Shell": 76287,
+            "Python": 29704,
+            "Tcl": 21356,
+            "CMake": 16126
+        }
+    },
+    {
+        "name": "jsx",
+        "full_name": "facebook/jsx",
+        "url": "https://github.com/facebook/jsx",
+        "stars": 1983,
+        "updated_at": "2025-03-06T13:07:36Z",
+        "description": "The JSX specification is a XML-like syntax extension to ECMAScript.",
+        "size_kb": 129,
+        "languages": {
+            "HTML": 98334
+        }
+    },
+    {
+        "name": "facebook-python-business-sdk",
+        "full_name": "facebook/facebook-python-business-sdk",
+        "url": "https://github.com/facebook/facebook-python-business-sdk",
+        "stars": 1365,
+        "updated_at": "2025-03-06T13:07:46Z",
+        "description": "Python SDK for Meta Marketing APIs",
+        "size_kb": 14359,
+        "languages": {
+            "Python": 4274986
+        }
+    },
+    {
+        "name": "grocery-delivery",
+        "full_name": "facebook/grocery-delivery",
+        "url": "https://github.com/facebook/grocery-delivery",
+        "stars": 155,
+        "updated_at": "2025-01-21T00:15:04Z",
+        "description": "The Grocery Delivery utility for managing cookbook uploads to distributed Chef backends.",
+        "size_kb": 89,
+        "languages": {
+            "Ruby": 21214,
+            "Shell": 3857
+        }
+    },
+    {
+        "name": "between-meals",
+        "full_name": "facebook/between-meals",
+        "url": "https://github.com/facebook/between-meals",
+        "stars": 59,
+        "updated_at": "2025-01-09T19:57:21Z",
+        "description": "A library to provide calculations between Chef diffs.",
+        "size_kb": 227,
+        "languages": {
+            "Ruby": 79463
+        }
+    },
+    {
+        "name": "fatal",
+        "full_name": "facebook/fatal",
+        "url": "https://github.com/facebook/fatal",
+        "stars": 1010,
+        "updated_at": "2025-03-06T13:08:21Z",
+        "description": "Fatal is a library for fast prototyping software in modern C++. It provides facilities to enhance the expressive power of C++. The library is heavily based on template meta-programming, while keeping the complexity under-the-hood.",
+        "size_kb": 2900,
+        "languages": {
+            "C++": 3405925,
+            "Shell": 7295,
+            "C": 2513
+        }
+    },
+    {
+        "name": "proxygen",
+        "full_name": "facebook/proxygen",
+        "url": "https://github.com/facebook/proxygen",
+        "stars": 8188,
+        "updated_at": "2025-03-06T13:03:20Z",
+        "description": "A collection of C++ HTTP libraries including an easy to use HTTP server.",
+        "size_kb": 24929,
+        "languages": {
+            "C++": 4749038,
+            "Python": 343472,
+            "CMake": 143186,
+            "Shell": 31316,
+            "C": 5816,
+            "Dockerfile": 1541
+        }
+    },
+    {
+        "name": "wangle",
+        "full_name": "facebook/wangle",
+        "url": "https://github.com/facebook/wangle",
+        "stars": 3067,
+        "updated_at": "2025-03-06T13:07:17Z",
+        "description": "Wangle is a framework providing a set of common client/server abstractions for building services in a consistent, modular, and composable way.",
+        "size_kb": 8914,
+        "languages": {
+            "C++": 1085305,
+            "Python": 336311,
+            "CMake": 109326,
+            "C": 4498,
+            "Starlark": 3924,
+            "Shell": 1734
+        }
+    },
+    {
+        "name": "react-native",
+        "full_name": "facebook/react-native",
+        "url": "https://github.com/facebook/react-native",
+        "stars": 120881,
+        "updated_at": "2025-03-06T13:59:04Z",
+        "description": "A framework for building native applications using React",
+        "size_kb": 908034,
+        "languages": {
+            "C++": 4804530,
+            "JavaScript": 2598465,
+            "Java": 2148843,
+            "Kotlin": 2138292,
+            "Objective-C++": 1920260,
+            "Objective-C": 1264944,
+            "Ruby": 449778,
+            "CMake": 123237,
+            "TypeScript": 80733,
+            "Shell": 59064,
+            "C": 49371,
+            "Assembly": 14920,
+            "Swift": 2949,
+            "HTML": 1473
+        }
+    },
+    {
+        "name": "stetho",
+        "full_name": "facebook/stetho",
+        "url": "https://github.com/facebook/stetho",
+        "stars": 12689,
+        "updated_at": "2025-03-06T14:56:46Z",
+        "description": "Stetho is a debug bridge for Android applications, enabling the powerful Chrome Developer Tools and much more.",
+        "size_kb": 2392,
+        "languages": {
+            "Java": 824501,
+            "JavaScript": 9190,
+            "Python": 7672,
+            "Shell": 695
+        }
+    },
+    {
+        "name": "zstd",
+        "full_name": "facebook/zstd",
+        "url": "https://github.com/facebook/zstd",
+        "stars": 24465,
+        "updated_at": "2025-03-06T11:20:03Z",
+        "description": "Zstandard - Fast real-time compression algorithm",
+        "size_kb": 38866,
+        "languages": {
+            "C": 4563013,
+            "C++": 829075,
+            "Shell": 179062,
+            "Python": 150999,
+            "Makefile": 116695,
+            "CMake": 46148,
+            "Roff": 38024,
+            "Meson": 28760,
+            "Assembly": 15150,
+            "Starlark": 10295,
+            "Batchfile": 5447,
+            "Lua": 1647,
+            "Swift": 1264,
+            "HTML": 982,
+            "Dockerfile": 661
+        }
+    },
+    {
+        "name": "squangle",
+        "full_name": "facebook/squangle",
+        "url": "https://github.com/facebook/squangle",
+        "stars": 124,
+        "updated_at": "2025-03-05T17:53:23Z",
+        "description": "SQuangLe is a C++ API for accessing MySQL servers",
+        "size_kb": 1844,
+        "languages": {
+            "C++": 579698,
+            "C": 467
+        }
+    },
+    {
+        "name": "facebook-ruby-business-sdk",
+        "full_name": "facebook/facebook-ruby-business-sdk",
+        "url": "https://github.com/facebook/facebook-ruby-business-sdk",
+        "stars": 211,
+        "updated_at": "2025-02-13T21:43:08Z",
+        "description": "Ruby SDK for Meta Marketing API",
+        "size_kb": 2373,
+        "languages": {
+            "Ruby": 1536205
+        }
+    },
+    {
+        "name": "fresco",
+        "full_name": "facebook/fresco",
+        "url": "https://github.com/facebook/fresco",
+        "stars": 17098,
+        "updated_at": "2025-03-06T13:02:57Z",
+        "description": "An Android library for managing images and the memory they use.",
+        "size_kb": 77396,
+        "languages": {
+            "Java": 2825578,
+            "Kotlin": 1124178,
+            "C++": 178312,
+            "C": 53673,
+            "Makefile": 10558,
+            "Python": 10095,
+            "Shell": 2364
+        }
+    },
+    {
+        "name": "componentkit",
+        "full_name": "facebook/componentkit",
+        "url": "https://github.com/facebook/componentkit",
+        "stars": 5761,
+        "updated_at": "2025-03-06T13:06:08Z",
+        "description": "A React-inspired view framework for iOS.",
+        "size_kb": 40221,
+        "languages": {
+            "Objective-C++": 1870550,
+            "Objective-C": 877164,
+            "Swift": 72484,
+            "C": 6879,
+            "Ruby": 3206,
+            "Shell": 2294,
+            "C++": 1120
+        }
+    },
+    {
+        "name": "PathPicker",
+        "full_name": "facebook/PathPicker",
+        "url": "https://github.com/facebook/PathPicker",
+        "stars": 5151,
+        "updated_at": "2025-03-06T13:06:14Z",
+        "description": "PathPicker accepts a wide range of input -- output from git commands, grep results, searches -- pretty much anything. After parsing the input, PathPicker presents you with a nice UI to select which files you're interested in. After that you can open them in your favorite editor or execute arbitrary commands.",
+        "size_kb": 1460,
+        "languages": {
+            "Python": 132510,
+            "HTML": 9289,
+            "CSS": 5628,
+            "Shell": 5368,
+            "Ruby": 859
+        }
+    },
+    {
+        "name": "fbjs",
+        "full_name": "facebook/fbjs",
+        "url": "https://github.com/facebook/fbjs",
+        "stars": 1962,
+        "updated_at": "2025-03-06T13:07:37Z",
+        "description": "A collection of utility libraries used by other Meta JS projects.",
+        "size_kb": 1556,
+        "languages": {
+            "JavaScript": 469683
+        }
+    },
+    {
+        "name": "relay",
+        "full_name": "facebook/relay",
+        "url": "https://github.com/facebook/relay",
+        "stars": 18551,
+        "updated_at": "2025-03-06T13:02:52Z",
+        "description": "Relay is a JavaScript framework for building data-driven React applications.",
+        "size_kb": 6724521,
+        "languages": {
+            "Rust": 4958619,
+            "JavaScript": 3702065,
+            "HTML": 103086,
+            "MDX": 46909,
+            "CSS": 43705,
+            "TypeScript": 33211,
+            "Shell": 2033,
+            "Python": 1724
+        }
+    },
+    {
+        "name": "facebook-sdk-for-unity",
+        "full_name": "facebook/facebook-sdk-for-unity",
+        "url": "https://github.com/facebook/facebook-sdk-for-unity",
+        "stars": 490,
+        "updated_at": "2025-03-04T15:31:08Z",
+        "description": "The facebook sdk for unity.",
+        "size_kb": 25931,
+        "languages": {
+            "C#": 1386918,
+            "C++": 1269820,
+            "Java": 113028,
+            "Shell": 47031,
+            "Objective-C++": 44511,
+            "PowerShell": 18456,
+            "Objective-C": 17153,
+            "Swift": 10599,
+            "JavaScript": 10551
+        }
+    },
+    {
+        "name": "idb",
+        "full_name": "facebook/idb",
+        "url": "https://github.com/facebook/idb",
+        "stars": 4609,
+        "updated_at": "2025-03-06T13:06:17Z",
+        "description": "idb is a flexible command line interface for automating iOS simulators and devices",
+        "size_kb": 98972,
+        "languages": {
+            "Objective-C": 2723488,
+            "Python": 439357,
+            "Swift": 206895,
+            "MDX": 95305,
+            "Shell": 12673,
+            "JavaScript": 4393,
+            "C": 3157,
+            "CSS": 1375,
+            "Dockerfile": 148
+        }
+    },
+    {
+        "name": "homebrew-fb",
+        "full_name": "facebook/homebrew-fb",
+        "url": "https://github.com/facebook/homebrew-fb",
+        "stars": 126,
+        "updated_at": "2025-02-21T15:48:00Z",
+        "description": "OS X Homebrew formulas to install Meta open source software",
+        "size_kb": 5597,
+        "languages": {
+            "Ruby": 8791
+        }
+    },
+    {
+        "name": "SoLoader",
+        "full_name": "facebook/SoLoader",
+        "url": "https://github.com/facebook/SoLoader",
+        "stars": 1364,
+        "updated_at": "2025-03-06T13:08:31Z",
+        "description": "Native code loader for Android",
+        "size_kb": 816,
+        "languages": {
+            "Java": 270086,
+            "Starlark": 5519
+        }
+    },
+    {
+        "name": "chef-cookbooks",
+        "full_name": "facebook/chef-cookbooks",
+        "url": "https://github.com/facebook/chef-cookbooks",
+        "stars": 574,
+        "updated_at": "2025-03-06T08:48:31Z",
+        "description": "Open source chef cookbooks.",
+        "size_kb": 2722,
+        "languages": {
+            "Ruby": 1514787,
+            "HTML": 70555,
+            "Shell": 24781,
+            "PowerShell": 22241
+        }
+    },
+    {
+        "name": "transform360",
+        "full_name": "facebook/transform360",
+        "url": "https://github.com/facebook/transform360",
+        "stars": 1014,
+        "updated_at": "2025-03-06T13:08:23Z",
+        "description": "Transform360 is an equirectangular to cubemap transform for 360 video.",
+        "size_kb": 86,
+        "languages": {
+            "C++": 47260,
+            "C": 28656,
+            "CMake": 850
+        }
+    },
+    {
+        "name": "FBRetainCycleDetector",
+        "full_name": "facebook/FBRetainCycleDetector",
+        "url": "https://github.com/facebook/FBRetainCycleDetector",
+        "stars": 4218,
+        "updated_at": "2025-03-06T13:06:26Z",
+        "description": "iOS library to help detecting retain cycles in runtime.",
+        "size_kb": 3062,
+        "languages": {
+            "Objective-C++": 101408,
+            "Objective-C": 77959,
+            "Swift": 16859,
+            "C": 10669,
+            "Ruby": 2002,
+            "Shell": 1251
+        }
+    },
+    {
+        "name": "create-react-app",
+        "full_name": "facebook/create-react-app",
+        "url": "https://github.com/facebook/create-react-app",
+        "stars": 103108,
+        "updated_at": "2025-03-06T14:10:44Z",
+        "description": "Set up a modern web app by running one command.",
+        "size_kb": 25186,
+        "languages": {
+            "JavaScript": 3050431,
+            "Shell": 37454,
+            "CSS": 4592,
+            "HTML": 3736,
+            "AppleScript": 2657,
+            "TypeScript": 2049,
+            "SCSS": 491,
+            "Sass": 200
+        }
+    },
+    {
+        "name": "fb303",
+        "full_name": "facebook/fb303",
+        "url": "https://github.com/facebook/fb303",
+        "stars": 78,
+        "updated_at": "2025-03-05T17:38:14Z",
+        "description": "fb303 is a core set of thrift functions that provide a common mechanism for querying stats and other information from a service.",
+        "size_kb": 9879,
+        "languages": {
+            "C++": 574668,
+            "Python": 336311,
+            "CMake": 99320,
+            "Starlark": 19762,
+            "Thrift": 4889,
+            "Rust": 4775,
+            "C": 4498,
+            "Shell": 1734
+        }
+    },
+    {
+        "name": "react-native-deprecated-modules",
+        "full_name": "facebook/react-native-deprecated-modules",
+        "url": "https://github.com/facebook/react-native-deprecated-modules",
+        "stars": 59,
+        "updated_at": "2025-01-09T19:57:39Z",
+        "description": "Deprecated modules that were formerly part of React Native.",
+        "size_kb": 177,
+        "languages": {
+            "JavaScript": 151344,
+            "Objective-C": 29035
+        }
+    },
+    {
+        "name": "TextLayoutBuilder",
+        "full_name": "facebook/TextLayoutBuilder",
+        "url": "https://github.com/facebook/TextLayoutBuilder",
+        "stars": 1477,
+        "updated_at": "2025-03-06T13:07:45Z",
+        "description": "An Android library that allows you to build text layouts more easily.",
+        "size_kb": 511,
+        "languages": {
+            "Java": 97659,
+            "Kotlin": 8170
+        }
+    },
+    {
+        "name": "prophet",
+        "full_name": "facebook/prophet",
+        "url": "https://github.com/facebook/prophet",
+        "stars": 18941,
+        "updated_at": "2025-03-06T14:19:51Z",
+        "description": "Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth.",
+        "size_kb": 67539,
+        "languages": {
+            "Python": 240401,
+            "R": 152175,
+            "Stan": 7265,
+            "Dockerfile": 174,
+            "Makefile": 117,
+            "C++": 48
+        }
+    },
+    {
+        "name": "metro",
+        "full_name": "facebook/metro",
+        "url": "https://github.com/facebook/metro",
+        "stars": 5308,
+        "updated_at": "2025-03-06T13:06:10Z",
+        "description": "\ud83d\ude87 The JavaScript bundler for React Native",
+        "size_kb": 46092,
+        "languages": {
+            "JavaScript": 2467015,
+            "SCSS": 3730,
+            "CSS": 632,
+            "TypeScript": 428
+        }
+    },
+    {
+        "name": "facebook-for-woocommerce",
+        "full_name": "facebook/facebook-for-woocommerce",
+        "url": "https://github.com/facebook/facebook-for-woocommerce",
+        "stars": 221,
+        "updated_at": "2025-03-06T14:25:06Z",
+        "description": "The official plugin from Meta. This repository is now officially maintained by Meta's engineering team. We welcome and encourage contributions from the community. ",
+        "size_kb": 13316,
+        "languages": {
+            "PHP": 1794995,
+            "JavaScript": 52412,
+            "CSS": 15174,
+            "Shell": 8402
+        }
+    },
+    {
+        "name": "facebook-nodejs-business-sdk",
+        "full_name": "facebook/facebook-nodejs-business-sdk",
+        "url": "https://github.com/facebook/facebook-nodejs-business-sdk",
+        "stars": 521,
+        "updated_at": "2025-03-04T11:49:13Z",
+        "description": "Node.js SDK for Meta Marketing APIs",
+        "size_kb": 2535,
+        "languages": {
+            "JavaScript": 1959586
+        }
+    },
+    {
+        "name": "openr",
+        "full_name": "facebook/openr",
+        "url": "https://github.com/facebook/openr",
+        "stars": 908,
+        "updated_at": "2025-03-05T17:51:56Z",
+        "description": "Distributed platform for building autonomic network functions.",
+        "size_kb": 26798,
+        "languages": {
+            "C++": 2956909,
+            "Python": 812690,
+            "CMake": 123687,
+            "Thrift": 108276,
+            "Shell": 6580,
+            "C": 5975,
+            "Dockerfile": 1230
+        }
+    },
+    {
+        "name": "FAI-PEP",
+        "full_name": "facebook/FAI-PEP",
+        "url": "https://github.com/facebook/FAI-PEP",
+        "stars": 390,
+        "updated_at": "2025-02-25T03:45:16Z",
+        "description": "Facebook AI Performance Evaluation Platform",
+        "size_kb": 25645,
+        "languages": {
+            "Python": 629565,
+            "Shell": 8313,
+            "HTML": 6213,
+            "JavaScript": 5813,
+            "CSS": 2774,
+            "Batchfile": 790
+        }
+    },
+    {
+        "name": "SPARTA",
+        "full_name": "facebook/SPARTA",
+        "url": "https://github.com/facebook/SPARTA",
+        "stars": 645,
+        "updated_at": "2025-03-02T20:24:30Z",
+        "description": "SPARTA is a library of software components specially designed for building high-performance static analyzers based on the theory of Abstract Interpretation.",
+        "size_kb": 847,
+        "languages": {
+            "C++": 761543,
+            "Rust": 192567,
+            "CMake": 7798,
+            "Shell": 629
+        }
+    },
+    {
+        "name": "Rapid",
+        "full_name": "facebook/Rapid",
+        "url": "https://github.com/facebook/Rapid",
+        "stars": 564,
+        "updated_at": "2025-02-28T19:23:20Z",
+        "description": "The OpenStreetMap editor driven by open data, AI, and supercharged features",
+        "size_kb": 442010,
+        "languages": {
+            "JavaScript": 4245816,
+            "CSS": 146284,
+            "HTML": 8544
+        }
+    },
+    {
+        "name": "facebook-business-sdk-codegen",
+        "full_name": "facebook/facebook-business-sdk-codegen",
+        "url": "https://github.com/facebook/facebook-business-sdk-codegen",
+        "stars": 92,
+        "updated_at": "2025-03-05T00:08:53Z",
+        "description": "Codegen project for our business SDKs",
+        "size_kb": 3759,
+        "languages": {
+            "PHP": 420817,
+            "Java": 183088,
+            "Python": 140803,
+            "Mustache": 140585,
+            "JavaScript": 116953,
+            "Ruby": 80259,
+            "HTML": 6501,
+            "Kotlin": 4298,
+            "CSS": 2914
+        }
+    },
+    {
+        "name": "ktfmt",
+        "full_name": "facebook/ktfmt",
+        "url": "https://github.com/facebook/ktfmt",
+        "stars": 975,
+        "updated_at": "2025-03-05T03:13:36Z",
+        "description": "A program that reformats Kotlin source code to comply with the common community standard for Kotlin code conventions.",
+        "size_kb": 6766,
+        "languages": {
+            "Kotlin": 769136,
+            "CSS": 10375,
+            "JavaScript": 10274,
+            "HTML": 10246,
+            "Shell": 2106
+        }
+    },
+    {
+        "name": "ristretto255-js",
+        "full_name": "facebook/ristretto255-js",
+        "url": "https://github.com/facebook/ristretto255-js",
+        "stars": 34,
+        "updated_at": "2025-01-09T19:58:22Z",
+        "description": "Javascript implementation of the Ristretto255 group operations, built on top of the popular TweetNaCl.js crypto library",
+        "size_kb": 148,
+        "languages": {
+            "JavaScript": 92778,
+            "CSS": 1509,
+            "HTML": 1134
+        }
+    },
+    {
+        "name": "CacheLib",
+        "full_name": "facebook/CacheLib",
+        "url": "https://github.com/facebook/CacheLib",
+        "stars": 1281,
+        "updated_at": "2025-03-06T13:08:28Z",
+        "description": "Pluggable in-process caching engine to build and scale high performance services",
+        "size_kb": 26495,
+        "languages": {
+            "C++": 4820119,
+            "Python": 336311,
+            "CMake": 171051,
+            "Rust": 65886,
+            "Shell": 35182,
+            "JavaScript": 27181,
+            "Thrift": 23253,
+            "C": 4498,
+            "CSS": 3860,
+            "Gnuplot": 1262
+        }
+    },
+    {
+        "name": "usort",
+        "full_name": "facebook/usort",
+        "url": "https://github.com/facebook/usort",
+        "stars": 194,
+        "updated_at": "2025-01-30T08:39:14Z",
+        "description": "Safe, minimal import sorting for Python projects.",
+        "size_kb": 553,
+        "languages": {
+            "Python": 148790,
+            "Makefile": 1125,
+            "Shell": 449
+        }
+    },
+    {
+        "name": "time",
+        "full_name": "facebook/time",
+        "url": "https://github.com/facebook/time",
+        "stars": 609,
+        "updated_at": "2025-03-02T10:14:31Z",
+        "description": "Meta's Time libraries",
+        "size_kb": 1983,
+        "languages": {
+            "Go": 1608481,
+            "C++": 18144,
+            "C": 12379,
+            "Makefile": 745
+        }
+    },
+    {
+        "name": "opaque-ke",
+        "full_name": "facebook/opaque-ke",
+        "url": "https://github.com/facebook/opaque-ke",
+        "stars": 319,
+        "updated_at": "2025-03-02T11:02:18Z",
+        "description": "An implementation of the OPAQUE password-authenticated key exchange protocol",
+        "size_kb": 1313,
+        "languages": {
+            "Rust": 511401
+        }
+    },
+    {
+        "name": "mariana-trench",
+        "full_name": "facebook/mariana-trench",
+        "url": "https://github.com/facebook/mariana-trench",
+        "stars": 1118,
+        "updated_at": "2025-03-06T13:08:25Z",
+        "description": "A security focused static analysis tool for Android and Java applications.",
+        "size_kb": 18658,
+        "languages": {
+            "C++": 2988568,
+            "Java": 263808,
+            "Python": 74084,
+            "CMake": 31921,
+            "Common Lisp": 20941,
+            "Kotlin": 12940,
+            "C": 5045,
+            "Shell": 744
+        }
+    },
+    {
+        "name": "lexical",
+        "full_name": "facebook/lexical",
+        "url": "https://github.com/facebook/lexical",
+        "stars": 20690,
+        "updated_at": "2025-03-06T13:02:48Z",
+        "description": "Lexical is an extensible text editor framework that provides excellent reliability, accessibility and performance.",
+        "size_kb": 73995,
+        "languages": {
+            "TypeScript": 3753170,
+            "JavaScript": 1417262,
+            "CSS": 106223,
+            "HTML": 5876,
+            "Swift": 3738,
+            "Shell": 2853,
+            "Svelte": 2110,
+            "Astro": 1415,
+            "MDX": 439
+        }
+    },
+    {
+        "name": "sapp",
+        "full_name": "facebook/sapp",
+        "url": "https://github.com/facebook/sapp",
+        "stars": 137,
+        "updated_at": "2025-02-19T20:48:37Z",
+        "description": "Post Processor for Facebook Static Analysis Tools.",
+        "size_kb": 2489,
+        "languages": {
+            "Python": 1374872,
+            "JavaScript": 155683,
+            "CSS": 3174,
+            "Shell": 1724,
+            "HTML": 1666
+        }
+    },
+    {
+        "name": "starlark-rust",
+        "full_name": "facebook/starlark-rust",
+        "url": "https://github.com/facebook/starlark-rust",
+        "stars": 764,
+        "updated_at": "2025-03-06T01:41:53Z",
+        "description": "A Rust implementation of the Starlark language",
+        "size_kb": 10940,
+        "languages": {
+            "Rust": 4149019,
+            "Starlark": 776245,
+            "Python": 5343,
+            "TypeScript": 3722,
+            "HTML": 2832
+        }
+    },
+    {
+        "name": "dont-use-facebook-for-woocommerce",
+        "full_name": "facebook/dont-use-facebook-for-woocommerce",
+        "url": "https://github.com/facebook/dont-use-facebook-for-woocommerce",
+        "stars": 4,
+        "updated_at": "2025-01-17T14:03:40Z",
+        "description": "A first-party extension plugin built for WooCommerce.",
+        "size_kb": 11994,
+        "languages": {
+            "PHP": 1729571,
+            "JavaScript": 47915,
+            "CSS": 13289,
+            "Shell": 8402
+        }
+    },
+    {
+        "name": "winterfell",
+        "full_name": "facebook/winterfell",
+        "url": "https://github.com/facebook/winterfell",
+        "stars": 829,
+        "updated_at": "2025-03-04T16:05:26Z",
+        "description": "A STARK prover and verifier for arbitrary computations",
+        "size_kb": 2363,
+        "languages": {
+            "Rust": 1236031,
+            "HTML": 1440,
+            "Makefile": 1088
+        }
+    },
+    {
+        "name": "akd",
+        "full_name": "facebook/akd",
+        "url": "https://github.com/facebook/akd",
+        "stars": 264,
+        "updated_at": "2025-03-02T11:02:08Z",
+        "description": "An implementation of an auditable key directory",
+        "size_kb": 3541,
+        "languages": {
+            "Rust": 592652
+        }
+    },
+    {
+        "name": "hyperion",
+        "full_name": "facebook/hyperion",
+        "url": "https://github.com/facebook/hyperion",
+        "stars": 37,
+        "updated_at": "2025-03-02T07:35:29Z",
+        "description": "This project enabled intercepting and virtualizing the browser API",
+        "size_kb": 2200,
+        "languages": {
+            "TypeScript": 628747,
+            "JavaScript": 22747,
+            "MDX": 3429,
+            "CSS": 3020,
+            "HTML": 1545
+        }
+    },
+    {
+        "name": "voprf",
+        "full_name": "facebook/voprf",
+        "url": "https://github.com/facebook/voprf",
+        "stars": 61,
+        "updated_at": "2025-03-02T11:01:24Z",
+        "description": "An implementation of a verifiable oblivious pseudorandom function (RFC 9497)",
+        "size_kb": 329,
+        "languages": {
+            "Rust": 186156
+        }
+    },
+    {
+        "name": "netconsd",
+        "full_name": "facebook/netconsd",
+        "url": "https://github.com/facebook/netconsd",
+        "stars": 52,
+        "updated_at": "2025-02-18T22:57:53Z",
+        "description": "Receive and process logs from the Linux kernel.",
+        "size_kb": 102,
+        "languages": {
+            "C": 93541,
+            "C++": 3867,
+            "Python": 3778,
+            "Makefile": 2702
+        }
+    },
+    {
+        "name": "memlab",
+        "full_name": "facebook/memlab",
+        "url": "https://github.com/facebook/memlab",
+        "stars": 4505,
+        "updated_at": "2025-03-06T13:06:18Z",
+        "description": "A framework for finding JavaScript memory leaks and analyzing heap snapshots",
+        "size_kb": 26900,
+        "languages": {
+            "TypeScript": 1092699,
+            "JavaScript": 393107,
+            "MDX": 9602,
+            "CSS": 6084,
+            "HTML": 1035
+        }
+    },
+    {
+        "name": "lr-with-bins",
+        "full_name": "facebook/lr-with-bins",
+        "url": "https://github.com/facebook/lr-with-bins",
+        "stars": 15,
+        "updated_at": "2025-01-09T19:59:21Z",
+        "description": "An experimental first-stage model used for quick and efficient inference on part of the data.",
+        "size_kb": 97,
+        "languages": {
+            "Jupyter Notebook": 329758,
+            "Python": 65341,
+            "Hack": 5425
+        }
+    },
+    {
+        "name": "threat-research",
+        "full_name": "facebook/threat-research",
+        "url": "https://github.com/facebook/threat-research",
+        "stars": 155,
+        "updated_at": "2025-02-27T17:30:04Z",
+        "description": "Welcome to the Meta Threat Research Indicator Repository, a dedicated resource for the sharing of Indicators of Compromise (IOCs) and other threat indicators with the external research community",
+        "size_kb": 818,
+        "languages": {
+            "Python": 4953,
+            "YARA": 4685
+        }
+    },
+    {
+        "name": "buck2-prelude",
+        "full_name": "facebook/buck2-prelude",
+        "url": "https://github.com/facebook/buck2-prelude",
+        "stars": 56,
+        "updated_at": "2025-03-06T08:04:02Z",
+        "description": "Prelude for the Buck2 project",
+        "size_kb": 13547,
+        "languages": {
+            "Java": 4227946,
+            "Starlark": 3808117,
+            "Python": 795553,
+            "Kotlin": 668590,
+            "Erlang": 420388,
+            "Go": 20054,
+            "Objective-C": 18111,
+            "C++": 12895,
+            "Thrift": 2967,
+            "Rust": 1510,
+            "Makefile": 1412,
+            "Batchfile": 1295,
+            "Shell": 1184,
+            "C": 344
+        }
+    },
+    {
+        "name": "dns",
+        "full_name": "facebook/dns",
+        "url": "https://github.com/facebook/dns",
+        "stars": 273,
+        "updated_at": "2025-03-03T19:16:45Z",
+        "description": "Collection of Meta's DNS Libraries",
+        "size_kb": 1934,
+        "languages": {
+            "Go": 1024439,
+            "C": 3979,
+            "Makefile": 2269
+        }
+    },
+    {
+        "name": "ocamlrep",
+        "full_name": "facebook/ocamlrep",
+        "url": "https://github.com/facebook/ocamlrep",
+        "stars": 130,
+        "updated_at": "2025-03-06T05:16:56Z",
+        "description": "Sets of libraries and tools to write applications and libraries mixing OCaml and Rust. These libraries will help keeping your types and data structures synchronized, and enable seamless exchange between OCaml and Rust",
+        "size_kb": 5335,
+        "languages": {
+            "Rust": 336472,
+            "Starlark": 90303,
+            "OCaml": 28389,
+            "C": 14915,
+            "Shell": 2658
+        }
+    },
+    {
+        "name": "glTF",
+        "full_name": "facebook/glTF",
+        "url": "https://github.com/facebook/glTF",
+        "stars": 4,
+        "updated_at": "2025-01-09T19:59:50Z",
+        "description": "glTF \u2013 Runtime 3D Asset Delivery",
+        "size_kb": 231212,
+        "languages": {
+            "HTML": 41391,
+            "CSS": 37885,
+            "JavaScript": 6990,
+            "Makefile": 3269
+        }
+    },
+    {
+        "name": "bpfilter",
+        "full_name": "facebook/bpfilter",
+        "url": "https://github.com/facebook/bpfilter",
+        "stars": 162,
+        "updated_at": "2025-03-05T15:35:36Z",
+        "description": "BPF-based packet filtering framework",
+        "size_kb": 1471,
+        "languages": {
+            "C": 667377,
+            "CMake": 31414,
+            "C++": 29693,
+            "Yacc": 19449,
+            "Lex": 4336,
+            "Python": 2504,
+            "Shell": 201
+        }
+    },
+    {
+        "name": "lexical-ios",
+        "full_name": "facebook/lexical-ios",
+        "url": "https://github.com/facebook/lexical-ios",
+        "stars": 568,
+        "updated_at": "2025-03-05T21:58:08Z",
+        "description": "Lexical iOS is an extensible text editor framework that integrates the APIs and philosophies from Lexical Web with a Swift API built on top of TextKit.",
+        "size_kb": 786,
+        "languages": {
+            "Swift": 825955
+        }
+    },
+    {
+        "name": "react-router-3",
+        "full_name": "facebook/react-router-3",
+        "url": "https://github.com/facebook/react-router-3",
+        "stars": 9,
+        "updated_at": "2025-01-21T00:15:34Z",
+        "description": "Fork of https//www.npmjs.com/package/react-router v3.0.5",
+        "size_kb": 21386,
+        "languages": {
+            "TypeScript": 1593453,
+            "JavaScript": 49411,
+            "CSS": 439,
+            "HTML": 325
+        }
+    },
+    {
+        "name": "SPIRV-Headers",
+        "full_name": "facebook/SPIRV-Headers",
+        "url": "https://github.com/facebook/SPIRV-Headers",
+        "stars": 4,
+        "updated_at": "2025-01-09T20:00:08Z",
+        "description": "SPIRV-Headers",
+        "size_kb": 1766,
+        "languages": {
+            "C++": 338134,
+            "C": 294920,
+            "C#": 166868,
+            "Python": 163759,
+            "Lua": 145057,
+            "Beef": 75192,
+            "D": 58657,
+            "CMake": 6915,
+            "Starlark": 4626,
+            "Shell": 200
+        }
+    },
+    {
+        "name": "igl",
+        "full_name": "facebook/igl",
+        "url": "https://github.com/facebook/igl",
+        "stars": 3018,
+        "updated_at": "2025-03-06T14:38:52Z",
+        "description": "Intermediate Graphics Library (IGL) is a cross-platform library that commands the GPU. It provides a single low-level cross-platform interface on top of various graphics APIs (e.g. OpenGL, Metal and Vulkan).",
+        "size_kb": 18215,
+        "languages": {
+            "C++": 3762528,
+            "Objective-C++": 367759,
+            "C": 324463,
+            "CMake": 55074,
+            "Java": 48616,
+            "Objective-C": 48011,
+            "Python": 1051,
+            "Metal": 1025
+        }
+    },
+    {
+        "name": "ocaml-scripts",
+        "full_name": "facebook/ocaml-scripts",
+        "url": "https://github.com/facebook/ocaml-scripts",
+        "stars": 9,
+        "updated_at": "2025-01-09T20:00:13Z",
+        "description": "Set of scripts to help building OCaml projects using buck2.",
+        "size_kb": 28,
+        "languages": {
+            "Python": 46168,
+            "Shell": 816
+        }
+    },
+    {
+        "name": "bookworm",
+        "full_name": "facebook/bookworm",
+        "url": "https://github.com/facebook/bookworm",
+        "stars": 9,
+        "updated_at": "2025-02-01T19:00:30Z",
+        "description": "Bookworm is a program that gleans context from a Chef/Ruby codebase leveraging RuboCop AST pattern matching",
+        "size_kb": 44,
+        "languages": {
+            "Ruby": 93770
+        }
+    },
+    {
+        "name": "react-native-cdp-status",
+        "full_name": "facebook/react-native-cdp-status",
+        "url": "https://github.com/facebook/react-native-cdp-status",
+        "stars": 8,
+        "updated_at": "2025-02-28T12:39:45Z",
+        "description": "Tracks the status of the CDP implementation in Hermes and React Native projects.",
+        "size_kb": 503,
+        "languages": {
+            "TypeScript": 125761,
+            "JavaScript": 7460,
+            "CSS": 445,
+            "SCSS": 134
+        }
+    },
+    {
+        "name": "dotslash-publish-release",
+        "full_name": "facebook/dotslash-publish-release",
+        "url": "https://github.com/facebook/dotslash-publish-release",
+        "stars": 7,
+        "updated_at": "2025-01-09T20:00:28Z",
+        "description": "Create DotSlash files for GitHub releases",
+        "size_kb": 24,
+        "languages": {
+            "Python": 15129,
+            "Dockerfile": 904
+        }
+    },
+    {
+        "name": "dotslash",
+        "full_name": "facebook/dotslash",
+        "url": "https://github.com/facebook/dotslash",
+        "stars": 676,
+        "updated_at": "2025-03-04T12:01:12Z",
+        "description": "Simplified executable deployment",
+        "size_kb": 2671,
+        "languages": {
+            "Rust": 163976,
+            "Python": 20418,
+            "JavaScript": 7567,
+            "CSS": 2079
+        }
+    },
+    {
+        "name": "Pysa",
+        "full_name": "facebook/Pysa",
+        "url": "https://github.com/facebook/Pysa",
+        "stars": 3,
+        "updated_at": "2025-01-16T15:39:13Z",
+        "description": "Python Static Analyzer",
+        "size_kb": 859,
+        "languages": {
+            "CSS": 5937,
+            "JavaScript": 5146,
+            "Shell": 53
+        }
+    },
+    {
+        "name": "react-strict-dom",
+        "full_name": "facebook/react-strict-dom",
+        "url": "https://github.com/facebook/react-strict-dom",
+        "stars": 3297,
+        "updated_at": "2025-03-06T13:06:35Z",
+        "description": "React Strict DOM (RSD) standardizes the development of styled React components for web and native.",
+        "size_kb": 2508,
+        "languages": {
+            "JavaScript": 178209,
+            "CSS": 6493,
+            "Shell": 69
+        }
+    },
+    {
+        "name": "oram",
+        "full_name": "facebook/oram",
+        "url": "https://github.com/facebook/oram",
+        "stars": 7,
+        "updated_at": "2025-03-02T21:19:34Z",
+        "description": "An implementation of Oblivious RAM",
+        "size_kb": 145,
+        "languages": {
+            "Rust": 69435
+        }
+    },
+    {
+        "name": "pake-kem",
+        "full_name": "facebook/pake-kem",
+        "url": "https://github.com/facebook/pake-kem",
+        "stars": 1,
+        "updated_at": "2025-03-02T11:01:38Z",
+        "description": "An implementation of a PAKE based on a KEM",
+        "size_kb": 51,
+        "languages": {
+            "Rust": 60282
+        }
+    },
+    {
+        "name": "buck2-shims-meta",
+        "full_name": "facebook/buck2-shims-meta",
+        "url": "https://github.com/facebook/buck2-shims-meta",
+        "stars": 2,
+        "updated_at": "2025-03-05T23:07:38Z",
+        "description": "Shims to convert Meta internal buck2 macros/targets for open source build compatibility.",
+        "size_kb": 167,
+        "languages": {
+            "Starlark": 70641
+        }
+    }
+]

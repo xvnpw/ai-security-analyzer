@@ -1,0 +1,43 @@
+[
+    {
+        "name": "hello-video-codec",
+        "full_name": "tempus-ex/hello-video-codec",
+        "url": "https://github.com/tempus-ex/hello-video-codec",
+        "stars": 76,
+        "updated_at": "2025-02-07T10:31:35Z",
+        "description": "a \"hello, world\" video codec for those new to video codecs",
+        "size_kb": 80517,
+        "languages": {
+            "Rust": 11731
+        }
+    },
+    {
+        "name": "hello-microcontroller",
+        "full_name": "tempus-ex/hello-microcontroller",
+        "url": "https://github.com/tempus-ex/hello-microcontroller",
+        "stars": 2,
+        "updated_at": "2022-02-04T20:09:15Z",
+        "description": "a \"hello, world\" microcontroller program for those new to microcontrollers",
+        "size_kb": 1,
+        "languages": {
+            "Rust": 2612
+        }
+    },
+    {
+        "name": "arduino-sdi",
+        "full_name": "tempus-ex/arduino-sdi",
+        "url": "https://github.com/tempus-ex/arduino-sdi",
+        "stars": 48,
+        "updated_at": "2024-12-10T19:43:28Z",
+        "description": "open hardware for transmitting SDI signals from an Arduino",
+        "size_kb": 6589,
+        "languages": {
+            "C": 27634,
+            "Verilog": 26983,
+            "Tcl": 6234,
+            "Go": 4057,
+            "C++": 1415,
+            "Makefile": 331
+        }
+    }
+]

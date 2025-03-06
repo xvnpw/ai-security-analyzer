@@ -1,0 +1,69 @@
+[
+    {
+        "name": "gen",
+        "full_name": "kubernetes-client/gen",
+        "url": "https://github.com/kubernetes-client/gen",
+        "stars": 149,
+        "updated_at": "2025-02-16T10:42:29Z",
+        "description": "Common generator scripts for all client libraries",
+        "size_kb": 271,
+        "languages": {
+            "Shell": 50762,
+            "Python": 22767,
+            "Dockerfile": 1840
+        }
+    },
+    {
+        "name": "go-base",
+        "full_name": "kubernetes-client/go-base",
+        "url": "https://github.com/kubernetes-client/go-base",
+        "stars": 9,
+        "updated_at": "2024-03-13T23:53:46Z",
+        "description": null,
+        "size_kb": 30,
+        "languages": {
+            "Go": 55543
+        }
+    },
+    {
+        "name": "go",
+        "full_name": "kubernetes-client/go",
+        "url": "https://github.com/kubernetes-client/go",
+        "stars": 215,
+        "updated_at": "2025-03-06T07:46:41Z",
+        "description": "OpenAPI based generated Go Client for Kubernetes",
+        "size_kb": 994,
+        "languages": {
+            "Go": 4615435,
+            "Shell": 2535
+        }
+    },
+    {
+        "name": "javascript",
+        "full_name": "kubernetes-client/javascript",
+        "url": "https://github.com/kubernetes-client/javascript",
+        "stars": 2106,
+        "updated_at": "2025-03-06T06:36:12Z",
+        "description": "JavaScript client",
+        "size_kb": 23975,
+        "languages": {
+            "TypeScript": 487954,
+            "Shell": 3001,
+            "JavaScript": 1718
+        }
+    },
+    {
+        "name": "csharp",
+        "full_name": "kubernetes-client/csharp",
+        "url": "https://github.com/kubernetes-client/csharp",
+        "stars": 1132,
+        "updated_at": "2025-03-04T15:01:55Z",
+        "description": "Officially supported dotnet Kubernetes Client library ",
+        "size_kb": 9935,
+        "languages": {
+            "C#": 842756,
+            "Shell": 139,
+            "Batchfile": 47
+        }
+    }
+]
