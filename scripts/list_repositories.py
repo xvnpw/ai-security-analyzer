@@ -4,7 +4,6 @@ import requests
 import time
 import argparse
 import re
-from datetime import datetime
 
 # GitHub API configuration
 GITHUB_API_URL = "https://api.github.com"
