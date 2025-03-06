@@ -74,7 +74,6 @@ def process_repository(repo):
 
     now = datetime.datetime.now(datetime.timezone.utc)
     one_year_ago = now - datetime.timedelta(days=365 * 1)
-    one_year_ago_str = one_year_ago.strftime("%Y-%m-%dT%H:%M:%SZ")
     updated_at = datetime.datetime.strptime(repo["updated_at"], "%Y-%m-%dT%H:%M:%SZ").replace(
         tzinfo=datetime.timezone.utc
     )
