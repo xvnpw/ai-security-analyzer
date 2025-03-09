@@ -1,13 +1,11 @@
 #!/bin/bash
 
 declare -A models
-# models["o3-mini"]="openai"
-# models["gemini-2.0-flash-thinking-exp"]="google"
-# models["anthropic/claude-3.7-sonnet:thinking"]="openrouter"
+models["o3-mini"]="openai"
+models["gemini-2.0-flash-thinking-exp"]="google"
+models["anthropic/claude-3.7-sonnet:thinking"]="openrouter"
 # models["openai/gpt-4.5-preview"]="openrouter"
 models["qwen/qwq-32b"]="openrouter"
-# models["perplexity/sonar-reasoning-pro"]="openrouter"
-# models["perplexity/sonar-deep-research"]="openrouter"
 
 declare -A temperatures
 temperatures["o3-mini"]="1"
@@ -15,14 +13,12 @@ temperatures["gemini-2.0-flash-thinking-exp"]="0.7 1"
 temperatures["anthropic/claude-3.7-sonnet:thinking"]="1"
 temperatures["openai/gpt-4.5-preview"]="1"
 temperatures["qwen/qwq-32b"]="0.7"
-temperatures["perplexity/sonar-reasoning-pro"]="0.7"
-temperatures["perplexity/sonar-deep-research"]="0.7"
 
 declare -A dirs
 dirs["vscode-laravel-extra-intellisense"]="typescript"
-# dirs["vscode_deno"]="typescript"
+dirs["vscode_deno"]="typescript"
 dirs["screenshot-to-code"]="python"
-# dirs["django-unicorn"]="python"
+dirs["django-unicorn"]="python"
 
 declare -A github_repo_urls
 github_repo_urls["vscode-laravel-extra-intellisense"]="https://github.com/amir9480/vscode-laravel-extra-intellisense"
@@ -48,8 +44,6 @@ context_windows["anthropic/claude-3.7-sonnet:thinking"]="100000"
 context_windows["o3-mini"]="100000"
 context_windows["openai/gpt-4.5-preview"]="100000"
 context_windows["qwen/qwq-32b"]="90000"
-context_windows["perplexity/sonar-reasoning-pro"]="100000"
-context_windows["perplexity/sonar-deep-research"]="100000"
 
 declare -A chunk_sizes
 chunk_sizes["gemini-2.0-flash-thinking-exp"]="60000" # for bigger projects: 140000 450000
@@ -57,17 +51,13 @@ chunk_sizes["anthropic/claude-3.7-sonnet:thinking"]="90000"
 chunk_sizes["o3-mini"]="90000"
 chunk_sizes["openai/gpt-4.5-preview"]="90000"
 chunk_sizes["qwen/qwq-32b"]="80000"
-chunk_sizes["perplexity/sonar-reasoning-pro"]="90000"
-chunk_sizes["perplexity/sonar-deep-research"]="90000"
 
 declare -A iterations
-iterations["gemini-2.0-flash-thinking-exp"]="2 8"
-iterations["anthropic/claude-3.7-sonnet:thinking"]="2 4"
-iterations["o3-mini"]="2 4"
+iterations["gemini-2.0-flash-thinking-exp"]="2 4 8"
+iterations["anthropic/claude-3.7-sonnet:thinking"]="4"
+iterations["o3-mini"]="4"
 iterations["openai/gpt-4.5-preview"]="2"
 iterations["qwen/qwq-32b"]="2 4"
-iterations["perplexity/sonar-reasoning-pro"]="2 4"
-iterations["perplexity/sonar-deep-research"]="2 4"
 
 # Split prompt types into an array
 prompt_types=("vulnerabilities-workflow-1" "vulnerabilities-workflow-2")
@@ -106,9 +96,9 @@ for dir_name in "${!dirs[@]}"; do
                     for prompt_type in "${prompt_types[@]}"; do
                         echo "Generating example for $dir_name with model $agent_model, prompt $prompt_type, temp $temp, context $ctx, chunk $chunk, iterations $iter"
                         
-                        output_file="examples-2/${safe_agent_model}/${dir_name}-${safe_agent_model}-${prompt_type}-temp${temp}-iter${iter}-ctx${ctx}-shuffled.md"
+                        output_file="examples-3/${safe_agent_model}/${dir_name}-${safe_agent_model}-${prompt_type}-temp${temp}-iter${iter}-ctx${ctx}.md"
                         
-                        mkdir -p "examples-2/${safe_agent_model}"
+                        mkdir -p "examples-3/${safe_agent_model}"
 
                         # Use an array for arguments to avoid shell parsing/quoting issues
                         ARGS=(
@@ -127,7 +117,6 @@ for dir_name in "${!dirs[@]}"; do
                             "-p" "$project_type"
                             "--files-context-window" "$ctx"
                             "--files-chunk-size" "$chunk"
-                            "--shuffle-files"
                             "--vulnerabilities-github-repo-url" "$github_repo_url"
                             "--recursion-limit" "100"
                         )
