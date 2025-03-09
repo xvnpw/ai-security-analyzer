@@ -39,6 +39,7 @@ FILES_GLOB: dict[str, List[str]] = {
     "java": GENERIC_FILES_GLOB + JAVA_FILES_GLOB,
     "android": GENERIC_FILES_GLOB + JAVA_FILES_GLOB + ANDROID_FILES_GLOB,
     "javascript": GENERIC_FILES_GLOB + JAVASCRIPT_FILES_GLOB,
+    "typescript": GENERIC_FILES_GLOB + JAVASCRIPT_FILES_GLOB,
 }
 
 DEFAULT_EXCLUDE = ["LICENSE", "**/dist/**", "**/bin/**", "**/build/**", "**/node_modules/**", "**/lib/**", "**/libs/**"]

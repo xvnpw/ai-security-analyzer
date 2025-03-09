@@ -1,0 +1,124 @@
+- Vulnerability name: Cross-Site Scripting (XSS) vulnerability due to unsafe HTML rendering
+- Description:
+    - Step 1: An attacker crafts a malicious string containing JavaScript code.
+    - Step 2: The attacker inputs this malicious string into a component's field that is bound to a template using `unicorn:model`.
+    - Step 3: If the component's view class has `Meta: safe = ("field_name",)` or the template uses `{{ field_name|safe }}` filter for this field, the malicious JavaScript code will be rendered directly into the HTML without proper encoding.
+    - Step 4: When a user views the page, the malicious JavaScript code executes in their browser, potentially leading to session hijacking, cookie theft, or other client-side attacks.
+- Impact:
+    - High
+    - Execution of arbitrary JavaScript code in the victim's browser.
+    - Potential session hijacking and cookie theft.
+    - Defacement of the web page.
+    - Redirection to malicious websites.
+- Vulnerability rank: High
+- Currently implemented mitigations:
+    - By default, django-unicorn HTML encodes updated field values to prevent XSS attacks.
+    - Mitigation was introduced in version v0.36.0.
+- Missing mitigations:
+    - Project relies on developer's awareness and proper usage of `Meta: safe = ("field_name",)` or `|safe` template filter. No automatic escaping for fields marked as safe.
+- Preconditions:
+    - A component uses `Meta: safe = ("field_name",)` or `|safe` template filter for a field that can be controlled by user input through `unicorn:model`.
+    - An attacker can input malicious JavaScript code into this field.
+- Source code analysis:
+    - File: `django_unicorn\views\__init__.py`
+    - In the `_process_component_request` function, the code iterates through `safe_fields` and marks them as safe using `mark_safe`. This bypasses default HTML encoding.
+    - File: `example\unicorn\components\text_inputs.py`
+    - The `TextInputsView` component has `testing_xss` field with unsafe content, illustrating the risk if `Meta: safe` is misused.
+- Security test case:
+    - Step 1: Create a Django Unicorn component with a field `xss_field` and `Meta: safe = ("xss_field",)`.
+    - Step 2: Render `{{ xss_field }}` in the template.
+    - Step 3: Create a view and template to include the component.
+    - Step 4: Access the page.
+    - Step 5: Input `<img src=x onerror=alert("XSS")>` in the input field bound to `xss_field` with `unicorn:model`.
+    - Step 6: Trigger component update.
+    - Step 7: Observe the alert box "XSS", confirming XSS vulnerability.
+
+- Vulnerability name: Improper Input Validation for Django Model Fields leading to data integrity issues and potential exceptions during model lookup
+- Description:
+    - Step 1: An attacker interacts with a component using Django Models, modifying model fields via `unicorn:model` or passing arguments to action methods that perform model lookups.
+    - Step 2: The attacker provides invalid input for a model field (e.g., exceeding `max_length`) or an invalid primary key for a model lookup in an action method.
+    - Step 3: The attacker triggers an action to save the model or execute the method with the invalid primary key.
+    - Step 4: If the component view's action method lacks server-side validation and error handling (specifically for model lookups), invalid data might be saved, or exceptions like `DoesNotExist` can occur during model retrieval.
+    - Step 5:  Saving invalid data can cause data integrity issues. Exceptions during model lookup can lead to unexpected application behavior or information disclosure via error messages.
+- Impact:
+    - Medium
+    - Data integrity issues in the database due to invalid data.
+    - Potential database errors or application instability.
+    - Business logic bypass if validation is not enforced server-side.
+    - Potential information disclosure or application errors due to unhandled exceptions during model lookups.
+- Vulnerability rank: Medium
+- Currently implemented mitigations:
+    - Django forms integration (`form_class`) provides a mechanism for validation.
+    - `$validate` action can trigger form validation.
+- Missing mitigations:
+    - No default server-side validation if Django forms or explicit `ValidationError` are not used in component views, especially when handling model updates or model lookups in action methods.
+    - No built-in error handling for `DoesNotExist` exceptions during model lookups in action methods when using user-provided primary keys.
+    - Reliance on developers to implement validation and error handling.
+- Preconditions:
+    - A component uses Django models and allows modification of model fields through `unicorn:model` or performs model lookups in action methods based on user-provided input.
+    - Component action methods saving models or performing lookups lack server-side validation and error handling.
+    - Attacker can manipulate input fields or action arguments to provide invalid data or non-existent primary keys.
+- Source code analysis:
+    - File: `example\unicorn\components\models.py`
+    - `ModelsView` component's `save_flavor` and `save` methods demonstrate saving models without explicit validation.
+    - File: `django_unicorn\views\action_parsers\utils.py`
+    - `set_property_value` directly sets property values without validation.
+    - File: `django_unicorn\typer.py`
+    - `cast_attribute_value` performs type conversion, not validation.
+    - File: `django_unicorn\views\action_parsers\call_method.py`
+    - `_call_method_name` retrieves model instances using `DbModel.objects.get(**{key: value})` based on arguments, and if `value` is user-controlled and invalid, it can lead to `DoesNotExist` exception if not handled in the component's action method. The code does not include try-except block for `DoesNotExist` exception.
+- Security test case:
+    - **Data Integrity Issue (Invalid Field Value):**
+        - Step 1: Create a component with a Django model field with `max_length`.
+        - Step 2: Bind an input field to this model field using `unicorn:model`.
+        - Step 3: Create a `save_model` action that saves the model without validation.
+        - Step 4: Access the page.
+        - Step 5: Enter a value exceeding `max_length` in the input field.
+        - Step 6: Trigger `save_model` action.
+        - Step 7: Check the database; invalid data might be saved if backend validation is missing in the model itself and database allows it, or Django might truncate data based on field definition.
+    - **Exception during Model Lookup (Invalid Primary Key):**
+        - Step 1: Create a component with an action method `get_flavor(self, pk: int)` that retrieves a `Flavor` model instance using `Flavor.objects.get(pk=pk)`.
+        - Step 2: In the template, create an input field bound to a component property `pk` using `unicorn:model`.
+        - Step 3: Create a button that triggers `get_flavor` action with `unicorn:click="get_flavor(pk=pk)"`.
+        - Step 4: Access the page.
+        - Step 5: Enter a non-existent primary key value (e.g., a large number) in the input field.
+        - Step 6: Trigger `get_flavor` action.
+        - Step 7: Observe the server response. It might return a 500 error with `Flavor matching query does not exist.` if `DoesNotExist` exception is not handled in the component or globally.
+
+- Vulnerability name: Potential Open Redirect via `redirect` action return
+- Description:
+    - Step 1: An attacker identifies a component action method that returns a redirect using `django.shortcuts.redirect`, `HttpResponseRedirect`, `HashUpdate` or `LocationUpdate`.
+    - Step 2: The attacker manipulates input parameters (e.g., via `unicorn:model` or arguments passed to actions) that influence the URL used in the redirect.
+    - Step 3: If the redirect URL is constructed using user-controlled data without proper validation and sanitization, the attacker can inject a malicious URL.
+    - Step 4: When a user triggers the action, they are redirected to the attacker-controlled malicious URL after the component update.
+    - Step 5: This can be used for phishing attacks or to redirect users to other malicious websites.
+- Impact:
+    - Medium
+    - Potential redirection of users to malicious external websites.
+    - Phishing attacks.
+    - Reputational damage.
+- Vulnerability rank: Medium
+- Currently implemented mitigations:
+    - No specific built-in mitigation in django-unicorn for open redirect in action returns.
+- Missing mitigations:
+    - Lack of built-in protection against open redirect vulnerabilities when using redirect action returns.
+    - No guidance in documentation to specifically address open redirect risks when constructing redirect URLs with user-provided data.
+- Preconditions:
+    - A component action method returns a redirect.
+    - The redirect URL is constructed or influenced by user-provided data.
+    - User-provided data is not properly validated and sanitized before being used to construct the redirect URL.
+- Source code analysis:
+    - File: `django_unicorn\docs\source\redirecting.md`
+    - Documentation examples show redirects but lack security warnings about open redirects.
+    - File: `django_unicorn\views\objects.py`
+    - `Return` class handles redirects without URL validation.
+    - File: `example\unicorn\components\redirects.py`
+    - `RedirectsView` shows redirect examples, highlighting the mechanism.
+- Security test case:
+    - Step 1: Create a component with `custom_redirect` action that returns a redirect using `django.shortcuts.redirect`.
+    - Step 2: Create an input field bound to `redirect_url` property with `unicorn:model`.
+    - Step 3: In `custom_redirect`, construct redirect URL from `redirect_url` without validation and return redirect.
+    - Step 4: Access the page.
+    - Step 5: Input malicious URL (e.g., `http://evil.com`) in the input field.
+    - Step 6: Trigger `custom_redirect` action.
+    - Step 7: Observe redirection to the malicious URL, confirming open redirect.

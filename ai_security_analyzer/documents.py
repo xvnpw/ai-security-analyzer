@@ -1,4 +1,5 @@
 import logging
+import random
 from typing import List, Optional, Set
 
 from langchain_core.documents import Document
@@ -43,8 +44,10 @@ class DocumentProcessor:
 class DocumentFilter:
     """Handles document filtering and sorting operations"""
 
-    @staticmethod
-    def sort_and_filter_docs(documents: List[Document], keywords: Optional[Set[str]]) -> List[Document]:
+    def __init__(self, shuffle: bool = False):
+        self.shuffle = shuffle
+
+    def sort_and_filter_docs(self, documents: List[Document], keywords: Optional[Set[str]]) -> List[Document]:
         """Sort and filter documents based on criteria"""
         keywords = keywords or set()
 
@@ -61,5 +64,8 @@ class DocumentFilter:
         filtered_docs = (
             [doc for doc in documents if is_readme(doc) or contains_keywords(doc)] if keywords else documents
         )
+
+        if self.shuffle:
+            random.shuffle(filtered_docs)
 
         return sorted(filtered_docs, key=lambda doc: (not is_readme(doc), not is_md_file(doc)))

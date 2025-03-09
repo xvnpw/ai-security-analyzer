@@ -56,9 +56,9 @@ def parse_arguments() -> AppConfig:
     io_group.add_argument(
         "-p",
         "--project-type",
-        choices=["python", "generic", "go", "java", "android", "javascript"],
+        choices=["python", "generic", "go", "java", "android", "javascript", "typescript"],
         default="python",
-        help="Type of project (python, generic, go, java, android, javascript). Default is python",
+        help="Type of project (python, generic, go, java, android, javascript, typescript). Default is python",
     )
     io_group.add_argument(
         "-o",
@@ -107,6 +107,11 @@ def parse_arguments() -> AppConfig:
         "--dry-run",
         action="store_true",
         help="Perform a dry run. Prints configuration and list of files to analyze without making API calls",
+    )
+    io_group.add_argument(
+        "--shuffle-files",
+        action="store_true",
+        help="Shuffle the files before analysis (default: False)",
     )
 
     # Logging arguments
@@ -236,8 +241,8 @@ def parse_arguments() -> AppConfig:
     vulnerabilities_group.add_argument(
         "--vulnerabilities-iterations",
         type=int,
-        default=3,
-        help="Number of iterations to perform for vulnerabilities workflow (default: 3)",
+        default=2,
+        help="Number of iterations to perform for vulnerabilities workflow (default: 2)",
     )
     vulnerabilities_group.add_argument(
         "--vulnerabilities-severity-threshold",

@@ -75,7 +75,7 @@ class AgentBuilder:
             )
             tokenizer = tiktoken.encoding_for_model(agent_model_config.tokenizer_model_name)
             doc_processor = DocumentProcessor(tokenizer)
-            doc_filter = DocumentFilter()
+            doc_filter = DocumentFilter(shuffle=self.config.shuffle_files)
 
             agent_prompts = self.prompt_manager.get_formatted_prompts(self.config)
             if not agent_prompts:

@@ -55,7 +55,8 @@ def test_sort_and_filter_docs_no_keywords():
     doc3 = Document(page_content="Content of a text file", metadata={"source": "file.txt"})
     documents = [doc3, doc2, doc1]
 
-    sorted_docs = DocumentFilter.sort_and_filter_docs(documents, keywords=None)
+    doc_filter = DocumentFilter()
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=None)
 
     assert sorted_docs == [doc1, doc2, doc3], "Documents should be sorted with README.md first, then .md files"
 
@@ -67,7 +68,8 @@ def test_sort_and_filter_docs_with_keywords():
     keywords = {"keyword", "important"}
     documents = [doc3, doc2, doc1]
 
-    sorted_docs = DocumentFilter.sort_and_filter_docs(documents, keywords=keywords)
+    doc_filter = DocumentFilter()
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=keywords)
 
     assert sorted_docs == [
         doc1,
@@ -103,7 +105,8 @@ def test_format_docs_for_prompt_empty():
 def test_sort_and_filter_docs_no_documents():
     documents = []
     keywords = {"test"}
-    sorted_docs = DocumentFilter.sort_and_filter_docs(documents, keywords=keywords)
+    doc_filter = DocumentFilter()
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=keywords)
     assert sorted_docs == [], "Sorted docs should be empty when input documents list is empty"
 
 
@@ -113,7 +116,8 @@ def test_sort_and_filter_docs_no_matching_keywords():
     documents = [doc1, doc2]
     keywords = {"nonexistent"}
 
-    sorted_docs = DocumentFilter.sort_and_filter_docs(documents, keywords=keywords)
+    doc_filter = DocumentFilter()
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=keywords)
     assert sorted_docs == [], "No documents should be returned when no documents contain the keywords"
 
 
@@ -122,7 +126,8 @@ def test_sort_and_filter_docs_case_insensitive_keywords():
     documents = [doc]
     keywords = {"keyword"}
 
-    sorted_docs = DocumentFilter.sort_and_filter_docs(documents, keywords=keywords)
+    doc_filter = DocumentFilter()
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=keywords)
     assert sorted_docs == [doc], "Keyword matching should be case-insensitive"
 
 
@@ -132,7 +137,8 @@ def test_sort_and_filter_docs_missing_metadata():
     documents = [doc1, doc2]
     keywords = {"keyword"}
 
-    sorted_docs = DocumentFilter.sort_and_filter_docs(documents, keywords=keywords)
+    doc_filter = DocumentFilter()
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=keywords)
     assert sorted_docs == [doc1], "Documents should be filtered based on content even if metadata is missing"
 
 
@@ -153,3 +159,36 @@ def test_get_docs_batch_zero_context_window():
     context_window = 0
     batch = processor.get_docs_batch(documents, context_window)
     assert batch == [], "Batch should be empty when context window is zero"
+
+
+def test_sort_and_filter_docs_with_shuffle():
+    # Create multiple docs of different types to test shuffling
+    readme_doc = Document(page_content="README content", metadata={"source": "README.md"})
+    md_doc1 = Document(page_content="Markdown content 1", metadata={"source": "file1.md"})
+    md_doc2 = Document(page_content="Markdown content 2", metadata={"source": "file2.md"})
+    txt_doc1 = Document(page_content="Text content 1", metadata={"source": "file1.txt"})
+    txt_doc2 = Document(page_content="Text content 2", metadata={"source": "file2.txt"})
+
+    documents = [txt_doc1, md_doc1, txt_doc2, readme_doc, md_doc2]
+
+    # Call with shuffle=True
+    doc_filter = DocumentFilter(shuffle=True)
+    sorted_docs = doc_filter.sort_and_filter_docs(documents, keywords=None)
+
+    # Verify README.md is still first despite shuffling
+    assert sorted_docs[0] == readme_doc, "README.md document should always be first despite shuffling"
+
+    # Verify remaining docs are still in proper type order (md files before txt files)
+    md_files = [doc for doc in sorted_docs[1:] if doc.metadata.get("source", "").endswith(".md")]
+    txt_files = [doc for doc in sorted_docs[1:] if doc.metadata.get("source", "").endswith(".txt")]
+
+    # All md files should come before all txt files in the sorted list
+    last_md_index = max([sorted_docs.index(doc) for doc in md_files]) if md_files else 0
+    first_txt_index = min([sorted_docs.index(doc) for doc in txt_files]) if txt_files else len(sorted_docs)
+
+    assert last_md_index < first_txt_index, "All markdown files should come before text files after sorting"
+
+    # Verify all documents are still present
+    assert len(sorted_docs) == len(documents), "Number of documents should remain the same"
+    for doc in documents:
+        assert doc in sorted_docs, f"Document {doc.metadata.get('source')} should be present in the sorted documents"

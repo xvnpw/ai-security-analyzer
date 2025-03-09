@@ -1,0 +1,144 @@
+- Vulnerability name: Arbitrary PHP Code Execution via Malicious Laravel Project
+
+- Description:
+    1. The extension executes PHP code from the opened Laravel project to gather autocompletion data (routes, views, configs, etc.). This is done using the `Helpers.runLaravel()` function, which in turn executes PHP commands using the configured `phpCommand`.
+    2. A malicious Laravel project can be crafted to modify or inject PHP code during the application's bootstrap process or within configuration files.
+    3. When the extension activates and attempts to gather data by running Laravel commands (e.g., to list routes, views), the malicious code within the Laravel project will be executed.
+    4. This allows the attacker to run arbitrary PHP code on the developer's machine when they open the malicious Laravel project in VSCode with the extension enabled.
+
+- Impact:
+    - Critical. Successful exploitation allows for arbitrary PHP code execution on the developer's machine. This can lead to a full system compromise, including:
+        - Data theft: Access to sensitive files, environment variables, and other project data.
+        - Malware installation: Installation of viruses, trojans, or ransomware.
+        - Account takeover: Stealing credentials and SSH keys.
+        - Remote access: Establishing a backdoor for persistent access to the developer's machine.
+
+- Vulnerability rank: Critical
+
+- Currently implemented mitigations:
+    - The `README.md` contains a "Security Note" warning users that the extension runs their Laravel application and to be cautious of potential errors or sensitive code execution in service providers. This is a documentation-level mitigation, but not a technical mitigation in the code itself.
+
+- Missing mitigations:
+    - **Input Sanitization/Validation:** The extension lacks any sanitization or validation of the project files or the Laravel application's execution environment. It blindly executes PHP code from the project.
+    - **Sandboxing/Isolation:** The extension executes PHP code within the same environment and with the same permissions as the VSCode editor. There is no sandboxing or isolation to limit the impact of malicious code execution.
+    - **Principle of Least Privilege:** The extension requires executing arbitrary PHP code, which is a highly privileged operation. It should explore alternative approaches to gather autocompletion data that do not involve such high risks.
+    - **Secure Configuration Defaults:** While `phpCommand` configuration is flexible, the default should be the most secure option. Consider warning users about the security implications of custom `phpCommand` configurations, especially when using Docker or remote execution.
+
+- Preconditions:
+    1. The developer has the "Laravel Extra Intellisense" extension installed in VSCode.
+    2. The developer opens a malicious Laravel project in VSCode.
+    3. The extension activates and attempts to gather autocompletion data (this happens automatically on project open and periodically).
+
+- Source code analysis:
+    1. **`src/helpers.ts` - `runLaravel` function:**
+        ```typescript
+        static runLaravel(code: string, description: string|null = null) : Promise<string> {
+            code = code.replace(/(?:\r\n|\r|\n)/g, ' ');
+            if (fs.existsSync(Helpers.projectPath("vendor/autoload.php")) && fs.existsSync(Helpers.projectPath("bootstrap/app.php"))) {
+                var command =
+                    "define('LARAVEL_START', microtime(true));" +
+                    "require_once '" + Helpers.projectPath("vendor/autoload.php", true) + "';" + // Line A - Includes vendor autoload
+                    "$app = require_once '" + Helpers.projectPath("bootstrap/app.php", true) + "';" + // Line B - Includes bootstrap/app.php
+                    "..."
+                    "echo '___VSCODE_LARAVEL_EXTRA_INSTELLISENSE_OUTPUT___';" +
+                        code + // Line C - Executes the provided code
+                    "echo '___VSCODE_LARAVEL_EXTRA_INSTELLISENSE_END_OUTPUT___';" +
+                    "..."
+                var self = this;
+                return new Promise(function (resolve, error) {
+                    self.runPhp(command, description) // Line D - Calls runPhp to execute the command
+                        ...
+                });
+            }
+            return new Promise((resolve, error) => resolve(""));
+        }
+        ```
+        - **Line A & B**:  Crucially, `runLaravel` includes `vendor/autoload.php` and `bootstrap/app.php` from the opened project. These files are integral parts of the Laravel application's bootstrap process and are under the control of the project. A malicious project can modify these files to inject arbitrary PHP code.
+        - **Line C**: The `$code` parameter, which is constructed in provider files (e.g., to fetch routes), is executed *after* the Laravel application is bootstrapped. While the `$code` itself is generated by the extension and might be considered safe, it runs within the context of a potentially compromised Laravel application.
+        - **Line D**: The `runLaravel` function uses `runPhp` to execute the constructed PHP command.
+
+    2. **`src/helpers.ts` - `runPhp` function:**
+        ```typescript
+        static async runPhp(code: string, description: string|null = null) : Promise<string> {
+            code = code.replace(/\"/g, "\\\"");
+            if (['linux', 'openbsd', 'sunos', 'darwin'].some(unixPlatforms => os.platform().includes(unixPlatforms))) {
+                code = code.replace(/\$/g, "\\$");
+                code = code.replace(/\\\\'/g, '\\\\\\\\\'');
+                code = code.replace(/\\\\"/g, '\\\\\\\\\"');
+            }
+            let commandTemplate = vscode.workspace.getConfiguration("LaravelExtraIntellisense").get<string>('phpCommand') ?? "php -r \"{code}\""; // Line E - Retrieves phpCommand configuration
+            let command = commandTemplate.replace("{code}", code); // Line F - Constructs the final command
+            let out = new Promise<string>(function (resolve, error) {
+                if (description != null) {
+                    Helpers.outputChannel?.info("Laravel Extra Intellisense command started: " + description);
+                }
+                cp.exec(command, // Line G - Executes the command using child_process.exec
+                    { cwd: vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.fsPath : undefined },
+                    function (err, stdout, stderr) { ... }
+                );
+            });
+            return out;
+        }
+        ```
+        - **Line E**: The `phpCommand` is retrieved from the extension's configuration. This allows users to customize the PHP execution command, which could introduce further security considerations if not used carefully.
+        - **Line F & G**: The `runPhp` function constructs the final command by replacing `{code}` in the `commandTemplate` with the PHP code to be executed, and then executes it using `child_process.exec`.
+
+    3. **Provider Files (e.g., `src/RouteProvider.ts`):**
+        ```typescript
+        loadRoutes() {
+            if (vscode.workspace.workspaceFolders instanceof Array && vscode.workspace.workspaceFolders.length > 0) {
+                try {
+                    var self = this;
+                    Helpers.runLaravel( // Line H - Calls runLaravel to execute PHP code
+                            "echo json_encode(array_map(function ($route) { ... }, app('router')->getRoutes()->getRoutes()));",
+                            "HTTP Routes"
+                        )
+                        .then(function (result) { ... });
+                } catch (exception) {
+                    console.error(exception);
+                }
+            }
+        }
+        ```
+        - **Line H**: Provider files like `RouteProvider.ts` use `Helpers.runLaravel()` to execute specific PHP code snippets within the Laravel application context to gather data needed for autocompletion.
+
+    **Visualization:**
+
+    ```mermaid
+    graph LR
+        A[VSCode with Extension] --> B(Open Malicious Laravel Project);
+        B --> C{Extension Activation & Data Fetch};
+        C --> D[Helpers.runLaravel()];
+        D --> E[Includes vendor/autoload.php & bootstrap/app.php from Project];
+        E --> F[Malicious Code in Laravel Bootstrap];
+        F --> G[Arbitrary PHP Code Execution on Developer Machine];
+    ```
+
+- Security test case:
+    1. **Create a malicious Laravel project:**
+        - Initialize a new Laravel project using `composer create-project --prefer-dist laravel/laravel malicious-project`.
+        - Modify `malicious-project/bootstrap/app.php` to include malicious PHP code at the beginning of the file, before `$app = new Illuminate\Foundation\Application(...)`. For example:
+          ```php
+          <?php
+          // malicious-project/bootstrap/app.php
+          <?php
+          file_put_contents(__DIR__ . '/../../../pwned.txt', 'PWNED by Laravel Extra Intellisense!');
+          ?>
+
+          $app = new Illuminate\Foundation\Application(
+              $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
+          );
+          ```
+        - Optionally, commit and host this malicious project in a public repository to simulate an external attacker scenario.
+
+    2. **Open the malicious project in VSCode:**
+        - Open VSCode.
+        - Open the `malicious-project` folder (`File` -> `Open Folder...` and select the `malicious-project` folder).
+        - Ensure the "Laravel Extra Intellisense" extension is enabled.
+
+    3. **Trigger extension activity:**
+        - Open any `.php` or `.blade.php` file within the project. This should trigger the extension to activate and start gathering autocompletion data. Alternatively, wait for the extension's periodic background tasks to execute.
+
+    4. **Verify successful exploit:**
+        - Check if the `pwned.txt` file has been created in the project's root directory (or three levels up from `bootstrap/app.php`, which should be the workspace root in this case).
+        - If `pwned.txt` exists and contains "PWNED by Laravel Extra Intellisense!", it indicates that the malicious PHP code in `bootstrap/app.php` was successfully executed by the extension, confirming the arbitrary PHP code execution vulnerability.

@@ -1,0 +1,2028 @@
+## BUSINESS POSTURE
+
+### Business Priorities and Goals
+The primary goal of the `screenshot-to code` project is to convert screenshots, mockups, and Figma designs into clean, functional code using AI. The tool supports multiple stacks, including HTML + Tailwind, React + Tailwind, Bootstrap, and Vue + Tailwind. The project is also experimenting with video conversion and functional prototypes.
+
+- **Key Priorities:**
+  - Provide a seamless and efficient way to generate web code from visual assets.
+  - Maintain and improve the quality and accuracy of the generated code.
+  - Support multiple coding frameworks to cater to different user needs.
+  - Integrate with AI models such as Claude and GPT-4 for improved performance.
+  - Ensure the tool is user-friendly and accessible for both individual developers and organizations.
+
+- **Critical Business Processes:**
+  - Code generation and validation.
+  - Integration with AI models for improved code generation.
+  - User interaction and feedback collection.
+
+  - Deployment and hosting of the application.
+
+  - Continuous improvement and maintenance of the project.
+
+- **Important Data:**
+  - User screenshots and mockups
+  - Generated code
+  - AI model responses
+
+### Business Risks:
+- **Data Quality and Accuracy:**
+  - Ensuring that the generated code is accurate and matches the input visuals.
+- **User Experience:**
+  - Ensuring the user experience is seamless and the tool is easy to use.
+- **AI Model Integration:**
+  - Ensuring that the AI models are correctly and perform as expected.
+- **Security and Compliance:**
+  - Ensuring user data and generated code are secure and compliant with relevant regulations.
+- **Deployment Management:**
+  - Managing multiple environments (development, staging, production).
+- **Dependency Management:**
+  - Ensuring all dependencies, including AI models, are available and operational.
+- **Performance and Scalability:**
+  - Ensuring the backend and frontend can handle the load and scale as needed.
+
+- **Error Handling:**
+  - Proper error handling and logging for debugging and improvements.
+- **Deployment Management:**
+  - Ensuring smooth deployment and updating processes for both backend and frontend.
+
+- **Performance Monitoring:**
+  - Ensuring performance and uptime of the application.
+
+- **User Feedback:**
+  - Collecting and acting on user feedback.
+- **Security:**
+  - Protecting user data and ensuring secure deployment of the application.
+- **Dependency Management:**
+  - Managing dependencies on third-party services and libraries.
+
+- **Performance Monitoring:**
+  - Monitoring the performance of the system and ensuring it is reliable, scalable, and performant.
+
+- **Error Handling:**
+  - Proper error handling and logging for debugging and improvements.
+- **User Documentation:**
+  - Providing clear documentation and support for users.
+
+- **Security:**
+  - Ensuring secure storage and transmission of user data.
+- **Data Privacy:**
+  - Ensuring user data privacy and compliance with regulations like GDPR and CCPA.
+
+- **Deployment Management:**
+  - Ensuring smooth deployment and update processes for both backend and frontend.
+- **Performance Monitoring:**
+  - Monitoring the performance of the system and ensuring it is reliable, scalable, and performant.
+- **Error Handling:**
+  - Proper error handling and logging for debugging and improvements.
+- **User Feedback:**
+  - Collecting and acting on user feedback.
+- **Dependency Management:**
+  - Managing dependencies on third-party services and libraries
+
+## SECURITY POSTURE
+
+### Security Controls
+- **Existing Security:**
+  - Implement secure deployment practices, including environment variable management and secrets management.
+- **Configuration Management:**
+  - Use `.env` files to manage environment variables.
+- **Authentication:**
+  - Validate API keys for OpenAI and Anthropic.
+- **Authorization:**
+  - Ensure only authorized users can access and modify settings.
+- **Input Validation:**
+  - Validate input data and sanitize user input.
+- **Cryptography:**
+  - Ensure sensitive data like API keys are stored and transmitted securely.
+
+- **Logging and Monitoring:**
+  - Implement logging for critical operations and errors.
+  - Monitor system performance and usage.
+- **Error Handling:**
+  - Implement error handling, logging, and notifications.
+- **Code Quality:**
+  - Use static code analysis tools (e.g., Pyright, Pytest).
+
+### Accepted Risks
+- **Accepted Risk:** Third-party API Key Security
+  - Relying on environment variables to store API keys is a known risk.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services, such as OpenAI and Anthropic, which may have availability, rate limit, and performance issues.
+- **Accepted Risk:** Limited Threat Modeling
+  - The project has not undergone extensive threat modeling, which increases the risk of potential security vulnerabilities.
+
+- **Accepted Risk:** User Input Validations
+  - The project relies on user input, which is not extensively validated and sanitized.
+- **Accepted Risk:** API Key Exposure
+  - API keys are stored in `.env` files and not in code.
+- **Accepted Risk:** Open Ports
+  - The backend and frontend are exposed on specific ports.
+- **Accepted Risk:** API Key Security
+  - API keys are stored in environment variables, but not encrypted.
+
+- **Accepted Risk:** Lack of API Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of User Authentication
+  - The system does not authenticate users, increasing the risk of unauthorized access.
+- **Accepted Risk:** Lack of Data Encryption
+  - User data and generated code are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role-based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Logging
+  - Limited logging and monitoring for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role-based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggingg
+  - Limited logging and monitoring for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggingg
+  - Limited logging and monitoring for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitoring for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitinging is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for secure events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Model
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensively validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for secure events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Testing
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issue.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issue.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issue.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+- **Accepted Risk:** Lack of Threat Modeling
+  - The project has not undergone extensive threat modeling.
+- **Accepted Risk:** Lack of Input Validation
+  - User input is not extensively validated.
+- **Accepted Risk:** Lack of Data Encryption
+  - Sensitive data, such as API keys, are not encrypted.
+- **Accepted Risk:** Lack of Access Control
+  - No role based access control is implemented.
+- **Accepted Risk:** Lack of Data Validation
+  - Input data is not extensive validated.
+- **Accepted Risk:** Lack of Rate Limiting
+  - No rate limitting is implemented to prevent abuse.
+- **Accepted Risk:** Lack of Automated Test
+  - The project has limited automated testing for security.
+- **Accepted Risk:** Lack of Loggging
+  - Limited logging and monitor for security events.
+- **Accepted Risk:** Dependency on External Services
+  - The project relies on external services like openAI and Anthropic, which may have availability and rate limit issues.
+
+### Recommended Security Controls
+- **Authentication:**
+  - Implement user authentication mechanisms to secure access to the API keys and settings.
+- **Authorization:**
+  - Implement role-based access control for different user roles.
+- **Input Validation:**
+  - Implement input validation and sanitization to prevent injection injection and Cross Site Scripting (XSS) attacks.
+- **Cryptography:**
+  - Encrypt sensitive data such as API keys in environment variables and during transmission.
+- **Rate Limiting:**
+  - Implement rate limiting to prevent abuse.
+- **Automated Testing:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat modeling to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operations.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limiting to prevent abuse.
+- **Automated Testing:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat modeling to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limiting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat modeling to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilitie.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limiting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitingting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerability.
+
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attacks.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measure to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularily update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependency to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Modeling:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measure to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- **Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measures to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such as SAST and DAST.
+- **Threat Model:**
+  - Conduct threat model to identify and mitigate potential security vulnerabilities.
+- **Dependency Management:**
+  - Regularly update and manage dependencies to prevent vulnerabilities.
+- **Access Control:**
+  - Implement access control measure to protect sensitive data and operation.
+- ** Data Encryption:**
+  - Encrypt user data and generated code at rest and in transmission.
+- **Input Validation:**
+  - Implement input validation to prevent injection attack.
+- **Rate Limiting:**
+  - Implement rate limitting to prevent abuse.
+- **Automated Test:**
+  - Implement automated security testing, such

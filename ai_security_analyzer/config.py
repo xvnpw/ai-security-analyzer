@@ -17,7 +17,9 @@ class AppConfig(BaseModel):
     mode: Literal["dir", "github", "file"] = Field(default="dir")
     target: str
     output_file: io.TextIOWrapper
-    project_type: Literal["python", "generic", "go", "java", "android", "javascript"] = Field(default="python")
+    project_type: Literal["python", "generic", "go", "java", "android", "javascript", "typescript"] = Field(
+        default="python"
+    )
     verbose: bool = Field(default=False)
     debug: bool = Field(default=False)
 
@@ -41,7 +43,7 @@ class AppConfig(BaseModel):
     agent_preamble: str = Field(default="##### (🤖 AI Generated)")
     deep_analysis: bool = Field(default=False)
     recursion_limit: int = Field(default=35)
-    vulnerabilities_iterations: int = Field(default=5)
+    vulnerabilities_iterations: int = Field(default=2)
 
     exclude: Optional[List[str]] = Field(default=None)
     exclude_mode: Literal["add", "override"] = Field(default="add")
@@ -55,6 +57,7 @@ class AppConfig(BaseModel):
     resume: bool = Field(default=False)
     clear_checkpoints: bool = Field(default=False)
     checkpoint_dir: str = Field(default=".checkpoints")
+    shuffle_files: bool = Field(default=False)
     reasoning_effort: Optional[str] = Field(default=None)
 
     # Secondary agent configuration
