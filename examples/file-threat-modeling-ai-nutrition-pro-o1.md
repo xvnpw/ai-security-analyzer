@@ -1,165 +1,176 @@
-# APPLICATION THREAT MODEL
+## APPLICATION THREAT MODEL
 
-## ASSETS
-1. **Control Plane Data (tenant, billing, configuration)**
-   Contains sensitive tenant onboarding details, billing information, system configuration.
+### ASSETS
+1. **Control Plane Database (control_plan_db)**
+   - Stores all data related to tenant onboarding, billing information, and configuration details.
 
-2. **API Keys for Meal Planner Applications**
-   Each integrated Meal Planner application has a unique API key; compromise of this key can lead to unauthorized access.
+2. **API Database (api_db)**
+   - Contains samples of dietitians' content, as well as requests and responses to the LLM for the AI Nutrition-Pro functionality.
 
-3. **Dietitian Content Samples and Generated Responses**
-   Intellectual property and sensitive content used to build nutrition plans. Stored in API database.
+3. **API Gateway (Kong)**
+   - Manages authentication, rate limiting, and filtering of inputs. Holds critical configuration (API keys, ACL rules).
 
-4. **Administrator Credentials**
-   Allows full management of AI Nutrition-Pro system. Compromise can lead to complete system takeover.
+4. **Web Control Plane (app_control_plane)**
+   - Handles administrative functions including onboarding of new clients and management of billing data. Stores and manages references to control_plan_db.
 
-5. **ChatGPT Interaction Data**
-   Requests and responses exchanged with the ChatGPT API, which may contain sensitive client data.
+5. **API Application (backend_api)**
+   - Provides AI Nutrition-Pro functionality. Needs to protect logic that uses ChatGPT and ensures integrity of requests/responses.
 
-## TRUST BOUNDARIES
+6. **Administrator Account**
+   - Has privileged access to configure the Web Control Plane and system settings.
+
+7. **Meal Planner Application Credentials**
+   - API keys for each Meal Planner application, used for authentication at the API Gateway.
+
+8. **Network Communications**
+   - Connections from Meal Planner to API Gateway, from Gateway to backend_api, from backend_api to ChatGPT, and from control plane to its database.
+
+### TRUST BOUNDARIES
 1. **Meal Planner Application to API Gateway**
-   External boundary where Meal Planner applications communicate with AI Nutrition-Pro.
+   - The Meal Planner application is external/untrusted, while the API Gateway is part of the AI Nutrition-Pro trusted environment.
 
-2. **API Gateway to API Application**
-   Internal boundary within AI Nutrition-Pro. Gateway enforces authentication and filtering.
+2. **API Gateway to Internal Services**
+   - Once traffic passes through the API Gateway, it is considered within the AI Nutrition-Pro environment (trusted). This boundary includes interactions with the backend_api.
 
-3. **Web Control Plane to Control Plane Database**
-   Internal boundary where the Web Control Plane manages data in Control Plane DB.
+3. **Administrator to Web Control Plane**
+   - The Administrator device (untrusted) communicates with the Web Control Plane in a trusted zone.
 
-4. **API Application to API Database**
-   Internal boundary where API Application reads/writes dietitian content samples and AI responses.
+4. **API Application to ChatGPT**
+   - Communication with ChatGPT is an external call; ChatGPT is outside of the AI Nutrition-Pro environment.
 
-5. **API Application to ChatGPT**
-   External boundary for calling the ChatGPT service from AI Nutrition-Pro.
+5. **Web Control Plane to Control Plane Database**
+   - The Web Control Plane is a trusted component; the database is also in a trusted zone, but still forms a boundary where data is stored.
 
-6. **Administrator to Web Control Plane**
-   Boundary for administrative access to system configurations.
+6. **Backend API to API Database**
+   - The backend API is trusted, but the database is a distinct system that stores potentially sensitive content.
 
-## DATA FLOWS
-1. **Meal Planner → API Gateway** (crosses external trust boundary)
-   • Purpose: Submitting requests and content samples.
-   • Protocol: HTTPS/REST.
+### DATA FLOWS
+1. **Meal Planner Application → API Gateway → Backend API**
+   - Inbound requests seeking AI content generation. Crosses the external to internal boundary.
 
-2. **API Gateway → API Application** (crosses internal trust boundary)
-   • Purpose: Forwarding validated requests for AI-based functionalities.
-   • Protocol: HTTPS/REST.
+2. **Backend API → ChatGPT**
+   - Outbound requests for generating AI-based dietary content. Crosses internal to external boundary.
 
-3. **API Application → ChatGPT** (crosses external trust boundary)
-   • Purpose: Sending text prompts and receiving generated text.
-   • Protocol: HTTPS/REST.
+3. **Backend API → API Database**
+   - Internal flow to store or retrieve dietitians' content samples, requests, and responses. Remains within trusted environment but still an identifiable boundary.
 
-4. **Web Control Plane → Control Plane DB** (internal trust boundary)
-   • Purpose: Reading/writing tenant, billing, configuration data.
-   • Protocol: TLS-protected database connection.
+4. **Administrator → Web Control Plane → Control Plane Database**
+   - Administrative flow to configure system settings, manage billing data. Internal, but the Admin device is external/untrusted.
 
-5. **API Application → API DB** (internal trust boundary)
-   • Purpose: Storing and retrieving meal planning data, dietitian content, and AI responses.
-   • Protocol: TLS-protected database connection.
+### APPLICATION THREATS
 
-6. **Administrator → Web Control Plane** (internal trust boundary)
-   • Purpose: System configuration and administration.
-   • Protocol: HTTPS/REST.
-
-## APPLICATION THREATS
-
-| THREAT ID | COMPONENT NAME | THREAT NAME                                                                                                           | STRIDE CATEGORY | WHY APPLICABLE                                                                                                   | HOW MITIGATED                                                                                     | MITIGATION                                                                                                                                                   | LIKELIHOOD EXPLANATION                                                                       | IMPACT EXPLANATION                                                                                     | RISK SEVERITY |
-|-----------|----------------|------------------------------------------------------------------------------------------------------------------------|-----------------|-------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|--------------|
-| 0001      | API Gateway    | Forged or stolen Meal Planner API key                                                                                 | Spoofing        | Access to an API key would allow an attacker to pose as a valid Meal Planner, calling protected endpoints         | Unique API keys assigned to each Meal Planner application; TLS used in transit; ACL rules at gateway    | Implement key rotation and more granular authorization checks.                                                                                                 | Keys could be stolen or guessed (if not robust). The system has controls, but cannot fully negate theft.      | Could lead to unauthorized access to AI content and possible data leakage.                                              | High         |
-| 0002      | API Gateway    | Malicious input tampering (falsifying request data)                                                                   | Tampering       | An attacker could alter request payloads, injecting harmful or misleading data                                  | Basic filtering exists at gateway; input validation within the API Application                          | Deploy stricter payload validation and content filtering in the gateway to reject malformed or unexpected fields.                                             | Attackers can attempt it externally at any time; the gateway does some filtering, but malicious data may slip through. | Could cause unauthorized operations or content injection into the API or LLM.                                           | Medium       |
-| 0003      | Web Control Plane | Unauthorized admin access or session hijacking                                                                        | Elevation of Privilege | The Web Control Plane manages billing and configuration, so admin privileges are highly sensitive           | Credentials required for admin access; uses HTTPS for secure transport                                | Enforce MFA for administrators and consider role-based access control to limit scope of each admin session.                                                  | If credentials are compromised, an attacker can fully manage the system. Likelihood depends on credential hygiene.  | Full system compromise, including billing data manipulation and tenant configuration changes.                               | High         |
-| 0004      | Control Plane Database | Manipulation of billing or tenant data                                                                                 | Tampering       | Attackers with illicit DB access or injection into the Control Plane could alter critical data                 | DB is behind VPC and only accessible through the Web Control Plane                                          | Harden queries to prevent injection, and restrict DB user permissions to minimal required for the Control Plane Application.                                  | Medium likelihood if Application or admin credentials compromised.                                       | Unauthorized manipulation of billing could cause financial losses, tenant data corruption, or brand damage.             | High         |
-| 0005      | API Application | Data exposure to unauthorized Meal Planner or external attacker                                                          | Information Disclosure | The API Application holds dietitian content and responses from ChatGPT in the DB, which could be leaked       | API Gateway enforces ACL, TLS in transit, and requests must include valid client API key                | Add fine-grained access controls per client, ensuring each Meal Planner sees only its own data.                                                                | Attackers who gain or replicate a valid key can query the data.                                            | Personal and business-sensitive content could be leaked, harming client trust.                                       | High         |
-| 0006      | API DB         | Unauthorized read/write of stored dietitian content                                                                    | Tampering       | Attackers or compromised API App could alter or corrupt stored content                                     | Access is restricted to the API Application over TLS; DB is not exposed publicly                        | Implement DB encryption at rest and add additional role-based DB credentials so only specific queries can write content.                                      | Likely low if app & DB credentials are kept secure, but possible with stolen credentials or app vulnerabilities.           | Alteration or loss of important content and potential misinformation to end-users.                                    | Medium       |
-| 0007      | API Application | An attacker hijacks or manipulates requests sent to ChatGPT                                                             | Tampering       | If the traffic to ChatGPT can be intercepted or requests manipulated, responses could be sabotaged           | TLS used to protect ChatGPT communications; code expects signed TLS certificate from ChatGPT endpoint    | Strict server certificate pinning or verification of ChatGPT endpoint domain.                                                                                | Interception requires a man-in-the-middle scenario, which is technically feasible but has protective controls. | Could lead to inaccurate or malicious AI responses, damaging service credibility or confidentiality.                    | Medium       |
-| 0008      | API Application | Excessive resource consumption from unbounded or malicious requests (DoS)                                               | Denial of Service | High volume or abusive requests might overwhelm the API Application or ChatGPT usage billing                | Basic rate limiting at the API Gateway                                                                     | Strengthen rate limits and configure usage quotas to gracefully degrade service if resource threshold is exceeded.                                           | Attackers could script repeated calls to exhaust resources.                                                   | Service unavailability for legitimate Meal Planner apps.                                                       | Medium       |
-| 0009      | Web Control Plane | Administrator repudiation of billing changes                                                                          | Repudiation     | Admin could claim ignorance of billing configuration changes if not properly logged                          | The system logs admin actions, stored in the Control Plane DB                                              | Store cryptographic audit trails or secure logs.                                                                                                               | If logs are tampered with or incomplete, disputes could arise.                                              | Could undermine trust in the system’s billing correctness.                                                               | Medium       |
-| 0010      | API Gateway    | Attempt to bypass or degrade encryption in transit                                                                     | Information Disclosure | Attackers might force downgrade of TLS or intercept traffic if misconfigured                                 | TLS enforced, strict cipher suites configured in the gateway                                              | Periodically update TLS configurations and disallow weak cipher suites.                                                                              | Attackers rely on discovering TLS misconfigurations; somewhat low likelihood if kept updated.                 | If successful, attacker gains insight into all traffic, leading to data theft.                                              | High         |
+| THREAT ID | COMPONENT NAME        | THREAT NAME                                                                                                       | STRIDE CATEGORY | WHY APPLICABLE                                                                                             | HOW MITIGATED                                                                                                                                   | MITIGATION                                                                                                                                     | LIKELIHOOD EXPLANATION                                                                                              | IMPACT EXPLANATION                                                                                                   | RISK SEVERITY |
+|-----------|-----------------------|-------------------------------------------------------------------------------------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|--------------|
+| 0001      | API Gateway          | Spoofing API key to impersonate a Meal Planner app                                                                 | Spoofing        | Attackers could use a stolen or guessed API key to pose as a legitimate Meal Planner.                                                            | The architecture references unique API keys and ACL rules in Kong.                                                                              | Implement stronger authentication methods for external clients (e.g., rotating API keys, mutual TLS, or signed requests).                       | Medium. If an attacker gains or guesses a valid key, it could be used prior to detection.                                                       | High. Successful impersonation leads to unauthorized system use and potential data exposure in the backend.                                    | High         |
+| 0002      | API Gateway          | Manipulating gateway configuration to allow malicious requests through                                            | Tampering       | If an attacker gains partial control (e.g., misconfiguration, insufficiently secured gateway admin APIs), they could change gateway filtering.   | There is no direct mention in the architecture of how Kong’s admin interface is protected.                                                      | Protect Kong admin endpoints behind strong authentication and limited network access.                                                           | Low. Admin interfaces are typically locked down, but vulnerabilities or misconfigurations could arise.                                         | High. If gateway rules are bypassed or altered, attackers can reach internal APIs and potentially exfiltrate data.                             | Medium       |
+| 0003      | Web Control Plane    | Administrator account credentials stolen or bypassed                                                               | Elevation of Privilege | The Administrator has full control over system settings and user onboarding. A stolen admin credential grants full administrative access.        | Not explicitly covered in the file, but presumably the Web Control Plane requires authentication.                                               | Enforce MFA for Administrator logins, keep strict password policies, monitor admin sessions.                                                   | Medium. The Admin interface is less exposed than the public API, but targeted attacks can occur.                                               | High. Full administrative privileges would allow changing billing data, client configurations, system-wide.                                    | High         |
+| 0004      | Web Control Plane    | Malicious data injection into control_plan_db                                                                     | Tampering       | Attackers or malicious admins could craft requests that tamper with meta-data or billing entries.                                                | Use parameterized queries or an ORM to reduce risk of injection; the file references standard RDS usage.                                        | Validate data at the Web Control Plane layer, ensure strict authorization checks for write operations.                                          | Medium. Requires either compromised admin or a direct injection vulnerability.                                                                  | Medium. Could lead to incorrect billing data, partial financial or reputational damage.                                                        | Medium       |
+| 0005      | Backend API          | Unauthorized reading or exfiltration of dietitian content                                                         | Information Disclosure | The backend API processes and returns data from the database. Improper access control can lead to reading content that belongs to other tenants. | API Gateway performs filtering and rate-limiting, but the file does not detail how tenant isolation is enforced.                                 | Enforce tenant-based authorization checks within the backend API to ensure only relevant content is accessed.                                   | Medium. Attackers might attempt to exploit vulnerabilities or misconfigurations in backend API routes.                                         | High. Potential for privacy violations or misuse of sensitive client data.                                                                     | High         |
+| 0006      | Backend API          | Unvalidated external LLM responses exposing sensitive data                                                        | Information Disclosure | If ChatGPT response is not validated, it might allow the introduction of unexpected content or reveal system info inadvertently.                  | Not mentioned how responses are handled. The system may store requests/responses in the api_db.                                                 | Sanitize and validate ChatGPT responses before storing or exposing them.                                                                       | Low. ChatGPT typically doesn't have direct access to sensitive data, but injection or reflection issues can arise.                             | Medium. Might reveal partial internal references or degrade system integrity.                                                                  | Medium       |
+| 0007      | Backend API          | Submission of malicious content to ChatGPT leading to misuse                                                      | Tampering       | Attackers might send specifically crafted instructions to ChatGPT that generate harmful or undesired content.                                    | The architecture includes rate-limiting and filtering, but no mention of content validation beyond the gateway.                                 | Filter or sanitize user prompts to remove malicious or disallowed content; apply content policy checks.                                        | Medium. Attackers could attempt repeated malicious inputs.                                                                                     | Low. Resulting content might be inappropriate but not necessarily destructive unless stored or published publicly.                             | Medium       |
+| 0008      | API Database         | Unauthorized direct queries to api_db through insecure endpoints                                                  | Spoofing        | If the backend API or the gateway is compromised, an attacker could directly query the database by stitching new endpoints or bypassing existing. | Access to the database is presumably restricted to the backend API, but exact network policies are not described.                               | Restrict database connections to known internal hosts (backend API only). Validate all queries inside the backend API for tenant isolation.    | Low. Requires a higher level of internal network compromise or system misconfiguration.                                                        | High. Full unauthorized data access if direct queries are possible.                                                                            | Medium       |
 
 ---
 
-# DEPLOYMENT THREAT MODEL
+## DEPLOYMENT THREAT MODEL
 
-In this scenario, AI Nutrition-Pro is deployed on AWS Elastic Container Service with Amazon RDS as the database. We assume a VPC-based deployment with security groups restricting inbound and outbound traffic. We will consider potential deployment-specific threats.
+Below is a sample single deployment scenario:
+- AI Nutrition-Pro is deployed on AWS ECS with separate containers for API Gateway (Kong), Web Control Plane, and Backend API.
+- Control Plane Database and API Database are Amazon RDS instances within private subnets.
+- External requests go through an AWS Load Balancer, then to API Gateway (for meal planner traffic) or directly to Web Control Plane (for admin traffic).
 
-## ASSETS
-1. **AWS Infrastructure Configuration**
-   Includes ECS cluster settings, security groups, IAM roles.
+### ASSETS
+1. **AWS ECS Cluster**
+   - Runs Docker containers for API Gateway, Web Control Plane, and Backend API.
 
-2. **Container Images**
-   The Docker images for the API Gateway, Web Control Plane, and API Application.
+2. **Amazon RDS Instances**
+   - Host the control_plane_db and api_db. Contain sensitive configuration, client data.
 
-3. **RDS Instances**
-   Hosting the Control Plane Database and API Database.
+3. **Networking Infrastructure (VPC, subnets, security groups)**
+   - Governs how traffic flows between containers, load balancers, and RDS instances.
 
-## TRUST BOUNDARIES
-1. **AWS IAM Roles**
-   Boundary controlling which ECS tasks/services can access which AWS resources.
+4. **Load Balancer**
+   - Exposes public endpoints to meal planner apps or the Administrator.
 
-2. **Security Groups**
-   Boundary controlling inbound/outbound traffic to containers and databases.
+5. **Deployment Configuration (IAM roles, ECS task definitions)**
+   - Holds permissions, security group references, container launch parameters.
 
-3. **Network Load Balancer / ALB**
-   Boundary where public internet traffic enters the AWS environment.
+### TRUST BOUNDARIES
+1. **Public Internet to AWS Load Balancer**
+   - Internet traffic hits the AWS load balancer before being routed internally.
 
-4. **VPC**
-   Logical boundary isolating internal ECS tasks from external networks.
+2. **AWS Load Balancer to ECS Services**
+   - The load balancer sends traffic to the relevant ECS tasks (API Gateway or Web Control Plane).
 
-## DEPLOYMENT THREATS
+3. **ECS Services to RDS**
+   - Encrypted connections from containers to RDS in private subnets.
 
-| THREAT ID | COMPONENT NAME             | THREAT NAME                                                                      | WHY APPLICABLE                                                                                      | HOW MITIGATED                                                                                         | MITIGATION                                                                                | LIKELIHOOD EXPLANATION                                                                        | IMPACT EXPLANATION                                                                                                | RISK SEVERITY |
-|-----------|----------------------------|----------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|--------------|
-| 0001      | ECS Cluster               | Compromised container image                                                     | If a malicious or tampered image is deployed, it can lead to backdoors or data leaks                 | Images presumably pulled from a trusted registry; image versioning tracked                             | Perform thorough scanning of images before pushing to container registry.                 | Medium likelihood if images are not scanned regularly.                                          | Could lead to code execution in production, exposing or tampering with sensitive data.                               | High         |
-| 0002      | Security Groups           | Misconfiguration allowing direct DB access from the internet                    | If security groups are misconfigured, RDS might be reachable externally, allowing unauthorized access | Default posture is to block public DB access; only ECS tasks can communicate with RDS                  | Periodic review of security group rules, ensuring only the ECS subnets can access DB.      | Mistakes occur in manually managing security groups.                                            | Could expose entire database of sensitive data to external attackers.                                               | High         |
-| 0003      | VPC Network               | Unauthorized external traffic infiltration                                      | Improper routing or misconfigured subnets could allow external attackers into private networks        | Typically controlled by correct routing tables, NAT gateways, etc.                                     | Strictly define routing tables and ensure no direct routes from the public internet to private subnets.             | Low if following AWS best practices and no special routing rules are introduced.              | Could result in direct attacks on container tasks or DB with minimal detection.                                       | Medium       |
-| 0004      | IAM Roles & Policies      | Excessive privilege escalation                                                  | Overly permissive IAM roles could allow a compromised service to pivot or compromise other resources  | Roles presumably limited by least privilege approach                                                   | Regularly audit IAM roles, removing unneeded actions and restricting resource access.      | Likely moderate if best practices are followed, but errors in policy creation could happen. | Significant impact on entire AWS environment, potentially leading to broader data theft or misuse of resources.     | High         |
+4. **IAM Roles and Policies**
+   - Control what each ECS task and administrative user can do within the AWS environment.
 
----
+### DEPLOYMENT THREATS
 
-# BUILD THREAT MODEL
-
-We assume a Docker-based build process for Golang services, with code stored in a repository and images pushed to a container registry. The build may be done locally or via a CI system (not clearly specified).
-
-## ASSETS
-1. **Source Code**
-   The Golang code base for both API Application and Web Control Plane.
-
-2. **Dockerfiles and Build Scripts**
-   Defines how containers are built and dependencies are fetched.
-
-3. **Container Registry**
-   Stores built images for deployment to ECS.
-
-## TRUST BOUNDARIES
-1. **Source Code Repository**
-   Controls read/write to the code base. Could be GitHub, GitLab, or another platform.
-
-2. **Build Environment**
-   Where the code is compiled and images are created. Could be local, or a CI pipeline environment.
-
-3. **Registry**
-   Where final images are pushed. Access control to the registry is critical to prevent malicious overwrite.
-
-## BUILD THREATS
-
-| THREAT ID | COMPONENT NAME   | THREAT NAME                                                      | WHY APPLICABLE                                                                               | HOW MITIGATED                                                                                               | MITIGATION                                                                                                                                              | LIKELIHOOD EXPLANATION                                                                 | IMPACT EXPLANATION                                                                                       | RISK SEVERITY |
-|-----------|------------------|------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------|--------------|
-| 0001      | Source Code      | Injection of malicious code or libraries                         | If an attacker obtains write access to the repo, they can add malicious code to the build     | Access to repository is restricted to authorized developers                                                 | Implement branch protections and code review requirements (e.g., pull requests) to detect unauthorized or suspicious changes.                           | Medium likelihood if repository access is not well managed                                               | Could compromise every service built and deployed, leading to wide-scale system infiltration.             | High         |
-| 0002      | Build Environment | Compromise of build process (e.g., tampering with build scripts) | Attackers who gain access to the build server or scripts can introduce backdoors in images    | Possibly enforced by a minimal set of permissions on build server                                           | Use ephemeral build agents, sign final artifacts, and monitor integrity of the build environment.                                                      | Low if access to the build environment is strongly controlled                                              | Backdoored images could be deployed, giving attackers direct access to production.                       | High         |
-| 0003      | Container Registry | Pushing of unauthorized or tampered images                       | Malicious user could overwrite legitimate images with compromised versions                     | Registry access presumably limited to CI with credentials only                                              | Use multi-factor authentication for registry admins, read-only access for most, and define separate write permissions for the build pipeline.          | Medium if credentials get leaked or misused                                                                | If successful, the malicious image would be deployed, compromising the entire system and data.            | High         |
+| THREAT ID | COMPONENT NAME               | THREAT NAME                                                               | WHY APPLICABLE                                                                                                                     | HOW MITIGATED                                                                                                                | MITIGATION                                                                                                                                   | LIKELIHOOD EXPLANATION                                                                                      | IMPACT EXPLANATION                                                                                             | RISK SEVERITY |
+|-----------|------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|--------------|
+| 0001      | AWS Load Balancer           | Maliciously routing traffic to fraudulent endpoints                       | Misconfiguration or compromised load balancer settings could send traffic to a rogue container or external host.                     | Typically mitigated by restricting access to LB config with proper IAM policies.                                               | Regularly review Load Balancer configuration and IAM permissions.                                                                                | Low. Requires compromised AWS account or misconfiguration.                                                  | High. Allows interception or malicious handling of production traffic.                                                                            | Medium       |
+| 0002      | ECS Cluster Networking      | Misconfigured Security Groups exposing internal containers                | Security Group rules might accidentally allow direct inbound from the public internet to the containers, bypassing the LB.          | Best practice is to strictly limit inbound traffic to only from the load balancer.                                            | Regular audits of security group rules. Ensure only the LB can talk to containers, and containers can talk only to the DB.                      | Medium. Config errors do occur.                                                                              | High. Could allow direct remote attacks on containers.                                                                                          | High         |
+| 0003      | RDS Instances (private subnets) | Direct DB connections from the internet if VPC rules are incorrect         | If the RDS instance is wrongly configured to accept traffic from the public internet, an attacker could attempt direct DB attacks.   | Typically mitigated by private subnets with no public IP and security groups that only whitelist the ECS tasks.               | Enforce no public IP on RDS, whitelisting only ECS subnets.                                                                                    | Low. Usually explicitly configured to be private, but misconfigurations can happen.                                                              | High. Full direct data compromise if the DB is exposed publicly.                                                                                 | High         |
+| 0004      | IAM Roles/Policies          | Overly permissive IAM role letting ECS tasks manipulate other AWS resources | If ECS tasks have an IAM role with broad permissions, an attacker who compromises the container could pivot to other AWS resources. | Not specifically discussed, but commonly mitigated by principle of least privilege.                                           | Assign minimal IAM permissions per container/service.                                                                                          | Medium. Permission scoping errors are relatively common in cloud deployments.                                                                     | High. Could lead to control over more resources (e.g., spinning up infrastructure, accessing other sensitive data).                               | High         |
+| 0005      | Deployment Configuration    | Hardcoded database credentials or secrets in ECS task definition          | If credentials or tokens are stored in environment variables openly, compromise of ECS tasks can reveal them.                        | Not mentioned how secrets are stored. Possibly mitigated via AWS Secrets Manager or environment variables with encrypted references. | Use a secure method to inject secrets at runtime (e.g., AWS Secrets Manager, SSM Parameter Store) instead of plain text in the task definition. | Medium. Attackers could read environment variables on compromised containers.                                                                    | Medium. Access to DB credentials leads to data exfiltration or tampering.                                                                         | Medium       |
 
 ---
 
-# QUESTIONS & ASSUMPTIONS
+## BUILD THREAT MODEL
+
+Assume a Docker-based build pipeline that produces container images for API Gateway, Web Control Plane, and Backend API, then pushes them to a private container registry (e.g., Amazon ECR). The product is then deployed using AWS ECS task definitions.
+
+### ASSETS
+1. **Source Code Repositories**
+   - Contain the Golang code for the Web Control Plane and Backend API, plus Kong configurations.
+
+2. **Build Pipeline Configuration**
+   - Includes scripts that build Docker images, references to container registry, and any third-party dependencies.
+
+3. **Docker Images and Image Registry**
+   - Final container images that are deployed to ECS.
+
+4. **Credentials for Push/Pull**
+   - Credentials that allow the pipeline to push images to the registry and ECS to pull images from the registry.
+
+### TRUST BOUNDARIES
+1. **Developer/CI Environment to Source Repositories**
+   - Developers or CI pipeline have write access to code that shapes the final product.
+
+2. **CI Pipeline to Docker Registry**
+   - Pipeline must authenticate to publish images.
+
+3. **Docker Registry to ECS**
+   - ECS must be allowed to pull images for deployment.
+
+### BUILD THREATS
+
+| THREAT ID | COMPONENT NAME           | THREAT NAME                                                       | WHY APPLICABLE                                                                                  | HOW MITIGATED                                                                              | MITIGATION                                                                                                                                   | LIKELIHOOD EXPLANATION                                                        | IMPACT EXPLANATION                                                              | RISK SEVERITY |
+|-----------|--------------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|---------------------------------------------------------------------------------|--------------|
+| 0001      | Source Code Repository  | Injection of malicious code by unauthorized contributors          | Attackers contribute malicious code or config to the repository, which will be built and deployed. | Possibly mitigated by access control on the repo.                                          | Enforce code reviews, use branch protection.                                                                          | Low. Generally requires admin or contributor access, or a repo compromise.       | High. Malicious code runs in production, potentially exfiltrating data.         | High         |
+| 0002      | Build Pipeline          | Compromise of build scripts leading to untrusted final container  | If attackers modify build scripts or Dockerfiles, the final image might contain backdoors.        | Not mentioned how pipeline security is enforced.                                          | Secure CI environment with restricted access. Validate final images’ contents before deploying.                                                           | Medium. Automated pipelines can be targeted with some effort.                   | High. Production containers could be fully compromised from the start.          | High         |
+| 0003      | Docker Registry         | Unauthorized access to private images                             | If registry credentials leak, attackers can pull images and inspect or tamper with them.          | Access might be restricted by IAM roles or tokens.                                         | Strictly control registry credentials. Give read/pull access only to ECS tasks that need it.                                                                | Medium. Stealing or leaking credentials from dev or CI systems is not uncommon. | Medium. Attackers gain knowledge of code and configuration, potentially re-deploy or modify images.                  | Medium       |
+| 0004      | Docker Images           | Dependency supply chain attack                                    | Malicious base images or third-party layers can introduce vulnerabilities or malicious software.   | Not explicitly stated, but typically mitigated by using trusted base images.              | Pin base images to specific versions, regularly vet third-party dependencies.                                                                           | Medium. Attackers often target widely used images or dependencies.              | High. Could affect all containers, leading to broad compromise at runtime.       | High         |
+| 0005      | Build Pipeline Credentials | Leakage of credentials for pushing images to repository            | If credentials for Docker registry or ECS are exposed in logs/env variables, attackers can push rogue images. | Not covered in the doc.                                                                    | Store credentials securely (avoid plain text), rotate credentials, limit usage to pipeline scope.                                                        | Medium. Attackers who gain access to pipeline logs or env can exfiltrate them.  | Medium. Rogue images in the registry could be deployed to production.            | Medium       |
+
+---
+
+## QUESTIONS & ASSUMPTIONS
 1. **Questions**
-   - Are there documented procedures for rotating API keys for Meal Planner applications?
-   - Are there additional controls in place for elevated administrator access (MFA, IP allowlists)?
-   - What is the exact CI/CD process for building and deploying Docker images?
-   - Are container images scanned for vulnerabilities before being pushed to production?
+   - How exactly does the API Gateway’s admin interface restrict changes to gateway configuration?
+   - Are tenant-specific policies enforced in the backend API to avoid cross-tenant data exposure?
+   - Is there any centralized user management for the Administrator accounts, such as MFA or short-lived credentials?
+   - How are ChatGPT credentials managed and secured?
+   - Does the build pipeline use a trusted base image or known secure dependencies?
 
 2. **Assumptions**
-   - All data flows that cross external boundaries are protected by TLS.
-   - The system enforces unique API keys and ACL rules at the API Gateway.
-   - The ChatGPT communication is performed only over secure channels with server certificate validation.
-   - Access to AWS environment (IAM roles, security groups) follows the principle of least privilege.
+   - All RDS instances are configured in private subnets with no direct public access.
+   - API Gateway is configured to authenticate external traffic with unique API keys per Meal Planner.
+   - Deployment uses least privilege IAM roles for each ECS task, though details are not specified.
+   - Build process uses a private Docker registry, and only authorized CI/CD pipelines can push images.
 
-These threat models focus on risks introduced by the AI Nutrition-Pro architecture as described. Potential mitigations and control references are based on information available in the document and typical usage patterns of AWS ECS, Kong API Gateway, and Golang-based microservices.
+These threats and assumptions are tailored to the AI Nutrition-Pro architecture described in the file. They focus on potential application, deployment, and build process risks specific to the system.

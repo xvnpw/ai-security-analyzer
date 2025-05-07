@@ -1,144 +1,169 @@
-Below is a new list of mitigation strategies based on the architecture described in the FILE. Each mitigation strategy includes a detailed description, the threats it mitigates, their severity, the impact of the strategy, whether it is currently implemented, and what is missing in its implementation.
+Below is an updated list of mitigation strategies based on the application architecture and newly observed risks. Each strategy is focused on threats introduced by AI Nutrition-Pro’s design, especially regarding multi-tenant usage, external LLM interactions, and control-plane configuration.
 
 ---
 
-1. **Mitigation Strategy:** Use unique per-tenant API keys with regular rotation
+### Mitigation Strategy 1: Enforce Unique Per-Tenant API Keys with Granular ACL
 
-   - **Description:**
-     1. Assign a distinct API key to each Meal Planner application when it onboards.
-     2. Enforce key rotation at a defined interval (e.g., every 90 days) or upon suspected compromise.
-     3. Store keys securely (e.g., in a dedicated secrets manager), restricting who can access them.
-     4. Validate the API key at the API Gateway before any request is processed.
+- **Description**
+  - Ensure each Meal Planner application receives a unique API key.
+  - Configure API Gateway ACL rules to allow or deny specific actions on a per-tenant basis.
+  - Regularly rotate API keys to minimize the window of opportunity if a key is compromised.
+  - Restrict back-end endpoints so that each tenant can only access data within its own scope.
 
-   - **Threats Mitigated:**
-     - **Unauthorized access to the API (High severity):** Prevents stolen or leaked credentials from being used indefinitely.
-     - **Escalation of privileges across tenants (High severity):** Ensures one tenant’s key cannot be used to access another tenant’s data.
+- **Threats Mitigated**
+  - *Threat:* Unauthorized access to endpoints or data by malicious or compromised Meal Planner applications (severity: high).
+  - *Threat:* Cross-tenant data exposure if ACLs are not granular (severity: high).
 
-   - **Impact:**
-     - Significantly reduces the risk of unauthorized usage by isolating each tenant and limiting the window of exposure if a key is compromised.
+- **Impact**
+  - Significantly reduces the risk of unauthorized or malicious requests reaching the AI Nutrition-Pro service.
+  - Limits blast radius in case of credential leakage.
 
-   - **Currently Implemented:**
-     - Individual API key issuance is mentioned (“Authentication with Meal Planner applications - each has individual API key”).
+- **Currently Implemented**
+  - API Gateway already provides basic ACL features and unique API keys for each Meal Planner application.
 
-   - **Missing Implementation:**
-     - Formal key rotation policy and automated tooling to rotate and revoke keys as needed.
-     - Secure key storage in a secrets manager (if not already present).
-
----
-
-2. **Mitigation Strategy:** Enforce granular ACL rules and strict request validation at the API Gateway
-
-   - **Description:**
-     1. Define strict ACL rules at the gateway that identify and permit only the expected endpoints/actions for each Meal Planner application.
-     2. Validate all incoming requests against these ACL rules before forwarding to the backend services.
-     3. Return an immediate denial to any request that does not match the defined scope (method, path, or action).
-
-   - **Threats Mitigated:**
-     - **Abuse of API endpoints (High severity):** Prevents malicious clients from calling endpoints not intended for them.
-     - **Unauthorized data access attempts (High severity):** Controls precisely which data and operations are allowed per client.
-
-   - **Impact:**
-     - Greatly reduces the attack surface by ensuring that only valid, pre-approved calls are permitted.
-
-   - **Currently Implemented:**
-     - API Gateway already implements ACL rules (“Authorization of Meal Planner applications - API Gateway has ACL rules…”).
-
-   - **Missing Implementation:**
-     - More granular, per-tenant or per-feature ACL definitions if currently only broad or coarse rules exist.
-     - Ongoing policy updates as new endpoints or features are added.
+- **Missing Implementation**
+  - Formalized key rotation schedule and automated revocation process.
+  - More granular ACL rules to strictly limit resource access per tenant.
 
 ---
 
-3. **Mitigation Strategy:** Enforce thorough sanitization of content before sending it to ChatGPT
+### Mitigation Strategy 2: Rate Limiting for Meal Planner Requests
 
-   - **Description:**
-     1. At the API Gateway or backend API layer, strip or encode any dangerous characters or scripts embedded in the user-provided content.
-     2. Validate the length, format, and type of input before forwarding to ChatGPT.
-     3. Ensure prompt construction does not unintentionally leak sensitive data or secrets.
+- **Description**
+  - Configure and enforce stricter rate limiting at the API Gateway.
+  - Define per-tenant request quotas to match expected usage patterns.
+  - Implement automated alerts or lockouts if usage spikes beyond threshold.
 
-   - **Threats Mitigated:**
-     - **Injection attacks (Medium severity):** Safeguards against malicious payloads that could manipulate LLM behavior or cause undesired outputs.
-     - **Data leakage or unintended prompts (Medium severity):** Minimizes the risk of forwarding sensitive or unvalidated data to ChatGPT.
+- **Threats Mitigated**
+  - *Threat:* Denial-of-service scenarios where a single tenant overloads the system (severity: medium).
+  - *Threat:* Uncontrolled consumption of resources leading to billing misuse (severity: medium).
 
-   - **Impact:**
-     - Reduces the likelihood that attackers can manipulate or coerce ChatGPT via harmful prompts.
+- **Impact**
+  - Reduces system overload risk and helps contain unintentional or malicious spikes in traffic.
+  - Ensures fair usage across all tenants.
 
-   - **Currently Implemented:**
-     - Basic filtering may exist (“filtering of input” is mentioned under API Gateway).
+- **Currently Implemented**
+  - A basic rate-limiting configuration exists in the API Gateway.
 
-   - **Missing Implementation:**
-     - A robust, context-specific sanitization routine that systematically checks and transforms user inputs.
-     - Content validation rules tailored to the LLM usage (e.g., no HTML tags, no special control sequences, etc.).
-
----
-
-4. **Mitigation Strategy:** Limit storage of ChatGPT requests and responses in the API Database
-
-   - **Description:**
-     1. Store only the minimal necessary fields from requests and responses (e.g., short excerpt for debugging, but not full transcripts).
-     2. Apply a retention policy that deletes or anonymizes older records after a set period.
-     3. Restrict access to logs and stored requests/responses to essential personnel only.
-
-   - **Threats Mitigated:**
-     - **Sensitive data exposure (High severity):** Minimizes the window in which private or confidential data is stored and potentially compromised.
-     - **Large-scale data breach (High severity):** Reduces the impact if the database is compromised, since less data is retained.
-
-   - **Impact:**
-     - Significantly controls potential data leakage by minimizing stored information from the LLM interaction.
-
-   - **Currently Implemented:**
-     - The architecture mentions that requests and responses to the LLM are stored in the API database, but no explicit retention or minimization policy is described.
-
-   - **Missing Implementation:**
-     - Clear policy and technical controls to enforce data minimization.
-     - Automated purge or anonymization processes.
+- **Missing Implementation**
+  - Per-tenant or more granular rate-limiting and automated lockout thresholds.
 
 ---
 
-5. **Mitigation Strategy:** Enforce strict role-based access controls (RBAC) in the Web Control Plane
+### Mitigation Strategy 3: Input Sanitization for LLM Prompts (Malicious Prompt Handling)
 
-   - **Description:**
-     1. Define distinct roles (Administrator, App Onboarding Manager, Meal Planner application manager) with their respective permissions.
-     2. Validate user roles at every critical function in the control plane (e.g., altering billing configurations, provisioning new tenants).
-     3. Enforce least-privilege principles, ensuring roles cannot exceed their intended scope.
+- **Description**
+  - Validate and sanitize any user-provided dietitian content or other text that will be sent to ChatGPT.
+  - Strip or escape problematic tokens and language that could lead to injection or malicious prompt manipulation.
+  - Perform minimal lexical checks to remove obviously harmful scripting tags or unusual tokens.
 
-   - **Threats Mitigated:**
-     - **Privilege misuse by internal staff or compromised accounts (High severity):** Prevents a single role from making impactful changes or accessing unnecessary data.
-     - **Unauthorized modifications to system/billing data (High severity):** Restricts critical actions to only the intended role(s).
+- **Threats Mitigated**
+  - *Threat:* Prompt injection attacks that could steer ChatGPT into disclosing sensitive information or creating harmful content (severity: high).
+  - *Threat:* Malicious content stored in the AI Nutrition-Pro database and reused in further LLM calls (severity: medium).
 
-   - **Impact:**
-     - Greatly decreases the possibility of malicious or accidental misuse of high-privilege functions in the control plane.
+- **Impact**
+  - Significantly reduces the likelihood of ChatGPT responding with unintended or harmful content based on injected prompts.
 
-   - **Currently Implemented:**
-     - The architecture refers to the existence of multiple user roles but does not outline the enforced structure or how strictly roles are separated.
+- **Currently Implemented**
+  - Basic input filtering at the API Gateway level.
 
-   - **Missing Implementation:**
-     - Fine-grained per-role permissions and robust enforcement for all control plane endpoints.
-     - Automated checks or gating logic to prevent role escalation.
-
----
-
-6. **Mitigation Strategy:** Maintain strict segregation between Control Plane Database and API Database
-
-   - **Description:**
-     1. Use separate AWS subnets or security groups so that only the Web Control Plane can communicate with the Control Plane Database, and only the API Application can communicate with the API Database.
-     2. Configure database user privileges so each service has only the required rights (read/write, table-level restrictions, etc.).
-     3. Restrict cross-database connectivity to eliminate the possibility of one service reading another service’s data.
-
-   - **Threats Mitigated:**
-     - **Unauthorized data crossover (Medium severity):** Prevents the scenario where an attacker gaining access to one database can pivot into the other.
-     - **Lateral movement between services (Medium severity):** Reduces the risk of widespread compromise from a single foothold.
-
-   - **Impact:**
-     - Reduces the overall blast radius of a single database compromise and enforces clear separation of responsibilities.
-
-   - **Currently Implemented:**
-     - Architecture references two distinct Amazon RDS instances (Control Plane Database and API database).
-
-   - **Missing Implementation:**
-     - Detailed network segmentation at the subnet/security group level if not already fully in place.
-     - Database-level privilege checks (ensuring each database user can only access relevant tables).
+- **Missing Implementation**
+  - Context-aware text sanitization or prompt validation specifically tailored to LLM usage.
 
 ---
 
-These mitigation strategies address specific risks posed by the **AI Nutrition-Pro** application architecture. They focus on realistic, high-impact controls rather than general best practices like monitoring or audits. By implementing these strategies, the project can substantially reduce the likelihood and impact of unauthorized access, data breaches, and misuse of the system’s capabilities.
+### Mitigation Strategy 4: Automated or Manual LLM Output Moderation
+
+- **Description**
+  - Implement checks on ChatGPT’s responses before storing or serving them to Meal Planner clients.
+  - If any disallowed or suspicious output is detected (e.g., sensitive data exposed, malicious links, or unexpected personal information), reject or flag the content.
+  - Provide an escalation path for manual review if the system flags potentially dangerous responses.
+
+- **Threats Mitigated**
+  - *Threat:* Injection of disallowed or malicious text into the system (severity: medium).
+  - *Threat:* Accidental disclosure of private or proprietary information from ChatGPT’s responses (severity: medium).
+
+- **Impact**
+  - Reduces the likelihood of distributing harmful content to end users.
+  - Lowers risk of brand damage or liability from inappropriate responses.
+
+- **Currently Implemented**
+  - No explicit LLM output moderation layer described in the architecture.
+
+- **Missing Implementation**
+  - A dedicated moderation and review mechanism to validate ChatGPT outputs.
+
+---
+
+### Mitigation Strategy 5: Enforce Tenant Isolation in Control Plane Database
+
+- **Description**
+  - Use separate schemas, row-level security, or other strong isolation techniques for each tenant in the Control Plane Database.
+  - Verify that the Web Control Plane only permits operations on the data belonging to the authenticated tenant.
+  - Periodically review queries and service layers to ensure strict logical separation between tenants.
+
+- **Threats Mitigated**
+  - *Threat:* Cross-tenant data leakage (severity: high).
+  - *Threat:* Escalation of privilege where one client can access another’s billing or configuration data (severity: high).
+
+- **Impact**
+  - Protects privacy and compliance requirements for each tenant.
+  - Minimizes scope of compromise if one tenant is breached.
+
+- **Currently Implemented**
+  - Single database with known multi-tenant design, but no detailed mention of isolation method.
+
+- **Missing Implementation**
+  - Configurable or enforced schema isolation or row-level access controls at the database layer.
+
+---
+
+### Mitigation Strategy 6: Strict Role-Based Access Control (RBAC) in the Web Control Plane
+
+- **Description**
+  - Assign each user (Administrator, App Onboarding Manager, Meal Planner manager) only the minimum privileges needed to perform their role.
+  - Enforce these roles in the Web Control Plane logic and require re-authentication or higher privileges for critical actions (e.g., changing systemwide settings).
+  - Log administrative actions separately to facilitate quick identification of misconfigurations.
+
+- **Threats Mitigated**
+  - *Threat:* Unauthorized changes to system properties or billing configuration (severity: high).
+  - *Threat:* Privilege escalation attacks if roles are not strictly enforced (severity: high).
+
+- **Impact**
+  - Greatly reduces the chance of administrative misconfigurations from lower-privileged accounts.
+  - Limits the damage if a lower-level account is compromised.
+
+- **Currently Implemented**
+  - Basic admin-level authentication is mentioned, but role distinctions are not clearly outlined.
+
+- **Missing Implementation**
+  - Detailed role definitions and enforcement in application logic.
+  - Fine-grained checks preventing role bypass.
+
+---
+
+### Mitigation Strategy 7: Data Minimization for ChatGPT Requests
+
+- **Description**
+  - Send ChatGPT only minimal context (e.g., summary of dietitian content) instead of full user or tenant data.
+  - Remove or mask identifiable information prior to forwarding requests to the external LLM.
+  - Strictly define prompt templates that avoid accidental leakage of sensitive details.
+
+- **Threats Mitigated**
+  - *Threat:* Leakage of sensitive or private data to external LLM provider (severity: medium).
+  - *Threat:* Unnecessary data retention in ChatGPT logs outside the system’s control (severity: low to medium).
+
+- **Impact**
+  - Reduces privacy and compliance risks.
+  - Limits exposure if ChatGPT or its logs are compromised.
+
+- **Currently Implemented**
+  - ChatGPT integration is outlined, but no mention of data minimization steps.
+
+- **Missing Implementation**
+  - Defined guidelines for what data is strictly necessary in ChatGPT requests.
+  - Automated data masking or trimming toolchain.
+
+---
+
+These mitigation strategies address the real-world threats posed by AI Nutrition-Pro’s multi-tenant architecture, external LLM interactions, and the need for robust compartmentalization of client data. By incrementally implementing each of these strategies, the development team will substantially reduce the overall risk to the AI Nutrition-Pro system.

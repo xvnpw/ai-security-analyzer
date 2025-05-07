@@ -1,153 +1,225 @@
-# AI Nutrition-Pro Mitigation Strategies
+# Mitigation Strategies for AI Nutrition-Pro
 
-## 1. Multi-tenant Data Isolation
+## 1. Enhanced API Key Management
 
-- **Description**: Implement strict data isolation between different Meal Planner clients by:
-  1. Using tenant identifiers in all database tables
-  2. Creating database views that automatically filter by tenant
-  3. Implementing application-level checks before any data access
-  4. Consider separate schema or database instances for high-risk clients
+**Description:**
+- Implement API key rotation on a regular schedule (every 30-90 days)
+- Use short-lived tokens instead of persistent API keys where possible
+- Store API keys securely using AWS Secrets Manager
+- Implement key revocation procedures for compromised keys
+- Use different API keys for different environments (dev, staging, production)
 
-- **Threats Mitigated**:
-  - Data leakage between tenants (High severity) - prevents one client from accessing another client's dietitian content samples or AI-generated content
-  - Accidental data cross-contamination (Medium severity)
+**Threats Mitigated:**
+- Unauthorized access to API endpoints (High severity) - Reduces risk of persistent access if keys are compromised
+- API key leakage (High severity) - Regular rotation limits the impact window of exposure
 
-- **Impact**: Completely prevents unauthorized cross-tenant data access, ensuring each Meal Planner application only accesses its own data, protecting client confidentiality and intellectual property.
+**Impact:**
+- Significantly reduces the risk window during which compromised API keys can be exploited
+- Provides quick remediation path in case of credential exposure
 
-- **Currently Implemented**: Not explicitly mentioned in the architecture document.
+**Currently Implemented:**
+- Basic authentication with API keys for Meal Planner applications is implemented
 
-- **Missing Implementation**: Needs to be implemented in both API database and Control Plane database design, with appropriate filtering in the API Application and Web Control Plane.
+**Missing Implementation:**
+- API key rotation mechanism
+- Secure secrets storage solution
+- Key revocation procedures
+- Environment-specific key management
 
-## 2. Data Minimization for LLM Requests
+## 2. Multi-Tenant Data Isolation
 
-- **Description**: Implement a data filtering system that:
-  1. Strips personally identifiable information before sending to ChatGPT
-  2. Removes specific dietitian identifiers
-  3. Sanitizes proprietary methodologies or trade secrets
-  4. Uses templates with placeholders instead of raw data
+**Description:**
+- Implement tenant ID in all database queries as a mandatory filter
+- Create data access layers that enforce tenant isolation
+- Use row-level security in both databases
+- Implement separate encryption keys per tenant
+- Add tenant context validation in all API requests
 
-- **Threats Mitigated**:
-  - Leakage of proprietary dietitian content to OpenAI (High severity)
-  - Exposure of personal information through LLM (Medium severity)
-  - Training data poisoning of public LLM (Medium severity)
+**Threats Mitigated:**
+- Cross-tenant data access (High severity) - Prevents one Meal Planner application from accessing another's data
+- Privilege escalation (High severity) - Limits impact of compromised credentials
 
-- **Impact**: Significantly reduces risk of sensitive information being sent to external AI systems while maintaining quality of AI-generated nutrition content.
+**Impact:**
+- Ensures strong separation between tenant data
+- Prevents data leakage between customers even if application logic is flawed
 
-- **Currently Implemented**: No evidence in architecture document of data filtering before LLM interaction.
+**Currently Implemented:**
+- The architecture suggests multi-tenant design but specific isolation controls are not detailed
 
-- **Missing Implementation**: Should be added to API Application logic when communicating with ChatGPT-3.5.
+**Missing Implementation:**
+- Row-level security in databases
+- Tenant-specific encryption keys
+- Tenant context validation
+- Data access layers with mandatory tenant filtering
 
-## 3. Advanced API Key Management
+## 3. LLM Prompt Security Controls
 
-- **Description**: Enhance API key security by:
-  1. Implementing automatic key rotation policies (e.g., quarterly)
-  2. Creating a key revocation system for compromised keys
-  3. Adding request signing requirements beyond simple key authentication
-  4. Implementing per-endpoint usage restrictions tied to API keys
+**Description:**
+- Implement input sanitization specifically designed for LLM prompt injection attacks
+- Create a library of allowed prompt templates that are verified as safe
+- Restrict free-form input that goes directly into ChatGPT prompts
+- Implement output filtering to prevent sensitive data leakage
+- Set up contextual boundaries in prompts to resist manipulation
 
-- **Threats Mitigated**:
-  - API key theft or compromise (High severity)
-  - Unauthorized API usage (High severity)
-  - Service abuse by authorized clients (Medium severity)
+**Threats Mitigated:**
+- LLM prompt injection attacks (High severity) - Prevents manipulation of ChatGPT responses
+- Data leakage through LLM (Medium severity) - Controls what information can be exposed
+- Prompt poisoning (High severity) - Prevents attackers from manipulating AI-generated content
 
-- **Impact**: Reduces the impact window of compromised credentials and provides fine-grained control over API access.
+**Impact:**
+- Significantly reduces the risk of LLM manipulation
+- Prevents attackers from using the LLM to access unauthorized information
+- Ensures consistent, safe AI-generated content
 
-- **Currently Implemented**: Basic API key authentication mentioned, but no details on rotation or revocation.
+**Currently Implemented:**
+- No specific LLM security controls are mentioned in the architecture
 
-- **Missing Implementation**: Enhanced key management features in API Gateway and Control Plane.
+**Missing Implementation:**
+- Input sanitization for LLM prompts
+- Prompt template library
+- Output filtering and validation
+- Contextual boundaries in prompts
 
-## 4. Prompt Injection Protection
+## 4. Database Access Controls and Encryption
 
-- **Description**: Secure the ChatGPT integration by:
-  1. Using structured prompts with clear boundaries between instructions and user input
-  2. Implementing input validation specific to prompt injection patterns
-  3. Creating a library of safe prompt templates
-  4. Testing prompts against known injection techniques
+**Description:**
+- Implement database-level encryption at rest for both Control Plane DB and API DB
+- Use column-level encryption for particularly sensitive data (billing information, API keys)
+- Implement strict access controls following principle of least privilege
+- Create separate database users for different functionality with minimal required permissions
+- Configure network security groups to restrict DB access to only necessary application components
 
-- **Threats Mitigated**:
-  - Prompt injection attacks manipulating AI output (High severity)
-  - Extraction of system information through carefully crafted inputs (Medium severity)
-  - Manipulation of AI to generate harmful content (Medium severity)
+**Threats Mitigated:**
+- Data leakage from databases (High severity) - Reduces risk and impact of unauthorized access
+- Tenant data isolation breaches (High severity) - Prevents access across tenant boundaries
+- Database credential compromise (Medium severity) - Limits impact if credentials are exposed
 
-- **Impact**: Prevents attackers from hijacking AI functionality through malicious inputs, ensuring generated nutrition content remains safe and appropriate.
+**Impact:**
+- Significantly reduces the risk of data exposure in case of infrastructure compromise
+- Creates multiple layers of protection around sensitive data
 
-- **Currently Implemented**: Not mentioned in architecture.
+**Currently Implemented:**
+- TLS is used for database connections according to the architecture diagram
+- Database separation between control plane and API functionality is implemented
 
-- **Missing Implementation**: Should be added to API Application's LLM integration component.
+**Missing Implementation:**
+- Column-level encryption for sensitive data
+- Detailed least-privilege access controls
+- Network security groups for database isolation
 
-## 5. Output Content Filtering
+## 5. Advanced API Gateway Security Configuration
 
-- **Description**: Implement post-processing of AI-generated content by:
-  1. Creating a validation layer that scans for inappropriate or harmful content
-  2. Adding keyword/phrase blacklists specific to nutrition and health safety
-  3. Implementing pattern detection for dangerous advice
-  4. Adding human review for flagged content
+**Description:**
+- Implement detailed request validation and schema enforcement at the API Gateway
+- Configure advanced WAF rules to detect and block common attack patterns
+- Set up multi-layered rate limiting (global, per-endpoint, and per-tenant)
+- Implement traffic pattern analysis to detect anomalous behavior
+- Configure mutual TLS (mTLS) for service-to-service authentication
 
-- **Threats Mitigated**:
-  - Distribution of harmful nutrition advice (High severity)
-  - Generation of inappropriate content (Medium severity)
-  - Bypass of dietary safety guidelines (High severity)
+**Threats Mitigated:**
+- API abuse (High severity) - Prevents misuse of API services
+- Denial of service attacks (Medium severity) - Protects application availability
+- API gateway bypass attempts (High severity) - Ensures all traffic flows through proper controls
 
-- **Impact**: Ensures all AI-generated nutrition content meets safety standards before being delivered to dietitians or end users.
+**Impact:**
+- Creates a strong perimeter defense for all API interactions
+- Reduces attack surface by validating all incoming requests
+- Prevents resource exhaustion through sophisticated rate limiting
 
-- **Currently Implemented**: Not mentioned in architecture.
+**Currently Implemented:**
+- Basic API Gateway with authentication, input filtering, and rate limiting is in place
 
-- **Missing Implementation**: Should be implemented in API Application before returning LLM-generated content.
+**Missing Implementation:**
+- Detailed request validation/schema enforcement
+- WAF rule configuration
+- Multi-layered rate limiting
+- Traffic pattern analysis
+- mTLS implementation
 
-## 6. API Endpoint Authorization Matrix
+## 6. Secure Admin Interface Controls
 
-- **Description**: Enhance authorization by:
-  1. Creating a detailed matrix of allowed operations per client
-  2. Implementing fine-grained permissions for each API endpoint
-  3. Adding context-aware authorization (time, location, request frequency)
-  4. Creating different permission tiers for access to sensitive nutrition data or AI features
+**Description:**
+- Implement multi-factor authentication for all administrator access to the Web Control Plane
+- Create role-based access controls with granular permissions
+- Establish IP restriction for admin interface access
+- Implement session timeout and automatic logout
+- Set up admin action logging and alerting for sensitive operations
 
-- **Threats Mitigated**:
-  - Unauthorized feature access (Medium severity)
-  - API function abuse (Medium severity)
-  - Privilege escalation (Medium severity)
+**Threats Mitigated:**
+- Admin interface compromise (Critical severity) - Prevents unauthorized admin access
+- Privilege escalation (High severity) - Limits damage if access is gained
+- Insider threats (Medium severity) - Creates accountability for administrative actions
 
-- **Impact**: Ensures each Meal Planner application has access only to appropriate functionality, preventing misuse of premium features or access to unauthorized data.
+**Impact:**
+- Significantly reduces risk of unauthorized administrative access
+- Creates accountability and auditability for admin actions
+- Limits damage potential if credentials are compromised
 
-- **Currently Implemented**: Basic ACL rules mentioned in API Gateway but likely lacking granularity.
+**Currently Implemented:**
+- Administrator role is defined but specific security controls are not detailed
 
-- **Missing Implementation**: More comprehensive authorization rules in API Gateway and potentially additional checks in API Application.
+**Missing Implementation:**
+- Multi-factor authentication
+- IP restrictions
+- Granular role-based permissions
+- Session timeout configuration
+- Admin action logging and alerting
 
-## 7. LLM Request/Response Monitoring
+## 7. Secure LLM Integration
 
-- **Description**: Implement specialized monitoring for LLM interactions:
-  1. Create pattern recognition for suspicious prompt patterns
-  2. Monitor and analyze all requests to detect attempts to extract sensitive data
-  3. Implement automated alerts for unusual usage patterns
-  4. Create dashboards for LLM usage statistics and anomalies
+**Description:**
+- Store ChatGPT API credentials in AWS Secrets Manager
+- Implement credential rotation for LLM access
+- Create separate API keys for different environments
+- Implement monitoring for unusual LLM API usage patterns
+- Set up cost controls and usage limits
+- Sanitize all information sent to and received from the LLM
 
-- **Threats Mitigated**:
-  - Systematic prompt injection attacks (Medium severity)
-  - Attempts to misuse AI capabilities (Medium severity)
-  - Data exfiltration attempts through LLM (Medium severity)
+**Threats Mitigated:**
+- LLM credential theft (High severity) - Prevents unauthorized use of AI services
+- Cost attacks (Medium severity) - Prevents malicious overconsumption of paid AI services
+- Data leakage through LLM (Medium severity) - Controls what information is shared with external AI services
 
-- **Impact**: Provides visibility into potential misuse or attacks targeting the AI component, enabling early detection and response.
+**Impact:**
+- Reduces risk of unauthorized AI service usage
+- Protects against financial damage from credential abuse
+- Ensures proper handling of sensitive information
 
-- **Currently Implemented**: Storage of requests/responses in API database mentioned, but no indication of monitoring.
+**Currently Implemented:**
+- The architecture shows integration with ChatGPT but doesn't detail security controls
 
-- **Missing Implementation**: Add analysis and alerting capabilities for LLM interactions in API Application.
+**Missing Implementation:**
+- Secure credential storage
+- Credential rotation
+- Usage monitoring
+- Cost controls
+- Input/output sanitization
 
-## 8. Enhanced Administrative Access Controls
+## 8. Data Minimization and Lifecycle Management
 
-- **Description**: Strengthen administrator security by:
-  1. Implementing multi-factor authentication for all administrative access
-  2. Creating granular admin roles with specific permissions
-  3. Adding IP restriction for administrative functions
-  4. Implementing session management with automatic timeouts
-  5. Adding approval workflows for sensitive administrative actions
+**Description:**
+- Implement data retention policies for all stored information in both databases
+- Create automated data pruning for old dietitian content samples, LLM requests and responses
+- Anonymize or pseudonymize data where full details aren't needed
+- Implement right-to-erasure capabilities for tenant data
+- Create data classification system to identify and protect sensitive information
 
-- **Threats Mitigated**:
-  - Administrative account compromise (High severity)
-  - Insider threats (Medium severity)
-  - Privilege escalation (Medium severity)
+**Threats Mitigated:**
+- Excessive data exposure (Medium severity) - Reduces impact of potential breaches
+- Compliance violations (High severity) - Ensures regulatory compliance
+- Data hoarding risks (Medium severity) - Reduces risks associated with storing unnecessary data
 
-- **Impact**: Significantly reduces the risk of administrator account compromise and limits potential damage from compromised accounts.
+**Impact:**
+- Reduces overall data liability
+- Minimizes breach impact by limiting stored data
+- Ensures compliance with privacy regulations
 
-- **Currently Implemented**: Administrator role mentioned but no details on access controls.
+**Currently Implemented:**
+- The architecture mentions storing samples, requests, and responses, but doesn't detail lifecycle management
 
-- **Missing Implementation**: Should be implemented in Web Control Plane for administrator access.
+**Missing Implementation:**
+- Data retention policies
+- Automated data pruning
+- Anonymization procedures
+- Data classification system
+- Right-to-erasure capabilities
