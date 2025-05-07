@@ -1,138 +1,157 @@
-# Mitigation Strategies
+## Mitigation Strategies
 
-## Strategy 1: Input Validation and Sanitization
+### 1. Strategy: Strict API Input Validation at API Gateway
 
-- **Description**:
-  - Enhance current validation and sanitization procedures within the API Gateway and API application by validating and sanitizing all received input from external Meal Planner applications.
-  - Implement strict schema validation for the inputs, setting explicit allowable formats and fields.
-  - Reject any input that does not strictly conform to the defined schema to avoid unexpected input handling downstream.
-  - Include validation logic at two levels:
-    1. API Gateway (basic structural validation and input sanitization)
-    2. API Application (domain-specific validation logic, preventing unwanted commands or injection attempts toward LLM integration)
+- **Description:**
+  Developers should strictly define and enforce input validation policies at the API Gateway level (Kong). These policies must enforce strict checks on data types, schemas, and allowed ranges or inputs. Any invalid or malicious payload would be immediately rejected before touching the backend application infrastructure. To implement this, developers should:
+  - Define comprehensive and restrictive schema definitions.
+  - Reject any payload not complying with the defined schemas immediately.
+  - Ensure controls for special characters and potential injection attacks.
 
-- **Threats Mitigated**:
-  - Input injection and prompt injection attacks via external Meal Planner systems (Severity: High)
-  - Malicious payload uploads which could harm or compromise the backend system or database integrity (Severity: Medium)
+- **Threats mitigated:**
+  - Severity: High - Injection attacks attempting to exploit the backend API or databases through malicious inputs.
+  - Severity: High - Malformed API calls leading to Denial of Service.
 
-- **Impact**:
-  - Significantly reduces the risk of prompt injection or input-based attacks toward AI components and backend services, ensuring backend and AI integrations are protected from attack vectors leveraging input manipulation.
+- **Impact:**
+  This strategy significantly reduces the risk of injection attacks and potential denial-of-service attacks by quickly discarding suspicious payloads, greatly lowering attack vectors on backend resources.
 
-- **Currently Implemented**:
-  - Currently implemented partially and generically as "filtering of input" at the API Gateway level (Kong).
+- **Currently implemented:**
+  "Filtering of input" functionality is mentioned at API Gateway (Kong), indicating some degree of input validation is already implemented.
 
-- **Missing Implementation**:
-  - API Application itself does not explicitly mention input validation and sanitization of requests passed to ChatGPT or stored in database. Additional detailed validation measures must be implemented within the API Application logic layer.
-
-## Strategy 2: Secure Handling and Validation of LLM Integration (ChatGPT-3.5)
-
-- **Description**:
-  - The backend API Application should strictly control and sanitize data sent in requests to the external ChatGPT-3.5 LLM system.
-  - Apply validation on data responses received from ChatGPT API to avoid indirectly propagating AI-generated malicious or harmful content downstream.
-  - Establish clear policies regarding acceptable AI-generated content as outputs and automate content moderation mechanisms to detect potentially harmful responses from the LLM before returning to the end-user.
-
-- **Threats Mitigated**:
-  - Risk of AI-generated harmful, inappropriate, biased or malicious outputs to end-users (Severity: High)
-  - Risk of propagating injected or malicious commands as a result of LLM processing (Severity: Medium)
-
-- **Impact**:
-  - Reduces significantly the real-world risk associated with AI content moderation and ensures toxic or dangerous AI-generated outcomes are mitigated proactively.
-
-- **Currently Implemented**:
-  - Not currently explicitly implemented.
-
-- **Missing Implementation**:
-  - Missing entirely in the backend API application logic, no explicit mention of LLM-integration input sanitization or output validation from external ChatGPT API calls.
-
-## Strategy 3: Principle of Least Privilege and Access Control Integration for Databases
-
-- **Description**:
-  - Ensure fine-grained, restricted, and limited permissions for backend applications accessing the "API database" and "Control Plane Database".
-  - Clearly separate permissions and roles, granting only necessary read/write permission per container, application or API based on the strictest minimal requirement.
-
-- **Threats Mitigated**:
-  - Unrestricted database access or unauthorized access to sensitive client-related and billing data through compromised application instances or containers. (Severity: High)
-  - Data tampering, unauthorized modification or malicious data queries (Severity: Medium)
-
-- **Impact**:
-  - Strongly minimizes potential damage and collateral/security impact in the event an internal system or container becomes compromised, by restricting attacker capability and limiting their lateral movement potential.
-
-- **Currently Implemented**:
-  - No explicit mention of current granular database permissions or defined roles.
-
-- **Missing Implementation**:
-  - Entire mitigation missing. Should be explicitly documented, verified, and implemented in the database access specifications and AWS RDS IAM policies.
-
-## Strategy 4: Enhanced Rate Limiting and Throttling Rules on API Gateway
-
-- **Description**:
-  - Strengthen current rate limiting rules at the API Gateway to detect and mitigate abuse or Denial-of-Service (DoS) attempts targeted at the API endpoints.
-  - Set rate-limiting policies that bound acceptable usage according to normal application patterns, to prevent intentional or accidental excessive API usage.
-
-- **Threats Mitigated**:
-  - Abuse of API Gateway or backend API endpoints causing degradation or denial of service affecting other valid applications (Severity: Medium).
-
-- **Impact**:
-  - Explicitly reduces the chance of availability or performance degradation by ensuring abnormal applications or malicious actors cannot impact system stability through excessive usage.
-
-- **Currently Implemented**:
-  - Kong API Gateway currently implements a basic rate-limiting policy but the exact policies and rules are not defined clearly.
-
-- **Missing Implementation**:
-  - Clearly documented policies, thresholds and configurable limits should be established and explicitly declared to tighten and enhance current generic implementation.
-
-## Strategy 5: Secure Storage of Sensitive Information (API Keys, credentials)
-
-- **Description**:
-  - Store sensitive information such as API keys, ChatGPT API access credentials, and secrets in secure methods (AWS Secrets Manager, Parameter Store, or encrypted secure storage services).
-  - Access sensitive data via IAM roles and policies, utilizing AWS native features to prevent leakage or unauthorized access.
-
-- **Threats Mitigated**:
-  - Credential exposure, API Key leakage and unauthorized access (Severity: High)
-
-- **Impact**:
-  - Greatly reduces the risk of unauthorized access to application and external systems, predominantly ChatGPT LLM and backend systems, in the case of security incidents or breaches.
-
-- **Currently Implemented**:
-  - Currently not documented or explicitly implemented.
-
-- **Missing Implementation**:
-  - Must verify that all secret credentials management is secure and uses AWS native or equivalent secure credential management systems.
-
-## Strategy 6: API Authentication and Authorization (API Gateway ACL)
-
-- **Description**:
-  - Continue ensuring explicit ACL rules and API Key–based authentication to validate external Meal Planner requests' authenticity and authorization clearly.
-  - Periodic review of ACL and API keys validity, ensuring rotation policies to reduce risk of compromised client credentials.
-
-- **Threats Mitigated**:
-  - Unauthorized API access, unauthorized client systems or applications using AI Nutrition-Pro functionality (Severity: High)
-
-- **Impact**:
-  - Strongly minimizes unauthorized access or use of system through valid, regularly rotated credentials reducing impact in cases of credential leakage.
-
-- **Currently Implemented**:
-  - Auth/authz are partially implemented at the API Gateway with API keys and current ACL rules, explicitly documented in architecture.
-
-- **Missing Implementation**:
-  - Clear rotation and lifecycle policies of API keys and ACL rules are currently not in place or documented.
-
-## Strategy 7: Encryption of Data at Rest (Amazon RDS Storage)
-
-- **Description**:
-  - Ensure encryption at rest is enabled for database data storage services (Amazon RDS) used for Control Plane Database and API Database.
-
-- **Threat Mitigated**:
-  - Unauthorized data access or exfiltration in the event of a compromise of physical data layers or accidental AWS misconfiguration (Severity: Medium)
-
-- **Impact**:
-  - Significantly mitigates the risk associated with accidental exposure or unauthorized data access through AWS-level breaches or physical storage layer exploits.
-
-- **Currently Implemented**:
-  - Not explicitly implemented or assured in the defined architecture documentation.
-
-- **Missing Implementation**:
-  - Database encryption-at-rest configuration must be explicitly validated and documented.
+- **Missing implementation:**
+  The current state of API Gateway input filtering isn't detailed enough. Developers should verify existing rules comprehensively and explicitly define validation policies if they are missing or incomplete.
 
 ---
 
-The provided mitigation strategies detail specific actions tailored explicitly to the identified architectural threats to the AI Nutrition-Pro Application while avoiding overly generic or irrelevant solutions.
+### 2. Strategy: Secure Management of API Keys
+
+- **Description:**
+  Developers should enforce secure generation, storage, rotation, and revocation processes for API keys issued to Meal Planner applications. Steps for ensuring secure API key management include:
+  - Generate strong API keys with sufficient entropy.
+  - Store keys securely, ensuring encryption at rest within the Control Plane Database.
+  - Provide simple management interfaces in Web Control Plane to rotate and revoke API keys.
+  - Implement API Gateway rules to disable immediately revoked or expired API keys.
+
+- **Threats mitigated:**
+  - Severity: High - Unauthorized access using compromised API keys.
+  - Severity: Medium - Replay attacks and impersonation of legitimate Meal Planner applications.
+
+- **Impact:**
+  Proper API key lifecycle management drastically reduces the window of vulnerability in case of accounts compromise, limiting potential damage.
+
+- **Currently implemented:**
+  Authentication via individual API keys for Meal Planner applications mentioned in current architecture.
+
+- **Missing implementation:**
+  Not explicitly described how API keys storage is implemented or if any revocation//rotation mechanisms currently exist. Missing implementation details should be verified in Web Control Plane.
+
+---
+
+### 3. Strategy: Principle of Least Privilege in ACL Rules
+
+- **Description:**
+  Developers should regularly audit and enforce minimum required privileges within the ACL rules on Kong API Gateway. Recommended steps include:
+  - Define exactly which actions and API endpoints each Meal Planner application is authorized to perform/access.
+  - Maintain ACL rule sets and explicitly disallow unnecessary operations.
+  - Restrict by API endpoint/resource and HTTP verbs strictly required for each client.
+
+- **Threats mitigated:**
+  - Severity: Medium - Over-privileged API keys leading to unauthorized access to sensitive endpoints/features.
+
+- **Impact:**
+  Reduces lateral movement and exploitation potential in case API keys are compromised or misused.
+
+- **Currently implemented:**
+  Mentioned explicitly that ACL rules allow or deny certain actions at API Gateway.
+
+- **Missing implementation:**
+  Not explicitly detailed how strict or comprehensive ACL definitions are, further confirmation required by checking actual configurations on API Gateway.
+
+---
+
+### 4. Strategy: Data Sanitization & Limitations in Request/Response Stored Data
+
+- **Description:**
+  Developers must ensure input/output data stored in "API database" (dietitian content samples, requests, and responses to LLM) undergoes appropriate sanitization and limitations. Practical steps include:
+  - Sanitize user/dietitian provided data before storing in the database.
+  - Enforce strict size limits and quotas per client tenant.
+  - Implement proper escaping and querying safeguards in the backend API database interactions.
+
+- **Threats mitigated:**
+  - Severity: High - Injection vulnerabilities and database attacks through maliciously constructed user content.
+  - Severity: Medium - Data corruption through malicious content.
+
+- **Impact:**
+  Proper sanitization greatly reduces system vulnerability to data injection attempts or corruption risks.
+
+- **Currently implemented:**
+  Not explicitly mentioned.
+
+- **Missing implementation:**
+  Missing clear directives and strategy for validating or sanitizing content samples and requests/responses saved in API database, indicating complete or partial missing implementation.
+
+---
+
+### 5. Strategy: Rate Limiting on API Clients
+
+- **Description:**
+  Strong and adaptive rate limiting capabilities are crucial for reducing DoS/DDoS and depletion of application infrastructure. Developers should:
+  - Utilize existing Kong API Gateway rate limiting capabilities fully and tune them in alignment with clients' SLA and expected usage.
+  - Provide adaptive throttling guidelines and rules in the API gateway configuration.
+  - Enforce stricter limits on sensitive API endpoints or for less-trusted API keys.
+
+- **Threats mitigated:**
+  - Severity: Medium - Excessive API requests causing degraded backend service availability or application downtime (DoS threats).
+
+- **Impact:**
+  Ensures backend infrastructure stability and service reliability under malicious or accidental overload conditions from registered API clients.
+
+- **Currently implemented:**
+  Mentioned as a responsibility of API Gateway (Kong).
+
+- **Missing implementation:**
+  Needs further detailed verification about how strictly or adaptively current rate limiting policies have been configured and enforced.
+
+---
+
+### 6. Strategy: Control and Validation of Responses from the External LLM (ChatGPT)
+
+- **Description:**
+  Implement a backend layer in the API Application to validate responses obtained from ChatGPT before forwarding them to Meal Planner clients or storing in database:
+  - Scan and validate returned LLM-generated responses to remove potentially unsafe or inappropriate content.
+  - Use automated checks/heuristics for inappropriate words, significant format deviations, length overflows, or injection style content.
+
+- **Threats mitigated:**
+  - Severity: Medium - Malicious, adversarial, or corrupted data injection from ChatGPT responses.
+
+- **Impact:**
+  Greatly reduces risk associated with compromised or unsafe third-party dependency outputs (ChatGPT), enhancing trustworthiness and correctness of system-generated data.
+
+- **Currently implemented:**
+  No explicit validation of responses from ChatGPT specified within the current documentation.
+
+- **Missing implementation:**
+  API Application currently directly utilizes ChatGPT responses without documented validation or filtering mechanisms, making implementation fully needed.
+
+---
+
+### 7. Strategy: Secure administration interface and role management
+
+- **Description:**
+  The Web Control Plane should implement strong authentication and strict authorization for Administration roles:
+  - Configure secure authentication mechanisms (e.g., MFA) for admins and critical staff.
+  - Implement role-based access controls to ensure functions and actions are limited only to appropriate administrators.
+
+- **Threats mitigated:**
+  - Severity: High - Unauthorized modifications or misuse of sensitive application configurations leading to security breach or downtime.
+
+- **Impact:**
+  Effectively mitigates risks from internal administration misuse or compromise and establishes clear accountability.
+
+- **Currently implemented:**
+  Explicit details of administration role configuration or access control mechanisms are lacking.
+
+- **Missing implementation:**
+  There is insufficient detail on current admin authentication or authorization model; further clarification and robust implementation required in the Web Control Plane.
+
+---

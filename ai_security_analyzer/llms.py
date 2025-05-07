@@ -105,7 +105,7 @@ class ProviderConfig:
     model_class: Type[BaseChatModel]
 
 
-FIX_TEMPERATURE_MODELS = ["o1", "o1-preview"]
+FIX_TEMPERATURE_MODELS = ["o1", "o1-preview", "o1-pro", "o1-mini", "o3", "o3-mini", "o4-mini"]
 MAX_OUTPUT_TOKENS = 100000
 
 
@@ -247,6 +247,9 @@ class LLMProvider:
                 "google_api_key": api_key,
                 "max_output_tokens": MAX_OUTPUT_TOKENS,
             }
+
+            if model_config.thinking and model_config.thinking_budget_tokens:
+                kwargs["thinking_budget"] = model_config.thinking_budget_tokens
         elif provider_config.model_class == ParrotFakeChatModel:
             kwargs = {
                 "temperature": llm_config.temperature,
