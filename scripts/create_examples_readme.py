@@ -3,7 +3,7 @@ import os
 
 
 def main():
-    examples_dir = "examples"
+    examples_dir = "examples-2025-08"
 
     # Our data structure will group files by mode, project, model and document type.
     # For most modes we store a single file per doc type.

@@ -1,0 +1,249 @@
+- Mitigation strategy: Lock down evals endpoints to a safe directory (prevent arbitrary file reads)
+  - Description:
+    - Only allow folders under a single allowed base directory (e.g., backend/evals_data/outputs or backend/evals/results).
+    - In backend/routes/evals.py:
+      - Replace folder parameters with an ID or a whitelisted relative path.
+      - Resolve the requested path with Path(...).resolve() and verify it starts with the allowed base directory Path.resolve().
+      - Reject absolute paths and any path containing .. segments.
+      - Return 403 for disallowed paths.
+    - Apply the same checks to /evals, /pairwise-evals, and /best-of-n-evals.
+  - List of threats mitigated:
+    - Arbitrary file read and information disclosure by requesting any server path via folder query params (High).
+  - Impact:
+    - Eliminates the ability to read .html files from arbitrary directories and directory-list sensitive locations. Risk reduced from High to Low/None for these routes.
+  - Currently implemented:
+    - Not implemented. The endpoints accept arbitrary absolute paths (backend/routes/evals.py).
+  - Missing implementation:
+    - Implement base-directory checks and folder ID mapping in backend/routes/evals.py for get_evals, get_pairwise_evals, and get_best_of_n_evals.
+
+- Mitigation strategy: Disable evals endpoints in production behind an explicit flag
+  - Description:
+    - Introduce EVALS_ENABLED (boolean) in env.
+    - In backend/main.py, include the evals router only if EVALS_ENABLED is true.
+    - Alternatively, check IS_PROD and disable in production, keeping EVALS only in dev.
+  - List of threats mitigated:
+    - Exposure of internal eval artifacts and unintended filesystem access in production (High).
+  - Impact:
+    - In production, eliminates the exposure surface entirely. Risk reduced from High to None when disabled.
+  - Currently implemented:
+    - Not implemented. main.py unconditionally includes evals router.
+  - Missing implementation:
+    - Guard app.include_router(evals.router) in backend/main.py with a feature flag.
+
+- Mitigation strategy: Strictly validate and constrain OpenAI base URL (proxy) usage
+  - Description:
+    - Only allow https scheme; reject http.
+    - Disallow IP literals and localhost/private network hosts (e.g., 127.0.0.0/8, 10.0.0.0/8, 172.16/12, 192.168/16, ::1, fc00::/7).
+    - Optionally maintain an allowlist of proxy hosts (e.g., api.openai.com or approved proxy domains).
+    - Ensure path contains /v1.
+    - Enforce these checks in ParameterExtractionStage when reading openAiBaseURL. If invalid, ignore and default to official URL.
+  - List of threats mitigated:
+    - SSRF from server to attacker-controlled endpoints and key exfiltration via malicious base URLs in dev (High).
+    - Accidental transmission of API keys over plaintext http (Medium).
+  - Impact:
+    - Prevents malicious endpoints and plaintext transport. SSRF risk reduced from High to Low/None in dev. In prod, already disabled, this keeps dev safe.
+  - Currently implemented:
+    - Base URL override disabled only when IS_PROD is truthy; no validation otherwise (backend/routes/generate_code.py ParameterExtractionStage).
+  - Missing implementation:
+    - Add URL validation in ParameterExtractionStage._get_from_settings_dialog_or_env (or directly after reading openAiBaseURL) and enforce https + host checks.
+
+- Mitigation strategy: Correct boolean env parsing for flags (IS_PROD, MOCK, IS_DEBUG_ENABLED)
+  - Description:
+    - Replace bool(os.environ.get(...)) with robust parsing:
+      - Example: def env_bool(name, default=False): val=os.getenv(name); return default if val is None else val.strip().lower() in ("1","true","yes","on").
+    - Apply to IS_PROD, SHOULD_MOCK_AI_RESPONSE, IS_DEBUG_ENABLED in backend/config.py.
+  - List of threats mitigated:
+    - Unintended enabling/disabling of protections due to truthy strings (e.g., "false" evaluating to True), allowing proxy override or mock mode in prod (Medium).
+  - Impact:
+    - Ensures intended behavior of prod/dev feature flags; reduces misconfiguration-driven exposure. Risk reduced from Medium to Low.
+  - Currently implemented:
+    - Flags parsed with bool(os.environ.get(...)) (backend/config.py) – incorrect.
+  - Missing implementation:
+    - Implement env_bool helper and update all boolean flags in backend/config.py.
+
+- Mitigation strategy: Tighten CORS and verify WebSocket origins
+  - Description:
+    - In backend/main.py:
+      - Set allow_origins to explicit frontend URLs (e.g., https://screenshottocode.com and http://localhost:5173 in dev).
+      - If allow_credentials is True, do not use "*" for origins.
+    - For WebSockets:
+      - In WebSocketSetupMiddleware.accept or early in stream_code, check the Origin/Sec-WebSocket-Origin header against the allowed origins; close if not allowed.
+  - List of threats mitigated:
+    - Cross-site abuse of the API and WebSocket from arbitrary origins (Medium).
+  - Impact:
+    - Limits who can initiate code generation or evals from a browser. Risk reduced from Medium to Low.
+  - Currently implemented:
+    - CORS is allow_origins=["*"], allow_credentials=True (backend/main.py). No WS origin checks.
+  - Missing implementation:
+    - Configure explicit origins in CORSMiddleware and add WS origin checks in backend/routes/generate_code.py WebSocketSetupMiddleware.
+
+- Mitigation strategy: Sandbox and constrain execution of generated HTML in the UI
+  - Description:
+    - Render generated code and eval outputs in a sandboxed iframe:
+      - Use sandbox attributes (e.g., sandbox="allow-scripts" but disallow same-origin, top-navigation, forms, popups).
+      - Serve HTML via Blob URLs to isolate origin.
+      - Apply a restrictive CSP on the iframe document to limit network access and script sources to a minimal allowlist (or none; allow only tailwind CDN if necessary).
+      - Disable cookies and storage access (no allow-same-origin).
+    - Apply the same constraints in the /evals viewer UI.
+  - List of threats mitigated:
+    - Execution of untrusted, model-generated HTML/JS including remote scripts that can exfiltrate data or attack the parent window (High).
+  - Impact:
+    - Confines untrusted code; prevents privilege escalation to app origin. Risk reduced from High to Low when CSP and sandbox are correctly applied.
+  - Currently implemented:
+    - Frontend details not included here; no evidence of sandboxing in project files.
+  - Missing implementation:
+    - Frontend: wrap code preview and eval rendering in sandboxed iframes with strict CSP and no same-origin privileges.
+
+- Mitigation strategy: Enforce strict limits on request payloads (images, video, history) for WebSocket code generation
+  - Description:
+    - In ParameterExtractionStage:
+      - Validate prompt.images entries are data URLs for image mode; reject external http/https URLs (or cap fetch logic).
+      - Enforce maximum base64 size per image (e.g., <= 8 MB before processing) and maximum number of images per message/history item (e.g., <= 5).
+      - Enforce maximum text sizes for prompt/history (e.g., <= 50 KB per message).
+      - For video mode, limit max video data URL size (e.g., <= 25 MB), duration, and resolution before accepting.
+    - Immediately reject requests exceeding limits with a clear error.
+  - List of threats mitigated:
+    - CPU, memory, and disk exhaustion from massive base64 payloads and videos (High).
+  - Impact:
+    - Prevents resource exhaustion and keeps latency predictable. Risk reduced from High to Low.
+  - Currently implemented:
+    - None at ingress. Image processing later compresses for Claude but does not enforce initial limits (backend/image_processing/utils.py). Video accepts any size (backend/video/utils.py).
+  - Missing implementation:
+    - Add size/type limits in backend/routes/generate_code.py ParameterExtractionStage and VideoGenerationStage prior to processing.
+
+- Mitigation strategy: Disable frame dumping and clean up temp files in video processing
+  - Description:
+    - Set video.utils.DEBUG = False by default.
+    - Gate any debug saves behind IS_DEBUG_ENABLED.
+    - Use TemporaryDirectory for screenshots and clean up after use.
+    - Consider sampling frames without writing to disk in non-debug mode.
+  - List of threats mitigated:
+    - Disk exhaustion and leakage of user-submitted content into /tmp (Medium).
+  - Impact:
+    - Removes persistent artifacts and reduces disk pressure. Risk reduced from Medium to Low/None.
+  - Currently implemented:
+    - DEBUG = True; save_images_to_tmp always saves when DEBUG (backend/video/utils.py).
+  - Missing implementation:
+    - Toggle DEBUG based on a properly parsed IS_DEBUG_ENABLED and remove or clean up file writes.
+
+- Mitigation strategy: Redact and size-cap stored run logs
+  - Description:
+    - In fs_logging.core.write_logs:
+      - Strip data URLs (replace with placeholders like "<image base64 redacted>").
+      - Truncate very long message contents to a safe length (e.g., 2–4 KB).
+      - Truncate or skip completion contents above a cap (e.g., write first 256 KB, note "[truncated]").
+      - Optionally hash large blobs to correlate without storing raw.
+      - Enforce a maximum total log file size and rotate or drop when exceeded.
+  - List of threats mitigated:
+    - Sensitive data leakage to disk and disk exhaustion via large logs (Medium).
+  - Impact:
+    - Prevents oversized logs and reduces leakage surface. Risk reduced from Medium to Low.
+  - Currently implemented:
+    - None. It writes full prompt messages and completion to run_logs (backend/fs_logging/core.py).
+  - Missing implementation:
+    - Add redaction/truncation before f.write and consider log rotation.
+
+- Mitigation strategy: Harden screenshot URL handling to avoid internal targets
+  - Description:
+    - In routes/screenshot.normalize_url and app_screenshot:
+      - Reject localhost and private network IP ranges.
+      - Optionally allow only http/https public hostnames (and block raw IPs).
+      - Optionally add a site allowlist in hosted deployments.
+    - Return 400 for disallowed targets.
+  - List of threats mitigated:
+    - Using the upstream screenshot service to target internal/private addresses (SSRF-by-proxy) (Medium).
+  - Impact:
+    - Substantially reduces misuse via private/loopback targets. Risk reduced from Medium to Low.
+  - Currently implemented:
+    - normalize_url allows localhost and IPs (backend/routes/screenshot.py).
+  - Missing implementation:
+    - Add private-range checks in routes/screenshot.py and enforce before calling the third-party API.
+
+- Mitigation strategy: Do not echo raw internal error messages to clients
+  - Description:
+    - In ParallelGenerationStage._stream_openai_with_error_handling and generic except blocks:
+      - Map known provider errors to friendly, generic messages that do not include provider response bodies or stack traces.
+      - For unexpected exceptions, log details server-side but return a generic "An unexpected error occurred. Please try again."
+      - Ensure variantError never includes raw exception text.
+    - Do similar for other provider paths (Anthropic, Gemini, Replicate).
+  - List of threats mitigated:
+    - Information leakage of stack traces, internal configuration, base URLs, or API responses (Medium).
+  - Impact:
+    - Lowers disclosure risk from Medium to Low.
+  - Currently implemented:
+    - Some curated messages exist for OpenAI auth/quota/model-not-found, but generic handlers still include str(e) in responses (backend/routes/generate_code.py).
+  - Missing implementation:
+    - Replace str(e) in user-facing messages with generic text; keep detailed logs server-side only.
+
+- Mitigation strategy: Correct parsing of isImageGenerationEnabled and other boolean params in requests
+  - Description:
+    - Client JSON may pass booleans or strings. Replace bool(params.get("isImageGenerationEnabled", True)) with robust parsing that treats "false"/false as False.
+    - Enforce a server-side override in hosted mode (ignore client value and set to False unless explicitly allowed) to prevent cost abuse.
+  - List of threats mitigated:
+    - Unintended image generation costs via incorrect truthiness of "false" strings and client override in hosted mode (Medium-High).
+  - Impact:
+    - Prevents accidental or malicious enablement of expensive features. Risk reduced from Medium-High to Low.
+  - Currently implemented:
+    - bool(params.get("isImageGenerationEnabled", True)) misparses "false" as True (backend/routes/generate_code.py).
+  - Missing implementation:
+    - Implement robust boolean parsing and a server-side policy (e.g., if IS_PROD: should_generate_images = False).
+
+- Mitigation strategy: Constrain outbound image generation usage and model calls per request
+  - Description:
+    - Enforce per-request caps:
+      - Keep NUM_VARIANTS fixed server-side; ignore any client attempts to influence count.
+      - For image generation, cap max images replaced per variant (e.g., 10) in image_generation/core.py.
+    - Short-circuit image generation when no REPLICATE_API_KEY exists and do not fall back to server OpenAI key unless explicitly allowed by config.
+  - List of threats mitigated:
+    - Cost/resource abuse by triggering many outbound calls per request (Medium).
+  - Impact:
+    - Bounds worst-case external spend and latency. Risk reduced from Medium to Low.
+  - Currently implemented:
+    - NUM_VARIANTS is server-side (backend/config.py). Image generation falls back to OpenAI API if no replicate key and a key is available.
+  - Missing implementation:
+    - Add explicit caps in backend/image_generation/core.py and a config gate that forbids fallback to server OpenAI key in hosted deployments.
+
+- Mitigation strategy: Validate and restrict imported code/history images to data URLs (no remote fetches by providers)
+  - Description:
+    - In prompts.create_message_from_history_item:
+      - If role == "user" and images are provided, require data URLs; reject http/https URLs.
+      - This avoids prompting providers to fetch attacker-controlled URLs.
+    - Optionally, strip remote image URLs and prompt the user to upload images instead.
+  - List of threats mitigated:
+    - Indirect SSRF performed by LLM providers fetching arbitrary URLs supplied by users (Low-Medium; off-box but still abuse vector).
+  - Impact:
+    - Removes provider-side SSRF via our prompts. Risk reduced from Low-Medium to Low/None.
+  - Currently implemented:
+    - OpenAI path forwards image_url as-is; Claude path converts data URLs and would break on remote URLs.
+  - Missing implementation:
+    - Enforce data URLs in backend/prompts/__init__.py when constructing messages for all providers.
+
+- Mitigation strategy: Enforce HTTPS and timeouts for all third-party API calls, and handle retries conservatively
+  - Description:
+    - Ensure any optional proxy/base_url is HTTPS (see earlier base URL strategy).
+    - Confirm timeouts are set (OpenAI client has timeout=600; consider shorter per chunk).
+    - Avoid aggressive retry loops for streaming; cap total time.
+  - List of threats mitigated:
+    - Hanging connections leading to resource exhaustion and long-running sockets (Low-Medium).
+  - Impact:
+    - Improves resilience and prevents stuck tasks from piling up. Risk reduced from Low-Medium to Low.
+  - Currently implemented:
+    - Some timeouts exist (e.g., httpx AsyncClient timeout=60 in screenshot; OpenAI timeout=600; replicate polling capped).
+  - Missing implementation:
+    - Reassess and tighten timeouts for streaming and screenshot calls; avoid infinite waits in processing stages.
+
+
+Notes on prioritization
+- Highest priority to implement now:
+  - Lock down and/or disable evals endpoints in production.
+  - Strict URL validation for OpenAI base URL and correct boolean env parsing.
+  - Sandbox/CSP for rendering generated HTML.
+  - Payload size limits for images/video and fixing isImageGenerationEnabled parsing.
+
+- Medium priority:
+  - CORS and WebSocket origin checks.
+  - Error message hardening and log redaction.
+  - Screenshot URL hardening.
+  - Debug temp file cleanup.
+
+These changes address the concrete risks exposed by the current code paths without adding generic “best practices” unrelated to this application’s behavior.
