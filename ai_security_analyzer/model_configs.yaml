@@ -10,8 +10,9 @@ models:
     tokenizer_model_name: 'gpt-4o'
     supports_structured_output: true
     structured_output_supports_temperature: true
+    max_tokens: 16384
 
-  gpt-4.5-preview:
+  gpt-4.1:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'system'
@@ -22,7 +23,7 @@ models:
     supports_structured_output: false
     max_tokens: 16384
 
-  gpt-4.1:
+  gpt-5:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'system'
@@ -44,15 +45,6 @@ models:
     tokenizer_model_name: 'gpt-4'
     supports_structured_output: false
     reasoning_effort: 'high'
-
-  o1-preview:
-    max_number_of_tools: 0
-    use_system_message: false
-    documents_chunk_size: 60000
-    documents_chunk_overlap: 0
-    documents_context_window: 70000
-    tokenizer_model_name: 'gpt-4'
-    supports_structured_output: false
 
   o1-mini:
     max_number_of_tools: 0
@@ -101,60 +93,32 @@ models:
     max_tokens: 30000
 
   # Google Gemini models
-  gemini-2.0-flash-thinking-exp:
+  gemini-2.5-pro:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'system'
-    documents_chunk_size: 700000
+    documents_chunk_size: 90000
     documents_chunk_overlap: 0
-    documents_context_window: 800000
-    tokenizer_model_name: 'gpt2'
-    supports_structured_output: false
-
-  gemini-2.0-pro-exp:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 60000
-    documents_chunk_overlap: 0
-    documents_context_window: 71000
-    tokenizer_model_name: 'gpt2'
-    supports_structured_output: false
-
-  gemini-2.5-flash-preview-04-17:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 700000
-    documents_chunk_overlap: 0
-    documents_context_window: 800000
+    documents_context_window: 100000
     tokenizer_model_name: 'gpt2'
     supports_structured_output: false
     thinking: true
-    thinking_budget_tokens: 24576
+    thinking_budget_tokens: -1 # -1 dynamic thinking https://ai.google.dev/gemini-api/docs/thinking#set-budget
 
-  gemini-2.5-pro-preview-05-06:
+  gemini-2.5-flash:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'system'
-    documents_chunk_size: 700000
+    documents_chunk_size: 90000
     documents_chunk_overlap: 0
-    documents_context_window: 800000
+    documents_context_window: 100000
     tokenizer_model_name: 'gpt2'
     supports_structured_output: false
-
-  gemini-2.5-pro-exp-03-25:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 700000
-    documents_chunk_overlap: 0
-    documents_context_window: 800000
-    tokenizer_model_name: 'gpt2'
-    supports_structured_output: false
+    thinking: true
+    thinking_budget_tokens: -1 # -1 dynamic thinking https://ai.google.dev/gemini-api/docs/thinking#set-budget
 
   # OpenRouter models
-  deepseek/deepseek-r1:
+  deepseek/deepseek-chat-v3.1:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'system'
@@ -164,7 +128,7 @@ models:
     tokenizer_model_name: 'gpt2'
     supports_structured_output: false
 
-  openai/o1:
+  openai/gpt-5:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'developer'
@@ -197,71 +161,16 @@ models:
     supports_structured_output: false
     max_tokens: 64000
 
-  openai/gpt-4.5-preview:
+  anthropic/claude-opus-4.1:
     max_number_of_tools: 0
     use_system_message: true
     system_message_type: 'system'
     documents_chunk_size: 90000
     documents_chunk_overlap: 0
     documents_context_window: 100000
-    tokenizer_model_name: 'gpt-4'
+    tokenizer_model_name: 'gpt2'
     supports_structured_output: false
-    max_tokens: 16384
-
-  qwen/qwq-32b:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 90000
-    documents_chunk_overlap: 0
-    documents_context_window: 100000
-    tokenizer_model_name: 'gpt-4'
-    supports_structured_output: false
-    max_tokens: 20000
-
-  qwen/qwen2.5-32b-instruct:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 90000
-    documents_chunk_overlap: 0
-    documents_context_window: 100000
-    tokenizer_model_name: 'gpt-4'
-    supports_structured_output: false
-    max_tokens: 20000
-
-  perplexity/sonar-reasoning-pro:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 90000
-    documents_chunk_overlap: 0
-    documents_context_window: 100000
-    tokenizer_model_name: 'gpt-4'
-    supports_structured_output: false
-    max_tokens: 100000
-
-  perplexity/sonar-pro:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 90000
-    documents_chunk_overlap: 0
-    documents_context_window: 100000
-    tokenizer_model_name: 'gpt-4'
-    supports_structured_output: false
-    max_tokens: 100000
-
-  perplexity/sonar-deep-research:
-    max_number_of_tools: 0
-    use_system_message: true
-    system_message_type: 'system'
-    documents_chunk_size: 90000
-    documents_chunk_overlap: 0
-    documents_context_window: 100000
-    tokenizer_model_name: 'gpt-4'
-    supports_structured_output: false
-    max_tokens: 100000
+    max_tokens: 64000
 
   # Anthropic models
   claude-3-7-sonnet-latest:
@@ -286,4 +195,4 @@ default:
   documents_context_window: 70000
   tokenizer_model_name: 'gpt2'
   supports_structured_output: false
-  max_tokens: 100000
+  max_tokens: 16384
