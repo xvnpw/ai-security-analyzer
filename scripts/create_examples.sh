@@ -1,6 +1,6 @@
 #!/bin/bash
 
-AGENT_PROMPT_TYPES="sec-design threat-modeling attack-surface attack-tree mitigations vulnerabilities"
+AGENT_PROMPT_TYPES="attack-tree"
 
 OUTPUT_DIR="examples-2025-10"
 
@@ -34,22 +34,22 @@ temperatures["anthropic/claude-sonnet-4.5"]="1"
 
 mkdir -p $OUTPUT_DIR
 
-for agent_prompt_type in $AGENT_PROMPT_TYPES; do
-    # Iterate over the keys of the models array
-    for agent_model in "${!models[@]}"; do
-        agent_provider="${models[$agent_model]}"
-        safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
+# for agent_prompt_type in $AGENT_PROMPT_TYPES; do
+#     # Iterate over the keys of the models array
+#     for agent_model in "${!models[@]}"; do
+#         agent_provider="${models[$agent_model]}"
+#         safe_agent_model=$(echo $agent_model | tr '[:upper:]' '[:lower:]' | tr -cd '[:alnum:]_.-')
 
-        echo "Generating example for $agent_prompt_type with $agent_model"
+#         echo "Generating example for $agent_prompt_type with $agent_model"
 
-        ARGS="dir -t ../screenshot-to-code/ -v -o $OUTPUT_DIR/dir-${agent_prompt_type}-screenshot-to-code-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
+#         ARGS="dir -t ../screenshot-to-code/ -v -o $OUTPUT_DIR/dir-${agent_prompt_type}-screenshot-to-code-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
-        CMD="python -m ai_security_analyzer.app $ARGS"
-        echo "Running: $CMD"
+#         CMD="python -m ai_security_analyzer.app $ARGS"
+#         echo "Running: $CMD"
 
-        python -m ai_security_analyzer.app $ARGS
-    done
-done
+#         python -m ai_security_analyzer.app $ARGS
+#     done
+# done
 
 for agent_prompt_type in $AGENT_PROMPT_TYPES; do
     if [ "$agent_prompt_type" == "vulnerabilities" ]; then
