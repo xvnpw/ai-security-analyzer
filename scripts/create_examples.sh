@@ -2,23 +2,24 @@
 
 AGENT_PROMPT_TYPES="sec-design threat-modeling attack-surface attack-tree mitigations vulnerabilities"
 
-OUTPUT_DIR="examples-2025-08"
+OUTPUT_DIR="examples-2025-10"
 
 declare -A models
 declare -A deep_analysis_models
-models["gpt-5"]="openai"
+# models["gpt-5"]="openai"
 # models["o3-pro"]="openai"
 # models["o1"]="openai"
 # models["o4-mini"]="openai"
 # models["gpt-4.5-preview"]="openai"
 # models["gpt-4.1"]="openai"
-models["gemini-2.5-flash"]="google"
-models["gemini-2.5-pro"]="google"
+# models["gemini-2.5-flash"]="google"
+# models["gemini-2.5-pro"]="google"
 # models["gemini-2.5-pro-preview-05-06"]="google"
 # models["gemini-2.5-flash-preview-04-17"]="google"
 # models["gemini-2.5-pro-exp-03-25"]="google"
 # models["claude-3-7-sonnet-latest"]="anthropic"
-models["anthropic/claude-opus-4.1"]="openrouter"
+# models["anthropic/claude-opus-4.1"]="openrouter"
+models["anthropic/claude-sonnet-4.5"]="openrouter"
 
 # deep_analysis_models["gemini-2.0-pro-exp"]="google"
 # deep_analysis_models["gemini-2.0-flash-thinking-exp"]="google"
@@ -29,6 +30,7 @@ temperatures["o3-pro"]="1"
 temperatures["gemini-2.5-flash"]="0.7"
 temperatures["gemini-2.5-pro"]="0.7"
 temperatures["anthropic/claude-opus-4.1"]="1"
+temperatures["anthropic/claude-sonnet-4.5"]="1"
 
 mkdir -p $OUTPUT_DIR
 
@@ -42,10 +44,10 @@ for agent_prompt_type in $AGENT_PROMPT_TYPES; do
 
         ARGS="dir -t ../screenshot-to-code/ -v -o $OUTPUT_DIR/dir-${agent_prompt_type}-screenshot-to-code-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
-        CMD="python ai_security_analyzer/app.py $ARGS"
+        CMD="python -m ai_security_analyzer.app $ARGS"
         echo "Running: $CMD"
 
-        python ai_security_analyzer/app.py $ARGS
+        python -m ai_security_analyzer.app $ARGS
     done
 done
 
@@ -62,10 +64,10 @@ for agent_prompt_type in $AGENT_PROMPT_TYPES; do
 
         ARGS="file -t tests/EXAMPLE_ARCHITECTURE.md -v -o $OUTPUT_DIR/file-${agent_prompt_type}-ai-nutrition-pro-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
-        CMD="python ai_security_analyzer/app.py $ARGS"
+        CMD="python -m ai_security_analyzer.app $ARGS"
         echo "Running: $CMD"
 
-        python ai_security_analyzer/app.py $ARGS
+        python -m ai_security_analyzer.app $ARGS
 
     done
 done
@@ -83,10 +85,10 @@ done
 
 #         ARGS="github -t https://github.com/abi/screenshot-to-code -v -o $OUTPUT_DIR/github-${agent_prompt_type}-screenshot-to-code-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
-#         CMD="python ai_security_analyzer/app.py $ARGS"
+#         CMD="python -m ai_security_analyzer.app $ARGS"
 #         echo "Running: $CMD"
 
-#         python ai_security_analyzer/app.py $ARGS
+#         python -m ai_security_analyzer.app $ARGS
 
 #         sleep 10
 #     done
@@ -105,10 +107,10 @@ done
 
 #         ARGS="github -t https://github.com/pallets/flask -v -o $OUTPUT_DIR/github-${agent_prompt_type}-flask-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider"
 
-#         CMD="python ai_security_analyzer/app.py $ARGS"
+#         CMD="python -m ai_security_analyzer.app $ARGS"
 #         echo "Running: $CMD"
 
-#         python ai_security_analyzer/app.py $ARGS
+#         python -m ai_security_analyzer.app $ARGS
 
 #         sleep 10
 #     done
@@ -128,10 +130,10 @@ done
 
 #         ARGS="github -t https://github.com/pallets/flask -v -o $OUTPUT_DIR/deep-analysis/${safe_agent_model}/github-da-${agent_prompt_type}-flask-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --deep-analysis"
 
-#         CMD="python ai_security_analyzer/app.py $ARGS"
+#         CMD="python -m ai_security_analyzer.app $ARGS"
 #         echo "Running: $CMD"
 
-#         python ai_security_analyzer/app.py $ARGS
+#         python -m ai_security_analyzer.app $ARGS
 
 #         sleep 5
 #     done
@@ -149,10 +151,10 @@ done
 
 #     ARGS="dir -t ../screenshot-to-code/ -v -o $OUTPUT_DIR/dir-vulnerabilitiesworkflow1-screenshot-to-code-${safe_agent_model}-i2.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 2"
 
-#     CMD="python ai_security_analyzer/app.py $ARGS"
+#     CMD="python -m ai_security_analyzer.app $ARGS"
 #     echo "Running: $CMD"
 
-#     python ai_security_analyzer/app.py $ARGS
+#     python -m ai_security_analyzer.app $ARGS
 
 #     sleep 10
 # done
@@ -169,10 +171,10 @@ done
 
 #     ARGS="dir -t ../screenshot-to-code/ -v -o $OUTPUT_DIR/dir-vulnerabilitiesworkflow1-screenshot-to-code-${safe_agent_model}-i8.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider --vulnerabilities-iterations 8"
 
-#     CMD="python ai_security_analyzer/app.py $ARGS"
+#     CMD="python -m ai_security_analyzer.app $ARGS"
 #     echo "Running: $CMD"
 
-#     python ai_security_analyzer/app.py $ARGS
+#     python -m ai_security_analyzer.app $ARGS
 
 #     sleep 10
 # done
@@ -191,10 +193,10 @@ done
 
 #         ARGS="dir -t ../terraform-provider-chronicle/ -v -o $OUTPUT_DIR/form3tech-oss/dir-${agent_prompt_type}-terraform-provider-chronicle-${safe_agent_model}.md --agent-model $agent_model --agent-temperature ${temperatures[$agent_model]} --agent-prompt-type $agent_prompt_type --agent-provider $agent_provider -p go --include **/*.tf,**/*.tmpl,**/GNUmakefile"
 
-#         CMD="python ai_security_analyzer/app.py $ARGS"
+#         CMD="python -m ai_security_analyzer.app $ARGS"
 #         echo "Running: $CMD"
 
-#         python ai_security_analyzer/app.py $ARGS
+#         python -m ai_security_analyzer.app $ARGS
 
 #         sleep 10
 #     done
